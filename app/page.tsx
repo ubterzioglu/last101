@@ -214,10 +214,10 @@ export default function HomePage() {
       {/* Divider */}
       <div className="h-[10px] bg-black" />
 
-      {/* CTA Section - Köln */}
+      {/* CTA Section - Berlin */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(/images/backgrounds/koln.jpg)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/berlin4.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -239,10 +239,10 @@ export default function HomePage() {
       {/* Divider */}
       <div className="h-[10px] bg-black" />
 
-      {/* Contact Section - Münih */}
+      {/* Contact Section - Berlin */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(/images/backgrounds/munih.jpg)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/berlin5.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="container mx-auto px-4 relative z-10">
