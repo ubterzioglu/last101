@@ -53,20 +53,11 @@
     }
   }
 
-  @keyframes marquee-ltr {
-    0% {
-      transform: translateX(-50%);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-
   .animate-marquee-rtl {
-    animation: marquee-rtl 24s linear infinite;
+    animation: marquee-rtl 40s linear infinite;
   }
 
-  .animate-marquee-ltr {
-    animation: marquee-ltr 24s linear infinite;
+  .animate-marquee-rtl:hover {
+    animation-play-state: paused;
   }
 }

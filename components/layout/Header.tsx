@@ -32,12 +32,12 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-google-yellow border-b border-gray-200 shadow-sm">
+      <header className="sticky top-0 z-50 bg-black border-b border-white/10 shadow-sm">
         <Container size="xl">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl font-bold text-gray-900">{SITE_NAME}</span>
+              <span className="text-xl font-bold text-white">{SITE_NAME}</span>
             </Link>
 
             {/* Menu Button */}
@@ -46,7 +46,7 @@ export function Header() {
               size="md" 
               onClick={openDrawer} 
               aria-label="Menüyü aç"
-              className="text-gray-900 hover:bg-white/20"
+              className="text-white hover:bg-white/20"
             >
               Menü
             </Button>
