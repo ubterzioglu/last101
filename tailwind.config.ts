@@ -15,6 +15,7 @@ const config: Config = {
           red: '#EA4335',
           yellow: '#FBBC05',
           green: '#34A853',
+          orange: '#FF9500',
         },
       },
       container: {
@@ -39,6 +40,15 @@ const config: Config = {
         '1000': '1000ms',
         '1500': '1500ms',
         '2000': '2000ms',
+      },
+      animation: {
+        'scroll': 'scroll 25s linear infinite',
+      },
+      keyframes: {
+        scroll: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
     },
   },

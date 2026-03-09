@@ -42,4 +42,31 @@
   .animate-fade-in-up {
     animation: fade-in-up 1s ease-out;
   }
+
+  /* Marquee Animations */
+  @keyframes marquee-rtl {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-ltr {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-marquee-rtl {
+    animation: marquee-rtl 24s linear infinite;
+  }
+
+  .animate-marquee-ltr {
+    animation: marquee-ltr 24s linear infinite;
+  }
 }

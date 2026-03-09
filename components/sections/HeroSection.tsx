@@ -54,10 +54,6 @@ export function HeroSection({
         />
       )}
 
-      {backgroundImage && (
-        <div className="absolute inset-0 bg-black/60" />
-      )}
-
       <Container>
         <div className={cn(
           'max-w-3xl relative z-10',
