@@ -85,11 +85,11 @@ export default function HomePage() {
     <>
       {/* Hero Section - Almanya Landscape */}
       <section 
-        className="min-h-screen flex items-center justify-center relative bg-cover bg-center"
+        className="min-h-screen flex items-start pt-[100px] relative bg-cover bg-center"
         style={{ backgroundImage: 'url(/images/backgrounds/hero.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/50" />
-        <div className="container mx-auto px-4 relative z-10 text-center">
+        <div className="container mx-auto px-4 relative z-10 text-center w-full">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">almanya101'e hoş geldin!</h1>
           <p className="text-lg md:text-xl text-gray-200 mb-8">yalnız değilsin! almanya101 seninle!</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
