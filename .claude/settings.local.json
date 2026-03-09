@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(find:*)",
+      "Bash(powershell -Command \"Get-ChildItem -Path ''almanya101'' | Move-Item -Destination ''.'' -Force; Get-ChildItem -Path ''almanya101'' -Recurse -Force | Remove-Item -Force\")"
+    ]
+  }
+}
