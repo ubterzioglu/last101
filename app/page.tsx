@@ -86,7 +86,7 @@ export default function HomePage() {
       {/* Hero Section - Almanya Landscape */}
       <section 
         className="min-h-screen flex items-center justify-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/hero.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/50" />
         <div className="container mx-auto px-4 relative z-10 text-center">
@@ -109,7 +109,7 @@ export default function HomePage() {
       {/* News Section - Berlin */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1560969184-10fe8719e047?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/berlin1.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 relative z-10">
@@ -126,7 +126,7 @@ export default function HomePage() {
       {/* Placeholder 1 - Berlin 2 */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/berlin2.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -148,7 +148,7 @@ export default function HomePage() {
       {/* Placeholder 2 - Berlin 3 */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/berlin3.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -170,7 +170,7 @@ export default function HomePage() {
       {/* Placeholder 3 - Frankfurt Skyline */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/frankfurt1.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -192,7 +192,7 @@ export default function HomePage() {
       {/* Articles Section - Frankfurt 2 */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/frankfurt2.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 relative z-10">
@@ -217,7 +217,7 @@ export default function HomePage() {
       {/* CTA Section - Köln */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/koln.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -242,7 +242,7 @@ export default function HomePage() {
       {/* Contact Section - Münih */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1595867865354-20db60b6e985?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(/images/backgrounds/munih.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="container mx-auto px-4 relative z-10">
