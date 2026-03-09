@@ -69,6 +69,7 @@ export default function RehberPage() {
         title="Kapsamlı Rehberler"
         description="Almanya ile ilgili her konuda detaylı rehberler ve makaleler. Uzmanlardan güvenilir bilgiler."
         centered={false}
+        className="bg-google-red"
       />
 
       <Section contained>

@@ -15,13 +15,14 @@ interface CTASectionProps extends HTMLAttributes<HTMLElement> {
     href: string;
   };
   centered?: boolean;
-  variant?: 'default' | 'blue' | 'gray';
+  variant?: 'default' | 'blue' | 'gray' | 'yellow';
 }
 
 const variantStyles = {
   default: 'bg-white border border-gray-200',
   blue: 'bg-google-blue text-white',
   gray: 'bg-gray-50',
+  yellow: 'bg-google-yellow text-gray-900',
 };
 
 export function CTASection({
@@ -35,8 +36,9 @@ export function CTASection({
   ...props
 }: CTASectionProps) {
   const isBlue = variant === 'blue';
-  const textColor = isBlue ? 'text-white' : 'text-gray-900';
-  const descriptionColor = isBlue ? 'text-blue-100' : 'text-gray-600';
+  const isYellow = variant === 'yellow';
+  const textColor = isBlue ? 'text-white' : isYellow ? 'text-gray-900' : 'text-gray-900';
+  const descriptionColor = isBlue ? 'text-blue-100' : isYellow ? 'text-gray-700' : 'text-gray-600';
 
   return (
     <section className={cn('py-16 md:py-20', variantStyles[variant], className)} {...props}>

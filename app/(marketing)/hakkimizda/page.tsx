@@ -70,6 +70,7 @@ export default function HakkimizdaPage() {
         title="Hakkımızda"
         description="Almanya101 hakkında bilgi edinin. Biz kimiz, ne yapıyoruz ve neden yapıyoruz?"
         centered={false}
+        className="bg-google-blue"
       />
 
       <Section contained>

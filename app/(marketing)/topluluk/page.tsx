@@ -45,6 +45,7 @@ export default function ToplulukPage() {
         title="Topluluğumuza Katılın"
         description="Binlerce Türk Almanya'da yaşadığı deneyimleri paylaşmaya hazır. Sorular sorun, cevaplar verin, dostluklar kurun."
         centered={false}
+        className="bg-google-yellow"
       />
 
       <Section contained>

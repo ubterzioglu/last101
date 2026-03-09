@@ -44,6 +44,7 @@ export default function IletisimPage() {
         title="İletişim"
         description="Sorularınız mı var? Bizimle iletişime geçin, yardımcı olalım."
         centered={false}
+        className="bg-google-green"
       />
 
       <Section contained>

@@ -84,6 +84,7 @@ export default function AlmanyaYasamPage() {
         title="Almanya'da Yaşam Rehberi"
         description="Almanya'da yeni bir hayat kurmak isteyenler için kapsamlı rehber. Resmi işlemler, yaşam koşulları ve daha fazlası."
         centered={false}
+        className="bg-google-blue"
       />
 
       <Section contained>

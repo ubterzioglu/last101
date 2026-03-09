@@ -75,6 +75,7 @@ export default function IsIlanlariPage() {
         title="Almanya'da İş Fırsatları"
         description="Türk iş verenler ve Türk dostu şirketlerden güncel iş ilanları. Hayalinizdeki işi bulun."
         centered={false}
+        className="bg-google-green"
       />
 
       <Section contained>

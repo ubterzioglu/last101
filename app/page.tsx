@@ -70,47 +70,51 @@ export default function HomePage() {
   return (
     <>
       <HeroSection
-        title="Almanya'da Yeni Bir Hayata Başlayın"
-        description="Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi, iş ilanları ve destekleyici topluluk."
+        title="almanya101'e hoş geldin!"
+        description="yalnız değilsin! almanya101 seninle!"
         primaryAction={{ label: 'Hemen Başlayın', href: '/almanyada-yasam' }}
         secondaryAction={{ label: 'Topluluğa Katılın', href: '/topluluk' }}
+        backgroundImage="/images/hero-background.jpg"
+        overlay
       />
 
-      <Section contained>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Neden Almanya101?</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Sizin için her şeyi tek yerde topladık. Yaşam, iş, eğitim ve topluluk.
-          </p>
-        </div>
-        <FeatureGrid features={features} columns={4} />
-      </Section>
+      <div className="bg-google-yellow">
+        <Section contained>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Neden Almanya101?</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Sizin için her şeyi tek yerde topladık. Yaşam, iş, eğitim ve topluluk.
+            </p>
+          </div>
+          <FeatureGrid features={features} columns={4} />
+        </Section>
 
-      <Section contained>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Popüler Rehberler</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            En çok okunan rehberler ve makaleler.
-          </p>
-        </div>
-        <ArticleGrid articles={articles} columns={3} />
-        <div className="text-center mt-8">
-          <a
-            href="/rehber"
-            className="text-google-blue hover:text-blue-700 font-medium transition-colors"
-          >
-            Tüm Rehberleri Gör →
-          </a>
-        </div>
-      </Section>
+        <Section contained>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Popüler Rehberler</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              En çok okunan rehberler ve makaleler.
+            </p>
+          </div>
+          <ArticleGrid articles={articles} columns={3} />
+          <div className="text-center mt-8">
+            <a
+              href="/rehber"
+              className="text-google-blue hover:text-blue-700 font-medium transition-colors"
+            >
+              Tüm Rehberleri Gör →
+            </a>
+          </div>
+        </Section>
 
-      <CTASection
-        title="Topluluğumuza Katılın"
-        description="Binlerce Türk Almanya'da yaşadığı deneyimleri paylaşmaya hazır. Sorular sorun, cevaplar verin, dostluklar kurun."
-        primaryAction={{ label: 'Hemen Kayıt Olun', href: '/topluluk' }}
-        secondaryAction={{ label: 'Daha Fazla Bilgi', href: '/topluluk' }}
-        variant="blue"
-      />
+        <CTASection
+          title="Topluluğumuza Katılın"
+          description="Binlerce Türk Almanya'da yaşadığı deneyimleri paylaşmaya hazır. Sorular sorun, cevaplar verin, dostluklar kurun."
+          primaryAction={{ label: 'Hemen Kayıt Olun', href: '/topluluk' }}
+          secondaryAction={{ label: 'Daha Fazla Bilgi', href: '/topluluk' }}
+          variant="yellow"
+        />
+      </div>
     </>
   );
 }
