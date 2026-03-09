@@ -15,13 +15,19 @@ interface DrawerItem {
 }
 
 const DRAWER_ITEMS: DrawerItem[] = [
-  { href: '/', label: 'Ana Sayfa' },
-  { href: '/almanyada-yasam', label: "Almanya'da Yaşam", description: 'Çalışma, yaşam, eğitim ve sağlık' },
-  { href: '/is-ilanlari', label: 'İş İlanları', description: 'Yazılım, mühendislik, satış ve sağlık' },
-  { href: '/rehber', label: 'Rehber' },
-  { href: '/topluluk', label: 'Topluluk' },
-  { href: '/hakkimizda', label: 'Hakkımızda' },
-  { href: '/iletisim', label: 'İletişim' },
+  { href: '/biz-kimiz', label: '🧑‍💻 Biz kimiz?', description: 'almanya101 ekibini tanıyın!' },
+  { href: '/bize-katil', label: '🤝 Bize Katıl!', description: 'almanya101 ekibine katılmak için tıkla!' },
+  { href: '/yazi-dizisi', label: '📝 Yazı Dizisi', description: 'Almanya hayatına dair adım adım yazı serileri.' },
+  { href: '/maas-hesaplama', label: '💸 Brütten Nete Maaş Hesaplama', description: 'Maaşınızın netini anında görün.' },
+  { href: '/vatandaslik-testi', label: '📝 Vatandaşlık Testi Denemesi', description: 'Almanya vatandaşlık testi için deneme sınavı' },
+  { href: '/banka-secim', label: '💳 Banka Seçim Araci', description: '20 soruyla banka profilinizi belirleyin.' },
+  { href: '/sigorta-secim', label: '🛡️ Sigorta Seçim Araci', description: '20 soruyla sigortaları önceliklendirin.' },
+  { href: '/turk-hizmet-rehberi-ara', label: '👨‍⚕️ Türk Hizmet Rehberi - Ara', description: 'Doktor, avukat, tamirci vs. Türkçe destek bulun!' },
+  { href: '/turk-hizmet-rehberi-oner', label: '➕ Türk Hizmet Rehberi - Öner', description: 'Bildiğiniz bir uzman eksikse ekleyin!' },
+  { href: '/tatil-planlayici-turkiye', label: '✈️ Tatil Planlayıcı 2026 Türkiye', description: 'Türkiye\'de 2026 tatilinizi planlayın!' },
+  { href: '/tatil-planlayici-almanya', label: '🏖️ Tatil Planlayıcı 2026 Almanya', description: 'Almanya\'da 2026 tatilinizi planlayın!' },
+  { href: '/para-transferi', label: '🔁 Para Transferi Seçim Aracı', description: 'Size uygun aktarım aracını 20 soruyla bulun!' },
+  { href: '/iletisim', label: '✉️ İletişim', description: 'Bizimle hızlıca iletişime geçin.' },
 ];
 
 export function Header() {
