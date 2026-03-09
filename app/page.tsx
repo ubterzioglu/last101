@@ -3,6 +3,7 @@ import { HeroSection } from '@/components/sections/HeroSection';
 import { FeatureGrid } from '@/components/sections/FeatureGrid';
 import { ArticleGrid } from '@/components/sections/ArticleCard';
 import { CTASection } from '@/components/sections/CTASection';
+import { ContactChannels } from '@/components/sections/ContactChannels';
 import { Section } from '@/components/ui/Section';
 import type { Feature, Article } from '@/types';
 
@@ -115,6 +116,8 @@ export default function HomePage() {
           variant="yellow"
         />
       </div>
+
+      <ContactChannels />
     </>
   );
 }
