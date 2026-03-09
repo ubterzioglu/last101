@@ -5,7 +5,7 @@ import { Container } from '@/components/ui/Container';
 
 export function Footer() {
   return (
-    <footer className="bg-google-yellow text-gray-900 py-8">
+    <footer className="bg-black text-white py-8">
       <Container size="xl">
         <div className="text-center space-y-2">
           <p className="text-sm">

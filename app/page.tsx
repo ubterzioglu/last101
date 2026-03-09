@@ -217,7 +217,7 @@ export default function HomePage() {
       {/* CTA Section - Köln */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1572816703439-d8b34c4dc939?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -242,7 +242,7 @@ export default function HomePage() {
       {/* Contact Section - Münih */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1523617530521-58d5e30f82e8?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1595867865354-20db60b6e985?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="container mx-auto px-4 relative z-10">
