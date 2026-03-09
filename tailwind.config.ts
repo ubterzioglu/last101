@@ -31,6 +31,15 @@ const config: Config = {
         '18': '4.5rem',
         '22': '5.5rem',
       },
+      transitionTimingFunction: {
+        'soft': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'bounce-soft': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+      },
+      transitionDuration: {
+        '1000': '1000ms',
+        '1500': '1500ms',
+        '2000': '2000ms',
+      },
     },
   },
   plugins: [],
