@@ -1,10 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
-import { HeroSection } from '@/components/sections/HeroSection';
 import { NewsCarousel } from '@/components/sections/NewsCarousel';
 import { ArticleGrid } from '@/components/sections/ArticleCard';
-import { CTASection } from '@/components/sections/CTASection';
-import { ContactChannels } from '@/components/sections/ContactChannels';
-import { Section } from '@/components/ui/Section';
 import type { Article } from '@/types';
 
 interface NewsItem {
@@ -87,7 +83,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero Section - Almanya Genel Manzara */}
+      {/* Hero Section - Almanya Landscape */}
       <section 
         className="min-h-screen flex items-center justify-center relative bg-cover bg-center"
         style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=1920&h=1080&fit=crop)' }}
@@ -107,10 +103,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* News Section - Berlin Brandenburg Kapısı */}
+      {/* Divider */}
+      <div className="h-[10px] bg-black" />
+
+      {/* News Section - Berlin */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1560969184-10fe8719e047?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 relative z-10">
@@ -121,10 +120,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Placeholder 1 - Münih Neuschwanstein */}
+      {/* Divider */}
+      <div className="h-[10px] bg-black" />
+
+      {/* Placeholder 1 - Berlin 2 */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1527933053326-89cb174defb6?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -140,10 +142,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Placeholder 2 - Köln Katedrali */}
+      {/* Divider */}
+      <div className="h-[10px] bg-black" />
+
+      {/* Placeholder 2 - Berlin 3 */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -159,10 +164,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Placeholder 3 - Hamburg Liman */}
+      {/* Divider */}
+      <div className="h-[10px] bg-black" />
+
+      {/* Placeholder 3 - Frankfurt Skyline */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1566404793232-28047b974ec5?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -178,10 +186,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Articles Section - Heidelberg */}
+      {/* Divider */}
+      <div className="h-[10px] bg-black" />
+
+      {/* Articles Section - Frankfurt 2 */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1595867865354-20db60b6e985?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 relative z-10">
@@ -200,10 +211,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section - Frankfurt Skyline */}
+      {/* Divider */}
+      <div className="h-[10px] bg-black" />
+
+      {/* CTA Section - Köln */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1533632359083-018577724325?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1572816703439-d8b34c4dc939?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -222,10 +236,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Contact Section - Bavyera Alpleri */}
+      {/* Divider */}
+      <div className="h-[10px] bg-black" />
+
+      {/* Contact Section - Münih */}
       <section 
         className="min-h-[80vh] flex items-center relative bg-cover bg-center"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop)' }}
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1523617530521-58d5e30f82e8?w=1920&h=1080&fit=crop)' }}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="container mx-auto px-4 relative z-10">
