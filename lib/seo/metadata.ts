@@ -65,7 +65,7 @@ export function createArticleMetadata(options: {
     description,
     publishedTime,
     modifiedTime,
-    authors = ['Almanya101'],
+    authors = ['almanya101'],
     tags = [],
     path,
     image = '/images/og-default.jpg',

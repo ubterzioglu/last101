@@ -2,7 +2,7 @@
  * Shared utility constants
  */
 
-export const SITE_NAME = 'Almanya101';
+export const SITE_NAME = 'almanya101';
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://almanya101.com';
 export const SITE_LOCALE = 'tr_TR';
 

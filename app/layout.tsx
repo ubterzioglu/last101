@@ -14,35 +14,35 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://almanya101.com'),
   title: {
-    default: 'Almanya101',
-    template: '%s | Almanya101',
+    default: 'almanya101',
+    template: '%s | almanya101',
   },
   description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi, iş ilanları ve topluluk platformu.",
   keywords: ['Almanya', 'Türkler', 'yaşam rehberi', 'iş ilanı', 'rehber', 'topluluk'],
-  authors: [{ name: 'Almanya101' }],
-  creator: 'Almanya101',
-  publisher: 'Almanya101',
+  authors: [{ name: 'almanya101' }],
+  creator: 'almanya101',
+  publisher: 'almanya101',
 
   openGraph: {
     type: 'website',
     locale: 'tr_TR',
-    siteName: 'Almanya101',
+    siteName: 'almanya101',
     url: 'https://almanya101.com',
-    title: 'Almanya101',
+    title: 'almanya101',
     description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi",
     images: [
       {
         url: 'https://almanya101.com/images/og-default.jpg',
         width: 1200,
         height: 630,
-        alt: 'Almanya101',
+        alt: 'almanya101',
       },
     ],
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: 'Almanya101',
+    title: 'almanya101',
     description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi",
     images: ['https://almanya101.com/images/og-default.jpg'],
   },

@@ -25,7 +25,7 @@ export function OrganizationJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Almanya101',
+    name: 'almanya101',
     url: 'https://almanya101.com',
     logo: 'https://almanya101.com/logo.png',
     description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi, iş ilanları ve topluluk platformu.",
@@ -53,7 +53,7 @@ export function WebSiteJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Almanya101',
+    name: 'almanya101',
     url: 'https://almanya101.com',
     description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi",
     potentialAction: {
@@ -87,7 +87,7 @@ export function ArticleJsonLd({
   description,
   datePublished,
   dateModified,
-  author = 'Almanya101',
+  author = 'almanya101',
   url,
 }: ArticleJsonLdProps) {
   const data = {
@@ -104,7 +104,7 @@ export function ArticleJsonLd({
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Almanya101',
+      name: 'almanya101',
       logo: {
         '@type': 'ImageObject',
         url: 'https://almanya101.com/logo.png',
@@ -127,7 +127,7 @@ export function LocalBusinessJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: 'Almanya101',
+    name: 'almanya101',
     description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi",
     url: 'https://almanya101.com',
     address: {

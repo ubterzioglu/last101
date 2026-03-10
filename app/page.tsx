@@ -122,7 +122,7 @@ export default function HomePage() {
       href: '/sigorta-secim',
       label: 'Sigorta Seçim',
       description: 'Sigortaları önceliklendirin.',
-      image: 'https://images.unsplash.com/photo-1619451334792-150fd785ee74?w=400&h=300&fit=crop'
+      image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop'
     },
     {
       href: '/turk-hizmet-rehberi-ara',
@@ -146,7 +146,7 @@ export default function HomePage() {
       href: '/tatil-planlayici-almanya',
       label: 'Tatil Almanya',
       description: '2026 tatilinizi planlayın.',
-      image: 'https://images.unsplash.com/photo-1599663253268-dc217d4cfb16?w=400&h=300&fit=crop'
+      image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop'
     },
     {
       href: '/para-transferi',

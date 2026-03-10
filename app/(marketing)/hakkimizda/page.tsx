@@ -7,7 +7,7 @@ import type { InfoBlock as InfoBlockType, Feature } from '@/types';
 
 export const metadata = createMetadata({
   title: 'Hakkımızda',
-  description: 'Almanya101 platformu hakkında bilgi. Misyonumuz, vizyonumuz ve değerlerimiz.',
+  description: 'almanya101 platformu hakkında bilgi. Misyonumuz, vizyonumuz ve değerlerimiz.',
   path: '/hakkimizda',
 });
 
@@ -68,7 +68,7 @@ export default function HakkimizdaPage() {
     <>
       <HeroSection
         title="Hakkımızda"
-        description="Almanya101 hakkında bilgi edinin. Biz kimiz, ne yapıyoruz ve neden yapıyoruz?"
+        description="almanya101 hakkında bilgi edinin. Biz kimiz, ne yapıyoruz ve neden yapıyoruz?"
         centered={false}
         className="bg-google-blue"
       />
@@ -77,7 +77,7 @@ export default function HakkimizdaPage() {
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Biz Kimiz?</h2>
           <p className="text-lg text-gray-600 max-w-3xl">
-            Almanya101, Almanya'da yaşayan veya taşınmayı planlayan Türkler için oluşturulmuş kapsamlı bir bilgi ve topluluk platformudur.
+            almanya101, Almanya'da yaşayan veya taşınmayı planlayan Türkler için oluşturulmuş kapsamlı bir bilgi ve topluluk platformudur.
             Amacımız, Almanya'daki Türk topluluğunun yaşamlarını kolaylaştırmak ve onları birbirleriyle birleştirmektir.
           </p>
         </div>

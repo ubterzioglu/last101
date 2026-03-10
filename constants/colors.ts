@@ -1,6 +1,6 @@
 /**
  * Google Color Palette
- * Almanya101 uses Google's official color palette
+ * almanya101 uses Google's official color palette
  */
 
 export const COLORS = {

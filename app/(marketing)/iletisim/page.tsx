@@ -8,7 +8,7 @@ import type { InfoBlock as InfoBlockType } from '@/types';
 
 export const metadata = createMetadata({
   title: 'İletişim',
-  description: 'Almanya101 ile iletişime geçin. Sorularınız mı var? Bize yazın, yardımcı olalım.',
+  description: 'almanya101 ile iletişime geçin. Sorularınız mı var? Bize yazın, yardımcı olalım.',
   path: '/iletisim',
 });
 
@@ -31,9 +31,9 @@ export default function IletisimPage() {
       icon: '📱',
       items: [
         'Twitter: @almanya101',
-        'Facebook: Almanya101',
+        'Facebook: almanya101',
         'Instagram: @almanya101',
-        'YouTube: Almanya101',
+        'YouTube: almanya101',
       ],
     },
   ];

@@ -1,4 +1,4 @@
-# Almanya101
+# almanya101
 
 Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi, iş ilanları ve topluluk platformu.
 
