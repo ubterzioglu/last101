@@ -81,24 +81,145 @@ export default function HomePage() {
     },
   ];
 
+  const menuItems = [
+    {
+      href: '/biz-kimiz',
+      label: 'Biz kimiz?',
+      description: 'almanya101 ekibini tanıyın!',
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/bize-katil',
+      label: 'Bize Katıl!',
+      description: 'Ekibimize katılmak için tıkla!',
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/yazi-dizisi',
+      label: 'Yazı Dizisi',
+      description: 'Adım adım yazı serileri.',
+      image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/maas-hesaplama',
+      label: 'Maaş Hesaplama',
+      description: 'Net maaşınızı anında görün.',
+      image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/vatandaslik-testi',
+      label: 'Vatandaşlık Testi',
+      description: 'Deneme sınavı çözün.',
+      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/banka-secim',
+      label: 'Banka Seçim',
+      description: 'Banka profilinizi belirleyin.',
+      image: 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/sigorta-secim',
+      label: 'Sigorta Seçim',
+      description: 'Sigortaları önceliklendirin.',
+      image: 'https://images.unsplash.com/photo-1619451334792-150fd785ee74?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/turk-hizmet-rehberi-ara',
+      label: 'Hizmet Rehberi',
+      description: 'Türkçe destek bulun!',
+      image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/turk-hizmet-rehberi-oner',
+      label: 'Hizmet Öner',
+      description: 'Uzman ekleyin!',
+      image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/tatil-planlayici-turkiye',
+      label: 'Tatil Türkiye',
+      description: '2026 tatilinizi planlayın.',
+      image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/tatil-planlayici-almanya',
+      label: 'Tatil Almanya',
+      description: '2026 tatilinizi planlayın.',
+      image: 'https://images.unsplash.com/photo-1599663253268-dc217d4cfb16?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/para-transferi',
+      label: 'Para Transferi',
+      description: 'Uygun aracı bulun!',
+      image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/iletisim',
+      label: 'İletişim',
+      description: 'Bize hızlıca ulaşın.',
+      image: 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/software-hub',
+      label: 'Software Hub',
+      description: 'Yazılım projelerimizi keşfedin!',
+      image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/topluluk',
+      label: 'Topluluğa Katıl',
+      description: 'Türk topluluğuna dahil olun!',
+      image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=300&fit=crop'
+    },
+  ];
+
   return (
     <>
       {/* Hero Section - Almanya Landscape */}
-      <section 
-        className="min-h-[70vh] sm:min-h-screen flex items-start pt-20 sm:pt-[100px] relative bg-cover bg-center"
+      <section
+        className="min-h-screen flex flex-col items-center justify-center relative bg-cover bg-center py-8"
         style={{ backgroundImage: 'url(/images/backgrounds/hero.jpg)' }}
       >
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center w-full">
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">almanya101'e hoş geldin!</h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8">yalnız değilsin! almanya101 seninle!</p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <a href="/araclar" className="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-black text-sm sm:text-base font-medium rounded-md hover:bg-gray-100 transition-colors">
-              Araçlar
-            </a>
-            <a href="/topluluk" className="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-transparent text-white text-sm sm:text-base font-medium rounded-md hover:bg-white/10 transition-colors border border-white/50">
-              Topluluğa Katılın
-            </a>
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">almanya101'e hoş geldin!</h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-200">yalnız değilsin! almanya101 seninle!</p>
+          </div>
+          
+          {/* Menu Cards Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5 max-w-6xl mx-auto mb-8">
+            {menuItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="group flex flex-col bg-white/95 hover:bg-white rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg min-h-[220px] sm:min-h-[280px]"
+              >
+                {/* Image - Top Half */}
+                <div className="h-1/2 min-h-[110px] sm:min-h-[140px] relative overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.label}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20" />
+                </div>
+                
+                {/* Content - Bottom Half */}
+                <div className="flex-1 p-3 sm:p-4 flex flex-col justify-center">
+                  {/* Title */}
+                  <h3 className="text-sm sm:text-base font-bold text-gray-900 text-center mb-1 sm:mb-2 line-clamp-1">
+                    {item.label}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-gray-600 text-center line-clamp-2 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </section>
