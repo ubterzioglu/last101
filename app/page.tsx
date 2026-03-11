@@ -251,14 +251,15 @@ export default function HomePage() {
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-8 sm:mb-10">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3">Biz Kimiz?</h2>
-              <p className="text-sm sm:text-base text-gray-300">almanya101 ekibi hakkında bilgi</p>
-            </div>
+          {/* Header */}
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3">Biz Kimiz?</h2>
+            <p className="text-sm sm:text-base text-gray-300">almanya101 ekibi hakkında bilgi</p>
+          </div>
 
-            {/* Profile Card */}
+          {/* Profile Cards Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
+            {/* Umut Barış Terzioğlu */}
             <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/30">
               {/* Profile Image */}
               <div className="flex justify-center mb-6">
@@ -313,6 +314,60 @@ export default function HomePage() {
                 <p className="text-google-yellow font-medium">
                   almanya101.de yaşayan bir platform. Zamanla gelişiyor, büyüyor ve katkılarla daha da güçleniyor. Eğer burada 
                   birine yardımcı olabiliyorsak, doğru yoldayız demektir.
+                </p>
+              </div>
+            </div>
+
+            {/* Şahincan Özbakır */}
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/30">
+              {/* Profile Image */}
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white/30 shadow-xl">
+                  <img 
+                    src="/images/sahin-profil.jpeg" 
+                    alt="Şahincan Özbakır" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Name & Title */}
+              <div className="text-center mb-6">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">Şahincan Özbakır</h3>
+                <p className="text-sm text-gray-400">Kurucu & Yazılım Geliştirici</p>
+              </div>
+
+              {/* Button */}
+              <div className="flex justify-center mb-8">
+                <span className="inline-flex items-center justify-center px-5 py-2.5 bg-google-blue text-white text-sm font-medium rounded-lg">
+                  2026'dan Beri Ekibimizde
+                </span>
+              </div>
+
+              {/* Description - Justified Text */}
+              <div className="text-gray-200 text-sm sm:text-base leading-relaxed space-y-4 text-justify">
+                <p>
+                  1994 İstanbul doğumluyum. Aslen turizm profesyoneli olarak başladığım kariyerime, 
+                  2021 tarihinden beri yazılım geliştirme alanında çalışıyorum.
+                </p>
+                <p>
+                  2022 yılından beri Almanya Magdeburg'ta eşim ve 2 kızımla birlikte yaşıyorum.
+                </p>
+                <p>
+                  İşkolik bir insanım ve yeni bir şeyler öğretip öğrenmeyi çok seviyorum. Turizm 
+                  sektöründe iken aldığım pedagojik formasyonum hayatıma çok büyük bir vizyon kattı.
+                </p>
+                <p>
+                  Gereksiz angarya işleri sevmediğim için, her işin önce SWOT analizini yapar ve kolay 
+                  yollarını ararım. Zorsa da kolaylaştırırım 😊 Oyun oynamayı ve gitar çalmayı severim.
+                </p>
+                <p>
+                  Genelde ulaşılabilir biriyimdir ve yukardan bakma gibi saçma egolarım yoktur. 
+                  Her zaman ulaşabilirsiniz.
+                </p>
+                <p className="text-google-blue font-medium">
+                  2026 yılında almanya101 ailesine katıldım ve UBT ile bir şeyler yapmaya uğraşıyoruz. 
+                  Gelin beraber büyümeye devam edelim. Paylaşalım, eğitelim, destek olalım.
                 </p>
               </div>
             </div>
