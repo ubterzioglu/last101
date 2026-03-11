@@ -27,6 +27,8 @@ const DRAWER_ITEMS: DrawerItem[] = [
   { href: '/tatil-planlayici-turkiye', label: '✈️ Tatil Planlayıcı 2026 Türkiye', description: 'Türkiye\'de 2026 tatilinizi planlayın!' },
   { href: '/tatil-planlayici-almanya', label: '🏖️ Tatil Planlayıcı 2026 Almanya', description: 'Almanya\'da 2026 tatilinizi planlayın!' },
   { href: '/para-transferi', label: '🔁 Para Transferi Seçim Aracı', description: 'Size uygun aktarım aracını 20 soruyla bulun!' },
+  { href: '/software-hub', label: '💻 Software Hub', description: 'Yazılım projelerimizi keşfedin!' },
+  { href: '/topluluk', label: '👥 Topluluğa Katıl', description: 'Türk topluluğuna dahil olun!' },
   { href: '/iletisim', label: '✉️ İletişim', description: 'Bizimle hızlıca iletişime geçin.' },
 ];
 
@@ -90,15 +92,15 @@ export function Header() {
         </div>
 
         {/* Drawer Content */}
-        <nav className="px-4 py-3">
+        <nav className="px-4 py-2">
           {DRAWER_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center px-3 py-3.5 text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group"
+              className="flex items-center px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group"
               onClick={closeDrawer}
             >
-              <span className="font-light text-base tracking-wide group-hover:translate-x-1 transition-transform duration-200">
+              <span className="font-light text-sm tracking-wide group-hover:translate-x-1 transition-transform duration-200">
                 {item.label}
               </span>
             </Link>

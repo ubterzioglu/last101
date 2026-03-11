@@ -244,21 +244,78 @@ export default function HomePage() {
       {/* Divider */}
       <div className="h-[10px] bg-black" />
 
-      {/* Placeholder 1 - Berlin 2 */}
+      {/* Biz Kimiz Section - Berlin 2 */}
       <section 
         className="min-h-[60vh] sm:min-h-[80vh] flex items-center relative bg-cover bg-center py-12 sm:py-0"
         style={{ backgroundImage: 'url(/images/backgrounds/berlin2.jpg)' }}
       >
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">Placeholder Bölüm 1</h2>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-200 max-w-2xl mx-auto mb-6 sm:mb-8">
-            Bu bölüm için içerik yakında eklenecektir. Şu an placeholder olarak kullanılmaktadır.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <a href="#" className="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-black text-sm sm:text-base font-medium rounded-md hover:bg-gray-100 transition-colors">
-              Daha Fazla Bilgi
-            </a>
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-8 sm:mb-10">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3">Biz Kimiz?</h2>
+              <p className="text-sm sm:text-base text-gray-300">almanya101 ekibi hakkında bilgi</p>
+            </div>
+
+            {/* Profile Card */}
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/30">
+              {/* Profile Image */}
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white/30 shadow-xl">
+                  <img 
+                    src="/images/profil.jpg" 
+                    alt="Umut Barış Terzioğlu" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Name & Title */}
+              <div className="text-center mb-6">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">Umut Barış Terzioğlu</h3>
+                <p className="text-sm text-gray-400">Kurucu</p>
+              </div>
+
+              {/* Personal Website Link */}
+              <div className="flex justify-center mb-8">
+                <a 
+                  href="https://ubterzioglu.de" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-5 py-2.5 bg-google-yellow text-gray-900 text-sm font-medium rounded-lg hover:bg-yellow-400 transition-colors"
+                >
+                  Kişisel Web Sayfam
+                </a>
+              </div>
+
+              {/* Description - Justified Text */}
+              <div className="text-gray-200 text-sm sm:text-base leading-relaxed space-y-4 text-justify">
+                <p>
+                  Ben Umut Barış Terzioğlu. Türkiye'de Barış, Almanya'da Umut :). 1985 doğumluyum. Aslen Makine Mühendisiyim; 
+                  bugünlerde yazılım tarafında çalışıyorum. 2021'den beri eşimle ve iki kedimizle birlikte Dortmund'da yaşıyorum.
+                </p>
+                <p>
+                  Yeni şeyler öğrenmeyi, üretmeyi ve insanlara faydalı olmayı seviyorum. Teknolojiyle iç içe olsam da günlük 
+                  hayatta pratik, net ve işe yarayan bilgiye değer veririm. Boş zamanlarımda bilgisayar oyunları, film/dizi, müzik 
+                  ve seyahat iyi gelir; kafamı toparlamanın en güzel yolu bazen de iki kedimizle evde "sessiz bir karmaşa" yaşamak 
+                  olur.
+                </p>
+                <p>
+                  Almanya'da yaşamaya başladığım günden beri, günlük hayatta karşılaştığım pek çok sorunun net ve dağınık olmayan 
+                  bir kaynağa ihtiyaç duyduğunu fark ettim. almanya101.de, tam olarak bu ihtiyaçtan doğdu.
+                </p>
+                <p>
+                  Bu platformu; Almanya'ya yeni gelenlerin, gelmeyi düşünenlerin ya da burada uzun süredir yaşayanların güvenilir 
+                  ve sade bilgilere kolayca ulaşabilmesi için kurdum. Amacım her şeyi bilen biri olmak değil; öğrenilenleri, 
+                  tecrübeleri ve faydalı bilgileri tek bir yerde toplamak.
+                </p>
+                <p className="text-google-yellow font-medium">
+                  almanya101.de yaşayan bir platform. Zamanla gelişiyor, büyüyor ve katkılarla daha da güçleniyor. Eğer burada 
+                  birine yardımcı olabiliyorsak, doğru yoldayız demektir.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
