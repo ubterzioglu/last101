@@ -39,7 +39,7 @@ const contactChannels: ContactChannel[] = [
     name: 'Telegram',
     description: 'Anlık bildirimler ve güncellemeler',
     icon: MessageCircle,
-    href: 'https://t.me/almanya101',
+    href: 'https://t.me/+UV4iuTECIIg0OWY0',
     color: 'bg-blue-400',
     hoverColor: 'hover:bg-blue-500',
   },
