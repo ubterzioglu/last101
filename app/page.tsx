@@ -340,7 +340,7 @@ export default function HomePage() {
 
               {/* Button */}
               <div className="flex justify-center mb-8">
-                <span className="inline-flex items-center justify-center px-5 py-2.5 bg-google-blue text-white text-sm font-medium rounded-lg">
+                <span className="inline-flex items-center justify-center px-5 py-2.5 bg-google-yellow text-gray-900 text-sm font-medium rounded-lg">
                   2026'dan Beri Ekibimizde
                 </span>
               </div>

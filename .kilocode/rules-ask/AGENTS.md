@@ -8,5 +8,5 @@
 
 ## Route Organization
 
-- Marketing pages are in `app/(marketing)/` route group
+- Marketing pages are in `app/(marketing)/` route group (shared layout)
 - Each page has its own directory with a `page.tsx` file

@@ -6,7 +6,12 @@
       "Bash(powershell -Command \"Get-ChildItem -Path ''almanya101'' | Move-Item -Destination ''.'' -Force; Get-ChildItem -Path ''almanya101'' -Recurse -Force | Remove-Item -Force\")",
       "WebSearch",
       "Bash(git remote set-url:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(tasklist)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :3000)",
+      "Bash(taskkill /F /PID 29076)",
+      "Bash(taskkill //F //PID 29076)"
     ]
   }
 }
