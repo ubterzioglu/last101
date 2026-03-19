@@ -166,12 +166,6 @@ export default function HomePage() {
       image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop'
     },
     {
-      href: '/yazi-dizisi',
-      label: 'Yazı Dizisi',
-      description: 'Adım adım yazı serileri.',
-      image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop'
-    },
-    {
       href: '/turk-hizmet-rehberi-ara',
       label: 'Hizmet Rehberi',
       description: 'Türkçe destek bulun!',

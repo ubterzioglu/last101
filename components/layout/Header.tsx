@@ -15,19 +15,19 @@ interface DrawerItem {
 }
 
 const DRAWER_ITEMS: DrawerItem[] = [
-  { href: '/devuser/du.html', label: '💻 Developer Topluluğu', description: 'Almanya\'daki Türk developerlar için topluluk.' },
+  { href: '/devuser/du.html', label: '💻 Developer Topluluğu', description: 'Almanya\'daki Türk developerlar için topluluk platformu.' },
+  { href: '/devuser/list.html', label: '👥 Developer Listesi', description: 'Developerları ara ve filtrele.' },
+  { href: '/devuser/cvopt.html', label: '📝 CV Optimizasyonu', description: 'CV\'nizi optimize edin.' },
   { href: '/yazi-dizisi', label: '📝 Yazı Dizisi', description: 'Adım adım rehberler ve yazılar.' },
   { href: '/haberler', label: '📰 Haberler', description: 'Güncel haberler ve gelişmeler.' },
   { href: '/belgeler', label: '📄 Yararlı Belgeler', description: 'İhtiyacınız olan belgeler ve formlar.' },
   { href: '/biz-kimiz', label: '🧑‍💻 Biz kimiz?', description: 'almanya101 ekibini tanıyın!' },
   { href: '/bize-katil', label: '🤝 Bize Katıl!', description: 'almanya101 ekibine katılmak için tıkla!' },
-  { href: '/yazi-dizisi', label: '📝 Yazı Dizisi', description: 'Almanya hayatına dair adım adım yazı serileri.' },
   { href: '/maas-hesaplama', label: '💸 Brütten Nete Maaş Hesaplama', description: 'Maaşınızın netini anında görün.' },
   { href: '/vatandaslik-testi', label: '📝 Vatandaşlık Testi Denemesi', description: 'Almanya vatandaşlık testi için deneme sınavı' },
   { href: '/banka-secim', label: '💳 Banka Seçim Araci', description: '20 soruyla banka profilinizi belirleyin.' },
   { href: '/sigorta-secim', label: '🛡️ Sigorta Seçim Araci', description: '20 soruyla sigortaları önceliklendirin.' },
-  { href: '/turk-hizmet-rehberi-ara', label: '👨‍⚕️ Türk Hizmet Rehberi - Ara', description: 'Doktor, avukat, tamirci vs. Türkçe destek bulun!' },
-  { href: '/turk-hizmet-rehberi-oner', label: '➕ Türk Hizmet Rehberi - Öner', description: 'Bildiğiniz bir uzman eksikse ekleyin!' },
+  { href: '/hizmet-rehberi', label: '👨‍⚕️ Türk Hizmet Rehberi', description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!' },
   { href: '/tatil/turkiye', label: '✈️ Tatil Planlayıcı 2026 Türkiye', description: 'Türkiye\'de 2026 tatilinizi planlayın!' },
   { href: '/tatil/almanya', label: '🏖️ Tatil Planlayıcı 2026 Almanya', description: 'Almanya\'da 2026 tatilinizi planlayın!' },
   { href: '/para-transferi', label: '🔁 Para Transferi Seçim Aracı', description: 'Size uygun aktarım aracını 20 soruyla bulun!' },

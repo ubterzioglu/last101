@@ -1,47 +1,35 @@
-/**
- * Supabase Server Client Configuration
- * This will be implemented when Supabase is integrated
- *
- * Usage:
- * import { createClient } from '@/lib/supabase/server'
- * const supabase = await createClient()
- *
- * Example implementation:
- * import { createServerClient } from '@supabase/ssr'
- * import { cookies } from 'next/headers'
- *
- * export async function createClient() {
- *   const cookieStore = await cookies()
- *
- *   return createServerClient(
- *     process.env.NEXT_PUBLIC_SUPABASE_URL!,
- *     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
- *     {
- *       cookies: {
- *         getAll() {
- *           return cookieStore.getAll()
- *         },
- *         setAll(cookiesToSet) {
- *           try {
- *             cookiesToSet.forEach(({ name, value, options }) =>
- *               cookieStore.set(name, value, options)
- *             )
- *           } catch {
- *             // The `setAll` method was called from a Server Component.
- *             // This can be ignored if you have middleware refreshing
- *             // user sessions.
- *           }
- *         },
- *       },
- *     }
- *   )
- * }
- */
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 
 export async function createClient() {
-  // TODO: Implement Supabase server client when ready
-  // import { createServerClient } from '@supabase/ssr'
-  // import { cookies } from 'next/headers'
-  // ... implementation
-  return null;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!url || !key) {
+    throw new Error('Supabase environment variables are not defined. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY');
+  }
+
+  const cookieStore = await cookies();
+
+  return createServerClient(
+    url,
+    key,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            );
+          } catch {
+            // The `setAll` method was called from a Server Component.
+            // This can be ignored if you have middleware refreshing user sessions.
+          }
+        },
+      },
+    }
+  );
 }
