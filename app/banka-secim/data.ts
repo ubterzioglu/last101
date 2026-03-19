@@ -137,6 +137,7 @@ export const BANKS: Bank[] = [
 export const QUESTIONS: Question[] = [
   {
     id: 'q1',
+    category: 'Profil',
     title: 'Almanya\'da ne zamandır yaşıyorsun?',
     desc: 'Yeni gelenler için dil/kurulum kolaylığı; yerleşik olanlar için şube/danışmanlık ihtiyaçları değişir.',
     type: 'single',
@@ -148,6 +149,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q2',
+    category: 'Profil',
     title: 'Almanca seviyen nasıl?',
     desc: 'Dil bariyeri varsa expat/dil-dostu ve güçlü uygulama desteği kritik olur.',
     type: 'single',
@@ -159,6 +161,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q3',
+    category: 'Profil',
     title: 'Yaşadığın yer daha çok…',
     desc: 'Şube/ATM ihtiyacı, yaşadığın lokasyona göre değişir.',
     type: 'single',
@@ -170,6 +173,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q4',
+    category: 'Şube & Nakit',
     title: 'Şubeye gitme ihtiyacın olur mu?',
     desc: 'Nakit yatırma, danışmanlık, özel işlemler…',
     type: 'single',
@@ -181,6 +185,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q5',
+    category: 'Masraf & Ücretler',
     title: 'En çok hangisi canını sıkar?',
     desc: 'Birincil ağrı noktanı seç: buna göre öneri keskinleşir.',
     type: 'single',
@@ -192,6 +197,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q6',
+    category: 'Masraf & Ücretler',
     title: 'Aylık hesap ücreti konusunda yaklaşımın?',
     desc: 'Ücret toleransı, banka tipini direkt etkiler.',
     type: 'single',
@@ -203,6 +209,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q7',
+    category: 'Masraf & Ücretler',
     title: 'SEPA havale/transfer sıklığın?',
     desc: 'Sık transfer yapanlar için masraf + hız önemli.',
     type: 'single',
@@ -214,6 +221,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q8',
+    category: 'Şube & Nakit',
     title: 'Nakit kullanımı senin için…',
     desc: 'Almanya\'da hâlâ nakit seven çok kişi var 🙂',
     type: 'single',
@@ -225,6 +233,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q9',
+    category: 'Şube & Nakit',
     title: 'ATM yakınlığı/erişimi önemli mi?',
     desc: 'Banliyöde/taşrada ATM ve şube fark yaratır.',
     type: 'single',
@@ -236,6 +245,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q10',
+    category: 'Kart Tercihi',
     title: 'Kart tercihinde hangisi ağır basıyor?',
     desc: 'Debit vs kredi vs klasik Girocard.',
     type: 'single',
@@ -247,6 +257,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q11',
+    category: 'Yatırım',
     title: 'Borsa/ETF yatırımı yapıyor musun?',
     desc: 'Yatırım odaklı bankalar/brokerlar farklı.',
     type: 'single',
@@ -258,6 +269,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q12',
+    category: 'Yatırım',
     title: 'Yatırımda senin için en önemli şey?',
     desc: 'Komisyon mu, güven mi, kullanım kolaylığı mı?',
     type: 'single',
@@ -269,6 +281,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q13',
+    category: 'Kripto',
     title: 'Kripto ile ilişkin nedir?',
     desc: 'Kripto aktifse doğru kanal seçimi çok fark eder.',
     type: 'single',
@@ -280,6 +293,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q14',
+    category: 'Kripto',
     title: 'Kripto nerede dursun istersin?',
     desc: 'Bankada mı, ayrı platformda mı?',
     type: 'single',
@@ -291,6 +305,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q15',
+    category: 'Kullanım Tercihi',
     title: 'Finansı tek uygulamada mı yönetmek istersin?',
     desc: 'Bankacılık + yatırım + kripto gibi.',
     type: 'single',
@@ -302,6 +317,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q16',
+    category: 'Kullanım Tercihi',
     title: 'Banka seçerken en önemli kriter hangisi?',
     desc: 'Tek bir şey seç: algoritma bunu \'weight\' gibi kullanır.',
     type: 'single',
@@ -313,6 +329,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q17',
+    category: 'Güven & Destek',
     title: 'Müşteri hizmetlerine erişim beklentin?',
     desc: 'Telefon/şube/online chat farkı.',
     type: 'single',
@@ -324,6 +341,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q18',
+    category: 'Güven & Destek',
     title: 'Hesabın bloke/kapanma riski seni ne kadar gerer?',
     desc: 'KYC/AML süreçleri bazı fintechlerde daha sert hissedilebilir.',
     type: 'single',
@@ -335,6 +353,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q19',
+    category: 'Güven & Destek',
     title: 'Banka değiştirmeye ne kadar açıksın?',
     desc: 'Esneklik yüksekse fintech/dijital daha mantıklı olur.',
     type: 'single',
@@ -346,6 +365,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 'q20',
+    category: 'Genel Tercih',
     title: 'İdeal banka senin için hangisi?',
     desc: 'Son soru: içgüdüsel tercihin.',
     type: 'single',
