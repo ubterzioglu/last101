@@ -14,6 +14,10 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
+# Copy static assets into standalone directory (required for standalone output)
+RUN cp -r .next/static .next/standalone/.next/static && \
+    cp -r public .next/standalone/public
+
 # Environment
 ENV NODE_ENV=production
 ENV PORT=3000
