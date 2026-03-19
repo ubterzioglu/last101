@@ -16,6 +16,10 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
+# Ensure static files are in the correct location for standalone mode
+RUN cp -r public .next/standalone/ 2>/dev/null || true
+RUN cp -r .next/static .next/standalone/.next/ 2>/dev/null || true
+
 # Environment
 ENV NODE_ENV=production
 ENV PORT=3000
