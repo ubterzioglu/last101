@@ -31,7 +31,7 @@ const DRAWER_ITEMS: DrawerItem[] = [
   { href: '/tatil/turkiye', label: '✈️ Tatil Planlayıcı 2026 Türkiye', description: 'Türkiye\'de 2026 tatilinizi planlayın!' },
   { href: '/tatil/almanya', label: '🏖️ Tatil Planlayıcı 2026 Almanya', description: 'Almanya\'da 2026 tatilinizi planlayın!' },
   { href: '/para-transferi', label: '🔁 Para Transferi Seçim Aracı', description: 'Size uygun aktarım aracını 20 soruyla bulun!' },
-  { href: '/software-hub', label: '💻 Software Hub', description: 'Yazılım projelerimizi keşfedin!' },
+  { href: '/software-hub', label: '💻 Software Hub', description: 'Developer Dashboard ve araçlar.' },
   { href: '/topluluk', label: '👥 Topluluğa Katıl', description: 'Türk topluluğuna dahil olun!' },
   { href: '/iletisim', label: '✉️ İletişim', description: 'Bizimle hızlıca iletişime geçin.' },
 ];
