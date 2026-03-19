@@ -6,7 +6,9 @@ export type ProviderType =
   | 'sigorta' | 'vergi_danismani' | 'berber' | 'kuafor' | 'surucu_kursu'
   | 'tamirci_otomobil' | 'tamirci_tesisat' | 'tamirci_boyaci' | 'tamir'
   // Gastronomi Rehberi
-  | 'restaurant' | 'market' | 'kasap' | 'cafe' | 'bakery';
+  | 'restaurant' | 'market' | 'kasap' | 'cafe' | 'bakery'
+  // All categories
+  | 'all';
 
 export interface Provider {
   id: string;
