@@ -2,15 +2,33 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  // Port environment variable desteği
-  experimental: {
-    optimizePackageImports: ['lucide-react'],
-  },
+  // Production build ayarları
+  poweredByHeader: false,
+  compress: true,
+  
+  // Image optimization
   images: {
     domains: [],
     remotePatterns: [],
+    unoptimized: false,
   },
-  // Enable image optimization
+  
+  // Headers ve security
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+        ],
+      },
+    ];
+  },
+  
+  // Experimental features
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
