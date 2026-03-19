@@ -314,7 +314,7 @@ export default function BankaClient() {
               )}
 
               {/* Maddeler */}
-              <ul className="text-gray-600 text-sm space-y-1 list-disc list-inside">
+              <ul className={cn('text-gray-600 text-sm space-y-1 list-disc list-inside', idx > 0 && 'line-clamp-2')}>
                 {rec.bullets.slice(0, idx === 0 ? 5 : 2).map((b, i) => (
                   <li key={i}>{b}</li>
                 ))}
