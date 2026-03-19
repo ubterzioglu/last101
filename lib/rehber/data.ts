@@ -3,7 +3,14 @@
 import { createClient } from '@/lib/supabase/client';
 import type { Provider, Tag, ProviderWithTags, ProviderType } from './types';
 
-const supabase = createClient();
+// Lazy initialization to avoid build-time errors
+let supabaseClient: ReturnType<typeof createClient> | null = null;
+function getSupabase() {
+  if (!supabaseClient && typeof window !== 'undefined') {
+    supabaseClient = createClient();
+  }
+  return supabaseClient!;
+}
 
 // Eski sistemdeki tablolar:
 // - providers (hizmet rehberi)
@@ -17,7 +24,7 @@ const supabase = createClient();
  * Hizmet rehberi sağlayıcılarını getir
  */
 export async function getServiceProviders(type: ProviderType, city?: string) {
-  let query = supabase
+  let query = getSupabase()
     .from('providers')
     .select(`
       *,
@@ -44,7 +51,7 @@ export async function getServiceProviders(type: ProviderType, city?: string) {
  * Gastronomi sağlayıcılarını getir
  */
 export async function getGastronomyProviders(type: ProviderType, city?: string) {
-  let query = supabase
+  let query = getSupabase()
     .from('gastronomy_providers')
     .select(`
       *,
@@ -73,7 +80,7 @@ export async function getGastronomyProviders(type: ProviderType, city?: string) 
 export async function getTamirciProviders(city?: string) {
   const tamirciTypes = ['tamirci_otomobil', 'tamirci_tesisat', 'tamirci_boyaci'];
   
-  let query = supabase
+  let query = getSupabase()
     .from('providers')
     .select(`
       *,
@@ -131,7 +138,7 @@ export async function getProvidersByCategory(
  * Hizmet etiketlerini getir
  */
 export async function getServiceTags(type: ProviderType) {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from('tags')
     .select('*')
     .eq('type', type);
@@ -148,7 +155,7 @@ export async function getServiceTags(type: ProviderType) {
  * Gastronomi etiketlerini getir
  */
 export async function getGastronomyTags(type: ProviderType) {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from('gastronomy_tags')
     .select('*')
     .eq('type', type);
@@ -184,7 +191,7 @@ export async function getAvailableCities(category?: ProviderType) {
     ? 'gastronomy_providers'
     : 'providers';
 
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from(table)
     .select('city')
     .eq('status', 'active')
@@ -205,13 +212,13 @@ export async function getAvailableCities(category?: ProviderType) {
  */
 export async function getCategoryStats() {
   // Hizmet sağlayıcıları
-  const { data: serviceData, error: serviceError } = await supabase
+  const { data: serviceData, error: serviceError } = await getSupabase()
     .from('providers')
     .select('type', { count: 'exact' })
     .eq('status', 'active');
 
   // Gastronomi sağlayıcıları
-  const { data: gastroData, error: gastroError } = await supabase
+  const { data: gastroData, error: gastroError } = await getSupabase()
     .from('gastronomy_providers')
     .select('type', { count: 'exact' })
     .eq('status', 'active');
@@ -245,8 +252,8 @@ export async function getCategoryStats() {
  */
 export async function getAllProvidersForSearch() {
   const [serviceProviders, gastroProviders] = await Promise.all([
-    supabase.from('providers').select('*').eq('status', 'active'),
-    supabase.from('gastronomy_providers').select('*').eq('status', 'active'),
+    getSupabase().from('providers').select('*').eq('status', 'active'),
+    getSupabase().from('gastronomy_providers').select('*').eq('status', 'active'),
   ]);
 
   const services = serviceProviders.data?.map(p => ({ ...p, source: 'service' })) || [];
