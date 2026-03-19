@@ -270,61 +270,78 @@ export default function BankaClient() {
 
       {/* Result Card */}
       {showResult && (
-        <div className="bg-gradient-to-br from-[#8F03B7] to-[#6B02A3] rounded-2xl p-5 text-white">
-          <div className="mb-4">
-            <h2 className="text-xl font-bold mb-1">Sonuç</h2>
-            <p className="text-sm text-white/85">Cevaplarına göre en uygun bankacılık profilleri:</p>
+        <div className="max-w-xl mx-auto space-y-4">
+          {/* Başlık — kart dışında */}
+          <div className="text-center mb-6">
+            <h2 className="text-white font-bold text-2xl mb-1">Sonuçların hazır!</h2>
+            <p className="text-white/50 text-sm">Cevaplarına göre en uygun bankacılık profilleri</p>
           </div>
 
-          <div className="space-y-3">
-            {recommendations.map((rec) => (
-              <div key={rec.bank.id} className="bg-gradient-to-br from-[#F65314] to-[#D84315] rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#FFBB00]" />
-                  <span className="font-bold text-lg">#{rec.rank} • {rec.bank.name}</span>
-                  <span className="text-sm text-white/70">({rec.bank.type})</span>
-                </div>
+          {/* Banka kartları */}
+          {recommendations.map((rec, idx) => (
+            <div
+              key={rec.bank.id}
+              className={cn(
+                'bg-white rounded-2xl p-5',
+                idx === 0
+                  ? 'shadow-2xl border-2 border-blue-500'
+                  : 'shadow-md border border-gray-200'
+              )}
+            >
+              {/* Badge + Banka adı */}
+              <div className="flex items-center gap-3 mb-3">
+                <span className={cn(
+                  'text-xs font-bold px-3 py-1 rounded-full',
+                  idx === 0
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-100 text-gray-500'
+                )}>
+                  {idx === 0 ? 'EN UYGUN' : `#${rec.rank}`}
+                </span>
+                <span className="font-bold text-gray-900 text-xl">{rec.bank.name}</span>
+                <span className="text-gray-400 text-sm ml-auto">{rec.bank.type}</span>
+              </div>
 
-                <div className="flex flex-wrap gap-1.5 mb-2">
+              {/* Etiketler */}
+              {rec.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-3">
                   {rec.tags.map((tag, i) => (
-                    <span key={i} className="text-xs px-2 py-0.5 bg-white/20 rounded-full">
+                    <span key={i} className="text-xs px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full">
                       {tag}
                     </span>
                   ))}
                 </div>
+              )}
 
-                <div className="text-sm font-semibold mb-2">
-                  Uygunluk Skoru: {Math.round(rec.bank.score)}
-                </div>
+              {/* Maddeler */}
+              <ul className="text-gray-600 text-sm space-y-1 list-disc list-inside">
+                {rec.bullets.slice(0, idx === 0 ? 5 : 2).map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
-                <ul className="text-xs text-white/85 space-y-1 list-disc list-inside">
-                  {rec.bullets.slice(0, 5).map((b, i) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="h-px bg-white/20 my-4" />
-
-          <div className="flex gap-3">
+          {/* Butonlar */}
+          <div className="flex gap-3 pt-2">
             <button
               onClick={handleReset}
-              className="flex-1 text-sm bg-white/20 hover:bg-white/30 px-4 py-2.5 rounded-lg transition-colors font-medium"
+              className="flex-1 text-sm text-white/70 border border-white/20 hover:bg-white/10 px-4 py-2.5 rounded-xl transition-colors font-medium"
             >
-              Sıfırla
+              Tekrar Yap
             </button>
             <button
               onClick={handleCopy}
-              className="flex-1 text-sm bg-[#FFBB00] hover:bg-[#ffcc33] text-gray-900 px-4 py-2.5 rounded-lg transition-colors font-bold"
+              className="flex-1 text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl transition-colors font-bold"
             >
-              {copied ? 'Kopyalandı!' : 'Sonucu kopyala'}
+              {copied ? 'Kopyalandı!' : 'Sonucu Kopyala'}
             </button>
           </div>
 
-          <p className="text-xs text-white/60 mt-4 leading-relaxed">
-            Not: Bu araç yönlendirme amaçlıdır. Son seçimde ücretler, kart koşulları, şube erişimi, müşteri hizmetleri ve kimlik doğrulama seçeneklerini bankanın kendi sayfasından kontrol et.
+          {/* Uyarı notu */}
+          <p className="text-white/30 text-xs leading-relaxed text-center pt-2">
+            Not: Bu araç yönlendirme amaçlıdır. Son seçimde ücretler, kart koşulları, şube erişimi,
+            müşteri hizmetleri ve kimlik doğrulama seçeneklerini bankanın kendi sayfasından kontrol et.
           </p>
         </div>
       )}
