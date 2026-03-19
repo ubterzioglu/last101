@@ -168,23 +168,22 @@ export default function BankaClient() {
 
   return (
     <div className="max-w-xl mx-auto space-y-4">
-      {/* Progress Card */}
       {!showResult && (
-        <div className="bg-[#F65314] rounded-2xl p-4 text-white">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-sm font-semibold">
+        <div className="max-w-xl mx-auto mb-3">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-white/50 text-sm">
               Soru {currentQuestion + 1} / {totalQuestions}
             </span>
             <button
               onClick={handleReset}
-              className="text-xs bg-white/25 hover:bg-white/40 px-3 py-1.5 rounded-lg transition-colors font-medium"
+              className="text-xs text-white/40 hover:text-white/70 transition-colors"
             >
               Sıfırla
             </button>
           </div>
-          <div className="h-2 bg-white/25 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
             <div
-              className="h-full bg-white rounded-full transition-all duration-300"
+              className="h-full bg-blue-500 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
