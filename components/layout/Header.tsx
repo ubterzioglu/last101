@@ -15,7 +15,7 @@ interface DrawerItem {
 }
 
 const DRAWER_ITEMS: DrawerItem[] = [
-  { href: '/devuser/du.html', label: '💻 Developer Topluluğu', description: 'Almanya\'daki Türk developerlar için topluluk platformu.' },
+  { href: 'https://101.almanya101.de/devuser/dev.html', label: '💻 Developer Topluluğu', description: 'Almanya\'daki Türk developerlar için topluluk platformu.' },
   { href: '/devuser/list.html', label: '👥 Developer Listesi', description: 'Developerları ara ve filtrele.' },
   { href: '/devuser/cvopt.html', label: '📝 CV Optimizasyonu', description: 'CV\'nizi optimize edin.' },
   { href: '/yazi-dizisi', label: '📝 Yazı Dizisi', description: 'Adım adım rehberler ve yazılar.' },
