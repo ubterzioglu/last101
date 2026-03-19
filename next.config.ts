@@ -1,31 +1,16 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // Coolify/Docker için standalone output
   output: 'standalone',
-  // Production build ayarları
+  
+  // Güvenlik ve performans
   poweredByHeader: false,
   compress: true,
   
-  // Image optimization
+  // Container ortamında image optimization için
   images: {
-    domains: [],
-    remotePatterns: [],
-    unoptimized: false,
-  },
-  
-  // Headers ve security
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-        ],
-      },
-    ];
+    unoptimized: true,
   },
   
   // Experimental features
