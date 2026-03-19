@@ -1,0 +1,121 @@
+<h2>Sonuç Ekranı — Bankalar nasıl gösterilsin?</h2>
+<p class="subtitle">3 banka önerisi için hangi sunum daha iyi?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="ranked-cards" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f8f9fa; padding:12px; border-radius:8px;">
+      <div style="max-width:320px; margin:0 auto; display:flex; flex-direction:column; gap:8px;">
+        <!-- #1 vurgulu -->
+        <div style="background:#fff; border-radius:10px; padding:10px; box-shadow:0 2px 8px rgba(66,133,244,0.2); border:2px solid #4285F4;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+            <div style="background:#4285F4; color:#fff; font-size:9px; font-weight:700; padding:2px 8px; border-radius:20px;">#1 ÖNERİ</div>
+            <span style="font-weight:700; font-size:12px; color:#202124;">N26</span>
+            <span style="font-size:10px; color:#5f6368; margin-left:auto;">Dijital Banka</span>
+          </div>
+          <div style="display:flex; gap:4px; margin-bottom:6px;">
+            <span style="background:#E8F0FE; color:#4285F4; font-size:9px; padding:2px 6px; border-radius:20px;">Düşük Masraf</span>
+            <span style="background:#E8F0FE; color:#4285F4; font-size:9px; padding:2px 6px; border-radius:20px;">Dijital</span>
+          </div>
+          <div style="font-size:10px; color:#5f6368;">• Masraf hassasiyetin yüksek: şeffaf ücret yapısı.</div>
+          <div style="font-size:10px; color:#5f6368;">• Tam mobil deneyim: hızlı kurulum.</div>
+        </div>
+        <!-- #2 normal -->
+        <div style="background:#fff; border-radius:10px; padding:10px; box-shadow:0 1px 3px rgba(0,0,0,0.1); border:1px solid #e0e0e0;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+            <div style="background:#f1f3f4; color:#5f6368; font-size:9px; font-weight:700; padding:2px 8px; border-radius:20px;">#2</div>
+            <span style="font-weight:600; font-size:12px; color:#202124;">DKB</span>
+            <span style="font-size:10px; color:#5f6368; margin-left:auto;">Direkt Banka</span>
+          </div>
+          <div style="font-size:10px; color:#5f6368;">• Dijital + klasik banka dengesi.</div>
+        </div>
+        <!-- #3 daha soluk -->
+        <div style="background:#fafafa; border-radius:10px; padding:10px; border:1px solid #eeeeee;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="background:#f1f3f4; color:#9aa0a6; font-size:9px; font-weight:700; padding:2px 8px; border-radius:20px;">#3</div>
+            <span style="font-weight:500; font-size:12px; color:#5f6368;">ING</span>
+            <span style="font-size:10px; color:#bbb; margin-left:auto;">Direkt Banka</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Sıralı Kartlar</h3>
+      <p>#1 öneri vurgulu ve büyük, #2 ve #3 giderek küçülür. Net hiyerarşi, kolay tarama.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="score-bar" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f8f9fa; padding:12px; border-radius:8px;">
+      <div style="max-width:320px; margin:0 auto; background:#fff; border-radius:10px; padding:12px; box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+        <div style="font-weight:700; color:#202124; font-size:12px; margin-bottom:10px;">Sana En Uygun Bankalar</div>
+        <!-- Bank rows with bars -->
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+              <span style="font-size:11px; font-weight:600; color:#202124;">N26</span>
+              <span style="font-size:10px; color:#4285F4; font-weight:600;">87 puan</span>
+            </div>
+            <div style="background:#f1f3f4; height:6px; border-radius:3px;"><div style="background:#4285F4; width:87%; height:100%; border-radius:3px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+              <span style="font-size:11px; font-weight:500; color:#5f6368;">DKB</span>
+              <span style="font-size:10px; color:#5f6368; font-weight:500;">72 puan</span>
+            </div>
+            <div style="background:#f1f3f4; height:6px; border-radius:3px;"><div style="background:#9aa0a6; width:72%; height:100%; border-radius:3px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+              <span style="font-size:11px; font-weight:500; color:#5f6368;">ING</span>
+              <span style="font-size:10px; color:#5f6368; font-weight:500;">61 puan</span>
+            </div>
+            <div style="background:#f1f3f4; height:6px; border-radius:3px;"><div style="background:#9aa0a6; width:61%; height:100%; border-radius:3px;"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:10px; padding-top:8px; border-top:1px solid #f1f3f4; font-size:10px; color:#5f6368;">
+          N26 için: masraf hassasiyetin yüksek, şeffaf ücret yapısı...
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Skor Barları</h3>
+      <p>Her banka için puan barı. Görsel karşılaştırma güçlü, fark açıkça belli. Altında detay açılır.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="match-chips" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f8f9fa; padding:12px; border-radius:8px;">
+      <div style="max-width:320px; margin:0 auto; display:flex; flex-direction:column; gap:8px;">
+        <!-- Winner banner -->
+        <div style="background:linear-gradient(135deg,#4285F4,#0d47a1); border-radius:10px; padding:12px; color:#fff; text-align:center;">
+          <div style="font-size:9px; opacity:0.8; margin-bottom:2px;">EN UYGUN BANKA</div>
+          <div style="font-size:18px; font-weight:700;">N26</div>
+          <div style="font-size:10px; opacity:0.8;">Dijital Banka</div>
+          <div style="display:flex; justify-content:center; gap:4px; margin-top:6px;">
+            <span style="background:rgba(255,255,255,0.2); font-size:8px; padding:2px 7px; border-radius:20px;">Düşük Masraf</span>
+            <span style="background:rgba(255,255,255,0.2); font-size:8px; padding:2px 7px; border-radius:20px;">Hızlı Kurulum</span>
+          </div>
+        </div>
+        <!-- Alt 2 -->
+        <div style="display:flex; gap:6px;">
+          <div style="flex:1; background:#fff; border-radius:8px; padding:8px; box-shadow:0 1px 3px rgba(0,0,0,0.08); text-align:center;">
+            <div style="font-size:9px; color:#9aa0a6; margin-bottom:2px;">#2</div>
+            <div style="font-size:12px; font-weight:600; color:#202124;">DKB</div>
+            <div style="font-size:9px; color:#5f6368;">Direkt Banka</div>
+          </div>
+          <div style="flex:1; background:#fff; border-radius:8px; padding:8px; box-shadow:0 1px 3px rgba(0,0,0,0.08); text-align:center;">
+            <div style="font-size:9px; color:#9aa0a6; margin-bottom:2px;">#3</div>
+            <div style="font-size:12px; font-weight:600; color:#202124;">ING</div>
+            <div style="font-size:9px; color:#5f6368;">Direkt Banka</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Kazanan Banner</h3>
+      <p>#1 büyük mavi banner olarak öne çıkar, #2 ve #3 yan yana küçük kartlar. Karar anında güçlü etki.</p>
+    </div>
+  </div>
+
+</div>

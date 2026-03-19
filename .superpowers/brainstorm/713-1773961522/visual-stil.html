@@ -1,0 +1,95 @@
+<h2>Görsel Stil — Hangi his daha doğru?</h2>
+<p class="subtitle">Banka seçim aracı için genel ton ve atmosfer</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="clean" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f8f9fa; padding:16px; border-radius:8px;">
+      <div style="background:#fff; border-radius:12px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div style="font-size:11px; color:#666; margin-bottom:8px;">Soru 3 / 20</div>
+        <div style="background:#e8eaed; height:4px; border-radius:2px; margin-bottom:12px;">
+          <div style="background:#4285F4; width:45%; height:100%; border-radius:2px;"></div>
+        </div>
+        <div style="font-weight:600; color:#1a1a1a; margin-bottom:10px; font-size:13px;">Aylık ortalama ne kadar para transfer ediyorsunuz?</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="border:2px solid #4285F4; border-radius:8px; padding:8px 12px; background:#EBF3FF; font-size:12px; color:#1a1a1a;">500€ altı</div>
+          <div style="border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; color:#444;">500€ – 2.000€</div>
+          <div style="border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; color:#444;">2.000€ üzeri</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Temiz &amp; Profesyonel</h3>
+      <p>Beyaz/açık arka plan, mavi aksanlar. Banka uygulaması hissi. Güven veriyor, ağır değil.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dark-premium" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:linear-gradient(135deg,#0f0c29,#302b63); padding:16px; border-radius:8px;">
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px; backdrop-filter:blur(10px);">
+        <div style="font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:8px;">Soru 3 / 20</div>
+        <div style="background:rgba(255,255,255,0.1); height:4px; border-radius:2px; margin-bottom:12px;">
+          <div style="background:linear-gradient(90deg,#a78bfa,#818cf8); width:45%; height:100%; border-radius:2px;"></div>
+        </div>
+        <div style="font-weight:600; color:#fff; margin-bottom:10px; font-size:13px;">Aylık ortalama ne kadar para transfer ediyorsunuz?</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="border:1px solid rgba(167,139,250,0.6); border-radius:8px; padding:8px 12px; background:rgba(167,139,250,0.15); font-size:12px; color:#fff;">500€ altı</div>
+          <div style="border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 12px; font-size:12px; color:rgba(255,255,255,0.6);">500€ – 2.000€</div>
+          <div style="border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 12px; font-size:12px; color:rgba(255,255,255,0.6);">2.000€ üzeri</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Koyu &amp; Premium</h3>
+      <p>Derin lacivert/mor degrade, cam efekti, mor aksanlar. Mevcut tarza yakın ama çok daha rafine.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="vibrant" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:linear-gradient(135deg,#FF6B6B,#FFE66D); padding:16px; border-radius:8px;">
+      <div style="background:rgba(255,255,255,0.95); border-radius:12px; padding:14px;">
+        <div style="font-size:11px; color:#666; margin-bottom:8px;">Soru 3 / 20</div>
+        <div style="background:#eee; height:4px; border-radius:2px; margin-bottom:12px;">
+          <div style="background:linear-gradient(90deg,#FF6B6B,#FFE66D); width:45%; height:100%; border-radius:2px;"></div>
+        </div>
+        <div style="font-weight:600; color:#1a1a1a; margin-bottom:10px; font-size:13px;">Aylık ortalama ne kadar para transfer ediyorsunuz?</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="border:2px solid #FF6B6B; border-radius:8px; padding:8px 12px; background:#FFF0F0; font-size:12px; color:#1a1a1a;">500€ altı</div>
+          <div style="border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; color:#444;">500€ – 2.000€</div>
+          <div style="border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; color:#444;">2.000€ üzeri</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Canlı &amp; Enerjik</h3>
+      <p>Renkli degradeler, beyaz kart içerikleri. Genç, dinamik, dikkat çekici. almanya101 markasına yakın.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="google" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#fff; padding:16px; border-radius:8px; border:1px solid #e0e0e0;">
+      <div style="background:#fff; border-radius:12px; padding:14px; border:1px solid #e8eaed;">
+        <div style="display:flex; gap:4px; margin-bottom:10px;">
+          <div style="width:8px; height:8px; border-radius:50%; background:#EA4335;"></div>
+          <div style="width:8px; height:8px; border-radius:50%; background:#FBBC05;"></div>
+          <div style="width:8px; height:8px; border-radius:50%; background:#34A853;"></div>
+          <div style="width:8px; height:8px; border-radius:50%; background:#4285F4;"></div>
+        </div>
+        <div style="background:#f1f3f4; height:4px; border-radius:2px; margin-bottom:12px;">
+          <div style="background:#4285F4; width:45%; height:100%; border-radius:2px;"></div>
+        </div>
+        <div style="font-weight:600; color:#202124; margin-bottom:10px; font-size:13px;">Aylık ortalama ne kadar para transfer ediyorsunuz?</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="border:2px solid #4285F4; border-radius:8px; padding:8px 12px; background:#E8F0FE; font-size:12px; color:#202124; display:flex; align-items:center; gap:8px;"><span style="color:#4285F4; font-weight:700;">●</span> 500€ altı</div>
+          <div style="border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; color:#5f6368; display:flex; align-items:center; gap:8px;"><span>○</span> 500€ – 2.000€</div>
+          <div style="border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; font-size:12px; color:#5f6368; display:flex; align-items:center; gap:8px;"><span>○</span> 2.000€ üzeri</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Google Material</h3>
+      <p>Proje zaten Google renk paletini kullanıyor. Tutarlı mavi/kırmızı/sarı/yeşil sistem, temiz ve tanıdık.</p>
+    </div>
+  </div>
+
+</div>

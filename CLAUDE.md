@@ -16,8 +16,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **This is a Next.js 15 application using App Router with TypeScript and TailwindCSS.**
 
 ### Route Groups
-- `app/(marketing)/` - Route group for marketing pages that share a common layout
-- `app/` - Root directory with root layout, home page, and global files
+- `app/(marketing)/` - Marketing pages sharing a common layout (almanyada-yasam, is-ilanlari, rehber, tatil, para-transferi, topluluk, hakkimizda, iletisim)
+- `app/` - Root directory with root layout, home page, and interactive tool pages
+
+### Interactive Tool Pages (outside marketing group)
+These pages live directly under `app/` and use the `'use client'` pattern with a `*Client.tsx` component holding state, and a `page.tsx` as the Server Component wrapper:
+- `app/banka-secim/` - Bank selection quiz (BankaClient.tsx + data.ts + types.ts)
+- `app/sigorta-secim/` - Insurance selection quiz (same pattern)
+- `app/vatandaslik-testi/` - Citizenship test
+- `app/maas-hesaplama/` - Salary calculator
+- `app/hizmet-rehberi/` - Service guide
+- `app/belgeler/` - Documents
+- `app/haberler/` - News
+- `app/yazi-dizisi/` - Article series
+- `app/software-hub/` - Software hub
+
+### API Routes
+- `app/api/health/` - Health check endpoint
+- `app/api/supabase-config/` - Supabase configuration check
+- `app/api/devuser/list/` - Dev user listing (development only)
+- `app/api/devuser-count/` - Dev user count (development only)
 
 ### Component Organization
 - `components/ui/` - Low-level reusable primitives (Button, Card, Container, Section, Badge)
@@ -80,6 +98,11 @@ Colors are defined in `tailwind.config.ts` and used throughout:
 **Future Integrations (Placeholders):**
 - `lib/supabase/client.ts` - Supabase browser client (returns null, not yet implemented)
 - `lib/supabase/server.ts` - Supabase server client (returns null, not yet implemented)
+
+### Deployment
+- Built with `output: 'standalone'` for Docker/Coolify deployment
+- `images.unoptimized: true` — Next.js image optimization is disabled (container environment)
+- `lucide-react` is configured with `optimizePackageImports` for tree-shaking
 
 ## Language Requirement
 
