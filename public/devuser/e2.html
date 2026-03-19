@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+  <title>almanya101.de ikinci etkinligi - almanya101</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="devuser-shell.css" />
+  <link rel="stylesheet" href="../devuser/devuser.css" />
+  <style>
+    body {
+      overflow-y: auto;
+      padding: 12px 0;
+    }
+
+    .container1 {
+      height: auto;
+      min-height: calc(100dvh - 24px);
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+      gap: 10px;
+    }
+
+    .container1 > .card:last-child {
+      min-height: 0;
+      display: block;
+    }
+
+    .card p {
+      margin: 0;
+      color: #cfcfcf;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .stack-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .textarea-input {
+      min-height: 120px;
+      resize: vertical;
+      margin-bottom: 0;
+    }
+
+    .checkbox-group {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr;
+    }
+
+    .checkbox-group .checkbox-label {
+      margin: 0;
+      padding: 10px;
+      justify-content: flex-start;
+      min-height: 44px;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .checkbox-group .checkbox-label input[type="checkbox"] {
+      margin-top: 4px;
+      flex: 0 0 auto;
+    }
+
+    .char-meta {
+      text-align: right;
+      color: #9a9a9a;
+      font-size: 12px;
+    }
+
+    .hp-field {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .form-status {
+      display: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .form-status.loading {
+      display: block;
+      background: #3e2d06;
+      color: #ffe08a;
+    }
+
+    .form-status.success {
+      display: block;
+      background: #143b27;
+      color: #9af0be;
+    }
+
+    .form-status.error {
+      display: block;
+      background: #46181d;
+      color: #ff9aa6;
+    }
+
+    .head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .head-row h4 {
+      margin: 0;
+      color: #fff;
+      font-size: 17px;
+    }
+
+    .refresh-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      font-size: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #2a2a2a;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .refresh-btn:hover {
+      background: #3a3a3a;
+    }
+
+    .result-meta {
+      color: #a9a9a9;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .result-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .result-card {
+      background: #161616;
+      border: 1px solid #2d2d2d;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .result-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: #f2f2f2;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .topic-label {
+      display: block;
+      white-space: pre-line;
+      line-height: 1.3;
+    }
+
+    .result-bar {
+      height: 8px;
+      width: 100%;
+      border-radius: 999px;
+      background: #2b2b2b;
+      overflow: hidden;
+    }
+
+    .result-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #89dcff, #56b3ff);
+      transition: width 0.24s ease;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .question-item {
+      background: #161616;
+      border: 1px solid #2f2f2f;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .question-text {
+      margin: 0;
+      color: #f7f7f7;
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .question-meta {
+      margin-top: 8px;
+      color: #a5a5a5;
+      font-size: 12px;
+    }
+
+    .empty-state {
+      color: #a7a7a7;
+      font-size: 13px;
+    }
+  </style>
+<link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+<link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+</head>
+
+<body class="devuser-shell-page devuser-shell-scroll">
+  <div class="devuser-shell-bg"><canvas id="devuser-shell-canvas"></canvas></div>
+  <div class="devuser-shell-grid"></div>
+  <div class="devuser-shell-frame devuser-shell-frame--compact">
+    <div class="devuser-shell-top-logo">
+      <img src="../almanya101.png" alt="almanya101" />
+    </div>
+    <header class="devuser-shell-header">
+      <h1 class="devuser-shell-title">de tr software dashboard</h1>
+    </header>
+    <a href="../dev.html" class="devuser-shell-back-link">&larr; dashboard'a don</a>
+    <div class="container1">
+    <div class="card hero-card1">
+      <div class="hero-domain1">almanya101.de</div>
+      <h3 style="margin-bottom: 8px;">almanya101.de ikinci etkinligini sunar!</h3>
+      <p style="color: rgba(255,255,255,.95);">
+        Ikinci etkinligimizin konu basliklarini birlikte oyluyoruz.
+      </p>
+      <p style="color: rgba(255,255,255,.95); margin-top: 6px;">
+        Konu secimini ve istersen soru/oneri metnini ayri ayri gonderebilirsin.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="head-row">
+        <h4>Konu Oylama Sonuclari</h4>
+        <button id="resultsRefreshBtn" class="refresh-btn" type="button">Yenile</button>
+      </div>
+      <div id="resultsMeta" class="result-meta">Yukleniyor...</div>
+      <div class="result-grid">
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">AI Araclari ve Egitim</span>
+            <span id="countAiTools">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillAiTools"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">Sektor Trendleri</span>
+            <span id="countIndustryTrends">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillIndustryTrends"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">AI vs Geleneksel Kodlama</span>
+            <span id="countAiVsCoding">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillAiVsCoding"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">Kar Amaci Gutmeyen Dernek</span>
+            <span id="countNonprofit">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillNonprofit"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">AI ile Isbirligi</span>
+            <span id="countAiCollaboration">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillAiCollaboration"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">Uygulama Test Grubu</span>
+            <span id="countAppTesting">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillAppTesting"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">Eyalet Bazli Gruplar</span>
+            <span id="countStateGroups">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillStateGroups"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">Yapay Zeka Kullanimi</span>
+            <span id="countAiUsage">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillAiUsage"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">Almanya'da Calisma Kosullari</span>
+            <span id="countWorkingConditions">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillWorkingConditions"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">Proje Tanitimlari</span>
+            <span id="countProjectPresentations">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillProjectPresentations"></div></div>
+        </article>
+        <article class="result-card">
+          <div class="result-row">
+            <span class="topic-label">Birbirimize Destek</span>
+            <span id="countMutualSupport">0 kisi</span>
+          </div>
+          <div class="result-bar"><div class="result-fill" id="fillMutualSupport"></div></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0; margin-bottom:10px; color:#fff;">Konu Secimi Gonder</h4>
+      <form id="voteForm" class="stack-form" novalidate>
+        <div>
+          <label class="field-label" for="voteFullNameInput">Ad Soyad</label>
+          <input id="voteFullNameInput" class="form-input" type="text" maxlength="80" placeholder="Adiniz soyadiniz" required />
+        </div>
+
+        <div>
+          <label class="field-label">Konu Sec (birden fazla secilebilir)</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label" for="voteTopic1Input">
+              <input id="voteTopic1Input" type="checkbox" name="topicChoice" value="ai-tools" />
+              <span class="topic-label">AI Araclari ve Egitim</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic2Input">
+              <input id="voteTopic2Input" type="checkbox" name="topicChoice" value="industry-trends" />
+              <span class="topic-label">Sektor Trendleri</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic3Input">
+              <input id="voteTopic3Input" type="checkbox" name="topicChoice" value="ai-vs-coding" />
+              <span class="topic-label">AI vs Geleneksel Kodlama</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic4Input">
+              <input id="voteTopic4Input" type="checkbox" name="topicChoice" value="nonprofit" />
+              <span class="topic-label">Kar Amaci Gutmeyen Dernek</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic5Input">
+              <input id="voteTopic5Input" type="checkbox" name="topicChoice" value="ai-collaboration" />
+              <span class="topic-label">AI ile Isbirligi</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic6Input">
+              <input id="voteTopic6Input" type="checkbox" name="topicChoice" value="app-testing" />
+              <span class="topic-label">Uygulama Test Grubu</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic7Input">
+              <input id="voteTopic7Input" type="checkbox" name="topicChoice" value="state-groups" />
+              <span class="topic-label">Eyalet Bazli Gruplar</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic8Input">
+              <input id="voteTopic8Input" type="checkbox" name="topicChoice" value="ai-usage" />
+              <span class="topic-label">Yapay Zeka Kullanimi</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic9Input">
+              <input id="voteTopic9Input" type="checkbox" name="topicChoice" value="working-conditions" />
+              <span class="topic-label">Almanya'da Calisma Kosullari</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic10Input">
+              <input id="voteTopic10Input" type="checkbox" name="topicChoice" value="project-presentations" />
+              <span class="topic-label">Proje Tanitimlari</span>
+            </label>
+            <label class="checkbox-label" for="voteTopic11Input">
+              <input id="voteTopic11Input" type="checkbox" name="topicChoice" value="mutual-support" />
+              <span class="topic-label">Birbirimize Destek</span>
+            </label>
+          </div>
+        </div>
+
+        <input id="voteWebsiteTrap" class="hp-field" type="text" name="website" autocomplete="off" tabindex="-1" />
+
+        <button id="voteSubmitBtn" class="btn btn-primary" type="submit">Konu Secimini Gonder</button>
+        <div id="voteStatus" class="form-status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0; margin-bottom:10px; color:#fff;">Konu / Soru Gonder</h4>
+      <form id="questionForm" class="stack-form" novalidate>
+        <div>
+          <label class="field-label" for="questionInput">Konu veya sorun</label>
+          <textarea id="questionInput" class="form-input textarea-input" maxlength="500" placeholder="Metninizi yazin..." required></textarea>
+          <div class="char-meta"><span id="questionCharCount">0</span> / 500</div>
+        </div>
+
+        <input id="questionWebsiteTrap" class="hp-field" type="text" name="website" autocomplete="off" tabindex="-1" />
+
+        <button id="questionSubmitBtn" class="btn btn-primary" type="submit">Konuyu Gonder</button>
+        <div id="questionStatus" class="form-status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="head-row">
+        <h4>Gonderilen Konular</h4>
+        <button id="questionRefreshBtn" class="refresh-btn" type="button">Yenile</button>
+      </div>
+      <div id="questionState" class="empty-state">Yukleniyor...</div>
+      <div id="questionList" class="question-list" hidden></div>
+    </div>
+  </div>
+
+  <script>
+    const VOTE_SUBMIT_API_URL = '/api/event-e2-submit';
+    const VOTE_RESULTS_API_URL = '/api/event-e2-results';
+    const QUESTION_SUBMIT_API_URL = '/api/event-e2-question-submit';
+    const QUESTION_LIST_API_URL = '/api/event-e2-question-list';
+
+    const TOPIC_KEYS = [
+      'ai-tools',
+      'industry-trends',
+      'ai-vs-coding',
+      'nonprofit',
+      'ai-collaboration',
+      'app-testing',
+      'state-groups',
+      'ai-usage',
+      'working-conditions',
+      'project-presentations',
+      'mutual-support'
+    ];
+
+    const TOPIC_LABELS = {
+      'ai-tools': 'AI Araclari ve Egitim',
+      'industry-trends': 'Sektor Trendleri',
+      'ai-vs-coding': 'AI vs Geleneksel Kodlama',
+      'nonprofit': 'Kar Amaci Gutmeyen Dernek',
+      'ai-collaboration': 'AI ile Isbirligi',
+      'app-testing': 'Uygulama Test Grubu',
+      'state-groups': 'Eyalet Bazli Gruplar',
+      'ai-usage': 'Yapay Zeka Kullanimi',
+      'working-conditions': "Almanya'da Calisma Kosullari",
+      'project-presentations': 'Proje Tanitimlari',
+      'mutual-support': 'Birbirimize Destek'
+    };
+
+    const TOPIC_ID_SUFFIX = {
+      'ai-tools': 'AiTools',
+      'industry-trends': 'IndustryTrends',
+      'ai-vs-coding': 'AiVsCoding',
+      'nonprofit': 'Nonprofit',
+      'ai-collaboration': 'AiCollaboration',
+      'app-testing': 'AppTesting',
+      'state-groups': 'StateGroups',
+      'ai-usage': 'AiUsage',
+      'working-conditions': 'WorkingConditions',
+      'project-presentations': 'ProjectPresentations',
+      'mutual-support': 'MutualSupport'
+    };
+
+    const voteForm = document.getElementById('voteForm');
+    const voteFullNameInput = document.getElementById('voteFullNameInput');
+    const voteSubmitBtn = document.getElementById('voteSubmitBtn');
+    const voteStatus = document.getElementById('voteStatus');
+    const voteWebsiteTrap = document.getElementById('voteWebsiteTrap');
+    const resultsMeta = document.getElementById('resultsMeta');
+
+    const questionForm = document.getElementById('questionForm');
+    const questionInput = document.getElementById('questionInput');
+    const questionCharCount = document.getElementById('questionCharCount');
+    const questionSubmitBtn = document.getElementById('questionSubmitBtn');
+    const questionStatus = document.getElementById('questionStatus');
+    const questionWebsiteTrap = document.getElementById('questionWebsiteTrap');
+    const questionState = document.getElementById('questionState');
+    const questionList = document.getElementById('questionList');
+
+    function escapeHtml(value) {
+      const div = document.createElement('div');
+      div.textContent = typeof value === 'string' ? value : String(value || '');
+      return div.innerHTML;
+    }
+
+    function normalizeLine(value) {
+      return String(value || '').replace(/\r\n/g, '\n').trim();
+    }
+
+    function setStatus(element, message, type) {
+      if (!message) {
+        element.className = 'form-status';
+        element.textContent = '';
+        return;
+      }
+
+      element.className = `form-status ${type}`.trim();
+      element.textContent = message;
+    }
+
+    function selectedTopicChoices() {
+      return Array.from(voteForm.querySelectorAll('input[name="topicChoice"]:checked')).map((node) => node.value);
+    }
+
+    function resetTopicChoices() {
+      voteForm.querySelectorAll('input[name="topicChoice"]').forEach((node) => {
+        node.checked = false;
+      });
+    }
+
+    function formatDate(value) {
+      if (!value) return '-';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return '-';
+      return date.toLocaleString('tr-TR');
+    }
+
+    function updateResultCards(stats) {
+      const counts = stats?.counts || {};
+      const submissions = Number(stats?.total_submissions || 0);
+      const maxCount = Math.max(...TOPIC_KEYS.map((key) => Number(counts[key] || 0)), 1);
+
+      TOPIC_KEYS.forEach((key) => {
+        const count = Number(counts[key] || 0);
+        const suffix = TOPIC_ID_SUFFIX[key];
+        const countEl = document.getElementById(`count${suffix}`);
+        const fillEl = document.getElementById(`fill${suffix}`);
+
+        if (countEl) countEl.textContent = `${count} kisi`;
+        if (fillEl && fillEl.parentElement && fillEl.parentElement.previousElementSibling) {
+          const labelEl = fillEl.parentElement.previousElementSibling.querySelector('span:first-child');
+          if (labelEl) labelEl.textContent = TOPIC_LABELS[key] || key;
+        }
+        if (fillEl) fillEl.style.width = `${Math.round((count / maxCount) * 100)}%`;
+      });
+
+      const totalVotes = Number(stats?.total_votes || 0);
+      resultsMeta.textContent = `Toplam gonderim: ${submissions} | Toplam secim: ${totalVotes}`;
+    }
+
+    async function loadVoteResults() {
+      resultsMeta.textContent = 'Yukleniyor...';
+      try {
+        const response = await fetch(VOTE_RESULTS_API_URL, {
+          method: 'GET',
+          headers: { Accept: 'application/json' }
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.ok) {
+          throw new Error(payload.error || `HTTP ${response.status}`);
+        }
+
+        updateResultCards(payload.stats || {});
+      } catch (error) {
+        resultsMeta.textContent = error.message || 'Sonuclar yuklenemedi.';
+      }
+    }
+
+    function renderQuestions(items) {
+      if (!Array.isArray(items) || items.length === 0) {
+        questionList.hidden = true;
+        questionList.innerHTML = '';
+        questionState.hidden = false;
+        questionState.textContent = 'Henuz konu yok.';
+        return;
+      }
+
+      questionState.hidden = true;
+      questionList.hidden = false;
+      questionList.innerHTML = items.map((item) => {
+        const text = escapeHtml(item.question || '');
+        const createdAt = escapeHtml(formatDate(item.created_at));
+        return `
+          <article class="question-item">
+            <p class="question-text">${text}</p>
+            <div class="question-meta">${createdAt}</div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    async function loadQuestions() {
+      questionState.hidden = false;
+      questionState.textContent = 'Yukleniyor...';
+      questionList.hidden = true;
+
+      try {
+        const response = await fetch(`${QUESTION_LIST_API_URL}?limit=80`, {
+          method: 'GET',
+          headers: { Accept: 'application/json' }
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.ok) {
+          throw new Error(payload.error || `HTTP ${response.status}`);
+        }
+
+        renderQuestions(payload.items || []);
+      } catch (error) {
+        questionList.hidden = true;
+        questionState.hidden = false;
+        questionState.textContent = error.message || 'Konular yuklenemedi.';
+      }
+    }
+
+    async function submitVote(event) {
+      event.preventDefault();
+      setStatus(voteStatus, '', '');
+
+      const fullName = normalizeLine(voteFullNameInput.value).replace(/\n/g, ' ');
+      const selectedTopics = selectedTopicChoices();
+
+      if (!fullName) {
+        setStatus(voteStatus, 'Ad soyad zorunlu.', 'error');
+        return;
+      }
+      if (!selectedTopics.length) {
+        setStatus(voteStatus, 'En az bir konu secmelisiniz.', 'error');
+        return;
+      }
+
+      voteSubmitBtn.disabled = true;
+      voteSubmitBtn.textContent = 'Gonderiliyor...';
+      setStatus(voteStatus, 'Kayit aliniyor...', 'loading');
+
+      try {
+        const response = await fetch(VOTE_SUBMIT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            full_name: fullName,
+            anonymous: false,
+            selected_topics: selectedTopics,
+            website: voteWebsiteTrap.value || ''
+          })
+        });
+
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.ok) {
+          throw new Error(payload.error || 'Gonderim basarisiz');
+        }
+
+        voteForm.reset();
+        resetTopicChoices();
+        setStatus(voteStatus, 'Konu secimin alindi.', 'success');
+        await loadVoteResults();
+      } catch (error) {
+        setStatus(voteStatus, error.message || 'Gonderim sirasinda hata olustu.', 'error');
+      } finally {
+        voteSubmitBtn.disabled = false;
+        voteSubmitBtn.textContent = 'Konu Secimini Gonder';
+      }
+    }
+
+    function updateQuestionCharCount() {
+      questionCharCount.textContent = String(questionInput.value.length);
+    }
+
+    async function submitQuestion(event) {
+      event.preventDefault();
+      setStatus(questionStatus, '', '');
+
+      const question = normalizeLine(questionInput.value);
+      if (!question) {
+        setStatus(questionStatus, 'Konu zorunlu.', 'error');
+        return;
+      }
+      if (question.length > 500) {
+        setStatus(questionStatus, 'Konu en fazla 500 karakter olabilir.', 'error');
+        return;
+      }
+
+      questionSubmitBtn.disabled = true;
+      questionSubmitBtn.textContent = 'Gonderiliyor...';
+      setStatus(questionStatus, 'Konu kaydediliyor...', 'loading');
+
+      try {
+        const response = await fetch(QUESTION_SUBMIT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question,
+            website: questionWebsiteTrap.value || ''
+          })
+        });
+
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.ok) {
+          throw new Error(payload.error || 'Konu gonderilemedi');
+        }
+
+        questionForm.reset();
+        updateQuestionCharCount();
+        setStatus(questionStatus, 'Konu gonderildi.', 'success');
+        await loadQuestions();
+      } catch (error) {
+        setStatus(questionStatus, error.message || 'Konu gonderilirken hata olustu.', 'error');
+      } finally {
+        questionSubmitBtn.disabled = false;
+        questionSubmitBtn.textContent = 'Konuyu Gonder';
+      }
+    }
+
+    voteForm.addEventListener('submit', submitVote);
+    questionInput.addEventListener('input', updateQuestionCharCount);
+    questionForm.addEventListener('submit', submitQuestion);
+    document.getElementById('resultsRefreshBtn').addEventListener('click', loadVoteResults);
+    document.getElementById('questionRefreshBtn').addEventListener('click', loadQuestions);
+
+    updateQuestionCharCount();
+    loadVoteResults();
+    loadQuestions();
+  </script>
+<script src="devuser-shell.js"></script>
+<script>
+  window.goatcounter = window.goatcounter || {};
+  window.goatcounter.path = location.pathname;
+</script>
+<script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  </div>
+</body>
+
+</html>
+

@@ -1,0 +1,1269 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+<title>Profil Düzenle - almanya101</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="devuser-shell.css" />
+  <link rel="stylesheet" href="devuserlist.css" />
+  <style>
+    /* Profile Edit Specific Styles */
+    .profile-layout {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .profile-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 20px;
+    }
+
+    .profile-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Progress Card */
+    .progress-card {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .progress-circle {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+
+    .progress-circle svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-circle-bg {
+      fill: none;
+      stroke: #2a2a2a;
+      stroke-width: 8;
+    }
+
+    .progress-circle-fill {
+      fill: none;
+      stroke: #F65314;
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Section Navigation */
+    .section-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .section-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .section-nav-item:hover {
+      background: #1a1a1a;
+      color: #fff;
+    }
+
+    .section-nav-item.active {
+      background: rgba(246, 83, 20, 0.15);
+      color: #F65314;
+      font-weight: 600;
+    }
+
+    .section-nav-item.completed {
+      color: #10b981;
+    }
+
+    .section-nav-item.completed::after {
+      content: '✓';
+      margin-left: auto;
+      font-size: 12px;
+    }
+
+    .section-nav-icon {
+      width: 24px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    /* Form Sections */
+    .form-section {
+      margin-bottom: 20px;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .form-section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 24px;
+      background: linear-gradient(90deg, rgba(246, 83, 20, 0.1) 0%, transparent 100%);
+      border-bottom: 1px solid #2a2a2a;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .form-section-header:hover {
+      background: linear-gradient(90deg, rgba(246, 83, 20, 0.15) 0%, transparent 100%);
+    }
+
+    .form-section-header.collapsed {
+      border-bottom: none;
+    }
+
+    .form-section-icon {
+      font-size: 20px;
+    }
+
+    .form-section-title {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+    }
+
+    .form-section-status {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #1a1a1a;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .form-section-status.completed {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+    }
+
+    .form-section-status.partial {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+    }
+
+    .form-section-toggle {
+      font-size: 12px;
+      transition: transform 0.2s;
+    }
+
+    .form-section-header.collapsed .form-section-toggle {
+      transform: rotate(-90deg);
+    }
+
+    .form-section-body {
+      padding: 24px;
+    }
+
+    .form-section-body.collapsed {
+      display: none;
+    }
+
+    /* Two Column Layout */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Improved Form Groups */
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="url"],
+    .form-group input[type="tel"],
+    .form-group input[type="email"] {
+      width: 100%;
+      padding: 14px 16px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #F65314;
+      box-shadow: 0 0 0 3px rgba(246, 83, 20, 0.1);
+      background: #222;
+    }
+
+    .form-group input.error {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Privacy Toggle in Input */
+    .input-with-toggle {
+      position: relative;
+    }
+
+    .input-with-toggle input {
+      padding-right: 100px;
+    }
+
+    .input-toggle {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #2a2a2a;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .input-toggle:hover {
+      background: #333;
+    }
+
+    .input-toggle input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      accent-color: #F65314;
+    }
+
+    /* Checkbox & Radio Groups */
+    .checkbox-group-container,
+    .radio-group-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .checkbox-group-container,
+      .radio-group-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checkbox-label,
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .checkbox-label:hover,
+    .radio-label:hover {
+      border-color: #F65314;
+      background: #222;
+    }
+
+    .checkbox-label:has(input:checked),
+    .radio-label:has(input:checked) {
+      background: rgba(246, 83, 20, 0.1);
+      border-color: #F65314;
+    }
+
+    .checkbox-label input,
+    .radio-label input {
+      width: 18px;
+      height: 18px;
+      accent-color: #F65314;
+    }
+
+    /* Sticky Action Bar */
+    .action-bar {
+      position: sticky;
+      bottom: 0;
+      background: linear-gradient(180deg, transparent 0%, #000 20%);
+      padding: 20px 0;
+      margin-top: 20px;
+      z-index: 100;
+    }
+
+    .action-bar-inner {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .action-bar .btn {
+      padding: 14px 32px;
+      font-size: 15px;
+    }
+
+    /* Error Text */
+    .error-text {
+      color: #ef4444;
+      font-size: 13px;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .error-text::before {
+      content: '⚠️';
+    }
+
+    /* Status Message */
+    .status-message {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .status-message.success {
+      display: block;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    .status-message.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    /* Mobile Sidebar Toggle */
+    .mobile-section-toggle {
+      display: none;
+      width: 100%;
+      padding: 14px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 16px;
+      cursor: pointer;
+    }
+
+    /* Loading State */
+    .loading-spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #333;
+      border-top-color: #F65314;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .profile-layout {
+        flex-direction: column;
+      }
+
+      .profile-sidebar {
+        width: 100%;
+        position: static;
+        order: -1;
+      }
+
+      .section-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .section-nav-item {
+        flex: 1;
+        min-width: 140px;
+        justify-content: center;
+        margin-bottom: 0;
+      }
+
+      .section-nav-item.completed::after {
+        display: none;
+      }
+
+      .progress-card {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .form-section-body {
+        padding: 16px;
+      }
+
+      .form-section-header {
+        padding: 16px 20px;
+      }
+
+      .action-bar-inner {
+        flex-direction: column;
+      }
+
+      .action-bar .btn {
+        width: 100%;
+      }
+    }
+  </style>
+<link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+<link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+</head>
+
+<body class="devuser-shell-page devuser-shell-scroll">
+  <div class="devuser-shell-bg"><canvas id="devuser-shell-canvas"></canvas></div>
+  <div class="devuser-shell-grid"></div>
+  <div class="devuser-shell-frame devuser-shell-frame--wide">
+    <div class="devuser-shell-top-logo">
+      <img src="../almanya101.png" alt="almanya101" />
+    </div>
+    <header class="devuser-shell-header">
+      <h1 class="devuser-shell-title">de tr software dashboard</h1>
+    </header>
+    <a href="../dev.html" class="devuser-shell-back-link">&larr; dashboard'a don</a>
+  <!-- Loading State -->
+  <div class="container1" id="loadingState">
+    <div class="card hero-card1" style="text-align: center; padding: 60px;">
+      <div class="hero-domain1">almanya101.de</div>
+      <h3 style="margin-top: 16px;">Profil Düzenle</h3>
+      <div style="margin-top: 30px;">
+        <div class="loading-spinner"></div>
+        <p style="margin-top: 16px; color: rgba(255,255,255,0.6);">Profil yükleniyor...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container1" id="mainContent" style="display:none;">
+    <!-- Hero -->
+    <div class="card hero-card1" style="margin-bottom: 24px;">
+      <div class="hero-top1">
+        <div>
+          <div class="hero-domain1">almanya101.de</div>
+          <h3 style="margin: 8px 0 0 0;">Profil Düzenle</h3>
+        </div>
+        <button type="button" class="btn btn-secondary" id="backBtn">← Listeye Dön</button>
+      </div>
+    </div>
+
+    <!-- Status Message -->
+    <div class="status-message" id="statusMessage"></div>
+
+    <div class="profile-layout">
+      <!-- Sidebar -->
+      <aside class="profile-sidebar">
+        <!-- Progress Card -->
+        <div class="card progress-card" style="margin-bottom: 16px;">
+          <div class="progress-circle">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+              <circle class="progress-circle-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="progress-circle-fill" id="progressCircle" cx="60" cy="60" r="52"
+                stroke-dasharray="326.73" stroke-dashoffset="326.73"></circle>
+            </svg>
+            <div class="progress-text" id="progressPercent">0%</div>
+          </div>
+          <div class="progress-label">Profil Tamamlama</div>
+        </div>
+
+        <!-- Section Navigation -->
+        <div class="card" style="padding: 16px;">
+          <ul class="section-nav">
+            <li class="section-nav-item active" data-section="personal">
+              <span class="section-nav-icon">👤</span>
+              <span>Kişisel Bilgiler</span>
+            </li>
+            <li class="section-nav-item" data-section="profile">
+              <span class="section-nav-icon">💼</span>
+              <span>Profil Bilgileri</span>
+            </li>
+            <li class="section-nav-item" data-section="tech">
+              <span class="section-nav-icon">⚙️</span>
+              <span>Teknoloji Stack</span>
+            </li>
+            <li class="section-nav-item" data-section="interests">
+              <span class="section-nav-icon">⭐</span>
+              <span>İlgi Alanları</span>
+            </li>
+            <li class="section-nav-item" data-section="work">
+              <span class="section-nav-icon">🔍</span>
+              <span>İş Durumu</span>
+            </li>
+            <li class="section-nav-item" data-section="collab">
+              <span class="section-nav-icon">🤝</span>
+              <span>İş Birliği</span>
+            </li>
+            <li class="section-nav-item" data-section="privacy">
+              <span class="section-nav-icon">🔒</span>
+              <span>Görünürlük</span>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Form Content -->
+      <main class="profile-content">
+        <!-- Kişisel Bilgiler -->
+        <div class="form-section" id="section-personal">
+          <div class="form-section-header" onclick="toggleSection('personal')">
+            <span class="form-section-icon">👤</span>
+            <h4 class="form-section-title">Kişisel Bilgiler</h4>
+            <span class="form-section-status" id="status-personal">Boş</span>
+            <span class="form-section-toggle">▼</span>
+          </div>
+          <div class="form-section-body" id="body-personal">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ad_soyad">Ad Soyad *</label>
+                <input type="text" id="ad_soyad" name="ad_soyad" required autocomplete="name" placeholder="Adınız ve soyadınız" />
+              </div>
+              <div class="form-group">
+                <label for="sehir">Şehir</label>
+                <input type="text" id="sehir" name="sehir" autocomplete="address-level2" placeholder="örn: Berlin" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="linkedin_url">LinkedIn URL</label>
+              <div class="input-with-toggle">
+                <input type="url" id="linkedin_url" name="linkedin_url" autocomplete="url" placeholder="https://linkedin.com/in/kullanici" />
+                <label class="input-toggle">
+                  <input type="checkbox" id="linkedin_gorunur" name="linkedin_gorunur" checked />
+                  <span>Göster</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="whatsapp_tel">WhatsApp Telefon</label>
+              <div class="input-with-toggle">
+                <input type="tel" id="whatsapp_tel" name="whatsapp_tel" autocomplete="tel" placeholder="+49 123 456 7890" />
+                <label class="input-toggle">
+                  <input type="checkbox" id="whatsapp_gorunur" name="whatsapp_gorunur" checked />
+                  <span>Göster</span>
+                </label>
+              </div>
+            </div>
+
+            <label class="checkbox-label" style="margin-top: 8px;">
+              <input type="checkbox" id="almanya_yasam" name="almanya_yasam" />
+              <span>🇩🇪 Almanya'da yaşıyorum</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Profil Bilgileri -->
+        <div class="form-section" id="section-profile">
+          <div class="form-section-header" onclick="toggleSection('profile')">
+            <span class="form-section-icon">💼</span>
+            <h4 class="form-section-title">Profil Bilgileri</h4>
+            <span class="form-section-status" id="status-profile">Boş</span>
+            <span class="form-section-toggle">▼</span>
+          </div>
+          <div class="form-section-body collapsed" id="body-profile">
+            <div class="form-group">
+              <label>Rol</label>
+              <div class="radio-group-container">
+                <label class="radio-label"><input type="radio" name="rol" value="Software Developer" /> Software Developer</label>
+                <label class="radio-label"><input type="radio" name="rol" value="QA/Test" /> QA/Test</label>
+                <label class="radio-label"><input type="radio" name="rol" value="DevOps" /> DevOps</label>
+                <label class="radio-label"><input type="radio" name="rol" value="Data/AI" /> Data/AI</label>
+                <label class="radio-label"><input type="radio" name="rol" value="Product/Project" /> Product/Project</label>
+                <label class="radio-label"><input type="radio" name="rol" value="UI/UX" /> UI/UX</label>
+                <label class="radio-label"><input type="radio" name="rol" value="Öğrenci" /> Öğrenci</label>
+                <label class="radio-label"><input type="radio" name="rol" value="Diğer" /> Diğer</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Deneyim Seviyesi</label>
+              <div class="radio-group-container">
+                <label class="radio-label"><input type="radio" name="deneyim_seviye" value="0-1 yıl" /> 0-1 yıl</label>
+                <label class="radio-label"><input type="radio" name="deneyim_seviye" value="1-3 yıl" /> 1-3 yıl</label>
+                <label class="radio-label"><input type="radio" name="deneyim_seviye" value="3-5 yıl" /> 3-5 yıl</label>
+                <label class="radio-label"><input type="radio" name="deneyim_seviye" value="5-10 yıl" /> 5-10 yıl</label>
+                <label class="radio-label"><input type="radio" name="deneyim_seviye" value="10+ yıl" /> 10+ yıl</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Güçlü Alanlar</label>
+              <div class="checkbox-group-container">
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="Backend" /> Backend</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="Frontend" /> Frontend</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="Mobile" /> Mobile</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="QA/Manual Testing" /> QA/Manual</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="Test Automation" /> Test Automation</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="DevOps/CI-CD" /> DevOps/CI-CD</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="Data/BI" /> Data/BI</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="AI/ML" /> AI/ML</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="Cloud" /> Cloud</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="Security" /> Security</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="Product/Project" /> Product/Project</label>
+                <label class="checkbox-label"><input type="checkbox" name="guclu_alanlar" value="UI/UX" /> UI/UX</label>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-top: 16px;">
+              <label class="checkbox-label"><input type="checkbox" id="aktif_kod" name="aktif_kod" /> 💻 Aktif kod yazıyorum</label>
+              <label class="checkbox-label"><input type="checkbox" id="acik_kaynak" name="acik_kaynak" /> 🌍 Açık kaynak projeler</label>
+              <label class="checkbox-label"><input type="checkbox" id="kendi_proje" name="kendi_proje" /> 🚀 Kendi projem var</label>
+            </div>
+
+            <div class="form-group" style="margin-top: 16px;">
+              <label for="proje_link">Proje Link</label>
+              <input type="url" id="proje_link" name="proje_link" autocomplete="url" placeholder="https://github.com/kullanici/proje" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Teknoloji Stack -->
+        <div class="form-section" id="section-tech">
+          <div class="form-section-header" onclick="toggleSection('tech')">
+            <span class="form-section-icon">⚙️</span>
+            <h4 class="form-section-title">Teknoloji Stack</h4>
+            <span class="form-section-status" id="status-tech">Boş</span>
+            <span class="form-section-toggle">▼</span>
+          </div>
+          <div class="form-section-body collapsed" id="body-tech">
+            <div class="form-group">
+              <label>Programlama Dilleri</label>
+              <div class="checkbox-group-container">
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="JavaScript" /> JavaScript</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="TypeScript" /> TypeScript</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="Python" /> Python</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="Java" /> Java</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="C#" /> C#</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="Go" /> Go</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="PHP" /> PHP</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="C/C++" /> C/C++</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="Kotlin" /> Kotlin</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="Swift" /> Swift</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="SQL" /> SQL</label>
+                <label class="checkbox-label"><input type="checkbox" name="programlama_dilleri" value="Rust" /> Rust</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Framework/Platformlar</label>
+              <div class="checkbox-group-container">
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="React" /> React</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="Angular" /> Angular</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="Vue" /> Vue</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="Next.js" /> Next.js</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="Node.js" /> Node.js</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value=".NET" /> .NET</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="Spring" /> Spring</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="Django" /> Django</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="FastAPI" /> FastAPI</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="Flutter" /> Flutter</label>
+                <label class="checkbox-label"><input type="checkbox" name="framework_platformlar" value="React Native" /> React Native</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>DevOps/Cloud</label>
+              <div class="checkbox-group-container">
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="Docker" /> Docker</label>
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="Kubernetes" /> Kubernetes</label>
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="AWS" /> AWS</label>
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="Azure" /> Azure</label>
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="GCP" /> GCP</label>
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="Terraform" /> Terraform</label>
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="GitHub Actions" /> GitHub Actions</label>
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="GitLab CI" /> GitLab CI</label>
+                <label class="checkbox-label"><input type="checkbox" name="devops_cloud" value="Jenkins" /> Jenkins</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- İlgi Alanları -->
+        <div class="form-section" id="section-interests">
+          <div class="form-section-header" onclick="toggleSection('interests')">
+            <span class="form-section-icon">⭐</span>
+            <h4 class="form-section-title">İlgi Alanları</h4>
+            <span class="form-section-status" id="status-interests">Boş</span>
+            <span class="form-section-toggle">▼</span>
+          </div>
+          <div class="form-section-body collapsed" id="body-interests">
+            <div class="form-group">
+              <label>İlgi Konuları</label>
+              <div class="checkbox-group-container">
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="AI araçları/LLM uygulamaları" /> 🤖 AI/LLM</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Startup/ürün geliştirme" /> 🚀 Startup</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Freelance/danışmanlık" /> 💼 Freelance</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Remote çalışma" /> 🏠 Remote</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Almanya'da kariyer" /> 🇩🇪 Almanya Kariyer</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Networking/event/meetup" /> 🎉 Networking</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Side project/hackathon" /> ⚡ Side Projects</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Open-source" /> 🌍 Open Source</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Sertifika/eğitim" /> 📚 Eğitim</label>
+                <label class="checkbox-label"><input type="checkbox" name="ilgi_konular" value="Teknik yazı/içerik" /> ✍️ Teknik Yazı</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Öğrenmek İstenen</label>
+              <div class="checkbox-group-container">
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Backend" /> Backend</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Frontend" /> Frontend</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Mobile" /> Mobile</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Test Automation" /> Test Automation</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="DevOps" /> DevOps</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Cloud" /> Cloud</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="AI/ML" /> AI/ML</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Data Engineering" /> Data Engineering</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Security" /> Security</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="System Design" /> System Design</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Interview prep/CV" /> Interview Prep</label>
+                <label class="checkbox-label"><input type="checkbox" name="ogrenmek_istenen" value="Almanya kariyer" /> Almanya Kariyer</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- İş Durumu -->
+        <div class="form-section" id="section-work">
+          <div class="form-section-header" onclick="toggleSection('work')">
+            <span class="form-section-icon">🔍</span>
+            <h4 class="form-section-title">İş Durumu</h4>
+            <span class="form-section-status" id="status-work">Boş</span>
+            <span class="form-section-toggle">▼</span>
+          </div>
+          <div class="form-section-body collapsed" id="body-work">
+            <div class="form-group">
+              <label>İş Arama Durumu</label>
+              <div class="radio-group-container">
+                <label class="radio-label"><input type="radio" name="is_arama_durumu" value="Hayır" /> 🟢 Hayır (Çalışıyorum)</label>
+                <label class="radio-label"><input type="radio" name="is_arama_durumu" value="Evet pasif (firsat olursa)" /> 🟡 Pasif (Fırsat olursa)</label>
+                <label class="radio-label"><input type="radio" name="is_arama_durumu" value="Evet, aktif" /> 🔴 Aktif Arıyorum</label>
+                <label class="radio-label"><input type="radio" name="is_arama_durumu" value="Sadece freelance bakıyorum" /> 💻 Sadece Freelance</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Freelance Açıklık</label>
+              <div class="radio-group-container">
+                <label class="radio-label"><input type="radio" name="freelance_aciklik" value="Hayır" /> ❌ Hayır</label>
+                <label class="radio-label"><input type="radio" name="freelance_aciklik" value="Evet hafta içi akşamları" /> 🌙 Hafta içi akşamları</label>
+                <label class="radio-label"><input type="radio" name="freelance_aciklik" value="Evet hafta sonu" /> 📅 Hafta sonu</label>
+                <label class="radio-label"><input type="radio" name="freelance_aciklik" value="Evet part-time düzenli" /> ⏰ Part-time düzenli</label>
+                <label class="radio-label"><input type="radio" name="freelance_aciklik" value="Evet full-time freelance" /> 🚀 Full-time freelance</label>
+              </div>
+            </div>
+
+            <label class="checkbox-label" style="margin-top: 8px;">
+              <input type="checkbox" id="gonullu_proje" name="gonullu_proje" />
+              <span>🙋 Gönüllü projelere katılabilirim</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- İş Birliği -->
+        <div class="form-section" id="section-collab">
+          <div class="form-section-header" onclick="toggleSection('collab')">
+            <span class="form-section-icon">🤝</span>
+            <h4 class="form-section-title">İş Birliği</h4>
+            <span class="form-section-status" id="status-collab">Boş</span>
+            <span class="form-section-toggle">▼</span>
+          </div>
+          <div class="form-section-body collapsed" id="body-collab">
+            <div class="form-group">
+              <label>Katılma Amacı</label>
+              <div class="radio-group-container">
+                <label class="radio-label"><input type="radio" name="katilma_amaci" value="Networking" /> 🤝 Networking</label>
+                <label class="radio-label"><input type="radio" name="katilma_amaci" value="İş bulmak" /> 🔍 İş bulmak</label>
+                <label class="radio-label"><input type="radio" name="katilma_amaci" value="İş arkadaşı bulmak" /> 👥 İş arkadaşı bulmak</label>
+                <label class="radio-label"><input type="radio" name="katilma_amaci" value="Proje geliştirmek" /> 🚀 Proje geliştirmek</label>
+                <label class="radio-label"><input type="radio" name="katilma_amaci" value="Bilgi paylaşmak" /> 📚 Bilgi paylaşmak</label>
+                <label class="radio-label"><input type="radio" name="katilma_amaci" value="Mentorluk almak" /> 🎓 Mentorluk almak</label>
+                <label class="radio-label"><input type="radio" name="katilma_amaci" value="Mentorluk vermek" /> 👨‍🏫 Mentorluk vermek</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>İş Birliği Türleri</label>
+              <div class="checkbox-group-container">
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="Side project (haftada 2-5 saat)" /> ⚡ Side project (2-5 saat)</label>
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="Side project (haftada 5-10 saat)" /> 🚀 Side project (5-10 saat)</label>
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="Startup kurmak (ciddi)" /> 💡 Startup kurmak</label>
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="MVP çıkarma ekibi" /> 🎯 MVP ekibi</label>
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="Freelance ekip kurmak" /> 💼 Freelance ekip</label>
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="Açık kaynak proje" /> 🌍 Açık kaynak</label>
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="Study group" /> 📖 Study group</label>
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="Mentorluk/koçluk" /> 🎓 Mentorluk</label>
+                <label class="checkbox-label"><input type="checkbox" name="isbirligi_turu" value="Sadece tanışma & network" /> ☕ Sadece network</label>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-top: 16px;">
+              <label class="checkbox-label">
+                <input type="checkbox" id="profesyonel_destek_verebilir" name="profesyonel_destek_verebilir" />
+                <span>👨‍🏫 Profesyonel destek verebilirim</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="profesyonel_destek_almak" name="profesyonel_destek_almak" />
+                <span>🎓 Profesyonel destek almak istiyorum</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Görünürlük -->
+        <div class="form-section" id="section-privacy">
+          <div class="form-section-header" onclick="toggleSection('privacy')">
+            <span class="form-section-icon">🔒</span>
+            <h4 class="form-section-title">Görünürlük</h4>
+            <span class="form-section-status" id="status-privacy">Boş</span>
+            <span class="form-section-toggle">▼</span>
+          </div>
+          <div class="form-section-body collapsed" id="body-privacy">
+            <div class="form-row">
+              <label class="checkbox-label">
+                <input type="checkbox" id="aratilabilir" name="aratilabilir" checked />
+                <span>🔍 Aranabilir (diğer üyeler beni bulsun)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="iletisim_izni" name="iletisim_izni" checked />
+                <span>📞 İletişim bilgilerimi paylaş</span>
+              </label>
+            </div>
+            <p style="margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6;">
+              💡 <strong>Bilgi:</strong> LinkedIn ve WhatsApp görünürlüğünü her alanın yanındaki "Göster" toggle'ından yönetebilirsiniz.
+            </p>
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+          <div class="action-bar-inner">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">İptal</button>
+            <button type="button" class="btn btn-primary" id="saveBtn">💾 Değişiklikleri Kaydet</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script type="module">
+    const loadingState = document.getElementById('loadingState');
+    const mainContent = document.getElementById('mainContent');
+    const statusMessage = document.getElementById('statusMessage');
+    const saveBtn = document.getElementById('saveBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const backBtn = document.getElementById('backBtn');
+    const progressCircle = document.getElementById('progressCircle');
+    const progressPercent = document.getElementById('progressPercent');
+
+    let supabaseClient = null;
+    let currentProfile = null;
+
+    async function getSupabaseClient() {
+      if (supabaseClient) return supabaseClient;
+      const cfg = await window.ALMANYA101.waitForConfig();
+      if (!window.supabase || !cfg.url || !cfg.anonKey) {
+        throw new Error('Supabase config eksik.');
+      }
+      supabaseClient = window.supabase.createClient(cfg.url, cfg.anonKey, {
+        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+      });
+      return supabaseClient;
+    }
+
+    async function getSessionToken() {
+      const client = await getSupabaseClient();
+      const { data, error } = await client.auth.getSession();
+      if (error || !data.session) return null;
+      return data.session.access_token;
+    }
+
+    // Progress calculation
+    function updateProgress() {
+      const sections = [
+        { id: 'personal', fields: ['ad_soyad', 'sehir', 'linkedin_url', 'whatsapp_tel'] },
+        { id: 'profile', fields: ['rol', 'deneyim_seviye', 'guclu_alanlar'] },
+        { id: 'tech', fields: ['programlama_dilleri', 'framework_platformlar', 'devops_cloud'] },
+        { id: 'interests', fields: ['ilgi_konular', 'ogrenmek_istenen'] },
+        { id: 'work', fields: ['is_arama_durumu', 'freelance_aciklik'] },
+        { id: 'collab', fields: ['katilma_amaci', 'isbirligi_turu'] },
+        { id: 'privacy', fields: ['aratilabilir'] }
+      ];
+
+      let completedSections = 0;
+      let partialSections = 0;
+
+      sections.forEach(section => {
+        let filledFields = 0;
+        let totalFields = section.fields.length;
+
+        section.fields.forEach(field => {
+          if (field === 'guclu_alanlar' || field === 'programlama_dilleri' || field === 'framework_platformlar' ||
+              field === 'devops_cloud' || field === 'ilgi_konular' || field === 'ogrenmek_istenen' ||
+              field === 'isbirligi_turu') {
+            const checkboxes = document.querySelectorAll(`input[name="${field}"]:checked`);
+            if (checkboxes.length > 0) filledFields++;
+          } else if (field === 'rol' || field === 'deneyim_seviye' || field === 'is_arama_durumu' ||
+                     field === 'freelance_aciklik' || field === 'katilma_amaci') {
+            const checked = document.querySelector(`input[name="${field}"]:checked`);
+            if (checked) filledFields++;
+          } else {
+            const input = document.getElementById(field);
+            if (input && input.value.trim()) filledFields++;
+          }
+        });
+
+        const statusEl = document.getElementById(`status-${section.id}`);
+        const navEl = document.querySelector(`.section-nav-item[data-section="${section.id}"]`);
+
+        if (filledFields === totalFields && totalFields > 0) {
+          statusEl.textContent = 'Tamamlandı';
+          statusEl.className = 'form-section-status completed';
+          navEl?.classList.add('completed');
+          completedSections++;
+        } else if (filledFields > 0) {
+          statusEl.textContent = 'Eksik';
+          statusEl.className = 'form-section-status partial';
+          navEl?.classList.remove('completed');
+          partialSections++;
+        } else {
+          statusEl.textContent = 'Boş';
+          statusEl.className = 'form-section-status';
+          navEl?.classList.remove('completed');
+        }
+      });
+
+      // Update circle progress
+      const totalSections = sections.length;
+      const percent = Math.round(((completedSections + partialSections * 0.5) / totalSections) * 100);
+      const circumference = 326.73;
+      const offset = circumference - (percent / 100) * circumference;
+      progressCircle.style.strokeDashoffset = offset;
+      progressPercent.textContent = percent + '%';
+    }
+
+    function populateForm(profileData) {
+      currentProfile = profileData;
+
+      // Text inputs
+      const textFields = ['ad_soyad', 'sehir', 'linkedin_url', 'whatsapp_tel', 'proje_link'];
+      textFields.forEach(field => {
+        const input = document.getElementById(field);
+        if (input && profileData[field]) input.value = profileData[field];
+      });
+
+      // Radio buttons
+      const radioFields = ['rol', 'deneyim_seviye', 'is_arama_durumu', 'freelance_aciklik', 'katilma_amaci'];
+      radioFields.forEach(field => {
+        if (profileData[field]) {
+          const radio = document.querySelector(`input[name="${field}"][value="${profileData[field]}"]`);
+          if (radio) radio.checked = true;
+        }
+      });
+
+      // Single checkboxes
+      const booleanFields = ['almanya_yasam', 'aktif_kod', 'acik_kaynak', 'kendi_proje',
+                            'gonullu_proje', 'profesyonel_destek_verebilir', 'profesyonel_destek_almak',
+                            'aratilabilir', 'iletisim_izni'];
+      booleanFields.forEach(field => {
+        const checkbox = document.getElementById(field);
+        if (checkbox) checkbox.checked = profileData[field] === true;
+      });
+
+      // Privacy toggles
+      ['linkedin_gorunur', 'whatsapp_gorunur'].forEach(field => {
+        const checkbox = document.getElementById(field);
+        if (checkbox) checkbox.checked = profileData[field] !== false;
+      });
+
+      // Checkbox groups
+      const arrayFields = ['guclu_alanlar', 'programlama_dilleri', 'framework_platformlar',
+                          'devops_cloud', 'ilgi_konular', 'ogrenmek_istenen', 'isbirligi_turu'];
+      arrayFields.forEach(field => {
+        if (Array.isArray(profileData[field])) {
+          profileData[field].forEach(value => {
+            const checkbox = document.querySelector(`input[name="${field}"][value="${value}"]`);
+            if (checkbox) checkbox.checked = true;
+          });
+        }
+      });
+
+      updateProgress();
+    }
+
+    async function loadProfile() {
+      try {
+        const token = await getSessionToken();
+        if (!token) {
+          window.location.href = 'list.html';
+          return;
+        }
+
+        const response = await fetch('/api/devuser-me', {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) throw new Error('Profil yüklenemedi');
+
+        const result = await response.json();
+        if (!result.data) throw new Error('Profil bulunamadı');
+
+        populateForm(result.data);
+        loadingState.style.display = 'none';
+        mainContent.style.display = 'block';
+      } catch (error) {
+        console.error('Profile load failed:', error);
+        window.location.href = 'list.html';
+      }
+    }
+
+    function validateForm() {
+      const errors = {};
+
+      const adSoyad = document.getElementById('ad_soyad').value.trim();
+      if (!adSoyad || adSoyad.length < 2) {
+        errors.ad_soyad = 'Ad Soyad en az 2 karakter olmalı';
+      }
+
+      // Clear previous errors
+      document.querySelectorAll('.form-group input.error').forEach(el => el.classList.remove('error'));
+      document.querySelectorAll('.error-text').forEach(el => el.remove());
+
+      // Show errors
+      Object.entries(errors).forEach(([field, msg]) => {
+        const input = document.getElementById(field);
+        if (input) {
+          input.classList.add('error');
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'error-text';
+          errorDiv.textContent = msg;
+          input.parentNode.appendChild(errorDiv);
+        }
+      });
+
+      return Object.keys(errors).length === 0;
+    }
+
+    function serializeForm() {
+      const getRadio = (name) => {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        return checked ? checked.value : '';
+      };
+
+      const formData = {
+        ad_soyad: document.getElementById('ad_soyad').value.trim(),
+        sehir: document.getElementById('sehir').value.trim(),
+        linkedin_url: document.getElementById('linkedin_url').value.trim(),
+        whatsapp_tel: document.getElementById('whatsapp_tel').value.trim(),
+        rol: getRadio('rol'),
+        deneyim_seviye: getRadio('deneyim_seviye'),
+        is_arama_durumu: getRadio('is_arama_durumu'),
+        freelance_aciklik: getRadio('freelance_aciklik'),
+        katilma_amaci: getRadio('katilma_amaci'),
+        proje_link: document.getElementById('proje_link').value.trim(),
+        almanya_yasam: document.getElementById('almanya_yasam').checked,
+        aktif_kod: document.getElementById('aktif_kod').checked,
+        acik_kaynak: document.getElementById('acik_kaynak').checked,
+        kendi_proje: document.getElementById('kendi_proje').checked,
+        gonullu_proje: document.getElementById('gonullu_proje').checked,
+        profesyonel_destek_verebilir: document.getElementById('profesyonel_destek_verebilir').checked,
+        profesyonel_destek_almak: document.getElementById('profesyonel_destek_almak').checked,
+        aratilabilir: document.getElementById('aratilabilir').checked,
+        iletisim_izni: document.getElementById('iletisim_izni').checked,
+        linkedin_gorunur: document.getElementById('linkedin_gorunur').checked,
+        whatsapp_gorunur: document.getElementById('whatsapp_gorunur').checked,
+      };
+
+      // Array fields
+      ['guclu_alanlar', 'programlama_dilleri', 'framework_platformlar',
+       'devops_cloud', 'ilgi_konular', 'ogrenmek_istenen', 'isbirligi_turu'].forEach(field => {
+        const checkboxes = document.querySelectorAll(`input[name="${field}"]:checked`);
+        formData[field] = Array.from(checkboxes).map(cb => cb.value);
+      });
+
+      return formData;
+    }
+
+    async function saveProfile() {
+      if (!validateForm()) return;
+
+      showStatus('');
+      saveBtn.disabled = true;
+      saveBtn.textContent = '💾 Kaydediliyor...';
+
+      try {
+        const token = await getSessionToken();
+        if (!token) {
+          showStatus('Oturum süresi doldu. Lütfen tekrar giriş yapın.', 'error');
+          setTimeout(() => window.location.href = 'list.html', 2000);
+          return;
+        }
+
+        const formData = serializeForm();
+
+        const response = await fetch('/api/devuser-update', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          showStatus(result.error || 'Güncelleme başarısız.', 'error');
+          return;
+        }
+
+        showStatus('Profil başarıyla güncellendi! Listeye yönlendiriliyorsunuz...', 'success');
+        updateProgress();
+        setTimeout(() => window.location.href = 'list.html', 1500);
+      } catch (error) {
+        console.error('Save failed:', error);
+        showStatus('Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = '💾 Değişiklikleri Kaydet';
+      }
+    }
+
+    function showStatus(msg, type) {
+      statusMessage.textContent = msg;
+      statusMessage.className = 'status-message ' + (type || '');
+    }
+
+    // Section toggle
+    window.toggleSection = function(sectionId) {
+      const header = document.querySelector(`#section-${sectionId} .form-section-header`);
+      const body = document.getElementById(`body-${sectionId}`);
+      header.classList.toggle('collapsed');
+      body.classList.toggle('collapsed');
+    };
+
+    // Navigation
+    document.querySelectorAll('.section-nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const sectionId = item.dataset.section;
+        const body = document.getElementById(`body-${sectionId}`);
+
+        // Collapse all
+        document.querySelectorAll('.form-section-body').forEach(b => b.classList.add('collapsed'));
+        document.querySelectorAll('.form-section-header').forEach(h => h.classList.add('collapsed'));
+
+        // Expand selected
+        body.classList.remove('collapsed');
+        document.querySelector(`#section-${sectionId} .form-section-header`).classList.remove('collapsed');
+
+        // Update nav
+        document.querySelectorAll('.section-nav-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+
+        // Scroll
+        document.getElementById(`section-${sectionId}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Event listeners
+    saveBtn.addEventListener('click', saveProfile);
+    cancelBtn.addEventListener('click', () => window.location.href = 'list.html');
+    backBtn.addEventListener('click', () => window.location.href = 'list.html');
+
+    // Update progress on any change
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('change', updateProgress);
+      input.addEventListener('input', updateProgress);
+    });
+
+    // Initialize
+    loadProfile();
+  </script>
+<script src="devuser-shell.js"></script>
+<script>
+  window.goatcounter = window.goatcounter || {};
+  window.goatcounter.path = location.pathname;
+</script>
+<script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  </div>
+</body>
+
+</html>
+

@@ -130,6 +130,30 @@ export default function HomePage() {
   // Diğer Başlıklar
   const digerItems = [
     {
+      href: '/devuser/du.html',
+      label: 'Developer Topluluğu',
+      description: 'Almanya\'daki Türk developerlar için topluluk.',
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/yazi-dizisi',
+      label: 'Yazı Dizisi',
+      description: 'Adım adım rehberler ve yazılar.',
+      image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/haberler',
+      label: 'Haberler',
+      description: 'Güncel haberler ve gelişmeler.',
+      image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop'
+    },
+    {
+      href: '/belgeler',
+      label: 'Yararlı Belgeler',
+      description: 'İhtiyacınız olan belgeler ve formlar.',
+      image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop'
+    },
+    {
       href: '#bize-katil',
       label: 'Bize Katıl!',
       description: 'Ekibimize katılmak için tıkla!',

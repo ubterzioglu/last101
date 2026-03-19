@@ -15,6 +15,10 @@ interface DrawerItem {
 }
 
 const DRAWER_ITEMS: DrawerItem[] = [
+  { href: '/devuser/du.html', label: '💻 Developer Topluluğu', description: 'Almanya\'daki Türk developerlar için topluluk.' },
+  { href: '/yazi-dizisi', label: '📝 Yazı Dizisi', description: 'Adım adım rehberler ve yazılar.' },
+  { href: '/haberler', label: '📰 Haberler', description: 'Güncel haberler ve gelişmeler.' },
+  { href: '/belgeler', label: '📄 Yararlı Belgeler', description: 'İhtiyacınız olan belgeler ve formlar.' },
   { href: '/biz-kimiz', label: '🧑‍💻 Biz kimiz?', description: 'almanya101 ekibini tanıyın!' },
   { href: '/bize-katil', label: '🤝 Bize Katıl!', description: 'almanya101 ekibine katılmak için tıkla!' },
   { href: '/yazi-dizisi', label: '📝 Yazı Dizisi', description: 'Almanya hayatına dair adım adım yazı serileri.' },

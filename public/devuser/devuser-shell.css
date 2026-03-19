@@ -1,0 +1,268 @@
+body.devuser-shell-page {
+  margin: 0;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body.devuser-shell-page.devuser-shell-scroll {
+  overflow-y: auto;
+}
+
+body.devuser-shell-page * {
+  box-sizing: border-box;
+}
+
+.devuser-shell-bg,
+.devuser-shell-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.devuser-shell-bg {
+  z-index: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+#devuser-shell-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.28;
+}
+
+.devuser-shell-grid {
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.devuser-shell-frame {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 860px);
+  margin: 0 auto;
+  padding: 12px 16px 28px;
+}
+
+.devuser-shell-frame--compact {
+  max-width: 640px;
+}
+
+.devuser-shell-frame--wide {
+  max-width: 1320px;
+}
+
+.devuser-shell-top-logo {
+  text-align: center;
+  margin-bottom: 12px;
+  padding-top: 6px;
+}
+
+.devuser-shell-top-logo img {
+  width: min(300px, 92%);
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 8px 32px rgba(66, 133, 244, 0.3);
+}
+
+.devuser-shell-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 12px;
+}
+
+.devuser-shell-title {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  text-align: center;
+  background: linear-gradient(135deg, #4285F4 0%, #EA4335 50%, #FBBC05 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.devuser-shell-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.devuser-shell-back-link:hover {
+  color: #4285F4;
+  border-color: rgba(66, 133, 244, 0.45);
+  transform: translateX(-2px);
+}
+
+body.devuser-shell-page .container,
+body.devuser-shell-page .container1,
+body.devuser-shell-page .reset-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+body.devuser-shell-page .container {
+  padding: 0;
+}
+
+body.devuser-shell-page .container1 {
+  padding: 0;
+}
+
+body.devuser-shell-page .reset-container {
+  padding: 0;
+}
+
+body.devuser-shell-page .card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+body.devuser-shell-page .hero-card1,
+body.devuser-shell-page .hero {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(66, 133, 244, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+body.devuser-shell-page .hero-card1::before,
+body.devuser-shell-page .hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #4285F4 0%, #EA4335 50%, #FBBC05 100%);
+}
+
+body.devuser-shell-page .hero-domain1,
+body.devuser-shell-page .hero .domain {
+  color: #4285F4;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+body.devuser-shell-page .hero-card1 h3,
+body.devuser-shell-page .hero h1,
+body.devuser-shell-page h3 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+body.devuser-shell-page .hero h1,
+body.devuser-shell-page .hero-card1 h3 {
+  color: #fff;
+}
+
+body.devuser-shell-page .btn-primary,
+body.devuser-shell-page button.btn-primary {
+  background: #4285F4;
+  border-color: #4285F4;
+  color: #fff;
+}
+
+body.devuser-shell-page .btn-primary:hover,
+body.devuser-shell-page button.btn-primary:hover {
+  background: #3367d6;
+  border-color: #3367d6;
+  box-shadow: 0 8px 20px rgba(66, 133, 244, 0.28);
+}
+
+body.devuser-shell-page .btn-secondary,
+body.devuser-shell-page button.btn-secondary {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+body.devuser-shell-page .btn-secondary:hover,
+body.devuser-shell-page button.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+body.devuser-shell-page .btn-outline {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+body.devuser-shell-page .btn-outline:hover {
+  border-color: rgba(66, 133, 244, 0.45);
+  color: #fff;
+}
+
+body.devuser-shell-page .input,
+body.devuser-shell-page .select,
+body.devuser-shell-page .textarea,
+body.devuser-shell-page .form-input,
+body.devuser-shell-page .auth-grid input,
+body.devuser-shell-page .filter-group input,
+body.devuser-shell-page .filter-group select,
+body.devuser-shell-page .form-group input,
+body.devuser-shell-page textarea.form-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+body.devuser-shell-page .input:focus,
+body.devuser-shell-page .select:focus,
+body.devuser-shell-page .textarea:focus,
+body.devuser-shell-page .form-input:focus,
+body.devuser-shell-page .auth-grid input:focus,
+body.devuser-shell-page .filter-group input:focus,
+body.devuser-shell-page .filter-group select:focus,
+body.devuser-shell-page .form-group input:focus {
+  outline: none;
+  border-color: #4285F4;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.15);
+}
+
+body.devuser-shell-page .icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body.devuser-shell-page .icon-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 768px) {
+  .devuser-shell-frame {
+    padding: 14px 12px 24px;
+  }
+
+  .devuser-shell-title {
+    font-size: 18px;
+  }
+
+  .devuser-shell-top-logo img {
+    width: min(220px, 88%);
+  }
+}

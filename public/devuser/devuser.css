@@ -1,0 +1,624 @@
+/* devuser.css - Bağımsız CSS dosyası */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: #000000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100dvh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 6px 0;
+  margin: 0;
+  overflow-y: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container1 {
+  max-width: 390px;
+  width: min(390px, 100vw);
+  margin: 0 auto;
+  padding: 6px;
+  height: calc(100dvh - 12px);
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.card {
+  background: #111;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.container1 > .card:last-child {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#devuserForm {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hero-card1 {
+  background: linear-gradient(135deg, #F65314 0%, #d43f0f 100%);
+}
+
+.hero-top1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.hero-domain1,
+.hero-card1 h3,
+.hero-count-label,
+.hero-count-value {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-domain1 {
+  color: #000;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.icon-btn img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.hero-card1 h3 {
+  margin: 0 0 4px 0;
+  color: #fff;
+}
+
+.title {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.3;
+}
+
+.hero-count {
+  margin-top: 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hero-count-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-count-value {
+  color: #fff;
+}
+
+/* Progress Bar */
+.progress-container {
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 7px;
+  background: #222;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F65314, #d43f0f);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 11px;
+  color: #F65314;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Step Container */
+.step-container {
+  display: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 2px;
+}
+
+.step-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.step-container {
+  scrollbar-width: none;
+}
+
+.step-container.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.question-number {
+  display: none;
+}
+
+.question-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.step-container[data-step="1"] .question-title {
+  font-size: 15px;
+  margin-bottom: 9px;
+}
+
+.step-container .question-title[style*="margin-top"] {
+  margin-top: 14px !important;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 11px;
+  background: #222;
+  border: 2px solid #333;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  margin-bottom: 10px;
+}
+
+.city-offset {
+  margin-top: 10px;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #F65314;
+}
+
+.checkbox-group,
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-label,
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px;
+  background: #222;
+  border: 2px solid #333;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.checkbox-label:hover,
+.radio-label:hover {
+  background: #2a2a2a;
+  border-color: #F65314;
+}
+
+.checkbox-label input[type="checkbox"],
+.radio-label input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #F65314;
+}
+
+.checkbox-label input:checked + span,
+.radio-label input:checked + span {
+  color: #F65314;
+  font-weight: 600;
+}
+
+/* Two column layout for specific questions */
+.checkbox-group-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.checkbox-group-two-col .checkbox-label {
+  padding: 8px;
+  font-size: 11.5px;
+}
+
+.checkbox-group-two-col .checkbox-label span {
+  font-size: 11.5px;
+}
+
+.role-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.role-two-col .radio-label {
+  min-height: 44px;
+}
+
+.step7-compact > .question-title {
+  font-size: 13px;
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+.step7-compact > .question-title:not(:first-of-type) {
+  margin-top: 10px !important;
+}
+
+.step7-compact .radio-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0 0 10px;
+}
+
+.step7-compact > .radio-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.step7-compact .radio-label {
+  padding: 7px;
+  font-size: 12px;
+  line-height: 1.2;
+  min-height: 38px;
+}
+
+.step7-compact .radio-label input[type="radio"] {
+  width: 16px;
+  height: 16px;
+}
+
+.step17-compact .question-title {
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.step17-compact .checkbox-group-two-col {
+  gap: 6px;
+}
+
+.step17-compact .checkbox-label {
+  padding: 7px;
+  font-size: 10.5px;
+  line-height: 1.15;
+  min-height: 34px;
+}
+
+.step17-compact .checkbox-label span {
+  font-size: 10.5px;
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #F65314, #d43f0f);
+  color: #fff;
+  flex: 1;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(246, 83, 20, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  background: #333;
+  color: #fff;
+  flex: 1 1 auto;
+}
+
+.btn-secondary:hover {
+  background: #444;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Success Message */
+.success-message {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-message.active {
+  display: block;
+}
+
+.success-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.success-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #F65314;
+}
+
+.success-text {
+  font-size: 16px;
+  color: #999;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* Conditional Fields */
+.conditional-field {
+  display: none;
+  margin-top: 10px;
+}
+
+.conditional-field.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Info Card (Collapsible) */
+.info-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #FF9900 !important;
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.info-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.info-toggle {
+  font-size: 12px;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.info-toggle.open {
+  transform: rotate(180deg);
+}
+
+.info-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, margin-top 0.3s ease;
+  font-size: 13px;
+  color: #fff;
+}
+
+.info-content.open {
+  max-height: 220px;
+  margin-top: 8px;
+}
+
+textarea.form-input {
+  min-height: 96px !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    padding: 6px 0;
+  }
+
+  .container1 {
+    padding: 6px;
+    width: min(390px, 100vw);
+    height: calc(100dvh - 12px);
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  .hero-top1 {
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 3px;
+  }
+
+  .title {
+    font-size: 11px;
+  }
+
+  .progress-container {
+    margin-bottom: 12px;
+  }
+
+  .question-number {
+    margin-bottom: 6px;
+  }
+
+  .question-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .step-container[data-step="1"] .question-title {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .form-input,
+  .form-select {
+    padding: 10px;
+    font-size: 13px;
+    margin-bottom: 9px;
+  }
+
+  .btn {
+    min-height: 48px;
+    font-size: 14px;
+  }
+
+  .checkbox-group,
+  .radio-group {
+    gap: 8px;
+  }
+
+  .checkbox-label,
+  .radio-label {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .checkbox-group-two-col {
+    gap: 8px;
+  }
+
+  .role-two-col {
+    gap: 6px;
+  }
+
+  .step7-compact > .question-title {
+    font-size: 12px;
+    margin: 0 0 7px;
+  }
+
+  .step7-compact > .question-title:not(:first-of-type) {
+    margin-top: 8px !important;
+  }
+
+  .step7-compact .radio-label {
+    padding: 6px;
+    font-size: 11.5px;
+    min-height: 34px;
+  }
+
+  .step17-compact .question-title {
+    font-size: 11.5px;
+    margin-bottom: 7px;
+  }
+
+  .step17-compact .checkbox-label {
+    padding: 6px;
+    font-size: 10px;
+    min-height: 32px;
+  }
+
+  .step17-compact .checkbox-label span {
+    font-size: 10px;
+  }
+
+  .question-title {
+    font-size: 14px;
+  }
+}

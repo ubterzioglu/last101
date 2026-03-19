@@ -1,0 +1,504 @@
+/* Shared CSS extracted from inline styles in haberler.html and haberdetay.html */
+
+:root { 
+  /* Match index.html background and adjust text colors for contrast */
+  --bg: linear-gradient(135deg,#1a1a2e,#16213e);
+  --card:#01A1F1; 
+  --text:#ffffff; 
+  --muted:#e0f2fe; 
+  --border: rgba(255,255,255,.15);
+  --shadow2: 0 8px 20px rgba(0,0,0,.08);
+}
+
+/* Use same UI/system font stack as banka.html for consistent look */
+body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; background:var(--bg); color:var(--text); }
+
+.wrap { 
+  max-width: 980px; 
+  margin: 0 auto; 
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Index.html ile aynı kart arası boşluk */
+}
+
+/* List spacing optimized for better readability */
+.list { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; /* Kartlar arası optimal boşluk */
+}
+
+.card {
+  display:block; background:var(--card); border:1px solid var(--border);
+  border-radius: 18px; padding: 18px; text-decoration:none; color:inherit;
+  transition: transform .06s ease, box-shadow .06s ease; box-shadow:var(--shadow2);
+}
+.card:active { transform: scale(0.995); }
+
+.thumb {
+  width:100%; height:160px; border-radius:12px; overflow:hidden; background:#eaecef; 
+  margin-bottom:14px; /* Resim ile başlık arası optimal boşluk */
+  display:flex; align-items:center; justify-content:center;
+}
+.thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+
+.meta { display:flex; flex-direction:column; gap:6px; }
+.headline {
+  /* Headlines use same size as article body text but remain bold */
+  font-size: 13px !important; /* match .body */
+  font-weight: 700 !important;
+  margin: 0;
+  line-height: 1.25;
+  font-family: inherit;
+}
+
+/* Ensure headlines are readable on blue cards (white text) */
+.list .card .headline,
+article.card .article-title {
+  color: #ffffff !important;
+}
+.sub { font-size: 13px; color: var(--muted); display:flex; flex-wrap:wrap; gap:8px; }
+.pill {
+  font-size:12px; /* keep size unchanged as requested */
+  padding: 6px 10px; /* larger tap target and more visible box */
+  border-radius: 12px;
+  color: #01A1F1 !important; /* blue text for readability */
+  background: #ffffff !important; /* white background */
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  font-weight: 700 !important; /* make label more prominent without changing size */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15) !important;
+}
+
+.state { background:#01A1F1; border:1px solid var(--border); border-radius: 14px; padding: 14px; color: #ffffff; }
+
+.btn {
+  border:1px solid var(--border); background:#ffffff; border-radius: 12px; padding: 10px 12px;
+  cursor:pointer; font-weight: 600; color: #01A1F1;
+}
+.row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.row .btn { width: 100%; }
+
+/* small utility classes moved from inline styles */
+.hero-announcement { display:none; }
+#state { display:none; }
+#loadMoreBtn { display:none; }
+#countInfo { color:#ffffff; font-size:13px; }
+.row--mt12 { margin-top: 14px; } /* Optimal top margin */
+
+/* Kategori Filtre Butonları */
+.filter-buttons { display:flex; flex-direction:column; gap:10px; margin-bottom: 16px; }
+.filter-btn {
+  border:1px solid var(--border); background:#ffffff; border-radius: 10px;
+  padding: 10px 16px; cursor:pointer; font-weight: 600; font-size: 14px;
+  transition: all .15s ease; color: #01A1F1;
+}
+.filter-btn:hover { background:#f0f9ff; border-color: rgba(255,255,255,.4); }
+.filter-btn.active { background:#ffffff; color:#01A1F1; border-color:#ffffff; font-weight: 800; }
+
+/* Hero Card */
+.hero-card { background:var(--card); border:1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; text-align:center; }
+.hero-card h1 { font-size: 28px; font-weight: 800; margin: 0 0 8px 0; }
+.hero-card p { font-size: 15px; color:var(--muted); margin: 0; }
+
+/* haberdetay specific */
+.card { background:var(--card); border:1px solid var(--border); border-radius: 14px; overflow:hidden; }
+.hero { width:100%; aspect-ratio: 16/9; background:#eaecef; }
+.hero img { width:100%; height:100%; object-fit:cover; display:block; }
+.content { padding: 16px; } /* İçerik padding'i optimize */
+.article-title {
+  /* Article title matches body size but is bold and same font */
+  margin: 0 0 12px;
+  font-size: 13px !important; /* match .body */
+  font-weight: 700 !important;
+  line-height: 1.25;
+  font-family: inherit;
+}
+.meta { color:var(--muted); font-size: 13px; display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 12px; }
+.summary { color:#ffffff; font-size: 14px; margin: 0 0 14px; line-height: 1.5; } /* Summary boşluğu optimize */
+.body { font-size: 13px; line-height: 1.6; white-space: pre-wrap; color: #ffffff; }
+.sourceCard { display:flex; align-items:center; justify-content:flex-end; margin:0; border:none; padding:0; }
+.sourceCard .pill { font-size: 20px; padding: 8px 12px; border:1px solid var(--border); border-radius: 999px; background:#fff; cursor:pointer; transition: all .15s ease; }
+.sourceCard .pill:hover { background:#f8f9fa; border-color: rgba(0,0,0,.2); }
+a.link { color: inherit; text-decoration: none; }
+a.link:hover { text-decoration: underline; }
+
+.hero-card1 h1 { font-size: 15px; font-weight:700; margin:0 0 8px 0; }
+
+/* meta-row utility for haberdetay */
+.meta-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; } /* Boşluk optimize */
+
+/* article initially hidden (JS toggles display) */
+#article { display:none; }
+
+/* Contents migrated from haberler.css (page-specific overrides) */
+
+/* Ensure hero matches index look (inherits from ubt-shared but keep local control) */
+.card.hero-card1 {
+  background: linear-gradient(135deg,#FFBB00,#f7931e);
+  color: #111;
+}
+.hero-domain1 { color: white; }
+
+/* Meta pill styling (slightly larger on some places) */
+.meta .pill {
+  font-size:13px;
+  padding:6px 10px;
+  border-radius:14px;
+  background: #fff;
+  color:var(--muted);
+  border:1px solid rgba(0,0,0,0.08);
+}
+
+/* Make category buttons responsive grid layout */
+.stackBtnsVertical {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns on desktop */
+  gap: 12px; /* spacing between buttons */
+  padding: 0;
+}
+
+.stackBtnsVertical .btn {
+  padding: 12px 16px !important; /* reasonable padding for readable buttons */
+  font-size: 14px !important;
+  border-radius: 10px !important;
+  white-space: nowrap;
+  width: 100%;
+}
+
+/* On narrow screens we keep single column for usability */
+@media (max-width: 600px) {
+  .wrap {
+    padding: 14px; /* Mobilde daha dar padding */
+    gap: 15px; /* Mobilde biraz daha kompakt kart arası boşluk */
+  }
+  
+  .stackBtnsVertical {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+    padding: 0;
+  }
+  
+  .stackBtnsVertical .btn {
+    width: 100% !important;
+  }
+  
+  .list {
+    gap: 15px; /* Mobilde biraz daha kompakt */
+  }
+  
+  .card {
+    padding: 16px; /* Mobilde kartlar biraz daha kompakt */
+  }
+}
+
+/* List uses gap for spacing - cleaner approach */
+
+/* Wrap direct children - no margins, gap handles spacing */
+.wrap > .card,
+.wrap > .panel,
+.wrap > .state,
+.wrap > .row {
+  margin: 0;
+}
+
+/* List is special - it has its own gap system */
+#list, .list { 
+  margin: 0; 
+  padding: 0; 
+}
+
+.list .card { 
+  padding: 18px; 
+  border-radius: 18px; 
+  margin: 0; /* gap handles spacing */
+}
+
+/* Thumb images keep their shape but ensure they don't blend into background */
+.list .thumb { background: rgba(255,255,255,0.06); }
+.list .thumb img { filter: none; }
+
+/* Meta pill on colored preview: white background with blue text */
+.list .pill {
+  /* Ensure list pills (timestamps) use white style on blue cards */
+  background: #ffffff !important;
+  color: #01A1F1 !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  font-weight: 700 !important;
+  padding: 6px 10px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15) !important;
+}
+
+/* Category panel: blue theme to match cards */
+.panel.panel--yellow {
+  /* Blue background to match card theme */
+  background: #01A1F1 !important;
+  border: 1px solid rgba(255,255,255,.15) !important;
+  border-radius: 16px !important;
+  padding: 14px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15) !important;
+  color: #ffffff !important;
+}
+
+/* Ensure all text inside blue panels is white */
+.panel.panel--yellow,
+.panel.panel--yellow .panel__title,
+.panel.panel--yellow p,
+.panel.panel--yellow a,
+.panel.panel--yellow span,
+.panel.panel--yellow .hb-card-buttons,
+.panel.panel--yellow .hb-card-buttons a {
+  color: #ffffff !important;
+}
+
+/* Category buttons styling - white on blue theme */
+.stackBtnsVertical .btn {
+  background: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  color: #01A1F1 !important;
+  transition: all .15s ease;
+}
+
+.stackBtnsVertical .btn:hover {
+  background: #f0f9ff !important;
+  border-color: rgba(255,255,255,.4) !important;
+}
+
+.stackBtnsVertical .btn.active {
+  background: #ffffff !important;
+  color: #01A1F1 !important;
+  border-color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* Panel title styling */
+.panelTop {
+  margin-bottom: 10px;
+}
+
+.panel__title {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: .2px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Detail article card: keep .detail-panel-yellow as special but make
+   article.card.panel--yellow use the standard list/card color
+   so the detail page card matches `haberler` list cards. */
+.detail-panel-yellow {
+  background: linear-gradient(135deg,#FFBB00,#f7931e) !important;
+  color: #111 !important;
+  border: none !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.28) !important;
+}
+
+article.card.panel--yellow {
+  /* Make detail-page bottom panel match blue theme */
+  background: #01A1F1 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,.15) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15) !important;
+}
+
+/* Meta pill on detail: white with blue text for readability */
+.detail-panel-yellow .pill,
+article.card.panel--yellow .pill,
+.meta .pill { background: #ffffff !important; color: #01A1F1 !important; border: 1px solid rgba(255,255,255,0.2) !important; }
+
+/* Bottom count panel: center text and place buttons on a new centered row */
+#countPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  text-align: center;
+}
+
+#countPanel .panelTop { width:100%; display:flex; justify-content:center; }
+#countPanel .panel__title { margin:0; font-size:15px; font-weight:700; }
+
+#countPanel .card-buttons { display:flex; gap:10px; justify-content:center; margin-top:6px; }
+#countPanel .card-buttons a { display:inline-block; }
+
+/* Namespaced HB (haberler) variants to avoid relying on ubt-shared.css */
+.hb-hero-card1 {
+  background: linear-gradient(135deg,#FFBB00,#f7931e);
+  color: white;
+  border-radius: 18px;
+  padding: 18px;
+}
+.hb-hero-top1 { display:flex; justify-content:space-between; margin-bottom:12px; align-items:center; }
+.hb-hero-logo-box1 { display:flex; align-items:center; gap:8px; }
+.hb-hero-domain1 { font-size:20px; font-weight:600; color:white; }
+
+/* Smaller header variant for `haberdetay.html` to give a compact header feel */
+.hb-hero-card1.hb-hero-card--small {
+  padding: 8px 12px !important;
+  border-radius: 12px !important;
+}
+.hb-hero-card1.hb-hero-card--small h1 {
+  font-size: 20px !important; /* same size as .hb-hero-domain1 */
+  font-weight: 600 !important;
+  margin: 0 !important;
+}
+.hb-hero-card1.hb-hero-card--small .hb-hero-top1 { margin-bottom: 6px !important; }
+
+/* Namespaced home / card buttons (smaller to fit on one line with text) */
+.hb-home-icon { width:34px; height:34px; border-radius:10px; padding:4px; background:white; box-shadow:0 4px 12px rgba(0,0,0,.18); }
+.hb-card-buttons { display:flex; gap:8px; justify-content:center; margin-top:8px; }
+.hb-btn-icon { width:28px; height:28px; border-radius:8px; padding:3px; background:#ffffff; box-shadow:0 6px 18px rgba(0,0,0,.18); object-fit:contain; }
+.hb-btn-icon:hover { transform:scale(1.06); box-shadow:0 10px 30px rgba(0,0,0,.22); }
+
+/* Footer card buttons (matches ubt-shared.css) */
+.card-buttons { position:absolute; right:14px; top:14px; display:flex; gap:10px; }
+.btn-icon { width:34px; height:34px; max-width:34px; max-height:34px; border-radius:10px; padding:5px; background:rgba(255,255,255,0.35); box-shadow:0 2px 6px rgba(0,0,0,.22); cursor:pointer; object-fit:contain; }
+.btn-icon:hover { transform:scale(1.08); }
+
+/* Ensure the hb-card-buttons sit slightly below the panel title and align with card text */
+.hb-card-buttons { margin-top:10px; }
+
+/* =====================================================
+   CONTACT CARD STYLES (Independent from ubt-shared.css)
+   - Green theme (#7CBB00)
+   - Card buttons (Home + Up)
+   - Icon grid styling
+   ===================================================== */
+
+/* Contact Card - Green Theme */
+.contact-card {
+  background: #7CBB00 !important;
+  color: #ffffff !important;
+  text-align: center;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  position: relative;
+}
+
+/* Card Buttons (Home + Up) - Top Right Corner */
+.contact-card-buttons {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+.contact-btn-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  padding: 5px;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 6px rgba(0,0,0,.22);
+  cursor: pointer;
+  transition: .15s;
+  object-fit: contain;
+}
+
+.contact-btn-icon:hover {
+  transform: scale(1.12);
+  background: rgba(255,255,255,0.55);
+}
+
+/* Contact Card Title */
+.contact-card h2 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  color: #ffffff;
+}
+
+/* Icon Grid Container */
+.contact-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 64px);
+  justify-content: center;
+  gap: 24px 30px;
+  margin: 32px 0 12px 0;
+}
+
+/* Individual Icon Wrapper */
+.contact-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+  cursor: pointer;
+}
+
+.contact-icon-wrapper:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.45);
+}
+
+/* Icon Image */
+.contact-icon-wrapper img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .contact-icon-grid {
+    grid-template-columns: repeat(3, 56px);
+    gap: 18px 20px;
+  }
+  
+  .contact-icon-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .contact-icon-wrapper img {
+    width: 28px;
+    height: 28px;
+  }
+}
+/* END of block: Contact Card Styles */
+
+.readmore {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+.readmore-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.95);
+  color: #01A1F1;
+  border: 1px solid rgba(255,255,255,0.2);
+  text-decoration: none;
+}
+.readmore-link:hover {
+  text-decoration: underline;
+}
+
+/* Card width lock (mobile width across all cards) */
+:root {
+  --card-mobile-width: 355px;
+}
+
+[class*="card"]:not(.card-buttons):not(.hb-card-buttons):not(.footer-blue-card__buttons):not(.contact-card-buttons):not(.card-title):not(.card-sub):not(.card-head):not(.card-foot) {
+  width: var(--card-mobile-width);
+  min-width: var(--card-mobile-width);
+  max-width: var(--card-mobile-width);
+  margin-left: auto;
+  margin-right: auto;
+}

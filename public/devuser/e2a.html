@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Event E2 Admin - almanya101</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="devuser-shell.css" />
+  <link rel="stylesheet" href="../devuser/devuseradmin.css" />
+  <style>
+    .topic-cell {
+      min-width: 280px;
+      max-width: 520px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.45;
+    }
+
+    .choices-cell {
+      min-width: 180px;
+    }
+
+    .choices-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .choice-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(115, 189, 255, 0.14);
+      color: #93d1ff;
+      border: 1px solid rgba(115, 189, 255, 0.35);
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  </style>
+<link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+<link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+</head>
+
+<body class="devuser-shell-page devuser-shell-scroll">
+  <div class="devuser-shell-bg"><canvas id="devuser-shell-canvas"></canvas></div>
+  <div class="devuser-shell-grid"></div>
+  <div class="devuser-shell-frame devuser-shell-frame--wide">
+    <div class="devuser-shell-top-logo">
+      <img src="../almanya101.png" alt="almanya101" />
+    </div>
+    <header class="devuser-shell-header">
+      <h1 class="devuser-shell-title">de tr software dashboard</h1>
+    </header>
+    <a href="../dev.html" class="devuser-shell-back-link">&larr; dashboard'a don</a>
+    <div class="container">
+    <div class="card hero">
+      <div class="domain">almanya101.de</div>
+      <h1>Event E2 Admin</h1>
+    </div>
+
+    <div class="card" id="loginCard">
+      <div class="login-grid">
+        <input class="input" id="adminKeyInput" type="password" placeholder="Admin key / sifre" autocomplete="off" />
+        <button class="btn-primary" id="loginBtn" type="button">Panele Gir</button>
+      </div>
+      <div class="status" id="loginStatus"></div>
+    </div>
+
+    <div id="panel" style="display:none;">
+      <div class="card">
+        <div class="row" style="justify-content: space-between; align-items:center;">
+          <strong>Event E2 admin oturumu acik</strong>
+          <div class="row">
+            <a class="btn-secondary" style="text-decoration:none; display:inline-flex; align-items:center;" href="e2.html">E2 Sayfasi</a>
+            <button class="btn-secondary" id="logoutBtn" type="button">Cikis</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card stats">
+        <div class="stat-box">
+          <div class="stat-label">Toplam Oy</div>
+          <div class="stat-value" id="statVoteTotal">-</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Toplam Soru</div>
+          <div class="stat-value" id="statQuestionTotal">-</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Filtreli Oy</div>
+          <div class="stat-value" id="statVoteFiltered">-</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Filtreli Soru</div>
+          <div class="stat-value" id="statQuestionFiltered">-</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <input class="input" id="searchInput" placeholder="Ara: ad, secim veya soru..." />
+          <button class="btn-primary" id="refreshBtn" type="button">Yenile</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">Konu Oylari</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ad Soyad</th>
+                <th>Secimler</th>
+                <th>Tarih</th>
+                <th>Aksiyon</th>
+              </tr>
+            </thead>
+            <tbody id="voteTableBody">
+              <tr><td class="empty" colspan="4">Yukleniyor...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">Sorular</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Soru</th>
+                <th>Tarih</th>
+                <th>Aksiyon</th>
+              </tr>
+            </thead>
+            <tbody id="questionTableBody">
+              <tr><td class="empty" colspan="3">Yukleniyor...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_KEY_STORAGE = 'event_e2_admin_key_v1';
+    const LIST_API_URL = '/api/event-e2-admin-list';
+    const ACTION_API_URL = '/api/event-e2-admin-action';
+
+    const CHOICE_LABELS = {
+      'ai-tools': '🤖 AI Araçları ve Eğitim',
+      'industry-trends': '📈 Sektör Trendleri',
+      'ai-vs-coding': '⚔️ AI vs Geleneksel Kodlama',
+      'nonprofit': '🏛️ Kâr Amacı Gütmeyen Dernek',
+      'ai-collaboration': '🤝 AI ile İşbirliği',
+      'app-testing': '📱 Uygulama Test Grubu',
+      'state-groups': '📍 Eyalet Bazlı Gruplar',
+      'ai-usage': '🧠 Yapay Zeka Kullanımı',
+      'working-conditions': '💼 Almanya\'da Çalışma Koşulları',
+      'project-presentations': '🎤 Proje Tanıtımları',
+      'mutual-support': '🤲 Birbirimize Destek',
+    };
+
+    const loginCard = document.getElementById('loginCard');
+    const panel = document.getElementById('panel');
+    const loginStatus = document.getElementById('loginStatus');
+    const adminKeyInput = document.getElementById('adminKeyInput');
+    const searchInput = document.getElementById('searchInput');
+    const voteTableBody = document.getElementById('voteTableBody');
+    const questionTableBody = document.getElementById('questionTableBody');
+
+    let adminKey = '';
+    let voteRows = [];
+    let questionRows = [];
+    let filteredVotes = [];
+    let filteredQuestions = [];
+
+    function setStatus(message, type = '') {
+      loginStatus.textContent = message;
+      loginStatus.className = `status ${type}`.trim();
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = typeof text === 'string' ? text : String(text ?? '');
+      return div.innerHTML;
+    }
+
+    function normalizeSearch(value) {
+      return String(value || '').toLowerCase().trim();
+    }
+
+    function toDate(value) {
+      if (!value) return '-';
+      const d = new Date(value);
+      if (Number.isNaN(d.getTime())) return '-';
+      return d.toLocaleString('tr-TR');
+    }
+
+    function apiHeaders() {
+      return {
+        'Content-Type': 'application/json',
+        'x-admin-key': adminKey,
+      };
+    }
+
+    async function apiGet(url) {
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: { 'x-admin-key': adminKey },
+      });
+      const payload = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(payload.error || `HTTP ${res.status}`);
+      }
+      return payload;
+    }
+
+    async function apiPost(url, body) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: apiHeaders(),
+        body: JSON.stringify(body),
+      });
+      const payload = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(payload.error || `HTTP ${res.status}`);
+      }
+      return payload;
+    }
+
+    function updateStats() {
+      document.getElementById('statVoteTotal').textContent = String(voteRows.length);
+      document.getElementById('statQuestionTotal').textContent = String(questionRows.length);
+      document.getElementById('statVoteFiltered').textContent = String(filteredVotes.length);
+      document.getElementById('statQuestionFiltered').textContent = String(filteredQuestions.length);
+    }
+
+    function renderChoices(selectedTopics) {
+      const items = Array.isArray(selectedTopics) ? selectedTopics : [];
+      if (!items.length) return '<span>-</span>';
+
+      return `<div class="choices-wrap">${items.map((key) => {
+        const label = CHOICE_LABELS[key] || key;
+        return `<span class="choice-badge">${escapeHtml(label)}</span>`;
+      }).join('')}</div>`;
+    }
+
+    function renderVoteTable() {
+      if (!filteredVotes.length) {
+        voteTableBody.innerHTML = '<tr><td class="empty" colspan="4">Kayit bulunamadi.</td></tr>';
+        return;
+      }
+
+      voteTableBody.innerHTML = filteredVotes.map((item) => {
+        const id = Number(item.id);
+        const sender = item.anonymous ? 'Anonim' : (item.full_name || '-');
+        return `
+          <tr>
+            <td>${escapeHtml(sender)}</td>
+            <td class="choices-cell">${renderChoices(item.selected_topics)}</td>
+            <td>${escapeHtml(toDate(item.created_at))}</td>
+            <td>
+              <div class="actions">
+                <button type="button" class="btn-danger" data-target="vote" data-action="delete" data-id="${id}">Sil</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderQuestionTable() {
+      if (!filteredQuestions.length) {
+        questionTableBody.innerHTML = '<tr><td class="empty" colspan="3">Kayit bulunamadi.</td></tr>';
+        return;
+      }
+
+      questionTableBody.innerHTML = filteredQuestions.map((item) => {
+        const id = Number(item.id);
+        return `
+          <tr>
+            <td class="topic-cell">${escapeHtml(item.question || '')}</td>
+            <td>${escapeHtml(toDate(item.created_at))}</td>
+            <td>
+              <div class="actions">
+                <button type="button" class="btn-danger" data-target="question" data-action="delete" data-id="${id}">Sil</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function applyFilter() {
+      const query = normalizeSearch(searchInput.value);
+      if (!query) {
+        filteredVotes = [...voteRows];
+        filteredQuestions = [...questionRows];
+      } else {
+        const tokens = query.split(/\s+/).map((item) => item.trim()).filter(Boolean);
+
+        filteredVotes = voteRows.filter((item) => {
+          const haystack = normalizeSearch([
+            item.full_name || '',
+            item.anonymous ? 'anonim' : '',
+            ...(Array.isArray(item.selected_topics) ? item.selected_topics : []),
+          ].join(' '));
+          return tokens.every((token) => haystack.includes(token));
+        });
+
+        filteredQuestions = questionRows.filter((item) => {
+          const haystack = normalizeSearch(item.question || '');
+          return tokens.every((token) => haystack.includes(token));
+        });
+      }
+
+      renderVoteTable();
+      renderQuestionTable();
+      updateStats();
+    }
+
+    async function loadRows() {
+      voteTableBody.innerHTML = '<tr><td class="empty" colspan="4">Yukleniyor...</td></tr>';
+      questionTableBody.innerHTML = '<tr><td class="empty" colspan="3">Yukleniyor...</td></tr>';
+
+      const payload = await apiGet(`${LIST_API_URL}?vote_limit=1000&question_limit=1000`);
+      voteRows = Array.isArray(payload.vote_items) ? payload.vote_items : [];
+      questionRows = Array.isArray(payload.question_items) ? payload.question_items : [];
+      applyFilter();
+    }
+
+    async function refreshAll() {
+      try {
+        await loadRows();
+      } catch (error) {
+        const message = escapeHtml(error.message || 'Yukleme hatasi');
+        voteTableBody.innerHTML = `<tr><td class="empty" colspan="4">${message}</td></tr>`;
+        questionTableBody.innerHTML = `<tr><td class="empty" colspan="3">${message}</td></tr>`;
+      }
+    }
+
+    async function login() {
+      const key = adminKeyInput.value.trim();
+      if (!key) {
+        setStatus('Admin key/sifre girin.', 'error');
+        return;
+      }
+
+      adminKey = key;
+      setStatus('Baglanti kontrol ediliyor...');
+
+      try {
+        await apiGet(`${LIST_API_URL}?vote_limit=1&question_limit=1`);
+        sessionStorage.setItem(ADMIN_KEY_STORAGE, adminKey);
+        loginCard.style.display = 'none';
+        panel.style.display = 'block';
+        setStatus('');
+        await refreshAll();
+      } catch (error) {
+        setStatus(error.message || 'Giris basarisiz.', 'error');
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem(ADMIN_KEY_STORAGE);
+      adminKey = '';
+      voteRows = [];
+      questionRows = [];
+      filteredVotes = [];
+      filteredQuestions = [];
+      panel.style.display = 'none';
+      loginCard.style.display = 'block';
+      adminKeyInput.value = '';
+      voteTableBody.innerHTML = '<tr><td class="empty" colspan="4">Yukleniyor...</td></tr>';
+      questionTableBody.innerHTML = '<tr><td class="empty" colspan="3">Yukleniyor...</td></tr>';
+      setStatus('Cikis yapildi.');
+    }
+
+    async function runAction(action, target, id) {
+      if (!id || !target) return;
+      if (action === 'delete' && !window.confirm('Bu kayit silinsin mi?')) return;
+
+      try {
+        await apiPost(ACTION_API_URL, { action, target, id });
+        await refreshAll();
+      } catch (error) {
+        window.alert(error.message || 'Islem basarisiz.');
+      }
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', login);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('refreshBtn').addEventListener('click', refreshAll);
+    searchInput.addEventListener('input', applyFilter);
+
+    adminKeyInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        login();
+      }
+    });
+
+    voteTableBody.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-action][data-target]');
+      if (!button) return;
+      runAction(button.dataset.action, button.dataset.target, button.dataset.id);
+    });
+
+    questionTableBody.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-action][data-target]');
+      if (!button) return;
+      runAction(button.dataset.action, button.dataset.target, button.dataset.id);
+    });
+
+    (function init() {
+      const saved = sessionStorage.getItem(ADMIN_KEY_STORAGE);
+      if (!saved) return;
+      adminKey = saved;
+      loginCard.style.display = 'none';
+      panel.style.display = 'block';
+      refreshAll().catch(() => {
+        logout();
+      });
+    })();
+  </script>
+<script src="devuser-shell.js"></script>
+<script>
+  window.goatcounter = window.goatcounter || {};
+  window.goatcounter.path = location.pathname;
+</script>
+<script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  </div>
+</body>
+
+</html>
+
