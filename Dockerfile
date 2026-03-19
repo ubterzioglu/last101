@@ -1,5 +1,8 @@
-# Next.js Dockerfile for Coolify - Simplified
+# Next.js Dockerfile for Coolify - With curl for healthcheck
 FROM node:20-alpine
+
+# Install curl for Coolify healthcheck
+RUN apk add --no-cache curl
 
 WORKDIR /app
 
