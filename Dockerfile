@@ -8,6 +8,8 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
+# Cache bust: update this value to force npm ci to re-run
+ARG CACHE_BUST=20260319
 RUN npm ci
 
 # Copy source and build
