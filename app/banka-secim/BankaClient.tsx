@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { PROFILES, BANKS, QUESTIONS } from './data';
 import { BankRecommendation } from './types';
+import { cn } from '@/lib/utils/cn';
 
 export default function BankaClient() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -191,17 +192,17 @@ export default function BankaClient() {
       )}
 
       {/* Info Card */}
-      <div className="bg-[#FFBB00] rounded-2xl overflow-hidden">
+      <div className="max-w-xl mx-auto bg-white rounded-2xl overflow-hidden shadow-lg">
         <button
           onClick={() => setShowInfo(!showInfo)}
-          className="w-full p-4 text-left text-gray-900 font-medium flex justify-between items-center"
+          className="w-full px-5 py-4 text-left text-gray-700 font-medium flex justify-between items-center hover:bg-gray-50 transition-colors"
         >
-          <span>Bilgi</span>
-          <span className="text-sm">{showInfo ? '▲' : '▼'}</span>
+          <span>Nasıl çalışır?</span>
+          <span className="text-gray-400 text-sm">{showInfo ? '▲' : '▼'}</span>
         </button>
         {showInfo && (
-          <div className="px-4 pb-4 text-gray-800 text-sm space-y-2">
-            <ul className="list-disc list-inside space-y-1">
+          <div className="px-5 pb-4 text-gray-500 text-sm border-t border-gray-100">
+            <ul className="list-disc list-inside space-y-1 pt-3">
               <li>Bu araç 20 soruyla size en uygun bankacılık profilini önerir.</li>
               <li>Sonuçlar yönlendirme amaçlıdır; son kararınızı vermeden önce bankanın güncel şartlarını kontrol edin.</li>
               <li>Ücretler, kart koşulları, şube erişimi ve müşteri hizmetleri bankaya göre değişebilir.</li>
@@ -212,43 +213,57 @@ export default function BankaClient() {
 
       {/* Question Card */}
       {!showResult && (
-        <div className="bg-[#F65314] rounded-2xl p-5 text-white min-h-[400px] flex flex-col">
-          <div className="mb-4">
-            <h1 className="text-lg font-bold mb-2 leading-tight">{question.title}</h1>
-            <p className="text-sm text-white/90">{question.desc}</p>
+        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-2xl p-6">
+          {/* Kategori etiketi */}
+          <div className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">
+            {question.category}
           </div>
 
-          <div className="flex-1 space-y-2.5 overflow-y-auto">
+          {/* Soru */}
+          <h2 className="text-gray-900 font-bold text-lg leading-tight mb-1">
+            {question.title}
+          </h2>
+          <p className="text-gray-500 text-sm mb-5">{question.desc}</p>
+
+          {/* Seçenekler */}
+          <div className="space-y-3">
             {question.options.map((option, idx) => (
               <button
                 key={option.key}
                 onClick={() => handleAnswer(option.key)}
-                className={`w-full flex items-start gap-3 p-3.5 rounded-xl border transition-all text-left
-                  ${answers[question.id] === option.key
-                    ? 'bg-white/25 border-white'
-                    : 'bg-white/10 border-white/25 hover:bg-white/20'
-                  }`}
+                className={cn(
+                  'w-full flex items-start gap-3 p-4 rounded-xl border text-left transition-all',
+                  answers[question.id] === option.key
+                    ? 'bg-blue-50 border-2 border-blue-500'
+                    : 'bg-white border border-gray-200 hover:border-blue-300 hover:bg-blue-50/30'
+                )}
               >
-                <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-white/20 border border-white/40 flex items-center justify-center text-xs font-bold">
+                <span className={cn(
+                  'flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold transition-colors',
+                  answers[question.id] === option.key
+                    ? 'bg-blue-100 text-blue-600'
+                    : 'bg-gray-100 text-gray-500'
+                )}>
                   {idx + 1}
                 </span>
                 <div>
-                  <div className="font-semibold text-sm">{option.label}</div>
-                  <div className="text-xs text-white/80">{option.desc}</div>
+                  <div className="font-semibold text-sm text-gray-900">{option.label}</div>
+                  <div className="text-xs text-gray-500 mt-0.5">{option.desc}</div>
                 </div>
               </button>
             ))}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-white/20 flex justify-between items-center">
+          {/* Alt bar */}
+          <div className="mt-5 pt-4 border-t border-gray-100 flex justify-between items-center">
             <button
               onClick={handleBack}
               disabled={currentQuestion === 0}
-              className="text-sm bg-white/20 hover:bg-white/30 disabled:opacity-40 disabled:cursor-not-allowed px-4 py-2 rounded-lg transition-colors font-medium"
+              className="text-sm text-gray-400 hover:text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors font-medium"
             >
-              Geri
+              ← Geri
             </button>
-            <span className="text-xs text-white/75">Bir şık seçince otomatik ilerler</span>
+            <span className="text-xs text-gray-400">Seçince otomatik ilerler</span>
           </div>
         </div>
       )}
