@@ -23,7 +23,7 @@ export interface Question {
   id: string;
   title: string;
   desc: string;
-  category?: string;
+  category: string;
   type: 'single' | 'yesno';
   options: Option[];
 }
