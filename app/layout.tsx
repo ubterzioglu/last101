@@ -100,6 +100,27 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+
+        {/* Scroll to Top Button - Fixed Bottom Right */}
+        <a
+          href="#"
+          className="fixed bottom-4 right-4 z-50 w-8 h-8 sm:w-10 sm:h-10 bg-google-yellow rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-400 hover:scale-110 transition-all duration-300"
+          aria-label="Yukarı git"
+        >
+          <svg
+            className="w-4 h-4 sm:w-5 sm:h-5 text-gray-900"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              d="M5 10l7-7m0 0l7 7m-7-7v18"
+            />
+          </svg>
+        </a>
       </body>
     </html>
   );

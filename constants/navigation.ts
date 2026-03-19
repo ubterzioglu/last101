@@ -8,6 +8,8 @@ export const NAVIGATION_ITEMS = [
   { href: '/almanyada-yasam', label: "Almanya'da Yaşam", id: 'life' },
   { href: '/is-ilanlari', label: 'İş İlanları', id: 'jobs' },
   { href: '/rehber', label: 'Rehber', id: 'guide' },
+  { href: '/tatil', label: 'Tatil Planlayıcı', id: 'holiday' },
+  { href: '/para-transferi', label: 'Para Transferi', id: 'transfer' },
   { href: '/topluluk', label: 'Topluluk', id: 'community' },
   { href: '/hakkimizda', label: 'Hakkımızda', id: 'about' },
   { href: '/iletisim', label: 'İletişim', id: 'contact' },
@@ -20,6 +22,8 @@ export const FOOTER_LINKS = {
     { href: '/almanyada-yasam', label: "Almanya'da Yaşam" },
     { href: '/is-ilanlari', label: 'İş İlanları' },
     { href: '/rehber', label: 'Rehber' },
+    { href: '/tatil', label: 'Tatil Planlayıcı' },
+    { href: '/para-transferi', label: 'Para Transferi' },
     { href: '/topluluk', label: 'Topluluk' },
   ],
   about: [
