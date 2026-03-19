@@ -48,16 +48,28 @@ export function Header() {
               <span className="text-xl font-bold text-white">{SITE_NAME}</span>
             </Link>
 
-            {/* Menu Button */}
-            <Button 
-              variant="ghost" 
-              size="md" 
-              onClick={openDrawer} 
-              aria-label="Menüyü aç"
-              className="text-white hover:bg-white/20"
-            >
-              Menü
-            </Button>
+            {/* Menu Button + Home Button */}
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="md" 
+                onClick={openDrawer} 
+                aria-label="Menüyü aç"
+                className="text-white hover:bg-white/20"
+              >
+                Menü
+              </Button>
+              <Link href="/">
+                <Button 
+                  variant="ghost" 
+                  size="md" 
+                  aria-label="Ana Sayfa"
+                  className="text-white hover:bg-white/20"
+                >
+                  Ana Sayfa
+                </Button>
+              </Link>
+            </div>
           </div>
         </Container>
       </header>
@@ -93,6 +105,16 @@ export function Header() {
 
         {/* Drawer Content */}
         <nav className="px-4 py-2">
+          {/* Ana Sayfa - En üstte */}
+          <Link
+            href="/"
+            className="flex items-center px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group border-b border-white/10 mb-2"
+            onClick={closeDrawer}
+          >
+            <span className="font-medium text-sm tracking-wide group-hover:translate-x-1 transition-transform duration-200">
+              🏠 Ana Sayfa
+            </span>
+          </Link>
           {DRAWER_ITEMS.map((item) => (
             <Link
               key={item.href}
