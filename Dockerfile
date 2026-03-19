@@ -1,29 +1,27 @@
-# Next.js Dockerfile for Coolify - With curl for healthcheck
-FROM node:20-alpine
-
-# Install curl for Coolify healthcheck
-RUN apk add --no-cache curl
-
+# Stage 1: Build
+FROM node:20-alpine AS builder
 WORKDIR /app
-
-# Install dependencies
 COPY package*.json ./
 RUN npm ci
-
-# Copy source and build
 COPY . .
 RUN npm run build
 
-# Copy static assets into standalone directory (required for standalone output)
-RUN cp -r .next/static .next/standalone/.next/static && \
-    cp -r public .next/standalone/public
+# Stage 2: Production runner
+FROM node:20-alpine AS runner
+RUN apk add --no-cache curl
+WORKDIR /app
 
-# Environment
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
+# Copy standalone server
+COPY --from=builder /app/.next/standalone ./
+# Copy static assets (required - standalone doesn't include these)
+COPY --from=builder /app/.next/static ./.next/static
+# Copy public folder
+COPY --from=builder /app/public ./public
+
 EXPOSE 3000
 
-# Run standalone server
-CMD ["node", ".next/standalone/server.js"]
+CMD ["node", "server.js"]
