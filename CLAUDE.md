@@ -16,7 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **This is a Next.js 15 application using App Router with TypeScript and TailwindCSS.**
 
 ### Route Groups
-- `app/(marketing)/` - Marketing pages sharing a common layout (almanyada-yasam, is-ilanlari, rehber, tatil, para-transferi, topluluk, hakkimizda, iletisim)
+- `app/(marketing)/` - Marketing pages sharing a common layout (almanyada-yasam, is-ilanlari, rehber, tatil, para-transferi, topluluk, hakkimizda, iletisim, ekibimize-katil)
 - `app/` - Root directory with root layout, home page, and interactive tool pages
 
 ### Interactive Tool Pages (outside marketing group)

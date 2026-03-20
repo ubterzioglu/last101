@@ -16,43 +16,49 @@ export const BANKS: Bank[] = [
     id: 'n26',
     name: 'N26',
     type: 'Mobil banka',
-    weights: { DIGITAL: 5, DIRECT: 2, EXPAT: 3, INVEST: 3, CRYPTO: 3, LOW_COST: 3, BRANCH: -4, LOCAL: -3 }
+    // 2024: Ücretsiz ETF/hisse alım-satımı ve Sparplan başlatıldı (Nisan 2024)
+    weights: { DIGITAL: 5, DIRECT: 2, EXPAT: 4, INVEST: 5, CRYPTO: 4, LOW_COST: 3, BRANCH: -4, LOCAL: -3 }
   },
   {
     id: 'revolut',
     name: 'Revolut',
-    type: 'Fintech (banka/EMI)',
-    weights: { DIGITAL: 5, EXPAT: 4, CRYPTO: 4, INVEST: 2, LOW_COST: 2, DIRECT: 1, BRANCH: -5, LOCAL: -4 }
+    type: 'Fintech (banka)',
+    // 2024: Almanya'ya özel DE IBAN başlatıldı (Mayıs 2024) - artık gerçek banka gibi
+    weights: { DIGITAL: 5, EXPAT: 4, CRYPTO: 4, INVEST: 2, LOW_COST: 2, DIRECT: 3, BRANCH: -5, LOCAL: -4 }
   },
   {
     id: 'ing',
     name: 'ING',
     type: 'Direkt banka',
-    weights: { DIRECT: 5, INVEST: 4, LOW_COST: 4, DIGITAL: 2, EXPAT: 1, BRANCH: -3, LOCAL: -2, CRYPTO: 0 }
+    // 2024: Aralık 2024'te ücret koşulları sıkılaştı (eşik €700→€1.000, yabancı para ücreti arttı)
+    weights: { DIRECT: 5, INVEST: 4, LOW_COST: 2, DIGITAL: 2, EXPAT: 1, BRANCH: -3, LOCAL: -2, CRYPTO: 0 }
   },
   {
     id: 'dkb',
     name: 'DKB',
     type: 'Direkt banka',
-    weights: { DIRECT: 4, INVEST: 4, LOW_COST: 3, DIGITAL: 2, EXPAT: 1, BRANCH: -3, LOCAL: -2, CRYPTO: 0 }
+    // Yalnızca Almanca arayüz; expat için zayıf
+    weights: { DIRECT: 4, INVEST: 4, LOW_COST: 3, DIGITAL: 2, EXPAT: 0, BRANCH: -3, LOCAL: -2, CRYPTO: 0 }
   },
   {
     id: 'sparkasse',
     name: 'Sparkasse',
     type: 'Yerel banka (şubeli)',
+    // 2026 ortasında kripto entegrasyonu planlanıyor
     weights: { LOCAL: 5, BRANCH: 5, INVEST: 2, DIGITAL: 1, DIRECT: 1, LOW_COST: -2, EXPAT: 0, CRYPTO: 1 }
   },
   {
     id: 'volksbank',
     name: 'Volksbank / Raiffeisenbank',
     type: 'Yerel banka (şubeli)',
-    weights: { LOCAL: 5, BRANCH: 5, INVEST: 2, DIGITAL: 1, DIRECT: 1, LOW_COST: -2, EXPAT: 0, CRYPTO: 1 }
+    weights: { LOCAL: 5, BRANCH: 5, INVEST: 2, DIGITAL: 1, DIRECT: 1, LOW_COST: -2, EXPAT: 0, CRYPTO: 0 }
   },
   {
     id: 'commerzbank',
     name: 'Commerzbank',
     type: 'Geleneksel banka',
-    weights: { LOCAL: 3, BRANCH: 3, DIRECT: 2, INVEST: 3, DIGITAL: 1, LOW_COST: -1, EXPAT: 0, CRYPTO: 0 }
+    // 2025: Mayıs 2025'te ücretsiz hesap koşulsuz olmaktan çıktı (min €700/ay)
+    weights: { LOCAL: 3, BRANCH: 3, DIRECT: 2, INVEST: 3, DIGITAL: 1, LOW_COST: -2, EXPAT: 1, CRYPTO: 0 }
   },
   {
     id: 'deutschebank',
@@ -63,14 +69,16 @@ export const BANKS: Bank[] = [
   {
     id: 'traderepublic',
     name: 'Trade Republic',
-    type: 'Yatırım uygulaması (broker)',
-    weights: { INVEST: 6, LOW_COST: 3, DIGITAL: 3, CRYPTO: 2, DIRECT: 1, EXPAT: 0, BRANCH: -6, LOCAL: -4 }
+    type: 'Yatırım + banka (ECB lisanslı)',
+    // 2024: Tam bankacılık lisansı + Girokonto başlatıldı (Aralık 2024)
+    weights: { INVEST: 6, LOW_COST: 3, DIGITAL: 3, CRYPTO: 3, DIRECT: 3, EXPAT: 1, BRANCH: -6, LOCAL: -4 }
   },
   {
     id: 'c24',
     name: 'C24 Bank',
     type: 'Direkt banka (app ağırlıklı)',
-    weights: { DIGITAL: 4, DIRECT: 4, LOW_COST: 4, EXPAT: 1, INVEST: 1, CRYPTO: 0, BRANCH: -4, LOCAL: -3 }
+    // Not: BaFin Kasım 2025'te AML denetimine tabi tuttu; mevduatlar güvenceli
+    weights: { DIGITAL: 4, DIRECT: 4, LOW_COST: 4, EXPAT: 0, INVEST: 0, CRYPTO: 0, BRANCH: -4, LOCAL: -3 }
   },
   {
     id: 'comdirect',
@@ -82,55 +90,56 @@ export const BANKS: Bank[] = [
     id: 'consorsbank',
     name: 'Consorsbank',
     type: 'Direkt banka / broker (BNP Paribas)',
-    weights: { DIRECT: 3, INVEST: 5, LOW_COST: 2, DIGITAL: 2, EXPAT: 0, CRYPTO: 0, BRANCH: -3, LOCAL: -2 }
+    // 2024-2025: Tüm ETF Sparplan ücretleri sıfırlandı (önceden %1,5 idi)
+    weights: { DIRECT: 3, INVEST: 6, LOW_COST: 3, DIGITAL: 2, EXPAT: 0, CRYPTO: 0, BRANCH: -3, LOCAL: -2 }
   },
   {
     id: 'targobank',
     name: 'Targobank',
     type: 'Geleneksel banka (şubeli)',
-    weights: { LOCAL: 3, BRANCH: 4, DIRECT: 1, INVEST: 2, DIGITAL: 1, LOW_COST: -1, EXPAT: 0, CRYPTO: 0 }
+    weights: { LOCAL: 3, BRANCH: 4, DIRECT: 1, INVEST: 1, DIGITAL: 1, LOW_COST: -1, EXPAT: 0, CRYPTO: 0 }
   },
   {
     id: 'postbank',
     name: 'Postbank',
     type: 'Geleneksel banka (şubeli)',
-    weights: { LOCAL: 3, BRANCH: 4, DIRECT: 1, INVEST: 2, DIGITAL: 1, LOW_COST: -1, EXPAT: 0, CRYPTO: 0 }
+    // Deutsche Bank grubu; BT entegrasyonu 2024'te tamamlandı
+    weights: { LOCAL: 3, BRANCH: 4, DIRECT: 1, INVEST: 2, DIGITAL: 1, LOW_COST: -2, EXPAT: 0, CRYPTO: 0 }
   },
   {
     id: 'hvb',
     name: 'HypoVereinsbank (UniCredit)',
     type: 'Geleneksel banka',
-    weights: { LOCAL: 3, BRANCH: 3, DIRECT: 1, INVEST: 3, DIGITAL: 1, LOW_COST: -1, EXPAT: 0, CRYPTO: 0 }
+    // İngilizce destek 2024-2025'te geriledi; müşteri yorumlarına göre artık güvenilir değil
+    weights: { LOCAL: 3, BRANCH: 3, DIRECT: 1, INVEST: 3, DIGITAL: 1, LOW_COST: -2, EXPAT: 0, CRYPTO: 0 }
   },
   {
     id: 'santander',
     name: 'Santander',
     type: 'Banka (şubeli/karma)',
-    weights: { LOCAL: 2, BRANCH: 2, DIRECT: 2, INVEST: 1, DIGITAL: 1, LOW_COST: 0, EXPAT: 0, CRYPTO: 0 }
+    // BestGiro koşulsuz ücretsiz; 1Plus Visa seyahat için popüler
+    weights: { LOCAL: 2, BRANCH: 2, DIRECT: 2, INVEST: 1, DIGITAL: 1, LOW_COST: 2, EXPAT: 0, CRYPTO: 0 }
   },
   {
     id: 'bunq',
     name: 'bunq',
     type: 'Mobil banka (AB fintech)',
-    weights: { DIGITAL: 5, EXPAT: 4, DIRECT: 2, LOW_COST: 1, INVEST: 0, CRYPTO: 0, BRANCH: -5, LOCAL: -4 }
+    // Tüm hesaplar ücretli (min €8,99/ay); Anmeldung olmadan açılabilen sayılı bankadan biri
+    weights: { DIGITAL: 5, EXPAT: 4, DIRECT: 2, LOW_COST: -2, INVEST: 0, CRYPTO: 0, BRANCH: -5, LOCAL: -4 }
   },
   {
     id: 'tomorrow',
     name: 'Tomorrow',
     type: 'Mobil banka (sürdürülebilir odak)',
-    weights: { DIGITAL: 4, DIRECT: 2, LOW_COST: 1, EXPAT: 1, INVEST: 0, CRYPTO: 0, BRANCH: -5, LOCAL: -4 }
+    // Haziran 2024'te ilk aylık kâra ulaştı; İngilizce destek mevcut
+    weights: { DIGITAL: 4, DIRECT: 2, LOW_COST: 1, EXPAT: 2, INVEST: 0, CRYPTO: 0, BRANCH: -5, LOCAL: -4 }
   },
   {
     id: 'wise',
     name: 'Wise',
     type: 'Fintech (çoklu para / transfer)',
+    // Belçika IBAN'ı (DE değil); bazı ev sahipleri/işverenler kabul etmeyebilir
     weights: { DIGITAL: 4, EXPAT: 5, LOW_COST: 4, DIRECT: 1, INVEST: 0, CRYPTO: 0, BRANCH: -6, LOCAL: -5 }
-  },
-  {
-    id: 'vivid',
-    name: 'Vivid Money',
-    type: 'Fintech (hesap & kart)',
-    weights: { DIGITAL: 4, EXPAT: 3, LOW_COST: 2, DIRECT: 1, INVEST: 1, CRYPTO: 1, BRANCH: -5, LOCAL: -4 }
   },
 ];
 

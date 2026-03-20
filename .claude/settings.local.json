@@ -18,7 +18,28 @@
       "Bash(npm run:*)",
       "Bash(npx tsc:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(curl -s \"https://unsplash.com/s/photos/germany-night\" -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\")",
+      "WebFetch(domain:unsplash.com)",
+      "WebFetch(domain:api.unsplash.com)",
+      "Bash(curl -sI \"https://images.unsplash.com/photo-wtQwcvlAteE?w=1920&q=80\")",
+      "Bash(curl -sI \"https://images.unsplash.com/photo-1560969184-10fe8719e047?w=100\")",
+      "Bash(curl -sI \"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=100\")",
+      "Bash(curl -sI \"https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=100\")",
+      "Bash(curl -sI \"https://images.unsplash.com/photo-1575340591882-75b85b8c92bb?w=100\")",
+      "Bash(curl -sI \"https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=100\")",
+      "Bash(curl -sI \"https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=1920&q=80\")",
+      "Bash(curl -sL https://unsplash.com/photos/wtQwcvlAteE -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" -H 'Accept: text/html')",
+      "Bash(curl -sI \"https://images.unsplash.com/photo-nN863yJtfTo?w=100\")",
+      "Bash(curl -s \"https://source.unsplash.com/nN863yJtfTo/1920x1080\" -I)",
+      "Read(//c//**)",
+      "Read(//c/.0temp/**)",
+      "Read(//c/temp/**)",
+      "Read(//c/tmp/**)",
+      "Read(//c/Users/**)",
+      "Bash(node -e \":*)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(taskkill //F //IM node.exe)"
     ]
   }
 }

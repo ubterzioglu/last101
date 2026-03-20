@@ -100,18 +100,28 @@ export default function BankaClient() {
         else bullets.push('Expat ihtiyaçların var: dil/kurulum süreçlerini kontrol et.');
       }
 
-      if (b.id === 'sparkasse' || b.id === 'volksbank') {
-        bullets.push('Yerel şube/ATM erişimi genelde güçlü olur; şehir/kasaba fark etmeksizin rahat eder.');
-      }
-      if (b.id === 'n26') {
-        bullets.push('Tam mobil deneyim: hızlı kurulum + uygulama odaklı kullanım.');
-      }
-      if (b.id === 'ing' || b.id === 'dkb') {
-        bullets.push('Direkt banka çizgisi: dijital kullanım + daha \'klasik banka\' hissi dengesi.');
-      }
-      if (b.id === 'traderepublic') {
-        bullets.push('Bu bir banka hesabından ziyade yatırım odaklı uygulamadır; ana banka yanında kullanmak mantıklı olabilir.');
-      }
+      const bankNotes: Record<string, string> = {
+        sparkasse: 'Almanya\'nın en geniş şube ağı (~13.000+); 2026 ortasında kripto entegrasyonu planlanıyor. Herhangi bir Alman adresiyle Basiskonto açılabilir.',
+        volksbank: 'Kooperatif yapısı; özellikle küçük şehirlerde güçlü şube/ATM ağı. 800+ bağımsız banka, hizmet kalitesi bölgeye göre değişebilir.',
+        n26: 'Nisan 2024\'te ücretsiz ETF/hisse alım-satımı başlatıldı (~1.700 Sparplan). Almanya\'da en iyi İngilizce destek; Anmeldung olmadan açılabiliyor.',
+        ing: 'En kapsamlı ücretsiz ETF Sparplan seçeneklerinden biri (1.198 ETF). Aralık 2024\'te ücret koşulları sıkılaştı: aylık min €1.000 gelir zorunlu.',
+        dkb: 'Worldwide ücretsiz ATM (Aktivkunde) + yabancı para ücreti yok. Yalnızca Almanca arayüz; İngilizce destek çok sınırlı.',
+        traderepublic: 'Aralık 2024\'te tam ECB bankacılık lisansı + Girokonto başlatıldı. €1/işlem komisyon + ücretsiz ETF Sparplan + %2 mevduat faizi.',
+        revolut: 'Mayıs 2024\'te Alman DE IBAN alındı — artık standart Almanya bankası gibi kullanılabiliyor. 30+ para birimi + kripto tek uygulamada.',
+        commerzbank: 'Almanya\'nın en iyi İngilizce desteği sunan geleneksel bankası. Mayıs 2025\'ten itibaren ücretsiz hesap için aylık min €700 gelir gerekli.',
+        deutschebank: 'Premium segment; uluslararası tanınırlık ve wealth management altyapısı. Postbank\'ı da bünyesine aldı (BT entegrasyonu 2024\'te tamamlandı).',
+        c24: 'Check24 bünyesinde modern masrafsız hesap; Kasım 2025\'te BaFin AML denetimine tabi tutuldu — mevduatlar güvenceli, ancak göz önünde bulundurulmalı.',
+        comdirect: 'Commerzbank grubu; 576 ücretsiz ETF Sparplan + güçlü broker altyapısı. 2024\'te "Pure Depot" ürünü eklendi.',
+        consorsbank: 'BNP Paribas grubu; 2024-2025\'te 1.564 ETF Sparplan\'ın tamamı ücretsiz yapıldı (önceden %1,5 ücret vardı). Yatırım odaklılar için güçlü seçenek.',
+        targobank: 'Ücretsiz hesap için düşük eşik: aylık min €600 maaş. Müşteri hizmetleri konusunda karışık yorumlar mevcut.',
+        postbank: 'Deutsche Bank grubu; eski posta şubeleri üzerinden ~1.700 şube/hizmet noktası. BT geçişi 2024\'te tamamlandı.',
+        hvb: 'UniCredit grubu; Güney Almanya\'da güçlü şube ağı. 2024-2025\'te İngilizce destek kalitesi geriledi; ücretsiz hesap için min €1.500 çeyreklik bakiye gerekli.',
+        santander: 'BestGiro koşulsuz ücretsiz (gelir şartı yok) — geleneksel bankalar arasında nadir bir avantaj. 1Plus Visa seyahat için ücretsiz worldwide ATM sunuyor.',
+        bunq: 'Anmeldung olmadan açılabilen sayılı AB bankasından biri; 90 gün içinde adres girilmesi yeterli. Tüm hesaplar ücretli: min €8,99/ay.',
+        tomorrow: 'Sürdürülebilir bankacılık odaklı; Haziran 2024\'te ilk aylık kâra ulaştı. İngilizce destek mevcut. Silah, fosil yakıt ve fabrika çiftçiliği yatırımı yok.',
+        wise: 'Uluslararası transferde benchmark: orta piyasa kuru + şeffaf ücret. Belçika IBAN\'ı (DE değil) — bazı ev sahipleri/işverenler kabul etmeyebilir.',
+      };
+      if (bankNotes[b.id]) bullets.push(bankNotes[b.id]);
 
       const tags = topSignals
         .map(s => PROFILES[s.key]?.title)
@@ -169,30 +179,11 @@ export default function BankaClient() {
 
   return (
     <div className="max-w-xl mx-auto space-y-4">
-      {!showResult && (
-        <div className="max-w-xl mx-auto mb-3">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-white/50 text-sm">
-              Soru {currentQuestion + 1} / {totalQuestions}
-            </span>
-            <button
-              onClick={handleReset}
-              className="text-xs text-white/40 hover:text-white/70 transition-colors"
-            >
-              Sıfırla
-            </button>
-          </div>
-          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-blue-500 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-      )}
-
       {/* Info Card */}
-      <div className="max-w-xl mx-auto bg-white rounded-2xl overflow-hidden shadow-lg">
+      <div className="max-w-xl mx-auto bg-white rounded-2xl overflow-hidden shadow-lg border-t-4 border-google-blue">
+        <div className="px-5 pt-5 pb-1 text-center">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Banka Seçim Aracı</h1>
+        </div>
         <button
           onClick={() => setShowInfo(!showInfo)}
           className="w-full px-5 py-4 text-left text-gray-700 font-medium flex justify-between items-center hover:bg-gray-50 transition-colors"
@@ -204,18 +195,41 @@ export default function BankaClient() {
           <div className="px-5 pb-4 text-gray-500 text-sm border-t border-gray-100">
             <ul className="list-disc list-inside space-y-1 pt-3">
               <li>Bu araç 20 soruyla size en uygun bankacılık profilini önerir.</li>
-              <li>Sonuçlar yönlendirme amaçlıdır; son kararınızı vermeden önce bankanın güncel şartlarını kontrol edin.</li>
+              <li>Sonuçlar yönlendirme amaçlıdır.</li>
+              <li>Son kararınızı vermeden önce bankanın güncel şartlarını kontrol edin.</li>
               <li>Ücretler, kart koşulları, şube erişimi ve müşteri hizmetleri bankaya göre değişebilir.</li>
             </ul>
           </div>
         )}
       </div>
 
+      {!showResult && (
+        <div className="max-w-xl mx-auto mb-3 bg-white rounded-2xl px-5 py-4 border-t-4 border-google-green">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-gray-500 text-sm">
+              Soru {currentQuestion + 1} / {totalQuestions}
+            </span>
+            <button
+              onClick={handleReset}
+              className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              Sıfırla
+            </button>
+          </div>
+          <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-google-green rounded-full transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Question Card */}
       {!showResult && (
-        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-2xl p-6">
+        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-google-blue min-h-[420px] flex flex-col">
           {/* Kategori etiketi */}
-          <div className="text-blue-600 text-xs font-semibold uppercase tracking-widest mb-2">
+          <div className="text-google-blue text-xs font-semibold uppercase tracking-widest mb-2">
             {question.category}
           </div>
 
@@ -227,25 +241,17 @@ export default function BankaClient() {
 
           {/* Seçenekler */}
           <div className="space-y-3">
-            {question.options.map((option, idx) => (
+            {question.options.map((option) => (
               <button
                 key={option.key}
                 onClick={() => handleAnswer(option.key)}
                 className={cn(
                   'w-full flex items-start gap-3 p-4 rounded-xl border text-left transition-all',
                   answers[question.id] === option.key
-                    ? 'bg-blue-50 border-2 border-blue-500'
-                    : 'bg-white border border-gray-200 hover:border-blue-300 hover:bg-blue-50/30'
+                    ? 'bg-blue-50 border-2 border-google-blue'
+                    : 'bg-google-blue/10 border border-blue-100 hover:border-google-blue/40 hover:bg-blue-50/30'
                 )}
               >
-                <span className={cn(
-                  'flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold transition-colors',
-                  answers[question.id] === option.key
-                    ? 'bg-blue-100 text-blue-600'
-                    : 'bg-gray-100 text-gray-500'
-                )}>
-                  {idx + 1}
-                </span>
                 <div>
                   <div className="font-semibold text-sm text-gray-900">{option.label}</div>
                   <div className="text-xs text-gray-500 mt-0.5">{option.desc}</div>
@@ -255,7 +261,7 @@ export default function BankaClient() {
           </div>
 
           {/* Alt bar */}
-          <div className="mt-5 pt-4 border-t border-gray-100 flex justify-between items-center">
+          <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
             <button
               onClick={handleBack}
               disabled={currentQuestion === 0}
@@ -271,10 +277,10 @@ export default function BankaClient() {
       {/* Result Card */}
       {showResult && (
         <div className="max-w-xl mx-auto space-y-4">
-          {/* Başlık — kart dışında */}
-          <div className="text-center mb-6">
-            <h2 className="text-white font-bold text-2xl mb-1">Sonuçların hazır!</h2>
-            <p className="text-white/50 text-sm">Cevaplarına göre en uygun bankacılık profilleri</p>
+          {/* Başlık kartı */}
+          <div className="bg-white rounded-2xl px-5 py-4 text-center border-t-4 border-google-orange">
+            <h2 className="text-gray-900 font-bold text-2xl mb-1">Sonuçların hazır!</h2>
+            <p className="text-gray-500 text-sm">Cevaplarına göre en uygun bankacılık profilleri</p>
           </div>
 
           {/* Banka kartları */}
@@ -282,31 +288,36 @@ export default function BankaClient() {
             <div
               key={rec.bank.id}
               className={cn(
-                'bg-white rounded-2xl p-5',
-                idx === 0
-                  ? 'shadow-2xl border-2 border-blue-500'
-                  : 'shadow-md border border-gray-200'
+                'bg-white rounded-2xl p-5 border-t-4',
+                idx === 0 ? 'shadow-2xl border-google-blue' :
+                idx === 1 ? 'shadow-md border-google-red' :
+                            'shadow-md border-google-yellow'
               )}
             >
               {/* Badge + Banka adı */}
               <div className="flex items-center gap-3 mb-3">
                 <span className={cn(
                   'text-xs font-bold px-3 py-1 rounded-full',
-                  idx === 0
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 text-gray-500'
+                  idx === 0 ? 'bg-google-blue text-white' :
+                  idx === 1 ? 'bg-google-red text-white' :
+                              'bg-google-yellow text-gray-800'
                 )}>
                   {idx === 0 ? 'EN UYGUN' : `#${rec.rank}`}
                 </span>
                 <span className="font-bold text-gray-900 text-xl">{rec.bank.name}</span>
-                <span className="text-gray-400 text-sm ml-auto">{rec.bank.type}</span>
+                <span className="text-gray-900 text-sm font-bold ml-auto">Skor: {Math.round(rec.bank.score)}</span>
               </div>
 
               {/* Etiketler */}
               {rec.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {rec.tags.map((tag, i) => (
-                    <span key={i} className="text-xs px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full">
+                    <span key={i} className={cn(
+                      'text-xs px-2.5 py-1 rounded-full',
+                      idx === 0 ? 'bg-google-blue/10 text-google-blue' :
+                      idx === 1 ? 'bg-google-red/10 text-google-red' :
+                                  'bg-google-yellow/20 text-yellow-700'
+                    )}>
                       {tag}
                     </span>
                   ))}
@@ -323,26 +334,21 @@ export default function BankaClient() {
           ))}
 
           {/* Butonlar */}
-          <div className="flex gap-3 pt-2">
-            <button
-              onClick={handleReset}
-              className="flex-1 text-sm text-white/70 border border-white/20 hover:bg-white/10 px-4 py-2.5 rounded-xl transition-colors font-medium"
-            >
-              Tekrar Yap
-            </button>
+          <div className="flex flex-col gap-3 pt-2">
             <button
               onClick={handleCopy}
-              className="flex-1 text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl transition-colors font-bold"
+              className="w-full text-sm bg-google-blue hover:bg-google-blue/90 text-white px-4 py-2.5 rounded-xl transition-colors font-bold"
             >
               {copied ? 'Kopyalandı!' : 'Sonucu Kopyala'}
             </button>
+            <button
+              onClick={handleReset}
+              className="w-full text-sm text-white/70 border border-white/20 hover:bg-white/10 px-4 py-2.5 rounded-xl transition-colors font-medium"
+            >
+              Tekrar Yap
+            </button>
           </div>
 
-          {/* Uyarı notu */}
-          <p className="text-white/30 text-xs leading-relaxed text-center pt-2">
-            Not: Bu araç yönlendirme amaçlıdır. Son seçimde ücretler, kart koşulları, şube erişimi,
-            müşteri hizmetleri ve kimlik doğrulama seçeneklerini bankanın kendi sayfasından kontrol et.
-          </p>
         </div>
       )}
     </div>
