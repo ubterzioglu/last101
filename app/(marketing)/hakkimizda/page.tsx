@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { createMetadata } from '@/lib/seo/metadata';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { InfoGrid } from '@/components/sections/InfoBlock';
@@ -109,10 +110,12 @@ export default function HakkimizdaPage() {
             <div className="relative z-10 p-8 md:p-10 flex flex-col items-center text-center">
               {/* Profile Image */}
               <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-google-yellow mb-6 shadow-lg">
-                <img
+                <Image
                   src="/images/profil.jpg"
                   alt="Umut Barış Terzioğlu"
                   className="w-full h-full object-cover"
+                  width={144}
+                  height={144}
                 />
               </div>
               
@@ -178,10 +181,12 @@ export default function HakkimizdaPage() {
             <div className="relative z-10 p-8 md:p-10 flex flex-col items-center text-center">
               {/* Profile Image */}
               <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-google-blue mb-6 shadow-lg">
-                <img
+                <Image
                   src="/images/sahin-profil.jpeg"
                   alt="Şahincan Özbakır"
                   className="w-full h-full object-cover"
+                  width={144}
+                  height={144}
                 />
               </div>
               

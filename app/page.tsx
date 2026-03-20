@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { createMetadata } from '@/lib/seo/metadata';
 import { NewsCarousel } from '@/components/sections/NewsCarousel';
 import { ArticleGrid } from '@/components/sections/ArticleCard';
@@ -227,10 +228,13 @@ export default function HomePage() {
               >
                 {/* Image - Top Half */}
                 <div className="h-1/2 min-h-[110px] sm:min-h-[140px] relative overflow-hidden">
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.label}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20" />
                 </div>
@@ -276,10 +280,13 @@ export default function HomePage() {
                 className="group flex flex-col bg-white/95 hover:bg-white rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg min-h-[220px] sm:min-h-[280px]"
               >
                 <div className="h-1/2 min-h-[110px] sm:min-h-[140px] relative overflow-hidden">
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.label}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20" />
                 </div>
@@ -506,6 +513,8 @@ export default function HomePage() {
             </a>
           </div>
         </div>
+      </section>
+      <a
         href="#"
         className="fixed bottom-4 right-4 z-50 w-8 h-8 sm:w-10 sm:h-10 bg-google-yellow rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-400 hover:scale-110 transition-all duration-300"
         aria-label="Yukarı git"

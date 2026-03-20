@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Container } from '@/components/ui/Container';
@@ -86,43 +86,47 @@ export default function HizmetRehberiPage() {
   const [activeTab, setActiveTab] = useState<'services' | 'gastronomy'>('services');
 
   // İlk yükleme
-  useEffect(() => {
-    loadInitialData();
-  }, []);
 
   // Kategori değiştiğinde verileri yükle
-  useEffect(() => {
-    loadProviders();
-    loadTags();
-    loadCities();
-  }, [selectedCategory]);
 
-  async function loadInitialData() {
+  const loadInitialData = useCallback(async () => {
     const statsData = await getCategoryStats();
     setStats(statsData);
     setLoading(false);
-  }
+  }, []);
 
-  async function loadProviders() {
+  const loadProviders = useCallback(async () => {
     setLoading(true);
     const data = await getProvidersByCategory(selectedCategory, selectedCity || undefined);
     setProviders(data);
     setLoading(false);
-  }
+  }, [selectedCategory, selectedCity]);
 
-  async function loadTags() {
+  const loadTags = useCallback(async () => {
     if (selectedCategory === 'all') {
       setTags([]);
       return;
     }
     const data = await getTagsByCategory(selectedCategory);
     setTags(data);
-  }
+  }, [selectedCategory]);
 
-  async function loadCities() {
+  const loadCities = useCallback(async () => {
     const data = await getAvailableCities(selectedCategory === 'all' ? undefined : selectedCategory);
     setCities(data);
-  }
+  }, [selectedCategory]);
+
+  // Ä°lk yÃ¼kleme
+  useEffect(() => {
+    loadInitialData();
+  }, [loadInitialData]);
+
+  // Kategori deÄŸiÅŸtiÄŸinde verileri yÃ¼kle
+  useEffect(() => {
+    loadProviders();
+    loadTags();
+    loadCities();
+  }, [loadCities, loadProviders, loadTags]);
 
   // Filtreleme
   const filteredProviders = useMemo(() => {

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { Header } from '@/components/layout/Header';
@@ -84,9 +85,10 @@ export default function VatandaslikTestiPage() {
   // Süre dolduğunda testi bitir
   useEffect(() => {
     if (timerAktif && kalanSure === 0) {
-      testiBitir();
+      setTimerAktif(false);
+      setMevcutSoruIndex(sorular.length);
     }
-  }, [timerAktif, kalanSure]);
+  }, [kalanSure, sorular.length, timerAktif]);
 
   const formatSure = (saniye: number) => {
     const dakika = Math.floor(saniye / 60);
@@ -185,10 +187,10 @@ export default function VatandaslikTestiPage() {
     }
   };
 
-  const testiBitir = () => {
+  function testiBitir() {
     setTimerAktif(false);
     setMevcutSoruIndex(sorular.length); // Sonuç ekranını göster
-  };
+  }
 
   const testiSifirla = () => {
     setAktifMod(null);
@@ -354,10 +356,13 @@ export default function VatandaslikTestiPage() {
 
               {/* Görsel */}
               {mevcutSoru.image_url && (
-                <img
+                <Image
                   src={mevcutSoru.image_url}
                   alt="Soru görseli"
                   className="w-full max-h-64 object-contain rounded-xl mb-4 bg-white/10"
+                  width={1200}
+                  height={640}
+                  unoptimized
                 />
               )}
 

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface NewsItem {
@@ -31,10 +32,13 @@ export function NewsCarousel({ items }: NewsCarouselProps) {
             >
               {/* Image Section */}
               <div className="h-48 relative overflow-hidden">
-                <img 
+                <Image
                   src={item.image} 
                   alt={item.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  unoptimized
+                  sizes="320px"
+                  className="object-cover"
                 />
                 {item.category && (
                   <span className="absolute top-3 left-3 px-3 py-1 bg-google-yellow text-gray-900 text-xs font-medium rounded-full">
