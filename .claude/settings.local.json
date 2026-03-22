@@ -39,7 +39,16 @@
       "Read(//c/Users/**)",
       "Bash(node -e \":*)",
       "Bash(taskkill /F /IM node.exe)",
-      "Bash(taskkill //F //IM node.exe)"
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(npx eslint:*)",
+      "Bash(npx next:*)",
+      "Bash(ls \"C:/.temp_private/.0000last/app/\\(devuser\\)/devuser/devuserlist/\")",
+      "Bash(ls \"C:/.temp_private/.0000last/app/\\(devuser\\)/devuser/devuser/\")",
+      "Bash(ls \"C:/.temp_private/.0000last/app/\\(devuser\\)/devuser/dev/\")",
+      "mcp__ide__getDiagnostics",
+      "Bash(cd:*)",
+      "Bash(rm -f *.html)",
+      "Bash(rm -f devuser-shell.css devuser-shell.js supabase-config.js devuser.css devuseradmin.css devuserlist.css devuserprofile.css devuserlist-backup-20260226-172214.css)"
     ]
   }
 }

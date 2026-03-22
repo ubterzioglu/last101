@@ -16,3 +16,15 @@
 - Google colors are pre-configured: `bg-google-blue`, `text-google-red`, etc.
 - Container has responsive padding built-in - just use `className="container"`
 - Hero sections: `min-h-[80vh]`, content sections: `py-32 md:py-48`
+
+## DevUser Dashboard Pattern
+
+- Dashboard pages use `DevUserShell` wrapper with `frameVariant` prop
+- Pattern: `page.tsx` (Server) imports `*Client.tsx` (Client with 'use client')
+- Available frameVariants: `'default' | 'compact' | 'wide'`
+
+## Supabase Clients
+
+- Browser: `import { createClient } from '@/lib/supabase/client'`
+- Server: `import { createClient } from '@/lib/supabase/server'` (async)
+- DevUser: `import { getDevUserClient } from '@/lib/supabase/devuser'` (async)
