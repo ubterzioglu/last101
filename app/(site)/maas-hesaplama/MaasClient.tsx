@@ -113,7 +113,7 @@ export default function MaasClient() {
         <div className="grid gap-4">
           {/* Period & Type */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-gray-50 rounded-xl p-3">
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
               <label className="text-xs text-gray-500 mb-2 block">Periyot</label>
               <div className="flex gap-2">
                 <button
@@ -136,7 +136,7 @@ export default function MaasClient() {
                 </button>
               </div>
             </div>
-            <div className="bg-gray-50 rounded-xl p-3">
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
               <label className="text-xs text-gray-500 mb-2 block">Tip</label>
               <div className="flex gap-2">
                 <button
@@ -162,7 +162,7 @@ export default function MaasClient() {
           </div>
 
           {/* Amount */}
-          <div className="bg-gray-50 rounded-xl p-3">
+          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
             <label className="text-xs text-gray-500 mb-2 block">Miktar (€)</label>
             <input
               type="number"
@@ -175,7 +175,7 @@ export default function MaasClient() {
 
           {/* Tax Class & State */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-gray-50 rounded-xl p-3">
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
               <label className="text-xs text-gray-500 mb-2 block">Steuerklasse</label>
               <select
                 value={taxClass}
@@ -189,7 +189,7 @@ export default function MaasClient() {
                 ))}
               </select>
             </div>
-            <div className="bg-gray-50 rounded-xl p-3">
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
               <label className="text-xs text-gray-500 mb-2 block">Eyalet</label>
               <select
                 value={state}
@@ -206,7 +206,7 @@ export default function MaasClient() {
           </div>
 
           {/* Children */}
-          <div className="bg-gray-50 rounded-xl p-3">
+          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -220,7 +220,7 @@ export default function MaasClient() {
 
           {hasChildren && (
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-gray-50 rounded-xl p-3">
+              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
                 <label className="text-xs text-gray-500 mb-2 block">Çocuk sayısı</label>
                 <input
                   type="number"
@@ -229,7 +229,7 @@ export default function MaasClient() {
                   className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
                 />
               </div>
-              <div className="bg-gray-50 rounded-xl p-3">
+              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
                 <label className="text-xs text-gray-500 mb-2 block">25 yaş altı</label>
                 <input
                   type="number"
@@ -243,7 +243,7 @@ export default function MaasClient() {
 
           {/* Age & Church Tax */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-gray-50 rounded-xl p-3">
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
               <label className="text-xs text-gray-500 mb-2 block">Yaş</label>
               <div className="flex gap-2">
                 <button
@@ -266,7 +266,7 @@ export default function MaasClient() {
                 </button>
               </div>
             </div>
-            <div className="bg-gray-50 rounded-xl p-3">
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
               <label className="flex items-center gap-3 cursor-pointer h-full">
                 <input
                   type="checkbox"
@@ -280,7 +280,7 @@ export default function MaasClient() {
           </div>
 
           {/* Child Allowance */}
-          <div className="bg-gray-50 rounded-xl p-3">
+          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
             <label className="text-xs text-gray-500 mb-2 block">Kinderfreibetrag (ZKF)</label>
             <input
               type="number"
@@ -292,7 +292,7 @@ export default function MaasClient() {
           </div>
 
           {/* Company Car */}
-          <div className="bg-gray-50 rounded-xl p-3">
+          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -305,8 +305,8 @@ export default function MaasClient() {
           </div>
 
           {hasCompanyCar && (
-            <div className="bg-gray-100 rounded-xl p-4 space-y-3">
-              <div className="bg-white rounded-lg p-3">
+            <div className="bg-google-blue/15 rounded-xl p-4 space-y-3 border border-google-blue/25">
+              <div className="bg-white/90 rounded-lg p-3 border border-google-blue/10">
                 <label className="text-xs text-gray-500 mb-2 block">Brüt Liste Fiyatı (€)</label>
                 <input
                   type="number"
@@ -333,7 +333,7 @@ export default function MaasClient() {
           )}
 
           {/* Insurance Type */}
-          <div className="bg-gray-50 rounded-xl p-3">
+          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
             <label className="text-xs text-gray-500 mb-2 block">Sigorta</label>
             <div className="flex gap-2">
               <button
@@ -359,7 +359,7 @@ export default function MaasClient() {
 
           {insuranceType === 'gkv' ? (
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-gray-50 rounded-xl p-3">
+              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
                 <label className="text-xs text-gray-500 mb-2 block">KV Kassensatz (%)</label>
                 <input
                   type="number"
@@ -369,7 +369,7 @@ export default function MaasClient() {
                   className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
                 />
               </div>
-              <div className="bg-gray-50 rounded-xl p-3">
+              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
                 <label className="text-xs text-gray-500 mb-2 block">KV Zusatz (%)</label>
                 <input
                   type="number"
@@ -382,7 +382,7 @@ export default function MaasClient() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-gray-50 rounded-xl p-3">
+              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
                 <label className="text-xs text-gray-500 mb-2 block">PKV Primi (€)</label>
                 <input
                   type="number"
@@ -391,7 +391,7 @@ export default function MaasClient() {
                   className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
                 />
               </div>
-              <div className="bg-gray-50 rounded-xl p-3">
+              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
                 <label className="text-xs text-gray-500 mb-2 block">PPV Primi (€)</label>
                 <input
                   type="number"

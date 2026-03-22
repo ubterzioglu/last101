@@ -1,5 +1,4 @@
 import { createMetadata } from '@/lib/seo/metadata';
-import StepstoneClient from './StepstoneClient';
 
 export const metadata = createMetadata({
   title: 'StepStone 2026 Maaş Karşılaştırma',
@@ -7,10 +6,10 @@ export const metadata = createMetadata({
   path: '/stepstone-karsilastirma',
 });
 
-export default function StepstoneKarsilastirmaPage() {
-  return (
-    <div className="min-h-screen bg-black py-8 px-4">
-      <StepstoneClient />
-    </div>
-  );
+export default function StepstoneKarsilastirmaLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return children;
 }

@@ -76,6 +76,12 @@ export const TOOL_ITEMS: ToolItem[] = [
     image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop',
   },
   {
+    href: '/stepstone-karsilastirma',
+    label: 'StepStone 2026 Maaş Karşılaştırma',
+    description: 'Maaşlarınızı karşılaştırın.',
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=300&fit=crop',
+  },
+  {
     href: '/vatandaslik-testi',
     label: 'Vatandaşlık Testi',
     description: 'Deneme sınavı çözün.',

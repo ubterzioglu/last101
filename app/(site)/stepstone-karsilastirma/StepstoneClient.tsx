@@ -1,290 +1,333 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { cn } from '@/lib/utils/cn';
-import { formatCurrency, formatPercent } from '@/lib/salary/calculator';
-import { STEPSTONE_2026, getSortedJobGroups, getSortedCities, EXPERIENCE_OPTIONS, COMPANY_SIZE_OPTIONS, EDUCATION_OPTIONS, RESPONSIBILITY_OPTIONS, GENDER_OPTIONS } from '@/lib/salary/stepstone-data';
-import { STATES } from '@/lib/salary/types';
-import { TrendingUp, Building2, Users, GraduationCap, Briefcase, User } from 'lucide-react';
+import { Calculator, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+
+interface SalaryData {
+  position: string;
+  industry: string;
+  experience: string;
+  minSalary: number;
+  maxSalary: number;
+  avgSalary: number;
+}
+
+const SALARY_DATA: SalaryData[] = [
+  {
+    position: 'Software Engineer',
+    industry: 'Technology',
+    experience: 'Mid-level (3-5 years)',
+    minSalary: 55000,
+    maxSalary: 85000,
+    avgSalary: 70000,
+  },
+  {
+    position: 'Software Engineer',
+    industry: 'Technology',
+    experience: 'Senior (5-10 years)',
+    minSalary: 70000,
+    maxSalary: 110000,
+    avgSalary: 90000,
+  },
+  {
+    position: 'Software Engineer',
+    industry: 'Technology',
+    experience: 'Lead (10+ years)',
+    minSalary: 90000,
+    maxSalary: 140000,
+    avgSalary: 115000,
+  },
+  {
+    position: 'Product Manager',
+    industry: 'Technology',
+    experience: 'Mid-level (3-5 years)',
+    minSalary: 65000,
+    maxSalary: 95000,
+    avgSalary: 80000,
+  },
+  {
+    position: 'Product Manager',
+    industry: 'Technology',
+    experience: 'Senior (5-10 years)',
+    minSalary: 80000,
+    maxSalary: 120000,
+    avgSalary: 100000,
+  },
+  {
+    position: 'Data Scientist',
+    industry: 'Technology',
+    experience: 'Mid-level (3-5 years)',
+    minSalary: 60000,
+    maxSalary: 90000,
+    avgSalary: 75000,
+  },
+  {
+    position: 'Data Scientist',
+    industry: 'Technology',
+    experience: 'Senior (5-10 years)',
+    minSalary: 75000,
+    maxSalary: 115000,
+    avgSalary: 95000,
+  },
+  {
+    position: 'DevOps Engineer',
+    industry: 'Technology',
+    experience: 'Mid-level (3-5 years)',
+    minSalary: 58000,
+    maxSalary: 88000,
+    avgSalary: 73000,
+  },
+  {
+    position: 'DevOps Engineer',
+    industry: 'Technology',
+    experience: 'Senior (5-10 years)',
+    minSalary: 72000,
+    maxSalary: 110000,
+    avgSalary: 91000,
+  },
+];
 
 export default function StepstoneClient() {
-  const [grossYearly, setGrossYearly] = useState<number>(60000);
-  const [jobGroup, setJobGroup] = useState('');
-  const [experience, setExperience] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [companySize, setCompanySize] = useState('');
-  const [education, setEducation] = useState('');
-  const [responsibility, setResponsibility] = useState('');
-  const [gender, setGender] = useState('');
+  const [selectedPosition, setSelectedPosition] = useState<string>('');
+  const [selectedExperience, setSelectedExperience] = useState<string>('');
+  const [currentSalary, setCurrentSalary] = useState<number>(0);
+  const [comparisonResult, setComparisonResult] = useState<{
+    position: string;
+    industry: string;
+    experience: string;
+    marketMin: number;
+    marketMax: number;
+    marketAvg: number;
+    difference: number;
+    percentage: number;
+  } | null>(null);
 
-  const [calculatedGross, setCalculatedGross] = useState<number | null>(null);
+  const handleCompare = () => {
+    const selected = SALARY_DATA.find(
+      (item) =>
+        item.position === selectedPosition &&
+        item.experience === selectedExperience
+    );
 
-  const handleCalculate = () => {
-    setCalculatedGross(grossYearly);
+    if (selected && currentSalary > 0) {
+      const difference = currentSalary - selected.avgSalary;
+      const percentage = ((currentSalary - selected.avgSalary) / selected.avgSalary) * 100;
+
+      setComparisonResult({
+        position: selected.position,
+        industry: selected.industry,
+        experience: selected.experience,
+        marketMin: selected.minSalary,
+        marketMax: selected.maxSalary,
+        marketAvg: selected.avgSalary,
+        difference,
+        percentage,
+      });
+    }
   };
 
-  const comparisonData = useMemo(() => {
-    if (calculatedGross === null) return [];
-    const comparisons: Array<{ title: string; median: number; diff: number; diffPercent: number }> = [];
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
 
-    if (jobGroup) {
-      const median = STEPSTONE_2026.jobGroups[jobGroup as keyof typeof STEPSTONE_2026.jobGroups] || 0;
-      comparisons.push({
-        title: `Meslek: ${jobGroup}`,
-        median,
-        diff: calculatedGross - median,
-        diffPercent: ((calculatedGross / median) - 1) * 100,
-      });
-    }
-
-    if (experience) {
-      const median = STEPSTONE_2026.experience[experience as keyof typeof STEPSTONE_2026.experience] || 0;
-      comparisons.push({
-        title: `Deneyim: ${EXPERIENCE_OPTIONS.find(e => e.value === experience)?.label}`,
-        median,
-        diff: calculatedGross - median,
-        diffPercent: ((calculatedGross / median) - 1) * 100,
-      });
-    }
-
-    if (city) {
-      const median = STEPSTONE_2026.cities[city as keyof typeof STEPSTONE_2026.cities] || 0;
-      comparisons.push({
-        title: `Şehir: ${city}`,
-        median,
-        diff: calculatedGross - median,
-        diffPercent: ((calculatedGross / median) - 1) * 100,
-      });
-    }
-
-    if (state) {
-      const median = STEPSTONE_2026.states[state as keyof typeof STEPSTONE_2026.states] || 0;
-      comparisons.push({
-        title: `Eyalet: ${STATES.find(s => s.code === state)?.name}`,
-        median,
-        diff: calculatedGross - median,
-        diffPercent: ((calculatedGross / median) - 1) * 100,
-      });
-    }
-
-    if (companySize) {
-      const median = STEPSTONE_2026.companySize[companySize as keyof typeof STEPSTONE_2026.companySize] || 0;
-      comparisons.push({
-        title: `Şirket: ${COMPANY_SIZE_OPTIONS.find(c => c.value === companySize)?.label}`,
-        median,
-        diff: calculatedGross - median,
-        diffPercent: ((calculatedGross / median) - 1) * 100,
-      });
-    }
-
-    return comparisons;
-  }, [calculatedGross, jobGroup, experience, city, state, companySize]);
-
-  const jobGroups = getSortedJobGroups();
-  const cities = getSortedCities();
+  const uniquePositions = Array.from(new Set(SALARY_DATA.map((item) => item.position)));
+  const uniqueExperiences = Array.from(
+    new Set(SALARY_DATA.map((item) => item.experience))
+  );
 
   return (
     <div className="max-w-xl mx-auto space-y-4">
-      {/* Header */}
-      <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-t-4 border-google-orange px-5 py-5 text-center">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Stepstone 2026 Karşılaştırma</h1>
-        <p className="text-gray-500 text-sm mt-1">Maaşını Almanya medyanıyla karşılaştır</p>
+      {/* Info Card */}
+      <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-t-4 border-google-blue">
+        <div className="px-5 pt-5 pb-1 text-center">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            StepStone 2026 Maaş Karşılaştırma
+          </h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Maaşınızı pazar ortalamasıyla karşılaştırın
+          </p>
+        </div>
       </div>
 
-      {/* Form */}
-      <div className="bg-white rounded-2xl shadow-lg p-5 border-t-4 border-google-orange">
+      {/* Input Form */}
+      <div className="bg-white rounded-2xl shadow-lg p-5 border-t-4 border-google-red">
         <h2 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
-          <TrendingUp size={20} />
-          Girdi
+          <Calculator size={20} />
+          Karşılaştırma Bilgileri
         </h2>
 
-        {/* Gross yearly */}
-        <div className="bg-gray-50 rounded-xl p-3 mb-4">
-          <label className="text-xs text-gray-500 mb-2 block">Yıllık Brüt Maaş (€)</label>
-          <input
-            type="number"
-            value={grossYearly}
-            onChange={(e) => setGrossYearly(Number(e.target.value))}
-            className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-google-orange/30"
-            placeholder="60000"
-          />
-        </div>
+        <div className="grid gap-4">
+          {/* Position */}
+          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+            <label className="text-xs text-gray-500 mb-2 block">Pozisyon</label>
+            <select
+              value={selectedPosition}
+              onChange={(e) => setSelectedPosition(e.target.value)}
+              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-blue/30"
+            >
+              <option value="">Seçiniz</option>
+              {uniquePositions.map((pos) => (
+                <option key={pos} value={pos}>
+                  {pos}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-gray-50 rounded-xl p-3">
-            <label className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <Briefcase size={14} /> Meslek grubu
-            </label>
+          {/* Experience */}
+          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+            <label className="text-xs text-gray-500 mb-2 block">Deneyim</label>
             <select
-              value={jobGroup}
-              onChange={(e) => setJobGroup(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none"
+              value={selectedExperience}
+              onChange={(e) => setSelectedExperience(e.target.value)}
+              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-blue/30"
             >
-              <option value="">Seç</option>
-              {jobGroups.map(jg => (
-                <option key={jg} value={jg}>{jg}</option>
+              <option value="">Seçiniz</option>
+              {uniqueExperiences.map((exp) => (
+                <option key={exp} value={exp}>
+                  {exp}
+                </option>
               ))}
             </select>
           </div>
-          <div className="bg-gray-50 rounded-xl p-3">
-            <label className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <Users size={14} /> Deneyim
+
+          {/* Current Salary */}
+          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+            <label className="text-xs text-gray-500 mb-2 block">
+              Mevcut Maaşınız (Yıllık €)
             </label>
-            <select
-              value={experience}
-              onChange={(e) => setExperience(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none"
-            >
-              <option value="">Seç</option>
-              {EXPERIENCE_OPTIONS.map(exp => (
-                <option key={exp.value} value={exp.value}>{exp.label}</option>
-              ))}
-            </select>
-          </div>
-          <div className="bg-gray-50 rounded-xl p-3">
-            <label className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <Building2 size={14} /> Şehir
-            </label>
-            <select
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none"
-            >
-              <option value="">Seç</option>
-              {cities.map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-          <div className="bg-gray-50 rounded-xl p-3">
-            <label className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <Building2 size={14} /> Eyalet
-            </label>
-            <select
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none"
-            >
-              <option value="">Seç</option>
-              {STATES.map(s => (
-                <option key={s.code} value={s.code}>{s.name}</option>
-              ))}
-            </select>
-          </div>
-          <div className="bg-gray-50 rounded-xl p-3">
-            <label className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <Building2 size={14} /> Şirket büyüklüğü
-            </label>
-            <select
-              value={companySize}
-              onChange={(e) => setCompanySize(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none"
-            >
-              <option value="">Seç</option>
-              {COMPANY_SIZE_OPTIONS.map(cs => (
-                <option key={cs.value} value={cs.value}>{cs.label}</option>
-              ))}
-            </select>
-          </div>
-          <div className="bg-gray-50 rounded-xl p-3">
-            <label className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <GraduationCap size={14} /> Eğitim
-            </label>
-            <select
-              value={education}
-              onChange={(e) => setEducation(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none"
-            >
-              <option value="">Seç</option>
-              {EDUCATION_OPTIONS.map(edu => (
-                <option key={edu.value} value={edu.value}>{edu.label}</option>
-              ))}
-            </select>
-          </div>
-          <div className="bg-gray-50 rounded-xl p-3">
-            <label className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <Briefcase size={14} /> Sorumluluk
-            </label>
-            <select
-              value={responsibility}
-              onChange={(e) => setResponsibility(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none"
-            >
-              <option value="">Seç</option>
-              {RESPONSIBILITY_OPTIONS.map(resp => (
-                <option key={resp.value} value={resp.value}>{resp.label}</option>
-              ))}
-            </select>
-          </div>
-          <div className="bg-gray-50 rounded-xl p-3">
-            <label className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-              <User size={14} /> Cinsiyet
-            </label>
-            <select
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none"
-            >
-              <option value="">Seç</option>
-              {GENDER_OPTIONS.map(g => (
-                <option key={g.value} value={g.value}>{g.label}</option>
-              ))}
-            </select>
+            <input
+              type="number"
+              value={currentSalary}
+              onChange={(e) => setCurrentSalary(Number(e.target.value))}
+              className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-google-blue/30"
+              placeholder="75000"
+            />
           </div>
         </div>
 
         <button
-          onClick={handleCalculate}
-          className="mt-4 w-full py-3 px-6 bg-google-orange text-white font-semibold rounded-xl hover:bg-orange-500 active:scale-95 transition-all"
+          onClick={handleCompare}
+          disabled={!selectedPosition || !selectedExperience || currentSalary <= 0}
+          className={cn(
+            'mt-4 w-full py-3 px-6 font-semibold rounded-xl transition-all',
+            !selectedPosition || !selectedExperience || currentSalary <= 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-google-blue text-white hover:bg-blue-600 active:scale-95'
+          )}
         >
           Karşılaştır
         </button>
       </div>
 
       {/* Results */}
-      {calculatedGross !== null && (
-        <div className="bg-white rounded-2xl shadow-lg p-5 border-t-4 border-google-orange">
-          <div className="flex justify-between items-center pb-3 border-b border-gray-200 mb-3">
-            <div>
-              <div className="text-sm text-gray-500">Senin yıllık brütün</div>
-              <div className="text-2xl font-bold text-gray-900">{formatCurrency(calculatedGross)}</div>
+      {comparisonResult && (
+        <div className="bg-white rounded-2xl shadow-lg p-5 border-t-4 border-google-green">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Sonuç</h2>
+
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+              <h3 className="text-xs text-gray-500 mb-1">Pazar Minimum</h3>
+              <div className="text-lg font-bold text-gray-900">
+                {formatCurrency(comparisonResult.marketMin)}
+              </div>
             </div>
-            <div className="text-right">
-              <div className="text-sm text-gray-500">Genel Almanya Medyanı</div>
-              <div className="text-lg font-semibold text-gray-900">{formatCurrency(STEPSTONE_2026.overall.median)}</div>
-              <div className={cn(
-                'text-xs',
-                calculatedGross - STEPSTONE_2026.overall.median >= 0 ? 'text-green-600' : 'text-red-600'
-              )}>
-                {calculatedGross - STEPSTONE_2026.overall.median >= 0 ? '+' : ''}
-                {formatCurrency(calculatedGross - STEPSTONE_2026.overall.median)}
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+              <h3 className="text-xs text-gray-500 mb-1">Pazar Maksimum</h3>
+              <div className="text-lg font-bold text-gray-900">
+                {formatCurrency(comparisonResult.marketMax)}
+              </div>
+            </div>
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+              <h3 className="text-xs text-gray-500 mb-1">Pazar Ortalaması</h3>
+              <div className="text-lg font-bold text-gray-900">
+                {formatCurrency(comparisonResult.marketAvg)}
+              </div>
+            </div>
+            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+              <h3 className="text-xs text-gray-500 mb-1">Maaşınız</h3>
+              <div className="text-lg font-bold text-gray-900">
+                {formatCurrency(currentSalary)}
               </div>
             </div>
           </div>
 
-          {comparisonData.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-2">Karşılaştırma için en az bir alan seç.</p>
-          ) : (
-            <div className="space-y-3">
-              {comparisonData.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
-                  <div className="text-sm text-gray-700">{item.title}</div>
-                  <div className="text-right">
-                    <div className="font-semibold text-gray-900">{formatCurrency(item.median)}</div>
-                    <div className={cn(
-                      'text-xs',
-                      item.diff >= 0 ? 'text-green-600' : 'text-red-600'
-                    )}>
-                      Fark: {item.diff >= 0 ? '+' : ''}{formatCurrency(item.diff)} ({formatPercent(item.diffPercent)})
-                    </div>
-                  </div>
-                </div>
-              ))}
+          {/* Comparison Indicator */}
+          <div
+            className={cn(
+              'rounded-xl p-4 flex items-center gap-3',
+              comparisonResult.percentage > 5
+                ? 'bg-green-50 border border-green-200'
+                : comparisonResult.percentage < -5
+                ? 'bg-red-50 border border-red-200'
+                : 'bg-yellow-50 border border-yellow-200'
+            )}
+          >
+            {comparisonResult.percentage > 5 ? (
+              <TrendingUp className="w-8 h-8 text-green-600 flex-shrink-0" />
+            ) : comparisonResult.percentage < -5 ? (
+              <TrendingDown className="w-8 h-8 text-red-600 flex-shrink-0" />
+            ) : (
+              <Minus className="w-8 h-8 text-yellow-600 flex-shrink-0" />
+            )}
+            <div>
+              <div className="text-sm font-medium text-gray-700">
+                {comparisonResult.percentage > 5
+                  ? 'Maaşınız pazar ortalamasının üzerinde'
+                  : comparisonResult.percentage < -5
+                  ? 'Maaşınız pazar ortalamasının altında'
+                  : 'Maaşınız pazar ortalamasına yakın'}
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                {comparisonResult.difference > 0 ? '+' : ''}
+                {formatCurrency(comparisonResult.difference)} (
+                {comparisonResult.percentage > 0 ? '+' : ''}
+                {comparisonResult.percentage.toFixed(1)}%)
+              </div>
             </div>
-          )}
+          </div>
         </div>
       )}
+
+      {/* Market Data */}
+      <div className="bg-white rounded-2xl shadow-lg p-5 border-t-4 border-google-yellow">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          Pazar Verileri (StepStone 2026)
+        </h2>
+        <div className="space-y-2">
+          {SALARY_DATA.map((item, index) => (
+            <div
+              key={index}
+              className="bg-google-blue/10 rounded-lg p-3 border border-google-blue/20"
+            >
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <div className="font-medium text-gray-900 text-sm">
+                    {item.position}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {item.experience}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900 text-sm">
+                    {formatCurrency(item.avgSalary)}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {formatCurrency(item.minSalary)} - {formatCurrency(item.maxSalary)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
