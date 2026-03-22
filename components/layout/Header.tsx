@@ -7,34 +7,7 @@ import { SITE_NAME } from '@/lib/utils/constants';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { cn } from '@/lib/utils/cn';
-
-interface DrawerItem {
-  href: string;
-  label: string;
-  description?: string;
-}
-
-const DRAWER_ITEMS: DrawerItem[] = [
-  { href: 'https://101.almanya101.de/devuser/dev.html', label: '💻 Developer Topluluğu', description: 'Almanya\'daki Türk developerlar için topluluk platformu.' },
-  { href: '/devuser/list.html', label: '👥 Developer Listesi', description: 'Developerları ara ve filtrele.' },
-  { href: '/devuser/cvopt.html', label: '📝 CV Optimizasyonu', description: 'CV\'nizi optimize edin.' },
-  { href: '/yazi-dizisi', label: '📝 Yazı Dizisi', description: 'Adım adım rehberler ve yazılar.' },
-  { href: '/haberler', label: '📰 Haberler', description: 'Güncel haberler ve gelişmeler.' },
-  { href: '/belgeler', label: '📄 Yararlı Belgeler', description: 'İhtiyacınız olan belgeler ve formlar.' },
-  { href: '/#biz-kimiz', label: '🧑‍💻 Biz kimiz?', description: 'almanya101 ekibini tanıyın!' },
-  { href: '/#bize-katil', label: '🤝 Bize Katıl!', description: 'almanya101 ekibine katılmak için tıkla!' },
-  { href: '/maas-hesaplama', label: '💸 Brütten Nete Maaş Hesaplama', description: 'Maaşınızın netini anında görün.' },
-  { href: '/vatandaslik-testi', label: '📝 Vatandaşlık Testi Denemesi', description: 'Almanya vatandaşlık testi için deneme sınavı' },
-  { href: '/banka-secim', label: '💳 Banka Seçim Araci', description: '20 soruyla banka profilinizi belirleyin.' },
-  { href: '/sigorta-secim', label: '🛡️ Sigorta Seçim Araci', description: '20 soruyla sigortaları önceliklendirin.' },
-  { href: '/hizmet-rehberi', label: '👨‍⚕️ Türk Hizmet Rehberi', description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!' },
-  { href: '/tatil/turkiye', label: '✈️ Tatil Planlayıcı 2026 Türkiye', description: 'Türkiye\'de 2026 tatilinizi planlayın!' },
-  { href: '/tatil/almanya', label: '🏖️ Tatil Planlayıcı 2026 Almanya', description: 'Almanya\'da 2026 tatilinizi planlayın!' },
-  { href: '/para-transferi', label: '🔁 Para Transferi Seçim Aracı', description: 'Size uygun aktarım aracını 20 soruyla bulun!' },
-  { href: '/software-hub', label: '💻 Software Hub', description: 'Developer Dashboard ve araçlar.' },
-  { href: '/topluluk', label: '👥 Topluluğa Katıl', description: 'Türk topluluğuna dahil olun!' },
-  { href: '/iletisim', label: '✉️ İletişim', description: 'Bizimle hızlıca iletişime geçin.' },
-];
+import { DRAWER_ITEMS } from '@/constants/navigation';
 
 export function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -89,7 +62,7 @@ export function Header() {
       {/* Drawer */}
       <div 
         className={cn(
-          'fixed top-0 right-0 h-[1000px] w-80 max-w-[85vw] bg-black z-50 shadow-2xl transform transition-transform duration-300 ease-in-out overflow-hidden',
+          'fixed top-0 right-0 h-screen w-80 max-w-[85vw] bg-black z-50 shadow-2xl transform transition-transform duration-300 ease-in-out overflow-y-auto',
           isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
@@ -132,8 +105,6 @@ export function Header() {
             </Link>
           ))}
         </nav>
-
-
       </div>
     </>
   );
