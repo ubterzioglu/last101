@@ -157,6 +157,12 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop',
   },
   {
+    href: '/turk-hizmet-rehberi-oner',
+    label: 'Hizmet Öner',
+    description: 'Uzman ekleyin!',
+    image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop',
+  },
+  {
     href: '/iletisim',
     label: 'İletişim',
     description: 'Bize hızlıca ulaşın.',
