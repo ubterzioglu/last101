@@ -42,7 +42,7 @@ const QUESTIONS: Question[] = [
     text: 'Üniversite diplomanız var mı ve Almanya tarafından tanınıyor mu?',
     hint: 'Lisans veya üzeri. Tanınırlık için anabin.de kontrol edilebilir.',
     options: [
-      { key: 'yes',     label: '✓  Evet, tanınmış / tanınabilir diplomain var',         next: 'Q05' },
+      { key: 'yes',     label: '✓  Evet, tanınmış / tanınabilir diplomam var',         next: 'Q05' },
       { key: 'process', label: '🔄  Diplomain var ama tanınma süreci devam ediyor',      next: 'RESULT:RECOGNITION_VISA' },
       { key: 'no',      label: '✗  Hayır, üniversite diplomam yok',                     next: 'Q07' },
     ],
@@ -102,7 +102,7 @@ const QUESTIONS: Question[] = [
     text: 'Üniversite diplomanız var mı ve Almanya tarafından tanınıyor mu?',
     hint: 'Chancenkarte ve iş arama vizesinde diplomanın tanınırlığı belirleyicidir.',
     options: [
-      { key: 'yes',     label: '✓  Evet, tanınmış / tanınabilir diplomain var',       next: 'Q10' },
+      { key: 'yes',     label: '✓  Evet, tanınmış / tanınabilir diplomam var',       next: 'Q10' },
       { key: 'process', label: '🔄  Diplomain var ama tanınma süreci devam ediyor',   next: 'RESULT:RECOGNITION_VISA' },
       { key: 'no',      label: '✗  Hayır, üniversite diplomam yok',                   next: 'Q12' },
     ],
@@ -296,7 +296,7 @@ const RESULTS: VisaResult[] = [
       'Süreç belgesini veya ön onayı alın',
       'Almanya Büyükelçiliği\'ne §16d AufenthG kapsamında başvurun',
       'Almanya\'ya gelerek tanınma sürecini tamamlayın',
-      'Tanınma tamamlanınca Fachkräftevisa veya Blue Card\'a geçiş yapın',
+      'Tanınma tamamlanınca Fachkräftevisa veya Mavi Kart\'a geçiş yapın',
     ],
     note: 'Tanınma ortalama 3–6 ay sürebilir. §16d kapsamında bazı sektörlerde tanınma tamamlanmadan pratik eğitimle çalışma imkânı vardır.',
   },
@@ -341,7 +341,7 @@ const RESULTS: VisaResult[] = [
       'Kabul mektubunu aldıktan sonra vize başvurusu yapın',
       'Deutsche Bank, Fintiba veya Coracle üzerinden bloke hesap açın',
     ],
-    note: 'Türkiye mezunları için uni-assist.de üzerinden başvuru çoğu üniversitede zorunludur. Başvuru dönemleri: Ocak (kış) ve Mayıs–Temmuz (yaz yarıyılı).',
+    note: 'Türkiye mezunları için uni-assist.de üzerinden başvuru çoğu üniversitede zorunludur. Başvuru dönemleri: Ocak (yaz yarıyılı / Sommersemester) ve Mayıs–Temmuz (kış yarıyılı / Wintersemester).',
   },
   {
     id: 'STUDIENKOLLEG',
@@ -415,7 +415,7 @@ const RESULTS: VisaResult[] = [
       'Yeterli yaşam alanı ve gelir (sponsor)',
     ],
     steps: [
-      'Almanya\'daki aile üyesinin oturma izni türünü ve süresi teyit edin',
+      'Almanya\'daki aile üyesinin oturma izni türünü ve süresini teyit edin',
       'İnsani gerekçelerinizi belgeleyin (sağlık raporu, bağımlılık durumu vb.)',
       'Bir göçmenlik avukatıyla çalışmanız şiddetle önerilir',
       'Almanya Büyükelçiliği\'ne randevuyla başvurun',
@@ -457,7 +457,7 @@ const RESULTS: VisaResult[] = [
       'Eşinizden davet mektubu ve sponsorluk belgelerini temin edin',
       'Almanya Büyükelçiliği\'ne aile birleşimi vizesi için başvurun',
     ],
-    note: 'A1 sınavı zor değildir; temel selamlaşma, sayılar ve basit cümle kalıplarını kapsar. İstisna: eş AB vatandaşıysa veya Blue Card sahibiyse A1 gerekmeyebilir.',
+    note: 'A1 sınavı zor değildir; temel selamlaşma, sayılar ve basit cümle kalıplarını kapsar. İstisna: eş AB vatandaşıysa veya Mavi Kart sahibiyse A1 gerekmeyebilir.',
   },
   {
     id: 'LIMITED_IT',
@@ -586,7 +586,7 @@ const RESULTS: VisaResult[] = [
       'Diplomanızın tanınırlığını kontrol edin',
       'Finansal kanıt için bloke hesap açın',
       'Almanya Büyükelçiliği\'ne §20 AufenthG kapsamında başvurun',
-      '6 ay içinde iş bularak Fachkräftevisa veya Blue Card\'a geçiş yapın',
+      '6 ay içinde iş bularak Fachkräftevisa veya Mavi Kart\'a geçiş yapın',
     ],
     note: '6 aylık süre uzatılamaz. Süre dolmadan iş teklifi alınarak çalışma vizesine geçilmesi zorunludur.',
   },
@@ -629,7 +629,7 @@ const RESULTS: VisaResult[] = [
   {
     id: 'AUSBILDUNG',
     title: 'Ausbildung Vizesi',
-    subtitle: 'Berufsausbildungsvisa — Mesleki Eğitim (§16a AufenthG)',
+    subtitle: 'Ausbildungsvisum — Mesleki Eğitim (§16a AufenthG)',
     color: 'green',
     requirements: [
       'Almanya\'dan Ausbildungsvertrag (eğitim sözleşmesi)',
@@ -682,7 +682,7 @@ const RESULTS: VisaResult[] = [
   {
     id: 'SELF_EMPLOY',
     title: 'Serbest Meslek Vizesi',
-    subtitle: 'Selbstständigkeitsvisa — Girişimci / Şirket Kurucusu (§21 AufenthG)',
+    subtitle: 'Selbstständigenvisum — Girişimci / Şirket Kurucusu (§21 AufenthG)',
     color: 'orange',
     requirements: [
       'Detaylı iş planı (Businessplan)',
@@ -701,7 +701,7 @@ const RESULTS: VisaResult[] = [
   {
     id: 'LIMITED',
     title: 'Kısıtlı Seçenekler',
-    subtitle: 'Mevcut profille doğrudan vize alma güçtür',
+    subtitle: 'Mevcut profille doğrudan vize almak zordur',
     color: 'red',
     requirements: [
       'Tanınmış diploma veya mesleki sertifika zorunludur',
