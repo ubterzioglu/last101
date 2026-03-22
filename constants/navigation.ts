@@ -28,7 +28,7 @@ export const DRAWER_ITEMS: DrawerItem[] = [
   { href: '/topluluk', label: '👥 Topluluğa Katıl', description: 'Türk topluluğuna dahil olun!', category: 'community' },
 
   // Content
-  { href: '/hizmet-rehberi', label: '👨‍⚕️ Türk Hizmet Rehberi', description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!', category: 'content' },
+  { href: '/hizmet-rehberi', label: '👨‍⚕️ Türk Hizmet Rehberi', description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!', category: 'tools' },
   { href: '/yazi-dizisi', label: '📝 Yazı Dizisi', description: 'Adım adım rehberler ve yazılar.', category: 'content' },
   { href: '/haberler', label: '📰 Haberler', description: 'Güncel haberler ve gelişmeler.', category: 'content' },
   { href: '/belgeler', label: '📄 Yararlı Belgeler', description: 'İhtiyacınız olan belgeler ve formlar.', category: 'content' },
