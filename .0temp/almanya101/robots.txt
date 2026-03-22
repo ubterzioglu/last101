@@ -1,0 +1,40 @@
+# robots.txt for almanya101.de
+
+# Allow all user agents
+User-agent: *
+Allow: /
+
+# Disallow admin/private pages
+Disallow: /zbom/zbom-admin.html
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*?*q=*
+
+# Sitemap location
+Sitemap: https://almanya101.de/sitemap.xml
+
+# Crawl delay (optional, be nice to servers)
+Crawl-delay: 1
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+# Block bad bots (optional)
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10

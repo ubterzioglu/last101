@@ -17,6 +17,7 @@ export const DRAWER_ITEMS: DrawerItem[] = [
   { href: '/banka-secim', label: '💳 Banka Seçim Araci', description: '20 soruyla banka profilinizi belirleyin.', category: 'tools' },
   { href: '/sigorta-secim', label: '🛡️ Sigorta Seçim Araci', description: '20 soruyla sigortaları önceliklendirin.', category: 'tools' },
   { href: '/para-transferi', label: '🔁 Para Transferi Seçim Aracı', description: 'Size uygun aktarım aracını bulun!', category: 'tools' },
+  { href: '/vize-secim', label: '🛂 Vize Seçim Aracı', description: 'Hangi Almanya vizesine başvurmanız gerektiğini 10-13 soruda öğrenin.', category: 'tools' },
   { href: '/tatil/turkiye', label: '✈️ Tatil Planlayıcı 2026 Türkiye', description: 'Türkiye\'de 2026 tatilinizi planlayın!', category: 'tools' },
   { href: '/tatil/almanya', label: '🏖️ Tatil Planlayıcı 2026 Almanya', description: 'Almanya\'da 2026 tatilinizi planlayın!', category: 'tools' },
 

@@ -1,0 +1,15 @@
+/* Color palette extracted from provided reference image */
+:root {
+  --cp-red: #d90000;
+  --cp-yellow: #ffc107;
+  --cp-light-gray: #dddee3;
+  --cp-black: #000000;
+  --cp-violet: #7a00f7;
+
+  --cp-sky-blue: #1ea0e6;
+  --cp-lime: #7bc400;
+  --cp-orange: #ff5a0a;
+  --cp-magenta: #9800c7;
+
+  --cp-light-gray-2: #dddee3;
+}

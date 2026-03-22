@@ -1,0 +1,2103 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+  <title>SW DE TR Kayıt - almanya101 - hep destek! tam destek!</title>
+  <meta name="title" content="SW DE TR Kayıt - almanya101 - hep destek! tam destek!">
+  <meta name="description" content="SW DE TR Kayıt - almanya101 - hep destek! tam destek!">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://almanya101.de/devuser/du.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:site_name" content="almanya101" />
+  <meta property="og:title" content="SW DE TR Kayıt - almanya101 - hep destek! tam destek!" />
+  <meta property="og:description" content="SW DE TR Kayıt - almanya101 - hep destek! tam destek!" />
+  <meta property="og:url" content="https://almanya101.de/devuser/du.html" />
+  <meta property="og:image" content="https://almanya101.de/devuser/du-share.svg" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SW DE TR Kayıt - almanya101 - hep destek! tam destek!" />
+  <meta name="twitter:description" content="SW DE TR Kayıt - almanya101 - hep destek! tam destek!" />
+  <meta name="twitter:image" content="https://almanya101.de/devuser/du-share.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --google-blue: #4285F4;
+      --google-red: #EA4335;
+      --google-yellow: #FBBC05;
+      --google-green: #34A853;
+      --dark-bg: #000000;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      --gradient-1: linear-gradient(135deg, #4285F4 0%, #EA4335 50%, #FBBC05 100%);
+      --gradient-2: linear-gradient(135deg, #34A853 0%, #4285F4 100%);
+      --gradient-3: linear-gradient(135deg, #FBBC05 0%, #EA4335 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--dark-bg);
+      min-height: 100vh;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: #000;
+    }
+
+    #code-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.28;
+    }
+
+    /* Grid Pattern Overlay */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Container */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Centered Logo */
+    .top-logo {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-top: 10px;
+    }
+
+    .top-logo img {
+      width: 300px;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 8px 32px rgba(66, 133, 244, 0.3);
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0 20px;
+      border-bottom: 1px solid var(--glass-border);
+      margin-bottom: 20px;
+    }
+
+    .title-group h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+      text-align: center;
+    }
+
+    /* Back Link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--google-blue);
+    }
+
+    /* Glassmorphism Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 28px;
+      backdrop-filter: blur(20px);
+      margin-bottom: 20px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Hero Card */
+    .hero-card {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-1);
+    }
+
+    .hero-domain {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--google-blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .hero-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-count {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .hero-count-label {
+      color: var(--text-secondary);
+    }
+
+    .hero-count-value {
+      font-weight: 600;
+      color: var(--google-green);
+    }
+
+    /* Info Card */
+    .info-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .info-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--google-yellow);
+    }
+
+    .info-toggle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: transform 0.3s ease;
+    }
+
+    .info-toggle.open {
+      transform: rotate(180deg);
+    }
+
+    .info-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .info-content.open {
+      max-height: 500px;
+      padding-top: 16px;
+    }
+
+    .info-content p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-1);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+
+    .progress-text {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Step Container */
+    .step-container {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .step-container.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--google-blue);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .question-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    /* Form Inputs */
+    .form-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-input:focus {
+      border-color: var(--google-blue);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+    }
+
+    .form-input.city-offset {
+      margin-top: 16px;
+    }
+
+    textarea.form-input {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Radio Group */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-group.role-two-col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .radio-label:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .radio-label input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--google-blue);
+      cursor: pointer;
+    }
+
+    .radio-label span {
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* Checkbox Group */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .checkbox-group.checkbox-group-two-col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-label:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--google-green);
+      cursor: pointer;
+    }
+
+    .checkbox-label span {
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+
+    /* Conditional Field */
+    .conditional-field {
+      display: none;
+      margin-top: 16px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .conditional-field.active {
+      display: block;
+    }
+
+    .conditional-field .question-title {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: var(--text-secondary);
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--gradient-1);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(66, 133, 244, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Success Message */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .success-message.active {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    .success-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: var(--gradient-2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .success-text {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Char Count */
+    #charCount {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    /* Compact Step Styles */
+    .step7-compact .question-title {
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .step7-compact .question-title:not(:first-of-type) {
+      margin-top: 20px;
+    }
+
+    .step17-compact .checkbox-label span {
+      font-size: 12px;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      .top-logo img {
+        width: 220px;
+      }
+
+      .title-group h1 {
+        font-size: 18px;
+      }
+
+      .card {
+        padding: 20px;
+        border-radius: 20px;
+      }
+
+      .hero-card h3 {
+        font-size: 20px;
+      }
+
+      .question-title {
+        font-size: 16px;
+      }
+
+      .radio-group.role-two-col,
+      .checkbox-group.checkbox-group-two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .checkbox-label span {
+        font-size: 12px;
+      }
+
+      .btn {
+        padding: 12px 18px;
+        font-size: 14px;
+      }
+
+      .success-title {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .top-logo img {
+        width: 180px;
+      }
+
+      .title-group h1 {
+        font-size: 16px;
+      }
+
+      .form-input {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+
+      .radio-label {
+        padding: 12px 14px;
+      }
+
+      .checkbox-label {
+        padding: 10px 12px;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+<link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+<link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <canvas id="code-canvas"></canvas>
+  </div>
+  <div class="grid-overlay"></div>
+
+  <div class="container">
+    <!-- Top Centered Logo -->
+    <div class="top-logo">
+      <img src="../almanya101.png" alt="almanya101">
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="title-group">
+        <h1>de tr software dashboard</h1>
+      </div>
+    </header>
+
+    <!-- Back Link -->
+    <a href="../dev.html" class="back-link">← dashboard'a dön</a>
+
+    <!-- Hero Card -->
+    <div class="card hero-card">
+      <div class="hero-domain">almanya101.de</div>
+      <h3>Software Veritabanı Kayıt</h3>
+      <div class="hero-count" aria-live="polite">
+        <span class="hero-count-label">Kayıtlı kullanıcı:</span>
+        <span class="hero-count-value" id="registeredUserCount">Yükleniyor...</span>
+      </div>
+    </div>
+
+    <!-- Info Card (Collapsible) -->
+    <div class="card">
+      <div class="info-header" onclick="toggleInfo()">
+        <span class="info-title">💡 Neden?</span>
+        <span class="info-toggle" id="infoToggle">▼</span>
+      </div>
+      <div class="info-content" id="infoContent">
+        <p>
+          Amaç veri toplamak değil; birbirimize destek olmak. Bu veritabanı, ihtiyaç duyduğumuzda birbirimizin tecrübelerini, ilgi alanlarını ve yeteneklerini tanıyabilmek için oluşturuluyor. Paylaşılan bilgiler yalnızca topluluk içinde networking, mentorluk, iş birlikleri ve bilgi paylaşımı için kullanılacak.<br /><br />Birlikte daha güçlüyüz.
+        </p>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="card">
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Soru 1 / 22</div>
+      </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="card">
+      <form id="devuserForm">
+        
+        <!-- Q1: Profil iletisim -->
+        <div class="step-container active" data-step="1">
+          <div class="question-number">Soru 1 / 22</div>
+          <div class="question-title">Ad Soyad</div>
+          <input type="text" name="ad_soyad" class="form-input" placeholder="Adınız ve soyadınız" />
+          <div class="question-title" style="margin-top: 20px;">LinkedIn profil linkiniz</div>
+          <input type="text" name="linkedin_url" class="form-input" placeholder="https://linkedin.com/in/..." />
+          <div class="question-title" style="margin-top: 20px;">WhatsApp telefon numaranız</div>
+          <input type="text" name="whatsapp_tel" class="form-input" placeholder="+49 123 456 7890" />
+        </div>
+
+        <!-- Q2: Yasam yeri + sehir -->
+        <div class="step-container" data-step="2">
+          <div class="question-number">Soru 2 / 22</div>
+          <div class="question-title">Şu anda nerede yaşıyorsunuz?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="yasam_yeri" value="Almanya" onchange="toggleConditional('yasamYeriDiger', false)" />
+              <span>Almanya</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="yasam_yeri" value="Türkiye" onchange="toggleConditional('yasamYeriDiger', false)" />
+              <span>Türkiye</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="yasam_yeri" value="Diğer" onchange="toggleConditional('yasamYeriDiger', true)" />
+              <span>Diğer</span>
+            </label>
+          </div>
+          <div id="yasamYeriDiger" class="conditional-field">
+            <input type="text" name="yasam_yeri_diger" class="form-input" placeholder="Hangi ülke?" />
+          </div>
+          <input type="text" name="sehir" class="form-input city-offset" placeholder="Şehir (Berlin, Münih, Hamburg...)" />
+        </div>
+
+        <!-- Q3: Rol -->
+        <div class="step-container" data-step="3">
+          <div class="question-number">Soru 3 / 22</div>
+          <div class="question-title">Rolün nedir?</div>
+          <div class="radio-group role-two-col">
+            <label class="radio-label">
+              <input type="radio" name="rol" value="Software Developer" />
+              <span>Software Developer</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rol" value="QA / Test" />
+              <span>QA / Test</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rol" value="DevOps" />
+              <span>DevOps</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rol" value="Data / AI" />
+              <span>Data / AI</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rol" value="Product / Project" />
+              <span>Product / Project</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rol" value="UI/UX" />
+              <span>UI/UX</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rol" value="Öğrenci" />
+              <span>Öğrenci</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rol" value="Diğer" />
+              <span>Diğer</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4: Deneyim -->
+        <div class="step-container" data-step="4">
+          <div class="question-number">Soru 4 / 22</div>
+          <div class="question-title">Deneyim seviyeniz?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="deneyim_seviye" value="0-1 yil" />
+              <span>0-1 yıl</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="deneyim_seviye" value="1-3 yil" />
+              <span>1-3 yıl</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="deneyim_seviye" value="3-5 yil" />
+              <span>3-5 yıl</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="deneyim_seviye" value="5-10 yil" />
+              <span>5-10 yıl</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="deneyim_seviye" value="10+ yil" />
+              <span>10+ yıl</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5: Güçlü alanlar -->
+        <div class="step-container" data-step="5">
+          <div class="question-number">Soru 5 / 22</div>
+          <div class="question-title">En güçlü olduğun alanlar (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="Backend" />
+              <span>Backend</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="Frontend" />
+              <span>Frontend</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="Mobile" />
+              <span>Mobile</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="QA / Manual Testing" />
+              <span>QA / Manual Testing</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="Test Automation" />
+              <span>Test Automation</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="DevOps / CI-CD" />
+              <span>DevOps / CI-CD</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="Data / BI" />
+              <span>Data / BI</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="AI / ML" />
+              <span>AI / ML</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="Cloud" />
+              <span>Cloud</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="Security" />
+              <span>Security</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="Product / Project" />
+              <span>Product / Project</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="guclu_alanlar" value="UI/UX" />
+              <span>UI/UX</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6: Açık kaynak -->
+        <div class="step-container step7-compact" data-step="6">
+          <div class="question-number">Soru 6 / 22</div>
+          <div class="question-title">Kendi projen / girişimin var mı?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="kendi_proje" value="true" onchange="toggleConditional('projeLink', true)" />
+              <span>Evet</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="kendi_proje" value="false" onchange="toggleConditional('projeLink', false)" />
+              <span>Hayır</span>
+            </label>
+          </div>
+          <div id="projeLink" class="conditional-field">
+            <div class="question-title">Proje linki veya ismi :</div>
+            <input type="text" name="proje_link" class="form-input" placeholder="Proje linki (GitHub, website, vb.)" />
+          </div>
+          <div class="question-title">Aktif olarak kod yazıyor musun?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="aktif_kod" value="true" />
+              <span>Evet</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="aktif_kod" value="false" />
+              <span>Hayır</span>
+            </label>
+          </div>
+          <div class="question-title">Açık kaynak projelere katkı sağlıyor musun?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="acik_kaynak" value="true" />
+              <span>Evet</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="acik_kaynak" value="false" />
+              <span>Hayır</span>
+            </label>
+          </div>
+          <div class="question-title" style="margin-top: 20px;">Profesyonel destek almak ister misin?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="profesyonel_destek_almak" value="true" />
+              <span>Evet</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="profesyonel_destek_almak" value="false" />
+              <span>Hayır</span>
+            </label>
+          </div>
+          <div class="question-title" style="margin-top: 20px;">Profesyonel destek verebilir misin? (CV, mülakat, kariyer)</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="profesyonel_destek_verebilir" value="true" />
+              <span>Evet</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="profesyonel_destek_verebilir" value="false" />
+              <span>Hayır</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7: Programlama dilleri -->
+        <div class="step-container" data-step="7">
+          <div class="question-number">Soru 7 / 22</div>
+          <div class="question-title">Kullandığın programlama dilleri (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="JavaScript" />
+              <span>JavaScript</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="TypeScript" />
+              <span>TypeScript</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="Python" />
+              <span>Python</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="Java" />
+              <span>Java</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="C#" />
+              <span>C#</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="Go" />
+              <span>Go</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="PHP" />
+              <span>PHP</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="C/C++" />
+              <span>C/C++</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="Kotlin" />
+              <span>Kotlin</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="Swift" />
+              <span>Swift</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="SQL" />
+              <span>SQL</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="programlama_dilleri" value="Diğer" />
+              <span>Diğer</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8: Framework -->
+        <div class="step-container" data-step="8">
+          <div class="question-number">Soru 8 / 22</div>
+          <div class="question-title">Kullandığın framework / platformlar (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="React" />
+              <span>React</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Angular" />
+              <span>Angular</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Vue" />
+              <span>Vue</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Node.js" />
+              <span>Node.js</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value=".NET" />
+              <span>.NET</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Spring" />
+              <span>Spring</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Django" />
+              <span>Django</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="FastAPI" />
+              <span>FastAPI</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Flutter" />
+              <span>Flutter</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="React Native" />
+              <span>React Native</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Compose" />
+              <span>Compose</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Ktor" />
+              <span>Ktor</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Quarkus" />
+              <span>Quarkus</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Micronaut" />
+              <span>Micronaut</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="framework_platformlar" value="Fiber (Go)" />
+              <span>Fiber (Go)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9: DevOps/Cloud -->
+        <div class="step-container" data-step="9">
+          <div class="question-number">Soru 9 / 22</div>
+          <div class="question-title">DevOps / Cloud araçları (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="Docker" />
+              <span>Docker</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="Kubernetes" />
+              <span>Kubernetes</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="AWS" />
+              <span>AWS</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="Azure" />
+              <span>Azure</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="GCP" />
+              <span>GCP</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="Terraform" />
+              <span>Terraform</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="GitHub Actions" />
+              <span>GitHub Actions</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="GitLab CI" />
+              <span>GitLab CI</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="Jenkins" />
+              <span>Jenkins</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="devops_cloud" value="Diğer" />
+              <span>Diğer</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10: İlgi konuları -->
+        <div class="step-container" data-step="10">
+          <div class="question-number">Soru 10 / 22</div>
+          <div class="question-title">Şu anda en çok ilgini çeken konular (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="AI araçları / LLM uygulamaları" />
+              <span>AI araçları / LLM uygulamaları</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Startup / ürün geliştirme" />
+              <span>Startup / ürün geliştirme</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Freelance / danışmanlık" />
+              <span>Freelance / danışmanlık</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Remote çalışma" />
+              <span>Remote çalışma</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Almanya'da kariyer & iş piyasası" />
+              <span>Almanya'da kariyer & iş piyasası</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Networking / event / meetup" />
+              <span>Networking / event / meetup</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Side project / hackathon" />
+              <span>Side project / hackathon</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Open-source" />
+              <span>Open-source</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Sertifika / eğitim" />
+              <span>Sertifika / eğitim</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ilgi_konular" value="Teknik yazı / içerik üretimi" />
+              <span>Teknik yazı / içerik üretimi</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q11: Öğrenmek istenen -->
+        <div class="step-container" data-step="11">
+          <div class="question-number">Soru 11 / 22</div>
+          <div class="question-title">Öğrenmek istediğin alanlar (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="Backend" />
+              <span>Backend</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="Frontend" />
+              <span>Frontend</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="Mobile" />
+              <span>Mobile</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="Test Automation" />
+              <span>Test Automation</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="DevOps" />
+              <span>DevOps</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="Cloud" />
+              <span>Cloud</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="AI / ML" />
+              <span>AI / ML</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="System Design / Architecture" />
+              <span>System Design / Architecture</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="UI/UX" />
+              <span>UI/UX</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="Interview prep / CV" />
+              <span>Interview prep / CV</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="Almanya kariyer / iş arama" />
+              <span>Almanya kariyer / iş arama</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ogrenmek_istenen" value="Diğer" />
+              <span>Diğer</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q12: İş arama -->
+        <div class="step-container" data-step="12">
+          <div class="question-number">Soru 12 / 22</div>
+          <div class="question-title">Aktif olarak iş arıyor musun?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="is_arama_durumu" value="Hayir" />
+              <span>Hayır</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="is_arama_durumu" value="Evet, pasif (firsat olursa)" />
+              <span>Evet, pasif (fırsat olursa)</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="is_arama_durumu" value="Evet, aktif" />
+              <span>Evet, aktif</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="is_arama_durumu" value="Sadece freelance bakiyorum" />
+              <span>Sadece freelance bakıyorum</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q13: AI App Builders -->
+        <div class="step-container" data-step="13">
+          <div class="question-number">Soru 13 / 22</div>
+          <div class="question-title">Aşağıdaki AI-driven app builderlardan hangilerini kullanıyorsun? (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Manus" />
+              <span>Manus</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Lovable" />
+              <span>Lovable</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Bolt.new" />
+              <span>Bolt.new</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Vercel v0" />
+              <span>Vercel v0</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Replit AI Apps" />
+              <span>Replit AI Apps</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Glide AI" />
+              <span>Glide AI</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Softr AI" />
+              <span>Softr AI</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Bubble AI" />
+              <span>Bubble AI</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Builder.ai" />
+              <span>Builder.ai</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Draftbit AI" />
+              <span>Draftbit AI</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="FlutterFlow AI" />
+              <span>FlutterFlow AI</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="ai_app_builders" value="Kullanmıyorum" />
+              <span>Kullanmıyorum</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q14: Freelance -->
+        <div class="step-container" data-step="14">
+          <div class="question-number">Soru 14 / 22</div>
+          <div class="question-title">Freelance işlere açık mısın?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="freelance_aciklik" value="Hayir" />
+              <span>Hayır</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="freelance_aciklik" value="Evet, hafta ici aksamlari" />
+              <span>Evet, hafta içi akşamları</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="freelance_aciklik" value="Evet, hafta sonu" />
+              <span>Evet, hafta sonu</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="freelance_aciklik" value="Evet, part-time duzenli" />
+              <span>Evet, part-time düzenli</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="freelance_aciklik" value="Evet, full-time freelance" />
+              <span>Evet, full-time freelance</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q15: Gönüllü proje -->
+        <div class="step-container" data-step="15">
+          <div class="question-number">Soru 15 / 22</div>
+          <div class="question-title">Gönüllü projelerde yer almak ister misin?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="gonullu_proje" value="true" />
+              <span>Evet</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="gonullu_proje" value="false" />
+              <span>Hayır</span>
+            </label>
+          </div>
+          <div class="question-title" style="margin-top: 20px;">Bilgilerin topluluk içinde aratılabilir olsun mu?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="aratilabilir" value="true" />
+              <span>Evet, profilim görünsün</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="aratilabilir" value="false" />
+              <span>Hayır, sadece kayıt olmak istiyorum</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q16: Katılma amacı -->
+        <div class="step-container" data-step="16">
+          <div class="question-number">Soru 16 / 22</div>
+          <div class="question-title">Topluluğa katılma amaçların (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="katilma_amaci" value="Networking" />
+              <span>Networking</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="katilma_amaci" value="İş bulmak" />
+              <span>İş bulmak</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="katilma_amaci" value="İş arkadaşı bulmak" />
+              <span>İş arkadaşı bulmak</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="katilma_amaci" value="Proje geliştirmek" />
+              <span>Proje geliştirmek</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="katilma_amaci" value="Bilgi paylaşmak" />
+              <span>Bilgi paylaşmak</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="katilma_amaci" value="Mentorluk almak" />
+              <span>Mentorluk almak</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="katilma_amaci" value="Mentorluk vermek" />
+              <span>Mentorluk vermek</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q17: İş birliği türü -->
+        <div class="step-container step17-compact" data-step="17">
+          <div class="question-number">Soru 17 / 22</div>
+          <div class="question-title">Nasıl iş birliği yapmak istersin? (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="Side project (haftada 2–5 saat)" />
+              <span>Side project (2-5 saat)</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="Side project (haftada 5–10 saat)" />
+              <span>Side project (5-10 saat)</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="Startup kurmak (ciddi)" />
+              <span>Startup kurmak</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="MVP çıkarma ekibi (tasarım+dev+test)" />
+              <span>MVP ekip</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="Freelance ekip kurmak (ücretli)" />
+              <span>Freelance ekip</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="Açık kaynak proje" />
+              <span>Açık kaynak proje</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="Study group (system design, leetcode vb.)" />
+              <span>Study group</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="Mentorluk / koçluk" />
+              <span>Mentorluk / koçluk</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="isbirligi_turu" value="Sadece tanışma & network" />
+              <span>Tanışma & network</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q18: IDE -->
+        <div class="step-container" data-step="18">
+          <div class="question-number">Soru 18 / 22</div>
+          <div class="question-title">Kullandığınız IDE'ler (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="VS Code" />
+              <span>VS Code</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="IntelliJ IDEA" />
+              <span>IntelliJ IDEA</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="PyCharm" />
+              <span>PyCharm</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="WebStorm" />
+              <span>WebStorm</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="Visual Studio" />
+              <span>Visual Studio</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="Eclipse" />
+              <span>Eclipse</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="Xcode" />
+              <span>Xcode</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="Android Studio" />
+              <span>Android Studio</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="Sublime Text" />
+              <span>Sublime Text</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_ide" value="Vim / Neovim" />
+              <span>Vim / Neovim</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q19: AI Agent'lar -->
+        <div class="step-container" data-step="19">
+          <div class="question-number">Soru 19 / 22</div>
+          <div class="question-title">Kullandığınız AI Agent'lar (birden fazla seçebilirsin)</div>
+          <div class="checkbox-group checkbox-group-two-col">
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="GitHub Copilot" />
+              <span>GitHub Copilot</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="ChatGPT" />
+              <span>ChatGPT</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="Claude" />
+              <span>Claude</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="Cursor" />
+              <span>Cursor</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="Windsurf" />
+              <span>Windsurf</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="Manus" />
+              <span>Manus</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="Tabnine" />
+              <span>Tabnine</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="Codeium" />
+              <span>Codeium</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="Amazon Q" />
+              <span>Amazon Q</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="kullanilan_agent" value="Kullanmıyorum" />
+              <span>Kullanmıyorum</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q20: Ek notlar -->
+        <div class="step-container" data-step="20">
+          <div class="question-number">Soru 20 / 22</div>
+          <div class="question-title">Eklemek istediğiniz bir şey var mı?</div>
+          <textarea name="ek_notlar" class="form-input" placeholder="Kısa bir not bırakabilirsiniz... (Opsiyonel)" maxlength="500" rows="5"></textarea>
+          <div id="charCount">0 / 500</div>
+        </div>
+
+        <!-- Q21: Veritabanı paylaşım onayı -->
+        <div class="step-container" data-step="21">
+          <div class="question-number">Soru 21 / 22</div>
+          <div class="question-title">Oluşturulan veritabanı grupla paylaşılacak. Onaylıyor musunuz?</div>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4;">(Onaylamazsanız listeye erişiminiz ne yazık ki olmayacak.)</p>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="veri_paylasim_onay" value="true" />
+              <span>Evet, onaylıyorum</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="veri_paylasim_onay" value="false" />
+              <span>Hayır, onaylamıyorum</span>
+            </label>
+          </div>
+          <div class="question-title" style="margin-top: 20px;">WhatsApp üzerinden proje/iş teklifleri için iletişime geçilebilir mi?</div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="iletisim_izni" value="true" />
+              <span>Evet</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="iletisim_izni" value="false" />
+              <span>Hayır</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q22: Kimlik doğrulama -->
+        <div class="step-container" data-step="22">
+          <div class="question-number">Soru 22 / 22</div>
+          <div class="question-title">Devuser girişi için e-posta ve şifre belirleyin</div>
+          <div>
+            <input type="text" name="auth_email" class="form-input" placeholder="Email adresiniz" autocomplete="email" required />
+            <input type="password" name="auth_password" class="form-input" placeholder="Şifreniz (en az 6 karakter)" autocomplete="new-password" required style="margin-top: 12px;" />
+            <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; line-height: 1.4;">
+              Bu e-posta ve şifre ile list.html sayfasına giriş yapacaksınız. Hesabınız admin onayından sonra arama ekranı açılır.
+            </p>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button type="button" class="btn btn-secondary" id="prevBtn" onclick="changeStep(-1)" disabled>
+          ← Geri
+        </button>
+        <button type="button" class="btn btn-primary" id="nextBtn" onclick="changeStep(1)">
+          İleri →
+        </button>
+        <button type="button" class="btn btn-primary" id="submitBtn" onclick="submitForm()" style="display: none;">
+          Gönder 🚀
+        </button>
+      </div>
+
+      <!-- Success Message -->
+      <div class="success-message" id="successMessage">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Kayıt Başarılı!</div>
+        <div class="success-text">
+          Admin onayından sonra tarafınıza bilgi verilecek ve listeye erişebileceksiniz! Teşekkürler!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const EDGE_FUNCTION_URL = '/api/devuser-register';
+    const USER_COUNT_API_URL = '/api/devuser-count';
+    const FORM_DRAFT_KEY = 'devuser_form_draft_v1';
+
+    let supabaseClient = null;
+    let isSubmitting = false;
+    let currentStep = 1;
+    const totalSteps = 22;
+
+    async function initSupabaseClient() {
+      if (supabaseClient) return supabaseClient;
+      const cfg = await window.ALMANYA101.waitForConfig();
+      if (!window.supabase || !cfg.url || !cfg.anonKey) {
+        throw new Error('Supabase ayarları eksik.');
+      }
+      supabaseClient = window.supabase.createClient(cfg.url, cfg.anonKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+        },
+      });
+      return supabaseClient;
+    }
+
+    async function getActiveSession() {
+      await initSupabaseClient();
+      const { data, error } = await supabaseClient.auth.getSession();
+      if (error) throw new Error(error.message || 'Oturum bilgisi alınamadı');
+      return data.session || null;
+    }
+
+    function isAbortLikeError(error) {
+      const message = String(error?.message || error || '').toLowerCase();
+      return error?.name === 'AbortError' ||
+        message.includes('signal is aborted') ||
+        message.includes('aborted');
+    }
+
+    async function withAbortRetry(task, options = {}) {
+      const attempts = Number(options.attempts || 2);
+      const delayMs = Number(options.delayMs || 350);
+      let lastError = null;
+
+      for (let i = 0; i < attempts; i += 1) {
+        try {
+          return await task();
+        } catch (error) {
+          lastError = error;
+          const isLastAttempt = i === attempts - 1;
+          if (isLastAttempt || !isAbortLikeError(error)) {
+            throw error;
+          }
+          await new Promise((resolve) => setTimeout(resolve, delayMs * (i + 1)));
+        }
+      }
+
+      throw lastError || new Error('Bilinmeyen hata');
+    }
+
+    function getReadableSubmitError(error) {
+      if (isAbortLikeError(error)) {
+        return 'Bağlantı kesildi. Lütfen internetinizi kontrol edip tekrar deneyin.';
+      }
+      return String(error?.message || error || 'Bilinmeyen hata');
+    }
+
+    function toggleInfo() {
+      const content = document.getElementById('infoContent');
+      const toggle = document.getElementById('infoToggle');
+      content.classList.toggle('open');
+      toggle.classList.toggle('open');
+    }
+
+    function formatCount(value) {
+      return Number(value || 0).toLocaleString('tr-TR');
+    }
+
+    async function loadRegisteredUserCount() {
+      const countEl = document.getElementById('registeredUserCount');
+      if (!countEl) return;
+
+      try {
+        const response = await fetch(USER_COUNT_API_URL, {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const payload = await response.json().catch(() => ({}));
+        const count = Number(payload?.count);
+
+        if (Number.isFinite(count) && count >= 0) {
+          countEl.textContent = `${formatCount(count)} kişi`;
+          return;
+        }
+
+        throw new Error('Invalid count');
+      } catch {
+        countEl.textContent = 'Şu an alınamıyor';
+      }
+    }
+
+    function updateProgress() {
+      const progress = (currentStep / totalSteps) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('progressText').textContent = `Soru ${currentStep} / ${totalSteps}`;
+    }
+
+    function showStep(step) {
+      document.querySelectorAll('.step-container').forEach((container) => {
+        container.classList.remove('active');
+      });
+
+      const currentContainer = document.querySelector(`[data-step="${step}"]`);
+      if (currentContainer) {
+        currentContainer.classList.add('active');
+      }
+
+      document.getElementById('prevBtn').disabled = (step === 1);
+
+      if (step === totalSteps) {
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('submitBtn').style.display = 'block';
+      } else {
+        document.getElementById('nextBtn').style.display = 'block';
+        document.getElementById('submitBtn').style.display = 'none';
+      }
+
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateCurrentStep() {
+      const currentContainer = document.querySelector(`[data-step="${currentStep}"]`);
+      if (!currentContainer) return true;
+      return true;
+    }
+
+    function changeStep(direction) {
+      if (direction === 1 && !validateCurrentStep()) {
+        return;
+      }
+
+      currentStep += direction;
+      if (currentStep < 1) currentStep = 1;
+      if (currentStep > totalSteps) currentStep = totalSteps;
+      showStep(currentStep);
+    }
+
+    function toggleConditional(fieldId, show) {
+      const field = document.getElementById(fieldId);
+      if (!field) return;
+      if (show) {
+        field.classList.add('active');
+        return;
+      }
+      field.classList.remove('active');
+      const input = field.querySelector('input');
+      if (input) input.value = '';
+    }
+
+    function buildDataFromForm(formData) {
+      const data = {};
+      const booleanFields = new Set([
+        'almanya_yasam',
+        'aktif_kod',
+        'acik_kaynak',
+        'kendi_proje',
+        'gonullu_proje',
+        'profesyonel_destek_verebilir',
+        'profesyonel_destek_almak',
+        'aratilabilir',
+        'iletisim_izni',
+        'veri_paylasim_onay',
+      ]);
+
+      for (const [key, value] of formData.entries()) {
+        if (booleanFields.has(key)) {
+          data[key] = value === 'true';
+        } else if (!Object.prototype.hasOwnProperty.call(data, key)) {
+          data[key] = value;
+        }
+      }
+
+      const arrayFields = [
+        'guclu_alanlar',
+        'programlama_dilleri',
+        'framework_platformlar',
+        'devops_cloud',
+        'ilgi_konular',
+        'ogrenmek_istenen',
+        'isbirligi_turu',
+        'kullanilan_ide',
+        'kullanilan_agent',
+        'ai_app_builders',
+      ];
+
+      arrayFields.forEach((field) => {
+        const values = formData.getAll(field);
+        data[field] = values.length > 0 ? values : [];
+      });
+
+      const katilmaAmaclari = formData.getAll('katilma_amaci').filter(Boolean);
+      data.katilma_amaci = katilmaAmaclari.length > 0 ? katilmaAmaclari.join(', ') : '';
+
+      return data;
+    }
+
+    function toFormDraft(data) {
+      return JSON.stringify({
+        data,
+        savedAt: Date.now(),
+      });
+    }
+
+    function saveDraft(data) {
+      sessionStorage.setItem(FORM_DRAFT_KEY, toFormDraft(data));
+    }
+
+    function clearDraft() {
+      sessionStorage.removeItem(FORM_DRAFT_KEY);
+    }
+
+    function loadDraftData() {
+      const raw = sessionStorage.getItem(FORM_DRAFT_KEY);
+      if (!raw) return null;
+      try {
+        const parsed = JSON.parse(raw);
+        return parsed?.data && typeof parsed.data === 'object' ? parsed.data : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function applyDraftToForm(draft) {
+      const form = document.getElementById('devuserForm');
+      if (!form || !draft || typeof draft !== 'object') return;
+
+      Object.entries(draft).forEach(([key, value]) => {
+        const fields = form.querySelectorAll(`[name="${key}"]`);
+        if (!fields || fields.length === 0) return;
+
+        if (Array.isArray(value)) {
+          fields.forEach((field) => {
+            if (field.type === 'checkbox') {
+              field.checked = value.includes(field.value);
+            }
+          });
+          return;
+        }
+
+        const first = fields[0];
+        if (first.type === 'radio') {
+          fields.forEach((field) => {
+            field.checked = String(field.value) === String(value);
+          });
+          return;
+        }
+
+        if (first.type === 'checkbox') {
+          if (fields.length > 1) {
+            const values = String(value || '')
+              .split(',')
+              .map((item) => item.trim())
+              .filter(Boolean);
+            fields.forEach((field) => {
+              field.checked = values.includes(String(field.value));
+            });
+            return;
+          }
+          first.checked = Boolean(value);
+          return;
+        }
+
+        first.value = value ?? '';
+      });
+
+      const ekNotlar = document.querySelector('textarea[name="ek_notlar"]');
+      if (ekNotlar) {
+        document.getElementById('charCount').textContent = `${ekNotlar.value.length} / 500`;
+      }
+    }
+
+    async function ensureSessionForSubmit(data) {
+      const email = String(data.auth_email || '').trim().toLowerCase();
+      const password = String(data.auth_password || '');
+
+      const session = await withAbortRetry(() => getActiveSession());
+      const activeEmail = String(session?.user?.email || '').trim().toLowerCase();
+      if (session && activeEmail === email) {
+        return session;
+      }
+      if (session && activeEmail && activeEmail !== email) {
+        await withAbortRetry(() => supabaseClient.auth.signOut());
+      }
+
+      const signInResult = await withAbortRetry(() =>
+        supabaseClient.auth.signInWithPassword({ email, password })
+      );
+      if (!signInResult.error && signInResult.data?.session) {
+        return signInResult.data.session;
+      }
+
+      const signInErrorMessage = String(signInResult.error?.message || '').toLowerCase();
+      const canTrySignUp =
+        signInErrorMessage.includes('invalid login credentials') ||
+        signInErrorMessage.includes('invalid credentials') ||
+        signInErrorMessage.includes('email not confirmed') ||
+        signInErrorMessage.includes('user not found');
+
+      if (!canTrySignUp) {
+        throw new Error(signInResult.error?.message || 'Giriş sırasında hata oluştu.');
+      }
+
+      const signUpResult = await withAbortRetry(() =>
+        supabaseClient.auth.signUp({ email, password })
+      );
+
+      if (signUpResult.error) {
+        const signUpErrorMessage = String(signUpResult.error.message || '').toLowerCase();
+        if (signUpErrorMessage.includes('already registered')) {
+          throw new Error('Bu e-posta zaten kayıtlı. Tekrar kayıt açılamaz.');
+        }
+        throw new Error(signUpResult.error.message || 'E-posta ile giriş/kayıt başarısız.');
+      }
+
+      if (signUpResult.data?.session) {
+        return signUpResult.data.session;
+      }
+
+      const retrySignIn = await withAbortRetry(() =>
+        supabaseClient.auth.signInWithPassword({ email, password })
+      );
+      if (!retrySignIn.error && retrySignIn.data?.session) {
+        return retrySignIn.data.session;
+      }
+
+      throw new Error('Hesap açıldı ancak oturum başlatılamadı. Supabase email confirmation ayarını kapatın.');
+    }
+
+    function getSubmissionPayload(data) {
+      const payload = { ...data };
+      delete payload.auth_email;
+      delete payload.auth_password;
+      return payload;
+    }
+
+    async function submitForm(skipValidation = false) {
+      if (isSubmitting) return;
+      if (!skipValidation && !validateCurrentStep()) {
+        return;
+      }
+
+      const form = document.getElementById('devuserForm');
+      const formData = new FormData(form);
+      const data = buildDataFromForm(formData);
+
+      isSubmitting = true;
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Gönderiliyor...';
+
+      try {
+        await initSupabaseClient();
+        const session = await ensureSessionForSubmit(data);
+        if (!session) {
+          return;
+        }
+
+        const payload = getSubmissionPayload(data);
+        const response = await withAbortRetry(() =>
+          fetch(EDGE_FUNCTION_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${session.access_token}`,
+            },
+            body: JSON.stringify(payload),
+          })
+        );
+
+        const result = await response.json().catch(() => ({}));
+
+        if (response.status === 401) {
+          throw new Error('Oturumunuz sona ermiş. Lütfen tekrar deneyin.');
+        }
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Kayıt sırasında bir hata oluştu');
+        }
+
+        clearDraft();
+        document.querySelector('.nav-buttons').style.display = 'none';
+        document.getElementById('devuserForm').style.display = 'none';
+        document.querySelector('.progress-container').parentElement.style.display = 'none';
+        document.getElementById('successMessage').classList.add('active');
+      } catch (error) {
+        alert('Bir hata olustu: ' + getReadableSubmitError(error));
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Gönder 🚀';
+      } finally {
+        isSubmitting = false;
+        if (!document.getElementById('successMessage').classList.contains('active')) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Gönder 🚀';
+        }
+      }
+    }
+
+    async function initPage() {
+      loadRegisteredUserCount();
+      await initSupabaseClient();
+
+      const draftData = loadDraftData();
+      if (draftData) {
+        applyDraftToForm(draftData);
+        currentStep = totalSteps;
+      }
+
+      showStep(currentStep);
+    }
+
+    const ekNotlarTextarea = document.querySelector('textarea[name="ek_notlar"]');
+    if (ekNotlarTextarea) {
+      ekNotlarTextarea.addEventListener('input', function () {
+        const charCount = this.value.length;
+        document.getElementById('charCount').textContent = `${charCount} / 500`;
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        if (currentStep < totalSteps) {
+          changeStep(1);
+        } else {
+          submitForm();
+        }
+      }
+    });
+
+    // Code rain animation
+    const canvas = document.getElementById('code-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz<>/{}[]();:=-+*/&|%$#@!';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = [];
+    
+    function initDrops() {
+      columns = Math.floor(canvas.width / fontSize);
+      drops = [];
+      for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * -100;
+      }
+    }
+    initDrops();
+    window.addEventListener('resize', initDrops);
+    
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#4285F4';
+      ctx.font = fontSize + 'px monospace';
+      
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+        
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    
+    setInterval(draw, 35);
+
+    initPage();
+  </script>
+<script>
+  window.goatcounter = window.goatcounter || {};
+  window.goatcounter.path = location.pathname;
+</script>
+<script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+
+

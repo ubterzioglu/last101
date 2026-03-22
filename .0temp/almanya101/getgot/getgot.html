@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle cx='256' cy='256' r='240' fill='%23ff0000'/%3E%3C/svg%3E">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GetGöt - Almanya-Türkiye Kargo Destek Platformu</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Footer Card Buttons */
+        .card-buttons {
+            position: absolute;
+            right: 14px;
+            top: 14px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn-icon {
+            width: 34px;
+            height: 34px;
+            max-width: 34px;
+            max-height: 34px;
+            border-radius: 10px;
+            padding: 5px;
+            background: rgba(255,255,255,0.35);
+            box-shadow: 0 2px 6px rgba(0,0,0,.22);
+            cursor: pointer;
+            object-fit: contain;
+        }
+
+        :root {
+            --primary: #FFA500;
+            --primary-dark: #FF8C00;
+            --primary-light: #FFB733;
+            --bg-dark: #0A0A0A;
+            --bg-card: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-gray: #666666;
+            --text-light: #999999;
+            --border: #E5E5E5;
+            --success: #10B981;
+            --warning: #FFA500;
+            --danger: #EF4444;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #FFF5E6 0%, #FFFFFF 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 32px rgba(255, 165, 0, 0.2);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #FFB733;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-text {
+            font-family: 'Sora', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .logo-text .get {
+            color: var(--primary);
+        }
+
+        .logo-text .got {
+            color: #FFB733;
+        }
+
+        h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+        }
+
+        .tagline {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Prohibited Items Warning */
+        .prohibited-warning {
+            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 32px;
+            border-left: 6px solid #EF4444;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15);
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+        }
+
+        .prohibited-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            padding: 8px 0;
+        }
+
+        .prohibited-header:hover {
+            opacity: 0.85;
+        }
+
+        .prohibited-icon {
+            font-size: 28px;
+        }
+
+        .prohibited-header h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #991B1B;
+            margin: 0;
+        }
+
+        .toggle-icon {
+            font-size: 20px;
+            color: #991B1B;
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.open {
+            transform: rotate(180deg);
+        }
+
+        .prohibited-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .prohibited-content.show {
+            max-height: 500px;
+        }
+
+        .prohibited-description {
+            color: #991B1B;
+            font-size: 14px;
+            margin: 16px 0;
+            font-weight: 500;
+        }
+
+        .prohibited-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .prohibited-item {
+            background: #FFFFFF;
+            padding: 10px 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #991B1B;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .prohibited-emoji {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Action Buttons */
+        .action-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .action-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 32px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(255, 165, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .action-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .action-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .action-card p {
+            color: var(--text-gray);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Filters */
+        .filters {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px var(--shadow);
+            animation: fadeIn 0.8s ease-out 0.5s backwards;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            transition: all 0.2s;
+            background: #FFFFFF;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.1);
+        }
+
+        /* Listings */
+        .listings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            animation: fadeIn 0.8s ease-out 0.7s backwards;
+        }
+
+        .listings-header h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 6px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .view-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-gray);
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: #FFFFFF;
+        }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .listing-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 16px var(--shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-out backwards;
+        }
+
+        .listing-card:nth-child(1) { animation-delay: 0.8s; }
+        .listing-card:nth-child(2) { animation-delay: 0.9s; }
+        .listing-card:nth-child(3) { animation-delay: 1s; }
+        .listing-card:nth-child(4) { animation-delay: 1.1s; }
+        .listing-card:nth-child(5) { animation-delay: 1.2s; }
+        .listing-card:nth-child(6) { animation-delay: 1.3s; }
+
+        .listing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(255, 165, 0, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .listing-type {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .type-carrier {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: #FFFFFF;
+        }
+
+        .type-sender {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: #FFFFFF;
+        }
+
+        .verification-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .verified {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+
+        .unverified {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .user-details h4 {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .user-details p {
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        .route {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            padding: 16px;
+            background: linear-gradient(135deg, #FFF5E6 0%, #FFFBF0 100%);
+            border-radius: 12px;
+        }
+
+        .route-point {
+            flex: 1;
+            text-align: center;
+        }
+
+        .route-point-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .route-point-city {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .route-arrow {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .listing-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .detail-icon {
+            font-size: 18px;
+        }
+
+        .detail-text {
+            color: var(--text-gray);
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .category-badge {
+            background: linear-gradient(135deg, #FFF5E6 0%, #FFFBF0 100%);
+            border: 2px solid var(--primary-light);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 16px 0;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .warning-badge {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-left: 4px solid #F59E0B;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-size: 13px;
+            color: #92400E;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        .warning-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .listing-description {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 16px 0;
+        }
+
+        .contact-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+        }
+
+        .contact-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--border);
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: var(--primary);
+            color: #FFFFFF;
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 15px;
+            }
+
+            .logo-circle {
+                width: 60px;
+                height: 60px;
+            }
+
+            .logo-text {
+                font-size: 20px;
+            }
+
+            .prohibited-warning {
+                padding: 16px;
+            }
+
+            .prohibited-header h3 {
+                font-size: 16px;
+            }
+
+            .prohibited-icon {
+                font-size: 24px;
+            }
+
+            .prohibited-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-section {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .listings-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .modal-content {
+                padding: 24px;
+            }
+
+            .listing-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+  <link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+  <link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+  <meta name="google-site-verification" content="JfOdXbFKGKzlacfzwUO4cDPcyzhUZ4vefX4iKcrLSsU">
+  <meta name="geo.region" content="DE">
+  <meta name="geo.placename" content="Germany">
+<style>
+    /* card-width-lock */
+    :root {
+      --card-mobile-width: 355px;
+    }
+
+    [class*="card"]:not(.card-buttons):not(.hb-card-buttons):not(.footer-blue-card__buttons):not(.contact-card-buttons):not(.card-title):not(.card-sub):not(.card-head):not(.card-foot) {
+      width: var(--card-mobile-width);
+      min-width: var(--card-mobile-width);
+      max-width: var(--card-mobile-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <div class="logo-circle">
+                    <span class="logo-text"><span class="get">GET</span><span class="got">GÖT</span></span>
+                </div>
+            </div>
+            <h1>Türkiye-Avrupa Kargo Destek Platformu</h1>
+            <p class="subtitle">Valizinizde boş yer mi var? Eşya mı göndereceksiniz? Birbirinize destek olun!</p>
+            <p class="tagline">🧳 Seyahat edenler valizlerindeki boş alanı paylaşır, eşya göndermek isteyenlerle buluşur. Tamamen gönüllülük esasına dayalı, yasal, güvenli, samimi.</p>
+        </header>
+
+        <!-- Prohibited Items Warning -->
+        <div class="prohibited-warning">
+            <div class="prohibited-header" onclick="toggleProhibited()">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="prohibited-icon">⚠️</span>
+                    <h3>Yasaklı Eşyalar - Lütfen Dikkat!</h3>
+                </div>
+                <span class="toggle-icon" id="prohibitedToggle">▼</span>
+            </div>
+            <div class="prohibited-content" id="prohibitedContent">
+                <p class="prohibited-description">Güvenliğiniz ve yasal sorumluluk için aşağıdaki eşyalar kesinlikle taşınamaz:</p>
+                <div class="prohibited-grid">
+                    <div class="prohibited-item">
+                        <span class="prohibited-emoji">🚫</span>
+                        <span>Alkol/Sigara</span>
+                    </div>
+                    <div class="prohibited-item">
+                        <span class="prohibited-emoji">🔫</span>
+                        <span>Silah/Mühimmat</span>
+                    </div>
+                    <div class="prohibited-item">
+                        <span class="prohibited-emoji">💻</span>
+                        <span>Büyük Elektronik</span>
+                    </div>
+                    <div class="prohibited-item">
+                        <span class="prohibited-emoji">💰</span>
+                        <span>Para/Değerli Kağıt</span>
+                    </div>
+                    <div class="prohibited-item">
+                        <span class="prohibited-emoji">☣️</span>
+                        <span>Tehlikeli Maddeler</span>
+                    </div>
+                    <div class="prohibited-item">
+                        <span class="prohibited-emoji">🔥</span>
+                        <span>Yanıcı Maddeler</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Cards -->
+        <div class="action-section">
+            <div class="action-card" onclick="openModal('carrier')">
+                <span class="action-icon">🧳</span>
+                <h3>Valizimde Yer Var</h3>
+                <p>Almanya-Türkiye veya Türkiye-Almanya seyahat ediyorsunuz ve valizinizde boş yer var? İlan verin, başkalarına yardımcı olun!</p>
+            </div>
+            <div class="action-card" onclick="openModal('sender')">
+                <span class="action-icon">📦</span>
+                <h3>Gönderilecek Eşyam Var</h3>
+                <p>Almanya'ya veya Türkiye'ye yasal eşya göndermek mi istiyorsunuz? Seyahat eden birisiyle anlaşın!</p>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Rota</label>
+                    <select id="routeFilter">
+                        <option value="all">Tüm Rotalar</option>
+                        <optgroup label="Türkiye'den">
+                            <option value="tr-de">🇹🇷 Türkiye → 🇩🇪 Almanya</option>
+                            <option value="tr-fr">🇹🇷 Türkiye → 🇫🇷 Fransa</option>
+                            <option value="tr-nl">🇹🇷 Türkiye → 🇳🇱 Hollanda</option>
+                            <option value="tr-gb">🇹🇷 Türkiye → 🇬🇧 İngiltere</option>
+                            <option value="tr-at">🇹🇷 Türkiye → 🇦🇹 Avusturya</option>
+                            <option value="tr-be">🇹🇷 Türkiye → 🇧🇪 Belçika</option>
+                        </optgroup>
+                        <optgroup label="Türkiye'ye">
+                            <option value="de-tr">🇩🇪 Almanya → 🇹🇷 Türkiye</option>
+                            <option value="fr-tr">🇫🇷 Fransa → 🇹🇷 Türkiye</option>
+                            <option value="nl-tr">🇳🇱 Hollanda → 🇹🇷 Türkiye</option>
+                            <option value="gb-tr">🇬🇧 İngiltere → 🇹🇷 Türkiye</option>
+                            <option value="at-tr">🇦🇹 Avusturya → 🇹🇷 Türkiye</option>
+                            <option value="be-tr">🇧🇪 Belçika → 🇹🇷 Türkiye</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>İlan Tipi</label>
+                    <select id="typeFilter">
+                        <option value="all">Tümü</option>
+                        <option value="carrier">Valizimde Yer Var</option>
+                        <option value="sender">Gönderilecek Eşyam Var</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Kategori</label>
+                    <select id="categoryFilter">
+                        <option value="all">Tüm Kategoriler</option>
+                        <option value="medicine">💊 İlaç (Reçeteli)</option>
+                        <option value="food">🍫 Gıda Ürünleri</option>
+                        <option value="textile">👕 Tekstil/Giyim</option>
+                        <option value="books">📚 Kitap/Dergi/Doküman</option>
+                        <option value="gifts">🎁 Hediye/Oyuncak</option>
+                        <option value="cosmetics">💄 Kozmetik/Kişisel Bakım</option>
+                        <option value="electronics">🔌 Elektronik Aksesuar</option>
+                        <option value="baby">🧸 Bebek Ürünleri</option>
+                        <option value="crafts">🏺 El Sanatı/Hediyelik</option>
+                        <option value="documents">📄 Evrak/Resmi Belge</option>
+                        <option value="hobby">🎨 Hobi Malzemeleri</option>
+                        <option value="other">🧷 Diğer</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Doğrulanmış Kullanıcılar</label>
+                    <select id="verifiedFilter">
+                        <option value="all">Tümü</option>
+                        <option value="verified">Sadece Doğrulanmış</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Seyahat Tarihi</label>
+                    <input type="date" id="dateFilter">
+                </div>
+            </div>
+        </div>
+
+        <!-- Listings Header -->
+        <div class="listings-header">
+            <h2>Güncel İlanlar</h2>
+            <div class="view-toggle">
+                <button class="view-btn active">🔥 Yeni İlanlar</button>
+                <button class="view-btn">⭐ Popüler</button>
+            </div>
+        </div>
+
+        <!-- Listings Grid -->
+        <div class="listings-grid" id="listingsGrid">
+            <!-- Verified Carrier Example -->
+            <div class="listing-card">
+                <span class="listing-type type-carrier">🧳 Valizimde Yer Var</span>
+                <div class="verification-badge verified">✓</div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">AY</div>
+                    <div class="user-details">
+                        <h4>Ahmet Yılmaz</h4>
+                        <p>Doğrulanmış Kullanıcı</p>
+                    </div>
+                </div>
+
+                <div class="route">
+                    <div class="route-point">
+                        <div class="route-point-label">Nereden</div>
+                        <div class="route-point-city">🇩🇪 München</div>
+                    </div>
+                    <div class="route-arrow">→</div>
+                    <div class="route-point">
+                        <div class="route-point-label">Nereye</div>
+                        <div class="route-point-city">🇹🇷 İstanbul</div>
+                    </div>
+                </div>
+
+                <div class="listing-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <span class="detail-text"><span class="detail-value">15 Şubat</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">⚖️</span>
+                        <span class="detail-text"><span class="detail-value">5 kg</span> kapasite</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">✈️</span>
+                        <span class="detail-text">Uçak ile</span>
+                    </div>
+                </div>
+
+                <div class="category-badge">👕 Tekstil, 🍫 Gıda, 🎁 Hediye</div>
+
+                <p class="listing-description">15 Şubat'ta İstanbul'a gidiyorum. Valizimde yaklaşık 5 kg boş yer var. Tekstil, gıda, hediye vb. yasal eşyalar taşıyabilirim.</p>
+
+                <button class="contact-btn">💬 İletişime Geç</button>
+            </div>
+
+            <!-- Unverified Sender Example - Netherlands -->
+            <div class="listing-card">
+                <span class="listing-type type-sender">📦 Gönderilecek Eşyam Var</span>
+                <div class="verification-badge unverified">⚠️</div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">MK</div>
+                    <div class="user-details">
+                        <h4>Mehmet Kaya</h4>
+                        <p>Yeni Kullanıcı</p>
+                    </div>
+                </div>
+
+                <div class="route">
+                    <div class="route-point">
+                        <div class="route-point-label">Nereden</div>
+                        <div class="route-point-city">🇳🇱 Amsterdam</div>
+                    </div>
+                    <div class="route-arrow">→</div>
+                    <div class="route-point">
+                        <div class="route-point-label">Nereye</div>
+                        <div class="route-point-city">🇹🇷 İstanbul</div>
+                    </div>
+                </div>
+
+                <div class="listing-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <span class="detail-text"><span class="detail-value">20 Şubat'a</span> kadar</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">⚖️</span>
+                        <span class="detail-text"><span class="detail-value">3 kg</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">📚</span>
+                        <span class="detail-text">Kitap</span>
+                    </div>
+                </div>
+
+                <div class="category-badge">📚 Kitap/Dergi/Doküman</div>
+
+                <div class="warning-badge">
+                    <span class="warning-icon">⚠️</span>
+                    <span>Bu kullanıcı henüz doğrulanmamış. Lütfen dikkatli olun ve güvenli ödeme yöntemleri kullanın.</span>
+                </div>
+
+                <p class="listing-description">İstanbul'a gönderilecek üniversite kitaplarım var. Toplam 3 kg civarında. Güvenilir birine emanet etmek istiyorum.</p>
+
+                <button class="contact-btn">💬 İletişime Geç</button>
+            </div>
+
+            <!-- Verified Sender Example - France -->
+            <div class="listing-card">
+                <span class="listing-type type-sender">📦 Gönderilecek Eşyam Var</span>
+                <div class="verification-badge verified">✓</div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">ZD</div>
+                    <div class="user-details">
+                        <h4>Zeynep Demir</h4>
+                        <p>Doğrulanmış Kullanıcı</p>
+                    </div>
+                </div>
+
+                <div class="route">
+                    <div class="route-point">
+                        <div class="route-point-label">Nereden</div>
+                        <div class="route-point-city">🇫🇷 Paris</div>
+                    </div>
+                    <div class="route-arrow">→</div>
+                    <div class="route-point">
+                        <div class="route-point-label">Nereye</div>
+                        <div class="route-point-city">🇹🇷 İzmir</div>
+                    </div>
+                </div>
+
+                <div class="listing-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <span class="detail-text"><span class="detail-value">10 Mart'a</span> kadar</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">⚖️</span>
+                        <span class="detail-text"><span class="detail-value">2 kg</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🎁</span>
+                        <span class="detail-text">Hediye</span>
+                    </div>
+                </div>
+
+                <div class="category-badge">🎁 Hediye/Oyuncak, 🍫 Gıda</div>
+
+                <p class="listing-description">İzmir'deki aileme hediye paketi göndereceğim. Fransız çikolatası, küçük oyuncaklar var. Güvenilir birisine emanet etmek isterim.</p>
+
+                <button class="contact-btn">💬 İletişime Geç</button>
+            </div>
+
+            <!-- Unverified Carrier Example - UK -->
+            <div class="listing-card">
+                <span class="listing-type type-carrier">🧳 Valizimde Yer Var</span>
+                <div class="verification-badge unverified">⚠️</div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">BC</div>
+                    <div class="user-details">
+                        <h4>Burak Can</h4>
+                        <p>Yeni Kullanıcı</p>
+                    </div>
+                </div>
+
+                <div class="route">
+                    <div class="route-point">
+                        <div class="route-point-label">Nereden</div>
+                        <div class="route-point-city">🇬🇧 Londra</div>
+                    </div>
+                    <div class="route-arrow">→</div>
+                    <div class="route-point">
+                        <div class="route-point-label">Nereye</div>
+                        <div class="route-point-city">🇹🇷 Ankara</div>
+                    </div>
+                </div>
+
+                <div class="listing-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <span class="detail-text"><span class="detail-value">25 Şubat</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">⚖️</span>
+                        <span class="detail-text"><span class="detail-value">8 kg</span> kapasite</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">✈️</span>
+                        <span class="detail-text">Uçak ile</span>
+                    </div>
+                </div>
+
+                <div class="category-badge">👕 Tekstil, 📚 Kitap, 🎁 Hediye</div>
+
+                <div class="warning-badge">
+                    <span class="warning-icon">⚠️</span>
+                    <span>Bu kullanıcı henüz doğrulanmamış. İletişime geçerken dikkatli olun ve eşyaları teslim etmeden önce güvenli ödeme yöntemleri kullanın.</span>
+                </div>
+
+                <p class="listing-description">Ankara'ya uçakla gidiyorum. Valizde yer var, yardımcı olabilirim. Yasal eşyalar için iletişime geçin.</p>
+
+                <button class="contact-btn">💬 İletişime Geç</button>
+            </div>
+
+            <!-- Verified Carrier Example - Austria -->
+            <div class="listing-card">
+                <span class="listing-type type-carrier">🧳 Valizimde Yer Var</span>
+                <div class="verification-badge verified">✓</div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">EY</div>
+                    <div class="user-details">
+                        <h4>Elif Yıldız</h4>
+                        <p>Doğrulanmış Kullanıcı</p>
+                    </div>
+                </div>
+
+                <div class="route">
+                    <div class="route-point">
+                        <div class="route-point-label">Nereden</div>
+                        <div class="route-point-city">🇦🇹 Viyana</div>
+                    </div>
+                    <div class="route-arrow">→</div>
+                    <div class="route-point">
+                        <div class="route-point-label">Nereye</div>
+                        <div class="route-point-city">🇹🇷 Bursa</div>
+                    </div>
+                </div>
+
+                <div class="listing-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <span class="detail-text"><span class="detail-value">5 Mart</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">⚖️</span>
+                        <span class="detail-text"><span class="detail-value">4 kg</span> kapasite</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">✈️</span>
+                        <span class="detail-text">Uçak ile</span>
+                    </div>
+                </div>
+
+                <div class="category-badge">💄 Kozmetik, 🧸 Bebek Ürünleri, 🎁 Hediye</div>
+
+                <p class="listing-description">5 Mart'ta Bursa'ya gidiyorum. Valizimde 4 kg boş yer var. Kozmetik, bebek ürünleri, hediye gibi küçük eşyalar taşıyabilirim.</p>
+
+                <button class="contact-btn">💬 İletişime Geç</button>
+            </div>
+
+            <!-- Verified Sender Example - Belgium -->
+            <div class="listing-card">
+                <span class="listing-type type-sender">📦 Gönderilecek Eşyam Var</span>
+                <div class="verification-badge verified">✓</div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">SK</div>
+                    <div class="user-details">
+                        <h4>Serkan Kılıç</h4>
+                        <p>Doğrulanmış Kullanıcı</p>
+                    </div>
+                </div>
+
+                <div class="route">
+                    <div class="route-point">
+                        <div class="route-point-label">Nereden</div>
+                        <div class="route-point-city">🇧🇪 Brüksel</div>
+                    </div>
+                    <div class="route-arrow">→</div>
+                    <div class="route-point">
+                        <div class="route-point-label">Nereye</div>
+                        <div class="route-point-city">🇹🇷 Adana</div>
+                    </div>
+                </div>
+
+                <div class="listing-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <span class="detail-text"><span class="detail-value">18 Şubat'a</span> kadar</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">⚖️</span>
+                        <span class="detail-text"><span class="detail-value">1.5 kg</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">📄</span>
+                        <span class="detail-text">Evrak</span>
+                    </div>
+                </div>
+
+                <div class="category-badge">📄 Evrak/Resmi Belge</div>
+
+                <p class="listing-description">Adana'ya gönderilecek önemli evraklarım var. Güvenilir bir taşıyıcıya emanet etmek istiyorum. Toplam 1.5 kg civarında.</p>
+
+                <button class="contact-btn">💬 İletişime Geç</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Creating Listing -->
+    <div class="modal" id="listingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Yeni İlan Oluştur</h3>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            
+            <form id="listingForm">
+                <div class="form-group">
+                    <label>İlan Tipi</label>
+                    <select id="listingType" required>
+                        <option value="">Seçiniz</option>
+                        <option value="carrier">🧳 Valizimde Yer Var</option>
+                        <option value="sender">📦 Gönderilecek Eşyam Var</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Nereden (Şehir)</label>
+                    <select id="fromCity" required>
+                        <option value="">Şehir Seçiniz</option>
+                        <optgroup label="🇩🇪 Almanya">
+                            <option value="Berlin">Berlin</option>
+                            <option value="München">München</option>
+                            <option value="Frankfurt">Frankfurt</option>
+                            <option value="Hamburg">Hamburg</option>
+                            <option value="Köln">Köln</option>
+                            <option value="Stuttgart">Stuttgart</option>
+                            <option value="Düsseldorf">Düsseldorf</option>
+                            <option value="Dortmund">Dortmund</option>
+                            <option value="Nürnberg">Nürnberg</option>
+                            <option value="Hannover">Hannover</option>
+                        </optgroup>
+                        <optgroup label="🇫🇷 Fransa">
+                            <option value="Paris">Paris</option>
+                            <option value="Marsilya">Marsilya</option>
+                            <option value="Lyon">Lyon</option>
+                            <option value="Toulouse">Toulouse</option>
+                            <option value="Nice">Nice</option>
+                            <option value="Strasbourg">Strasbourg</option>
+                            <option value="Bordeaux">Bordeaux</option>
+                        </optgroup>
+                        <optgroup label="🇳🇱 Hollanda">
+                            <option value="Amsterdam">Amsterdam</option>
+                            <option value="Rotterdam">Rotterdam</option>
+                            <option value="Den Haag">Den Haag</option>
+                            <option value="Utrecht">Utrecht</option>
+                            <option value="Eindhoven">Eindhoven</option>
+                            <option value="Groningen">Groningen</option>
+                        </optgroup>
+                        <optgroup label="🇬🇧 İngiltere">
+                            <option value="Londra">Londra</option>
+                            <option value="Manchester">Manchester</option>
+                            <option value="Birmingham">Birmingham</option>
+                            <option value="Leeds">Leeds</option>
+                            <option value="Liverpool">Liverpool</option>
+                            <option value="Bristol">Bristol</option>
+                        </optgroup>
+                        <optgroup label="🇦🇹 Avusturya">
+                            <option value="Viyana">Viyana</option>
+                            <option value="Salzburg">Salzburg</option>
+                            <option value="Innsbruck">Innsbruck</option>
+                            <option value="Graz">Graz</option>
+                            <option value="Linz">Linz</option>
+                        </optgroup>
+                        <optgroup label="🇧🇪 Belçika">
+                            <option value="Brüksel">Brüksel</option>
+                            <option value="Anvers">Anvers</option>
+                            <option value="Gent">Gent</option>
+                            <option value="Brugge">Brugge</option>
+                            <option value="Liège">Liège</option>
+                        </optgroup>
+                        <optgroup label="🇹🇷 Türkiye">
+                            <option value="İstanbul">İstanbul</option>
+                            <option value="Ankara">Ankara</option>
+                            <option value="İzmir">İzmir</option>
+                            <option value="Antalya">Antalya</option>
+                            <option value="Bursa">Bursa</option>
+                            <option value="Adana">Adana</option>
+                            <option value="Gaziantep">Gaziantep</option>
+                            <option value="Konya">Konya</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Nereye (Şehir)</label>
+                    <select id="toCity" required>
+                        <option value="">Şehir Seçiniz</option>
+                        <optgroup label="🇩🇪 Almanya">
+                            <option value="Berlin">Berlin</option>
+                            <option value="München">München</option>
+                            <option value="Frankfurt">Frankfurt</option>
+                            <option value="Hamburg">Hamburg</option>
+                            <option value="Köln">Köln</option>
+                            <option value="Stuttgart">Stuttgart</option>
+                            <option value="Düsseldorf">Düsseldorf</option>
+                            <option value="Dortmund">Dortmund</option>
+                            <option value="Nürnberg">Nürnberg</option>
+                            <option value="Hannover">Hannover</option>
+                        </optgroup>
+                        <optgroup label="🇫🇷 Fransa">
+                            <option value="Paris">Paris</option>
+                            <option value="Marsilya">Marsilya</option>
+                            <option value="Lyon">Lyon</option>
+                            <option value="Toulouse">Toulouse</option>
+                            <option value="Nice">Nice</option>
+                            <option value="Strasbourg">Strasbourg</option>
+                            <option value="Bordeaux">Bordeaux</option>
+                        </optgroup>
+                        <optgroup label="🇳🇱 Hollanda">
+                            <option value="Amsterdam">Amsterdam</option>
+                            <option value="Rotterdam">Rotterdam</option>
+                            <option value="Den Haag">Den Haag</option>
+                            <option value="Utrecht">Utrecht</option>
+                            <option value="Eindhoven">Eindhoven</option>
+                            <option value="Groningen">Groningen</option>
+                        </optgroup>
+                        <optgroup label="🇬🇧 İngiltere">
+                            <option value="Londra">Londra</option>
+                            <option value="Manchester">Manchester</option>
+                            <option value="Birmingham">Birmingham</option>
+                            <option value="Leeds">Leeds</option>
+                            <option value="Liverpool">Liverpool</option>
+                            <option value="Bristol">Bristol</option>
+                        </optgroup>
+                        <optgroup label="🇦🇹 Avusturya">
+                            <option value="Viyana">Viyana</option>
+                            <option value="Salzburg">Salzburg</option>
+                            <option value="Innsbruck">Innsbruck</option>
+                            <option value="Graz">Graz</option>
+                            <option value="Linz">Linz</option>
+                        </optgroup>
+                        <optgroup label="🇧🇪 Belçika">
+                            <option value="Brüksel">Brüksel</option>
+                            <option value="Anvers">Anvers</option>
+                            <option value="Gent">Gent</option>
+                            <option value="Brugge">Brugge</option>
+                            <option value="Liège">Liège</option>
+                        </optgroup>
+                        <optgroup label="🇹🇷 Türkiye">
+                            <option value="İstanbul">İstanbul</option>
+                            <option value="Ankara">Ankara</option>
+                            <option value="İzmir">İzmir</option>
+                            <option value="Antalya">Antalya</option>
+                            <option value="Bursa">Bursa</option>
+                            <option value="Adana">Adana</option>
+                            <option value="Gaziantep">Gaziantep</option>
+                            <option value="Konya">Konya</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Eşya Kategorisi</label>
+                    <select id="categorySelect" required>
+                        <option value="">Kategori Seçiniz</option>
+                        <option value="medicine">💊 İlaç (Reçeteli - Reçete ile birlikte)</option>
+                        <option value="food">🍫 Gıda Ürünleri (Çikolata, baharat vb.)</option>
+                        <option value="textile">👕 Tekstil/Giyim</option>
+                        <option value="books">📚 Kitap/Dergi/Doküman</option>
+                        <option value="gifts">🎁 Hediye/Oyuncak</option>
+                        <option value="cosmetics">💄 Kozmetik/Kişisel Bakım</option>
+                        <option value="electronics">🔌 Elektronik Aksesuar (Şarj aleti, kablo vb.)</option>
+                        <option value="baby">🧸 Bebek Ürünleri</option>
+                        <option value="crafts">🏺 El Sanatı/Hediyelik</option>
+                        <option value="documents">📄 Evrak/Resmi Belge</option>
+                        <option value="hobby">🎨 Hobi Malzemeleri</option>
+                        <option value="other">🧷 Diğer</option>
+                    </select>
+                </div>
+
+                <div class="filter-grid" style="margin-bottom: 24px;">
+                    <div class="form-group" style="margin: 0;">
+                        <label>Seyahat/Teslim Tarihi</label>
+                        <input type="date" required>
+                    </div>
+
+                    <div class="form-group" style="margin: 0;">
+                        <label>Ağırlık (kg)</label>
+                        <input type="number" placeholder="Örn: 5" min="1" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <textarea placeholder="İlanınızla ilgili detayları paylaşın. Ne tür eşyalar taşıyabilirsiniz/göndermek istiyorsunuz?" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">🚀 İlanı Yayınla</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Prohibited Items
+        function toggleProhibited() {
+            const content = document.getElementById('prohibitedContent');
+            const toggle = document.getElementById('prohibitedToggle');
+            
+            content.classList.toggle('show');
+            toggle.classList.toggle('open');
+        }
+
+        // Modal Functions
+        function openModal(type) {
+            const modal = document.getElementById('listingModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const listingTypeSelect = document.getElementById('listingType');
+            
+            if (type === 'carrier') {
+                modalTitle.textContent = '🧳 Valizimde Yer Var - İlan Oluştur';
+                listingTypeSelect.value = 'carrier';
+            } else {
+                modalTitle.textContent = '📦 Gönderilecek Eşyam Var - İlan Oluştur';
+                listingTypeSelect.value = 'sender';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('listingModal');
+            modal.classList.remove('active');
+        }
+
+        // Close modal on background click
+        document.getElementById('listingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Form submission
+        document.getElementById('listingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('İlanınız başarıyla oluşturuldu! ✅\n\nDoğrulanmış kullanıcı olarak onaylandıktan sonra daha fazla güven kazanacaksınız.');
+            closeModal();
+            this.reset();
+        });
+
+        // View toggle buttons
+        const viewButtons = document.querySelectorAll('.view-btn');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                viewButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Contact buttons
+        const contactButtons = document.querySelectorAll('.contact-btn');
+        contactButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                alert('💬 İletişim özelliği yakında aktif olacak!\n\nKullanıcı ile mesajlaşabilecek ve detayları görüşebileceksiniz.');
+            });
+        });
+    </script>
+
+    <!-- GoatCounter Analytics -->
+    <script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <div class="footer-blue-card-wrap">
+      <div class="card footer-blue-card">
+        <div class="card-buttons footer-blue-card__buttons">
+          <a href="../index.html">
+            <img src="../img/buttons/z0cliphome.png" class="btn-icon" alt="Home" />
+          </a>
+          <a href="#top">
+            <img src="../img/buttons/z0clipup.png" class="btn-icon" alt="Up" />
+          </a>
+          <button type="button" class="btn-icon" title="Menu" onclick="document.getElementById('menuOpenBtn') && document.getElementById('menuOpenBtn').click()" style="background: none; border: none; padding: 0; cursor: pointer;">
+            <img src="../img/buttons/z0clipmenu.png" class="btn-icon" alt="Menu" />
+          </button>
+        </div>
+        <div class="footer-slogan">yalnız değilsin! almanya101 seninle!</div>
+        <div class="footer-credit">made by UBT with love</div>
+        <div class="footer-copyright">&copy;almanya101de &bull; 2026</div>
+      </div>
+    </div>
+
+  <script src="/shared-cards.js"></script>
+</body>
+</html>
+
+
+

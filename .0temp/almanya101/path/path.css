@@ -1,0 +1,315 @@
+/* =========================================================
+  FILE: /zpath/zpath.css
+  PURPOSE:
+  - Standalone ZPATH styling
+  - VISUALS aligned with ZBOM (arca.directory vibe)
+  - IMPORTANT: No layout/position changes (only look & feel)
+========================================================= */
+
+:root{
+  --bg: #070707;
+  --panel: #0c0c0c;
+  --card: #0e0e0e;
+
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.58);
+
+  --line: rgba(255,255,255,.10);
+  --line-soft: rgba(255,255,255,.07);
+
+  --ok: rgba(73,209,125,.16);
+  --warn: rgba(255,193,7,.16);
+  --bad: rgba(255,107,107,.16);
+
+  --radius: 14px;
+}
+
+*{ box-sizing:border-box; }
+html, body { height: 100%; }
+
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+
+  font-size: 16px;
+}
+
+.wrap{ width: min(1200px, 100%); }
+
+.card{
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 70px rgba(0,0,0,.55);
+  overflow:hidden;
+}
+
+.topbar{
+  padding:18px 18px;
+  border-bottom:1px solid var(--line-soft);
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.title{
+  margin:0;
+  font-size:15.5px;
+  font-weight:600;
+}
+
+.subtitle{
+  margin:6px 0 0 0;
+  color: var(--muted);
+  font-size:12.5px;
+  line-height:1.45;
+  max-width:70ch;
+}
+
+.topbar-right{
+  text-align:right;
+  min-width:190px;
+}
+
+.pill{
+  font-size:11px;
+  padding:5px 9px;
+  border-radius:999px;
+  border:1px solid var(--line-soft);
+  background: #0c0c0c;
+  color: var(--text);
+  white-space:nowrap;
+  opacity:.92;
+  margin-bottom:10px;
+}
+
+.bar{
+  height:8px;
+  background: rgba(255,255,255,.08);
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid var(--line-soft);
+}
+
+.bar > div{
+  height:100%;
+  width:0%;
+  background: rgba(255,255,255,.28);
+  border-radius:999px;
+  transition: width .25s ease;
+}
+
+.content{ padding:18px 18px 18px; }
+
+.q{
+  font-size: clamp(20px, 1.8vw, 26px);
+  margin:0 0 14px 0;
+  line-height:1.35;
+}
+
+.hint{
+  margin:0 0 18px 0;
+  color: var(--muted);
+  font-size:12.5px;
+  line-height:1.45;
+}
+
+.btnrow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+}
+
+button{
+  border:1px solid var(--line-soft);
+  background: transparent;
+  color: var(--text);
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:700;
+  letter-spacing:.2px;
+  font-size:14px;
+
+  transition: transform .06s ease, background .14s ease, border-color .14s ease, opacity .14s ease;
+}
+
+button:hover{
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.18);
+}
+
+button:active{ transform: translateY(1px); }
+
+.ghost{
+  background: transparent;
+  color: var(--muted);
+  font-weight:700;
+}
+
+.ghost:hover{
+  background: rgba(255,255,255,.05);
+  color: var(--text);
+}
+
+.sep{
+  height:1px;
+  background: var(--line-soft);
+  margin:18px 0;
+}
+
+.results{
+  display:none;
+  gap:15px;
+  grid-template-columns: 1fr 1fr;
+}
+.results.show{ display:grid; }
+
+.tool{
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  padding:14px;
+  background: var(--card);
+  transition: border-color .15s ease, background .15s ease, transform .1s ease;
+}
+
+.tool:hover{
+  border-color: rgba(255,255,255,.25);
+  background:#111;
+  transform: translateY(-1px);
+}
+
+.tool h3{ margin:0; font-size:13px; font-weight:600; color: var(--text); }
+
+.scoreline{
+  margin:8px 0 10px 0;
+  color: var(--muted);
+  font-size:11.5px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.why{
+  margin:0;
+  color: var(--text);
+  font-size:12px;
+  line-height:1.45;
+  opacity:.92;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+
+.tag{
+  font-size:11px;
+  padding:3px 7px;
+  border-radius:999px;
+  border:1px solid var(--line-soft);
+  opacity:.75;
+  color: var(--text);
+  background: transparent;
+}
+
+.ai-cta{
+  margin-top: 18px;
+  padding-right: 120px;
+}
+
+.ai-cta p{
+  margin: 6px 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.ai-cta a{
+  color: var(--text);
+  opacity:.9;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255,255,255,.25);
+}
+
+.ai-cta a:hover{
+  opacity:1;
+  border-bottom-color: rgba(255,255,255,.45);
+}
+
+.corner-widget{
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 10;
+}
+
+.widget-avatar{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.14);
+  background: #000;
+  opacity: .88;
+  transition: opacity .15s ease, transform .12s ease, border-color .15s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+
+.widget-avatar.logo{ opacity:.82; background: #000; }
+
+.corner-widget a:hover .widget-avatar{
+  opacity:1;
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.28);
+}
+
+@media (max-width:700px){
+  .topbar{ flex-direction:column; align-items:stretch; }
+  .topbar-right{ text-align:left; min-width:0; }
+  .results.show{ grid-template-columns:1fr; }
+
+  .corner-widget{ right:12px; bottom:12px; }
+  .widget-avatar{ width:36px; height:36px; }
+
+  .ai-cta{
+    padding-right: 0;
+    margin-bottom: 56px;
+  }
+}
+
+/* Footer card buttons (matches ubt-shared.css) */
+.card-buttons { position:absolute; right:14px; top:14px; display:flex; gap:10px; }
+.btn-icon { width:34px; height:34px; max-width:34px; max-height:34px; border-radius:10px; padding:5px; background:rgba(255,255,255,0.35); box-shadow:0 2px 6px rgba(0,0,0,.22); cursor:pointer; object-fit:contain; }
+.btn-icon:hover { transform:scale(1.08); }
+
+
+/* Card width lock (mobile width across all cards) */
+:root {
+  --card-mobile-width: 355px;
+}
+
+[class*="card"]:not(.card-buttons):not(.hb-card-buttons):not(.footer-blue-card__buttons):not(.contact-card-buttons):not(.card-title):not(.card-sub):not(.card-head):not(.card-foot) {
+  width: var(--card-mobile-width);
+  min-width: var(--card-mobile-width);
+  max-width: var(--card-mobile-width);
+  margin-left: auto;
+  margin-right: auto;
+}

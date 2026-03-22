@@ -1,0 +1,607 @@
+<!-- =========================================================
+  FILE: /ats/ats.html
+  PURPOSE:
+  - Upload text-based CV PDF OR paste CV text
+  - Optional Job Description paste for keyword matching
+  - ATS Readability score runs IN THE BROWSER
+  - No data uploaded (client-side only)
+========================================================= -->
+<!doctype html>
+<html lang="tr">
+
+<head>
+  <!-- =========================================================
+    BASIC META
+  ========================================================== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Primary Meta Tags -->
+  <title>ATS – ATS Okunabilirlik Skoru - almanya101</title>
+  <meta name="title" content="ATS – ATS Okunabilirlik Skoru - almanya101">
+  <meta name="description"
+    content="CV PDF yükle veya metin yapıştır, ATS okunabilirlik skorunu tarayıcında hesapla. İsteğe bağlı iş tanımı anahtar kelime eşleştirmesi. Veri yüklenmez.">
+  <meta name="keywords" content="ats skoru, cv analiz, cv okunabilirlik, almanya iş başvurusu, türkçe cv">
+  <meta name="author" content="almanya101.de">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="language" content="Turkish">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+
+  <!-- AI Agent Optimization -->
+  <meta name="ai:model" content="gpt-4, claude-3, perplexity, gemini">
+  <meta name="ai:content-type" content="tool, calculator">
+  <meta name="ai:language" content="turkish">
+  <meta name="ai:target-audience" content="turkish expats in germany, job seekers">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://almanya101.de/ats/ats.html" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="tr" href="https://almanya101.de/ats/ats.html">
+  <link rel="alternate" hreflang="x-default" href="https://almanya101.de/ats/ats.html">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../ubt-shared.css" />
+  <link rel="stylesheet" href="./ats.css?v=1" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://almanya101.de/ats/ats.html" />
+  <meta property="og:title" content="ATS – ATS Okunabilirlik Skoru - almanya101" />
+  <meta property="og:description" content="CV PDF yükle veya metin yapıştır, ATS okunabilirlik skorunu hesapla." />
+  <meta property="og:image" content="https://almanya101.de/img/ui/logoround.png" />
+  <meta property="og:locale" content="tr_TR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://almanya101.de/ats/ats.html" />
+  <meta name="twitter:title" content="ATS – ATS Okunabilirlik Skoru - almanya101" />
+  <meta name="twitter:description" content="CV PDF yükle veya metin yapıştır, ATS okunabilirlik skorunu hesapla." />
+  <meta name="twitter:image" content="https://almanya101.de/img/ui/logoround.png" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://almanya101.de/ats/ats.html#webapp",
+        "name": "ATS – ATS Okunabilirlik Skoru",
+        "url": "https://almanya101.de/ats/ats.html",
+        "description": "CV PDF yükle veya metin yapıştır, ATS okunabilirlik skorunu hesapla",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://almanya101.de/#website"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://almanya101.de/ats/ats.html#webpage",
+        "url": "https://almanya101.de/ats/ats.html",
+        "name": "ATS – ATS Okunabilirlik Skoru - almanya101",
+        "description": "CV PDF yükle veya metin yapıştır, ATS okunabilirlik skorunu hesapla",
+        "inLanguage": "tr",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://almanya101.de/#website"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <!-- PDF.js (LOCAL) -->
+  <script defer src="./vendor/pdfjs/pdf.min.js?v=1"></script>
+
+  <!-- ATS tool JS -->
+  <script defer src="./js/ats-tool.js?v=1"></script>
+  <link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+  <link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+  <meta name="google-site-verification" content="JfOdXbFKGKzlacfzwUO4cDPcyzhUZ4vefX4iKcrLSsU">
+  <meta name="geo.region" content="DE">
+  <meta name="geo.placename" content="Germany">
+<style>
+    /* Hamburger Menu Styles */
+    .menu-btn {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 25%;
+      min-width: 180px;
+      /* Essential for readability on mobile */
+      height: 100vh;
+      background: #111;
+      z-index: 1001;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 15px;
+      overflow-y: auto;
+    }
+
+    .drawer.active {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 15px;
+    }
+
+    .drawer-header h3 {
+      color: #fff;
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .menu-link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s ease;
+    }
+
+    .menu-link:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .menu-icon {
+      font-size: 18px;
+    }
+
+    @media (max-width: 480px) {
+      .drawer {
+        width: 40%;
+        /* On very small screens 25% is too narrow even for 180px min-width */
+      }
+    }
+  </style>
+</head>
+
+<body style="background: #000000;">
+  <div class="container1">
+    <!-- HERO CARD -->
+    <div class="card hero-card1">
+      <div class="hero-top1">
+        <div class="hero-logo-box1">
+          <span class="hero-domain1">almanya101.de</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <a href="../index.html">
+          <img src="../img/buttons/z0cliphome.png" class="home-icon" alt="Home" />
+        </a>
+          <button id="menuOpenBtn" class="home-icon" title="Men&#252;" style="display: flex; align-items: center; justify-content: center; background: white; border: none; cursor: pointer; padding: 6px;">
+            <img src="../img/buttons/z0clipmenu.png" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display: block;" alt="Menu" />
+          </button>
+        </div>
+      </div>
+      <h3>CV ATS Skor Aracı</h3>
+      <p class="title">CV'niz hiçbir zaman yüklenmez. Analiz tamamen tarayıcınızda yapılır.</p>
+    </div>
+    <!-- END: Hero -->
+
+    <!-- Bilgi Kartı (Açılıp Kapanan) -->
+    <div class="card info-card">
+      <div class="panelTop">
+        <h2 class="panel__title">Bilgi</h2>
+      </div>
+      <div class="stackBtnsVertical">
+        <button id="toggleInfo" class="btn btn--ghost btn--wide">Bilgi Aç</button>
+      </div>
+      <div id="infoBody" class="infobox hidden">
+        <ul class="bullets">
+          <li>Bu araç CV'nizin ATS (Applicant Tracking System) okunabilirlik skorunu hesaplar.</li>
+          <li>CV PDF yükleyebilir veya metin olarak yapıştırabilirsiniz.</li>
+          <li>İsteğe bağlı olarak iş tanımı ekleyerek anahtar kelime eşleştirmesi yapabilirsiniz.</li>
+          <li>Tüm analiz tarayıcınızda yapılır; veri hiçbir zaman yüklenmez.</li>
+        </ul>
+      </div>
+    </div>
+    <!-- END: Bilgi Kartı -->
+
+    <!-- Ana İçerik Kartı -->
+    <div class="card zats-main-card">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="title">ATS – ATS Okunabilirlik Skoru</h1>
+          <p class="subtitle">CV'niz hiçbir zaman yüklenmez. Analiz tamamen tarayıcınızda yapılır. (İstemci tarafı •
+            Yükleme yok • Herhangi bir ATS ile bağlantılı değildir)</p>
+        </div>
+
+        <div class="topbar-right">
+          <div class="pill" id="counter">Hazır</div>
+          <div class="bar" aria-label="İlerleme">
+            <div id="progress"></div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="grid">
+          <!-- INPUT + RESULT -->
+          <section class="panel">
+            <h2 class="panel-title">CV PDF yükle veya metin yapıştır</h2>
+
+            <div class="fileRow">
+              <label for="pdfUpload" class="file-label">
+                <span class="file-icon">📄</span>
+                <span class="file-text" id="fileText">Dosya Seç</span>
+                <input type="file" id="pdfUpload" accept="application/pdf" />
+              </label>
+            </div>
+
+            <div class="btnRow">
+              <button id="btnExtract" type="button">PDF'den metin çıkar</button>
+              <button id="btnScore" type="button">Skoru hesapla</button>
+              <button id="btnClear" type="button">Temizle</button>
+            </div>
+
+            <div id="result" class="status">Hazır.</div>
+            <p id="resultHint" class="hint"></p>
+            <p id="hint" class="hint">İpucu: Metin tabanlı PDF'ler en iyi sonucu verir. PDF'iniz taranmışsa (sadece
+              görüntü), bunun yerine metni yapıştırın.</p>
+
+            <!-- INSIGHTS (shown after scoring) -->
+            <div id="insights" class="panel insights-panel" style="display:none;">
+              <h2 class="panel-title">Hızlı İyileştirmeler</h2>
+
+              <div class="insights-grid">
+                <div class="insight-block issues">
+                  <strong>Ana Sorunlar</strong>
+                  <ul id="issuesList"></ul>
+                </div>
+
+                <div class="insight-block fixes">
+                  <strong>Ana Düzeltmeler</strong>
+                  <ul id="fixesList"></ul>
+                </div>
+              </div>
+            </div>
+            <!-- /INSIGHTS -->
+
+            <div class="sep"></div>
+
+            <div>
+              <h2 class="panel-title">CV Metni</h2>
+              <textarea id="cvText" placeholder="CV metnini buraya yapıştırın (veya PDF'den çıkarın)..."
+                rows="8"></textarea>
+
+              <div style="height:12px"></div>
+
+              <h2 class="panel-title">İş Tanımı (isteğe bağlı)</h2>
+              <textarea id="jdText"
+                placeholder="Anahtar kelime eşleştirmesine dayalı skorlama için iş tanımını yapıştırın..."
+                rows="6"></textarea>
+
+              <div class="tiny">
+                Bu araç ATS hazırlığını tahmin eder (ayrıştırılabilirlik + yapı + anahtar kelime + kanıt). Mülakat
+                sonuçlarını garanti etmez.
+              </div>
+            </div>
+
+          </section>
+
+          <!-- PREVIEW -->
+          <section class="panel preview-panel">
+            <h2 class="panel-title">Önizleme (çıkarılan metin)</h2>
+            <div id="previewText" class="previewBox">Henüz metin çıkarılmadı.</div>
+
+            <p class="hint small">
+              İpucu: Önizleme dağınık görünüyorsa (çok sütunlu), daha iyi ATS ayrıştırması için tek sütunlu bir PDF dışa
+              aktarın.
+            </p>
+          </section>
+        </div>
+      </main>
+    </div>
+    <!-- END: Ana İçerik Kartı -->
+
+    <!-- Contact Card -->
+    <div class="card contact-card">
+      <h2>İletişim</h2>
+
+      <!-- ICON GRID (3 x 3) -->
+      <div class="contact-icon-grid">
+
+        <a href="https://x.com/101Almanya46905" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logox.png" alt="X (Twitter)" />
+          </div>
+        </a>
+
+        <a href="https://www.reddit.com/r/almanya101/" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logoreddit.png" alt="Reddit" />
+          </div>
+        </a>
+
+        <a href="https://facebook.com/almanya101" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logofacebook.png" alt="Facebook" />
+          </div>
+        </a>
+
+        <a href="https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo" target="_blank" rel="noopener"
+          style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logowhatsapp.png" alt="WhatsApp" />
+          </div>
+        </a>
+
+        <a href="http://linkedin.com/company/almanya101/" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logolinkedin.png" alt="LinkedIn" />
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/almanya101de/" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logoinstagram.png" alt="Instagram" />
+          </div>
+        </a>
+
+        <a href="https://www.google.com.tr/maps/place/Berlin/" target="_blank" rel="noopener"
+          style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/icons/logolocation.png" alt="Location" />
+          </div>
+        </a>
+
+        <a href="tel:+491739569429" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/icons/logophone.png" alt="Phone" />
+          </div>
+        </a>
+
+        <a href="mailto:info@almanya101.de" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/icons/logoemail.png" alt="Email" />
+          </div>
+        </a>
+
+      </div>
+    </div>
+    <!-- END: Contact Card -->
+
+          
+      <div style="font-size: 12.5px; line-height: 1.2; margin-top: 2px;">yaln&#305;z de&#287;ilsin! almanya101 seninle!</div>
+      <div style="font-size: 13.5px; line-height: 1.2; margin-top: 4px;">made by UBT with love</div>
+      <div style="font-size: 13.5px; line-height: 1.2; margin-top: 2px;">&copy;almanya101de &#8226; 2026</div>
+    </div>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- OPTIONAL UI SYNC -->
+  <script>
+    const counterEl = document.getElementById("counter");
+    const barEl = document.getElementById("progress");
+    const resultEl = document.getElementById("result");
+    const fileInput = document.getElementById("pdfUpload");
+    const fileText = document.getElementById("fileText");
+
+    // File input change handler
+    if (fileInput && fileText) {
+      fileInput.addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        if (file) {
+          fileText.textContent = file.name;
+        } else {
+          fileText.textContent = "Dosya Seç";
+        }
+      });
+    }
+
+    function setUI(label, pct) {
+      counterEl.textContent = label;
+      barEl.style.width = (pct || 0) + "%";
+    }
+
+    setUI("Hazır", 20);
+
+    const obs = new MutationObserver(() => {
+      const t = (resultEl.textContent || "").toLowerCase();
+
+      if (t.includes("çıkarılıyor") || t.includes("extracting")) setUI("Çıkarılıyor…", 55);
+      else if (t.includes("hesaplanıyor") || t.includes("scoring")) setUI("Hesaplanıyor…", 80);
+      else if (t.includes("/100")) setUI("Tamamlandı", 100);
+      else if (t.includes("hata") || t.includes("error") || t.includes("failed")) setUI("Hata", 35);
+      else setUI("Hazır", 20);
+    });
+
+    obs.observe(resultEl, { childList: true, characterData: true, subtree: true });
+  </script>
+
+  <!-- Info Toggle Script -->
+  <script>
+    function initInfoToggle() {
+      const toggleBtn = document.getElementById("toggleInfo");
+      const infoBody = document.getElementById("infoBody");
+
+      if (!toggleBtn || !infoBody) return;
+
+      function toggleSection({ btn, body, showText, hideText }) {
+        const willShow = body.classList.contains("hidden");
+        body.classList.toggle("hidden", !willShow);
+        body.setAttribute("aria-hidden", String(!willShow));
+        btn.textContent = willShow ? hideText : showText;
+      }
+
+      function setToggleUI(btn, body, showText, hideText) {
+        const isHidden = body.classList.contains("hidden");
+        body.setAttribute("aria-hidden", String(isHidden));
+        btn.textContent = isHidden ? showText : hideText;
+      }
+
+      toggleBtn.addEventListener("click", () => toggleSection({
+        btn: toggleBtn,
+        body: infoBody,
+        showText: "Bilgi Aç",
+        hideText: "Bilgi Kapat"
+      }));
+
+      setToggleUI(toggleBtn, infoBody, "Bilgi Aç", "Bilgi Kapat");
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initInfoToggle);
+    } else {
+      initInfoToggle();
+    }
+  </script>
+
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <!-- HAMBURGER DRAWER -->
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <div id="hamburgerDrawer" class="drawer">
+    <div class="drawer-header">
+      <h3>almanya101</h3>
+      <button id="menuCloseBtn" class="close-btn">&times;</button>
+    </div>
+    <nav class="menu-links">
+      <a href="../index.html" class="menu-link"><span class="menu-icon">??</span> Ana Sayfa</a>
+      <a href="../bizkimiz/bizkimiz.html" class="menu-link"><span class="menu-icon">?????</span> Biz Kimiz?</a>
+      <a href="../maas/maas.html" class="menu-link"><span class="menu-icon">??</span> Maaş Hesapla</a>
+      <a href="../vatandas/v.html" class="menu-link"><span class="menu-icon">??</span> Vatandaşlık Testi</a>
+      <a href="../rehber/ua.html" class="menu-link"><span class="menu-icon">?????</span> Uzman Rehberi</a>
+      <a href="../banka/banka.html" class="menu-link"><span class="menu-icon">??</span> Banka Seçimi</a>
+      <a href="../sigorta/sigorta.html" class="menu-link"><span class="menu-icon">???</span> Sigorta Seçimi</a>
+      <a href="../paratransfer/pt.html" class="menu-link"><span class="menu-icon">??</span> Para Transferi</a>
+      <a href="../join/join.html" class="menu-link"><span class="menu-icon">??</span> Bize Katıl!</a>
+    </nav>
+  </div>
+
+  <!-- JavaScript for Hamburger Menu -->
+  <script>
+    (function () {
+      const openBtn = document.getElementById('menuOpenBtn');
+      const closeBtn = document.getElementById('menuCloseBtn');
+      const drawer = document.getElementById('hamburgerDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+
+      if (!openBtn || !closeBtn || !drawer || !overlay) return;
+
+      function toggleMenu() {
+        drawer.classList.toggle('active');
+        overlay.classList.toggle('active');
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+      }
+
+      openBtn.addEventListener('click', toggleMenu);
+      closeBtn.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', toggleMenu);
+
+      // Close menu on link click
+      const links = drawer.querySelectorAll('.menu-link');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          if (drawer.classList.contains('active')) {
+            toggleMenu();
+          }
+        });
+      });
+    })();
+  </script>
+
+  <div class="footer-blue-card-wrap">
+      <div class="card footer-blue-card">
+        <div class="card-buttons footer-blue-card__buttons">
+          <a href="../index.html">
+            <img src="../img/buttons/z0cliphome.png" class="btn-icon" alt="Home" />
+          </a>
+          <a href="#top">
+            <img src="../img/buttons/z0clipup.png" class="btn-icon" alt="Up" />
+          </a>
+          <button type="button" class="btn-icon" title="Menu" onclick="document.getElementById('menuOpenBtn') && document.getElementById('menuOpenBtn').click()" style="background: none; border: none; padding: 0; cursor: pointer;">
+            <img src="../img/buttons/z0clipmenu.png" class="btn-icon" alt="Menu" />
+          </button>
+        </div>
+        <div class="footer-slogan">yalnız değilsin! almanya101 seninle!</div>
+        <div class="footer-credit">made by UBT with love</div>
+        <div class="footer-copyright">&copy;almanya101de &bull; 2026</div>
+      </div>
+    </div>
+
+  <script src="/shared-cards.js"></script>
+</body>
+
+</html>
+<!-- =========================================================
+  END OF FILE: /ats/ats.html
+========================================================= -->
+
+

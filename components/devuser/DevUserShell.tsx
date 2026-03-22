@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface DevUserShellProps {
@@ -25,7 +24,9 @@ export function DevUserShell({
   return (
     <div className={frameClasses[frameVariant]}>
       <div className="devuser-shell-top-logo">
-        <Image src="/almanya101.png" alt="almanya101" width={300} height={80} unoptimized />
+        <Link href="/" className="text-xl font-bold text-white hover:opacity-80 transition-opacity">
+          almanya101
+        </Link>
       </div>
       <header className="devuser-shell-header">
         <h1 className="devuser-shell-title">{title}</h1>

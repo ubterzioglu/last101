@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { INSURANCE_TYPES, QUESTIONS } from './data';
 import { ClassifiedResult } from './types';
 import { cn } from '@/lib/utils/cn';
@@ -11,6 +12,7 @@ export default function SigortaClient() {
   const [showResult, setShowResult] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [showWhy, setShowWhy] = useState(false);
 
   const question = QUESTIONS[currentQuestion];
   const totalQuestions = QUESTIONS.length;
@@ -137,109 +139,105 @@ export default function SigortaClient() {
   };
 
   return (
-    <div className="max-w-xl mx-auto space-y-4">
+    <div className="space-y-2">
 
-      {/* Info Card */}
-      <div className="max-w-xl mx-auto bg-white rounded-2xl overflow-hidden shadow-lg border-t-4 border-google-blue">
-        <div className="px-5 pt-5 pb-1 text-center">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Sigorta Seçim Aracı</h1>
+      {/* Başlık + Nasıl Çalışır accordion */}
+      <div
+        className="bg-white rounded-xl border-2 border-google-blue overflow-hidden cursor-pointer select-none"
+        onClick={() => setShowInfo(!showInfo)}
+      >
+        <div className="flex items-center justify-between px-4 py-3">
+          <div>
+            <h1 className="text-2xl font-bold leading-tight">Sigorta Seçim Aracı</h1>
+            <div className="flex items-center gap-1 mt-0.5 text-google-blue font-medium text-sm">
+              Nasıl Çalışır?
+            </div>
+          </div>
+          <span className={cn("text-google-blue text-xl transition-transform duration-200", showInfo && "rotate-180")}>▾</span>
         </div>
-        <button
-          onClick={() => setShowInfo(!showInfo)}
-          className="w-full px-5 py-4 text-left text-gray-700 font-medium flex justify-between items-center hover:bg-gray-50 transition-colors"
-        >
-          <span>Nasıl çalışır?</span>
-          <span className="text-gray-400 text-sm">{showInfo ? '▲' : '▼'}</span>
-        </button>
         {showInfo && (
-          <div className="px-5 pb-4 text-gray-500 text-sm border-t border-gray-100 pt-3">
-            <ul className="list-disc list-inside space-y-1.5">
-              <li>Bu araç 20 soruyla sigortalarınızı önceliklendirir.</li>
-              <li>Sonuçlar bilgilendirme amaçlıdır.</li>
-              <li>Sözleşme öncesi kapsam ve şartları kontrol edin.</li>
+          <div className="px-4 pb-4 bg-blue-50 border-t border-blue-200">
+            <ul className="space-y-2 text-sm text-blue-800 pt-3">
+              <li>• Bu araç 20 soruyla sigortalarınızı önceliklendirir.</li>
+              <li>• Sonuçlar bilgilendirme amaçlıdır.</li>
+              <li>• Sözleşme öncesi kapsam ve şartları kontrol edin.</li>
             </ul>
           </div>
         )}
       </div>
 
-      {/* Progress Card */}
-      {!showResult && (
-        <div className="max-w-xl mx-auto mb-3 bg-white rounded-2xl px-5 py-4 border-t-4 border-google-green">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-500 text-sm">
-              Soru {currentQuestion + 1} / {totalQuestions}
-            </span>
-            <button
-              onClick={handleReset}
-              className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              Sıfırla
-            </button>
+      {/* Bu araç neden var? */}
+      <div
+        className="bg-white rounded-xl border-2 border-google-green overflow-hidden cursor-pointer select-none"
+        onClick={() => setShowWhy(!showWhy)}
+      >
+        <div className="flex items-center justify-between px-4 py-3">
+          <span className="font-semibold text-gray-900">Bu araç neden var?</span>
+          <span className={cn("text-google-green text-xl transition-transform duration-200", showWhy && "rotate-180")}>▾</span>
+        </div>
+        {showWhy && (
+          <div className="px-4 pb-4 bg-green-50 border-t border-green-200">
+            <p className="text-sm text-green-900 pt-3 leading-relaxed">
+              Almanya'da yaşamak, doğru sigortaları seçmeyi neredeyse zorunlu kılar. Sağlık sigortası yasal olarak zorunlu, ancak bunun yanı sıra kira sigortası, kişisel sorumluluk sigortası (Haftpflicht), araç sigortası, iş göremezlik sigortası ve daha pek çok seçenek var. Hangilerini almanın şart, hangilerinin tavsiye edilebilir, hangilerinin opsiyonel olduğu ise yaşam durumuna ve önceliklerine göre değişir. Bu araç, birkaç soruyla senin için önemli olan sigortaları öncelik sırasıyla listeler.
+            </p>
           </div>
-          <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-google-green rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
+        )}
+      </div>
+
+      {/* Progress */}
+      {!showResult && (
+        <div className="bg-white rounded-xl border-2 border-google-red px-4 py-3">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium text-google-red">Soru {currentQuestion + 1} / {totalQuestions}</span>
+            <button onClick={handleReset} className="text-sm text-google-red hover:opacity-75">Sıfırla</button>
+          </div>
+          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-full bg-google-red transition-all duration-300" style={{ width: `${progress}%` }} />
           </div>
         </div>
       )}
 
       {/* Question Card */}
       {!showResult && (
-        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-google-blue min-h-[420px] flex flex-col">
-          <h2 className="text-gray-900 font-bold text-lg leading-tight mb-1">
-            {question.title}
-          </h2>
-          <p className="text-gray-500 text-sm mb-5">{question.desc}</p>
+        <div className="bg-white rounded-xl border-2 border-google-yellow p-5">
+          <h2 className="text-gray-900 font-bold text-lg leading-tight mb-1">{question.title}</h2>
+          <p className="text-gray-500 text-sm mb-4">{question.desc}</p>
 
-          <div className="space-y-3">
-            {question.type === 'yesno' && (
-              <>
-                {(['yes', 'no'] as const).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => handleAnswer(key)}
-                    className={cn(
-                      'w-full flex items-start gap-3 p-4 rounded-xl border text-left transition-all',
-                      answers[question.id] === key
-                        ? 'bg-blue-50 border-2 border-google-blue'
-                        : 'bg-google-blue/10 border border-blue-100 hover:border-google-blue/40 hover:bg-blue-50/30'
-                    )}
-                  >
-                    <div>
-                      <div className="font-semibold text-sm text-gray-900">
-                        {key === 'yes' ? 'Evet' : 'Hayır'}
-                      </div>
-                      <div className="text-xs text-gray-500 mt-0.5">
-                        {key === 'yes' ? 'Bu durum bende var.' : 'Bu durum bende yok.'}
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </>
-            )}
+          <div className="space-y-2">
+            {question.type === 'yesno' && (['yes', 'no'] as const).map((key) => (
+              <button
+                key={key}
+                onClick={() => handleAnswer(key)}
+                className={cn(
+                  'w-full p-4 rounded-lg border-2 text-left transition-all',
+                  answers[question.id] === key
+                    ? 'border-google-blue bg-blue-100'
+                    : 'border-google-blue/30 bg-blue-50/60 hover:bg-blue-100/80 hover:border-google-blue'
+                )}
+              >
+                <div className="font-semibold text-sm text-gray-900">{key === 'yes' ? 'Evet' : 'Hayır'}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{key === 'yes' ? 'Bu durum bende var.' : 'Bu durum bende yok.'}</div>
+              </button>
+            ))}
 
             {question.type === 'single' && question.options?.map((option) => (
               <button
                 key={option.key}
                 onClick={() => handleAnswer(option.key)}
                 className={cn(
-                  'w-full flex items-start gap-3 p-4 rounded-xl border text-left transition-all',
+                  'w-full p-4 rounded-lg border-2 text-left transition-all',
                   answers[question.id] === option.key
-                    ? 'bg-blue-50 border-2 border-google-blue'
-                    : 'bg-google-blue/10 border border-blue-100 hover:border-google-blue/40 hover:bg-blue-50/30'
+                    ? 'border-google-blue bg-blue-100'
+                    : 'border-google-blue/30 bg-blue-50/60 hover:bg-blue-100/80 hover:border-google-blue'
                 )}
               >
-                <div>
-                  <div className="font-semibold text-sm text-gray-900">{option.label}</div>
-                  <div className="text-xs text-gray-500 mt-0.5">{option.desc}</div>
-                </div>
+                <div className="font-semibold text-sm text-gray-900">{option.label}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{option.desc}</div>
               </button>
             ))}
           </div>
 
-          <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+          <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
             <button
               onClick={handleBack}
               disabled={currentQuestion === 0}
@@ -254,31 +252,25 @@ export default function SigortaClient() {
 
       {/* Result */}
       {showResult && (
-        <div className="max-w-xl mx-auto space-y-4">
-
-          {/* Başlık kartı */}
-          <div className="bg-white rounded-2xl px-5 py-4 text-center border-t-4 border-google-orange">
-            <h2 className="text-gray-900 font-bold text-2xl">Sonuçların hazır!</h2>
+        <>
+          <div className="bg-white rounded-xl border-2 border-google-red px-4 py-3">
+            <h2 className="text-gray-900 font-bold text-2xl mb-0.5">Sonuç</h2>
+            <p className="text-gray-500 text-sm">Cevaplarına göre sigorta önceliklendirmen</p>
           </div>
 
-          {/* Yüksek Öncelikli */}
           {classified.must.length > 0 && (
-            <div className="bg-white rounded-2xl p-5 shadow-md border-t-4 border-google-red">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-google-red text-white">
-                  Yüksek Öncelikli
-                </span>
-              </div>
-              <div className="space-y-3">
+            <div className="bg-white rounded-xl border-2 border-google-red p-5">
+              <span className="text-xs font-bold px-3 py-1 rounded-full bg-google-red text-white">Yüksek Öncelikli</span>
+              <div className="space-y-2 mt-3">
                 {classified.must.map((item) => (
-                  <div key={item.key} className="rounded-xl p-4 border border-red-100 bg-red-50 shadow-sm">
-                    <div className="flex items-center justify-between mb-2">
+                  <div key={item.key} className="rounded-lg p-3 border border-red-100 bg-red-50">
+                    <div className="flex items-center justify-between mb-1">
                       <h3 className="text-base font-bold text-gray-900">{item.title}</h3>
-                      <span className="text-sm font-bold text-gray-900">Skor: {item.score}</span>
+                      <span className="text-sm font-bold text-gray-500">Skor: {item.score}</span>
                     </div>
-                    <ul className="text-gray-600 text-sm space-y-1 list-disc list-inside">
+                    <ul className="text-gray-600 text-sm space-y-0.5">
                       {item.reasons.map((r, i) => (
-                        <li key={i}>{r}</li>
+                        <li key={i} className="flex gap-2"><span className="text-gray-400 shrink-0">•</span>{r}</li>
                       ))}
                     </ul>
                   </div>
@@ -287,24 +279,19 @@ export default function SigortaClient() {
             </div>
           )}
 
-          {/* Durumuna Bağlı */}
           {classified.should.length > 0 && (
-            <div className="bg-white rounded-2xl p-5 shadow-md border-t-4 border-google-yellow">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-google-yellow text-gray-800">
-                  Durumuna Bağlı
-                </span>
-              </div>
-              <div className="space-y-3">
+            <div className="bg-white rounded-xl border-2 border-google-yellow p-5">
+              <span className="text-xs font-bold px-3 py-1 rounded-full bg-google-yellow text-gray-800">Durumuna Bağlı</span>
+              <div className="space-y-2 mt-3">
                 {classified.should.map((item) => (
-                  <div key={item.key} className="rounded-xl p-4 border border-yellow-100 bg-yellow-50 shadow-sm">
-                    <div className="flex items-center justify-between mb-2">
+                  <div key={item.key} className="rounded-lg p-3 border border-yellow-100 bg-yellow-50">
+                    <div className="flex items-center justify-between mb-1">
                       <h3 className="text-base font-bold text-gray-900">{item.title}</h3>
-                      <span className="text-sm font-bold text-gray-900">Skor: {item.score}</span>
+                      <span className="text-sm font-bold text-gray-500">Skor: {item.score}</span>
                     </div>
-                    <ul className="text-gray-600 text-sm space-y-1 list-disc list-inside">
+                    <ul className="text-gray-600 text-sm space-y-0.5">
                       {item.reasons.map((r, i) => (
-                        <li key={i}>{r}</li>
+                        <li key={i} className="flex gap-2"><span className="text-gray-400 shrink-0">•</span>{r}</li>
                       ))}
                     </ul>
                   </div>
@@ -313,24 +300,19 @@ export default function SigortaClient() {
             </div>
           )}
 
-          {/* Opsiyonel */}
           {classified.nice.length > 0 && (
-            <div className="bg-white rounded-2xl p-5 shadow-md border-t-4 border-google-green">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-google-green text-white">
-                  Opsiyonel
-                </span>
-              </div>
-              <div className="space-y-3">
+            <div className="bg-white rounded-xl border-2 border-google-green p-5">
+              <span className="text-xs font-bold px-3 py-1 rounded-full bg-google-green text-white">Opsiyonel</span>
+              <div className="space-y-2 mt-3">
                 {classified.nice.map((item) => (
-                  <div key={item.key} className="rounded-xl p-4 border border-green-100 bg-green-50 shadow-sm">
-                    <div className="flex items-center justify-between mb-2">
+                  <div key={item.key} className="rounded-lg p-3 border border-green-100 bg-green-50">
+                    <div className="flex items-center justify-between mb-1">
                       <h3 className="text-base font-bold text-gray-900">{item.title}</h3>
-                      <span className="text-sm font-bold text-gray-900">Skor: {item.score}</span>
+                      <span className="text-sm font-bold text-gray-500">Skor: {item.score}</span>
                     </div>
-                    <ul className="text-gray-600 text-sm space-y-1 list-disc list-inside">
+                    <ul className="text-gray-600 text-sm space-y-0.5">
                       {item.reasons.map((r, i) => (
-                        <li key={i}>{r}</li>
+                        <li key={i} className="flex gap-2"><span className="text-gray-400 shrink-0">•</span>{r}</li>
                       ))}
                     </ul>
                   </div>
@@ -339,24 +321,20 @@ export default function SigortaClient() {
             </div>
           )}
 
-          {/* Butonlar */}
-          <div className="flex flex-col gap-3 pt-2">
-            <button
-              onClick={handleCopy}
-              className="w-full text-sm bg-google-blue hover:bg-google-blue/90 text-white px-4 py-2.5 rounded-xl transition-colors font-bold"
-            >
-              {copied ? 'Kopyalandı!' : 'Sonucu Kopyala'}
-            </button>
-            <button
-              onClick={handleReset}
-              className="w-full text-sm text-white/70 border border-white/20 hover:bg-white/10 px-4 py-2.5 rounded-xl transition-colors font-medium"
-            >
-              Tekrar Yap
-            </button>
-          </div>
-
-        </div>
+          <button onClick={handleReset} className="w-full flex items-center justify-center rounded-xl border-2 border-google-orange bg-google-orange text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+            Sıfırla
+          </button>
+          <button onClick={handleCopy} className="w-full flex items-center justify-center rounded-xl border-2 border-google-blue bg-google-blue text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+            {copied ? 'Kopyalandı!' : 'Sonucu Kopyala'}
+          </button>
+          <Link href="/" className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+            Ana Sayfaya Dön
+          </Link>
+        </>
       )}
+      <Link href="/" className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+        Ana Sayfaya Dön
+      </Link>
     </div>
   );
 }

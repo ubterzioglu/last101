@@ -9,7 +9,7 @@ export const metadata = createMetadata({
 
 export default function StepstoneKarsilastirmaPage() {
   return (
-    <div className="min-h-screen bg-black py-8 px-4">
+    <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <StepstoneClient />
     </div>
   );

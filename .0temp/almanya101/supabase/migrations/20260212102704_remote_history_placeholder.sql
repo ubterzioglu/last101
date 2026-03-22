@@ -1,0 +1,3 @@
+-- Placeholder migration to align local history with remote.
+-- This version already exists on remote (applied outside this repo state).
+-- Kept intentionally as no-op.

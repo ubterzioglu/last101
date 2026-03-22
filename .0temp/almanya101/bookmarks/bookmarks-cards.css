@@ -1,0 +1,138 @@
+/* =========================================================
+  FILE: /bookmark/bookmark-cards.css
+  PURPOSE:
+  - Fully isolated ZBOM grid + cards (NO dependency on ubt-shared.css)
+  - 3-line description
+  - No artificial bottom space
+  - Thumb noise/grid overlay
+========================================================= */
+
+/* Grid */
+#grid{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap:15px;
+  align-items:start;
+}
+
+@media(max-width:1200px){ #grid{grid-template-columns:repeat(3,1fr);} }
+@media(max-width:900px){  #grid{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:600px){  #grid{grid-template-columns:1fr;} }
+
+/* Card */
+#grid .bookmark-card{
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  cursor:pointer;
+  position: relative;
+  overflow:hidden;
+
+  display:flex;
+  flex-direction:column;
+
+  transition: border-color .15s ease, background .15s ease, transform .1s ease;
+}
+
+#grid .bookmark-card:hover{
+  border-color: rgba(255,255,255,.25);
+  background:#111;
+  transform: translateY(-1px);
+}
+
+/* Thumb */
+#grid .bookmark-thumb{
+  height:108px;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+
+#grid .bookmark-thumb::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 6px 6px;
+  opacity:.08;
+  pointer-events:none;
+}
+
+#grid .bookmark-thumb::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity:.05;
+  pointer-events:none;
+}
+
+#grid .bookmark-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.9;
+  position:relative;
+  z-index:1;
+}
+
+#grid .bookmark-thumb .fallback{
+  font-weight:700;
+  opacity:.65;
+  position:relative;
+  z-index:1;
+}
+
+/* Body */
+#grid .bookmark-body{
+  padding:10px 11px 12px;
+}
+
+#grid .bookmark-name{
+  font-size:13px;
+  font-weight:600;
+  margin:0 0 6px 0;
+  color: var(--text);
+}
+
+#grid .bookmark-desc{
+  font-size:12px;
+  opacity:.58;
+  line-height:1.4;
+  margin:0 0 6px 0;
+  color: var(--muted);
+
+  height: calc(1.4em * 3); /* 3 lines reserved */
+  overflow:hidden;
+}
+
+/* Meta */
+#grid .bookmark-meta{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top:6px;
+}
+
+#grid .bookmark-tag{
+  font-size:11px;
+  padding:3px 7px;
+  border-radius:999px;
+  border:1px solid var(--line-soft);
+  opacity:.75;
+  color: var(--text);
+}
+
+#grid .bookmark-by{
+  margin-left:auto;
+  font-size:11px;
+  opacity:.45;
+  color: var(--text);
+}

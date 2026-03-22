@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { FOOTER_LINKS } from '@/constants/navigation';
-import { SITE_NAME, SOCIAL_LINKS, CONTACT_INFO } from '@/lib/utils/constants';
 import { Container } from '@/components/ui/Container';
 
 export function Footer() {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
 import { calculateSalary, formatCurrency } from '@/lib/salary/calculator';
 import { STATES, TAX_CLASSES, type SalaryInput } from '@/lib/salary/types';
@@ -37,6 +38,7 @@ export default function MaasClient() {
 
   // UI state
   const [showInfo, setShowInfo] = useState(false);
+  const [showWhy, setShowWhy] = useState(false);
   const [showMonthlyBreakdown, setShowMonthlyBreakdown] = useState(false);
   const [showYearlyBreakdown, setShowYearlyBreakdown] = useState(false);
 
@@ -77,34 +79,53 @@ export default function MaasClient() {
   };
 
   return (
-    <div className="max-w-xl mx-auto space-y-4">
+    <div className="space-y-2">
       {/* Info Card */}
-      <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-t-4 border-google-blue">
-        <div className="px-5 pt-5 pb-1 text-center">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Maaş Hesaplayıcı</h1>
-          <p className="text-gray-500 text-sm mt-1">Brüt → Net → Brüt</p>
+      <div
+        className="bg-white rounded-xl border-2 border-google-blue overflow-hidden cursor-pointer select-none"
+        onClick={() => setShowInfo(!showInfo)}
+      >
+        <div className="flex items-center justify-between px-4 py-3">
+          <div>
+            <h1 className="text-2xl font-bold leading-tight">Almanya Maaş Hesaplayıcı — Brüt → Net → Brüt</h1>
+            <div className="flex items-center gap-1 mt-0.5 text-google-blue font-medium text-sm">
+              Nasıl Çalışır?
+            </div>
+          </div>
+          <span className={cn('text-google-blue text-xl transition-transform duration-200', showInfo && 'rotate-180')}>▾</span>
         </div>
-        <button
-          onClick={() => setShowInfo(!showInfo)}
-          className="w-full px-5 py-4 text-left text-gray-700 font-medium flex justify-between items-center hover:bg-gray-50 transition-colors"
-        >
-          <span>Nasıl çalışır?</span>
-          <span className="text-gray-400 text-sm">{showInfo ? '▲' : '▼'}</span>
-        </button>
         {showInfo && (
-          <div className="px-5 pb-4 text-gray-500 text-sm border-t border-gray-100 pt-3">
-            <ul className="list-disc list-inside space-y-1.5">
-              <li>Kullanıcı verileri saklanmaz.</li>
-              <li><strong>KV (Krankenkasse)</strong>: Yasal sağlık sigortası kesintisi. Standart oran %14.6'dır.</li>
-              <li><strong>Zusatzbeitrag</strong>: Ek prim, genelde %1.6 – %2.5 arasındadır.</li>
-              <li>Her iki prim de çalışan ve işveren arasında yarı yarıya paylaşılır.</li>
+          <div className="px-4 pb-4 bg-blue-50 border-t border-blue-200">
+            <ul className="space-y-2 text-sm text-blue-800 pt-3">
+              <li>• Kullanıcı verileri saklanmaz.</li>
+              <li>• <strong>KV (Krankenkasse)</strong>: Yasal sağlık sigortası kesintisi. Standart oran %14.6'dır.</li>
+              <li>• <strong>Zusatzbeitrag</strong>: Ek prim, genelde %1.6 – %2.5 arasındadır.</li>
+              <li>• Her iki prim de çalışan ve işveren arasında yarı yarıya paylaşılır.</li>
             </ul>
           </div>
         )}
       </div>
 
+      {/* Bu araç neden var? */}
+      <div
+        className="bg-white rounded-xl border-2 border-google-green overflow-hidden cursor-pointer select-none"
+        onClick={() => setShowWhy(!showWhy)}
+      >
+        <div className="flex items-center justify-between px-4 py-3">
+          <span className="font-semibold text-gray-900">Bu araç neden var?</span>
+          <span className={cn('text-google-green text-xl transition-transform duration-200', showWhy && 'rotate-180')}>▾</span>
+        </div>
+        {showWhy && (
+          <div className="px-4 pb-4 bg-green-50 border-t border-green-200">
+            <p className="text-sm text-green-900 pt-3 leading-relaxed">
+              Almanya'da çalışıyorsan ya da çalışmayı planlıyorsan, eline ne geçeceğini önceden bilmek hayati önem taşır. Brüt maaş rakamları iş ilanlarında cazip görünür, ancak Almanya'nın vergi ve sigorta sistemi ciddi kesintiler getirir. Bu araç, girdiğin brüt maaştan Lohnsteuer, Krankenversicherung, Pflegeversicherung, Rentenversicherung ve Arbeitslosenversicherung kesintilerini eyalete, vergi sınıfına ve aile durumuna göre hesaplar. Tersine de çalışır: hedef net rakamını girer, gerekli brütü öğrenirsin. Dienstwagen (şirket aracı) kullananlar için ek vergi etkisini de dahil edebilirsin.
+            </p>
+          </div>
+        )}
+      </div>
+
       {/* Input Form */}
-      <div className="bg-white rounded-2xl shadow-lg p-5 border-t-4 border-google-red">
+      <div className="bg-white rounded-xl border-2 border-google-yellow p-5">
         <h2 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
           <Calculator size={20} />
           Girdi
@@ -113,8 +134,8 @@ export default function MaasClient() {
         <div className="grid gap-4">
           {/* Period & Type */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-              <label className="text-xs text-gray-500 mb-2 block">Periyot</label>
+            <div className="">
+              <label className="text-xs text-gray-500 block mb-1">Periyot</label>
               <div className="flex gap-2">
                 <button
                   onClick={() => setPeriod('monthly')}
@@ -136,8 +157,8 @@ export default function MaasClient() {
                 </button>
               </div>
             </div>
-            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-              <label className="text-xs text-gray-500 mb-2 block">Tip</label>
+            <div className="">
+              <label className="text-xs text-gray-500 block mb-1">Tip</label>
               <div className="flex gap-2">
                 <button
                   onClick={() => setType('gross')}
@@ -162,25 +183,25 @@ export default function MaasClient() {
           </div>
 
           {/* Amount */}
-          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-            <label className="text-xs text-gray-500 mb-2 block">Miktar (€)</label>
+          <div className="">
+            <label className="text-xs text-gray-500 block mb-1">Miktar (€)</label>
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(Number(e.target.value))}
-              className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-google-blue/30"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
               placeholder="5000"
             />
           </div>
 
           {/* Tax Class & State */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-              <label className="text-xs text-gray-500 mb-2 block">Steuerklasse</label>
+            <div className="">
+              <label className="text-xs text-gray-500 block mb-1">Steuerklasse</label>
               <select
                 value={taxClass}
                 onChange={(e) => setTaxClass(e.target.value)}
-                className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-blue/30"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
               >
                 {TAX_CLASSES.map(tc => (
                   <option key={tc.value} value={tc.value}>
@@ -189,12 +210,12 @@ export default function MaasClient() {
                 ))}
               </select>
             </div>
-            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-              <label className="text-xs text-gray-500 mb-2 block">Eyalet</label>
+            <div className="">
+              <label className="text-xs text-gray-500 block mb-1">Eyalet</label>
               <select
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-blue/30"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
               >
                 {STATES.map(s => (
                   <option key={s.code} value={s.code}>
@@ -206,7 +227,7 @@ export default function MaasClient() {
           </div>
 
           {/* Children */}
-          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+          <div className="">
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -220,22 +241,22 @@ export default function MaasClient() {
 
           {hasChildren && (
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-                <label className="text-xs text-gray-500 mb-2 block">Çocuk sayısı</label>
+              <div className="">
+                <label className="text-xs text-gray-500 block mb-1">Çocuk sayısı</label>
                 <input
                   type="number"
                   value={childrenCount}
                   onChange={(e) => setChildrenCount(Number(e.target.value))}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
                 />
               </div>
-              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-                <label className="text-xs text-gray-500 mb-2 block">25 yaş altı</label>
+              <div className="">
+                <label className="text-xs text-gray-500 block mb-1">25 yaş altı</label>
                 <input
                   type="number"
                   value={childrenUnder25}
                   onChange={(e) => setChildrenUnder25(Number(e.target.value))}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
                 />
               </div>
             </div>
@@ -243,8 +264,8 @@ export default function MaasClient() {
 
           {/* Age & Church Tax */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-              <label className="text-xs text-gray-500 mb-2 block">Yaş</label>
+            <div className="">
+              <label className="text-xs text-gray-500 block mb-1">Yaş</label>
               <div className="flex gap-2">
                 <button
                   onClick={() => setAge23Plus(false)}
@@ -266,7 +287,7 @@ export default function MaasClient() {
                 </button>
               </div>
             </div>
-            <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+            <div className="">
               <label className="flex items-center gap-3 cursor-pointer h-full">
                 <input
                   type="checkbox"
@@ -280,19 +301,19 @@ export default function MaasClient() {
           </div>
 
           {/* Child Allowance */}
-          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-            <label className="text-xs text-gray-500 mb-2 block">Kinderfreibetrag (ZKF)</label>
+          <div className="">
+            <label className="text-xs text-gray-500 block mb-1">Kinderfreibetrag (ZKF)</label>
             <input
               type="number"
               step="0.5"
               value={childAllowance}
               onChange={(e) => setChildAllowance(Number(e.target.value))}
-              className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2 text-gray-900"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
             />
           </div>
 
           {/* Company Car */}
-          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
+          <div className="">
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -305,14 +326,14 @@ export default function MaasClient() {
           </div>
 
           {hasCompanyCar && (
-            <div className="bg-google-blue/15 rounded-xl p-4 space-y-3 border border-google-blue/25">
-              <div className="bg-white/90 rounded-lg p-3 border border-google-blue/10">
-                <label className="text-xs text-gray-500 mb-2 block">Brüt Liste Fiyatı (€)</label>
+            <div className="rounded-xl p-4 space-y-3 border border-gray-200">
+              <div className="">
+                <label className="text-xs text-gray-500 block mb-1">Brüt Liste Fiyatı (€)</label>
                 <input
                   type="number"
                   value={carListPrice}
                   onChange={(e) => setCarListPrice(Number(e.target.value))}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
                 />
               </div>
               <div className="grid grid-cols-3 gap-2">
@@ -333,8 +354,8 @@ export default function MaasClient() {
           )}
 
           {/* Insurance Type */}
-          <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-            <label className="text-xs text-gray-500 mb-2 block">Sigorta</label>
+          <div className="">
+            <label className="text-xs text-gray-500 block mb-1">Sigorta</label>
             <div className="flex gap-2">
               <button
                 onClick={() => setInsuranceType('gkv')}
@@ -359,45 +380,45 @@ export default function MaasClient() {
 
           {insuranceType === 'gkv' ? (
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-                <label className="text-xs text-gray-500 mb-2 block">KV Kassensatz (%)</label>
+              <div className="">
+                <label className="text-xs text-gray-500 block mb-1">KV Kassensatz (%)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={kvBase}
                   onChange={(e) => setKvBase(Number(e.target.value))}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
                 />
               </div>
-              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-                <label className="text-xs text-gray-500 mb-2 block">KV Zusatz (%)</label>
+              <div className="">
+                <label className="text-xs text-gray-500 block mb-1">KV Zusatz (%)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={kvZusatz}
                   onChange={(e) => setKvZusatz(Number(e.target.value))}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
                 />
               </div>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-                <label className="text-xs text-gray-500 mb-2 block">PKV Primi (€)</label>
+              <div className="">
+                <label className="text-xs text-gray-500 block mb-1">PKV Primi (€)</label>
                 <input
                   type="number"
                   value={pkvPremium}
                   onChange={(e) => setPkvPremium(Number(e.target.value))}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
                 />
               </div>
-              <div className="bg-google-blue/10 rounded-xl p-3 border border-google-blue/20">
-                <label className="text-xs text-gray-500 mb-2 block">PPV Primi (€)</label>
+              <div className="">
+                <label className="text-xs text-gray-500 block mb-1">PPV Primi (€)</label>
                 <input
                   type="number"
                   value={ppvPremium}
                   onChange={(e) => setPpvPremium(Number(e.target.value))}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none"
                 />
               </div>
             </div>
@@ -492,6 +513,9 @@ export default function MaasClient() {
 
       </>
       )}
+      <Link href="/" className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+        Ana Sayfaya Dön
+      </Link>
     </div>
   );
 }

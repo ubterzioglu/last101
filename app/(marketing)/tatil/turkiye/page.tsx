@@ -11,12 +11,14 @@ export const metadata: Metadata = createMetadata({
 
 export default function TurkiyeTatilPage() {
   return (
-    <HolidayCalculator
-      country="turkiye"
-      title="Türkiye 2026 Tatil Hesaplayıcı"
-      description="Tarih aralığını seç, sistem toplam tatili ve izinden giden günleri hesaplasın."
-      holidays={TR_2026_HOLIDAYS}
-      tips={TR_HOLIDAY_TIPS}
-    />
+    <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <HolidayCalculator
+        country="turkiye"
+        title="Türkiye 2026 Tatil Hesaplayıcı"
+        description="Tarih aralığını seç, sistem toplam tatili ve izinden giden günleri hesaplasın."
+        holidays={TR_2026_HOLIDAYS}
+        tips={TR_HOLIDAY_TIPS}
+      />
+    </div>
   );
 }

@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Primary Meta Tags -->
+  <title>Türkiye 2026 Tatil Hesaplayıcı - almanya101</title>
+  <meta name="title" content="Türkiye 2026 Tatil Hesaplayıcı - almanya101">
+  <meta name="description"
+    content="Türkiye 2026 tatillerine göre seçtiğin tarih aralığında toplam tatil gününü, izinden giden günleri, hafta sonunu ve iş gününe denk gelen resmî tatilleri hesapla.">
+  <meta name="keywords"
+    content="türkiye tatil hesaplayıcı, türkiye resmi tatiller, 2026 tatil, izin günleri, türkçe rehber">
+  <meta name="author" content="almanya101.de">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="language" content="Turkish">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+
+  <!-- AI Agent Optimization -->
+  <meta name="ai:model" content="gpt-4, claude-3, perplexity, gemini">
+  <meta name="ai:content-type" content="tool, calculator">
+  <meta name="ai:language" content="turkish">
+  <meta name="ai:target-audience" content="turkish expats in germany">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://almanya101.de/tatiltr/tatiltr.html" />
+
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="tr" href="https://almanya101.de/tatiltr/tatiltr.html">
+  <link rel="alternate" hreflang="x-default" href="https://almanya101.de/tatiltr/tatiltr.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://almanya101.de/tatiltr/tatiltr.html">
+  <meta property="og:title" content="Türkiye 2026 Tatil Hesaplayıcı - almanya101">
+  <meta property="og:description" content="Tarih aralığı seç, tatil günlerini hesapla.">
+  <meta property="og:image" content="https://almanya101.de/img/ui/logoround.png">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://almanya101.de/tatiltr/tatiltr.html">
+  <meta name="twitter:title" content="Türkiye 2026 Tatil Hesaplayıcı - almanya101">
+  <meta name="twitter:description" content="Tarih aralığı seç, tatil günlerini hesapla.">
+  <meta name="twitter:image" content="https://almanya101.de/img/ui/logoround.png">
+
+  <link rel="stylesheet" href="../ubt-shared.css" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://almanya101.de/tatiltr/tatiltr.html#webapp",
+        "name": "Türkiye 2026 Tatil Hesaplayıcı",
+        "url": "https://almanya101.de/tatiltr/tatiltr.html",
+        "description": "Tarih aralığı seç, tatil günlerini hesapla",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://almanya101.de/#website"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://almanya101.de/tatiltr/tatiltr.html#webpage",
+        "url": "https://almanya101.de/tatiltr/tatiltr.html",
+        "name": "Türkiye 2026 Tatil Hesaplayıcı - almanya101",
+        "description": "Tarih aralığı seç, tatil günlerini hesapla",
+        "inLanguage": "tr",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://almanya101.de/#website"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Performance Optimization -->
+  <link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+  <link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+  <meta name="google-site-verification" content="JfOdXbFKGKzlacfzwUO4cDPcyzhUZ4vefX4iKcrLSsU">
+  <meta name="geo.region" content="DE">
+  <meta name="geo.placename" content="Germany">
+<style>
+    /* Hamburger Menu Styles */
+    .menu-btn {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 25%;
+      min-width: 180px;
+      /* Essential for readability on mobile */
+      height: 100vh;
+      background: #111;
+      z-index: 1001;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 15px;
+      overflow-y: auto;
+    }
+
+    .drawer.active {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 15px;
+    }
+
+    .drawer-header h3 {
+      color: #fff;
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .menu-link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s ease;
+    }
+
+    .menu-link:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .menu-icon {
+      font-size: 18px;
+    }
+
+    /* Tarih alanı etiketleri siyah */
+    .field__label {
+      color: #111;
+    }
+
+    /* Hero sıkılaştırma ve ikon hizalama */
+    .hero-card1 {
+      padding: 16px 16px 14px;
+      border-radius: 18px;
+    }
+
+    .hero-card1 h3 {
+      margin-bottom: 6px;
+    }
+
+    .hero-card1 .title {
+      margin: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-actions .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      padding: 6px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .hero-actions .icon-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .hero-actions .icon-btn img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      border-radius: 6px;
+      display: block;
+    }
+
+    /* Footer boşluğunu 15px'e indir */
+    .container1 {
+      padding-bottom: 0;
+    }
+
+    @media (max-width: 480px) {
+      .drawer {
+        width: 40%;
+        /* On very small screens 25% is too narrow even for 180px min-width */
+      }
+    }
+  </style>
+</head>
+
+<body style="background: #000000;">
+  <div class="container1">
+    <!-- HERO (MANUAL) -->
+    <div class="card hero-card1">
+      <div class="hero-top1">
+        <div class="hero-logo-box1">
+          <span class="hero-domain1">almanya101.de</span>
+        </div>
+        <div class="hero-actions">
+          <a href="../index.html" class="icon-btn" aria-label="Home">
+            <img src="../img/buttons/z0cliphome.png" alt="Home" />
+          </a>
+          <button id="menuOpenBtn" class="icon-btn" title="Men&#252;" type="button">
+            <img src="../img/buttons/z0clipmenu.png" alt="Menu" />
+          </button>
+        </div>
+      </div>
+      <h3>Türkiye 2026 Tatil Hesaplayıcı</h3>
+      <p class="title">Tarih aralığını seç, sistem toplam tatili ve izinden giden günleri hesaplasın.</p>
+    </div>
+    <!-- END of block: Hero -->
+
+    <div class="stack">
+
+      <!-- INFO -->
+      <div class="panel panel--yellow">
+        <div class="stackBtnsVertical">
+          <button id="toggleInfo" class="btn btn--ghost btn--wide">Bilgi Aç</button>
+          <button id="toggleHolidayList" class="btn btn--ghost btn--wide">2026 Tatiller Aç</button>
+          <button id="toggleTips" class="btn btn--ghost btn--wide">Tüyoları Aç</button>
+        </div>
+
+        <div id="infoBody" class="infobox hidden">
+          <ul class="bullets">
+            <li>Hafta sonları ve resmî tatiller otomatik düşülür.</li>
+            <li>Arefeler yarım gün sayılır.</li>
+            <li>Bu sürüm sadece TR 2026 içindir.</li>
+          </ul>
+        </div>
+
+        <div id="holidayList" class="holidaylist hidden"></div>
+
+        <!-- 👇 SENİN YAZACAĞIN TÜYO KARTI -->
+        <div id="tipsCard" class="infobox hidden">
+          <!-- BURAYI SERBESTÇE YAZ -->
+          🌟 UBT'den Tüyolar! <br><br>
+
+          🌟 1 Ocak 2026 Perşembe resmî tatil; 2 Ocak Cuma izin alırsan Perşembe–Pazar 4 günlük tatil çıkar. <br><br>
+
+          🌟 Ramazan Bayramı 19–22 Mart aralığında; 16–18 Mart (Pazartesi–Çarşamba) izin alırsan 15–22 Mart arasında 9
+          güne kadar tatil yapabilirsin. <br><br>
+
+          🌟 23 Nisan 2026 Perşembe; 24 Nisan Cuma izin alırsan Perşembe–Pazar 4 günlük tatil olur. <br><br>
+
+          🌟 1 Mayıs 2026 Cuma; Cumartesi–Pazar ile birleşince 3 günlük tatil hazır. <br><br>
+
+          🌟 19 Mayıs 2026 Salı; 18 Mayıs Pazartesi izin alırsan 4 günlük mini tatil yaparsın. <br><br>
+
+          🌟 Kurban Bayramı 26–30 Mayıs döneminde; 25 Mayıs ve 1 Haziran Pazartesi izin alarak 9–10 gün tatil
+          planlayabilirsin. <br><br>
+
+          🌟 15 Temmuz 2026 Çarşamba; 13–14 Temmuz izin alırsan 5 günlük tatil yakalarsın. <br><br>
+
+          🌟 30 Ağustos 2026 Pazar; 31 Ağustos Pazartesi izin eklersen Cumartesi–Pazartesi 3 günlük tatil olur. <br><br>
+
+          🌟 29 Ekim 2026 Perşembe; 30 Ekim Cuma izin alırsan Perşembe–Pazar 4 günlük tatil çıkar. <br><br>
+
+          🌟 Ramazan ve Kurban Bayramı civarında Kapadokya, Ege veya Akdeniz gibi rotalara kısa kaçamak planlayıp hafta
+          içi ekstra izinle daha sakin tarihleri yakalayabilirsin.
+
+        </div>
+      </div>
+
+      <!-- DATE RANGE -->
+      <div class="panel panel--blue" style="color:#111;">
+        <h2 class="panel__title">Tatil Aralığı</h2>
+
+        <div class="row2">
+          <label class="field">
+            <span class="field__label">Başlangıç</span>
+            <input id="startDate" type="date" />
+          </label>
+          <label class="field">
+            <span class="field__label">Bitiş</span>
+            <input id="endDate" type="date" />
+          </label>
+        </div>
+
+        <div id="pickedSummary" class="picked muted hidden"></div>
+
+        <div class="actions">
+          <button id="calcBtn" class="btn btn--danger">Hesapla</button>
+          <button id="resetBtn" class="btn btn--danger">Sıfırla</button>
+        </div>
+
+        <!-- sistem tüyosu -->
+        <div id="tipsBox" class="tips hidden"></div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="panel panel--green" style="color:#111;">
+        <div class="resultsHead">
+          <h2 class="panel__title">Sonuçlar</h2>
+        </div>
+
+        <div id="tripBadge" class="tripBadge tripBadge--vertical hidden"></div>
+
+        <div class="effBox">
+          <div class="effLabel">İzin Verimliliği</div>
+          <div class="effBar">
+            <div id="effFill" class="effFill"></div>
+          </div>
+          <div id="effText" class="effText">—</div>
+        </div>
+
+        <div class="kpis kpis--stack">
+          <div class="kpi kpi--green">
+            <div class="kpi__label">Toplam tatil</div>
+            <div id="kpiTotal" class="kpi__value">—</div>
+            <div class="kpi__sub muted">Seçtiğin aralıktaki toplam gün</div>
+          </div>
+
+          <div class="kpi kpi--orange">
+            <div class="kpi__label">İzinden giden</div>
+            <div id="kpiLeaveHuman" class="kpi__value">—</div>
+            <div class="kpi__sub muted">Hafta içi ve tatil olmayan günler</div>
+          </div>
+
+          <div class="kpi kpi--purple">
+            <div class="kpi__label">Resmî tatil (iş gününe denk)</div>
+            <div id="kpiHolidaysHuman" class="kpi__value">—</div>
+            <div class="kpi__sub muted">Arefeler 0.5 sayılır</div>
+          </div>
+
+          <div class="kpi kpi--yellow">
+            <div class="kpi__label">Hafta sonu</div>
+            <div id="kpiWeekends" class="kpi__value">—</div>
+            <div class="kpi__sub muted">Cumartesi + Pazar</div>
+          </div>
+        </div>
+
+        <div class="miniSection">
+          <div class="miniTitle">Haftalık Ritim</div>
+          <div id="rhythmRow" class="rhythmRow">—</div>
+        </div>
+
+        <div class="miniSection">
+          <div class="miniTitle">Hafta Hafta Plan</div>
+          <div id="weeklyPlan" class="weeklyPlan muted">
+            Tarih seçip hesaplayınca burada haftalık özet çıkacak.
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <!-- GoatCounter Analytics -->
+  <script>
+    window.goatcounter = window.goatcounter || {};
+    window.goatcounter.path = "/tatiltr/tatiltr.html";
+  </script>
+  <script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <!-- HAMBURGER DRAWER -->
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <div id="hamburgerDrawer" class="drawer">
+    <div class="drawer-header">
+      <h3>almanya101</h3>
+      <button id="menuCloseBtn" class="close-btn">&times;</button>
+    </div>
+    <nav class="menu-links">
+      <a href="../index.html" class="menu-link"><span class="menu-icon">??</span> Ana Sayfa</a>
+      <a href="../bizkimiz/bizkimiz.html" class="menu-link"><span class="menu-icon">?????</span> Biz Kimiz?</a>
+      <a href="../maas/maas.html" class="menu-link"><span class="menu-icon">??</span> Maaş Hesapla</a>
+      <a href="../vatandas/v.html" class="menu-link"><span class="menu-icon">??</span> Vatandaşlık Testi</a>
+      <a href="../rehber/ua.html" class="menu-link"><span class="menu-icon">?????</span> Uzman Rehberi</a>
+      <a href="../banka/banka.html" class="menu-link"><span class="menu-icon">??</span> Banka Seçimi</a>
+      <a href="../sigorta/sigorta.html" class="menu-link"><span class="menu-icon">???</span> Sigorta Seçimi</a>
+      <a href="../paratransfer/pt.html" class="menu-link"><span class="menu-icon">??</span> Para Transferi</a>
+      <a href="../join/join.html" class="menu-link"><span class="menu-icon">??</span> Bize Katıl!</a>
+    </nav>
+  </div>
+
+  <!-- JavaScript for Hamburger Menu -->
+  <script>
+    (function () {
+      const openBtn = document.getElementById('menuOpenBtn');
+      const closeBtn = document.getElementById('menuCloseBtn');
+      const drawer = document.getElementById('hamburgerDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+
+      if (!openBtn || !closeBtn || !drawer || !overlay) return;
+
+      function toggleMenu() {
+        drawer.classList.toggle('active');
+        overlay.classList.toggle('active');
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+      }
+
+      openBtn.addEventListener('click', toggleMenu);
+      closeBtn.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', toggleMenu);
+
+      // Close menu on link click
+      const links = drawer.querySelectorAll('.menu-link');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          if (drawer.classList.contains('active')) {
+            toggleMenu();
+          }
+        });
+      });
+    })();
+  </script>
+</div>
+
+
+  </div>
+
+  </div>
+</div>
+
+  <!-- FOOTER -->
+  <div class="footer-blue-card-wrap">
+      <div class="card footer-blue-card">
+        <div class="card-buttons footer-blue-card__buttons">
+          <a href="../index.html">
+            <img src="../img/buttons/z0cliphome.png" class="btn-icon" alt="Home" />
+          </a>
+          <a href="#top">
+            <img src="../img/buttons/z0clipup.png" class="btn-icon" alt="Up" />
+          </a>
+          <button type="button" class="btn-icon" title="Menu" onclick="document.getElementById('menuOpenBtn') && document.getElementById('menuOpenBtn').click()" style="background: none; border: none; padding: 0; cursor: pointer;">
+            <img src="../img/buttons/z0clipmenu.png" class="btn-icon" alt="Menu" />
+          </button>
+        </div>
+        <div class="footer-slogan">yalnız değilsin! almanya101 seninle!</div>
+        <div class="footer-credit">made by UBT with love</div>
+        <div class="footer-copyright">&copy;almanya101de &bull; 2026</div>
+      </div>
+    </div>
+<!-- END: FOOTER -->
+  <script src="/shared-cards.js"></script>
+

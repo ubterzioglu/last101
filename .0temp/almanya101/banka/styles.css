@@ -1,0 +1,903 @@
+/* =====================================================
+   🎨 CSS DEĞİŞKENLERİ (CSS VARIABLES)
+   =====================================================
+   
+   Bu dosya zbanka/banka.html sayfası için özel stilleri içerir.
+   Tüm renkler, boyutlar ve efektler CSS değişkenleri ile
+   merkezi olarak yönetilir.
+   
+   RENK PALETİ:
+   ------------
+   --bg: Ana arka plan rengi (siyah)
+   --bg2: İkinci arka plan rengi (koyu gri)
+   --white: Beyaz metin rengi
+   --muted: Soluk/gri metin rengi
+   --blue: Mavi vurgu rengi (#01A1F1)
+   --green: Yeşil vurgu rengi (#7CBB00)
+   --orange: Turuncu vurgu rengi (#F65314)
+   --purple: Mor vurgu rengi (#8F03B7)
+   --yellow: Sarı vurgu rengi (#FFBB00)
+   --red: Kırmızı vurgu rengi (#BF0000)
+   --black: Siyah (#000000)
+   
+   KART STİLLERİ:
+   --------------
+   --card: Kart arka plan rengi (koyu)
+   --card2: Kart ikinci arka plan rengi
+   --stroke: Kenarlık rengi (ince)
+   --stroke2: Kenarlık rengi (kalın)
+   --shadow: Gölge efekti
+   --radius: Border radius değeri (18px)
+   
+   ===================================================== */
+:root{
+  /* Arka plan renkleri */
+  --bg: #060707;
+  --bg2:#000000;
+
+  /* Metin renkleri */
+  --white:#ffffff;
+  --muted:#b8b8b8;
+
+  /* Vurgu renkleri (almanya101 paleti) */
+  --blue:#01A1F1;
+  --green:#7CBB00;
+  --orange:#F65314;
+  --purple:#8F03B7;
+  --yellow:#FFBB00;
+  --red:#BF0000;
+  --black:#000000;
+
+  /* Kart stilleri */
+  --card:#0b0b0c;
+  --card2:#101112;
+  --stroke:rgba(255,255,255,.10);
+  --stroke2:rgba(255,255,255,.16);
+
+  /* Efektler */
+  --shadow: 0 18px 60px rgba(0,0,0,.55);
+  --radius: 18px;
+}
+
+/* =====================================================
+   📐 TEMEL STİLLER (BASE STYLES)
+   ===================================================== */
+
+/* Tüm elementler için box-sizing */
+*{box-sizing:border-box}
+
+/* HTML ve body yükseklik ayarları */
+html,body{height:100%}
+
+/* Body: Ana sayfa arka planı ve tipografi */
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  
+  /* Arka planı düz beyaz yapar */
+  background: #050127;
+  
+  /* Yazı rengini okunabilirlik için siyah yapar */
+  color: #ffffff;
+}
+
+/* Arka plan parıltı efekti (glow effect) */
+.bg-glow{
+  position:fixed;
+  inset:-40px;
+  pointer-events:none; /* Tıklamaları engelle */
+  background:
+    radial-gradient(700px 350px at 15% 15%, rgba(0, 0, 0, 0.08), transparent 60%),
+    radial-gradient(900px 450px at 70% 25%, rgba(0, 0, 0, 0.09), transparent 60%),
+    radial-gradient(900px 450px at 55% 90%, rgba(0, 0, 0, 0.08), transparent 60%);
+  filter: blur(18px);
+  opacity:.9;
+}
+
+/* Ana uygulama container'ı */
+.app{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 18px 34px;
+  position:relative;
+}
+
+/* =====================================================
+   📋 HEADER BÖLÜMÜ (ÜST KISIM)
+   ===================================================== */
+
+/* Header container: Logo ve progress bar'ı içerir */
+.header{
+  display:flex;
+  gap:18px;
+  align-items:flex-end;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
+
+/* Marka/logo container'ı */
+.brand{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+/* Logo nokta (renkli gradient nokta) */
+.logo-dot{
+  width:14px;height:14px;border-radius:999px;
+  background: conic-gradient(from 120deg, var(--purple), var(--yellow), var(--red), var(--purple));
+  box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+}
+
+/* =====================================================
+   📊 PROGRESS BAR (İLERLEME ÇUBUĞU)
+   ===================================================== */
+
+/* Progress bar container'ı */
+.progress-wrap{
+  min-width: 320px;
+  flex: 1;
+  max-width: 520px;
+}
+
+/* Progress bar üst kısmı (metin ve buton) */
+.progress-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+  gap:10px;
+}
+
+/* Progress bar arka planı */
+.progress{
+  height:10px;
+  background: rgba(255,255,255,.08);
+  border:1px solid var(--stroke);
+  border-radius:999px;
+  overflow:hidden;
+}
+
+/* Progress bar doluluk çubuğu (animasyonlu) */
+.progress-bar{
+  height:100%;
+  width:0%; /* JavaScript ile güncellenir */
+  background: linear-gradient(90deg, var(--purple), var(--yellow), var(--red));
+  border-radius:999px;
+  transition: width .25s ease;
+}
+
+/* =====================================================
+   🃏 KART STİLLERİ (CARD STYLES)
+   ===================================================== */
+
+/* Temel kart stili */
+.card{
+  background: linear-gradient(180deg, var(--card), var(--card2));
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 18px 14px;
+}
+
+/* Kartlar arası boşluk */
+.card + .card{ margin-top:15px; }
+
+/* Kart başlıkları */
+.card-head h1, .card-head h2{margin:0 0 6px}
+.card-head h1{font-size:22px}
+.card-head h2{font-size:20px}
+
+/* Yardımcı sınıflar */
+.muted{color:var(--muted)} /* Soluk metin rengi */
+.tiny{font-size:12px; line-height:1.35} /* Küçük metin */
+
+/* =====================================================
+   ✅ CEVAP SEÇENEKLERİ (ANSWER OPTIONS)
+   ===================================================== */
+
+/* Cevap seçenekleri container'ı (grid layout) */
+.answers{
+  margin-top:14px;
+  display:grid;
+  gap:10px;
+}
+
+/* Tek bir cevap seçeneği */
+.answer{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding: 12px 12px;
+  border:1px solid var(--stroke);
+  border-radius: 14px;
+  cursor:pointer;
+  background: rgba(255,255,255,.03);
+  transition: transform .05s ease, border-color .15s ease, background .15s ease;
+}
+
+/* Cevap seçeneği hover efekti */
+.answer:hover{
+  border-color: var(--stroke2);
+  background: rgba(255,255,255,.05);
+}
+
+/* Seçili cevap seçeneği (sarı vurgu) */
+.answer.selected{
+  border-color: rgba(255,187,0,.55);
+  background: rgba(255,187,0,.08);
+}
+
+/* Cevap rozeti (badge) - A, B, C gibi harfler için */
+.badge{
+  min-width:28px;
+  height:28px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--stroke);
+  color: var(--white);
+  background: rgba(0,0,0,.25);
+}
+
+/* Seçili cevabın rozeti */
+.answer.selected .badge{
+  border-color: rgba(255,187,0,.75);
+  background: rgba(255,187,0,.15);
+}
+
+/* Cevap başlığı */
+.answer-title{
+  font-weight:650;
+  margin: 1px 0 2px;
+}
+/* Cevap açıklaması */
+.answer-desc{
+  margin:0;
+  color: var(--muted);
+  font-size:13px;
+  line-height:1.35;
+}
+
+/* =====================================================
+   🦶 KART ALT KISMI (CARD FOOTER)
+   ===================================================== */
+
+/* Kart alt kısmı (Geri butonu ve ipuçları) */
+.card-foot{
+  margin-top:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* Kart alt kısmı sağ tarafı (ipuçları) */
+.foot-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+/* =====================================================
+   🔘 BUTON STİLLERİ (BUTTON STYLES)
+   ===================================================== */
+
+/* Temel buton stili */
+.btn{
+  border-radius: 999px;
+  padding: 10px 14px;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,.04);
+  color: var(--white);
+  cursor:pointer;
+  font-weight:650;
+  transition: background .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+/* Buton hover efekti */
+.btn:hover{
+  background: rgba(255,255,255,.07);
+  border-color: var(--stroke2);
+}
+
+/* Buton tıklama efekti */
+.btn:active{ transform: translateY(1px); }
+
+/* Devre dışı buton */
+.btn[disabled]{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+/* Birincil buton (sarı vurgu) */
+.btn-primary{
+  border-color: rgba(255,187,0,.35);
+  background: rgba(255,187,0,.12);
+}
+
+.btn-primary:hover{
+  border-color: rgba(255,187,0,.6);
+  background: rgba(255,187,0,.16);
+}
+
+/* Vurgu butonu (mor) */
+.btn-accent{
+  border-color: rgba(143,3,183,.35);
+  background: rgba(143,3,183,.14);
+}
+
+.btn-accent:hover{
+  border-color: rgba(143,3,183,.65);
+  background: rgba(143,3,183,.18);
+}
+
+/* Hayalet buton (şeffaf arka plan) */
+.btn-ghost{
+  color: #ffffff;
+  background: #4e0909;
+}
+
+/* =====================================================
+   📊 SONUÇ BÖLÜMÜ (RESULTS SECTION)
+   ===================================================== */
+
+/* Gizli sonuç kartı */
+.result.hidden{ display:none; }
+
+/* Sonuç kutuları container'ı (responsive grid) */
+.result-boxes{
+  display:grid;
+  grid-template-columns: 1fr; /* Mobil: 1 sütun */
+  gap:15px;
+  margin-top:10px;
+}
+
+/* Tablet ve üzeri: 3 sütun */
+@media (min-width: 820px){
+  .result-boxes{ grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Tek bir sonuç kutusu (banka profili) */
+.result-box{
+  border:1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 12px 12px;
+  background: rgba(255,255,255,.03);
+}
+
+/* Sonuç etiketi (tag) - Öncelik seviyesi göstergesi */
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  padding: 6px 10px;
+  border-radius:999px;
+  border:1px solid var(--stroke);
+  background: rgba(0,0,0,.25);
+  margin-bottom:8px;
+}
+
+/* Etiket içindeki nokta (renk göstergesi) */
+.tag .dot{
+  width:8px;height:8px;border-radius:999px;
+  background: var(--yellow); /* Varsayılan: sarı */
+}
+
+/* Mor etiket */
+.tag.purple .dot{ background: var(--purple); }
+/* Kırmızı etiket */
+.tag.red .dot{ background: var(--red); }
+
+/* Sonuç kutusu başlığı */
+.result-box h3{
+  margin: 0 0 8px;
+  font-size:16px;
+}
+/* Sonuç kutusu liste */
+.result-box ul{
+  margin: 0 0 0 18px;
+  padding:0;
+  color: var(--muted);
+  font-size:13px;
+  line-height:1.45;
+}
+/* Sonuç kutusu liste öğesi */
+.result-box li{ margin: 4px 0; }
+
+/* Ayırıcı çizgi */
+.divider{
+  height:1px;
+  background: var(--stroke);
+  margin: 14px 0;
+}
+
+/* Sonuç aksiyon butonları (Düzenle, Kopyala) */
+.result-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* Footer bölümü */
+.footer{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+  opacity:.95;
+}
+
+/* Hap şeklinde etiket (pill) */
+.pill{
+  font-size:12px;
+  padding: 7px 10px;
+  border:1px solid var(--stroke);
+  border-radius:999px;
+  background: rgba(0,0,0,.22);
+}
+
+/* =====================================================
+   🏷️ CHIP ETİKETLERİ (CHIP TAGS)
+   ===================================================== */
+
+/* Chip container'ı (flexbox) */
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:10px 0 8px;
+}
+
+/* Tek bir chip etiketi */
+.chip{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.06);
+  font-size:12px;
+  line-height:1;
+}
+
+/* =====================================================
+   YENIDEN TASARLANAN KARTLAR
+   ===================================================== */
+
+/* Container genişliği - Tüm kartlar için ortak */
+.container1 {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.container1 .card + .card{
+  margin-top: 0;
+}
+
+/* Hero Card (ztatiltr style - birebir aynı) */
+/* App Container - Hero ile aynı genişlik */
+.app {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Progress Card (#F65314 - Orange) */
+  .progress-card {
+  background: #F65314 !important;
+  color: white !important;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  width: 100%;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.progress-meta span {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.btn-reset {
+  background: rgba(255,255,255,0.25) !important;
+  color: white !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .15s;
+  font-weight: 600;
+}
+
+.btn-reset:hover {
+  background: rgba(255,255,255,0.4) !important;
+}
+
+.progress {
+  height: 8px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #ffffff;
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 999px;
+}
+
+/* Question Card (#F65314 - Orange) - SABİT YÜKSEKLİK */
+.question-card {
+  background: #F65314 !important;
+  color: white !important;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  width: 100%;
+  min-height: 420px; /* Sabit minimum yükseklik - layout jump önleme */
+  display: flex;
+  flex-direction: column;
+}
+
+.question-card .card-head {
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+
+.question-card h1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: white;
+  line-height: 1.3;
+}
+
+.question-card .muted {
+  color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1; /* Kalan alanı doldur */
+  overflow-y: auto; /* Taşma durumunda scroll */
+  max-height: 250px; /* Maksimum yükseklik */
+}
+
+/* Answer seçenekleri - beyaz arka plan */
+.answer {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  transition: transform .05s ease, border-color .15s ease, background .15s ease;
+  color: white;
+}
+
+.answer:hover {
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.18);
+}
+
+.answer.selected {
+  border-color: #ffffff;
+  background: rgba(255,255,255,0.25);
+  border-width: 2px;
+}
+
+.badge {
+  min-width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  background: rgba(255,255,255,0.15);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.answer.selected .badge {
+  border-color: #ffffff;
+  background: rgba(255,255,255,0.35);
+}
+
+.answer-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 2px 0;
+  color: white;
+}
+
+.answer-desc {
+  margin: 0;
+  color: rgba(255,255,255,0.85);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* En alta it */
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.foot-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-foot .muted {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+
+/* Geri butonu */
+.btn-ghost {
+  background: rgba(255,255,255,0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: .15s;
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.35) !important;
+}
+
+.btn-ghost[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Result Card (ztatilde style colors - MOR TEMA) */
+.result-card {
+  background: linear-gradient(135deg, #8F03B7, #6B02A3) !important;
+  color: white !important;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  display: none;
+}
+
+.result-card.hidden {
+  display: none;
+}
+
+.result-card.show,
+.result-card:not(.hidden) {
+  display: block;
+}
+
+.result-card .card-head {
+  margin-bottom: 20px;
+}
+
+.result-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: white;
+}
+
+.result-card .muted {
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+}
+
+.result-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.result-box {
+  padding: 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #F65314, #D84315);
+  border: none;
+  color: white;
+}
+
+.result-box .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.result-box .tag .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FFBB00;
+}
+
+.result-box .tag span:last-child {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.result-box .score {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+}
+
+.result-box .chips {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 8px 0;
+}
+
+.result-box .chip {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  width: fit-content;
+}
+
+.result-box h3 {
+  margin: 10px 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+}
+
+.result-box ul {
+  margin: 0 0 0 16px;
+  padding: 0;
+  color: rgba(255,255,255,0.85);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.result-box li {
+  margin: 4px 0;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+  margin: 20px 0;
+}
+
+.result-summary {
+  background: linear-gradient(135deg, #F65314, #D84315) !important;
+  padding: 12px 16px !important;
+}
+
+.result-summary .card-head {
+  margin: 0;
+}
+
+.result-summary h2 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+}
+
+.result-summary .muted {
+  margin: 0;
+  font-size: 12px;
+}
+
+.result-actions-card {
+  background: linear-gradient(135deg, #F65314, #D84315) !important;
+  padding: 12px 16px !important;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.result-actions .btn {
+  width: 100%;
+}
+
+.btn-accent {
+  background: #FFBB00 !important;
+  color: #111 !important;
+  border: none !important;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  transition: .15s;
+}
+
+.btn-accent:hover {
+  background: #ffcc33 !important;
+  transform: translateY(-1px);
+}
+
+.tiny {
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.4;
+}
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+  .container1 {
+    padding: 14px;
+    gap: 15px;
+  }
+  .progress-card {
+    padding: 16px;
+  }
+
+  .question-card {
+    padding: 18px;
+    min-height: 380px;
+  }
+
+  .question-card h1 {
+    font-size: 16px;
+  }
+
+  .answers {
+    max-height: 220px;
+  }
+
+  .answer {
+    padding: 10px 12px;
+  }
+
+  .result-card {
+    padding: 18px;
+  }
+}

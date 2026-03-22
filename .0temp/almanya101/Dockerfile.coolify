@@ -1,0 +1,94 @@
+# ============================================
+# Coolify Dockerfile - almanya101 (Next.js)
+# ============================================
+
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig*.json ./
+COPY next.config.* ./
+
+# Install dependencies (include devDeps needed for build: typescript, etc.)
+RUN npm ci --include=dev
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Production stage
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# Copy Next.js standalone output
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.* ./
+
+# Copy API handlers and install their runtime dependencies
+COPY --from=builder /app/api ./api
+COPY --from=builder /app/package*.json ./
+RUN npm ci --omit=dev
+
+# Copy root-level static files
+COPY --from=builder /app/*.html ./
+COPY --from=builder /app/*.css ./
+COPY --from=builder /app/*.js ./
+COPY --from=builder /app/colorpalette.css ./
+COPY --from=builder /app/shared-cards.js ./
+COPY --from=builder /app/ubt-shared.css ./
+
+# Copy image assets
+COPY --from=builder /app/*.jpg ./
+COPY --from=builder /app/*.png ./
+COPY --from=builder /app/img ./img
+
+# Copy all content directories
+COPY --from=builder /app/admin ./admin
+COPY --from=builder /app/article ./article
+COPY --from=builder /app/ats ./ats
+COPY --from=builder /app/banka ./banka
+COPY --from=builder /app/belgeler ./belgeler
+COPY --from=builder /app/bizkimiz ./bizkimiz
+COPY --from=builder /app/bookmarks ./bookmarks
+COPY --from=builder /app/contact ./contact
+COPY --from=builder /app/devuser ./devuser
+COPY --from=builder /app/dis ./dis
+COPY --from=builder /app/docs ./docs
+COPY --from=builder /app/etkinlik ./etkinlik
+COPY --from=builder /app/fikir ./fikir
+COPY --from=builder /app/gastronomi ./gastronomi
+COPY --from=builder /app/gen ./gen
+COPY --from=builder /app/getgot ./getgot
+COPY --from=builder /app/haberler ./haberler
+COPY --from=builder /app/join ./join
+COPY --from=builder /app/maas ./maas
+COPY --from=builder /app/oparayaben ./oparayaben
+COPY --from=builder /app/paratransfer ./paratransfer
+COPY --from=builder /app/path ./path
+COPY --from=builder /app/qa ./qa
+COPY --from=builder /app/rehber ./rehber
+COPY --from=builder /app/sc ./sc
+COPY --from=builder /app/sigorta ./sigorta
+COPY --from=builder /app/supporteachother ./supporteachother
+COPY --from=builder /app/tatilde ./tatilde
+COPY --from=builder /app/tatiltr ./tatiltr
+COPY --from=builder /app/vatandas ./vatandas
+
+# Expose port
+EXPOSE 3000
+
+# Set environment
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Start the application
+CMD ["node", "server.js"]

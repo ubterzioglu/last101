@@ -10,6 +10,8 @@ export const metadata: Metadata = createMetadata({
 
 export default function AlmanyaTatilPage() {
   return (
-    <GermanHolidayCalculator />
+    <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <GermanHolidayCalculator />
+    </div>
   );
 }

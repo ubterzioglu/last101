@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback, useMemo } from 'react';
+import Link from 'next/link';
 import { PROFILES, BANKS, QUESTIONS } from './data';
 import { BankRecommendation } from './types';
 import { cn } from '@/lib/utils/cn';
@@ -11,6 +12,7 @@ export default function BankaClient() {
   const [showResult, setShowResult] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [showWhy, setShowWhy] = useState(false);
 
   const question = QUESTIONS[currentQuestion];
   const totalQuestions = QUESTIONS.length;
@@ -178,90 +180,93 @@ export default function BankaClient() {
   };
 
   return (
-    <div className="max-w-xl mx-auto space-y-4">
-      {/* Info Card */}
-      <div className="max-w-xl mx-auto bg-white rounded-2xl overflow-hidden shadow-lg border-t-4 border-google-blue">
-        <div className="px-5 pt-5 pb-1 text-center">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Banka Seçim Aracı</h1>
+    <div className="space-y-2">
+      {/* Başlık + Nasıl Çalışır accordion */}
+      <div
+        className="bg-white rounded-xl border-2 border-google-blue overflow-hidden cursor-pointer select-none"
+        onClick={() => setShowInfo(!showInfo)}
+      >
+        <div className="flex items-center justify-between px-4 py-3">
+          <div>
+            <h1 className="text-2xl font-bold leading-tight">Banka Seçim Aracı</h1>
+            <div className="flex items-center gap-1 mt-0.5 text-google-blue font-medium text-sm">
+              Nasıl Çalışır?
+            </div>
+          </div>
+          <span className={cn("text-google-blue text-xl transition-transform duration-200", showInfo && "rotate-180")}>▾</span>
         </div>
-        <button
-          onClick={() => setShowInfo(!showInfo)}
-          className="w-full px-5 py-4 text-left text-gray-700 font-medium flex justify-between items-center hover:bg-gray-50 transition-colors"
-        >
-          <span>Nasıl çalışır?</span>
-          <span className="text-gray-400 text-sm">{showInfo ? '▲' : '▼'}</span>
-        </button>
         {showInfo && (
-          <div className="px-5 pb-4 text-gray-500 text-sm border-t border-gray-100">
-            <ul className="list-disc list-inside space-y-1 pt-3">
-              <li>Bu araç 20 soruyla size en uygun bankacılık profilini önerir.</li>
-              <li>Sonuçlar yönlendirme amaçlıdır.</li>
-              <li>Son kararınızı vermeden önce bankanın güncel şartlarını kontrol edin.</li>
-              <li>Ücretler, kart koşulları, şube erişimi ve müşteri hizmetleri bankaya göre değişebilir.</li>
+          <div className="px-4 pb-4 bg-blue-50 border-t border-blue-200">
+            <ul className="space-y-2 text-sm text-blue-800 pt-3">
+              <li>• Bu araç 20 soruyla size en uygun bankacılık profilini önerir.</li>
+              <li>• Sonuçlar yönlendirme amaçlıdır.</li>
+              <li>• Son kararınızı vermeden önce bankanın güncel şartlarını kontrol edin.</li>
+              <li>• Ücretler, kart koşulları, şube erişimi ve müşteri hizmetleri bankaya göre değişebilir.</li>
             </ul>
           </div>
         )}
       </div>
 
+      {/* Bu araç neden var? */}
+      <div
+        className="bg-white rounded-xl border-2 border-google-green overflow-hidden cursor-pointer select-none"
+        onClick={() => setShowWhy(!showWhy)}
+      >
+        <div className="flex items-center justify-between px-4 py-3">
+          <span className="font-semibold text-gray-900">Bu araç neden var?</span>
+          <span className={cn("text-google-green text-xl transition-transform duration-200", showWhy && "rotate-180")}>▾</span>
+        </div>
+        {showWhy && (
+          <div className="px-4 pb-4 bg-green-50 border-t border-green-200">
+            <p className="text-sm text-green-900 pt-3 leading-relaxed">
+              Almanya'da banka seçmek göründüğü kadar basit değil. N26, Revolut gibi tam dijital bankalar; DKB, ING gibi direkt bankalar; Sparkasse, Volksbank gibi şubeli yerel bankalar; Trade Republic gibi yatırım odaklı platformlar… Hangisinin sana uygun olduğu, günlük alışkanlıklarına, yatırım ihtiyacına, şube gereksinimlerine ve expat statüne göre değişir. Bu araç, 20 kısa soruyla profilini çıkarır ve sana en uygun banka kategorisini somut gerekçelerle önerir.
+            </p>
+          </div>
+        )}
+      </div>
+
       {!showResult && (
-        <div className="max-w-xl mx-auto mb-3 bg-white rounded-2xl px-5 py-4 border-t-4 border-google-green">
+        <div className="bg-white rounded-xl border-2 border-google-red px-4 py-3">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-500 text-sm">
-              Soru {currentQuestion + 1} / {totalQuestions}
-            </span>
-            <button
-              onClick={handleReset}
-              className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
-            >
+            <span className="text-sm font-medium text-google-red">Soru {currentQuestion + 1} / {totalQuestions}</span>
+            <button onClick={handleReset} className="text-sm text-google-red hover:opacity-75 flex items-center gap-1">
               Sıfırla
             </button>
           </div>
-          <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-google-green rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
+          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-full bg-google-red transition-all duration-300" style={{ width: `${progress}%` }} />
           </div>
         </div>
       )}
 
       {/* Question Card */}
       {!showResult && (
-        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-2xl p-6 border-t-4 border-google-blue min-h-[420px] flex flex-col">
-          {/* Kategori etiketi */}
-          <div className="text-google-blue text-xs font-semibold uppercase tracking-widest mb-2">
+        <div className="bg-white rounded-xl border-2 border-google-yellow p-5">
+          <div className="text-google-blue text-xs font-semibold uppercase tracking-widest mb-1">
             {question.category}
           </div>
+          <h2 className="text-gray-900 font-bold text-lg leading-tight mb-1">{question.title}</h2>
+          <p className="text-gray-500 text-sm mb-4">{question.desc}</p>
 
-          {/* Soru */}
-          <h2 className="text-gray-900 font-bold text-lg leading-tight mb-1">
-            {question.title}
-          </h2>
-          <p className="text-gray-500 text-sm mb-5">{question.desc}</p>
-
-          {/* Seçenekler */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             {question.options.map((option) => (
               <button
                 key={option.key}
                 onClick={() => handleAnswer(option.key)}
                 className={cn(
-                  'w-full flex items-start gap-3 p-4 rounded-xl border text-left transition-all',
+                  'w-full p-4 rounded-lg border-2 text-left transition-all',
                   answers[question.id] === option.key
-                    ? 'bg-blue-50 border-2 border-google-blue'
-                    : 'bg-google-blue/10 border border-blue-100 hover:border-google-blue/40 hover:bg-blue-50/30'
+                    ? 'border-google-blue bg-blue-100'
+                    : 'border-google-blue/30 bg-blue-50/60 hover:bg-blue-100/80 hover:border-google-blue'
                 )}
               >
-                <div>
-                  <div className="font-semibold text-sm text-gray-900">{option.label}</div>
-                  <div className="text-xs text-gray-500 mt-0.5">{option.desc}</div>
-                </div>
+                <div className="font-semibold text-sm text-gray-900">{option.label}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{option.desc}</div>
               </button>
             ))}
           </div>
 
-          {/* Alt bar */}
-          <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+          <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
             <button
               onClick={handleBack}
               disabled={currentQuestion === 0}
@@ -274,83 +279,66 @@ export default function BankaClient() {
         </div>
       )}
 
-      {/* Result Card */}
+      {/* Result */}
       {showResult && (
-        <div className="max-w-xl mx-auto space-y-4">
-          {/* Başlık kartı */}
-          <div className="bg-white rounded-2xl px-5 py-4 text-center border-t-4 border-google-orange">
-            <h2 className="text-gray-900 font-bold text-2xl mb-1">Sonuçların hazır!</h2>
+        <>
+          <div className="bg-white rounded-xl border-2 border-google-red px-4 py-3">
+            <h2 className="text-gray-900 font-bold text-2xl mb-0.5">Sonuç</h2>
             <p className="text-gray-500 text-sm">Cevaplarına göre en uygun bankacılık profilleri</p>
           </div>
 
-          {/* Banka kartları */}
           {recommendations.map((rec, idx) => (
             <div
               key={rec.bank.id}
               className={cn(
-                'bg-white rounded-2xl p-5 border-t-4',
-                idx === 0 ? 'shadow-2xl border-google-blue' :
-                idx === 1 ? 'shadow-md border-google-red' :
-                            'shadow-md border-google-yellow'
+                'bg-white rounded-xl border-2 p-5',
+                idx === 0 ? 'border-google-yellow' :
+                idx === 1 ? 'border-google-blue' : 'border-google-green'
               )}
             >
-              {/* Badge + Banka adı */}
-              <div className="flex items-center gap-3 mb-3">
-                <span className={cn(
-                  'text-xs font-bold px-3 py-1 rounded-full',
-                  idx === 0 ? 'bg-google-blue text-white' :
-                  idx === 1 ? 'bg-google-red text-white' :
-                              'bg-google-yellow text-gray-800'
-                )}>
-                  {idx === 0 ? 'EN UYGUN' : `#${rec.rank}`}
-                </span>
-                <span className="font-bold text-gray-900 text-xl">{rec.bank.name}</span>
-                <span className="text-gray-900 text-sm font-bold ml-auto">Skor: {Math.round(rec.bank.score)}</span>
-              </div>
+              <h3 className="text-lg font-bold mb-2">
+                {rec.rank} - {rec.bank.name} - {idx === 0 ? 'Ana Öneri' : idx === 1 ? 'Alternatif' : 'Üçüncü Seçenek'}
+              </h3>
 
-              {/* Etiketler */}
               {rec.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-3">
+                <div className="flex flex-wrap gap-1.5 mb-2">
                   {rec.tags.map((tag, i) => (
-                    <span key={i} className={cn(
-                      'text-xs px-2.5 py-1 rounded-full',
-                      idx === 0 ? 'bg-google-blue/10 text-google-blue' :
-                      idx === 1 ? 'bg-google-red/10 text-google-red' :
-                                  'bg-google-yellow/20 text-yellow-700'
-                    )}>
-                      {tag}
-                    </span>
+                    <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">{tag}</span>
                   ))}
                 </div>
               )}
 
-              {/* Maddeler */}
-              <ul className="text-gray-600 text-sm space-y-1 list-disc list-inside">
-                {rec.bullets.slice(0, idx === 0 ? 5 : 2).map((b, i) => (
-                  <li key={i}>{b}</li>
-                ))}
-              </ul>
+              <p className="text-sm font-semibold text-gray-700 mb-2">
+                Uygunluk Skoru: <span className="text-google-green">{Math.round(rec.bank.score)}</span>
+              </p>
+
+              <div className="bg-gray-50 rounded-lg p-3">
+                <p className="text-xs font-semibold text-gray-500 mb-1.5">Neden bu banka?</p>
+                <ul className="space-y-1">
+                  {rec.bullets.slice(0, idx === 0 ? 5 : 2).map((b, i) => (
+                    <li key={i} className="text-sm text-gray-700 flex gap-2">
+                      <span className="text-gray-400 shrink-0">•</span>{b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
 
-          {/* Butonlar */}
-          <div className="flex flex-col gap-3 pt-2">
-            <button
-              onClick={handleCopy}
-              className="w-full text-sm bg-google-blue hover:bg-google-blue/90 text-white px-4 py-2.5 rounded-xl transition-colors font-bold"
-            >
-              {copied ? 'Kopyalandı!' : 'Sonucu Kopyala'}
-            </button>
-            <button
-              onClick={handleReset}
-              className="w-full text-sm text-white/70 border border-white/20 hover:bg-white/10 px-4 py-2.5 rounded-xl transition-colors font-medium"
-            >
-              Tekrar Yap
-            </button>
-          </div>
-
-        </div>
+          <button onClick={handleReset} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-orange bg-google-orange text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+            Sıfırla
+          </button>
+          <button onClick={handleCopy} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-blue bg-google-blue text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+            {copied ? 'Kopyalandı!' : 'Sonucu Kopyala'}
+          </button>
+          <Link href="/" className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+            Ana Sayfaya Dön
+          </Link>
+        </>
       )}
+      <Link href="/" className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+        Ana Sayfaya Dön
+      </Link>
     </div>
   );
 }

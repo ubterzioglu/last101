@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+  <title>Genel Soru Gönder - almanya101</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../devuser/devuser.css" />
+  <style>
+    body {
+      overflow-y: auto;
+      padding: 12px 0;
+    }
+
+    .container1 {
+      height: auto;
+      min-height: calc(100dvh - 24px);
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+      gap: 10px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #cfcfcf;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .stack-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .textarea-input {
+      min-height: 120px;
+      resize: vertical;
+      margin-bottom: 0;
+    }
+
+    .char-meta {
+      text-align: right;
+      color: #9a9a9a;
+      font-size: 12px;
+    }
+
+    .hp-field {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .form-status {
+      display: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .form-status.loading {
+      display: block;
+      background: #3e2d06;
+      color: #ffe08a;
+    }
+
+    .form-status.success {
+      display: block;
+      background: #143b27;
+      color: #9af0be;
+    }
+
+    .form-status.error {
+      display: block;
+      background: #46181d;
+      color: #ff9aa6;
+    }
+
+    .head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .head-row h4 {
+      margin: 0;
+      color: #fff;
+      font-size: 17px;
+    }
+
+    .refresh-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      font-size: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #2a2a2a;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .refresh-btn:hover {
+      background: #3a3a3a;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .question-item {
+      background: #161616;
+      border: 1px solid #2f2f2f;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .question-text {
+      margin: 0;
+      color: #f7f7f7;
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .question-meta {
+      margin-top: 8px;
+      color: #a5a5a5;
+      font-size: 12px;
+    }
+
+    .empty-state {
+      color: #a7a7a7;
+      font-size: 13px;
+    }
+  </style>
+<link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+<link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+</head>
+
+<body>
+  <div class="container1">
+    <div class="card hero-card1">
+      <div class="hero-domain1">almanya101.de</div>
+      <h3 style="margin-bottom: 8px;">Genel Soru Gönder</h3>
+      <p style="color: rgba(255,255,255,.95);">
+        Sorunuzu anonim olarak gönderin.
+      </p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0; margin-bottom:10px; color:#fff;">Soru</h4>
+      <form id="questionForm" class="stack-form" novalidate>
+        <textarea id="questionInput" class="form-input textarea-input" maxlength="500" placeholder="Sorunuzu yazın..." required></textarea>
+        <div class="char-meta"><span id="questionCharCount">0</span> / 500</div>
+
+        <input id="questionWebsiteTrap" class="hp-field" type="text" name="website" autocomplete="off" tabindex="-1" />
+
+        <button id="questionSubmitBtn" class="btn btn-primary" type="submit">Gönder</button>
+        <div id="questionStatus" class="form-status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="head-row">
+        <h4>Gönderilen Sorular</h4>
+        <button id="refreshBtn" class="refresh-btn" type="button">Yenile</button>
+      </div>
+      <div id="questionState" class="empty-state">Yükleniyor...</div>
+      <div id="questionList" class="question-list" hidden></div>
+    </div>
+  </div>
+
+  <script>
+    const QUESTION_SUBMIT_API_URL = '/api/vizeqa-question-submit';
+    const QUESTION_LIST_API_URL = '/api/vizeqa-question-list';
+
+    const questionForm = document.getElementById('questionForm');
+    const questionInput = document.getElementById('questionInput');
+    const questionCharCount = document.getElementById('questionCharCount');
+    const questionSubmitBtn = document.getElementById('questionSubmitBtn');
+    const questionStatus = document.getElementById('questionStatus');
+    const questionWebsiteTrap = document.getElementById('questionWebsiteTrap');
+    const questionList = document.getElementById('questionList');
+    const questionState = document.getElementById('questionState');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    function escapeHtml(value) {
+      const div = document.createElement('div');
+      div.textContent = typeof value === 'string' ? value : String(value || '');
+      return div.innerHTML;
+    }
+
+    function normalizeLine(value) {
+      return String(value || '').replace(/\r\n/g, '\n').trim();
+    }
+
+    function setStatus(element, message, type) {
+      if (!message) {
+        element.className = 'form-status';
+        element.textContent = '';
+        return;
+      }
+
+      element.className = `form-status ${type}`.trim();
+      element.textContent = message;
+    }
+
+    function updateQuestionCharCount() {
+      questionCharCount.textContent = String(questionInput.value.length);
+    }
+
+    function formatDate(value) {
+      if (!value) return '-';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return '-';
+      return date.toLocaleString('tr-TR');
+    }
+
+    function renderQuestions(items) {
+      if (!Array.isArray(items) || items.length === 0) {
+        questionList.hidden = true;
+        questionList.innerHTML = '';
+        questionState.hidden = false;
+        questionState.textContent = 'Henüz soru yok.';
+        return;
+      }
+
+      questionState.hidden = true;
+      questionList.hidden = false;
+      questionList.innerHTML = items.map((item) => {
+        const text = escapeHtml(item.question || '');
+        const createdAt = escapeHtml(formatDate(item.created_at));
+        return `
+          <article class="question-item">
+            <p class="question-text">${text}</p>
+            <div class="question-meta">${createdAt}</div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    async function loadQuestions() {
+      questionState.hidden = false;
+      questionState.textContent = 'Yükleniyor...';
+      questionList.hidden = true;
+
+      try {
+        const response = await fetch(QUESTION_LIST_API_URL, {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.ok) {
+          throw new Error(payload.error || 'Sorular yüklenemedi.');
+        }
+
+        renderQuestions(payload.items || []);
+      } catch (error) {
+        questionList.hidden = true;
+        questionState.hidden = false;
+        questionState.textContent = error.message || 'Sorular yüklenemedi.';
+      }
+    }
+
+    async function submitQuestion(event) {
+      event.preventDefault();
+      setStatus(questionStatus, '', '');
+
+      const question = normalizeLine(questionInput.value);
+      if (!question) {
+        setStatus(questionStatus, 'Soru zorunlu.', 'error');
+        return;
+      }
+      if (question.length > 500) {
+        setStatus(questionStatus, 'Soru en fazla 500 karakter olabilir.', 'error');
+        return;
+      }
+
+      questionSubmitBtn.disabled = true;
+      questionSubmitBtn.textContent = 'Gönderiliyor...';
+      setStatus(questionStatus, 'Soru kaydediliyor...', 'loading');
+
+      try {
+        const response = await fetch(QUESTION_SUBMIT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question,
+            website: questionWebsiteTrap.value || '',
+          }),
+        });
+
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.ok) {
+          throw new Error(payload.error || 'Gönderim başarısız');
+        }
+
+        questionForm.reset();
+        updateQuestionCharCount();
+        setStatus(questionStatus, 'Soru gönderildi.', 'success');
+        await loadQuestions();
+      } catch (error) {
+        setStatus(questionStatus, error.message || 'Gönderim sırasında hata oluştu.', 'error');
+      } finally {
+        questionSubmitBtn.disabled = false;
+        questionSubmitBtn.textContent = 'Gönder';
+      }
+    }
+
+    questionInput.addEventListener('input', updateQuestionCharCount);
+    questionForm.addEventListener('submit', submitQuestion);
+    refreshBtn.addEventListener('click', loadQuestions);
+
+    updateQuestionCharCount();
+    loadQuestions();
+  </script>
+<script>
+  window.goatcounter = window.goatcounter || {};
+  window.goatcounter.path = location.pathname;
+</script>
+<script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+
+</html>
+

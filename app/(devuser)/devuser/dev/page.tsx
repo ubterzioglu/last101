@@ -54,8 +54,12 @@ const css = `
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    display: block;
+    display: flex;
+    flex-direction: column;
     animation: devFadeInUp 0.6s ease backwards;
+  }
+  .dev-action-card p {
+    flex: 1;
   }
   .dev-action-card::before {
     content: '';
@@ -89,16 +93,18 @@ const css = `
     border-color: rgba(52, 168, 83, 0.5);
     box-shadow: 0 25px 50px -12px rgba(52, 168, 83, 0.15);
   }
-  .dev-card-image {
+  .dev-card-image-wrap {
+    position: relative;
     width: calc(100% + 56px);
-    height: 160px;
-    object-fit: cover;
+    height: 180px;
     margin: -28px -28px 20px -28px;
     border-radius: 24px 24px 0 0;
+    overflow: hidden;
+    flex-shrink: 0;
   }
   .dev-action-card h3 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 30px;
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 10px;
     color: #fff;
@@ -128,13 +134,13 @@ const css = `
   @media (max-width: 768px) {
     .dev-dashboard-grid { grid-template-columns: 1fr; gap: 15px; }
     .dev-action-card { padding: 22px; border-radius: 20px; }
-    .dev-card-image {
+    .dev-card-image-wrap {
       width: calc(100% + 44px);
-      height: 140px;
+      height: 150px;
       margin: -22px -22px 16px -22px;
       border-radius: 20px 20px 0 0;
     }
-    .dev-action-card h3 { font-size: 27px; }
+    .dev-action-card h3 { font-size: 13px; }
     .dev-action-card p { font-size: 13px; }
     .dev-welcome-banner { padding: 22px; border-radius: 20px; }
     .dev-welcome-banner h2 { font-size: 20px; }
@@ -161,17 +167,12 @@ export default function DevPage() {
         </div>
 
         <div className="dev-dashboard-grid">
-          <Link href="/devuser/devuser/survey" className="dev-action-card accent">
-            <Image
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop"
-              alt="survey"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
-            <h3>tanisma toplantisi anketi</h3>
-            <p>1 saatlik tanisma kaynasma proje fikirleri oylama toplantisi icin uygun tarihlerini belirt.</p>
+          <Link href="/devuser/survey" className="dev-action-card accent">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop" alt="survey" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
+            <h3>tanışma toplantısı anketi</h3>
+            <p>1 saatlik tanışma kaynaşma proje fikirleri oylama toplantısı için uygun tarihlerini belirt.</p>
           </Link>
 
           <a
@@ -180,157 +181,97 @@ export default function DevPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image
-              src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&auto=format&fit=crop"
-              alt="community people"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&auto=format&fit=crop" alt="community people" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>whatsapp topluluğuna katıl</h3>
             <p>almanya101 software whatsapp grubuna katıl!</p>
           </a>
 
-          <Link href="/devuser/devuser/du" className="dev-action-card accent">
-            <Image
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&auto=format&fit=crop"
-              alt="register"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/du" className="dev-action-card accent">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&auto=format&fit=crop" alt="register" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>veritabanına kayıt ol</h3>
             <p>de tr software topluluğuna katıl, profilini oluştur ve diğer developerlarla bağlantı kur.</p>
           </Link>
 
-          <Link href="/devuser/devuser/list" className="dev-action-card primary">
-            <Image
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop"
-              alt="developers"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/list" className="dev-action-card primary">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop" alt="developers" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>üye veritabanı</h3>
             <p>onaylı üyeler arasında ara, filtrele ve bağlantı kur.</p>
           </Link>
 
-          <Link href="/devuser/devuser/summary" className="dev-action-card secondary">
-            <Image
-              src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=600&auto=format&fit=crop"
-              alt="events"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/summary" className="dev-action-card secondary">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=600&auto=format&fit=crop" alt="events" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>haftalık özetler</h3>
             <p>whatsapp mesajlarını takip edemiyor musun? sorun değil! her hafta chat içeriklerini özetliyoruz.</p>
           </Link>
 
-          <Link href="/devuser/devuser/gelismeler" className="dev-action-card accent">
-            <Image
-              src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&auto=format&fit=crop"
-              alt="calendar updates"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/gelismeler" className="dev-action-card accent">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&auto=format&fit=crop" alt="calendar updates" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>etkinlik takvimi</h3>
-            <p>gelecek etkinlikleri, duyurulari, haberleri ve gelismeleri tek ekranda takip et. gecmis kayitlari alana gore filtrele.</p>
+            <p>gelecek etkinlikleri, duyuruları, haberleri ve gelişmeleri tek ekranda takip et. geçmiş kayıtları alana göre filtrele.</p>
           </Link>
 
-          <Link href="/devuser/devuser/news" className="dev-action-card secondary">
-            <Image
-              src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&auto=format&fit=crop"
-              alt="news calendar"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/news" className="dev-action-card secondary">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&auto=format&fit=crop" alt="news calendar" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>haberler duyurular takvim</h3>
-            <p>guncel haberleri, duyurulari ve etkinlik takvimini tek karttan takip et.</p>
+            <p>güncel haberleri, duyuruları ve etkinlik takvimini tek karttan takip et.</p>
           </Link>
 
-          <Link href="/devuser/devuser/discussion" className="dev-action-card">
-            <Image
-              src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&auto=format&fit=crop"
-              alt="discussion"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/discussion" className="dev-action-card">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&auto=format&fit=crop" alt="discussion" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>tartışma konusu öner</h3>
             <p>bir sonraki etkinliklerde tartışmak üzere konu öner!</p>
           </Link>
 
-          <Link href="/devuser/devuser/tavla" className="dev-action-card">
-            <Image
-              src="https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=600&auto=format&fit=crop"
-              alt="tournament"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/tavla" className="dev-action-card">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=600&auto=format&fit=crop" alt="tournament" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>turnuva</h3>
             <p>1. tavla turnuvasına katıl, şampiyon ol ve ödülü kazan!</p>
           </Link>
 
-          <Link href="/devuser/devuser/vct" className="dev-action-card accent">
-            <Image
-              src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop"
-              alt="vibecoding"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/vct" className="dev-action-card accent">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop" alt="vibecoding" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>vibecoding tournament</h3>
             <p>takımını kur, vibe coding yap ve ödülü kazan!</p>
           </Link>
 
-          <Link href="/devuser/devuser/promote" className="dev-action-card">
-            <Image
-              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&auto=format&fit=crop"
-              alt="promote"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/promote" className="dev-action-card">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&auto=format&fit=crop" alt="promote" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>promote your product</h3>
             <p>ürününü tanıt, anonim geri bildirim al ve puanla!</p>
           </Link>
 
-          <Link href="/devuser/devuser/cvopt" className="dev-action-card primary">
-            <Image
-              src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop"
-              alt="cv linkedin"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
-            <h3>cv linkedin iyilestirme</h3>
-            <p>cv'ni whatsapp'tan gonder, linkedin profilini birak ve admin onayli siraya gir.</p>
+          <Link href="/devuser/cvopt" className="dev-action-card primary">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop" alt="cv linkedin" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
+            <h3>cv linkedin iyileştirme</h3>
+            <p>cv'ni whatsapp'tan gönder, linkedin profilini bırak ve admin onaylı sıraya gir.</p>
           </Link>
 
-          <Link href="/devuser/devuser/typing" className="dev-action-card secondary">
-            <Image
-              src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop"
-              alt="typing"
-              className="dev-card-image"
-            width={600}
-            height={400}
-            unoptimized
-            />
+          <Link href="/devuser/typing" className="dev-action-card secondary">
+            <div className="dev-card-image-wrap">
+              <Image src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop" alt="typing" fill style={{ objectFit: 'cover' }} unoptimized />
+            </div>
             <h3>klavye hız yarışması</h3>
             <p>klavyende ne kadar hızlısın? yarış ve ödülü kazan!</p>
           </Link>

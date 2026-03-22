@@ -1,15 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { Container } from '@/components/ui/Container';
-import { Section } from '@/components/ui/Section';
-import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils/cn';
-import { Timer, HelpCircle, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
+import { Timer, CheckCircle, XCircle } from 'lucide-react';
 
 // Direkt Supabase bağlantısı
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -51,7 +47,7 @@ export default function VatandaslikTestiPage() {
   // Mod seçimi state'leri
   const [aktifMod, setAktifMod] = useState<TestModu>(null);
   const [seciliEyalet, setSeciliEyalet] = useState('');
-  
+
   // Test state'leri
   const [sorular, setSorular] = useState<Soru[]>([]);
   const [mevcutSoruIndex, setMevcutSoruIndex] = useState(0);
@@ -60,15 +56,19 @@ export default function VatandaslikTestiPage() {
   const [secilenCevap, setSecilenCevap] = useState<string | null>(null);
   const [yukleniyor, setYukleniyor] = useState(false);
   const [hata, setHata] = useState('');
-  
+
   // Timer state'leri
   const [kalanSure, setKalanSure] = useState(0);
   const [timerAktif, setTimerAktif] = useState(false);
 
+  // UI state
+  const [showInfo, setShowInfo] = useState(false);
+  const [showWhy, setShowWhy] = useState(false);
+
   // Timer efekti
   useEffect(() => {
     if (!timerAktif || kalanSure <= 0) return;
-    
+
     const interval = setInterval(() => {
       setKalanSure((prev) => {
         if (prev <= 1) {
@@ -98,7 +98,7 @@ export default function VatandaslikTestiPage() {
 
   const sorulariYukle = useCallback(async () => {
     if (!aktifMod || !supabase) return;
-    
+
     setYukleniyor(true);
     setHata('');
 
@@ -110,21 +110,21 @@ export default function VatandaslikTestiPage() {
           .from('vatandaslik_sorulari')
           .select('*')
           .eq('eyalet', 'Genel');
-        
+
         if (error) throw error;
         if (!data || data.length === 0) throw new Error('Genel soru bulunamadı');
         hazirSorular = shuffleArray(data).slice(0, 300);
-      } 
+      }
       else if (aktifMod === 'state' && seciliEyalet) {
         const { data, error } = await supabase
           .from('vatandaslik_sorulari')
           .select('*')
           .eq('eyalet', seciliEyalet);
-        
+
         if (error) throw error;
         if (!data || data.length === 0) throw new Error('Bu eyalet için soru bulunamadı');
         hazirSorular = shuffleArray(data).slice(0, 10);
-      } 
+      }
       else if (aktifMod === 'real' && seciliEyalet) {
         const [generalRes, stateRes] = await Promise.all([
           supabase.from('vatandaslik_sorulari').select('*').eq('eyalet', 'Genel'),
@@ -167,10 +167,10 @@ export default function VatandaslikTestiPage() {
 
   const cevabiKontrolEt = (cevap: string) => {
     if (cevapVerildi) return;
-    
+
     setSecilenCevap(cevap);
     setCevapVerildi(true);
-    
+
     const mevcutSoru = sorular[mevcutSoruIndex];
     if (cevap === mevcutSoru.dogru_cevap) {
       setDogruSayisi((prev) => prev + 1);
@@ -189,7 +189,7 @@ export default function VatandaslikTestiPage() {
 
   function testiBitir() {
     setTimerAktif(false);
-    setMevcutSoruIndex(sorular.length); // Sonuç ekranını göster
+    setMevcutSoruIndex(sorular.length);
   }
 
   const testiSifirla = () => {
@@ -209,169 +209,173 @@ export default function VatandaslikTestiPage() {
   const testBitti = sorular.length > 0 && mevcutSoruIndex >= sorular.length;
 
   return (
-    <>
-      <Header />
-      
-      <main className="min-h-screen bg-black">
-        {/* Hero Section */}
-        <Section className="bg-[#01A1F1] py-12">
-          <Container>
-            <div className="text-center text-white">
-              <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                Almanya Vatandaşlık Testi
-              </h1>
-              <p className="text-lg text-white/90">
-                33 soruluk sınav formatıyla pratik yapın ve skorunuzu görün.
-              </p>
-            </div>
-          </Container>
-        </Section>
+    <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="space-y-2">
 
-        {/* Hata Mesajı */}
-        {hata && (
-          <Section className="bg-yellow-500/10 py-4">
-            <Container>
-              <div className="bg-yellow-500/20 border border-yellow-500/40 rounded-lg p-4 text-yellow-200">
-                {hata}
+        {/* Başlık + Nasıl Çalışır accordion */}
+        <div
+          className="bg-white rounded-xl border-2 border-google-blue overflow-hidden cursor-pointer select-none"
+          onClick={() => setShowInfo(!showInfo)}
+        >
+          <div className="flex items-center justify-between px-4 py-3">
+            <div>
+              <h1 className="text-2xl font-bold leading-tight">Almanya Vatandaşlık Testi</h1>
+              <div className="flex items-center gap-1 mt-0.5 text-google-blue font-medium text-sm">
+                Nasıl Çalışır?
               </div>
-            </Container>
-          </Section>
-        )}
-
-        {/* Mod Seçimi Ekranı */}
-        {!aktifMod && !yukleniyor && (
-          <Section contained className="py-8">
-            {/* Bilgi Kartı */}
-            <div className="bg-[#FF9900] rounded-2xl p-6 mb-6 text-gray-900">
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <HelpCircle size={20} />
-                Sınav Bilgisi
-              </h2>
-              <ul className="space-y-2 text-sm bg-white/90 rounded-xl p-4">
+            </div>
+            <span className={cn('text-google-blue text-xl transition-transform duration-200', showInfo && 'rotate-180')}>▾</span>
+          </div>
+          {showInfo && (
+            <div className="px-4 pb-4 bg-blue-50 border-t border-blue-200">
+              <ul className="space-y-2 text-sm text-blue-800 pt-3">
                 <li>• Toplam 33 sorudan en az 17 doğru cevap sınavı geçmek için yeterlidir.</li>
                 <li>• Her sorunun yalnızca 1 doğru cevabı vardır.</li>
                 <li>• İlerledikçe doğru sayınız hesaplanır ve test sonunda sonuç gösterilir.</li>
               </ul>
             </div>
+          )}
+        </div>
 
-            {/* Mod Kartları */}
-            <div className="space-y-4">
-              {/* Tüm Sorular */}
-              <div className="bg-[#F65314] rounded-2xl p-6 text-white">
-                <h3 className="text-lg font-semibold mb-2">Tüm sorular (300)</h3>
-                <p className="text-sm text-white/90 mb-4">
-                  Genel soruların tamamı arasından 300 soru ile tam test yapın.
-                </p>
-                <Button 
-                  onClick={() => setAktifMod('all')}
-                  className="w-full bg-[#FFBB00] hover:bg-[#ffcc33] text-gray-900 font-semibold"
-                >
-                  Sınava Başla
-                </Button>
-              </div>
-
-              {/* Gerçek Deneme Sınavı */}
-              <div className="bg-[#F65314] rounded-2xl p-6 text-white">
-                <h3 className="text-lg font-semibold mb-1">Gerçek deneme sınavı</h3>
-                <p className="text-xs text-white/80 mb-2">(30 genel + 3 eyalet)</p>
-                <p className="text-sm text-white/90 mb-4">
-                  Genel sorulardan 30, seçtiğiniz eyaletten 3 soru ile klasik sınav formatı.
-                </p>
-                <label className="block text-xs mb-2">Eyalet Seçin:</label>
-                <select
-                  value={seciliEyalet}
-                  onChange={(e) => setSeciliEyalet(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-white/35 bg-white/20 text-gray-900 mb-3"
-                >
-                  <option value="">Seçiniz</option>
-                  {EYALETLER.map((eyalet) => (
-                    <option key={eyalet} value={eyalet}>
-                      {eyalet}
-                    </option>
-                  ))}
-                </select>
-                <Button 
-                  onClick={() => setAktifMod('real')}
-                  disabled={!seciliEyalet}
-                  className="w-full bg-[#FFBB00] hover:bg-[#ffcc33] text-gray-900 font-semibold disabled:opacity-50"
-                >
-                  Sınava Başla
-                </Button>
-              </div>
-
-              {/* Eyalet Soruları */}
-              <div className="bg-[#F65314] rounded-2xl p-6 text-white">
-                <h3 className="text-lg font-semibold mb-2">Eyalet soruları (10)</h3>
-                <p className="text-sm text-white/90 mb-4">
-                  Sadece seçtiğiniz eyalete özel 10 soru ile hızlı test.
-                </p>
-                <label className="block text-xs mb-2">Eyalet Seçin:</label>
-                <select
-                  value={seciliEyalet}
-                  onChange={(e) => setSeciliEyalet(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-white/35 bg-white/20 text-gray-900 mb-3"
-                >
-                  <option value="">Seçiniz</option>
-                  {EYALETLER.map((eyalet) => (
-                    <option key={eyalet} value={eyalet}>
-                      {eyalet}
-                    </option>
-                  ))}
-                </select>
-                <Button 
-                  onClick={() => setAktifMod('state')}
-                  disabled={!seciliEyalet}
-                  className="w-full bg-[#FFBB00] hover:bg-[#ffcc33] text-gray-900 font-semibold disabled:opacity-50"
-                >
-                  Sınava Başla
-                </Button>
-              </div>
+        {/* Bu araç neden var? */}
+        <div
+          className="bg-white rounded-xl border-2 border-google-green overflow-hidden cursor-pointer select-none"
+          onClick={() => setShowWhy(!showWhy)}
+        >
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="font-semibold text-gray-900">Bu araç neden var?</span>
+            <span className={cn('text-google-green text-xl transition-transform duration-200', showWhy && 'rotate-180')}>▾</span>
+          </div>
+          {showWhy && (
+            <div className="px-4 pb-4 bg-green-50 border-t border-green-200">
+              <p className="text-sm text-green-900 pt-3 leading-relaxed">
+                Almanya vatandaşlığı için başvuru yapacaksanız Einbürgerungstest'i geçmek zorundasınız. Sınav, Bundesamt für Migration und Flüchtlinge (BAMF) tarafından hazırlanan 310 soruluk havuzdan rastgele seçilen 33 sorudan oluşur ve en az 17 doğru yanıt gereklidir. Bu araç, resmi soru havuzunu kullanarak gerçek sınav formatında pratik yapmanızı sağlar. Tüm sorular, eyalet sorularıyla ya da gerçek sınav simülasyonuyla çalışabilirsiniz; anlık geri bildirim ve sonuç özeti ile hangi konuları pekiştirmeniz gerektiğini hızla görebilirsiniz.
+              </p>
             </div>
-          </Section>
+          )}
+        </div>
+
+        {/* Hata Mesajı */}
+        {hata && (
+          <div className="bg-white rounded-xl border-2 border-google-yellow p-4">
+            <p className="text-sm text-gray-700">{hata}</p>
+          </div>
+        )}
+
+        {/* Mod Seçimi */}
+        {!aktifMod && !yukleniyor && (
+          <>
+            {/* Tüm Sorular */}
+            <div className="bg-white rounded-xl border-2 border-google-red p-5">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">Tüm Sorular (300)</h3>
+              <p className="text-sm text-gray-500 mb-4">Genel soruların tamamı arasından 300 soru ile tam test yapın.</p>
+              <button
+                onClick={() => setAktifMod('all')}
+                className="w-full rounded-lg bg-google-red text-white font-semibold py-3 hover:opacity-90 transition-opacity"
+              >
+                Sınava Başla
+              </button>
+            </div>
+
+            {/* Gerçek Deneme */}
+            <div className="bg-white rounded-xl border-2 border-google-red p-5">
+              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Gerçek Deneme Sınavı</h3>
+              <p className="text-xs text-gray-400 mb-1">(30 genel + 3 eyalet)</p>
+              <p className="text-sm text-gray-500 mb-4">Genel sorulardan 30, seçtiğiniz eyaletten 3 soru ile klasik sınav formatı.</p>
+              <label className="text-xs text-gray-500 block mb-1">Eyalet Seçin</label>
+              <select
+                value={seciliEyalet}
+                onChange={(e) => setSeciliEyalet(e.target.value)}
+                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white mb-3 focus:outline-none"
+              >
+                <option value="">Seçiniz</option>
+                {EYALETLER.map((eyalet) => (
+                  <option key={eyalet} value={eyalet}>{eyalet}</option>
+                ))}
+              </select>
+              <button
+                onClick={() => setAktifMod('real')}
+                disabled={!seciliEyalet}
+                className="w-full rounded-lg bg-google-red text-white font-semibold py-3 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                Sınava Başla
+              </button>
+            </div>
+
+            {/* Eyalet Soruları */}
+            <div className="bg-white rounded-xl border-2 border-google-red p-5">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">Eyalet Soruları (10)</h3>
+              <p className="text-sm text-gray-500 mb-4">Sadece seçtiğiniz eyalete özel 10 soru ile hızlı test.</p>
+              <label className="text-xs text-gray-500 block mb-1">Eyalet Seçin</label>
+              <select
+                value={seciliEyalet}
+                onChange={(e) => setSeciliEyalet(e.target.value)}
+                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white mb-3 focus:outline-none"
+              >
+                <option value="">Seçiniz</option>
+                {EYALETLER.map((eyalet) => (
+                  <option key={eyalet} value={eyalet}>{eyalet}</option>
+                ))}
+              </select>
+              <button
+                onClick={() => setAktifMod('state')}
+                disabled={!seciliEyalet}
+                className="w-full rounded-lg bg-google-red text-white font-semibold py-3 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                Sınava Başla
+              </button>
+            </div>
+          </>
         )}
 
         {/* Yükleniyor */}
         {yukleniyor && (
-          <Section contained className="py-16 text-center">
-            <div className="text-white text-lg">Sorular yükleniyor...</div>
-          </Section>
+          <div className="bg-white rounded-xl border-2 border-google-blue p-8 text-center">
+            <p className="text-gray-500">Sorular yükleniyor...</p>
+          </div>
         )}
 
         {/* Soru Ekranı */}
         {aktifMod && !yukleniyor && !testBitti && mevcutSoru && (
-          <Section contained className="py-6">
-            <div className="bg-[#F65314] rounded-2xl p-6 text-white">
-              {/* Soru Başlığı */}
-              <div className="flex items-center justify-between mb-6">
-                <span className="text-xl font-bold">
-                  {mevcutSoruIndex + 1} / {sorular.length}
+          <>
+            {/* Progress */}
+            <div className="bg-white rounded-xl border-2 border-google-red px-4 py-3">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium text-google-red">
+                  Soru {mevcutSoruIndex + 1} / {sorular.length}
                 </span>
                 {timerAktif && (
-                  <span className="flex items-center gap-2 text-sm font-bold bg-white/20 px-3 py-1 rounded-full">
-                    <Timer size={16} />
+                  <span className="flex items-center gap-1.5 text-sm font-bold text-google-red">
+                    <Timer size={15} />
                     {formatSure(kalanSure)}
                   </span>
                 )}
               </div>
+              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-google-red transition-all duration-300"
+                  style={{ width: `${((mevcutSoruIndex + 1) / sorular.length) * 100}%` }}
+                />
+              </div>
+            </div>
 
-              {/* Görsel */}
+            {/* Soru Kartı */}
+            <div className="bg-white rounded-xl border-2 border-google-yellow p-5">
               {mevcutSoru.image_url && (
                 <Image
                   src={mevcutSoru.image_url}
                   alt="Soru görseli"
-                  className="w-full max-h-64 object-contain rounded-xl mb-4 bg-white/10"
+                  className="w-full max-h-64 object-contain rounded-xl mb-4"
                   width={1200}
                   height={640}
                   unoptimized
                 />
               )}
 
-              {/* Soru Metni */}
-              <p className="text-lg font-bold mb-2">{mevcutSoru.soru_almanca}</p>
-              <p className="text-sm text-white/85 mb-6">{mevcutSoru.soru_turkce}</p>
+              <p className="text-gray-900 font-bold text-lg leading-tight mb-1">{mevcutSoru.soru_almanca}</p>
+              <p className="text-gray-500 text-sm mb-4">{mevcutSoru.soru_turkce}</p>
 
-              {/* Seçenekler */}
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {Object.entries(mevcutSoru.secenekler).map(([key, value]) => {
                   const isSelected = secilenCevap === key;
                   const isCorrect = mevcutSoru.dogru_cevap === key;
@@ -384,95 +388,95 @@ export default function VatandaslikTestiPage() {
                       onClick={() => cevabiKontrolEt(key)}
                       disabled={cevapVerildi}
                       className={cn(
-                        'w-full text-left p-4 rounded-xl border transition-all duration-200',
-                        'border-white/25 bg-white/10 hover:bg-white/20',
-                        showCorrect && 'bg-green-600 border-green-600',
-                        showWrong && 'bg-red-600 border-red-600',
+                        'w-full text-left p-4 rounded-lg border-2 transition-all',
+                        showCorrect
+                          ? 'border-green-500 bg-green-50'
+                          : showWrong
+                          ? 'border-red-500 bg-red-50'
+                          : isSelected
+                          ? 'border-google-blue bg-blue-100'
+                          : 'border-google-blue/30 bg-blue-50/60 hover:bg-blue-100/80 hover:border-google-blue',
                         cevapVerildi && !isSelected && !isCorrect && 'opacity-60'
                       )}
                     >
-                      <span className="font-semibold">{key.toUpperCase()})</span>{' '}
-                      {value}
+                      <span className="font-semibold text-sm text-gray-900">{key.toUpperCase()})</span>{' '}
+                      <span className="text-sm text-gray-800">{value}</span>
                     </button>
                   );
                 })}
               </div>
 
-              {/* Sonraki Butonu */}
-              <div className="mt-6 space-y-3">
-                <Button
+              <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-2">
+                <button
                   onClick={sonrakiSoru}
                   disabled={!cevapVerildi}
-                  className="w-full bg-[#FFBB00] hover:bg-[#ffcc33] text-gray-900 font-semibold disabled:opacity-50"
+                  className="w-full rounded-lg bg-google-orange text-white font-semibold py-3 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {mevcutSoruIndex < sorular.length - 1 ? 'Sonraki Soru' : 'Testi Bitir'}
-                </Button>
-                <Button
+                </button>
+                <button
                   onClick={testiSifirla}
-                  variant="ghost"
-                  className="w-full text-white hover:bg-white/20"
+                  className="w-full rounded-lg border border-gray-200 text-gray-500 font-medium py-2.5 hover:bg-gray-50 transition-colors text-sm"
                 >
                   Sınav Modunu Değiştir
-                </Button>
+                </button>
               </div>
             </div>
-          </Section>
+          </>
         )}
 
         {/* Sonuç Ekranı */}
         {testBitti && (
-          <Section contained className="py-8">
-            <div className="bg-gradient-to-br from-[#8F03B7] to-[#6B02A3] rounded-2xl p-8 text-white text-center">
-              <h2 className="text-2xl font-bold mb-4">Test Sonucu</h2>
-              <p className="text-lg mb-6">
-                Toplam <span className="font-bold">{sorular.length}</span> sorudan{' '}
-                <span className="font-bold text-[#FFBB00]">{dogruSayisi}</span> tanesini doğru cevapladınız.
+          <>
+            <div className="bg-white rounded-xl border-2 border-google-green p-5 text-center">
+              <h2 className="text-2xl font-bold text-gray-900 mb-1">Test Sonucu</h2>
+              <p className="text-gray-500 text-sm mb-5">
+                Toplam <span className="font-bold text-gray-900">{sorular.length}</span> sorudan{' '}
+                <span className="font-bold text-google-green">{dogruSayisi}</span> tanesini doğru cevapladınız.
               </p>
-              
-              {/* Sonuç Durumu */}
-              <div className="flex justify-center gap-4 mb-6">
-                <div className="flex items-center gap-2 bg-green-600/30 px-4 py-2 rounded-full">
-                  <CheckCircle size={20} className="text-green-400" />
-                  <span>{dogruSayisi} Doğru</span>
+
+              <div className="flex justify-center gap-3 mb-5">
+                <div className="flex items-center gap-2 bg-green-50 border border-green-200 px-4 py-2 rounded-full">
+                  <CheckCircle size={18} className="text-green-600" />
+                  <span className="text-sm font-semibold text-green-700">{dogruSayisi} Doğru</span>
                 </div>
-                <div className="flex items-center gap-2 bg-red-600/30 px-4 py-2 rounded-full">
-                  <XCircle size={20} className="text-red-400" />
-                  <span>{sorular.length - dogruSayisi} Yanlış</span>
+                <div className="flex items-center gap-2 bg-red-50 border border-red-200 px-4 py-2 rounded-full">
+                  <XCircle size={18} className="text-red-500" />
+                  <span className="text-sm font-semibold text-red-600">{sorular.length - dogruSayisi} Yanlış</span>
                 </div>
               </div>
 
-              {/* Geçme Durumu */}
               {aktifMod === 'real' && (
                 <div className={cn(
-                  'p-4 rounded-xl mb-6',
-                  dogruSayisi >= 17 ? 'bg-green-600/30' : 'bg-red-600/30'
+                  'p-4 rounded-xl mb-5 text-sm font-semibold',
+                  dogruSayisi >= 17
+                    ? 'bg-green-50 border border-green-200 text-green-700'
+                    : 'bg-red-50 border border-red-200 text-red-600'
                 )}>
-                  {dogruSayisi >= 17 ? (
-                    <p className="font-semibold text-green-300">
-                      🎉 Tebrikler! Sınavı geçtiniz!
-                    </p>
-                  ) : (
-                    <p className="font-semibold text-red-300">
-                      😔 Maalesef sınavı geçemediniz. En az 17 doğru cevap gerekiyor.
-                    </p>
-                  )}
+                  {dogruSayisi >= 17
+                    ? 'Tebrikler! Sınavı geçtiniz!'
+                    : 'Maalesef sınavı geçemediniz. En az 17 doğru cevap gerekiyor.'}
                 </div>
               )}
-
-              <Button
-                onClick={testiSifirla}
-                className="bg-white/20 hover:bg-white/30 text-white"
-              >
-                <RotateCcw size={18} className="mr-2" />
-                Sınav Modunu Değiştir
-              </Button>
             </div>
-          </Section>
-        )}
-      </main>
 
-      <Footer />
-    </>
+            <button
+              onClick={testiSifirla}
+              className="w-full flex items-center justify-center rounded-xl border-2 border-google-orange bg-google-orange text-white font-semibold py-3 hover:opacity-90 transition-opacity"
+            >
+              Sınav Modunu Değiştir
+            </button>
+            <Link href="/" className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+              Ana Sayfaya Dön
+            </Link>
+          </>
+        )}
+
+        <Link href="/" className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+          Ana Sayfaya Dön
+        </Link>
+      </div>
+    </div>
   );
 }
 

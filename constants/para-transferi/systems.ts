@@ -264,6 +264,43 @@ export const TRANSFER_SYSTEMS: TransferSystem[] = [
     color: "red",
     scores: { cost: 2, speed: 2, online: 3, cash: 0, multi: 1, official: 5, business: 5, simple: 2, weekend: 1, limits: 5, promos: 0 }
   },
+  {
+    id: "commerz_business",
+    name: "Commerzbank Business",
+    tags: ["Business", "Banka", "Resmi"],
+    color: "red",
+    scores: { cost: 2, speed: 2, online: 3, cash: 0, multi: 1, official: 5, business: 5, simple: 2, weekend: 1, limits: 5, promos: 0 }
+  },
+  {
+    id: "sparkasse_business",
+    name: "Sparkasse Business",
+    tags: ["Business", "Banka", "Resmi"],
+    color: "red",
+    scores: { cost: 2, speed: 2, online: 3, cash: 0, multi: 0, official: 5, business: 5, simple: 2, weekend: 1, limits: 5, promos: 0 }
+  },
+
+  // Crypto (opsiyonel — düşük öncelik)
+  {
+    id: "binance",
+    name: "Binance",
+    tags: ["Kripto", "Risk", "Hızlı"],
+    color: "red",
+    scores: { cost: 3, speed: 3, online: 5, cash: 0, multi: 2, official: 0, business: 0, simple: 1, weekend: 5, limits: 4, promos: 0 }
+  },
+  {
+    id: "coinbase",
+    name: "Coinbase",
+    tags: ["Kripto", "Risk", "Platform"],
+    color: "red",
+    scores: { cost: 2, speed: 2, online: 5, cash: 0, multi: 1, official: 0, business: 0, simple: 1, weekend: 5, limits: 3, promos: 0 }
+  },
+  {
+    id: "kraken",
+    name: "Kraken",
+    tags: ["Kripto", "Risk", "Platform"],
+    color: "red",
+    scores: { cost: 2, speed: 2, online: 5, cash: 0, multi: 1, official: 0, business: 0, simple: 1, weekend: 5, limits: 3, promos: 0 }
+  },
 ];
 
 // Hızlı erişim için Map

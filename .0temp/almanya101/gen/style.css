@@ -1,0 +1,760 @@
+/* =========================================================
+   ZGEN – style.css (CLEAN FINAL)
+   Palette: #01A1F1 #7CBB00 #F65314 #8F03B7 #FFBB00
+   Rules: pure black background, solid colorful cards (no glass)
+   ========================================================= */
+
+/* STANDARD UI TEXT STYLE - Reused across ZGEN */
+/* Matches hero-announcement: font-size: 15px, line-height: 1.5 */
+:root {
+  --ui-text-size: 15px;
+  --ui-text-line-height: 1.5;
+}
+
+/* RESET */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  background:#000;
+  color:#fff;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  line-height:1.45;
+}
+
+/* A11Y */
+.sr-only{
+  position:absolute !important;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);
+  white-space:nowrap;border:0;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:.9em;
+  padding:.12rem .35rem;
+  border-radius:.5rem;
+  background: rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.18);
+}
+
+/* LAYOUT */
+.wrap{
+  min-height:100%;
+  padding:28px 18px 80px;
+}
+.shell{
+  max-width:700px;
+  margin:0 auto;
+}
+
+/* HERO CARD */
+.hero-card1 {
+  background: linear-gradient(135deg, #FFBB00, #f7931e);
+  color: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 14px 30px rgba(0,0,0,.40);
+}
+.hero-top1 {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.hero-logo-box1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-domain1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+}
+.hero-home-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  padding: 4px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+  transition: transform 0.2s;
+}
+.hero-home-icon:hover {
+  transform: scale(1.06);
+}
+.hero-card1 h1 {
+  margin: 0 0 8px 0;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 800;
+  color: white;
+  letter-spacing: 0.02em;
+}
+.hero-announcement {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.5;
+}
+
+/* STATUS PILL */
+.status-pill {
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.90);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:16px;
+}
+
+/* CARDS (solid color) */
+.card{
+  border-radius: 16px;
+  padding: 12px 12px 10px;
+  border: 2px solid rgba(0,0,0,.35);
+  box-shadow: 0 14px 30px rgba(0,0,0,.40);
+}
+.card-head{ margin-bottom: 10px; }
+.card-title{
+  margin:0;
+  font-size: var(--ui-text-size);
+  letter-spacing:.02em;
+  font-weight: normal;
+  line-height: var(--ui-text-line-height);
+}
+.card-sub{
+  margin:6px 0 0;
+  color: rgba(0,0,0,.80);
+  font-weight: normal;
+  font-size: var(--ui-text-size);
+  line-height: var(--ui-text-line-height);
+}
+
+/* Solid palette cards */
+.card-blue{ background:#01A1F1; color:#061018; }
+.card-green{ background:#7CBB00; color:#0b1300; }
+.card-orange{ background:#F65314; color:#170800; }
+.card-purple{ background:#8F03B7; color:#0e0013; }
+.card-yellow{ background:#FFBB00; color:#1a1200; }
+
+/* Improve readability on purple */
+.card-purple .card-sub,
+.card-purple .micro,
+.card-purple .mini-title,
+.card-purple .bullets,
+.card-purple .chips,
+.card-purple .acc-head{ color: rgba(255,255,255,.92); }
+.card-purple .acc-kicker,
+.card-purple .acc-name {
+  color: #000 !important;
+}
+/* Removed - now using black text */
+
+/* INPUTS */
+.input-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.input{
+  flex: 1 1 220px;
+  height: 46px;
+  border-radius: 12px;
+  border: 2px solid rgba(0,0,0,.35);
+  background: rgba(255,255,255,.92);
+  color:#0b0b0b;
+  padding: 0 14px;
+  font-size: 16px;
+  outline: none;
+}
+.input:focus{
+  border-color: rgba(0,0,0,.70);
+  box-shadow: 0 0 0 3px rgba(0,0,0,.18);
+}
+.btn{
+  height:46px;
+  border-radius: 12px;
+  border: 2px solid rgba(0,0,0,.45);
+  background: #000;
+  color:#fff;
+  padding: 0 14px;
+  font-weight: 900;
+  letter-spacing:.02em;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.btn:hover{ transform: translateY(-1px); }
+.btn:active{ transform: translateY(0px); }
+
+/* MICRO TEXT */
+.micro{
+  margin:10px 0 0;
+  font-size: var(--ui-text-size);
+  font-weight: normal;
+  color: rgba(0,0,0,.78);
+  line-height: var(--ui-text-line-height);
+}
+
+/* =========================================================
+   CARD 1: Birth year + right inner ZGENCHECK (FINAL)
+   NOTE: Your HTML must use:
+     <div class="blue-split">
+       <div class="blue-left">...</div>
+       <aside class="inner-card inner-card--right">...</aside>
+     </div>
+   ========================================================= */
+
+.blue-split{
+  display:grid;
+  grid-template-columns: 1.5fr .85fr;
+  gap:16px;
+  align-items:stretch;
+}
+.blue-left{ min-width:0; }
+
+/* Inner ZGENCHECK card */
+.inner-card--right{
+  /* layout */
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+
+  /* visuals */
+  padding:12px;
+  border-radius:18px;
+  background: rgba(255,255,255,.78);
+  border: 2px dashed rgba(0,0,0,.28);
+  box-shadow: 0 10px 22px rgba(0,0,0,.14);
+  backdrop-filter: blur(2px);
+}
+
+/* IMPORTANT: kill default margins inside inner card */
+.inner-card--right h1,
+.inner-card--right h2,
+.inner-card--right h3,
+.inner-card--right h4,
+.inner-card--right p,
+.inner-card--right ul,
+.inner-card--right ol{
+  margin:0 !important;
+}
+
+/* header row inside inner card */
+.inner-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+/* typography */
+.inner-title{
+  font-size:14px;
+  font-weight:1000;
+  letter-spacing:.02em;
+  line-height:1.1;
+}
+.inner-sub{
+  font-size:12px;
+  font-weight:750;
+  color: rgba(0,0,0,.62);
+  line-height:1.2;
+}
+.inner-text{
+  font-size:12px;
+  font-weight:700;
+  color: rgba(0,0,0,.62);
+  line-height:1.25;
+}
+
+/* mini button (for the inner card) */
+.btn-mini{
+  height:30px;
+  padding:0 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  border: 2px solid rgba(0,0,0,.18);
+  background: rgba(0,0,0,.86);
+  color:#fff;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex: 0 0 auto;
+}
+
+/* Mobile stack */
+@media (max-width: 860px){
+  .blue-split{ grid-template-columns: 1fr; }
+  .inner-head{ justify-content:flex-start; flex-wrap:wrap; }
+}
+
+/* =========================================================
+   CARD 2 layout
+   ========================================================= */
+.two-col{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:14px;
+  align-items:start;
+}
+.mini-title{
+  margin:0 0 8px;
+  font-size: var(--ui-text-size);
+  letter-spacing:.02em;
+  color: rgba(0,0,0,.82);
+  font-weight: normal;
+  line-height: var(--ui-text-line-height);
+}
+
+/* Lists */
+.bullets{
+  margin:0;
+  padding-left: 18px;
+}
+.bullets li{
+  margin: 6px 0;
+  font-weight: normal;
+  font-size: var(--ui-text-size);
+  line-height: var(--ui-text-line-height);
+}
+
+/* Right sidebox */
+.sidebox{
+  border-radius: 16px;
+  padding: 12px;
+  border: 2px solid rgba(0,0,0,.35);
+  background: rgba(255,255,255,.18);
+}
+.card-purple .sidebox{
+  background: rgba(0,0,0,.25);
+  border-color: rgba(255,255,255,.18);
+}
+
+/* =========================================================
+   AVATARS (IMAGE-BASED + PAIRS)
+   ========================================================= */
+.avatar-row{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-bottom: 10px;
+}
+
+/* Pair wrapper: keeps two circles aligned + same height */
+.avatar-pair{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex: 0 0 auto;
+}
+
+/* Avatar container = circle frame */
+.avatar{
+  border-radius: 999px;
+  overflow:hidden;
+  border: 3px solid rgba(0,0,0,.45);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+  flex: 0 0 auto;
+  display:block;
+}
+
+/* Sizes */
+.avatar.lg{ width:78px; height:78px; }   /* Card 2 pair */
+.avatar.xl{ width:86px; height:86px; }   /* Accordion pairs */
+.avatar.sm{ width:64px; height:64px; }   /* reserved */
+
+/* Image inside circle */
+.avatar-img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit: cover;
+}
+
+/* Purple card avatar borders */
+.card-purple .avatar{
+  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.10);
+}
+
+/* Avatar text blocks */
+.avatar-title{
+  font-weight: normal;
+  letter-spacing:.02em;
+  font-size: var(--ui-text-size);
+  line-height: var(--ui-text-line-height);
+}
+.avatar-sub{
+  font-size: var(--ui-text-size);
+  font-weight: normal;
+  color: rgba(0,0,0,.75);
+  line-height: var(--ui-text-line-height);
+}
+.card-purple .avatar-sub{ color: rgba(255,255,255,.78); }
+
+/* Chips list */
+.chips{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.chips li{
+  border-radius: 12px;
+  padding: 8px 10px;
+  border: 2px solid rgba(0,0,0,.30);
+  background: rgba(255,255,255,.88);
+  color:#000;
+  font-weight: normal;
+  font-size: var(--ui-text-size);
+  line-height: var(--ui-text-line-height);
+}
+.card-purple .chips li{
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.18);
+  color:#fff;
+}
+
+/* =========================================================
+   ACCORDION
+   ========================================================= */
+.accordion{
+  display:grid;
+  gap:16px;
+}
+.acc{
+  padding: 0;
+  overflow:hidden;
+}
+.acc-head{
+  width:100%;
+  border:0;
+  background: transparent;
+  padding: 12px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  font: inherit;
+}
+.acc-title{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  text-align:left;
+}
+.acc-kicker{
+  font-size: var(--ui-text-size);
+  font-weight: normal;
+  color: #000;
+  letter-spacing:.04em;
+  text-transform: uppercase;
+  line-height: var(--ui-text-line-height);
+}
+.acc-name{
+  font-size: var(--ui-text-size);
+  font-weight: normal;
+  color: #000;
+  line-height: var(--ui-text-line-height);
+}
+.acc-icon{
+  width:38px;height:38px;
+  border-radius: 12px;
+  display:grid;
+  place-items:center;
+  border: 2px solid rgba(0,0,0,.35);
+  background: rgba(255,255,255,.85);
+  color:#000;
+  font-weight: 1000;
+  font-size: 18px;
+}
+.card-purple .acc-icon{
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.18);
+  color:#fff;
+}
+
+.acc-body{ padding: 0 12px 12px; }
+
+/* Avatars row inside accordion - horizontal layout with VS in the middle */
+.acc-avatars{
+  display:flex;
+  flex-direction: row;
+  gap:12px;
+  margin: 8px 0 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.avatar-row-compat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Single column inside accordion body - Yap and Yapma stacked vertically */
+.acc-cols{
+  display:flex;
+  flex-direction: column;
+  gap:12px;
+}
+
+/* Tags */
+.avatar-tags{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-left: 6px;
+  flex: 1 1 220px;
+}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: normal;
+  letter-spacing:.02em;
+  border: 2px solid rgba(0,0,0,.30);
+  background: rgba(255,255,255,.85);
+  color:#000;
+  font-size: var(--ui-text-size);
+  line-height: var(--ui-text-line-height);
+}
+.card-purple .tag{
+  border-color: rgba(0,0,0,.30);
+  background: rgba(255,255,255,.85);
+  color:#000;
+}
+
+/* Do/Don't boxes - compact width */
+.dos, .donts{
+  border-radius: 14px;
+  padding: 10px 12px;
+  border: 2px solid rgba(0,0,0,.25);
+  background: rgba(255,255,255,.16);
+  width: 100%;
+  max-width: 100%;
+}
+.card-purple .dos,
+.card-purple .donts{
+  border-color: rgba(255,255,255,.18);
+  background: rgba(0,0,0,.22);
+}
+.dos-title, .donts-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* Joke bubble - REMOVED */
+
+/* Corner widget */
+.corner-widget{
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  display:flex;
+  gap:10px;
+  z-index: 20;
+}
+.widget-avatar{
+  width:46px;
+  height:46px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,.22);
+  box-shadow: 0 12px 28px rgba(0,0,0,.45);
+  background:#000;
+  object-fit: cover;
+}
+.widget-avatar.logo{
+  border-color: rgba(255,255,255,.14);
+}
+
+/* RESPONSIVE (general) */
+@media (max-width: 860px){
+  .hero{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .hero-right{
+    align-items:flex-start;
+    min-width: 0;
+  }
+  .two-col{ grid-template-columns: 1fr; }
+
+  /* slightly smaller avatars on mobile */
+  .avatar.lg{ width:72px; height:72px; }
+  .avatar.xl{ width:78px; height:78px; }
+}
+/* VS symbol between avatar pairs */
+.gen-vs {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0 8px;
+  padding: 8px 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8F03B7, #01A1F1);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 48px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 720px) {
+  .gen-vs {
+    font-size: 28px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 6px 10px;
+  }
+}
+
+
+
+/* =========================================================
+   GENERATION CHART (white card)
+   - Shows when user starts typing in #birthYear
+   - No JS needed (uses :has + :placeholder-shown)
+   ========================================================= */
+
+.card-white{
+  background:#fff;
+  color:#000;
+}
+
+/* Keep sub text readable on white */
+.card-white .card-sub,
+.card-white .micro,
+.card-white .mini-title,
+.card-white .bullets,
+.card-white .chips,
+.card-white .acc-head,
+.card-white .acc-kicker{
+  color: rgba(0,0,0,.78);
+}
+
+/* Hide by default */
+#genChart{ display:none; }
+
+/* Show once the input is not empty */
+.wrap:has(#birthYear:not(:placeholder-shown)) #genChart{
+  display:block;
+}
+
+/* Chart layout */
+.genchart-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+}
+
+.genchart-item{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:12px;
+  border-radius:16px;
+  border:2px solid rgba(0,0,0,.18);
+  background: rgba(0,0,0,.03);
+}
+
+.genchart-meta{
+  min-width: 0;
+}
+
+.genchart-name{
+  font-weight: normal;
+  letter-spacing: .01em;
+  font-size: var(--ui-text-size);
+  line-height: var(--ui-text-line-height);
+}
+
+.genchart-range{
+  margin-top: 4px;
+  font-weight: normal;
+  color: rgba(0,0,0,.68);
+  font-size: var(--ui-text-size);
+  line-height: var(--ui-text-line-height);
+}
+
+/* On white card, avatars should use darker border */
+.card-white .avatar{
+  border-color: rgba(0,0,0,.28);
+  background: rgba(0,0,0,.04);
+}
+
+/* Responsive */
+@media (max-width: 860px){
+  .genchart-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   FOOTER CARD BUTTONS
+   ========================================================= */
+.card-buttons {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  display: flex;
+  gap: 10px;
+}
+.btn-icon {
+  width: 34px;
+  height: 34px;
+  max-width: 34px;
+  max-height: 34px;
+  border-radius: 10px;
+  padding: 5px;
+  background: rgba(255,255,255,0.35);
+  box-shadow: 0 2px 6px rgba(0,0,0,.22);
+  cursor: pointer;
+  object-fit: contain;
+}
+
+
+/* Card width lock (mobile width across all cards) */
+:root {
+  --card-mobile-width: 355px;
+}
+
+[class*="card"]:not(.card-buttons):not(.hb-card-buttons):not(.footer-blue-card__buttons):not(.contact-card-buttons):not(.card-title):not(.card-sub):not(.card-head):not(.card-foot) {
+  width: var(--card-mobile-width);
+  min-width: var(--card-mobile-width);
+  max-width: var(--card-mobile-width);
+  margin-left: auto;
+  margin-right: auto;
+}

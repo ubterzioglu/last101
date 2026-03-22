@@ -1,0 +1,542 @@
+// =====================================================
+// ADMIN/PROVIDERS.JS - Admin Panel Logic
+// Turkish Doctor & Lawyer Directory
+// =====================================================
+
+// Supabase Configuration
+const SUPABASE_URL = 'https://ldptefnpiudquipdsezr.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_mqX5A9NdO66oM2GjvPJwNw_C7MhIDcI';
+
+// Initialize Supabase client (using window to avoid redeclaration errors)
+window.sbClient = window.sbClient || window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase = window.sbClient;
+
+// State
+let currentUser = null;
+let isAdmin = false;
+let currentRejectId = null;
+
+// =====================================================
+// INITIALIZATION
+// =====================================================
+document.addEventListener('DOMContentLoaded', async () => {
+  await checkAuth();
+  initTabs();
+
+  if (isAdmin) {
+    await loadAllSubmissions();
+  }
+});
+
+// =====================================================
+// AUTH CHECK
+// =====================================================
+async function checkAuth() {
+  const authStatus = document.getElementById('authStatus');
+
+  try {
+    // Get current user
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      authStatus.innerHTML = `
+        <div style="color: #BF0000; font-weight: 600;">
+          ❌ Giriş yapmanız gerekiyor.
+        </div>
+        <p style="margin-top: 8px; font-size: 14px; color: #6B7280;">
+          Bu sayfa sadece admin kullanıcılar için erişilebilir.
+        </p>
+      `;
+      return;
+    }
+
+    currentUser = user;
+
+    // Check if user is admin
+    const role = user.app_metadata?.role;
+    isAdmin = (role === 'admin');
+
+    if (!isAdmin) {
+      authStatus.innerHTML = `
+        <div style="color: #BF0000; font-weight: 600;">
+          ❌ Yetkiniz yok.
+        </div>
+        <p style="margin-top: 8px; font-size: 14px; color: #6B7280;">
+          Bu sayfa sadece admin kullanıcılar için erişilebilir.
+        </p>
+      `;
+      return;
+    }
+
+    // Admin confirmed
+    authStatus.innerHTML = `
+      <div style="color: #7CBB00; font-weight: 600;">
+        ✅ Admin olarak giriş yaptınız
+      </div>
+      <p style="margin-top: 4px; font-size: 13px; color: #6B7280;">
+        ${user.email}
+      </p>
+    `;
+
+  } catch (error) {
+    console.error('Auth check error:', error);
+    authStatus.innerHTML = `
+      <div style="color: #BF0000; font-weight: 600;">
+        ❌ Bir hata oluştu.
+      </div>
+    `;
+  }
+}
+
+// =====================================================
+// TABS
+// =====================================================
+function initTabs() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.dataset.tab;
+
+      // Remove active from all
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      // Add active to clicked
+      btn.classList.add('active');
+      document.querySelector(`.tab-content[data-tab="${targetTab}"]`).classList.add('active');
+    });
+  });
+}
+
+// =====================================================
+// LOAD SUBMISSIONS
+// =====================================================
+async function loadAllSubmissions() {
+  await Promise.all([
+    loadSubmissions('pending'),
+    loadSubmissions('approved'),
+    loadSubmissions('rejected')
+  ]);
+}
+
+async function loadSubmissions(status) {
+  const listId = `${status}List`;
+  const countId = `${status}Count`;
+  const list = document.getElementById(listId);
+  const count = document.getElementById(countId);
+
+  list.innerHTML = '<div style="text-align: center; padding: 20px; color: #6B7280;">Yükleniyor...</div>';
+
+  try {
+    const { data, error } = await supabase
+      .from('provider_submissions')
+      .select('*')
+      .eq('status', status)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    const submissions = data || [];
+
+    // Update count
+    count.textContent = submissions.length;
+
+    // Render
+    if (submissions.length === 0) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <div style="font-size: 40px; margin-bottom: 12px;">📭</div>
+          <p style="font-size: 14px;">Henüz ${status === 'pending' ? 'bekleyen' : status === 'approved' ? 'onaylı' : 'reddedilen'} kayıt yok.</p>
+        </div>
+      `;
+    } else {
+      list.innerHTML = '';
+      submissions.forEach(submission => {
+        const card = createSubmissionCard(submission);
+        list.appendChild(card);
+      });
+    }
+
+  } catch (error) {
+    console.error(`Error loading ${status} submissions:`, error);
+    list.innerHTML = `
+      <div style="color: #BF0000; text-align: center; padding: 20px;">
+        Bir hata oluştu. Lütfen sayfayı yenileyin.
+      </div>
+    `;
+  }
+}
+
+// =====================================================
+// CREATE SUBMISSION CARD
+// =====================================================
+function createSubmissionCard(submission) {
+  const card = document.createElement('div');
+  card.className = `submission-card ${submission.status}`;
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'submission-header';
+
+  const title = document.createElement('div');
+  title.className = 'submission-title';
+  title.textContent = submission.display_name;
+  header.appendChild(title);
+
+  const statusBadge = document.createElement('div');
+  statusBadge.className = `status-badge status-${submission.status}`;
+  statusBadge.textContent = submission.status === 'pending' ? 'Bekliyor' : submission.status === 'approved' ? 'Onaylandı' : 'Reddedildi';
+  header.appendChild(statusBadge);
+
+  card.appendChild(header);
+
+  // Details
+  const details = document.createElement('div');
+  details.className = 'submission-details';
+  details.innerHTML = `
+    <div><strong>Tür:</strong> ${submission.type === 'doctor' ? 'Doktor' : 'Avukat'}</div>
+    <div><strong>Şehir:</strong> ${submission.city}</div>
+    ${submission.address ? `<div><strong>Adres:</strong> ${submission.address}</div>` : ''}
+    ${submission.phone ? `<div><strong>Telefon:</strong> ${submission.phone}</div>` : ''}
+    ${submission.website ? `<div><strong>Website:</strong> <a href="${submission.website}" target="_blank">${submission.website}</a></div>` : ''}
+    ${submission.tag_labels && submission.tag_labels.length > 0 ? `<div><strong>Tagler:</strong> ${submission.tag_labels.join(', ')}</div>` : ''}
+    ${submission.google_maps_url ? `<div><strong>Google Maps:</strong> <a href="${submission.google_maps_url}" target="_blank">Link</a></div>` : ''}
+    ${submission.google_place_id ? `<div><strong>Place ID:</strong> ${submission.google_place_id}</div>` : ''}
+    ${submission.note ? `<div><strong>Not:</strong> ${submission.note}</div>` : ''}
+    ${submission.admin_comment ? `<div style="color: #BF0000;"><strong>Admin Yorumu:</strong> ${submission.admin_comment}</div>` : ''}
+    <div style="font-size: 12px; color: #9CA3AF; margin-top: 8px;">
+      Gönderilme: ${new Date(submission.created_at).toLocaleString('tr-TR')}
+    </div>
+  `;
+  card.appendChild(details);
+
+  // Actions
+  const actions = document.createElement('div');
+  actions.className = 'submission-actions';
+
+  if (submission.status === 'pending') {
+    // Approve button
+    const approveBtn = document.createElement('button');
+    approveBtn.className = 'btn-approve';
+    approveBtn.textContent = '✓ Onayla';
+    approveBtn.addEventListener('click', () => approveSubmission(submission.id));
+    actions.appendChild(approveBtn);
+
+    // Reject button
+    const rejectBtn = document.createElement('button');
+    rejectBtn.className = 'btn-reject';
+    rejectBtn.textContent = '✗ Reddet';
+    rejectBtn.addEventListener('click', () => openRejectModal(submission.id));
+    actions.appendChild(rejectBtn);
+  }
+
+  if (submission.status === 'approved' && submission.approved_provider_id) {
+    // Force sync button
+    const syncBtn = document.createElement('button');
+    syncBtn.className = 'btn-sync';
+    syncBtn.textContent = '🔄 Google Sync (Force)';
+    syncBtn.addEventListener('click', () => forceGoogleSync(submission.approved_provider_id));
+    actions.appendChild(syncBtn);
+  }
+
+  if (actions.children.length > 0) {
+    card.appendChild(actions);
+  }
+
+  return card;
+}
+
+// =====================================================
+// APPROVE SUBMISSION
+// =====================================================
+async function approveSubmission(submissionId) {
+  if (!confirm('Bu öneriyi onaylamak istediğinize emin misiniz?')) {
+    return;
+  }
+
+  showLoading(true);
+
+  try {
+    // Get submission
+    const { data: submission, error: fetchError } = await supabase
+      .from('provider_submissions')
+      .select('*')
+      .eq('id', submissionId)
+      .single();
+
+    if (fetchError) throw fetchError;
+
+    // Check if provider with same place_id already exists
+    let providerId = null;
+
+    if (submission.google_place_id) {
+      const { data: existingProvider } = await supabase
+        .from('providers')
+        .select('id')
+        .eq('google_place_id', submission.google_place_id)
+        .single();
+
+      if (existingProvider) {
+        providerId = existingProvider.id;
+      }
+    }
+
+    // Create or update provider
+    const providerData = {
+      type: submission.type,
+      display_name: submission.display_name,
+      city: submission.city,
+      address: submission.address,
+      phone: submission.phone,
+      website: submission.website,
+      google_place_id: submission.google_place_id,
+      google_maps_url: submission.google_maps_url,
+      status: 'active'
+    };
+
+    if (providerId) {
+      // Update existing
+      const { error: updateError } = await supabase
+        .from('providers')
+        .update(providerData)
+        .eq('id', providerId);
+
+      if (updateError) throw updateError;
+    } else {
+      // Create new
+      const { data: newProvider, error: insertError } = await supabase
+        .from('providers')
+        .insert([providerData])
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+      providerId = newProvider.id;
+    }
+
+    // Normalize and create tags
+    if (submission.tag_labels && submission.tag_labels.length > 0) {
+      await normalizeTags(submission.tag_labels, submission.type, providerId);
+    }
+
+    // Update submission status
+    const { error: submissionUpdateError } = await supabase
+      .from('provider_submissions')
+      .update({
+        status: 'approved',
+        approved_provider_id: providerId
+      })
+      .eq('id', submissionId);
+
+    if (submissionUpdateError) throw submissionUpdateError;
+
+    // Trigger Google sync if place_id exists
+    if (submission.google_place_id) {
+      await triggerGoogleSync(providerId, false);
+    }
+
+    // Reload all lists
+    await loadAllSubmissions();
+
+    alert('✅ Öneri başarıyla onaylandı!');
+
+  } catch (error) {
+    console.error('Error approving submission:', error);
+    alert('❌ Bir hata oluştu: ' + error.message);
+  } finally {
+    showLoading(false);
+  }
+}
+
+// =====================================================
+// NORMALIZE TAGS
+// =====================================================
+async function normalizeTags(tagLabels, type, providerId) {
+  const tagIds = [];
+
+  for (const label of tagLabels) {
+    const trimmedLabel = label.trim();
+    if (!trimmedLabel) continue;
+
+    // Generate slug (lowercase, remove special chars, replace spaces with -)
+    const slug = trimmedLabel
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-');
+
+    // Check if tag exists
+    const { data: existingTag } = await supabase
+      .from('tags')
+      .select('id')
+      .eq('slug', slug)
+      .single();
+
+    let tagId;
+
+    if (existingTag) {
+      tagId = existingTag.id;
+    } else {
+      // Create new tag
+      const { data: newTag, error: tagError } = await supabase
+        .from('tags')
+        .insert([{
+          type: type,
+          label: trimmedLabel,
+          slug: slug
+        }])
+        .select()
+        .single();
+
+      if (tagError) {
+        console.error('Error creating tag:', tagError);
+        continue;
+      }
+
+      tagId = newTag.id;
+    }
+
+    tagIds.push(tagId);
+  }
+
+  // Create provider_tags relationships
+  if (tagIds.length > 0) {
+    // First, delete existing relationships for this provider
+    await supabase
+      .from('provider_tags')
+      .delete()
+      .eq('provider_id', providerId);
+
+    // Then insert new relationships
+    const providerTags = tagIds.map(tagId => ({
+      provider_id: providerId,
+      tag_id: tagId
+    }));
+
+    const { error: ptError } = await supabase
+      .from('provider_tags')
+      .insert(providerTags);
+
+    if (ptError) {
+      console.error('Error creating provider_tags:', ptError);
+    }
+  }
+}
+
+// =====================================================
+// TRIGGER GOOGLE SYNC
+// =====================================================
+async function triggerGoogleSync(providerId, force = false) {
+  try {
+    const url = `/api/google-place-sync?provider_id=${providerId}${force ? '&force=1' : ''}`;
+
+    const response = await fetch(url, { method: 'POST' });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Sync failed');
+    }
+
+    const result = await response.json();
+    console.log('Google sync result:', result);
+
+  } catch (error) {
+    console.error('Google sync error:', error);
+    // Don't throw - sync failure shouldn't block approval
+  }
+}
+
+// =====================================================
+// REJECT SUBMISSION
+// =====================================================
+function openRejectModal(submissionId) {
+  currentRejectId = submissionId;
+  document.getElementById('rejectComment').value = '';
+  document.getElementById('rejectModal').classList.add('active');
+}
+
+function closeRejectModal() {
+  currentRejectId = null;
+  document.getElementById('rejectModal').classList.remove('active');
+}
+
+async function confirmReject() {
+  if (!currentRejectId) return;
+
+  const comment = document.getElementById('rejectComment').value.trim();
+
+  if (!comment) {
+    alert('Lütfen ret sebebini yazın.');
+    return;
+  }
+
+  showLoading(true);
+  closeRejectModal();
+
+  try {
+    const { error } = await supabase
+      .from('provider_submissions')
+      .update({
+        status: 'rejected',
+        admin_comment: comment
+      })
+      .eq('id', currentRejectId);
+
+    if (error) throw error;
+
+    // Reload all lists
+    await loadAllSubmissions();
+
+    alert('✅ Öneri reddedildi.');
+
+  } catch (error) {
+    console.error('Error rejecting submission:', error);
+    alert('❌ Bir hata oluştu: ' + error.message);
+  } finally {
+    showLoading(false);
+    currentRejectId = null;
+  }
+}
+
+// =====================================================
+// FORCE GOOGLE SYNC
+// =====================================================
+async function forceGoogleSync(providerId) {
+  if (!confirm('Google sync\'i force etmek istediğinize emin misiniz?')) {
+    return;
+  }
+
+  showLoading(true);
+
+  try {
+    await triggerGoogleSync(providerId, true);
+    alert('✅ Google sync başlatıldı. Sonuçları birkaç saniye sonra görebilirsiniz.');
+
+    // Reload after a delay
+    setTimeout(async () => {
+      await loadAllSubmissions();
+      showLoading(false);
+    }, 3000);
+
+  } catch (error) {
+    console.error('Error forcing Google sync:', error);
+    alert('❌ Bir hata oluştu: ' + error.message);
+    showLoading(false);
+  }
+}
+
+// =====================================================
+// LOADING OVERLAY
+// =====================================================
+function showLoading(show) {
+  const overlay = document.getElementById('loadingOverlay');
+
+  if (show) {
+    overlay.classList.add('active');
+  } else {
+    overlay.classList.remove('active');
+  }
+}

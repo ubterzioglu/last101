@@ -1,0 +1,2096 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+<title>de tr software dashboard | Developer Topluluğu - almanya101</title>
+  <meta name="title" content="Developer Topluluğu - almanya101">
+  <meta name="description"
+    content="Almanya'da yaşayan Türk developer, QA, DevOps ve tech profesyonellerini keşfet.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --google-blue: #4285F4;
+      --google-red: #EA4335;
+      --google-yellow: #FBBC05;
+      --google-green: #34A853;
+      --dark-bg: #000000;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      --gradient-1: linear-gradient(135deg, #4285F4 0%, #EA4335 50%, #FBBC05 100%);
+      --gradient-2: linear-gradient(135deg, #34A853 0%, #4285F4 100%);
+      --gradient-3: linear-gradient(135deg, #FBBC05 0%, #EA4335 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--dark-bg);
+      min-height: 100vh;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: #000;
+    }
+
+    #code-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.28;
+    }
+
+    /* Grid Pattern Overlay */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Container */
+    .container1 {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* Top Logo */
+    .top-logo {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-top: 10px;
+    }
+
+    .top-logo img {
+      width: 300px;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 8px 32px rgba(66, 133, 244, 0.3);
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0 20px;
+      border-bottom: 1px solid var(--glass-border);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .title-group h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--google-blue);
+      border-color: var(--google-blue);
+      transform: translateX(-3px);
+    }
+
+    /* Glassmorphism Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-card1 {
+      background: var(--card-bg);
+      border: 1px solid rgba(66, 133, 244, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card1::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-1);
+    }
+
+    .hero-top1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-domain1 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--google-blue);
+      text-transform: lowercase;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 8px 0 0 0;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    /* Auth Card */
+    .auth-card {
+      max-width: 480px;
+      margin: 0 auto 20px auto;
+    }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .auth-grid input {
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    .auth-grid input:focus {
+      outline: none;
+      border-color: var(--google-blue);
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+    }
+
+    .auth-grid input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .auth-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .auth-note {
+      margin: 16px 0 0 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .auth-status {
+      min-height: 18px;
+      margin: 12px 0 0 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .auth-status.error {
+      color: var(--google-red);
+    }
+
+    .auth-status.success {
+      color: var(--google-green);
+    }
+
+    .password-reset-link {
+      display: inline-block;
+      margin-top: 16px;
+      color: var(--google-blue);
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .password-reset-link:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--google-blue);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #3367d6;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(66, 133, 244, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid var(--glass-border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .dashboard-card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .dashboard-card.primary::before {
+      background: var(--google-blue);
+    }
+
+    .dashboard-card.success::before {
+      background: var(--google-green);
+    }
+
+    .dashboard-card.info::before {
+      background: var(--google-yellow);
+    }
+
+    .dashboard-card.warning::before {
+      background: var(--google-red);
+    }
+
+    .dashboard-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .dashboard-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dashboard-icon {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 24px;
+      opacity: 0.5;
+    }
+
+    /* Main Layout: Sidebar + Content */
+    .main-layout {
+      display: flex;
+      gap: 20px;
+      min-height: calc(100vh - 40px);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 20px;
+      height: fit-content;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--glass-border);
+      border-radius: 3px;
+    }
+
+    .sidebar .card {
+      margin-bottom: 16px;
+    }
+
+    .sidebar-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--google-blue);
+      margin: 0 0 16px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-title::before {
+      content: '☰';
+      font-size: 16px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .sidebar-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .sidebar-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* Category Filter Buttons */
+    .category-filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .category-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .category-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .category-btn.active {
+      background: rgba(66, 133, 244, 0.15);
+      border-color: var(--google-blue);
+      color: #fff;
+    }
+
+    .category-btn .icon {
+      font-size: 16px;
+      width: 24px;
+      text-align: center;
+    }
+
+    .category-btn .badge {
+      margin-left: auto;
+      font-size: 11px;
+      padding: 3px 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      border: none;
+      color: var(--text-secondary);
+    }
+
+    .category-btn.active .badge {
+      background: var(--google-blue);
+      color: #fff;
+    }
+
+    /* Mobile Toggle Button */
+    .sidebar-mobile-toggle {
+      display: none;
+      width: 100%;
+      padding: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 16px;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .sidebar-mobile-toggle::after {
+      content: '▼';
+      font-size: 12px;
+      transition: transform 0.2s;
+    }
+
+    .sidebar-mobile-toggle.open::after {
+      transform: rotate(180deg);
+    }
+
+    /* Search */
+    .search-bar-container {
+      margin-bottom: 20px;
+    }
+
+    .search-bar-container input {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .search-bar-container input:focus {
+      outline: none;
+      border-color: var(--google-blue);
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+    }
+
+    .search-bar-container input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Checkbox Filters */
+    .checkbox-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .checkbox-filter-row .checkbox-filter-item {
+      flex: 0 0 auto;
+      min-width: fit-content;
+      max-width: 200px;
+    }
+
+    .checkbox-filter-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-secondary);
+      transition: all 0.3s;
+    }
+
+    .checkbox-filter-item:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .checkbox-filter-item input[type="checkbox"] {
+      accent-color: var(--google-blue);
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* View All Button */
+    .view-all-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 14px;
+      background: var(--gradient-1);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .view-all-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(66, 133, 244, 0.3);
+    }
+
+    .view-all-btn.hidden {
+      display: none;
+    }
+
+    /* Content Area */
+    .content-area {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 0 4px;
+    }
+
+    .results-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      margin: 0;
+    }
+
+    .results-count {
+      font-size: 14px;
+      color: var(--text-secondary);
+      background: var(--card-bg);
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+    }
+
+    /* User Grid */
+    .user-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .user-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid var(--glass-border);
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .user-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(66, 133, 244, 0.3);
+      box-shadow: 0 16px 40px rgba(66, 133, 244, 0.15);
+    }
+
+    .user-card-main {
+      display: grid;
+      grid-template-columns: minmax(280px, 320px) 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .user-card-left {
+      background: linear-gradient(165deg, rgba(66, 133, 244, 0.1), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(66, 133, 244, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .user-card-right {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .user-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .user-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 6px 0;
+      line-height: 1.2;
+    }
+
+    .user-role {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(66, 133, 244, 0.3);
+      background: rgba(66, 133, 244, 0.1);
+      color: #8ab4f8;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .user-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      background: rgba(66, 133, 244, 0.1);
+      border: 1px solid rgba(66, 133, 244, 0.25);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #8ab4f8;
+    }
+
+    .badge-green {
+      background: rgba(52, 168, 83, 0.1);
+      border-color: rgba(52, 168, 83, 0.3);
+      color: #81c995;
+    }
+
+    .badge-blue {
+      background: rgba(251, 188, 5, 0.1);
+      border-color: rgba(251, 188, 5, 0.3);
+      color: #fde293;
+    }
+
+    .badge-purple {
+      background: rgba(234, 67, 53, 0.1);
+      border-color: rgba(234, 67, 53, 0.3);
+      color: #f28b82;
+    }
+
+    .user-info {
+      margin: 0;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      margin-right: 10px;
+      color: var(--google-blue);
+      font-size: 14px;
+    }
+
+    .section-title {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(66, 133, 244, 0.1);
+      border: 1px solid rgba(66, 133, 244, 0.2);
+      color: #8ab4f8;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin: 0 0 12px 0;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 16px 0;
+    }
+
+    .tech-tag {
+      border-radius: 999px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .tech-tag:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .user-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 0;
+      padding-top: 16px;
+      border-top: 1px dashed var(--glass-border);
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(66, 133, 244, 0.3);
+      background: rgba(66, 133, 244, 0.08);
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .action-btn:hover {
+      background: rgba(66, 133, 244, 0.2);
+      border-color: var(--google-blue);
+      transform: translateY(-1px);
+    }
+
+    /* Empty & Loading States */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-secondary);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--glass-border);
+      border-top-color: var(--google-blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(20px);
+    }
+
+    .modal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      color: #fff;
+    }
+
+    .modal-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0 0 20px 0;
+      line-height: 1.6;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 20px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--google-blue);
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+    }
+
+    .modal-input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card, .user-card, .dashboard-card {
+      animation: fadeInUp 0.5s ease backwards;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 1024px) {
+      .main-layout {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        position: static;
+        max-height: none;
+      }
+      
+      .sidebar-mobile-toggle {
+        display: flex !important;
+      }
+      
+      .sidebar-content {
+        display: none;
+      }
+      
+      .sidebar-content.open {
+        display: block;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .user-card-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container1 {
+        padding: 15px;
+      }
+
+      .top-logo img {
+        width: 220px;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 10px 0 20px;
+      }
+
+      .title-group h1 {
+        font-size: 18px;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .dashboard-card {
+        padding: 16px;
+      }
+
+      .dashboard-value {
+        font-size: 28px;
+      }
+
+      .user-card {
+        padding: 18px;
+      }
+
+      .user-card-left,
+      .user-card-right {
+        padding: 16px;
+      }
+
+      .user-name {
+        font-size: 18px;
+      }
+
+      .user-actions {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        justify-content: center;
+      }
+
+      .hero-top1 {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .modal-content {
+        padding: 24px;
+      }
+
+      .modal-actions {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .title-group h1 {
+        font-size: 16px;
+      }
+
+      .checkbox-filter-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .checkbox-filter-row .checkbox-filter-item {
+        max-width: 100%;
+      }
+    }
+
+    /* Touch feedback for mobile */
+    @media (hover: none) {
+      .category-btn:active,
+      .action-btn:active,
+      .btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+<link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+<link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <canvas id="code-canvas"></canvas>
+  </div>
+  <div class="grid-overlay"></div>
+
+  <!-- Auth Gate -->
+  <div class="container1" id="authGate">
+    <!-- Top Centered Logo -->
+    <div class="top-logo">
+      <img src="../almanya101.png" alt="almanya101">
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="title-group">
+        <h1>de tr software dashboard</h1>
+      </div>
+    </header>
+
+    <div class="card hero-card1" style="max-width: 480px; margin: 0 auto 24px auto;">
+      <div class="hero-domain1">almanya101.de</div>
+      <h3 style="margin-top: 8px;">Giriş Gerekli</h3>
+      <p style="margin: 10px 0 0 0; color: var(--text-secondary);">Devuser listesini görmek için onaylı hesabınızla giriş yapın.</p>
+    </div>
+
+    <div class="card auth-card">
+      <div class="auth-grid">
+        <input type="email" id="authEmail" placeholder="Email adresiniz" autocomplete="email" />
+        <input type="password" id="authPassword" placeholder="Şifreniz" autocomplete="current-password" />
+      </div>
+
+      <div class="auth-actions">
+        <button class="btn btn-primary" id="emailSignInBtn" type="button">E-posta ile giriş</button>
+      </div>
+
+      <p class="auth-note">Sadece admin onaylı üyeler arama ekranına erişebilir.</p>
+      <p class="auth-status" id="authStatusText"></p>
+      
+      <a href="#" class="password-reset-link" id="forgotPasswordLink">Şifremi unuttum</a>
+    </div>
+  </div>
+
+  <!-- Password Reset Modal -->
+  <div class="modal-overlay hidden" id="passwordResetModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Şifre Sıfırlama</h3>
+      <p class="modal-text">Şifre sıfırlama bağlantısı için e-posta adresinizi girin.</p>
+      <input type="email" id="resetEmail" class="modal-input" placeholder="email@ornek.com" />
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="cancelResetBtn">İptal</button>
+        <button class="btn btn-primary" id="sendResetBtn">Gönder</button>
+      </div>
+      <p class="auth-status" id="resetStatusText" style="margin-top: 16px; text-align: center;"></p>
+    </div>
+  </div>
+
+  <!-- Protected Content -->
+  <div class="container1" id="protectedContent" style="display:none;">
+    <!-- Top Centered Logo -->
+    <div class="top-logo">
+      <img src="../almanya101.png" alt="almanya101">
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <a href="../dev.html" class="back-link">← dashboard'a dön</a>
+      <div class="title-group">
+        <h1>de tr software dashboard</h1>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <div class="card hero-card1" style="margin-bottom: 24px;">
+      <div class="hero-top1">
+        <div>
+          <div class="hero-domain1">almanya101.de</div>
+          <h3 style="margin: 8px 0 0 0;">Developer Topluluğu</h3>
+        </div>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-secondary" id="editProfileBtn">Profil Düzenle</button>
+          <button type="button" class="btn btn-secondary" id="logoutBtn">Çıkış</button>
+        </div>
+      </div>
+      <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--glass-border);">
+        <div style="font-size: 13px; color: var(--text-secondary);">Aktif oturum: <strong id="activeAccountEmail" style="color: #fff;">-</strong></div>
+      </div>
+    </div>
+
+    <!-- Dashboard Stats -->
+    <div class="dashboard-grid" id="dashboard">
+      <div class="dashboard-card primary">
+        <div class="dashboard-icon">👥</div>
+        <div class="dashboard-value" id="statTotalUsers">-</div>
+        <div class="dashboard-label">Toplam Üye</div>
+      </div>
+      <div class="dashboard-card success">
+        <div class="dashboard-icon">🔍</div>
+        <div class="dashboard-value" id="statJobSeekers">-</div>
+        <div class="dashboard-label">İş Arayan</div>
+      </div>
+      <div class="dashboard-card info">
+        <div class="dashboard-icon">💼</div>
+        <div class="dashboard-value" id="statFreelancers">-</div>
+        <div class="dashboard-label">Freelance Açık</div>
+      </div>
+      <div class="dashboard-card warning">
+        <div class="dashboard-icon">🎓</div>
+        <div class="dashboard-value" id="statMentors">-</div>
+        <div class="dashboard-label">Mentor</div>
+      </div>
+    </div>
+
+    <!-- Main Layout: Sidebar + Content -->
+    <div class="main-layout">
+      <!-- Sidebar Filters -->
+      <aside class="sidebar">
+        <button class="sidebar-mobile-toggle" id="mobileFilterToggle">
+          Filtreler ☰
+        </button>
+        
+        <div class="sidebar-content" id="sidebarContent">
+          <div class="card">
+            <h4 class="sidebar-title">Kategoriler</h4>
+            
+            <div class="category-filter-group">
+              <button class="category-btn active" data-category="recent" id="catRecent">
+                <span class="icon">🆕</span>
+                <span>Son Katılanlar</span>
+                <span class="badge" id="countRecent">10</span>
+              </button>
+              <button class="category-btn" data-category="jobseeker" id="catJobSeeker">
+                <span class="icon">🔍</span>
+                <span>İş Arayanlar</span>
+                <span class="badge" id="countJobSeekers">0</span>
+              </button>
+              <button class="category-btn" data-category="employer" id="catEmployer">
+                <span class="icon">🏢</span>
+                <span>İş Verenler</span>
+                <span class="badge" id="countEmployers">0</span>
+              </button>
+              <button class="category-btn" data-category="freelance" id="catFreelance">
+                <span class="icon">💻</span>
+                <span>Freelancerlar</span>
+                <span class="badge" id="countFreelancers">0</span>
+              </button>
+              <button class="category-btn" data-category="mentor" id="catMentor">
+                <span class="icon">🎓</span>
+                <span>Mentorlar</span>
+                <span class="badge" id="countMentors">0</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4 class="sidebar-title">Filtrele</h4>
+            
+            <div class="sidebar-section">
+              <label class="sidebar-label">Anahtar Kelime</label>
+              <div class="search-bar-container" style="margin: 0;">
+                <input type="text" id="keywordSearch" placeholder="Ad, şehir, rol, teknoloji...">
+              </div>
+            </div>
+
+            <div class="sidebar-section">
+              <label class="sidebar-label">Deneyim Seviyesi</label>
+              <div class="checkbox-filter-row" style="flex-direction: column; align-items: stretch;">
+                <label class="checkbox-filter-item">
+                  <input type="checkbox" class="exp-filter-checkbox" value="0-1">
+                  <span>0-1 yıl</span>
+                </label>
+                <label class="checkbox-filter-item">
+                  <input type="checkbox" class="exp-filter-checkbox" value="1-3">
+                  <span>1-3 yıl</span>
+                </label>
+                <label class="checkbox-filter-item">
+                  <input type="checkbox" class="exp-filter-checkbox" value="3-5">
+                  <span>3-5 yıl</span>
+                </label>
+                <label class="checkbox-filter-item">
+                  <input type="checkbox" class="exp-filter-checkbox" value="5-10">
+                  <span>5-10 yıl</span>
+                </label>
+                <label class="checkbox-filter-item">
+                  <input type="checkbox" class="exp-filter-checkbox" value="10+">
+                  <span>10+ yıl</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="sidebar-section">
+              <label class="sidebar-label">Hızlı Filtreler</label>
+              <div class="checkbox-filter-row" style="flex-direction: column; align-items: stretch;">
+                <label class="checkbox-filter-item">
+                  <input type="checkbox" id="filterActiveJob">
+                  <span>🟢 Aktif iş arıyor</span>
+                </label>
+                <label class="checkbox-filter-item">
+                  <input type="checkbox" id="filterFreelance">
+                  <span>💼 Freelance açık</span>
+                </label>
+                <label class="checkbox-filter-item">
+                  <input type="checkbox" id="filterMentor">
+                  <span>🎓 Mentorluk verebilir</span>
+                </label>
+              </div>
+            </div>
+
+            <button class="view-all-btn hidden" id="viewAllBtn">
+              Tüm Üyeleri Göster →
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="content-area">
+        <div class="results-header">
+          <h2 class="results-title" id="resultsTitle">Son Katılan Üyeler</h2>
+          <span class="results-count" id="resultsCount">Yükleniyor...</span>
+        </div>
+
+        <div class="loading" id="loadingState">
+          <div class="loading-spinner"></div>
+          <p>Üyeler yükleniyor...</p>
+        </div>
+
+        <div class="user-grid hidden" id="userGrid"></div>
+
+        <div class="empty-state hidden" id="emptyState">
+          <h4>Sonuç bulunamadı</h4>
+          <p>Filtreleri değiştirerek tekrar deneyin.</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script type="module">
+    const USERS_API_URL = '/api/devuser-list';
+    const USER_COUNT_API_URL = '/api/devuser-count';
+
+    // DOM Elements
+    const authGate = document.getElementById('authGate');
+    const protectedContent = document.getElementById('protectedContent');
+    const authStatusText = document.getElementById('authStatusText');
+    const activeAccountEmail = document.getElementById('activeAccountEmail');
+
+    const emailInput = document.getElementById('authEmail');
+    const passwordInput = document.getElementById('authPassword');
+
+    const emailSignInBtn = document.getElementById('emailSignInBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+
+    // Modal elements
+    const passwordResetModal = document.getElementById('passwordResetModal');
+    const resetEmail = document.getElementById('resetEmail');
+    const sendResetBtn = document.getElementById('sendResetBtn');
+    const cancelResetBtn = document.getElementById('cancelResetBtn');
+    const resetStatusText = document.getElementById('resetStatusText');
+
+    // Filter elements
+    const keywordSearchInput = document.getElementById('keywordSearch');
+    const filterActiveJobInput = document.getElementById('filterActiveJob');
+    const filterFreelanceInput = document.getElementById('filterFreelance');
+    const filterMentorInput = document.getElementById('filterMentor');
+    const expFilterInputs = Array.from(document.querySelectorAll('.exp-filter-checkbox'));
+    const categoryBtns = Array.from(document.querySelectorAll('.category-btn'));
+    const viewAllBtn = document.getElementById('viewAllBtn');
+    const mobileFilterToggle = document.getElementById('mobileFilterToggle');
+    const sidebarContent = document.getElementById('sidebarContent');
+    const resultsTitle = document.getElementById('resultsTitle');
+
+    // State
+    let supabaseClient = null;
+    let allUsers = [];
+    let filteredUsers = [];
+    let usersLoaded = false;
+    let activeSessionUserId = '';
+    let currentCategory = 'recent';
+    let showingAll = false;
+    let totalRegisteredCount = 0;
+    const REQUEST_TIMEOUT_MS = 12000;
+
+    // Stats elements
+    const statTotalUsers = document.getElementById('statTotalUsers');
+    const statJobSeekers = document.getElementById('statJobSeekers');
+    const statFreelancers = document.getElementById('statFreelancers');
+    const statMentors = document.getElementById('statMentors');
+    const countJobSeekers = document.getElementById('countJobSeekers');
+    const countEmployers = document.getElementById('countEmployers');
+    const countFreelancers = document.getElementById('countFreelancers');
+    const countMentors = document.getElementById('countMentors');
+
+    function setAuthStatus(message, type = '') {
+      authStatusText.textContent = message;
+      authStatusText.className = `auth-status ${type}`.trim();
+    }
+
+    async function getSupabaseClient() {
+      if (supabaseClient) return supabaseClient;
+
+      const cfg = await window.ALMANYA101.waitForConfig();
+      if (!window.supabase || !cfg.url || !cfg.anonKey) {
+        throw new Error('Supabase config eksik.');
+      }
+
+      supabaseClient = window.supabase.createClient(cfg.url, cfg.anonKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+        },
+      });
+      return supabaseClient;
+    }
+
+    function showProtected(session) {
+      authGate.style.display = 'none';
+      protectedContent.style.display = 'block';
+      activeAccountEmail.textContent = session?.user?.email || '-';
+    }
+
+    function showAuthGate() {
+      usersLoaded = false;
+      allUsers = [];
+      filteredUsers = [];
+      activeSessionUserId = '';
+      activeAccountEmail.textContent = '-';
+      protectedContent.style.display = 'none';
+      authGate.style.display = 'block';
+    }
+
+    async function getSessionToken() {
+      const client = await getSupabaseClient();
+      const { data, error } = await client.auth.getSession();
+      if (error || !data.session) return null;
+      return data.session.access_token;
+    }
+
+    function withTimeout(promise, timeoutMs = REQUEST_TIMEOUT_MS, timeoutMessage = 'İstek zaman aşımına uğradı.') {
+      let timerId = null;
+      const timeoutPromise = new Promise((_, reject) => {
+        timerId = window.setTimeout(() => {
+          reject(new Error(timeoutMessage));
+        }, timeoutMs);
+      });
+      return Promise.race([promise, timeoutPromise]).finally(() => {
+        if (timerId) window.clearTimeout(timerId);
+      });
+    }
+
+    async function fetchUsersWithToken(token) {
+      const response = await withTimeout(
+        fetch(USERS_API_URL, {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        REQUEST_TIMEOUT_MS,
+        'Kullanıcı listesi zaman aşımına uğradı.'
+      );
+
+      if (response.status === 401) {
+        return { ok: false, unauthorized: true, data: null };
+      }
+      if (response.status === 403) {
+        const payload = await response.json().catch(() => ({}));
+        return { ok: false, unauthorized: false, forbidden: true, payload, data: null };
+      }
+
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload.error || `HTTP ${response.status}`);
+      }
+      return { ok: true, unauthorized: false, data: payload.data || [] };
+    }
+
+    async function loadUsers() {
+      const loadingState = document.getElementById('loadingState');
+      const userGrid = document.getElementById('userGrid');
+      
+      usersLoaded = false;
+      loadingState.classList.remove('hidden');
+      userGrid.classList.add('hidden');
+
+      try {
+        const token = await getSessionToken();
+        if (!token) {
+          showAuthGate();
+          return { ok: false, reason: 'auth' };
+        }
+
+        let result = await fetchUsersWithToken(token);
+        if (result.forbidden) {
+          await signOutSilently();
+          setAuthStatus(result.payload?.error || 'Kaydınız admin onayı bekliyor.', 'error');
+          return { ok: false, reason: 'auth' };
+        }
+
+        if (result.unauthorized) {
+          const refreshedToken = await getSessionToken();
+          if (!refreshedToken) {
+            showAuthGate();
+            setAuthStatus('Oturum süresi doldu. Lütfen tekrar giriş yapın.', 'error');
+            return { ok: false, reason: 'auth' };
+          }
+          result = await fetchUsersWithToken(refreshedToken);
+          if (result.forbidden) {
+            await signOutSilently();
+            setAuthStatus(result.payload?.error || 'Kaydınız admin onayı bekliyor.', 'error');
+            return { ok: false, reason: 'auth' };
+          }
+          if (result.unauthorized) {
+            showAuthGate();
+            setAuthStatus('Oturum süresi doldu. Lütfen tekrar giriş yapın.', 'error');
+            return { ok: false, reason: 'auth' };
+          }
+        }
+
+        allUsers = result.data || [];
+        await loadTotalRegisteredCount();
+        updateStats();
+        applyCategoryFilter();
+        usersLoaded = true;
+        return { ok: true, reason: 'ok' };
+      } catch (error) {
+        console.error('User load failed:', error);
+        loadingState.innerHTML = '<p style="color: var(--google-red);">Yükleme hatası. Lütfen sayfayı yenileyin.</p>';
+        return { ok: false, reason: 'error' };
+      }
+    }
+
+    async function loadTotalRegisteredCount() {
+      totalRegisteredCount = allUsers.length;
+      try {
+        const response = await withTimeout(
+          fetch(USER_COUNT_API_URL, { method: 'GET', headers: { Accept: 'application/json' } }),
+          6000,
+          'Üye sayısı alınamadı.'
+        );
+        if (!response.ok) return;
+        const payload = await response.json().catch(() => ({}));
+        const count = Number(payload?.count);
+        if (Number.isFinite(count) && count >= 0) {
+          totalRegisteredCount = count;
+        }
+      } catch (_) {
+        // fallback already set to visible user count
+      }
+    }
+
+    // ===== STATS & COUNTERS =====
+    function updateStats() {
+      const total = Number.isFinite(totalRegisteredCount) && totalRegisteredCount > 0
+        ? totalRegisteredCount
+        : allUsers.length;
+      const jobSeekers = allUsers.filter(u => {
+        const status = normalizeText(u.is_arama_durumu);
+        // 'Evet, aktif' veya 'Evet, pasif' gibi iş arayan durumları
+        return status.includes('evet') && (status.includes('aktif') || status.includes('pasif'));
+      }).length;
+      const freelancers = allUsers.filter(u => {
+        const status = normalizeText(u.freelance_aciklik);
+        return status && !status.startsWith('hay');
+      }).length;
+      const mentors = allUsers.filter(u => u.profesyonel_destek_verebilir).length;
+      const employers = allUsers.filter(u => {
+        const status = normalizeText(u.is_arama_durumu);
+        return status.includes('calisan') || status.includes('employer');
+      }).length;
+
+      statTotalUsers.textContent = total;
+      statJobSeekers.textContent = jobSeekers;
+      statFreelancers.textContent = freelancers;
+      statMentors.textContent = mentors;
+
+      countJobSeekers.textContent = jobSeekers;
+      countEmployers.textContent = employers;
+      countFreelancers.textContent = freelancers;
+      countMentors.textContent = mentors;
+    }
+
+    // ===== CATEGORY FILTERING =====
+    function applyCategoryFilter() {
+      let users = [...allUsers];
+
+      switch (currentCategory) {
+        case 'recent':
+          users.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+          if (!showingAll) users = users.slice(0, 10);
+          resultsTitle.textContent = showingAll ? 'Tüm Üyeler' : 'Son Katılan 10 Üye';
+          viewAllBtn.classList.toggle('hidden', showingAll || users.length < 10);
+          break;
+        case 'jobseeker':
+          users = users.filter(u => {
+            const status = normalizeText(u.is_arama_durumu);
+            return status.includes('evet');
+          });
+          resultsTitle.textContent = 'İş Arayanlar';
+          viewAllBtn.classList.add('hidden');
+          break;
+        case 'employer':
+          users = users.filter(u => {
+            const amac = normalizeText(u.katilma_amaci);
+            return amac.includes('takim') || amac.includes('eleman');
+          });
+          resultsTitle.textContent = 'İş Verenler / Ekipler';
+          viewAllBtn.classList.add('hidden');
+          break;
+        case 'freelance':
+          users = users.filter(u => {
+            const status = normalizeText(u.freelance_aciklik);
+            return status && !status.startsWith('hay');
+          });
+          resultsTitle.textContent = 'Freelancerlar';
+          viewAllBtn.classList.add('hidden');
+          break;
+        case 'mentor':
+          users = users.filter(u => u.profesyonel_destek_verebilir);
+          resultsTitle.textContent = 'Mentorlar';
+          viewAllBtn.classList.add('hidden');
+          break;
+      }
+
+      filteredUsers = users;
+      applyAdditionalFilters();
+    }
+
+    function applyAdditionalFilters() {
+      const keyword = normalizeText(keywordSearchInput.value);
+      const tokens = keyword ? keyword.split(/[\s,]+/).map(t => t.trim()).filter(Boolean) : [];
+      const filterState = readQuickFilterState();
+
+      const finalUsers = filteredUsers.filter(user => {
+        if (!matchesQuickFilters(user, filterState)) return false;
+        if (tokens.length === 0) return true;
+
+        const haystack = normalizeText([
+          user.ad_soyad, user.sehir, user.rol, user.deneyim_seviye, user.is_arama_durumu,
+          ...(user.guclu_alanlar || []), ...(user.programlama_dilleri || []),
+          ...(user.framework_platformlar || []), ...(user.devops_cloud || []),
+          ...(user.ilgi_konular || []), ...(user.ogrenmek_istenen || []),
+          ...(user.kullanilan_ide || []), ...(user.kullanilan_agent || []),
+        ].join(' '));
+
+        return tokens.every(token => haystack.includes(token));
+      });
+
+      displayUsers(finalUsers);
+    }
+
+    function readQuickFilterState() {
+      return {
+        activeJob: Boolean(filterActiveJobInput?.checked),
+        freelance: Boolean(filterFreelanceInput?.checked),
+        mentor: Boolean(filterMentorInput?.checked),
+        selectedExperience: expFilterInputs.filter(i => i.checked).map(i => i.value),
+      };
+    }
+
+    function matchesQuickFilters(user, filterState) {
+      if (filterState.activeJob) {
+        const status = normalizeText(user.is_arama_durumu);
+        // 'Evet, aktif' -> normalize -> 'evet,aktif' (virgül korunur)
+        if (!status.includes('evet') || !status.includes('aktif')) return false;
+      }
+      if (filterState.freelance) {
+        const status = normalizeText(user.freelance_aciklik);
+        if (!status || /^hay/.test(status)) return false;
+      }
+      if (filterState.mentor && !user.profesyonel_destek_verebilir) return false;
+      if (filterState.selectedExperience.length > 0) {
+        const bucket = getExperienceBucket(user.deneyim_seviye);
+        if (!filterState.selectedExperience.includes(bucket)) return false;
+      }
+      return true;
+    }
+
+    // ===== DISPLAY =====
+    function displayUsers(users) {
+      const loadingState = document.getElementById('loadingState');
+      const userGrid = document.getElementById('userGrid');
+      const emptyState = document.getElementById('emptyState');
+      const resultsCount = document.getElementById('resultsCount');
+
+      loadingState.classList.add('hidden');
+      resultsCount.textContent = `${users.length} üye`;
+
+      if (users.length === 0) {
+        userGrid.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      userGrid.classList.remove('hidden');
+      userGrid.innerHTML = users.map(user => createUserCard(user)).join('');
+    }
+
+    function createUserCard(user) {
+      const techStack = [
+        ...(user.programlama_dilleri || []),
+        ...(user.framework_platformlar || []),
+        ...(user.devops_cloud || []),
+      ].slice(0, 8);
+
+      const badges = [];
+      if (user.is_arama_durumu === 'Evet, aktif') {
+        badges.push('<span class="badge badge-green">🟢 Aktif iş arıyor</span>');
+      } else if (user.is_arama_durumu === 'Evet, pasif (firsat olursa)') {
+        badges.push('<span class="badge">🔍 Pasif iş arıyor</span>');
+      }
+      if (user.freelance_aciklik && user.freelance_aciklik !== 'Hayir') {
+        badges.push('<span class="badge badge-blue">💼 Freelance açık</span>');
+      }
+      if (user.profesyonel_destek_verebilir) {
+        badges.push('<span class="badge badge-purple">🎓 Mentorluk verebilir</span>');
+      }
+
+      const safeLinkedinUrl = getSafeLinkedInUrl(user.linkedin_url);
+      const safeWhatsappUrl = user.whatsapp_tel && user.iletisim_izni
+        ? getSafeWhatsappUrl(user.whatsapp_tel)
+        : null;
+
+      const linkedinBtn = safeLinkedinUrl
+        ? `<a href="${escapeHtml(safeLinkedinUrl)}" target="_blank" rel="noopener noreferrer" class="action-btn">LinkedIn</a>`
+        : '';
+      const whatsappBtn = safeWhatsappUrl
+        ? `<a href="${escapeHtml(safeWhatsappUrl)}" target="_blank" rel="noopener noreferrer" class="action-btn">WhatsApp</a>`
+        : '';
+
+      return `
+        <div class="user-card">
+          <div class="user-card-main">
+            <div class="user-card-left">
+              <div class="user-header">
+                <div>
+                  <h3 class="user-name">${escapeHtml(user.ad_soyad)}</h3>
+                  <div class="user-role">${escapeHtml(user.rol || 'Developer')}</div>
+                </div>
+              </div>
+              ${badges.length > 0 ? `<div class="user-badges">${badges.join('')}</div>` : ''}
+              <div class="user-info">
+                ${user.sehir ? `<div class="info-row"><span class="info-icon">📍</span> ${escapeHtml(user.sehir)}</div>` : ''}
+                ${user.deneyim_seviye ? `<div class="info-row"><span class="info-icon">⭐</span> ${escapeHtml(user.deneyim_seviye)} deneyim</div>` : ''}
+                ${user.almanya_yasam ? `<div class="info-row"><span class="info-icon">🇩🇪</span> Almanya'da yaşıyor</div>` : ''}
+              </div>
+            </div>
+            <div class="user-card-right">
+              ${user.guclu_alanlar?.length > 0 ? `
+                <div class="section-title">Güçlü Alanlar</div>
+                <div class="tech-tags">
+                  ${user.guclu_alanlar.slice(0, 5).map(a => `<span class="tech-tag">${escapeHtml(a)}</span>`).join('')}
+                </div>
+              ` : ''}
+              ${techStack.length > 0 ? `
+                <div class="section-title">Teknoloji Stack</div>
+                <div class="tech-tags">
+                  ${techStack.map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}
+                </div>
+              ` : ''}
+              ${user.ilgi_konular?.length > 0 ? `
+                <div class="section-title">İlgi Alanları</div>
+                <div class="tech-tags">
+                  ${user.ilgi_konular.slice(0, 4).map(i => `<span class="tech-tag">${escapeHtml(i)}</span>`).join('')}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+          ${(linkedinBtn || whatsappBtn) ? `
+            <div class="user-actions">
+              ${linkedinBtn}
+              ${whatsappBtn}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // ===== HELPERS =====
+    function normalizeText(value) {
+      return String(value || '').toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9,+\s()-]/g, '').trim();
+    }
+
+    function getExperienceBucket(value) {
+      const text = normalizeText(value);
+      if (!text) return '';
+      if (/\b10\s*\+/.test(text)) return '10+';
+      if (/\b5\s*-\s*10\b/.test(text)) return '5-10';
+      if (/\b3\s*-\s*5\b/.test(text)) return '3-5';
+      if (/\b1\s*-\s*3\b/.test(text)) return '1-3';
+      if (/\b0\s*-\s*1\b/.test(text)) return '0-1';
+      return '';
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = typeof text === 'string' ? text : String(text ?? '');
+      return div.innerHTML;
+    }
+
+    function getSafeLinkedInUrl(rawUrl) {
+      if (typeof rawUrl !== 'string' || !rawUrl.trim()) return null;
+      try {
+        const url = new URL(rawUrl.trim());
+        const hostname = url.hostname.toLowerCase();
+        const isLinkedIn = hostname === 'linkedin.com' || hostname === 'www.linkedin.com' || hostname.endsWith('.linkedin.com');
+        if (!isLinkedIn || (url.protocol !== 'https:' && url.protocol !== 'http:')) return null;
+        return url.toString();
+      } catch { return null; }
+    }
+
+    function getSafeWhatsappUrl(rawPhone) {
+      if (typeof rawPhone !== 'string') return null;
+      const digits = rawPhone.replace(/[^0-9]/g, '');
+      if (digits.length < 8 || digits.length > 15) return null;
+      return `https://wa.me/${digits}`;
+    }
+
+    // ===== AUTH =====
+    function readEmailPassword() {
+      const email = emailInput.value.trim().toLowerCase();
+      const password = passwordInput.value;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('Geçerli bir e-posta girin.');
+      if (password.length < 6) throw new Error('Şifre en az 6 karakter olmalı.');
+      return { email, password };
+    }
+
+    async function signInWithPassword() {
+      try {
+        const { email, password } = readEmailPassword();
+        setAuthStatus('Giriş yapılıyor...');
+        const client = await getSupabaseClient();
+        const { error } = await withTimeout(
+          client.auth.signInWithPassword({ email, password }),
+          REQUEST_TIMEOUT_MS,
+          'Giriş süresi aşıldı.'
+        );
+        if (error) throw error;
+        setAuthStatus('Giriş başarılı.', 'success');
+      } catch (error) {
+        setAuthStatus(error.message || 'Giriş yapılamadı.', 'error');
+      }
+    }
+
+    async function signOut() {
+      const client = await getSupabaseClient();
+      await client.auth.signOut();
+      showAuthGate();
+      location.reload();
+    }
+
+    async function signOutSilently() {
+      try {
+        const client = await getSupabaseClient();
+        await client.auth.signOut();
+      } catch { }
+      showAuthGate();
+    }
+
+    // ===== PASSWORD RESET =====
+    function showPasswordResetModal() {
+      passwordResetModal.classList.remove('hidden');
+      resetEmail.value = emailInput.value || '';
+      resetStatusText.textContent = '';
+      resetStatusText.className = '';
+    }
+
+    function hidePasswordResetModal() {
+      passwordResetModal.classList.add('hidden');
+    }
+
+    async function sendPasswordReset() {
+      const email = resetEmail.value.trim().toLowerCase();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        resetStatusText.textContent = 'Geçerli bir e-posta girin.';
+        resetStatusText.className = 'auth-status error';
+        return;
+      }
+
+      resetStatusText.textContent = 'Gönderiliyor...';
+      resetStatusText.className = '';
+
+      try {
+        const client = await getSupabaseClient();
+        const { error } = await withTimeout(
+          client.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.origin + '/devuser/reset-password.html',
+          }),
+          REQUEST_TIMEOUT_MS,
+          'İstek zaman aşımına uğradı.'
+        );
+        if (error) throw error;
+        resetStatusText.textContent = 'Şifre sıfırlama bağlantısı gönderildi. E-postanızı kontrol edin.';
+        resetStatusText.className = 'auth-status success';
+        setTimeout(hidePasswordResetModal, 2000);
+      } catch (error) {
+        resetStatusText.textContent = error.message || 'Gönderilemedi.';
+        resetStatusText.className = 'auth-status error';
+      }
+    }
+
+    // ===== INIT =====
+    async function initAuth() {
+      try {
+        const client = await getSupabaseClient();
+        client.auth.onAuthStateChange((_event, session) => {
+          if (!session) {
+            showAuthGate();
+            return;
+          }
+          const nextUserId = String(session?.user?.id || '');
+          if (activeSessionUserId && activeSessionUserId !== nextUserId) {
+            usersLoaded = false;
+            allUsers = [];
+          }
+          activeSessionUserId = nextUserId;
+          loadUsers().then(result => {
+            if (result.ok || result.reason === 'error') showProtected(session);
+          });
+        });
+
+        const { data, error } = await client.auth.getSession();
+        if (error || !data.session) {
+          showAuthGate();
+          return;
+        }
+        activeSessionUserId = String(data.session?.user?.id || '');
+        const result = await loadUsers();
+        if (result.ok || result.reason === 'error') showProtected(data.session);
+      } catch (error) {
+        setAuthStatus(error.message || 'Auth başlatılamadı.', 'error');
+        showAuthGate();
+      }
+    }
+
+    // ===== EVENT LISTENERS =====
+    emailSignInBtn.addEventListener('click', signInWithPassword);
+    logoutBtn.addEventListener('click', signOut);
+    editProfileBtn.addEventListener('click', () => window.location.href = 'profile-edit.html');
+    forgotPasswordLink.addEventListener('click', (e) => { e.preventDefault(); showPasswordResetModal(); });
+    cancelResetBtn.addEventListener('click', hidePasswordResetModal);
+    sendResetBtn.addEventListener('click', sendPasswordReset);
+
+    emailInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); signInWithPassword(); }});
+    passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); signInWithPassword(); }});
+    resetEmail.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendPasswordReset(); }});
+
+    // Category buttons
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.category;
+        showingAll = false;
+        applyCategoryFilter();
+      });
+    });
+
+    // View all button
+    viewAllBtn.addEventListener('click', () => {
+      showingAll = true;
+      viewAllBtn.classList.add('hidden');
+      applyCategoryFilter();
+    });
+
+    // Mobile filter toggle
+    mobileFilterToggle.addEventListener('click', () => {
+      sidebarContent.classList.toggle('open');
+      mobileFilterToggle.classList.toggle('open');
+    });
+
+    // Filter inputs
+    keywordSearchInput.addEventListener('input', applyAdditionalFilters);
+    filterActiveJobInput.addEventListener('change', applyAdditionalFilters);
+    filterFreelanceInput.addEventListener('change', applyAdditionalFilters);
+    filterMentorInput.addEventListener('change', applyAdditionalFilters);
+    expFilterInputs.forEach(input => input.addEventListener('change', applyAdditionalFilters));
+
+    // Code rain animation
+    const canvas = document.getElementById('code-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz<>/{}[]();:=-+*/&|%$#@!';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    const drops = [];
+    
+    for (let i = 0; i < columns; i++) {
+      drops[i] = Math.random() * -100;
+    }
+    
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#4285F4';
+      ctx.font = fontSize + 'px monospace';
+      
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+        
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    
+    setInterval(draw, 35);
+
+    // Console easter egg
+    console.log('%c🚀 almanya101 dev dashboard', 'font-size: 24px; font-weight: bold; background: linear-gradient(135deg, #4285F4, #EA4335); -webkit-background-clip: text; -webkit-text-fill-color: transparent;');
+    console.log('%cmerhaba developer! kodlara mı baktın? 👀', 'font-size: 12px; color: #666;');
+
+    // Init
+    initAuth();
+  </script>
+<script>
+  window.goatcounter = window.goatcounter || {};
+  window.goatcounter.path = location.pathname;
+</script>
+<script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+
+</html>
+

@@ -94,6 +94,12 @@ export const TOOL_ITEMS: ToolItem[] = [
     image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop',
   },
   {
+    href: '/vize-secim',
+    label: 'Almanya Vize Seçim Aracı',
+    description: 'Hangi vizeye başvurmanız gerektiğini öğrenin.',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
+  },
+  {
     href: '/tatil/almanya',
     label: '2026 Almanya Tatil Planlayıcı',
     description: '2026 tatilinizi planlayın.',
@@ -109,7 +115,7 @@ export const TOOL_ITEMS: ToolItem[] = [
 
 export const OTHER_LINK_ITEMS: LinkItem[] = [
   {
-    href: '/devuser/du.html',
+    href: '/devuser/dev',
     label: 'Developer Topluluğu',
     description: 'Almanya\'daki Türk developerlar için topluluk.',
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop',

@@ -1,0 +1,12 @@
+name: Auto Deploy (manual only)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+  # Auto commit/push removed to prevent Actions bot commits.

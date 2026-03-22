@@ -1,0 +1,12 @@
+# ============================================
+# Coolify Nixpacks Config - almanya101
+# ============================================
+
+[phases.build]
+cmds = ["npm run build"]
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "npm"]
+
+[start]
+cmd = "npm run start"

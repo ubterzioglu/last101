@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-site-verification" content="JfOdXbFKGKzlacfzwUO4cDPcyzhUZ4vefX4iKcrLSsU">
+  <meta name="geo.region" content="DE">
+  <meta name="geo.placename" content="Germany">
+
+  <title>Soru Sor! - almanya101</title>
+  <meta name="title" content="Soru Sor! - almanya101">
+  <meta name="description" content="Anonim soru sor, cevap ve yorumlari gor. almanya101 toplulugu ile soru-cevap.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="language" content="Turkish">
+  <meta name="author" content="almanya101.de">
+
+  <link rel="canonical" href="https://almanya101.de/sc/sc.html">
+  <link rel="alternate" hreflang="tr" href="https://almanya101.de/sc/sc.html">
+  <link rel="alternate" hreflang="x-default" href="https://almanya101.de/sc/sc.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://almanya101.de/sc/sc.html">
+  <meta property="og:title" content="Soru Sor! - almanya101">
+  <meta property="og:description" content="Anonim soru sor, cevap ve yorumlari gor. almanya101 toplulugu ile soru-cevap.">
+  <meta property="og:image" content="https://almanya101.de/img/ui/logoround.png">
+  <meta property="og:locale" content="tr_TR">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://almanya101.de/sc/sc.html">
+  <meta name="twitter:title" content="Soru Sor! - almanya101">
+  <meta name="twitter:description" content="Anonim soru sor, cevap ve yorumlari gor.">
+  <meta name="twitter:image" content="https://almanya101.de/img/ui/logoround.png">
+
+  <link rel="stylesheet" href="../ubt-shared.css" />
+  <link rel="icon" type="image/png" href="../img/icons/headericon.png" />
+  <link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+  <link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+
+  <style>
+    .cs-card {
+      padding: 16px;
+    }
+
+    .cs-input {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid #333;
+      background: #0b0b0b;
+      color: #fff;
+      padding: 12px;
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .cs-btn {
+      background: #0ea5e9;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .cs-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .cs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .cs-item {
+      background: #0d0d0d;
+      border: 1px solid #222;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .cs-meta {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .cs-answer-input {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #111;
+      color: #fff;
+      padding: 10px;
+      min-height: 70px;
+      resize: vertical;
+      margin-top: 8px;
+    }
+
+    .cs-answers {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cs-answer {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    .cs-status {
+      margin-top: 8px;
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    /* Contact Card (from other pages) */
+    .contact-card {
+      background: #7CBB00 !important;
+      color: white !important;
+      text-align: center;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .28);
+      position: relative;
+    }
+
+    .contact-card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+      color: white;
+    }
+
+    .contact-icon-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 56px);
+      justify-content: center;
+      gap: 20px 24px;
+      margin: 24px 0 12px 0;
+    }
+
+    .contact-icon-wrapper {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
+      transition: transform .2s ease, box-shadow .2s ease;
+      cursor: pointer;
+    }
+
+    .contact-icon-wrapper:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .45);
+    }
+
+    .contact-icon-wrapper img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+      /* Hamburger Menu Styles */
+    .menu-btn {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 25%;
+      min-width: 180px;
+      height: 100vh;
+      background: #111;
+      z-index: 1001;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 15px;
+      overflow-y: auto;
+    }
+
+    .drawer.active {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 15px;
+    }
+
+    .drawer-header h3 {
+      color: #fff;
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .menu-link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s ease;
+    }
+
+    .menu-link:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .menu-icon {
+      font-size: 18px;
+    }
+
+    @media (max-width: 480px) {
+      .drawer {
+        width: 40%;
+      }
+    }
+  </style>
+</head>
+
+<body style="background: #000000;">
+  <div class="container1">
+    <div class="card hero-card1">
+      <div class="hero-top1">
+        <div class="hero-logo-box1">
+          <span class="hero-domain1">almanya101.de</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <a href="../index.html" style="display: flex; align-items: center;">
+            <img src="../img/buttons/z0cliphome.png" class="home-icon" alt="Home" />
+          </a>
+          <button id="menuOpenBtn" class="home-icon" title="Men&#252;"
+            style="display: flex; align-items: center; justify-content: center; background: white; border: none; cursor: pointer; padding: 6px;">
+            <img src="../img/buttons/z0clipmenu.png"
+              style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display: block;" alt="Menu" />
+          </button>
+        </div>
+      </div>
+      <h3>"Soru Sor!"</h3>
+      <p class="title">Anonim soru sor, anonim cevaplar ve yorumlar.</p>
+    </div>
+
+    <div class="card cs-card">
+      <h2 class="section-title">Soru sor</h2>
+      <textarea id="csQuestion" class="cs-input" placeholder="Sorunu buraya yaz..."></textarea>
+      <div style="display:flex; gap:10px; margin-top:10px;">
+        <button id="csAskBtn" class="cs-btn">Gonder</button>
+        <div id="csAskStatus" class="cs-status"></div>
+      </div>
+    </div>
+
+    <div class="card cs-card">
+      <h2 class="section-title">Sorular</h2>
+      <div id="csList" class="cs-list"></div>
+    </div>
+
+    <!-- Contact Card -->
+    <div class="card contact-card">
+      <h2>İletişim</h2>
+
+      <!-- ICON GRID (3 x 3) -->
+      <div class="contact-icon-grid">
+
+        <a href="https://x.com/101Almanya46905" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logox.png" alt="X (Twitter)" />
+          </div>
+        </a>
+
+        <a href="https://www.reddit.com/r/almanya101/" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logoreddit.png" alt="Reddit" />
+          </div>
+        </a>
+
+        <a href="https://facebook.com/almanya101" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logofacebook.png" alt="Facebook" />
+          </div>
+        </a>
+
+        <a href="https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo" target="_blank" rel="noopener"
+          style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logowhatsapp.png" alt="WhatsApp" />
+          </div>
+        </a>
+
+        <a href="http://linkedin.com/company/almanya101/" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logolinkedin.png" alt="LinkedIn" />
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/almanya101de/" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/social/logoinstagram.png" alt="Instagram" />
+          </div>
+        </a>
+
+        <a href="https://www.google.com.tr/maps/place/Berlin/" target="_blank" rel="noopener"
+          style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/icons/logolocation.png" alt="Location" />
+          </div>
+        </a>
+
+        <a href="tel:+491739569429" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/icons/logophone.png" alt="Phone" />
+          </div>
+        </a>
+
+        <a href="mailto:info@almanya101.de" style="text-decoration:none;">
+          <div class="contact-icon-wrapper">
+            <img src="../img/icons/logoemail.png" alt="Email" />
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+        
+      <div style="font-size: 12.5px; line-height: 1.2; margin-top: 2px;">yaln&#305;z de&#287;ilsin! almanya101 seninle!</div>
+      <div style="font-size: 13.5px; line-height: 1.2; margin-top: 4px;">made by UBT with love</div>
+      <div style="font-size: 13.5px; line-height: 1.2; margin-top: 2px;">&copy;almanya101de &#8226; 2026</div>
+    </div>
+  </div>
+
+  <!-- HAMBURGER DRAWER -->
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <div id="hamburgerDrawer" class="drawer">
+    <div class="drawer-header">
+      <h3>almanya101</h3>
+      <button id="menuCloseBtn" class="close-btn">&times;</button>
+    </div>
+    <nav class="menu-links">
+      <a href="../index.html" class="menu-link"><span class="menu-icon">&#127968;</span> Ana Sayfa</a>
+      <a href="../bizkimiz/bizkimiz.html" class="menu-link"><span class="menu-icon">&#129489;&#8205;&#128187;</span> Biz Kimiz?</a>
+      <a href="../maas/maas.html" class="menu-link"><span class="menu-icon">&#128184;</span> Maaş Hesapla</a>
+      <a href="../vatandas/v.html" class="menu-link"><span class="menu-icon">&#128221;</span> Vatandaşlık Testi</a>
+      <a href="../rehber/ua.html" class="menu-link"><span class="menu-icon">&#128104;&#8205;&#9877;&#65039;</span> Uzman Rehberi</a>
+      <a href="../banka/banka.html" class="menu-link"><span class="menu-icon">&#128179;</span> Banka Secimi</a>
+      <a href="../sigorta/sigorta.html" class="menu-link"><span class="menu-icon">&#128737;&#65039;</span> Sigorta Secimi</a>
+      <a href="../paratransfer/pt.html" class="menu-link"><span class="menu-icon">&#128257;</span> Para Transferi</a>
+      <a href="../join/join.html" class="menu-link"><span class="menu-icon">&#129309;</span> Bize Katıl!</a>
+    </nav>
+  </div>
+
+  <script src="./sc.js"></script>
+  <script>
+    (function () {
+      const openBtn = document.getElementById('menuOpenBtn');
+      const closeBtn = document.getElementById('menuCloseBtn');
+      const drawer = document.getElementById('hamburgerDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      if (!openBtn || !closeBtn || !drawer || !overlay) return;
+
+      function toggleMenu() {
+        drawer.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+      }
+
+      openBtn.addEventListener('click', toggleMenu);
+      closeBtn.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', toggleMenu);
+
+      const links = drawer.querySelectorAll('.menu-link');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          if (drawer.classList.contains('active')) toggleMenu();
+        });
+      });
+    })();
+  </script>
+
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <div class="footer-blue-card-wrap">
+      <div class="card footer-blue-card">
+        <div class="card-buttons footer-blue-card__buttons">
+          <a href="../index.html">
+            <img src="../img/buttons/z0cliphome.png" class="btn-icon" alt="Home" />
+          </a>
+          <a href="#top">
+            <img src="../img/buttons/z0clipup.png" class="btn-icon" alt="Up" />
+          </a>
+          <button type="button" class="btn-icon" title="Menu" onclick="document.getElementById('menuOpenBtn') && document.getElementById('menuOpenBtn').click()" style="background: none; border: none; padding: 0; cursor: pointer;">
+            <img src="../img/buttons/z0clipmenu.png" class="btn-icon" alt="Menu" />
+          </button>
+        </div>
+        <div class="footer-slogan">yalnız değilsin! almanya101 seninle!</div>
+        <div class="footer-credit">made by UBT with love</div>
+        <div class="footer-copyright">&copy;almanya101de &bull; 2026</div>
+      </div>
+    </div>
+
+  <script src="/shared-cards.js"></script>
+</body>
+
+</html>
+
+
+

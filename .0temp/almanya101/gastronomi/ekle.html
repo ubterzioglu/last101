@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4BF7B6LJDC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4BF7B6LJDC');
+    </script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle cx='256' cy='256' r='240' fill='%23ff0000'/%3E%3C/svg%3E">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary Meta Tags -->
+  <title>Gastronomi Öner | almanya101</title>
+  <meta name="title" content="Gastronomi Öner | almanya101">
+  <meta name="description" content="Almanya'da beğendiğiniz restoran, market veya kasapları buradan önerin.">
+
+  <!-- Supabase Client -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* =====================================================
+   UZMAN EKLE - LAYOUT (m/m.html style)
+   ===================================================== */
+
+    /* Global reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    a,
+    a:link,
+    a:visited,
+    a:hover,
+    a:active,
+    a:focus {
+      color: inherit !important;
+      text-decoration: none;
+    }
+
+    a:hover {
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    /* Body background + base font */
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* Container */
+    .container1 {
+      max-width: 355px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding-bottom: 100px;
+    }
+
+    /* Card Base */
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .28);
+      position: relative;
+    }
+
+    /* Footer Card Buttons */
+    .card-buttons {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      display: flex;
+      gap: 10px;
+    }
+    .btn-icon {
+      width: 34px;
+      height: 34px;
+      max-width: 34px;
+      max-height: 34px;
+      border-radius: 10px;
+      padding: 5px;
+      background: rgba(255,255,255,0.35);
+      box-shadow: 0 2px 6px rgba(0,0,0,.22);
+      cursor: pointer;
+      object-fit: contain;
+    }
+
+    /* Hero Card - Orange gradient */
+    .hero-card1 {
+      background: linear-gradient(135deg, #F65314, #FFBB00);
+      color: white;
+    }
+
+    .hero-top1 {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .hero-domain1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .hero-logo-box1 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .home-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      padding: 6px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+      transition: .2s;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .home-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* Titles */
+    .section-title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    /* Form Elements */
+    .form-field {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 12px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #111827;
+      font-family: inherit;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: rgba(1, 161, 241, 0.65);
+      box-shadow: 0 0 0 4px rgba(1, 161, 241, 0.18);
+    }
+
+    .form-textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    /* Buttons */
+    .btn {
+      border: 1px solid rgba(0, 0, 0, .10);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 650;
+      font-size: 14px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, .90);
+      color: #111827;
+      transition: transform .12s ease, filter .12s ease;
+    }
+
+    .btn:hover {
+      filter: brightness(1.02);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(1, 161, 241, .18);
+    }
+
+    .btn--primary {
+      background: #7CBB00;
+      color: white;
+      border-color: #7CBB00;
+    }
+
+    .btn--primary:hover {
+      background: #6AA700;
+    }
+
+    .btn--wide {
+      width: 100%;
+    }
+
+    .btn--ghost {
+      background: rgba(255, 255, 255, .82);
+    }
+
+    /* Accordion Info Card */
+    .panelTop {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .panel__title {
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+    }
+
+    .stackBtnsVertical {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .infobox {
+      margin-top: 10px;
+      border: 1px solid rgba(1, 161, 241, 0.4);
+      background: #01A1F1;
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 13px;
+      line-height: 1.35;
+      color: #ffffff;
+    }
+
+    .bullets {
+      margin: 0;
+      padding-left: 18px;
+      color: #ffffff;
+    }
+
+    .bullets li {
+      margin: 6px 0;
+      line-height: 1.35;
+    }
+
+    /* Messages */
+    .success-message {
+      padding: 14px 16px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      color: #065F46;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .error-message {
+      padding: 14px 16px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      color: #991B1B;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    /* =====================================================
+       FORM KARTI - Turuncu Stil
+       ===================================================== */
+    .form-card {
+      background: #F65314 !important;
+      color: white !important;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+    }
+
+    .form-card .section-title {
+      color: white;
+    }
+
+    .form-card p {
+      color: rgba(255,255,255,0.9) !important;
+    }
+
+    .form-card .form-label {
+      color: rgba(255,255,255,0.9);
+    }
+
+    .form-card .form-input,
+    .form-card .form-textarea,
+    .form-card select {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+    }
+
+    .form-card .form-input::placeholder,
+    .form-card .form-textarea::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .form-card .form-input:focus,
+    .form-card .form-textarea:focus,
+    .form-card select:focus {
+      border-color: rgba(255,255,255,0.5);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+    }
+
+    /* Dropdown options - siyah yazı */
+    .form-card select option {
+      background: white;
+      color: #111;
+    }
+
+    .form-card .btn--primary {
+      background: white;
+      color: #F65314;
+      border-color: white;
+    }
+
+    .form-card .btn--primary:hover {
+      background: rgba(255,255,255,0.9);
+    }
+  </style>
+<!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4BF7B6LJDC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-4BF7B6LJDC');
+  </script>
+  <!-- SEO + GEO (auto) -->
+  <link rel="canonical" href="https://almanya101.de/gastronomi/ekle.html">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="author" content="almanya101.de">
+  <meta name="language" content="Turkish">
+  <meta name="geo.region" content="DE">
+  <meta name="geo.placename" content="Germany">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://almanya101.de/gastronomi/ekle.html">
+  <meta property="og:title" content="Gastronomi Öner | almanya101">
+  <meta property="og:description" content="Gastronomi Öner | almanya101 | almanya101">
+  <meta property="og:image" content="https://almanya101.de/img/logoround.png">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="almanya101">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://almanya101.de/gastronomi/ekle.html">
+  <meta name="twitter:title" content="Gastronomi Öner | almanya101">
+  <meta name="twitter:description" content="Gastronomi Öner | almanya101 | almanya101">
+  <meta name="twitter:image" content="https://almanya101.de/img/logoround.png">
+  <link rel="alternate" hreflang="tr" href="https://almanya101.de/gastronomi/ekle.html">
+  <link rel="alternate" hreflang="x-default" href="https://almanya101.de/gastronomi/ekle.html">
+  <script type=\"application/ld+json\">
+  {
+    \"@context\": \"https://schema.org\",
+    \"@type\": \"WebPage\",
+    \"url\": \"https://almanya101.de/gastronomi/ekle.html\",
+    \"name\": \"Gastronomi Öner | almanya101\",
+    \"description\": \"Gastronomi Öner | almanya101 | almanya101\",
+    \"inLanguage\": \"tr\",
+    \"isPartOf\": {
+      \"@type\": \"WebSite\",
+      \"name\": \"almanya101\",
+      \"url\": \"https://almanya101.de\"
+    },
+    \"publisher\": {
+      \"@type\": \"Organization\",
+      \"name\": \"almanya101\",
+      \"url\": \"https://almanya101.de\",
+      \"logo\": {
+        \"@type\": \"ImageObject\",
+        \"url\": \"https://almanya101.de/img/logoround.png\"
+      }
+    }
+  }
+  </script>
+  <style>
+    body { background: #000 !important; }
+  </style>
+  <link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+  <link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+  <meta name="google-site-verification" content="JfOdXbFKGKzlacfzwUO4cDPcyzhUZ4vefX4iKcrLSsU">
+
+  <style>
+    /* card-width-lock */
+    :root {
+      --card-mobile-width: 355px;
+    }
+
+    [class*="card"]:not(.card-buttons):not(.hb-card-buttons):not(.footer-blue-card__buttons):not(.contact-card-buttons):not(.card-title):not(.card-sub):not(.card-head):not(.card-foot) {
+      width: var(--card-mobile-width);
+      min-width: var(--card-mobile-width);
+      max-width: var(--card-mobile-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container1">
+    <!-- HERO CARD -->
+    <div class="card hero-card1">
+      <div class="hero-top1">
+        <div class="hero-logo-box1">
+          <a href="../index.html" class="home-icon">🏠</a>
+        </div>
+        <div class="hero-domain1">almanya101.de</div>
+      </div>
+      <h1 style="margin: 0 0 8px 0; font-size: 24px;">Gastronomi Öner</h1>
+      <p style="margin: 0; font-size: 15px; opacity: 0.9;">
+        Beğendiğiniz restoran, market veya kasapları buradan önerebilirsiniz.
+      </p>
+      <a href="ara.html"
+        style="display: block; margin-top: 14px; padding: 12px 20px; background: #1a1a2e; color: white; border-radius: 12px; font-size: 14px; font-weight: 600; text-decoration: none; text-align: center;">Gastronomi
+        Ara →</a>
+    </div>
+
+    <!-- BILGI KARTI (Açılıp Kapanan) -->
+    <div class="card info-card">
+      <div class="panelTop">
+        <h2 class="panel__title">Bilgi</h2>
+      </div>
+      <div id="infoBody" class="infobox">
+        Admin tarafından <strong>diğer bilgiler de eklenerek</strong> onaylanacaktır. Sizin az bilgi vermeniz
+        yeterli :)
+      </div>
+    </div>
+    <!-- END: Bilgi Kartı -->
+
+    <!-- KAYIT ÖNER FORMU -->
+    <div class="card form-card">
+      <h2 class="section-title">Form</h2>
+      <p style="font-size: 14px; color: #6B7280; margin-bottom: 16px;">
+        Admin tarafından <strong>diğer bilgiler de eklenerek</strong> onaylanacaktır. Sizin az bilgi vermeniz yeterli :)
+      </p>
+
+      <div id="submitMessage"></div>
+
+      <form id="submitForm">
+        <div class="form-field">
+          <label class="form-label">Tür *</label>
+          <select id="submitType" class="form-input" required>
+            <option value="restaurant">🍽️ Restoran</option>
+            <option value="market">🛒 Market</option>
+            <option value="kasap">🥩 Kasap</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">İsim *</label>
+          <input type="text" id="submitName" class="form-input" required placeholder="Örnek Restoran">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Şehir *</label>
+          <input type="text" id="submitCity" class="form-input" required placeholder="Berlin">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Not / Açıklama</label>
+          <textarea id="submitNote" class="form-input form-textarea" placeholder="Ekstra bilgiler..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--wide" id="submitBtn">
+          Gönder
+        </button>
+      </form>
+    </div>
+
+              
+      <div style="font-size: 12.5px; line-height: 1.2; margin-top: 2px;">yaln&#305;z de&#287;ilsin! almanya101 seninle!</div>
+      <div style="font-size: 13.5px; line-height: 1.2; margin-top: 4px;">made by UBT with love</div>
+      <div style="font-size: 13.5px; line-height: 1.2; margin-top: 2px;">&copy;almanya101de &#8226; 2026</div>
+    </div>
+
+  </div>
+</div>
+
+  <!-- FOOTER -->
+    <div style="text-align: center; margin: 24px 0 16px 0; color: #ffffff; font-size: 12px;">
+      © almanya101 · 2026
+    </div>
+  </div>
+
+  <script src="uzman.js?v=5"></script>
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  </div>
+</div>
+
+<div style="font-size: 12.5px; line-height: 1.2; margin-top: 2px;">yaln&#305;z de&#287;ilsin! almanya101 seninle!</div>
+      <div style="font-size: 13.5px; line-height: 1.2; margin-top: 4px;">made by UBT with love</div>
+      <div style="font-size: 13.5px; line-height: 1.2; margin-top: 2px;">&copy;almanya101de &#8226; 2026</div>
+    </div>
+  </div>
+
+  <div class="footer-blue-card-wrap">
+      <div class="card footer-blue-card">
+        <div class="card-buttons footer-blue-card__buttons">
+          <a href="../index.html">
+            <img src="../img/buttons/z0cliphome.png" class="btn-icon" alt="Home" />
+          </a>
+          <a href="#top">
+            <img src="../img/buttons/z0clipup.png" class="btn-icon" alt="Up" />
+          </a>
+          <button type="button" class="btn-icon" title="Menu" onclick="document.getElementById('menuOpenBtn') && document.getElementById('menuOpenBtn').click()" style="background: none; border: none; padding: 0; cursor: pointer;">
+            <img src="../img/buttons/z0clipmenu.png" class="btn-icon" alt="Menu" />
+          </button>
+        </div>
+        <div class="footer-slogan">yalnız değilsin! almanya101 seninle!</div>
+        <div class="footer-credit">made by UBT with love</div>
+        <div class="footer-copyright">&copy;almanya101de &bull; 2026</div>
+      </div>
+    </div>
+
+  <script src="/shared-cards.js"></script>
+</body>
+
+</html>
+
+
+

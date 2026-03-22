@@ -1,0 +1,429 @@
+/* =====================================================
+   YENIDEN TASARLANAN KARTLAR
+   ===================================================== */
+
+/* Container genişliği - Tüm kartlar için ortak */
+.container1 {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Hero Card (ztatiltr style - birebir aynı) */
+/* App Container - Hero ile aynı genişlik */
+.app {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Progress Card (#F65314 - Orange) */
+  .progress-card {
+  background: #F65314 !important;
+  color: white !important;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  width: 100%;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.progress-meta span {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.btn-reset {
+  background: rgba(255,255,255,0.25) !important;
+  color: white !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .15s;
+  font-weight: 600;
+}
+
+.btn-reset:hover {
+  background: rgba(255,255,255,0.4) !important;
+}
+
+.progress {
+  height: 8px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #ffffff;
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 999px;
+}
+
+/* Question Card (#F65314 - Orange) - SABİT YÜKSEKLİK */
+.question-card {
+  background: #F65314 !important;
+  color: white !important;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  width: 100%;
+  min-height: 420px; /* Sabit minimum yükseklik - layout jump önleme */
+  display: flex;
+  flex-direction: column;
+}
+
+.question-card .card-head {
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+
+.question-card h1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: white;
+  line-height: 1.3;
+}
+
+.question-card .muted {
+  color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1; /* Kalan alanı doldur */
+  overflow-y: visible; /* Scroll bar çıkmasın */
+  max-height: none; /* Maksimum yükseklik kaldırıldı */
+}
+
+/* Answer seçenekleri - beyaz arka plan */
+.answer {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  transition: transform .05s ease, border-color .15s ease, background .15s ease;
+  color: white;
+}
+
+.answer:hover {
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.18);
+}
+
+.answer.selected {
+  border-color: #ffffff;
+  background: rgba(255,255,255,0.25);
+  border-width: 2px;
+}
+
+.badge {
+  min-width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  background: rgba(255,255,255,0.15);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.answer.selected .badge {
+  border-color: #ffffff;
+  background: rgba(255,255,255,0.35);
+}
+
+.answer-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 2px 0;
+  color: white;
+}
+
+.answer-desc {
+  margin: 0;
+  color: rgba(255,255,255,0.85);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* En alta it */
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.foot-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-foot .muted {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+
+/* Geri butonu */
+.btn-ghost {
+  background: rgba(255,255,255,0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: .15s;
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.35) !important;
+}
+
+.btn-ghost[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Result Card (banka.html style - MOR ANA KART, TURUNCU SONUÇLAR) */
+.result-card {
+  background: linear-gradient(135deg, #8F03B7, #6B02A3) !important;
+  color: white !important;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  display: none;
+}
+
+.result-card.hidden {
+  display: none;
+}
+
+.result-card.show,
+.result-card:not(.hidden) {
+  display: block;
+}
+
+.result-card .card-head {
+  margin-bottom: 20px;
+}
+
+.result-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: white;
+}
+
+.result-card .muted {
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+}
+
+.result-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.result-box {
+  padding: 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #F65314, #D84315);
+  border: none;
+  color: white;
+}
+
+.result-box .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.result-box .tag .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FFBB00;
+}
+
+.result-box .tag span:last-child {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.result-box .score {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+}
+
+.result-box .chips {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 8px 0;
+}
+
+.result-box .chip {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  width: fit-content;
+}
+
+.result-box h3 {
+  margin: 10px 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+}
+
+.result-box ul {
+  margin: 0 0 0 16px;
+  padding: 0;
+  color: rgba(255,255,255,0.85);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.result-box li {
+  margin: 4px 0;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+  margin: 20px 0;
+}
+
+.result-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.result-actions .btn {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.result-actions .btn-ghost {
+  background: #FFBB00 !important;
+  color: #111 !important;
+  border: none !important;
+}
+
+.result-actions .btn-ghost:hover {
+  background: #ffcc33 !important;
+}
+
+.btn-accent {
+  background: #7CBB00 !important;
+  color: #111 !important;
+  border: none !important;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  transition: .15s;
+}
+
+.btn-accent:hover {
+  background: #8bd300 !important;
+  transform: translateY(-1px);
+}
+
+.tiny {
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.4;
+}
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+  .container1 {
+    padding: 14px;
+    gap: 15px;
+  }
+  .progress-card {
+    padding: 16px;
+  }
+
+  .question-card {
+    padding: 18px;
+    min-height: 380px;
+  }
+
+  .question-card h1 {
+    font-size: 16px;
+  }
+
+  .answers {
+    max-height: none;
+  }
+
+  .answer {
+    padding: 10px 12px;
+  }
+
+  .result-card {
+    padding: 18px;
+  }
+}
+
+/* v3: Sistem tavsiyesi listesi */
+.provider-list{
+  margin: 0 0 0 16px;
+  padding: 0;
+  color: rgba(255,255,255,0.88);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.provider-list li{ margin: 4px 0; }

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Bookmarks · almanya101</title>
+  <meta name="title" content="Bookmarks · almanya101">
+  <meta name="description" content="A curated bookmarks explorer with user submissions. Discover useful links by category, search fast, and submit your own bookmarks." />
+  <meta name="keywords" content="bookmarks, links, curated links, useful links, almanya resources">
+  <meta name="robots" content="index,follow" />
+
+  <link rel="canonical" href="https://almanya101.de/bookmarks/bookmarks.html" />
+  <link rel="icon" type="image/png" href="./img/icons/headericon.png" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://almanya101.de/bookmarks/bookmarks.html">
+  <meta property="og:title" content="Bookmarks · almanya101">
+  <meta property="og:description" content="Curated bookmarks explorer with user submissions. Discover useful links by category.">
+  <meta property="og:image" content="https://almanya101.de/img/ui/logoround.png">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://almanya101.de/bookmarks/bookmarks.html">
+  <meta name="twitter:title" content="Bookmarks · almanya101">
+  <meta name="twitter:description" content="Curated bookmarks explorer with user submissions.">
+  <meta name="twitter:image" content="https://almanya101.de/img/ui/logoround.png">
+  
+  <!-- Performance Optimization -->
+  <link rel="dns-prefetch" href="https://almanya101de.goatcounter.com">
+
+  <link rel="stylesheet" href="/ubt-shared.css" />
+  <link rel="stylesheet" href="/bookmarks/bookmarks.css" />
+<link rel="stylesheet" href="/bookmarks/bookmarks-cards.css" />
+
+
+  <!-- =====================================================
+       STRUCTURED DATA: PERSON (SHARED ID)
+       ===================================================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://almanya101.de/#organization",
+    "name": "almanya101",
+    "url": "https://almanya101.de",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://almanya101.de/img/ui/logoround.png"
+    },
+    "description": "Almanya'daki Türk expatlar ve aileleri için güvenilir, pratik rehber platformu."
+  }
+  </script>
+
+  <!-- =====================================================
+       STRUCTURED DATA: WEBPAGE (BOOKMARKS)
+       ===================================================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://almanya101.de/bookmarks/bookmarks.html#webpage",
+    "url": "https://almanya101.de/bookmarks/bookmarks.html",
+    "name": "Bookmarks · almanya101",
+    "description": "A curated bookmarks explorer with user submissions. Browse categories, search instantly, and submit new bookmarks.",
+    "inLanguage": "tr",
+    "isPartOf": {
+      "@type": "WebSite",
+      "@id": "https://almanya101.de/#website",
+      "url": "https://almanya101.de/",
+      "name": "almanya101"
+    },
+    "about": {
+      "@type": "Organization",
+      "@id": "https://almanya101.de/#organization"
+    }
+  }
+  </script>
+  <!-- END: STRUCTURED DATA -->
+  <link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+  <meta name="google-site-verification" content="JfOdXbFKGKzlacfzwUO4cDPcyzhUZ4vefX4iKcrLSsU">
+  <meta name="geo.region" content="DE">
+  <meta name="geo.placename" content="Germany">
+</head>
+
+<body>
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- Sidebar Avatars -->
+      <div class="sidebar-avatars">
+        <a href="../index.html" aria-label="Go to Home">
+          <img src="../img/brands/logoubt.png" alt="UBT Logo" />
+        </a>
+        <a href="../index.html" aria-label="Go to Home">
+          <img src="../img/ui/picprofile.png" alt="UBT Profile" />
+        </a>
+      </div>
+      <!-- /Sidebar Avatars -->
+<!-- Bookmarks Logo -->
+<div class="bookmarks-logo">
+  <a href="../bookmarks/bookmarks.html" aria-label="Go to Home">
+  <img src="/bookmarks/logo-bookmarks.png" alt="ZBOM Logo" />
+  </a>
+</div>
+      <!-- Brand -->
+      <div class="brand" title="Bookmarks">
+        <div>
+      
+          <!--    <b>ZBOM</b> -->
+
+          <span>Your favorite links, one place.</span>
+        </div>
+      </div>
+      <!-- /Brand -->
+
+      <div class="nav" id="nav"></div>
+
+      <div class="sidebarBottom">
+        <button class="submitBtn" id="openSubmit">Submit</button>
+        <div class="mini">
+          User submissions go to <b>Added by users</b>.<br/>
+          Curated collections are maintained separately.
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="topbar">
+        <button class="hamb" id="hamb" aria-label="Open menu" aria-expanded="false">☰</button>
+        <div class="titleRow">
+          <h1 id="viewTitle">Explore</h1>
+          <span class="pill warn" id="syncPill">Loading…</span>
+        </div>
+
+        <div class="search" title="Search">
+          <span style="opacity:.7">⌕</span>
+          <input id="q" placeholder="Search…" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="grid" id="grid"></div>
+
+      <div class="hint" id="empty" style="display:none;margin-top:14px;opacity:.75">
+        No results. Try another keyword or category.
+      </div>
+    </main>
+  </div>
+<div class="sbOverlay" id="sbOverlay" aria-hidden="true"></div>
+
+  <!-- SUBMIT MODAL -->
+  <div class="modalOverlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Submit bookmark">
+      <div class="modalHead">
+        <b>Submit a bookmark</b>
+        <button class="close" id="closeModal">Close</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="row two">
+          <div>
+            <label>Title</label>
+            <input id="sTitle" placeholder="e.g. PortableApps" />
+          </div>
+          <div>
+            <label>URL</label>
+            <input id="sUrl" placeholder="https://…" />
+          </div>
+        </div>
+
+        <div class="row two">
+          <div>
+            <label>Suggested category</label>
+            <select id="sCat"></select>
+          </div>
+          <div>
+            <label>Optional image URL</label>
+            <input id="sImg" placeholder="https://… (optional)" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Note</label>
+            <textarea id="sNote" placeholder="Why is it useful? Keep it short."></textarea>
+          </div>
+        </div>
+
+        <div class="hint" id="submitMsg" style="margin-top:10px"></div>
+      </div>
+
+      <div class="modalFoot">
+        <button class="btn secondary" id="submitCancel">Cancel</button>
+        <button class="btn" id="submitSend">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPORTANT: curated set lives in bookmarks-data.js -->
+  <script src="/bookmarks/bookmarks-data.js"></script>
+  <script src="/bookmarks/bookmarks.js"></script>
+
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://almanya101de.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <div class="footer-blue-card-wrap">
+      <div class="card footer-blue-card">
+        <div class="card-buttons footer-blue-card__buttons">
+          <a href="../index.html">
+            <img src="../img/buttons/z0cliphome.png" class="btn-icon" alt="Home" />
+          </a>
+          <a href="#top">
+            <img src="../img/buttons/z0clipup.png" class="btn-icon" alt="Up" />
+          </a>
+          <button type="button" class="btn-icon" title="Menu" onclick="document.getElementById('menuOpenBtn') && document.getElementById('menuOpenBtn').click()" style="background: none; border: none; padding: 0; cursor: pointer;">
+            <img src="../img/buttons/z0clipmenu.png" class="btn-icon" alt="Menu" />
+          </button>
+        </div>
+        <div class="footer-slogan">yalnız değilsin! almanya101 seninle!</div>
+        <div class="footer-credit">made by UBT with love</div>
+        <div class="footer-copyright">&copy;almanya101de &bull; 2026</div>
+      </div>
+    </div>
+
+  <script src="/shared-cards.js"></script>
+</body>
+</html>
+
+
+

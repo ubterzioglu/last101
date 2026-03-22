@@ -1,0 +1,7 @@
+{
+  "tool_name": "Read",
+  "tool_input_preview": "{\"file_path\":\"C:\\\\.temp_private\\\\.0000last\\\\.0temp\\\\almanya101\\\\paratransfer\\\\script.js\"}",
+  "error": "File content (13391 tokens) exceeds maximum allowed tokens (10000). Use offset and limit parameters to read specific portions of the file, or search for specific content instead of reading the whole file.",
+  "timestamp": "2026-03-22T09:14:14.291Z",
+  "retry_count": 1
+}
