@@ -111,6 +111,12 @@ export const TOOL_ITEMS: ToolItem[] = [
     description: '2026 tatilinizi planlayın.',
     image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=400&h=300&fit=crop',
   },
+  {
+    href: '/hizmet-rehberi',
+    label: 'Türk Hizmet Rehberi',
+    description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!',
+    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=300&fit=crop',
+  },
 ];
 
 export const OTHER_LINK_ITEMS: LinkItem[] = [
@@ -149,18 +155,6 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Biz kimiz?',
     description: 'almanya101 ekibini tanıyın!',
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop',
-  },
-  {
-    href: '/turk-hizmet-rehberi-ara',
-    label: 'Hizmet Rehberi',
-    description: 'Türkçe destek bulun!',
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=300&fit=crop',
-  },
-  {
-    href: '/turk-hizmet-rehberi-oner',
-    label: 'Hizmet Öner',
-    description: 'Uzman ekleyin!',
-    image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop',
   },
   {
     href: '/iletisim',
