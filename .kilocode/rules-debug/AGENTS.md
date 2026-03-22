@@ -1,26 +1,24 @@
 # Debug Mode Rules
 
-## Supabase Integration (NOW ACTIVE)
+## Non-Obvious Debugging Info
 
-- `lib/supabase/client.ts` - Browser client using `@supabase/ssr`
-- `lib/supabase/server.ts` - Server client with cookie handling
-- `lib/supabase/devuser.ts` - Special client fetching config from `/api/supabase-config/`
+### DevUser Client Quirks
+- `getDevUserClient()` fetches config dynamically from `/api/supabase-config/` instead of using env vars directly
+- Session persistence is DISABLED in devuser client (`persistSession: false`)
 
-## Environment
+### Header/Footer Visibility
+- Header/Footer hide when `body[data-devuser]` attribute is set
+- Admin and devuser pages must set `document.body.setAttribute('data-devuser', 'true')`
 
-- Check `.env.local` for environment variables (not committed to git)
-- Dev server runs on `http://localhost:3000` via `npm run dev`
-- Required: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+### Admin Auth
+- Rate limit: 12 attempts / 15 min, then 30 min block
+- Two modes: simple (`ADMIN_PANEL_PASSWORD`) or DB mode (`admin_api_keys` table with PBKDF2)
 
-## API Routes
+### Build Failures
+- Docker build FAILS on ESLint issues - always run `npm run lint` before deploy
+- Missing `SUPABASE_SERVICE_ROLE_KEY` breaks admin service mode
+- Wrong service key causes "Invalid API key" errors
 
+### API Routes for Debugging
 - `/api/health/` - Health check endpoint
 - `/api/supabase-config/` - Returns Supabase config for client-side
-- `/api/devuser/list/` - Dev user listing (development only)
-- `/api/devuser-count/` - Dev user count (development only)
-
-## DevUser Dashboard
-
-- Uses `DevUserShell` component with CSS from `app/(devuser)/devuser-shell.css`
-- Canvas background via `DevUserCanvas` component
-- Page controller via `DevUserPageController` component
