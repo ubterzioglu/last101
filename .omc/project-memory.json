@@ -190,6 +190,31 @@
       ]
     }
   },
-  "hotPaths": [],
+  "hotPaths": [
+    {
+      "path": "app\\(site)\\maas-hesaplama\\MaasClient.tsx",
+      "accessCount": 18,
+      "lastAccessed": 1774167529839,
+      "type": "file"
+    },
+    {
+      "path": "app\\(site)\\maas-hesaplama\\page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1774167072166,
+      "type": "file"
+    },
+    {
+      "path": "app\\(site)\\stepstone-karsilastirma\\page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1774167438318,
+      "type": "file"
+    },
+    {
+      "path": "app\\(site)\\stepstone-karsilastirma\\StepstoneClient.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1774167475630,
+      "type": "file"
+    }
+  ],
   "userDirectives": []
 }

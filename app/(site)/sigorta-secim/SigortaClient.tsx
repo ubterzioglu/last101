@@ -152,11 +152,12 @@ export default function SigortaClient() {
           <span className="text-gray-400 text-sm">{showInfo ? '▲' : '▼'}</span>
         </button>
         {showInfo && (
-          <div className="px-5 pb-4 text-gray-500 text-sm border-t border-gray-100 pt-3 space-y-1">
-            <p>Bu araç 20 soruyla sigortalarınızı önceliklendirir: Yüksek Öncelikli, Durumuna Bağlı, Opsiyonel.</p>
-            <p>Sonuçlar bilgilendirme amaçlıdır.</p>
-            <p>Sözleşme öncesi kapsam ve şartları kontrol edin.</p>
-            <p>Sağlık sigortası türü, iş durumu, aile durumu gibi faktörler kişisel duruma göre değişebilir.</p>
+          <div className="px-5 pb-4 text-gray-500 text-sm border-t border-gray-100 pt-3">
+            <ul className="list-disc list-inside space-y-1.5">
+              <li>Bu araç 20 soruyla sigortalarınızı önceliklendirir.</li>
+              <li>Sonuçlar bilgilendirme amaçlıdır.</li>
+              <li>Sözleşme öncesi kapsam ve şartları kontrol edin.</li>
+            </ul>
           </div>
         )}
       </div>
