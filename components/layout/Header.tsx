@@ -7,7 +7,7 @@ import { SITE_NAME } from '@/lib/utils/constants';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { cn } from '@/lib/utils/cn';
-import { DRAWER_ITEMS } from '@/constants/navigation';
+import { DRAWER_ITEMS, DRAWER_CATEGORIES } from '@/constants/navigation';
 
 export function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -22,7 +22,7 @@ export function Header() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl font-bold text-white">{SITE_NAME}</span>
+              <img src="/almanya101.png" alt={SITE_NAME} className="h-8 w-auto" />
             </Link>
 
             {/* Menu Button + Home Button */}
@@ -85,25 +85,40 @@ export function Header() {
           {/* Ana Sayfa - En üstte */}
           <Link
             href="/"
-            className="flex items-center px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group border-b border-white/10 mb-2"
+            className="flex items-center px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group border-b border-white/10 mb-3"
             onClick={closeDrawer}
           >
             <span className="font-medium text-sm tracking-wide group-hover:translate-x-1 transition-transform duration-200">
               🏠 Ana Sayfa
             </span>
           </Link>
-          {DRAWER_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group"
-              onClick={closeDrawer}
-            >
-              <span className="font-light text-sm tracking-wide group-hover:translate-x-1 transition-transform duration-200">
-                {item.label}
-              </span>
-            </Link>
-          ))}
+
+          {/* Kategorilere göre gruplandırılmış menü */}
+          {(Object.entries(DRAWER_CATEGORIES) as [keyof typeof DRAWER_CATEGORIES, { label: string; order: number }][])
+            .sort((a, b) => a[1].order - b[1].order)
+            .map(([catKey, cat]) => {
+              const items = DRAWER_ITEMS.filter(i => i.category === catKey);
+              if (items.length === 0) return null;
+              return (
+                <div key={catKey} className="mb-3">
+                  <p className="px-3 py-1 text-xs font-semibold text-white/40 uppercase tracking-widest">
+                    {cat.label}
+                  </p>
+                  {items.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="flex items-center px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group"
+                      onClick={closeDrawer}
+                    >
+                      <span className="font-light text-sm tracking-wide group-hover:translate-x-1 transition-transform duration-200">
+                        {item.label}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              );
+            })}
         </nav>
       </div>
     </>

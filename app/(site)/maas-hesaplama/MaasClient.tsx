@@ -81,17 +81,18 @@ export default function MaasClient() {
   return (
     <div className="space-y-2">
       {/* Info Card */}
+      {/* Başlık */}
+      <div className="bg-white rounded-xl border-2 border-google-blue px-4 py-3">
+        <h1 className="text-2xl font-bold leading-tight">Almanya Maaş Hesaplayıcı — Brüt → Net → Brüt</h1>
+      </div>
+
+      {/* Nasıl Çalışır? */}
       <div
         className="bg-white rounded-xl border-2 border-google-blue overflow-hidden cursor-pointer select-none"
         onClick={() => setShowInfo(!showInfo)}
       >
         <div className="flex items-center justify-between px-4 py-3">
-          <div>
-            <h1 className="text-2xl font-bold leading-tight">Almanya Maaş Hesaplayıcı — Brüt → Net → Brüt</h1>
-            <div className="flex items-center gap-1 mt-0.5 text-google-blue font-medium text-sm">
-              Nasıl Çalışır?
-            </div>
-          </div>
+          <span className="font-semibold text-gray-900">Nasıl Çalışır?</span>
           <span className={cn('text-google-blue text-xl transition-transform duration-200', showInfo && 'rotate-180')}>▾</span>
         </div>
         {showInfo && (

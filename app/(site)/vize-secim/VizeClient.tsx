@@ -4,173 +4,482 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
 
-// --- Types ---
-interface Option {
-  key: string;
-  label: string;
-  next: string; // question ID or 'RESULT:visa_id'
-}
-
-interface Question {
-  id: string;
-  text: string;
-  hint?: string;
-  options: Option[];
-}
-
+interface Option { key: string; label: string; next: string; }
+interface Question { id: string; text: string; hint?: string; options: Option[]; }
 interface VisaResult {
-  id: string;
-  title: string;
-  subtitle: string;
+  id: string; title: string; subtitle: string;
   color: 'blue' | 'green' | 'yellow' | 'orange' | 'red';
-  requirements: string[];
-  steps: string[];
-  note?: string;
+  requirements: string[]; steps: string[]; note?: string;
 }
 
-// --- Questions ---
 const QUESTIONS: Question[] = [
-  {
-    id: 'Q01',
-    text: 'AB, AEA veya İsviçre vatandaşı mısınız?',
-    hint: 'Avrupa Birliği, Avrupa Ekonomik Alanı (Norveç, İzlanda, Lihtenştayn) veya İsviçre',
-    options: [
-      { key: 'yes', label: 'Evet', next: 'RESULT:EU_CITIZEN' },
-      { key: 'no', label: 'Hayır', next: 'Q02' },
-    ],
-  },
   {
     id: 'Q02',
     text: "Almanya'ya gidişinizin temel amacı nedir?",
     options: [
-      { key: 'work', label: '💼  Çalışmak / Kariyer', next: 'Q03' },
-      { key: 'study', label: '🎓  Üniversite okumak', next: 'RESULT:STUDENT' },
-      { key: 'ausbildung', label: '🔧  Meslek eğitimi (Ausbildung)', next: 'RESULT:AUSBILDUNG' },
-      { key: 'family', label: "👨‍👩‍👧  Almanya'daki aileye katılmak", next: 'RESULT:FAMILY' },
-      { key: 'research', label: '🔬  Araştırma / Doktora', next: 'RESULT:RESEARCH' },
-      { key: 'selfemploy', label: '🚀  Serbest meslek / Girişimcilik', next: 'RESULT:SELF_EMPLOY' },
+      { key: 'work',      label: '💼  Çalışmak / Kariyer yapmak',                        next: 'Q03' },
+      { key: 'study',     label: '🎓  Üniversite / Yüksek lisans okumak',                 next: 'Q_STUDY' },
+      { key: 'ausbildung',label: '🔧  Meslek eğitimi (Ausbildung)',                        next: 'Q_AUSB' },
+      { key: 'family',    label: "👨‍👩‍👧  Almanya'daki aile bireylerime katılmak",          next: 'Q_FAM' },
+      { key: 'research',  label: '🔬  Araştırma / Doktora programı',                       next: 'RESULT:RESEARCH' },
+      { key: 'selfemploy',label: '🚀  Serbest meslek / Girişimcilik',                      next: 'Q_SELF' },
+      { key: 'language',  label: '🌍  Almanca dil kursu almak',                            next: 'RESULT:LANGUAGE_VISA' },
+      { key: 'shortstay', label: '✈️  Kısa ziyaret / Turizm / İş görüşmesi (≤90 gün)',    next: 'RESULT:SCHENGEN' },
     ],
   },
+
+  // ── ÇALIŞMA KOLU ──────────────────────────────────────────────────────────
   {
     id: 'Q03',
     text: "Almanya'dan yazılı iş teklifiniz (sözleşmeniz) var mı?",
     options: [
-      { key: 'yes', label: 'Evet, iş sözleşmem var', next: 'Q04' },
-      { key: 'no', label: 'Hayır, iş arıyorum', next: 'Q09' },
+      { key: 'yes', label: '✓  Evet, imzalı iş sözleşmem var',   next: 'Q04' },
+      { key: 'no',  label: '✗  Hayır, henüz iş arıyorum',         next: 'Q09' },
     ],
   },
   {
     id: 'Q04',
-    text: 'Üniversite diplomanız var mı?',
-    hint: 'Lisans, yüksek lisans veya doktora — Almanya ya da AB tarafından tanınmış olması gerekir',
+    text: 'Üniversite diplomanız var mı ve Almanya tarafından tanınıyor mu?',
+    hint: 'Lisans veya üzeri. Tanınırlık için anabin.de kontrol edilebilir.',
     options: [
-      { key: 'yes', label: 'Evet, tanınmış üniversite diplomam var', next: 'Q05' },
-      { key: 'no', label: 'Hayır, üniversite diplomam yok', next: 'Q07' },
+      { key: 'yes',     label: '✓  Evet, tanınmış / tanınabilir diplomain var',         next: 'Q05' },
+      { key: 'process', label: '🔄  Diplomain var ama tanınma süreci devam ediyor',      next: 'RESULT:RECOGNITION_VISA' },
+      { key: 'no',      label: '✗  Hayır, üniversite diplomam yok',                     next: 'Q07' },
     ],
   },
   {
     id: 'Q05',
     text: 'İş teklifindeki yıllık brüt maaş ne kadar?',
-    hint: 'EU Mavi Kart eşiği 2025\'te ~45.300 € (kıtlık mesleklerinde ~41.042 €)',
+    hint: "EU Mavi Kart eşiği 2025'te ≥ 45.300 € (STEM/tıp gibi kıtlık mesleklerinde ≥ 41.042 €)",
     options: [
-      { key: 'high', label: '45.300 € ve üzeri', next: 'RESULT:BLUE_CARD' },
-      { key: 'mid', label: '41.000 – 45.300 € arası', next: 'Q06' },
-      { key: 'low', label: '41.000 € altında', next: 'RESULT:FACHKRAFT_UNI' },
+      { key: 'high', label: '💰  45.300 € ve üzeri',        next: 'RESULT:BLUE_CARD' },
+      { key: 'mid',  label: '📊  41.000 – 45.300 € arası',  next: 'Q06' },
+      { key: 'low',  label: '📉  41.000 € altında',          next: 'Q05B' },
+    ],
+  },
+  {
+    id: 'Q05B',
+    text: 'Diplomanızın resmi Alman tanınma belgesi (KMK / ZAB) var mı?',
+    hint: 'Fachkräftevisa başvurusunda diplomanın tanınmış olması şarttır.',
+    options: [
+      { key: 'yes',     label: '✓  Evet, resmi tanınma belgem var',           next: 'RESULT:FACHKRAFT_UNI' },
+      { key: 'process', label: '🔄  Başvurdum, süreç devam ediyor',            next: 'RESULT:RECOGNITION_VISA' },
+      { key: 'no',      label: '✗  Hayır / Henüz başvurmadım',                next: 'Q07' },
     ],
   },
   {
     id: 'Q06',
-    text: 'Hangi alanda çalışacaksınız?',
-    hint: 'Kıtlık mesleği olan alanlarda EU Mavi Kart için daha düşük maaş eşiği uygulanır',
+    text: 'Çalışacağınız alan hangisi? (41.000 – 45.300 € maaş aralığı için)',
+    hint: 'STEM ve tıp gibi kıtlık mesleklerinde daha düşük eşikle EU Mavi Kart alınabilir.',
     options: [
-      { key: 'stem', label: '💻  STEM (Mühendislik, BT, Matematik, Doğa Bilimleri)', next: 'RESULT:BLUE_CARD' },
-      { key: 'health', label: '⚕️  Tıp / Sağlık / Eczacılık', next: 'RESULT:BLUE_CARD' },
-      { key: 'other', label: '🗂️  Diğer bir alan', next: 'RESULT:FACHKRAFT_UNI' },
+      { key: 'stem',   label: '💻  STEM (Mühendislik, BT, Matematik, Doğa Bilimleri)',  next: 'RESULT:BLUE_CARD' },
+      { key: 'health', label: '⚕️  Tıp / Sağlık / Eczacılık',                           next: 'RESULT:BLUE_CARD' },
+      { key: 'other',  label: '🗂️  Diğer bir alan',                                      next: 'RESULT:FACHKRAFT_UNI' },
     ],
   },
   {
     id: 'Q07',
     text: 'BT / Yazılım alanında mı çalışacaksınız?',
-    hint: "Almanya'da diploma olmadan BT uzmanı vizesiyle çalışmak mümkündür",
+    hint: '3+ yıl BT deneyimiyle diploma şartı aranmaksızın çalışmak mümkündür (§19c AufenthG).',
     options: [
-      { key: 'yes', label: 'Evet, 3+ yıl BT deneyimim var', next: 'RESULT:IT_SPECIALIST' },
-      { key: 'no', label: 'Hayır / 3 yıldan az BT deneyimim var', next: 'Q08' },
+      { key: 'yes', label: '💻  Evet, 3+ yıl aktif BT / yazılım deneyimim var',   next: 'RESULT:IT_SPECIALIST' },
+      { key: 'no',  label: '✗  Hayır / 3 yıldan az deneyimim var',                 next: 'Q08' },
     ],
   },
   {
     id: 'Q08',
-    text: "Almanya'da tanınan mesleki eğitim (Ausbildung / IHK / HWK) sertifikanız var mı?",
+    text: "Almanya'da tanınan mesleki eğitim sertifikanız var mı? (IHK, HWK vb.)",
     options: [
-      { key: 'yes', label: 'Evet, tanınmış mesleki sertifikam var', next: 'RESULT:FACHKRAFT_VOC' },
-      { key: 'no', label: 'Hayır', next: 'RESULT:LIMITED' },
+      { key: 'yes',     label: '✓  Evet, tanınmış mesleki sertifikam var',            next: 'RESULT:FACHKRAFT_VOC' },
+      { key: 'process', label: '🔄  Tanınma başvurusu yaptım, süreci bekliyorum',     next: 'RESULT:RECOGNITION_VISA' },
+      { key: 'no',      label: '✗  Hayır',                                             next: 'RESULT:LIMITED' },
     ],
   },
+
+  // ── İŞ ARAMA KOLU ─────────────────────────────────────────────────────────
   {
     id: 'Q09',
-    text: 'Üniversite diplomanız var mı?',
-    hint: 'Lisans veya üzeri, Almanya ya da AB tarafından tanınmış',
+    text: 'Üniversite diplomanız var mı ve Almanya tarafından tanınıyor mu?',
+    hint: 'Chancenkarte ve iş arama vizesinde diplomanın tanınırlığı belirleyicidir.',
     options: [
-      { key: 'yes', label: 'Evet, tanınmış üniversite diplomam var', next: 'Q10' },
-      { key: 'no', label: 'Hayır', next: 'Q12' },
+      { key: 'yes',     label: '✓  Evet, tanınmış / tanınabilir diplomain var',       next: 'Q10' },
+      { key: 'process', label: '🔄  Diplomain var ama tanınma süreci devam ediyor',   next: 'RESULT:RECOGNITION_VISA' },
+      { key: 'no',      label: '✗  Hayır, üniversite diplomam yok',                   next: 'Q12' },
     ],
   },
   {
     id: 'Q10',
-    text: 'Mesleki çalışma deneyiminiz kaç yıl?',
-    hint: 'Diplomanızla ilgili alanda, son 5 yıl içindeki deneyim',
+    text: 'Diplomanızla ilgili alanda mesleki çalışma deneyiminiz kaç yıl?',
+    hint: 'Son 5 yıl içindeki deneyim esas alınır. Chancenkarte için en az 2 yıl gereklidir.',
     options: [
-      { key: 'twoplus', label: '2 yıl ve üzeri', next: 'Q11' },
-      { key: 'less', label: '2 yıldan az', next: 'RESULT:JOB_SEEKER' },
+      { key: 'twoplus', label: '📅  2 yıl ve üzeri (son 5 yılda)',  next: 'Q11' },
+      { key: 'less',    label: '📅  2 yıldan az',                    next: 'RESULT:JOB_SEEKER' },
     ],
   },
   {
     id: 'Q11',
     text: 'Almanca dil seviyeniz nedir?',
-    hint: "Chancenkarte'da dil puanı önemli bir kriter; A1 bile puan kazandırır",
+    hint: 'Chancenkarte puan sisteminde dil seviyesi en kritik kriterdir. A1 bile 1 puan kazandırır.',
     options: [
-      { key: 'a1plus', label: 'A1 veya üzeri (Almanca biliyorum)', next: 'RESULT:CHANCENKARTE' },
-      { key: 'none', label: 'Almancam yok', next: 'Q11B' },
+      { key: 'b2plus', label: '🇩🇪  B2 veya üzeri (ileri düzey)',       next: 'RESULT:CHANCENKARTE' },
+      { key: 'a1b1',   label: '🇩🇪  A1 – B1 arası (temel / orta)',       next: 'RESULT:CHANCENKARTE' },
+      { key: 'none',   label: '❌  Almancam yok',                        next: 'Q11B' },
     ],
   },
   {
     id: 'Q11B',
     text: 'Aşağıdakilerden en az biri sizin için geçerli mi?',
-    hint: "Chancenkarte'da Almanca dışı kriterler de puan kazandırabilir",
+    hint: 'Chancenkarte minimum 6 puan gerektirir. Almanca dışındaki kriterler de puan kazandırır.',
     options: [
-      { key: 'yes', label: '✓  İngilizce B2+ seviyesinde biliyorum', next: 'RESULT:CHANCENKARTE' },
-      { key: 'prev', label: "✓  Daha önce Almanya'da çalıştım veya okudum", next: 'RESULT:CHANCENKARTE' },
-      { key: 'no', label: 'Hayır, hiçbiri geçerli değil', next: 'RESULT:JOB_SEEKER' },
+      { key: 'english', label: '🇬🇧  İngilizce B2+ seviyesinde biliyorum',            next: 'RESULT:CHANCENKARTE' },
+      { key: 'prev',    label: "🏛️  Daha önce Almanya'da çalıştım veya okudum",       next: 'RESULT:CHANCENKARTE' },
+      { key: 'young',   label: '🎂  35 yaşın altındayım',                              next: 'RESULT:CHANCENKARTE' },
+      { key: 'no',      label: '✗  Hiçbiri benim için geçerli değil',                 next: 'RESULT:JOB_SEEKER' },
     ],
   },
   {
     id: 'Q12',
-    text: "Almanya'da tanınan mesleki eğitim sertifikanız var mı?",
+    text: "Almanya'da tanınan mesleki eğitim sertifikanız var mı? (IHK, HWK vb.)",
     options: [
-      { key: 'yes', label: 'Evet, tanınmış mesleki sertifikam var', next: 'RESULT:JOB_SEEKER_VOC' },
-      { key: 'no', label: 'Hayır', next: 'RESULT:LIMITED' },
+      { key: 'yes',     label: '✓  Evet, tanınmış mesleki sertifikam var',            next: 'RESULT:JOB_SEEKER_VOC' },
+      { key: 'process', label: '🔄  Tanınma başvurusu yaptım, bekliyorum',            next: 'RESULT:RECOGNITION_VISA' },
+      { key: 'no',      label: '✗  Hayır',                                             next: 'Q12B' },
+    ],
+  },
+  {
+    id: 'Q12B',
+    text: 'BT / Yazılım alanında 3+ yıl deneyiminiz var mı?',
+    hint: 'BT uzmanı vizesi iş teklifi gerektirse de, kariyer planınız için bilinmesi önemlidir.',
+    options: [
+      { key: 'yes', label: '💻  Evet, 3+ yıl BT / yazılım deneyimim var',  next: 'RESULT:LIMITED_IT' },
+      { key: 'no',  label: '✗  Hayır',                                       next: 'RESULT:LIMITED' },
+    ],
+  },
+
+  // ── ÜNİVERSİTE KOLU ───────────────────────────────────────────────────────
+  {
+    id: 'Q_STUDY',
+    text: 'Ne tür bir eğitim almak istiyorsunuz?',
+    options: [
+      { key: 'bachelor',       label: '🎓  Lisans / Yüksek lisans (kabul mektubum var)',          next: 'RESULT:STUDENT' },
+      { key: 'bachelor_apply', label: '📋  Lisans / Yüksek lisans (henüz başvurmadım)',           next: 'RESULT:STUDENT_APPLY' },
+      { key: 'phd',            label: '🔬  Doktora / Araştırma programı',                         next: 'RESULT:RESEARCH' },
+      { key: 'studienkolleg',  label: '📚  Studienkolleg (lise denkliği / hazırlık yılı)',        next: 'RESULT:STUDIENKOLLEG' },
+    ],
+  },
+
+  // ── AUSBİLDUNG KOLU ───────────────────────────────────────────────────────
+  {
+    id: 'Q_AUSB',
+    text: "Almanya'dan imzalı Ausbildung sözleşmeniz (Ausbildungsvertrag) var mı?",
+    hint: 'Sözleşme, vize başvurusunun temelidir.',
+    options: [
+      { key: 'yes', label: '✓  Evet, imzalı sözleşmem var',     next: 'Q_AUSB2' },
+      { key: 'no',  label: '✗  Hayır, henüz arıyorum',           next: 'RESULT:AUSBILDUNG' },
+    ],
+  },
+  {
+    id: 'Q_AUSB2',
+    text: 'Almanca dil seviyeniz nedir?',
+    hint: 'Çoğu Ausbildung programı en az B1 Almanca gerektirmektedir.',
+    options: [
+      { key: 'b1plus', label: '✓  B1 veya üzeri',                  next: 'RESULT:AUSBILDUNG' },
+      { key: 'a2',     label: '⚠️  A1 – A2 arası (temel düzey)',    next: 'RESULT:AUSBILDUNG_PREP' },
+      { key: 'none',   label: '❌  Almancam yok / sıfır başlangıç', next: 'RESULT:AUSBILDUNG_PREP' },
+    ],
+  },
+
+  // ── AİLE BİRLEŞİMİ KOLU ───────────────────────────────────────────────────
+  {
+    id: 'Q_FAM',
+    text: "Almanya'da sizden önce giden, yanına katılmak istediğiniz kişi kim?",
+    options: [
+      { key: 'spouse',  label: '💑  Eş veya kayıtlı partner (Lebenspartner)',              next: 'Q_FAM2' },
+      { key: 'parent',  label: "👨‍👩‍👦  Anne / babam (onların yanına gidiyorum, 18+ yetişkin)", next: 'RESULT:FAMILY_ADULT' },
+      { key: 'child',   label: '👶  Ebeveynimin yanına (reşit değilim, 18 altı)',           next: 'RESULT:FAMILY' },
+    ],
+  },
+  {
+    id: 'Q_FAM2',
+    text: "Almanya'daki eşinizin oturma izni türü nedir?",
+    hint: 'İzin türü, aile birleşimi şartlarını ve A1 zorunluluğunu doğrudan etkiler.',
+    options: [
+      { key: 'bluecard', label: '🔵  EU Mavi Kart',                                      next: 'RESULT:FAMILY_BLUE' },
+      { key: 'nied',     label: '🏠  Niederlassungserlaubnis (kalıcı oturma izni)',        next: 'RESULT:FAMILY_BLUE' },
+      { key: 'work',     label: '💼  Çalışma vizesi / geçici oturma izni',                next: 'Q_FAM3' },
+      { key: 'refugee',  label: '🛡️  Mülteci / İnsani koruma statüsü',                    next: 'RESULT:FAMILY_REFUGEE' },
+    ],
+  },
+  {
+    id: 'Q_FAM3',
+    text: 'A1 Almanca sertifikanız var mı?',
+    hint: 'Çalışma vizesi sahibinin eşi için genellikle A1 dil seviyesi zorunludur.',
+    options: [
+      { key: 'yes', label: '✓  Evet, A1 veya üzeri Almanca sertifikam var',  next: 'RESULT:FAMILY' },
+      { key: 'no',  label: '✗  Hayır, henüz Almancam yok',                    next: 'RESULT:FAMILY_NO_GERMAN' },
+    ],
+  },
+
+  // ── SERBEST MESLEK KOLU ───────────────────────────────────────────────────
+  {
+    id: 'Q_SELF',
+    text: 'Serbest meslek türünüz nedir?',
+    hint: '"Freie Berufe" kapsamındaki freelancerlar ile şirket kuranlar için farklı süreçler geçerlidir.',
+    options: [
+      { key: 'freelancer', label: '💻  Freelancer — BT, tasarım, danışmanlık, içerik üretimi',  next: 'RESULT:FREELANCER' },
+      { key: 'artist',     label: '🎨  Sanat / Kültür / Medya alanında serbest çalışma',         next: 'RESULT:FREELANCER' },
+      { key: 'startup',    label: '🏢  Şirket kurmak / Girişimcilik / E-ticaret',                next: 'RESULT:SELF_EMPLOY' },
     ],
   },
 ];
 
-// --- Visa Results ---
 const RESULTS: VisaResult[] = [
+  // ── YENİ SONUÇLAR ─────────────────────────────────────────────────────────
   {
-    id: 'EU_CITIZEN',
-    title: 'Vize Gerekmez',
-    subtitle: 'AB / AEA / İsviçre — Serbest Dolaşım Hakkı',
+    id: 'SCHENGEN',
+    title: 'Schengen Vizesi',
+    subtitle: 'Kısa Süreli C Vizesi — Turizm / İş Ziyareti / Aile Ziyareti',
     color: 'green',
     requirements: [
-      'AB/AEA/İsviçre pasaportu veya kimlik kartı yeterlidir',
-      "Almanya'ya serbest giriş ve çalışma hakkınız bulunmaktadır",
-      "3 aydan uzun kalışlarda ikamet kaydı (Anmeldung) zorunludur",
+      'Geçerli pasaport (en az 6 ay geçerli, 2 boş sayfa)',
+      'Geri dönüş uçak bileti',
+      'Seyahat sağlık sigortası (minimum 30.000 € teminat)',
+      'Konaklama kanıtı (otel rezervasyonu veya davetiye mektubu)',
+      'Finansal yeterlilik kanıtı (banka hesap özeti)',
+      'Kalış amacına göre ek belgeler (davet mektubu, iş görüşme belgesi vb.)',
     ],
     steps: [
-      "Almanya'ya pasaportunuzla giriş yapın",
-      "İlk 3 ay içinde Einwohnermeldeamt'a Anmeldung yaptırın",
-      'Çalışmak için işvereniniz üzerinden sosyal sigorta kaydını tamamlayın',
+      'Almanya Büyükelçiliği web sitesinden randevu alın',
+      'Başvuru formunu doldurup belgelerinizi hazırlayın',
+      'Vize ücretini ödeyin (80 €)',
+      'Biyometrik fotoğraf ve parmak izi için şahsen başvurun',
+      'Ortalama 2–4 hafta içinde sonuç açıklanır',
     ],
-    note: 'Ayrıca oturma izni (Aufenthaltstitel) almanıza gerek yoktur.',
+    note: 'Schengen vizesiyle 180 günlük periyotta en fazla 90 gün kalabilirsiniz. Bu süre uzatılamaz; aşılırsa ciddi yaptırımlar uygulanır.',
   },
+  {
+    id: 'LANGUAGE_VISA',
+    title: 'Dil Kursu Vizesi',
+    subtitle: 'Almanca Dil Kursu — Ulusal Vize (D Vizesi, 3 aydan uzun)',
+    color: 'green',
+    requirements: [
+      'Almanya\'daki dil okulundan kayıt / kabul belgesi',
+      '3 aydan uzun kurs için ulusal vize (D vizesi) gerekir',
+      'Finansal yeterlilik (aylık 700–1.000 € yaşam gideri)',
+      'Sağlık sigortası',
+      'Konaklama adresi veya yurt rezervasyonu',
+    ],
+    steps: [
+      'Goethe-Institut, telc veya özel bir dil okulu seçin ve kayıt yaptırın',
+      '3 aydan kısa kurslar için Schengen vizesi yeterlidir',
+      '3 ayı geçen kurslar için Almanya Büyükelçiliği\'nden ulusal vize randevusu alın',
+      'Finansal kanıt için banka hesap özeti veya bloke hesap hazırlayın',
+      'Kursu bitirince Ausbildung, üniversite veya Fachkräftevisa süreçlerine geçebilirsiniz',
+    ],
+    note: 'Almanca öğrenmek; Ausbildung, Chancenkarte ve aile birleşimi vizelerinde ciddi avantaj sağlar. Erken başlamak her zaman kazandırır.',
+  },
+  {
+    id: 'RECOGNITION_VISA',
+    title: 'Tanınma Hazırlık Vizesi',
+    subtitle: 'Anerkennungsvisum — Denklik Süreci (§16d AufenthG)',
+    color: 'yellow',
+    requirements: [
+      'Almanya\'da tanınma süreci başlatılmış diploma veya mesleki sertifika',
+      'Tanınma otoritesinden ön inceleme veya süreç belgesi',
+      'Mümkünse işverenin bekleme taahhüdü (Beschäftigungszusage)',
+      'Finansal yeterlilik (banka hesabı)',
+      'Sağlık sigortası',
+    ],
+    steps: [
+      'Diplomanızın durumunu anerkennung-in-deutschland.de üzerinden kontrol edin',
+      'İlgili tanınma otoritesine (ZAB, IHK, HWK veya Landesbehörde) başvurun',
+      'Süreç belgesini veya ön onayı alın',
+      'Almanya Büyükelçiliği\'ne §16d AufenthG kapsamında başvurun',
+      'Almanya\'ya gelerek tanınma sürecini tamamlayın',
+      'Tanınma tamamlanınca Fachkräftevisa veya Blue Card\'a geçiş yapın',
+    ],
+    note: 'Tanınma ortalama 3–6 ay sürebilir. §16d kapsamında bazı sektörlerde tanınma tamamlanmadan pratik eğitimle çalışma imkânı vardır.',
+  },
+  {
+    id: 'FREELANCER',
+    title: 'Serbest Meslek Vizesi (Freiberufler)',
+    subtitle: 'Freelancer / Bağımsız Uzman — §21 Abs. 5 AufenthG',
+    color: 'orange',
+    requirements: [
+      'BT, tasarım, danışmanlık, sanat veya medya alanında faaliyet',
+      'Almanya\'dan veya uluslararası müşteri sözleşmeleri / iş teklifleri',
+      'Mesleki yeterlilik belgesi (diploma veya güçlü portföy)',
+      'Yeterli başlangıç sermayesi (en az 6 aylık yaşam gideri)',
+      'Sağlık sigortası (özel, zorunlu)',
+    ],
+    steps: [
+      'Müşteri sözleşmelerini veya iş tekliflerini toplayın',
+      'Portföy ve mesleki referans mektupları hazırlayın',
+      'Kısa bir iş planı oluşturun (Almanca tercih edilir)',
+      'Almanya Büyükelçiliği\'ne §21 Abs. 5 AufenthG kapsamında başvurun',
+      'Almanya\'ya gelince Finanzamt\'a kayıt olun (Steuernummer alın)',
+      'Gerekirse "Freiberufler" statüsünü Finanzamt\'a teyit ettirin',
+    ],
+    note: 'BT geliştiricileri, tasarımcılar ve danışmanlar genellikle "freie Berufe" (serbest meslek) kapsamına girer ve şirket kurmaksızın bağımsız çalışabilir.',
+  },
+  {
+    id: 'STUDENT_APPLY',
+    title: 'Önce Üniversiteye Başvurun',
+    subtitle: 'Kabul mektubunuz olmadan öğrenci vizesi başvurusu mümkün değildir',
+    color: 'yellow',
+    requirements: [
+      'Üniversiteden kabul mektubu (Zulassungsbescheid / Einschreibebescheinigung)',
+      'Almanca veya İngilizce dil yeterliliği (programa göre)',
+      'Lise diploması veya Studienkolleg denklik belgesi',
+      'Bloke hesap: ~11.904 €/yıl (2025 itibarıyla aylık 992 €)',
+      'Sağlık sigortası',
+    ],
+    steps: [
+      'uni-assist.de üzerinden veya üniversite sitesinden başvurun',
+      'DAAD burs olanaklarını araştırın (daad.de)',
+      'Almanca gerekiyorsa TestDaF veya DSH sınavına hazırlanın',
+      'Kabul mektubunu aldıktan sonra vize başvurusu yapın',
+      'Deutsche Bank, Fintiba veya Coracle üzerinden bloke hesap açın',
+    ],
+    note: 'Türkiye mezunları için uni-assist.de üzerinden başvuru çoğu üniversitede zorunludur. Başvuru dönemleri: Ocak (kış) ve Mayıs–Temmuz (yaz yarıyılı).',
+  },
+  {
+    id: 'STUDIENKOLLEG',
+    title: 'Studienkolleg Vizesi',
+    subtitle: 'Yükseköğretime Hazırlık — Feststellungsprüfung Sınavı',
+    color: 'green',
+    requirements: [
+      'Studienkolleg\'den kabul mektubu',
+      'Türk lise diploması (Almanya\'da doğrudan kabul görmeyen durumlarda gerekli)',
+      'Almanca dil seviyesi B1–B2 (programa göre)',
+      'Bloke hesap: ~11.904 €/yıl',
+      'Sağlık sigortası',
+    ],
+    steps: [
+      'Studienkolleg\'e uni-assist.de veya doğrudan başvurun',
+      'Almanca dil sertifikası (B1/B2) alın',
+      'Kabul sonrası öğrenci vizesiyle Almanya\'ya gelin',
+      '1 yıllık hazırlığı tamamlayın',
+      'Feststellungsprüfung sınavını geçerek istediğiniz üniversiteye başvurun',
+    ],
+    note: 'Türk lise diplomasının kabul durumu anabin.de üzerinden kontrol edilebilir. Bazı üniversiteler Studienkolleg olmadan da kabul edebilir.',
+  },
+  {
+    id: 'AUSBILDUNG_PREP',
+    title: 'Önce Almanca Öğrenin',
+    subtitle: 'Ausbildung için dil hazırlığı gerekiyor — B1 hedefleyin',
+    color: 'yellow',
+    requirements: [
+      'En az B1 Almanca (çoğu Ausbildung programı için zorunlu)',
+      'Bazı programlar A2 ile başlasa da B1 hedeflenmeli',
+      'Almanya\'daki Ausbildung firmasından imzalı sözleşme',
+    ],
+    steps: [
+      'Goethe-Institut, telc veya çevrimiçi (italki, Duolingo) ile Almanca öğrenmeye başlayın',
+      'B1 sertifikası alın (Goethe-Zertifikat B1 veya telc Deutsch B1)',
+      'make-it-in-germany.com üzerinden Ausbildung fırsatlarını araştırın',
+      'Başvuruları gönderin ve Ausbildungsvertrag imzalayın',
+      'Sözleşmeyle birlikte §16a AufenthG kapsamında vize başvurusu yapın',
+    ],
+    note: 'Yoğun Almanca kurslarıyla B1 seviyesine 6–12 ayda ulaşmak mümkündür. Ausbildung süresince aylık 800–1.000 € eğitim maaşı alırsınız.',
+  },
+  {
+    id: 'FAMILY_BLUE',
+    title: 'Mavi Kart / Kalıcı İzin Sahibine Aile Birleşimi',
+    subtitle: 'Familiennachzug — EU Mavi Kart veya Niederlassungserlaubnis',
+    color: 'green',
+    requirements: [
+      'Eşin geçerli EU Mavi Kart veya Niederlassungserlaubnis belgesi',
+      'Apostilli ve Almancaya tercüme edilmiş evlilik cüzdanı',
+      'Yeterli yaşam alanı ve gelir (sponsor)',
+      'Sağlık sigortası',
+      'A1 Almanca — Mavi Kart sahipleri için genellikle MUAF tutulur',
+    ],
+    steps: [
+      'Eşin Mavi Kart / NE fotokopisi alın',
+      'Evlilik cüzdanını apostille onaylatın',
+      'Türkçe belgeleri yeminli tercümana onaylattırın',
+      'Almanya Büyükelçiliği\'nden randevu alarak aile birleşimi vizesi başvurusu yapın',
+    ],
+    note: 'Mavi Kart sahiplerinin eşleri A1 dil şartından muaf olabilir ve çalışma izni almaksızın Almanya\'ya gelebilir. Bu diğer vize türlerine göre önemli bir avantajdır.',
+  },
+  {
+    id: 'FAMILY_ADULT',
+    title: 'Yetişkin Çocuk / Ebeveyn Birleşimi',
+    subtitle: 'Familiennachzug §36 AufenthG — İstisnai Durumlar',
+    color: 'orange',
+    requirements: [
+      'Almanya\'daki aile üyesinin geçerli oturma izni',
+      'Ciddi insani veya sağlık gerekçesi (istisnai hardship)',
+      'Aile bağını kanıtlayan belgeler (apostilli)',
+      'Yeterli yaşam alanı ve gelir (sponsor)',
+    ],
+    steps: [
+      'Almanya\'daki aile üyesinin oturma izni türünü ve süresi teyit edin',
+      'İnsani gerekçelerinizi belgeleyin (sağlık raporu, bağımlılık durumu vb.)',
+      'Bir göçmenlik avukatıyla çalışmanız şiddetle önerilir',
+      'Almanya Büyükelçiliği\'ne randevuyla başvurun',
+    ],
+    note: '18 yaşın üzerindeki çocukların veya ebeveynlerin aile birleşimi §36 AufenthG kapsamında çok kısıtlıdır; genellikle yalnızca ciddi insani durumlarda onaylanır.',
+  },
+  {
+    id: 'FAMILY_REFUGEE',
+    title: 'Mülteci Statüsüne Aile Birleşimi',
+    subtitle: 'Familiennachzug — Mülteci / Koruma Statüsü Sahibine',
+    color: 'orange',
+    requirements: [
+      'Almanya\'da tanınan mültecilik (Flüchtlingsstatus) veya sübsidier koruma statüsü',
+      'Aile bağını kanıtlayan belgeler (evlilik / doğum — apostilli)',
+      'Tanınma kararından itibaren 3 aylık süreyi kaçırmamak (daha kolay süreç için)',
+    ],
+    steps: [
+      'Eş / çocuğun Almanya\'daki statüsünü ve tanınma tarihini öğrenin',
+      '3 aylık süre geçtiyse daha uzun ve zor bir süreç beklediğinizi bilin',
+      'IOM (Uluslararası Göç Örgütü) veya bir göçmenlik avukatına danışın',
+      'Almanya Büyükelçiliği\'nden randevu alarak başvurun',
+    ],
+    note: 'Sübsidier koruma statüsündeki kişilere aile birleşimi daha kısıtlıdır. Mülteci statüsündekiler için süreç daha erişilebilirdir. Mutlaka uzman desteği alın.',
+  },
+  {
+    id: 'FAMILY_NO_GERMAN',
+    title: 'Önce A1 Almanca Alın',
+    subtitle: 'Aile Birleşimi Vizesi İçin A1 Dil Şartı Karşılanmalıdır',
+    color: 'yellow',
+    requirements: [
+      'A1 Almanca sertifikası (Goethe veya telc)',
+      'Çalışma vizesi sahibi eşin davet ve sponsorluk belgesi',
+      'Yeterli yaşam alanı ve gelir',
+      'Apostilli evlilik cüzdanı',
+    ],
+    steps: [
+      'Türkiye\'deki Goethe-Institut, telc veya İFSAK\'ta A1 kursuna yazılın',
+      'A1 sınavını geçerek sertifikayı alın (2–4 ay)',
+      'Eşinizden davet mektubu ve sponsorluk belgelerini temin edin',
+      'Almanya Büyükelçiliği\'ne aile birleşimi vizesi için başvurun',
+    ],
+    note: 'A1 sınavı zor değildir; temel selamlaşma, sayılar ve basit cümle kalıplarını kapsar. İstisna: eş AB vatandaşıysa veya Blue Card sahibiyse A1 gerekmeyebilir.',
+  },
+  {
+    id: 'LIMITED_IT',
+    title: 'BT Uzmanı Vizesi Potansiyeli Var — Önce İş Teklifi Alın',
+    subtitle: '§19c AufenthG kapsamında iş teklifi zorunludur',
+    color: 'yellow',
+    requirements: [
+      'Almanya\'dan imzalı iş sözleşmesi (şu an eksik)',
+      'En az 3 yıl güncel BT deneyimi (mevcut)',
+      'Deneyim belgeleri (referans mektubu, eski sözleşmeler, LinkedIn)',
+      'Diploma zorunlu değil — deneyim yeterli',
+    ],
+    steps: [
+      'LinkedIn, XING veya StepStone\'da Alman şirketlere aktif başvuru yapın',
+      'GitHub, portföy veya açık kaynak projelerinizi öne çıkarın',
+      'İngilizce güçlüyse Almanca şartı olmayan pozisyonları hedefleyin',
+      'İş teklifi alındığında §19c AufenthG kapsamında vize başvurusu yapın',
+    ],
+    note: 'BT uzmanı vizesinde diploma şartı yoktur; 3+ yıl deneyim yeterlidir. Bir iş teklifi almanız durumunda vize süreci oldukça hızlıdır.',
+  },
+
+  // ── MEVCUT SONUÇLAR ───────────────────────────────────────────────────────
   {
     id: 'BLUE_CARD',
     title: 'EU Mavi Kart',
@@ -183,12 +492,12 @@ const RESULTS: VisaResult[] = [
       'Sağlık sigortası kanıtı',
     ],
     steps: [
-      "Diplomanızın tanınırlığını anabin.de üzerinden kontrol edin",
-      "Gerekiyorsa Statement of Comparability (KMK) belgesi alın",
-      "Almanya Büyükelçiliği'ne ulusal vize başvurusu yapın",
-      "Almanya'ya geldikten sonra Ausländerbehörde'den Mavi Kart alın",
+      'Diplomanızın tanınırlığını anabin.de üzerinden kontrol edin',
+      'Gerekiyorsa Statement of Comparability (KMK) belgesi alın',
+      'Almanya Büyükelçiliği\'ne ulusal vize başvurusu yapın',
+      'Almanya\'ya geldikten sonra Ausländerbehörde\'den Mavi Kart alın',
     ],
-    note: '21 ay B1 Almanca ile kalıcı oturma izni (Niederlassungserlaubnis) alabilirsiniz. Aile bireyleri çalışma izni almadan gelebilir.',
+    note: '21 ay B1 Almancayla kalıcı oturma izni (Niederlassungserlaubnis) alabilirsiniz. Eşiniz çalışma izni almadan gelebilir ve çalışabilir.',
   },
   {
     id: 'FACHKRAFT_UNI',
@@ -197,14 +506,14 @@ const RESULTS: VisaResult[] = [
     color: 'blue',
     requirements: [
       'Tanınmış üniversite diploması (ilgili meslekte)',
-      "Almanya'dan iş sözleşmesi (maaş alt sınırı yoktur)",
-      'Diplomanın tanınması veya denklik belgesi',
+      'Almanya\'dan iş sözleşmesi (maaş alt sınırı yoktur)',
+      'Diplomanın tanınması veya denklik belgesi (KMK / ZAB)',
     ],
     steps: [
-      "Diplomanızı anabin.de ve uni-assist.de üzerinden kontrol edin",
-      "İşvereninizden imzalı iş sözleşmesini temin edin",
-      "Almanya Büyükelçiliği'ne §18b AufenthG kapsamında başvurun",
-      "Almanya'ya geldikten sonra Aufenthaltstitel için kayıt yaptırın",
+      'Diplomanızı anabin.de ve uni-assist.de üzerinden kontrol edin',
+      'İşvereninizden imzalı iş sözleşmesini temin edin',
+      'Almanya Büyükelçiliği\'ne §18b AufenthG kapsamında başvurun',
+      'Almanya\'ya geldikten sonra Aufenthaltstitel için Ausländerbehörde\'ye gidin',
     ],
   },
   {
@@ -213,15 +522,15 @@ const RESULTS: VisaResult[] = [
     subtitle: 'Vasıflı Çalışan Vizesi — Mesleki Eğitim (§18a AufenthG)',
     color: 'blue',
     requirements: [
-      "Almanya'da tanınan mesleki eğitim sertifikası (IHK, HWK vb.)",
-      "Almanya'dan iş sözleşmesi",
+      'Almanya\'da tanınan mesleki eğitim sertifikası (IHK, HWK vb.)',
+      'Almanya\'dan iş sözleşmesi',
       'Sertifikanın tanınması için ZAB veya ilgili kurum onayı',
     ],
     steps: [
-      "Mesleki sertifikanızın tanınırlığını anerkennung-in-deutschland.de'den kontrol edin",
+      'Mesleki sertifikanızın tanınırlığını anerkennung-in-deutschland.de\'den kontrol edin',
       'Tanınma başvurusu için belgeleri hazırlayın',
-      "İşvereninizden iş sözleşmesini temin edin",
-      "Almanya Büyükelçiliği'ne §18a AufenthG kapsamında başvurun",
+      'İşvereninizden iş sözleşmesini temin edin',
+      'Almanya Büyükelçiliği\'ne §18a AufenthG kapsamında başvurun',
     ],
   },
   {
@@ -230,16 +539,16 @@ const RESULTS: VisaResult[] = [
     subtitle: 'IT Specialist Visa — Diploma Şartı Yok (§19c AufenthG)',
     color: 'blue',
     requirements: [
-      "BT alanında Almanya'dan iş sözleşmesi",
+      'BT alanında Almanya\'dan iş sözleşmesi',
       'En az 3 yıl güncel BT deneyimi (yazılım, siber güvenlik, veri vb.)',
       'Diploma zorunlu değil — deneyim belgesi yeterlidir',
     ],
     steps: [
       'İşvereninizle iş sözleşmesi imzalayın',
       'Deneyim belgelerini hazırlayın (referans mektupları, eski sözleşmeler)',
-      "Almanya Büyükelçiliği'ne §19c AufenthG kapsamında başvurun",
+      'Almanya Büyükelçiliği\'ne §19c AufenthG kapsamında başvurun',
     ],
-    note: '2023 yılında Almanya\'nın güncellenen göçmenlik yasasıyla (Fachkräfteeinwanderungsgesetz) kapsamı genişletilmiştir.',
+    note: '2023 Fachkräfteeinwanderungsgesetz güncellemesiyle BT uzmanı vizesinin kapsamı genişletilmiştir. Maaş eşiği yoktur.',
   },
   {
     id: 'CHANCENKARTE',
@@ -249,18 +558,18 @@ const RESULTS: VisaResult[] = [
     requirements: [
       'Tanınmış üniversite diploması VEYA mesleki eğitim sertifikası',
       'En az 2 yıl mesleki deneyim (son 5 yıl içinde)',
-      'Puan sistemi: Almanca dil (A1=1pt, B2=2pt), İngilizce B2 (1pt), Almanya bağlantısı (1pt), yaş <35 (1pt)',
-      'Minimum 6 puan gereklidir',
-      'Yeterli finansal kaynak (aylık ~1.100 €)',
+      'Puan sistemi: Almanca A1=1pt / B2=2pt, İngilizce B2=1pt, Almanya bağlantısı=1pt, <35 yaş=1pt',
+      'Minimum 6 puan (veya yalnızca Almanca B2 ile)',
+      'Yeterli finansal kaynak (aylık ~1.100 €, toplam ~13.200 €)',
     ],
     steps: [
       'Puan hesaplamasını make-it-in-germany.com üzerinden yapın',
       'Diplomanızın tanınırlığını teyit edin',
-      'Finansal kaynak için bloke hesap açın',
-      "Almanya Büyükelçiliği'ne başvurun",
-      "Almanya'da 1 yıl içinde iş bulun ve Fachkräftevisa'ya geçin",
+      'Finansal kaynak için bloke hesap açın (Fintiba, Deutsche Bank vb.)',
+      'Almanya Büyükelçiliği\'ne başvurun',
+      'Almanya\'da 1 yıl içinde iş bularak Fachkräftevisa\'ya geçin',
     ],
-    note: "Kart süresince haftada 20 saat part-time çalışabilirsiniz. Almanya'ya gelmeden iş teklifi almanıza gerek yoktur.",
+    note: 'Kart süresince haftada 20 saat part-time çalışabilirsiniz. Almanya\'ya gelmeden iş teklifi almanıza gerek yoktur.',
   },
   {
     id: 'JOB_SEEKER',
@@ -276,46 +585,46 @@ const RESULTS: VisaResult[] = [
     steps: [
       'Diplomanızın tanınırlığını kontrol edin',
       'Finansal kanıt için bloke hesap açın',
-      "Almanya Büyükelçiliği'ne §20 AufenthG kapsamında başvurun",
-      "6 ay içinde iş bularak Fachkräftevisa veya Blue Card'a geçiş yapın",
+      'Almanya Büyükelçiliği\'ne §20 AufenthG kapsamında başvurun',
+      '6 ay içinde iş bularak Fachkräftevisa veya Blue Card\'a geçiş yapın',
     ],
-    note: '6 aylık süre uzatılamaz; süre dolmadan iş bulunması zorunludur.',
+    note: '6 aylık süre uzatılamaz. Süre dolmadan iş teklifi alınarak çalışma vizesine geçilmesi zorunludur.',
   },
   {
     id: 'JOB_SEEKER_VOC',
     title: 'İş Arama Vizesi',
-    subtitle: 'Job Seeker Visa — Mesleki Eğitim Mezunu',
+    subtitle: 'Job Seeker Visa — Mesleki Eğitim Mezunu (§20 AufenthG)',
     color: 'yellow',
     requirements: [
-      "Almanya'da tanınan mesleki eğitim sertifikası",
+      'Almanya\'da tanınan mesleki eğitim sertifikası',
       'Finansal kaynak kanıtı',
       'Sağlık sigortası',
     ],
     steps: [
       'Mesleki sertifikanızın tanınırlığını anerkennung-in-deutschland.de ile teyit edin',
       'Finansal kanıt hazırlayın',
-      "Almanya Büyükelçiliği'ne §20 AufenthG kapsamında başvurun",
-      "Almanya'da iş bularak Fachkräftevisa'ya (§18a) geçiş yapın",
+      'Almanya Büyükelçiliği\'ne §20 AufenthG kapsamında başvurun',
+      'Almanya\'da iş bularak Fachkräftevisa\'ya (§18a) geçiş yapın',
     ],
   },
   {
     id: 'STUDENT',
     title: 'Öğrenci Vizesi',
-    subtitle: 'Studienvisum — Üniversite Öğrencileri',
+    subtitle: 'Studienvisum — Üniversite Öğrencileri (§16b AufenthG)',
     color: 'green',
     requirements: [
-      "Almanya'daki bir üniversiteye kabul mektubu",
-      'Yeterli finansal kaynak (bloke hesap: ~11.904 €/yıl)',
+      'Almanya\'daki üniversiteden kabul mektubu',
+      'Bloke hesap: ~11.904 €/yıl (aylık 992 €)',
       'Sağlık sigortası',
-      'Almanca veya İngilizce dil yeterlilik belgesi (programa göre)',
+      'Almanca veya İngilizce dil yeterliliği (programa göre)',
     ],
     steps: [
-      "Almanya'da üniversiteye başvurun (uni-assist.de veya doğrudan)",
+      'Almanya\'da üniversiteye başvurun (uni-assist.de veya doğrudan)',
       'Kabul mektubunu alın',
-      'Deutsche Bank veya benzer kurumda bloke hesap açın',
-      "Almanya Büyükelçiliği'ne başvurun",
+      'Deutsche Bank, Fintiba veya Coracle\'da bloke hesap açın',
+      'Almanya Büyükelçiliği\'ne başvurun',
     ],
-    note: 'Mezuniyet sonrası 18 aylık iş arama vizesiyle (§20 AufenthG) Almanya\'da kalabilirsiniz.',
+    note: 'Mezuniyet sonrası 18 aylık iş arama vizesiyle (§20 AufenthG) Almanya\'da kalabilir, iş bulursanız doğrudan Fachkräftevisa\'ya geçiş yapabilirsiniz.',
   },
   {
     id: 'AUSBILDUNG',
@@ -323,17 +632,17 @@ const RESULTS: VisaResult[] = [
     subtitle: 'Berufsausbildungsvisa — Mesleki Eğitim (§16a AufenthG)',
     color: 'green',
     requirements: [
-      "Almanya'dan Ausbildungsvertrag (eğitim sözleşmesi)",
+      'Almanya\'dan Ausbildungsvertrag (eğitim sözleşmesi)',
       'En az B1 Almanca dil seviyesi (çoğu program için)',
       'Sağlık sigortası',
     ],
     steps: [
-      "make-it-in-germany.com üzerinden Ausbildung imkânlarını araştırın",
+      'make-it-in-germany.com üzerinden Ausbildung fırsatlarını araştırın',
       'Firmalardan eğitim sözleşmesi temin edin',
       'Almanca dil sertifikası alın (Goethe veya telc B1)',
-      "Almanya Büyükelçiliği'ne §16a AufenthG kapsamında başvurun",
+      'Almanya Büyükelçiliği\'ne §16a AufenthG kapsamında başvurun',
     ],
-    note: 'Eğitim süresince aylık 800–1.000 € maaş alırsınız. Bitirince doğrudan Fachkräftevisa\'ya geçiş yapılabilir.',
+    note: 'Sözleşmeniz yoksa önce make-it-in-germany.com veya ausbildung.de üzerinden başvurun. Ausbildung süresince aylık 800–1.000 € eğitim maaşı alırsınız. Bitirince doğrudan Fachkräftevisa\'ya geçiş yapılabilir.',
   },
   {
     id: 'FAMILY',
@@ -341,50 +650,51 @@ const RESULTS: VisaResult[] = [
     subtitle: "Familiennachzug — Almanya'daki Aileye Katılım",
     color: 'green',
     requirements: [
-      "Almanya'da geçerli oturma izni olan eş veya ebeveyn",
+      'Almanya\'da geçerli oturma izni olan eş veya ebeveyn',
       'Yeterli yaşam alanı ve gelir (sponsor)',
       'Temel Almanca (A1) dil bilgisi — eş için (bazı istisnalar geçerlidir)',
-      'Evlilik cüzdanı veya doğum belgesi (apostilli)',
+      'Apostilli evlilik cüzdanı veya doğum belgesi',
     ],
     steps: [
-      "Almanya'daki yakınınızın oturma izni türünü teyit edin",
+      'Almanya\'daki yakınınızın oturma izni türünü teyit edin',
       'A1 Almanca sertifikası alın (Goethe veya telc)',
-      'Apostilli belgeleri hazırlayın',
-      "Almanya Büyükelçiliği'ne randevu alarak başvurun",
+      'Apostilli belgeleri hazırlayın ve Almancaya tercüme ettirin',
+      'Almanya Büyükelçiliği\'ne randevu alarak başvurun',
     ],
   },
   {
     id: 'RESEARCH',
     title: 'Araştırma Vizesi',
-    subtitle: 'Forschungsvisum — Araştırmacılar ve Doktora Öğrencileri',
+    subtitle: 'Forschungsvisum — Araştırmacılar ve Doktora Öğrencileri (§18d AufenthG)',
     color: 'green',
     requirements: [
-      "Almanya'daki araştırma kurumuyla hosting anlaşması (Aufnahmevereinbarung)",
+      'Almanya\'daki araştırma kurumuyla hosting anlaşması (Aufnahmevereinbarung)',
       'Üniversite veya doktora diploması',
       'Yeterli finansal destek (burs veya maaş)',
     ],
     steps: [
-      "Almanya'daki üniversite veya araştırma enstitüsüyle iletişime geçin",
+      'Almanya\'daki üniversite veya araştırma enstitüsüyle iletişime geçin',
       'Hosting anlaşmasını imzalayın',
-      "Almanya Büyükelçiliği'ne §18d veya §20 AufenthG kapsamında başvurun",
+      'Almanya Büyükelçiliği\'ne §18d AufenthG kapsamında başvurun',
     ],
+    note: 'DAAD bursu veya Humboldt Vakfı bursları araştırmacılar için güçlü finansman kaynağıdır. Doktora öğrencileri çoğunlukla araştırmacı statüsünde değerlendirilir.',
   },
   {
     id: 'SELF_EMPLOY',
     title: 'Serbest Meslek Vizesi',
-    subtitle: 'Selbstständigkeitsvisa — Girişimci / Freelancer (§21 AufenthG)',
+    subtitle: 'Selbstständigkeitsvisa — Girişimci / Şirket Kurucusu (§21 AufenthG)',
     color: 'orange',
     requirements: [
       'Detaylı iş planı (Businessplan)',
       'Sermaye veya finansal güvence',
-      "Almanya ekonomisine katkı ve ekonomik gereklilik kanıtı",
+      'Almanya ekonomisine katkı ve ekonomik gereklilik kanıtı',
       'Mesleki yeterlilik (ilgili sektöre göre değişir)',
     ],
     steps: [
       'Detaylı iş planı hazırlayın (Almanca tercih edilir)',
       'Finansal kanıt belgelerini toplayın',
-      "Gerekiyorsa Almanya'daki ilgili ticaret odasıyla iletişime geçin",
-      "Almanya Büyükelçiliği'ne §21 AufenthG kapsamında başvurun",
+      'Gerekiyorsa Almanya\'daki ilgili ticaret odasıyla (IHK/HWK) iletişime geçin',
+      'Almanya Büyükelçiliği\'ne §21 AufenthG kapsamında başvurun',
     ],
     note: 'Değerlendirme subjektiftir ve bireyden bireye farklılık gösterir. Profesyonel danışmanlık almanız önerilir.',
   },
@@ -399,15 +709,14 @@ const RESULTS: VisaResult[] = [
     ],
     steps: [
       'Eğitim durumunuzu güçlendirin: diploma veya mesleki sertifika edinin',
-      "Almanca öğrenerek Ausbildung başvurusunu değerlendirin",
+      'Almanca öğrenerek Ausbildung başvurusunu değerlendirin',
       'make-it-in-germany.com adresinden kapsamlı rehber okuyun',
       'Bir göçmenlik danışmanıyla görüşün',
     ],
-    note: 'Almanca öğrenerek Ausbildung başvurusu, uzun vadede en erişilebilir seçenek olabilir.',
+    note: 'Almanca öğrenerek (B1) Ausbildung başvurusu, uzun vadede en erişilebilir seçenek olabilir. BT deneyiminiz varsa iş teklifi alarak §19c kapsamında başvurabilirsiniz.',
   },
 ];
 
-// --- Color system ---
 const COLORS: Record<string, { border: string; bg: string; text: string; badge: string }> = {
   blue:   { border: 'border-google-blue',   bg: 'bg-blue-50',   text: 'text-blue-900',   badge: 'bg-blue-100 text-blue-800' },
   green:  { border: 'border-google-green',  bg: 'bg-green-50',  text: 'text-green-900',  badge: 'bg-green-100 text-green-800' },
@@ -416,9 +725,8 @@ const COLORS: Record<string, { border: string; bg: string; text: string; badge: 
   red:    { border: 'border-google-red',    bg: 'bg-red-50',    text: 'text-red-900',    badge: 'bg-red-100 text-red-800' },
 };
 
-// --- Main Component ---
 export default function VizeClient() {
-  const [qId, setQId] = useState('Q01');
+  const [qId, setQId] = useState('Q02');
   const [history, setHistory] = useState<string[]>([]);
   const [resultId, setResultId] = useState<string | null>(null);
   const [showInfo, setShowInfo] = useState(false);
@@ -427,7 +735,7 @@ export default function VizeClient() {
   const q = QUESTIONS.find(x => x.id === qId) ?? null;
   const visaResult = resultId ? (RESULTS.find(r => r.id === resultId) ?? null) : null;
   const qNum = history.length + 1;
-  const progressPct = Math.min((history.length / 12) * 100, 95);
+  const progressPct = Math.min((history.length / 5) * 100, 95);
 
   const pick = (next: string) => {
     if (next.startsWith('RESULT:')) {
@@ -439,44 +747,37 @@ export default function VizeClient() {
   };
 
   const goBack = () => {
-    if (resultId) {
-      setResultId(null);
-      return;
-    }
+    if (resultId) { setResultId(null); return; }
     if (history.length > 0) {
       setQId(history[history.length - 1]);
       setHistory(h => h.slice(0, -1));
     }
   };
 
-  const reset = () => {
-    setQId('Q01');
-    setHistory([]);
-    setResultId(null);
-  };
+  const reset = () => { setQId('Q02'); setHistory([]); setResultId(null); };
 
   return (
     <div className="space-y-2">
 
-      {/* Başlık + Nasıl Çalışır accordion */}
+      {/* Başlık */}
+      <div className="bg-white rounded-xl border-2 border-google-blue px-4 py-3">
+        <h1 className="text-2xl font-bold leading-tight">Almanya Vize Seçim Aracı</h1>
+      </div>
+
+      {/* Nasıl Çalışır? */}
       <div
         className="bg-white rounded-xl border-2 border-google-blue overflow-hidden cursor-pointer select-none"
         onClick={() => setShowInfo(!showInfo)}
       >
         <div className="flex items-center justify-between px-4 py-3">
-          <div>
-            <h1 className="text-2xl font-bold leading-tight">Almanya Vize Seçim Aracı</h1>
-            <div className="flex items-center gap-1 mt-0.5 text-google-blue font-medium text-sm">
-              Nasıl Çalışır?
-            </div>
-          </div>
+          <span className="font-semibold text-gray-900">Nasıl Çalışır?</span>
           <span className={cn('text-google-blue text-xl transition-transform duration-200', showInfo && 'rotate-180')}>▾</span>
         </div>
         {showInfo && (
           <div className="px-4 pb-4 bg-blue-50 border-t border-blue-200">
             <ul className="space-y-2 text-sm text-blue-800 pt-3">
-              <li>• 10–13 kısa soruyla size en uygun vize tipini belirler.</li>
-              <li>• Dallanmalı mantık: her cevap sizi doğru yönde ilerletir.</li>
+              <li>• Dallanmalı sorularla profilinize en uygun vize tipini belirler.</li>
+              <li>• 8 amaç kategorisi, 12+ farklı vize sonucu ve adım adım rehber.</li>
               <li>• Sonuç bilgilendirme amaçlıdır; kesin karar için göçmenlik danışmanına başvurunuz.</li>
               <li>• Kaynak: 2024/2025 Almanya göçmenlik mevzuatı (AufenthG, Fachkräfteeinwanderungsgesetz).</li>
             </ul>
@@ -496,7 +797,7 @@ export default function VizeClient() {
         {showWhy && (
           <div className="px-4 pb-4 bg-green-50 border-t border-green-200">
             <p className="text-sm text-green-900 pt-3 leading-relaxed">
-              Almanya'ya göç etmek isteyenler için en büyük belirsizliklerden biri hangi vize türüne başvurmaları gerektiğidir. EU Mavi Kart, Fachkräftevisa, Chancenkarte, IT Uzmanı Vizesi, Ausbildung Vizesi… Her birinin farklı şartları ve süreçleri var. Bu araç, eğitim durumu, iş teklifi, maaş, deneyim ve hedef gibi temel değişkenleri sorarak size en uygun vize yolunu 10–13 soruda belirler ve ne yapmanız gerektiğini adım adım açıklar.
+              Almanya&apos;ya göç etmek isteyenler için en büyük belirsizliklerden biri hangi vize türüne başvurmaları gerektiğidir. EU Mavi Kart, Fachkräftevisa, Chancenkarte, BT Uzmanı Vizesi, Ausbildung, Serbest Meslek, Dil Kursu… Her birinin farklı şartları ve süreçleri var. Bu araç, eğitim durumu, iş teklifi, maaş, deneyim ve hedef gibi temel değişkenleri sorarak size en uygun vize yolunu belirler ve ne yapmanız gerektiğini adım adım açıklar.
             </p>
           </div>
         )}
@@ -512,10 +813,7 @@ export default function VizeClient() {
             </button>
           </div>
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-google-red transition-all duration-300"
-              style={{ width: `${progressPct}%` }}
-            />
+            <div className="h-full bg-google-red transition-all duration-300" style={{ width: `${progressPct}%` }} />
           </div>
         </div>
       )}
@@ -524,9 +822,7 @@ export default function VizeClient() {
       {!visaResult && q && (
         <div className="bg-white rounded-xl border-2 border-google-yellow p-5">
           <p className="text-gray-900 font-bold text-lg leading-tight mb-1">{q.text}</p>
-          {q.hint && (
-            <p className="text-gray-500 text-sm mb-4">{q.hint}</p>
-          )}
+          {q.hint && <p className="text-gray-500 text-sm mb-4">{q.hint}</p>}
           <div className="space-y-2 mt-4">
             {q.options.map(opt => (
               <button
@@ -539,10 +835,7 @@ export default function VizeClient() {
             ))}
           </div>
           {history.length > 0 && (
-            <button
-              onClick={goBack}
-              className="mt-4 text-sm text-gray-400 hover:text-gray-600 transition-colors"
-            >
+            <button onClick={goBack} className="mt-4 text-sm text-gray-400 hover:text-gray-600 transition-colors">
               ← Önceki soruya dön
             </button>
           )}
@@ -550,11 +843,9 @@ export default function VizeClient() {
       )}
 
       {/* Result Card */}
-      {visaResult && (
-        <ResultCard result={visaResult} onReset={reset} onBack={goBack} />
-      )}
+      {visaResult && <ResultCard result={visaResult} onReset={reset} onBack={goBack} />}
 
-      {/* Persistent Ana Sayfaya Dön */}
+      {/* Ana Sayfaya Dön */}
       {!visaResult && (
         <Link
           href="/"
@@ -563,26 +854,14 @@ export default function VizeClient() {
           Ana Sayfaya Dön
         </Link>
       )}
-
     </div>
   );
 }
 
-// --- Result Card ---
-function ResultCard({
-  result,
-  onReset,
-  onBack,
-}: {
-  result: VisaResult;
-  onReset: () => void;
-  onBack: () => void;
-}) {
+function ResultCard({ result, onReset, onBack }: { result: VisaResult; onReset: () => void; onBack: () => void }) {
   const c = COLORS[result.color] ?? COLORS.blue;
-
   return (
     <div className={cn('bg-white rounded-xl border-2 p-5', c.border)}>
-      {/* Header */}
       <div className="mb-4">
         <span className={cn('inline-block text-xs font-semibold px-2 py-1 rounded-full mb-2', c.badge)}>
           Önerilen Vize Türü
@@ -590,8 +869,6 @@ function ResultCard({
         <h2 className="text-2xl font-bold text-gray-900">{result.title}</h2>
         <p className="text-gray-500 text-sm mt-1">{result.subtitle}</p>
       </div>
-
-      {/* Requirements */}
       <div className={cn('rounded-xl p-4 mb-3', c.bg)}>
         <h3 className={cn('font-semibold text-sm mb-2', c.text)}>Temel Şartlar</h3>
         <ul className="space-y-1.5">
@@ -603,8 +880,6 @@ function ResultCard({
           ))}
         </ul>
       </div>
-
-      {/* Steps */}
       <div className="rounded-xl p-4 bg-gray-50 mb-3">
         <h3 className="font-semibold text-sm mb-2 text-gray-700">Sonraki Adımlar</h3>
         <ol className="space-y-1.5">
@@ -616,32 +891,19 @@ function ResultCard({
           ))}
         </ol>
       </div>
-
-      {/* Note */}
       {result.note && (
         <div className="rounded-xl p-3 bg-yellow-50 border border-yellow-200 mb-4">
           <p className="text-sm text-yellow-800">💡 {result.note}</p>
         </div>
       )}
-
-      {/* Actions */}
       <div className="flex flex-col gap-2">
-        <button
-          onClick={onBack}
-          className="w-full py-3 rounded-xl border-2 border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
-        >
+        <button onClick={onBack} className="w-full py-3 rounded-xl border-2 border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-colors">
           ← Son Soruya Dön
         </button>
-        <button
-          onClick={onReset}
-          className="w-full py-3 rounded-xl border-2 border-gray-300 text-gray-600 font-semibold hover:bg-gray-50 transition-colors"
-        >
+        <button onClick={onReset} className="w-full py-3 rounded-xl border-2 border-gray-300 text-gray-600 font-semibold hover:bg-gray-50 transition-colors">
           Yeniden Başla
         </button>
-        <Link
-          href="/"
-          className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity"
-        >
+        <Link href="/" className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
           Ana Sayfaya Dön
         </Link>
       </div>

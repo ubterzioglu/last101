@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
 
 const css = `
   :root {
@@ -37,7 +38,7 @@ const css = `
   .hero-domain { font-size: 14px; font-weight: 600; color: var(--google-red); text-transform: lowercase; margin-bottom: 8px; }
   .hero-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 8px; }
   .hero-card p { color: var(--text-secondary); font-size: 15px; }
-  .main-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 8px; }
+  .main-menu { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; margin-bottom: 8px; }
   .menu-card { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 32px; text-align: center; cursor: pointer; transition: all 0.3s ease; color: inherit; }
   .menu-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
   .menu-card.primary { border-color: rgba(66,133,244,0.3); }
@@ -136,7 +137,7 @@ const css = `
     .header { flex-direction: column; gap: 15px; padding: 15px 0 25px; }
     .back-link { position: static; align-self: flex-start; }
     .title-group h1 { font-size: 18px; }
-    .main-menu { grid-template-columns: 1fr; }
+    .main-menu { grid-template-columns: repeat(2, 1fr); }
     .card { padding: 22px; border-radius: 20px; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .stat-value { font-size: 24px; }
@@ -1539,6 +1540,18 @@ export default function AdminPage() {
             </div>
           </div>
         </main>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', padding: '24px 0 32px' }}>
+          <Link href="/" style={{ padding: '10px 24px', borderRadius: 10, background: 'rgba(255,255,255,0.08)', border: '1px solid var(--glass-border)', color: 'var(--text-primary)', textDecoration: 'none', fontWeight: 500, fontSize: 14, transition: 'background 0.2s' }}
+            onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
+            onMouseOut={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}>
+            Ana Sayfaya Dön
+          </Link>
+          <Link href="/devuser" style={{ padding: '10px 24px', borderRadius: 10, background: 'rgba(66,133,244,0.15)', border: '1px solid rgba(66,133,244,0.4)', color: '#4285F4', textDecoration: 'none', fontWeight: 500, fontSize: 14, transition: 'background 0.2s' }}
+            onMouseOver={e => (e.currentTarget.style.background = 'rgba(66,133,244,0.25)')}
+            onMouseOut={e => (e.currentTarget.style.background = 'rgba(66,133,244,0.15)')}>
+            Software Dashboard
+          </Link>
+        </div>
       </div>
     </div>
   );
