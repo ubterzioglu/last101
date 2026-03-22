@@ -47,7 +47,6 @@ function isValidSlotIndex(slotIndex: number | null): slotIndex is number {
   return Number.isInteger(slotIndex) && (slotIndex as number) >= 0 && (slotIndex as number) < SLOT_LIMIT;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function findFirstEmptySlot(supabase: any, bracketTable: string): Promise<number> {
   const { data, error } = await supabase
     .from(bracketTable)
@@ -69,7 +68,6 @@ async function findFirstEmptySlot(supabase: any, bracketTable: string): Promise<
 }
 
 async function ensureParticipantExistsAndApproved(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   participantTable: string,
   participantId: string
@@ -87,7 +85,6 @@ async function ensureParticipantExistsAndApproved(
 }
 
 async function addToBracket(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   category: string,
   participantId: string,
@@ -144,7 +141,6 @@ async function addToBracket(
 }
 
 async function removeParticipantFromBracket(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   category: string,
   participantId: string
@@ -159,7 +155,6 @@ async function removeParticipantFromBracket(
 }
 
 async function toggleBracketWinner(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   category: string,
   slotIndex: number
@@ -186,7 +181,6 @@ async function toggleBracketWinner(
 }
 
 async function clearBracketSlot(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   category: string,
   slotIndex: number

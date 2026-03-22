@@ -35,7 +35,6 @@ function normalizeSearch(value: unknown): string {
   return String(value || '').trim().slice(0, 120);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function countNews(supabase: any, category: string, status: string): Promise<number> {
   let query = supabase.from('news_posts').select('id', { count: 'exact', head: true });
   if (category !== 'all') query = query.eq('category', category);
@@ -66,7 +65,6 @@ export async function GET(request: NextRequest) {
   const limit = normalizeLimit(searchParams.get('limit'));
   const search = normalizeSearch(searchParams.get('q'));
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const supabase: any = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });

@@ -73,7 +73,6 @@ export async function GET(request: NextRequest) {
   }
 
   const limit = parseLimit(request.nextUrl.searchParams.get('limit'), 500);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const supabase: any = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });

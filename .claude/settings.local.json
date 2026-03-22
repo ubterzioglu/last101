@@ -81,7 +81,10 @@
       "Bash(grep -E ^[A-Z_]+= C:/.temp_private/.0000last/.env.local)",
       "Bash(sed s/=.*/=***/)",
       "Bash(grep -E ^[A-Z_]+= C:/.temp_private/.0000last/.env)",
-      "Bash(grep -v \"^$\")"
+      "Bash(grep -v \"^$\")",
+      "Bash(for f:*)",
+      "Bash(do sed:*)",
+      "Bash(sed -i '/eslint-disable.*typescript-eslint/d' \"$f\")"
     ]
   }
 }

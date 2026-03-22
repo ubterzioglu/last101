@@ -29,7 +29,6 @@ function normalizeRowStatus(row: Record<string, unknown>): string {
 }
 
 type QueryOptions = { applyStatusFilter: boolean; orderByCreatedAt: boolean };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SupabaseClient = any;
 
 async function runQueryWithFallback({

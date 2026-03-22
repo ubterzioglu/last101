@@ -57,7 +57,6 @@ function isMissingColumnError(error: unknown, columnName: string): boolean {
   return msg.includes('column') && msg.includes(String(columnName || '').toLowerCase());
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function queryDiscussionRowsWithFallback({ supabase, limit, status }: { supabase: any; limit: number; status: string }) {
   const attempts = [
     { includeStatus: true, orderByCreatedAt: true },

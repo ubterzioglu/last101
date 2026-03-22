@@ -26,7 +26,6 @@ function getSupabaseAdminClient() {
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function loadParticipants(supabase: any, tableName: string): Promise<unknown[]> {
   const result = await supabase
     .from(tableName)
@@ -36,7 +35,6 @@ async function loadParticipants(supabase: any, tableName: string): Promise<unkno
   return Array.isArray(result.data) ? result.data : [];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function loadBracket(supabase: any, tableName: string): Promise<unknown[]> {
   const result = await supabase
     .from(tableName)
@@ -46,7 +44,6 @@ async function loadBracket(supabase: any, tableName: string): Promise<unknown[]>
   return Array.isArray(result.data) ? result.data : [];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function loadCategoryPayload(supabase: any, category: string): Promise<Record<string, unknown>> {
   const tableConfig = CATEGORY_TABLE[category];
   const participants = await loadParticipants(supabase, tableConfig.participants);

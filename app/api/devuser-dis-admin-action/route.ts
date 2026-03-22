@@ -10,7 +10,6 @@ function normalizeAction(value: unknown): string | null {
   return null;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function updateStatusWithFallback(supabase: any, id: string, statuses: string[]) {
   let lastError: unknown = null;
 
