@@ -24,12 +24,31 @@ const ICON_MAP = {
   facebook: FacebookIcon,
 } as const;
 
+const ICON_ONLY_ACCENT_MAP = {
+  whatsapp: 'text-green-400 shadow-[0_16px_40px_rgba(34,197,94,0.28)] hover:shadow-[0_20px_48px_rgba(34,197,94,0.38)]',
+  telegram: 'text-sky-300 shadow-[0_16px_40px_rgba(56,189,248,0.28)] hover:shadow-[0_20px_48px_rgba(56,189,248,0.38)]',
+  phone: 'text-indigo-300 shadow-[0_16px_40px_rgba(99,102,241,0.28)] hover:shadow-[0_20px_48px_rgba(99,102,241,0.38)]',
+  email: 'text-rose-300 shadow-[0_16px_40px_rgba(244,63,94,0.28)] hover:shadow-[0_20px_48px_rgba(244,63,94,0.38)]',
+  instagram: 'text-pink-300 shadow-[0_16px_40px_rgba(236,72,153,0.28)] hover:shadow-[0_20px_48px_rgba(236,72,153,0.38)]',
+  youtube: 'text-red-300 shadow-[0_16px_40px_rgba(239,68,68,0.28)] hover:shadow-[0_20px_48px_rgba(239,68,68,0.38)]',
+  linkedin: 'text-blue-300 shadow-[0_16px_40px_rgba(59,130,246,0.28)] hover:shadow-[0_20px_48px_rgba(59,130,246,0.38)]',
+  twitter: 'text-slate-200 shadow-[0_16px_40px_rgba(148,163,184,0.22)] hover:shadow-[0_20px_48px_rgba(148,163,184,0.32)]',
+  facebook: 'text-blue-200 shadow-[0_16px_40px_rgba(96,165,250,0.28)] hover:shadow-[0_20px_48px_rgba(96,165,250,0.38)]',
+} as const;
+
 interface ContactChannelCardProps {
   channel: ContactChannel;
   className?: string;
+  compact?: boolean;
+  iconOnly?: boolean;
 }
 
-export function ContactChannelCard({ channel, className }: ContactChannelCardProps) {
+export function ContactChannelCard({
+  channel,
+  className,
+  compact = false,
+  iconOnly = false,
+}: ContactChannelCardProps) {
   const IconComponent = ICON_MAP[channel.icon];
 
   return (
@@ -37,28 +56,62 @@ export function ContactChannelCard({ channel, className }: ContactChannelCardPro
       href={channel.href}
       target={channel.external ? '_blank' : undefined}
       rel={channel.external ? 'noopener noreferrer' : undefined}
+      aria-label={channel.label}
       className={cn(
-        'flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl',
-        'bg-white/10 hover:bg-white/20 transition-all duration-300',
-        'backdrop-blur-sm border border-white/20 group',
+        'flex rounded-xl',
+        iconOnly
+          ? 'h-[72px] w-[72px] items-center justify-center rounded-full border-white/12 bg-white/6 p-0 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 sm:h-[84px] sm:w-[84px]'
+          : compact
+            ? 'flex-col items-center justify-start gap-3 p-3 text-center'
+            : 'items-center gap-3 sm:gap-4 p-4 sm:p-5',
+        !iconOnly && 'bg-white/10 hover:bg-white/20 transition-all duration-300',
+        !iconOnly && 'backdrop-blur-sm border border-white/20',
+        'group',
         className
       )}
     >
       <div
         className={cn(
-          'flex-shrink-0 w-12 sm:w-14 h-12 sm:h-14 rounded-xl',
-          'flex items-center justify-center',
-          channel.bgColor
+          iconOnly
+            ? 'flex-shrink-0'
+            : compact
+              ? 'flex-shrink-0 w-11 h-11 rounded-lg'
+              : 'flex-shrink-0 w-12 sm:w-14 h-12 sm:h-14 rounded-xl',
+          !iconOnly && 'flex items-center justify-center',
+          !iconOnly && channel.bgColor
         )}
       >
-        <IconComponent className="w-6 sm:w-7 h-6 sm:h-7 text-white" />
+        <IconComponent
+          className={cn(
+            iconOnly ? ICON_ONLY_ACCENT_MAP[channel.icon] : 'text-white',
+            iconOnly
+              ? 'h-[60px] w-[60px] drop-shadow-[0_10px_24px_rgba(255,255,255,0.15)] sm:h-[72px] sm:w-[72px]'
+              : compact
+                ? 'w-5 h-5'
+                : 'w-6 sm:w-7 h-6 sm:h-7'
+          )}
+        />
       </div>
-      <div>
-        <h3 className="font-semibold text-white text-sm sm:text-base group-hover:text-gray-300 transition-colors">
-          {channel.label}
-        </h3>
-        <p className="text-xs sm:text-sm text-gray-400">{channel.description}</p>
-      </div>
+      {!iconOnly && (
+        <div className={compact ? 'w-full' : undefined}>
+          <h3
+            className={cn(
+              'font-semibold text-white group-hover:text-gray-300 transition-colors',
+              compact ? 'text-xs leading-tight' : 'text-sm sm:text-base'
+            )}
+          >
+            {channel.label}
+          </h3>
+          <p
+            className={cn(
+              'text-gray-400',
+              compact ? 'mt-1 text-[11px] leading-tight break-words' : 'text-xs sm:text-sm'
+            )}
+          >
+            {channel.description}
+          </p>
+        </div>
+      )}
     </a>
   );
 }

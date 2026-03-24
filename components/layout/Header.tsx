@@ -26,7 +26,7 @@ export function Header() {
             </Link>
 
             {/* Menu Button + Home Button */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               <Button 
                 variant="ghost" 
                 size="md" 
@@ -36,6 +36,17 @@ export function Header() {
               >
                 Menü
               </Button>
+              <span className="h-5 w-px bg-white/20" aria-hidden="true" />
+              <a
+                href="https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Whatsapp TopluluÄŸu"
+                className="inline-flex items-center justify-center rounded-md px-4 py-2 text-base font-medium text-white transition-colors hover:bg-white/20"
+              >
+                Whatsapp
+              </a>
+              <span className="h-5 w-px bg-white/20" aria-hidden="true" />
               <Link href="/">
                 <Button 
                   variant="ghost" 

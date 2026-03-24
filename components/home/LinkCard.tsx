@@ -19,14 +19,20 @@ export function LinkCard({
     <a
       href={item.href}
       className={cn(
-        'group flex flex-col bg-white/95 hover:bg-white rounded-xl overflow-hidden',
+        'group flex h-full w-full flex-col bg-white/95 hover:bg-white rounded-xl overflow-hidden',
         'transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg',
         'min-h-[220px] sm:min-h-[280px]',
         className
       )}
     >
-      {/* Image - Top Half */}
-      <div className="h-1/2 min-h-[110px] sm:min-h-[140px] relative overflow-hidden">
+      <div className="flex min-h-[34px] items-center border-b border-black/5 bg-slate-950 px-3 py-1 text-center sm:min-h-[40px] sm:px-4 sm:py-1.5">
+        <span className="w-full text-[11px] font-semibold uppercase tracking-[0.22em] text-google-yellow sm:text-xs">
+          {item.topLabel}
+        </span>
+      </div>
+
+      {/* Image */}
+      <div className="h-[30%] min-h-[78px] sm:min-h-[96px] relative overflow-hidden">
         <Image
           src={item.image}
           alt={item.label}
@@ -38,7 +44,7 @@ export function LinkCard({
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20" />
       </div>
 
-      {/* Content - Bottom Half */}
+      {/* Content */}
       <div className="flex-1 p-3 sm:p-4 flex flex-col justify-center">
         <h3
           className={cn(
