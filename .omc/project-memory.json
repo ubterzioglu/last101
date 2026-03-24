@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1774163142914,
-  "projectRoot": "C:\\.temp_private\\.0000last",
+  "lastScanned": 1774364797963,
+  "projectRoot": "c:\\.temp_private\\.0000last",
   "techStack": {
     "languages": [
       {
@@ -81,7 +81,7 @@
       "path": "app",
       "purpose": "Application code",
       "fileCount": 7,
-      "lastAccessed": 1774163142846,
+      "lastAccessed": 1774364797922,
       "keyFiles": [
         "globals.css",
         "icon.svg",
@@ -94,16 +94,18 @@
       "path": "components",
       "purpose": "UI components",
       "fileCount": 0,
-      "lastAccessed": 1774163142847,
+      "lastAccessed": 1774364797923,
       "keyFiles": []
     },
     "constants": {
       "path": "constants",
       "purpose": null,
-      "fileCount": 2,
-      "lastAccessed": 1774163142847,
+      "fileCount": 4,
+      "lastAccessed": 1774364797946,
       "keyFiles": [
         "colors.ts",
+        "contact-channels.ts",
+        "home-data.ts",
         "navigation.ts"
       ]
     },
@@ -111,14 +113,14 @@
       "path": "docs",
       "purpose": "Documentation",
       "fileCount": 0,
-      "lastAccessed": 1774163142847,
+      "lastAccessed": 1774364797947,
       "keyFiles": []
     },
     "hooks": {
       "path": "hooks",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1774163142847,
+      "lastAccessed": 1774364797947,
       "keyFiles": [
         "use-mobile-menu.ts"
       ]
@@ -127,21 +129,24 @@
       "path": "lib",
       "purpose": "Library code",
       "fileCount": 0,
-      "lastAccessed": 1774163142847,
+      "lastAccessed": 1774364797947,
       "keyFiles": []
     },
     "public": {
       "path": "public",
       "purpose": "Public files",
-      "fileCount": 0,
-      "lastAccessed": 1774163142847,
-      "keyFiles": []
+      "fileCount": 2,
+      "lastAccessed": 1774364797948,
+      "keyFiles": [
+        "almanya101.png",
+        "almanya101lragetransparent.png"
+      ]
     },
     "scripts": {
       "path": "scripts",
       "purpose": "Build/utility scripts",
       "fileCount": 1,
-      "lastAccessed": 1774163142848,
+      "lastAccessed": 1774364797948,
       "keyFiles": [
         "vercel-env-setup.ps1"
       ]
@@ -150,14 +155,14 @@
       "path": "supabase",
       "purpose": null,
       "fileCount": 0,
-      "lastAccessed": 1774163142848,
+      "lastAccessed": 1774364797948,
       "keyFiles": []
     },
     "types": {
       "path": "types",
       "purpose": "Type definitions",
       "fileCount": 1,
-      "lastAccessed": 1774163142848,
+      "lastAccessed": 1774364797949,
       "keyFiles": [
         "index.ts"
       ]
@@ -166,14 +171,14 @@
       "path": "app\\api",
       "purpose": "API routes",
       "fileCount": 0,
-      "lastAccessed": 1774163142848,
+      "lastAccessed": 1774364797950,
       "keyFiles": []
     },
     "lib\\utils": {
       "path": "lib\\utils",
       "purpose": "Utility functions",
       "fileCount": 3,
-      "lastAccessed": 1774163142849,
+      "lastAccessed": 1774364797951,
       "keyFiles": [
         "cn.ts",
         "constants.ts",
@@ -184,313 +189,12 @@
       "path": "supabase\\migrations",
       "purpose": "Database migrations",
       "fileCount": 1,
-      "lastAccessed": 1774163142849,
+      "lastAccessed": 1774364797952,
       "keyFiles": [
         "20260211_security_hardening.sql"
       ]
     }
   },
-  "hotPaths": [
-    {
-      "path": "app\\(site)\\maas-hesaplama\\MaasClient.tsx",
-      "accessCount": 49,
-      "lastAccessed": 1774175820500,
-      "type": "file"
-    },
-    {
-      "path": "app\\(devuser)\\devuser\\dev\\page.tsx",
-      "accessCount": 39,
-      "lastAccessed": 1774179868621,
-      "type": "file"
-    },
-    {
-      "path": "components\\para-transferi\\transfer-selector.tsx",
-      "accessCount": 31,
-      "lastAccessed": 1774175730369,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\stepstone-karsilastirma\\StepstoneClient.tsx",
-      "accessCount": 13,
-      "lastAccessed": 1774175699906,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\banka-secim\\BankaClient.tsx",
-      "accessCount": 12,
-      "lastAccessed": 1774175702661,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\vatandaslik-testi\\page.tsx",
-      "accessCount": 11,
-      "lastAccessed": 1774175720851,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\sigorta-secim\\SigortaClient.tsx",
-      "accessCount": 9,
-      "lastAccessed": 1774175711695,
-      "type": "file"
-    },
-    {
-      "path": "components\\holiday\\holiday-calculator.tsx",
-      "accessCount": 9,
-      "lastAccessed": 1774175747917,
-      "type": "file"
-    },
-    {
-      "path": "",
-      "accessCount": 8,
-      "lastAccessed": 1774182327472,
-      "type": "directory"
-    },
-    {
-      "path": "app\\(site)\\para-transferi\\page.tsx",
-      "accessCount": 7,
-      "lastAccessed": 1774175111215,
-      "type": "file"
-    },
-    {
-      "path": ".0temp\\almanya101\\paratransfer\\script.js",
-      "accessCount": 6,
-      "lastAccessed": 1774170900187,
-      "type": "file"
-    },
-    {
-      "path": ".0temp\\almanya101\\maas\\maas.html",
-      "accessCount": 6,
-      "lastAccessed": 1774173050853,
-      "type": "file"
-    },
-    {
-      "path": "components\\holiday\\german-holiday-calculator.tsx",
-      "accessCount": 6,
-      "lastAccessed": 1774175740250,
-      "type": "file"
-    },
-    {
-      "path": ".0temp\\almanya101\\maas\\script.js",
-      "accessCount": 5,
-      "lastAccessed": 1774173083826,
-      "type": "directory"
-    },
-    {
-      "path": "constants\\home-data.ts",
-      "accessCount": 5,
-      "lastAccessed": 1774176992957,
-      "type": "directory"
-    },
-    {
-      "path": "app",
-      "accessCount": 5,
-      "lastAccessed": 1774177056622,
-      "type": "directory"
-    },
-    {
-      "path": "app\\layout.tsx",
-      "accessCount": 5,
-      "lastAccessed": 1774182126109,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\maas-hesaplama\\page.tsx",
-      "accessCount": 4,
-      "lastAccessed": 1774175111917,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\stepstone-karsilastirma\\page.tsx",
-      "accessCount": 4,
-      "lastAccessed": 1774175115168,
-      "type": "file"
-    },
-    {
-      "path": "app\\(marketing)\\tatil\\almanya\\page.tsx",
-      "accessCount": 4,
-      "lastAccessed": 1774175117456,
-      "type": "file"
-    },
-    {
-      "path": "app\\(marketing)\\tatil\\turkiye\\page.tsx",
-      "accessCount": 4,
-      "lastAccessed": 1774175118663,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\banka-secim\\page.tsx",
-      "accessCount": 4,
-      "lastAccessed": 1774175129158,
-      "type": "file"
-    },
-    {
-      "path": "components\\devuser\\DevUserShell.tsx",
-      "accessCount": 4,
-      "lastAccessed": 1774179351628,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\sigorta-secim\\page.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1774175112963,
-      "type": "file"
-    },
-    {
-      "path": "constants\\para-transferi\\questions.ts",
-      "accessCount": 2,
-      "lastAccessed": 1774171002716,
-      "type": "file"
-    },
-    {
-      "path": "constants\\para-transferi\\systems.ts",
-      "accessCount": 2,
-      "lastAccessed": 1774171017095,
-      "type": "file"
-    },
-    {
-      "path": "components",
-      "accessCount": 2,
-      "lastAccessed": 1774174669538,
-      "type": "directory"
-    },
-    {
-      "path": "components\\ui\\Container.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1774175035404,
-      "type": "file"
-    },
-    {
-      "path": "components\\ui\\Section.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1774175069590,
-      "type": "file"
-    },
-    {
-      "path": "constants\\navigation.ts",
-      "accessCount": 2,
-      "lastAccessed": 1774176641116,
-      "type": "file"
-    },
-    {
-      "path": "components\\layout\\Header.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1774177475947,
-      "type": "file"
-    },
-    {
-      "path": "app\\(devuser)\\devuser\\typing\\TypingClient.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1774177635674,
-      "type": "file"
-    },
-    {
-      "path": "app\\(devuser)\\devuser\\typing\\page.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1774179571629,
-      "type": "file"
-    },
-    {
-      "path": ".0temp\\almanya101\\paratransfer\\providers.js",
-      "accessCount": 1,
-      "lastAccessed": 1774170854933,
-      "type": "file"
-    },
-    {
-      "path": ".0temp\\almanya101\\paratransfer\\pt.html",
-      "accessCount": 1,
-      "lastAccessed": 1774170855254,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\para-transferi\\layout.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1774171268444,
-      "type": "file"
-    },
-    {
-      "path": "lib\\utils\\cn.ts",
-      "accessCount": 1,
-      "lastAccessed": 1774171602057,
-      "type": "file"
-    },
-    {
-      "path": ".0temp\\almanya101\\maas",
-      "accessCount": 1,
-      "lastAccessed": 1774173054998,
-      "type": "directory"
-    },
-    {
-      "path": "lib\\salary\\stepstone-data.ts",
-      "accessCount": 1,
-      "lastAccessed": 1774173071868,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\vatandaslik-testi",
-      "accessCount": 1,
-      "lastAccessed": 1774173624322,
-      "type": "directory"
-    },
-    {
-      "path": "app\\(site)\\vatandaslik-testi\\layout.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1774173627656,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)",
-      "accessCount": 1,
-      "lastAccessed": 1774173976818,
-      "type": "directory"
-    },
-    {
-      "path": "app\\(marketing)",
-      "accessCount": 1,
-      "lastAccessed": 1774174238341,
-      "type": "directory"
-    },
-    {
-      "path": "app\\(marketing)\\layout.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1774174242258,
-      "type": "file"
-    },
-    {
-      "path": ".0temp\\deep-research-report.md",
-      "accessCount": 1,
-      "lastAccessed": 1774176168846,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\vize-secim\\page.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1774176455295,
-      "type": "file"
-    },
-    {
-      "path": "app\\(site)\\vize-secim\\VizeClient.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1774176606025,
-      "type": "file"
-    },
-    {
-      "path": "constants",
-      "accessCount": 1,
-      "lastAccessed": 1774176622918,
-      "type": "directory"
-    },
-    {
-      "path": "public",
-      "accessCount": 1,
-      "lastAccessed": 1774177466952,
-      "type": "directory"
-    },
-    {
-      "path": ".0temp\\almanya101\\devuser\\typing.html",
-      "accessCount": 1,
-      "lastAccessed": 1774177646032,
-      "type": "file"
-    }
-  ],
+  "hotPaths": [],
   "userDirectives": []
 }

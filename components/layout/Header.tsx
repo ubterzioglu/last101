@@ -22,7 +22,7 @@ export function Header() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <img src="/almanya101.png" alt={SITE_NAME} className="h-8 w-auto" />
+              <img src="/almanya101header.png" alt={SITE_NAME} className="h-8 w-auto" />
             </Link>
 
             {/* Menu Button + Home Button */}

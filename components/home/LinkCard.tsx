@@ -5,9 +5,16 @@ import type { ToolItem } from '@/constants/home-data';
 interface LinkCardProps {
   item: ToolItem;
   className?: string;
+  titleClassName?: string;
+  descriptionClassName?: string;
 }
 
-export function LinkCard({ item, className }: LinkCardProps) {
+export function LinkCard({
+  item,
+  className,
+  titleClassName,
+  descriptionClassName,
+}: LinkCardProps) {
   return (
     <a
       href={item.href}
@@ -33,10 +40,20 @@ export function LinkCard({ item, className }: LinkCardProps) {
 
       {/* Content - Bottom Half */}
       <div className="flex-1 p-3 sm:p-4 flex flex-col justify-center">
-        <h3 className="text-sm sm:text-base font-bold text-gray-900 text-center mb-1 sm:mb-2 break-words leading-tight">
+        <h3
+          className={cn(
+            'text-sm sm:text-base font-bold text-gray-900 text-center mb-1 sm:mb-2 break-words leading-tight',
+            titleClassName
+          )}
+        >
           {item.label}
         </h3>
-        <p className="text-xs sm:text-sm text-gray-600 text-center line-clamp-2 leading-relaxed break-words">
+        <p
+          className={cn(
+            'text-xs sm:text-sm text-gray-600 text-center line-clamp-2 leading-relaxed break-words',
+            descriptionClassName
+          )}
+        >
           {item.description}
         </p>
       </div>

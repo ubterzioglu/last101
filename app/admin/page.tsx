@@ -810,7 +810,7 @@ export default function AdminPage() {
         <div className="grid-overlay" />
         <div className="auth-gate">
           <div className="top-logo">
-            <img src="/almanya101.png" alt="almanya101" />
+            <img src="/almanya101lragetransparent.png" alt="almanya101" />
           </div>
           <div className="auth-card">
             <div style={{ textAlign: 'center', fontSize: 14, fontWeight: 600, color: 'var(--google-red)', textTransform: 'lowercase', marginBottom: 8 }}>almanya101.de</div>
@@ -848,7 +848,7 @@ export default function AdminPage() {
 
       <div className="container">
         <div className="top-logo">
-          <img src="/almanya101.png" alt="almanya101" />
+          <img src="/almanya101lragetransparent.png" alt="almanya101" />
         </div>
 
         <header className="header">

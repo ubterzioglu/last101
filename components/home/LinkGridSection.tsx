@@ -8,6 +8,13 @@ interface LinkGridSectionProps {
   items: ToolItem[];
   className?: string;
   gridClassName?: string;
+  cardClassName?: string;
+  cardTitleClassName?: string;
+  cardDescriptionClassName?: string;
+  overlayOpacity?: string | false;
+  backgroundImage?: string | false;
+  titleMarginSmall?: boolean;
+  noCenter?: boolean;
 }
 
 export function LinkGridSection({
@@ -16,22 +23,30 @@ export function LinkGridSection({
   items,
   className,
   gridClassName,
+  cardClassName,
+  cardTitleClassName,
+  cardDescriptionClassName,
+  overlayOpacity = 'bg-black/60',
+  backgroundImage = '/images/backgrounds/hero.jpg',
+  titleMarginSmall = false,
+  noCenter = false,
 }: LinkGridSectionProps) {
   return (
     <section
       className={cn(
-        'min-h-screen flex flex-col items-center justify-center relative bg-cover bg-center py-8',
+        'h-[1000px] flex flex-col items-center relative bg-cover bg-center py-8',
+        noCenter ? 'justify-start' : 'justify-center',
         className
       )}
-      style={{ backgroundImage: 'url(/images/backgrounds/hero.jpg)' }}
+      style={backgroundImage !== false ? { backgroundImage: `url(${backgroundImage})` } : undefined}
     >
-      <div className="absolute inset-0 bg-black/60" />
+      {overlayOpacity !== false && <div className={cn('absolute inset-0', overlayOpacity)} />}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="text-center mb-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+        <div className={cn('text-center', titleMarginSmall ? 'mb-2' : 'mb-6')}>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">
             {title}
           </h2>
-          {subtitle && <p className="text-sm text-gray-300">{subtitle}</p>}
+          {subtitle && <p className="text-xs text-gray-300">{subtitle}</p>}
         </div>
         <div
           className={cn(
@@ -40,7 +55,13 @@ export function LinkGridSection({
           )}
         >
           {items.map((item) => (
-            <LinkCard key={item.href} item={item} />
+            <LinkCard
+              key={item.href}
+              item={item}
+              className={cardClassName}
+              titleClassName={cardTitleClassName}
+              descriptionClassName={cardDescriptionClassName}
+            />
           ))}
         </div>
       </div>

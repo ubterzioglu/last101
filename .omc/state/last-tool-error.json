@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cd \\\"C:/.temp_private/.0000last\\\" && git show --name-only HEAD | grep -i \\\"env.example\\\" && echo \\\"---\\\" && git log --oneline -3\",\"description\":\"Verify .env.example not in latest commit\"}",
-  "error": "Exit code 1",
-  "timestamp": "2026-03-22T13:05:33.291Z",
-  "retry_count": 1
-}

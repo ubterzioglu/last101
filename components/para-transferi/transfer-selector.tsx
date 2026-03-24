@@ -383,7 +383,7 @@ export function TransferSelector() {
         {/* Ana Sayfaya Dön */}
         <Link
           href="/"
-          className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity"
+          className="mt-2 w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity"
         >
           Ana Sayfaya Dön
         </Link>
@@ -504,7 +504,7 @@ export function TransferSelector() {
           </span>
         </div>
       </div>
-      <Link href="/" className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+      <Link href="/" className="mt-2 w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
         Ana Sayfaya Dön
       </Link>
     </Section>

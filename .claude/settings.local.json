@@ -84,7 +84,9 @@
       "Bash(grep -v \"^$\")",
       "Bash(for f:*)",
       "Bash(do sed:*)",
-      "Bash(sed -i '/eslint-disable.*typescript-eslint/d' \"$f\")"
+      "Bash(sed -i '/eslint-disable.*typescript-eslint/d' \"$f\")",
+      "Bash(head -15 grep -rn \"Nasıl Çalışır\\\\|showInfo\" \"C:/.temp_private/.0000last/app/\\(site\\)/para-transferi/\")",
+      "Bash(cat C:/Users/baris-terzioglu/.claude/mcp-configs/*.json)"
     ]
   }
 }
