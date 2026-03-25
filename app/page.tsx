@@ -5,8 +5,8 @@ import { LinkGridSection } from '@/components/home/LinkGridSection';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
 import { ArrowUpIcon, WhatsAppIcon } from '@/components/icons/ContactIcons';
 import { cn } from '@/lib/utils/cn';
+import { NEWS_ITEMS } from '@/lib/content/news';
 import {
-  NEWS_ITEMS,
   TOOL_ITEMS,
   OTHER_LINK_ITEMS,
 } from '@/constants/home-data';
@@ -115,21 +115,22 @@ export default function HomePage() {
         heightClassName="h-[360px]"
       >
         <div className="w-full">
-          <div className="text-center mb-6 sm:mb-8">
+          <div className="text-center mb-4 sm:mb-5">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
               Topluluğumuza Katılın
             </h2>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <a
-                href="https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-500 text-white text-sm sm:text-base font-medium rounded-md hover:bg-green-600 transition-colors"
-              >
-                <WhatsAppIcon className="w-5 h-5" />
-                WhatsApp Topluluğuna Katıl
-              </a>
-            </div>
+          </div>
+
+          <div className="flex justify-center mb-4 sm:mb-5">
+            <a
+              href="https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-500 text-white text-sm sm:text-base font-medium rounded-md hover:bg-green-600 transition-colors"
+            >
+              <WhatsAppIcon className="w-5 h-5" />
+              WhatsApp Topluluğuna Katıl
+            </a>
           </div>
 
           <div className="text-center mb-4 sm:mb-6">

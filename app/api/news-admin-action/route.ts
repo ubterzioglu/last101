@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 
-const ALLOWED_ACTIONS = new Set(['set_category', 'set_status', 'delete']);
+const ALLOWED_ACTIONS = new Set(['create', 'set_category', 'set_status', 'delete']);
 const ALLOWED_CATEGORIES = new Set(['Almanya', 'Türkiye', 'Avrupa', 'Dünya']);
 const ALLOWED_STATUSES = new Set(['draft', 'published']);
 
@@ -30,6 +30,28 @@ function normalizeStatus(value: unknown): string {
   return ALLOWED_STATUSES.has(safe) ? safe : '';
 }
 
+function normalizeText(value: unknown, maxLength: number): string {
+  return String(value || '').trim().slice(0, maxLength);
+}
+
+function normalizeOptionalUrl(value: unknown): string {
+  const safe = String(value || '').trim().slice(0, 1000);
+  if (!safe) return '';
+
+  try {
+    const parsed = new URL(safe);
+    return parsed.toString();
+  } catch {
+    return '';
+  }
+}
+
+function normalizeReadingMinutes(value: unknown): number {
+  const parsed = Number.parseInt(String(value || ''), 10);
+  if (!Number.isFinite(parsed)) return 3;
+  return Math.min(Math.max(parsed, 1), 60);
+}
+
 export async function POST(request: NextRequest) {
   const auth = await isAdminAuthorized(request);
   if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
@@ -44,11 +66,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const id = String(body.id || '').trim();
   const action = normalizeAction(body.action);
+  const id = String(body.id || '').trim();
 
-  if (!id) return NextResponse.json({ error: 'id is required' }, { status: 400 });
   if (!action) return NextResponse.json({ error: 'action is required' }, { status: 400 });
+  if (action !== 'create' && !id) return NextResponse.json({ error: 'id is required' }, { status: 400 });
 
   const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
   const serviceRoleKey = normalizeEnvValue(
@@ -66,6 +88,41 @@ export async function POST(request: NextRequest) {
   });
 
   try {
+    if (action === 'create') {
+      const title = normalizeText(body.title, 180);
+      const summary = normalizeText(body.summary, 600);
+      const category = normalizeCategory(body.category) || 'Almanya';
+      const status = normalizeStatus(body.status) || 'draft';
+      const coverImageUrl = normalizeOptionalUrl(body.coverImageUrl);
+      const sourceName = normalizeText(body.sourceName, 120);
+      const sourceUrl = normalizeOptionalUrl(body.sourceUrl);
+      const readingMinutes = normalizeReadingMinutes(body.readingMinutes);
+
+      if (!title) return NextResponse.json({ error: 'title is required' }, { status: 400 });
+
+      const { data, error } = await supabase
+        .from('news_posts')
+        .insert([
+          {
+            category,
+            title,
+            summary: summary || null,
+            cover_image_url: coverImageUrl || null,
+            source_name: sourceName || null,
+            source_url: sourceUrl || null,
+            reading_minutes: readingMinutes,
+            status,
+            published_at: status === 'published' ? new Date().toISOString() : null,
+          },
+        ])
+        .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status')
+        .maybeSingle();
+
+      if (error) throw error;
+
+      return NextResponse.json({ ok: true, action: 'create', data }, { status: 201 });
+    }
+
     if (action === 'delete') {
       const { error } = await supabase.from('news_posts').delete().eq('id', id);
       if (error) throw error;

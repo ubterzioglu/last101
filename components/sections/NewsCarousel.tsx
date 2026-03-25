@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 interface NewsItem {
   id: string;
+  slug?: string;
+  href?: string;
   title: string;
   excerpt: string;
   image: string;
@@ -59,7 +61,7 @@ export function NewsCarousel({ items }: NewsCarouselProps) {
                   </p>
                 </div>
                 <Link 
-                  href="#" 
+                  href={item.href || '/haberler'} 
                   className="inline-flex items-center text-sm text-google-blue hover:text-blue-700 font-medium transition-colors mt-2"
                 >
                   Devamını Oku →

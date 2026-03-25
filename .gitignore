@@ -44,3 +44,6 @@ next-env.d.ts
 # Old repo backup
 .0old/
 .0temp/
+
+# agent session memory
+.omc/

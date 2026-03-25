@@ -147,7 +147,7 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
   },
   {
     href: '/belgeler',
-    topLabel: 'YARARLI BELGELER',
+    topLabel: 'BELGELER',
     label: 'Yararlı Belgeler',
     description: 'İhtiyacınız olan belgeler ve formlar.',
     image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop',
@@ -161,7 +161,7 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
   },
   {
     href: '/hakkimizda',
-    topLabel: 'TÜRK UZMAN',
+    topLabel: 'HAKKIMIZDA',
     label: 'Biz kimiz?',
     description: 'almanya101 ekibini tanıyın!',
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop',
