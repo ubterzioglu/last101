@@ -3,10 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createArticleMetadata } from '@/lib/seo/metadata';
 import {
-  getAllNewsArticles,
-  getNewsArticleBySlug,
-  getRelatedNewsArticles,
-} from '@/lib/content/news';
+  getPublishedNewsArticleBySlug,
+  getRelatedPublishedNewsArticles,
+} from '@/lib/public-news';
 
 interface NewsDetailPageProps {
   params: Promise<{
@@ -14,20 +13,16 @@ interface NewsDetailPageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  return getAllNewsArticles().map((article) => ({
-    slug: article.slug,
-  }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: NewsDetailPageProps) {
   const { slug } = await params;
-  const article = getNewsArticleBySlug(slug);
+  const article = await getPublishedNewsArticleBySlug(slug);
 
   if (!article) {
     return createArticleMetadata({
       title: 'Haber bulunamadı',
-      description: 'Aradığınız haber bulunamadı.',
+      description: 'Aradığınız yayınlanmış haber bulunamadı.',
       publishedTime: new Date().toISOString(),
       path: `/haberler/${slug}`,
     });
@@ -35,9 +30,9 @@ export async function generateMetadata({ params }: NewsDetailPageProps) {
 
   return createArticleMetadata({
     title: article.title,
-    description: article.excerpt,
+    description: article.excerpt || article.title,
     publishedTime: article.publishedAt,
-    path: `/haberler/${article.slug}`,
+    path: article.href,
     image: article.image,
     tags: [article.category, 'Haberler', 'Almanya'],
   });
@@ -45,11 +40,11 @@ export async function generateMetadata({ params }: NewsDetailPageProps) {
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const { slug } = await params;
-  const article = getNewsArticleBySlug(slug);
+  const article = await getPublishedNewsArticleBySlug(slug);
 
   if (!article) notFound();
 
-  const relatedArticles = getRelatedNewsArticles(article.slug);
+  const relatedArticles = await getRelatedPublishedNewsArticles(article.id);
 
   return (
     <div className="bg-black text-white">
@@ -77,14 +72,8 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
                 {article.title}
               </h1>
 
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-white/78">
-                {article.excerpt}
-              </p>
-
-              {article.sourceName ? (
-                <div className="mt-6 text-sm text-white/55">
-                  Kaynak: {article.sourceName}
-                </div>
+              {article.excerpt ? (
+                <p className="mt-5 max-w-3xl text-lg leading-8 text-white/78">{article.excerpt}</p>
               ) : null}
             </div>
 
@@ -105,40 +94,73 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
       <section className="container grid gap-12 py-14 md:grid-cols-[minmax(0,1fr)_320px] md:py-20">
         <article className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 md:p-10">
           <div className="space-y-6 text-base leading-8 text-white/84 md:text-lg">
-            {article.body.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
+            {article.excerpt ? (
+              <div>
+                <h2 className="text-2xl font-bold">Özet</h2>
+                <p className="mt-4">{article.excerpt}</p>
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-2xl font-bold">Özet</h2>
+                <p className="mt-4 text-white/70">Bu kayıt için ayrıca özet metni girilmemiş.</p>
+              </div>
+            )}
+
+            <div className="grid gap-4 rounded-[1.5rem] border border-white/10 bg-black/20 p-5 md:grid-cols-2">
+              <div>
+                <div className="text-sm uppercase tracking-[0.16em] text-white/45">Yayın Tarihi</div>
+                <div className="mt-2 font-semibold">{article.dateLabel}</div>
+              </div>
+              <div>
+                <div className="text-sm uppercase tracking-[0.16em] text-white/45">Kategori</div>
+                <div className="mt-2 font-semibold">{article.category}</div>
+              </div>
+              <div>
+                <div className="text-sm uppercase tracking-[0.16em] text-white/45">Okuma Süresi</div>
+                <div className="mt-2 font-semibold">{article.readingMinutes} dakika</div>
+              </div>
+              <div>
+                <div className="text-sm uppercase tracking-[0.16em] text-white/45">Kaynak</div>
+                <div className="mt-2 font-semibold">{article.sourceName || 'Belirtilmedi'}</div>
+              </div>
+            </div>
+
+            {article.sourceUrl ? (
+              <div>
+                <a
+                  href={article.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex rounded-full bg-[#01A1F1] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#139ce6]"
+                >
+                  Kaynak bağlantısını aç
+                </a>
+              </div>
+            ) : null}
           </div>
         </article>
 
         <aside className="space-y-6">
-          <div className="rounded-[2rem] border border-white/10 bg-[#01A1F1]/12 p-6">
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#7fd5ff]">
-              Haber Yönetimi İçin Hazır Alan
-            </div>
-            <h2 className="mt-3 text-2xl font-bold">Bu detay sayfası artık canlı bir temel sunuyor.</h2>
-            <p className="mt-3 text-sm leading-7 text-white/72">
-              Bir sonraki adımda aynı şablonu admin üzerinden oluşturulan haber kayıtlarına bağlayabiliriz.
-              Böylece ana sayfa kartı, haber listesi ve detay sayfası tek kaynaktan beslenecek.
-            </p>
-          </div>
-
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
             <h2 className="text-xl font-bold">Diğer Haberler</h2>
             <div className="mt-5 space-y-4">
-              {relatedArticles.map((related) => (
-                <Link
-                  key={related.slug}
-                  href={`/haberler/${related.slug}`}
-                  className="block rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-white/25 hover:bg-white/[0.06]"
-                >
-                  <div className="text-xs uppercase tracking-[0.16em] text-white/45">
-                    {related.category}
-                  </div>
-                  <div className="mt-2 font-semibold leading-6">{related.title}</div>
-                  <div className="mt-2 text-sm text-white/60">{related.dateLabel}</div>
-                </Link>
-              ))}
+              {relatedArticles.length === 0 ? (
+                <p className="text-sm leading-7 text-white/65">Şu anda başka yayınlanmış haber bulunmuyor.</p>
+              ) : (
+                relatedArticles.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={related.href}
+                    className="block rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-white/25 hover:bg-white/[0.06]"
+                  >
+                    <div className="text-xs uppercase tracking-[0.16em] text-white/45">
+                      {related.category}
+                    </div>
+                    <div className="mt-2 font-semibold leading-6">{related.title}</div>
+                    <div className="mt-2 text-sm text-white/60">{related.dateLabel}</div>
+                  </Link>
+                ))
+              )}
             </div>
           </div>
         </aside>

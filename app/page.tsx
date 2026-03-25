@@ -5,7 +5,7 @@ import { LinkGridSection } from '@/components/home/LinkGridSection';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
 import { ArrowUpIcon, WhatsAppIcon } from '@/components/icons/ContactIcons';
 import { cn } from '@/lib/utils/cn';
-import { NEWS_ITEMS } from '@/lib/content/news';
+import { getPublishedNewsItems } from '@/lib/public-news';
 import {
   TOOL_ITEMS,
   OTHER_LINK_ITEMS,
@@ -18,6 +18,8 @@ export const metadata = createMetadata({
     "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi, iş ilanları ve topluluk platformu.",
   path: '/',
 });
+
+export const dynamic = 'force-dynamic';
 
 const HOMEPAGE_ITEMS = [...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
 
@@ -57,7 +59,9 @@ function SectionDivider() {
   return <div className="h-[10px] bg-black" />;
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const newsItems = await getPublishedNewsItems(12);
+
   return (
     <>
       <section
@@ -104,7 +108,7 @@ export default function HomePage() {
             Haberler & Duyurular & Güncellemeler
           </h2>
         </div>
-        <NewsCarousel items={NEWS_ITEMS} />
+        <NewsCarousel items={newsItems} />
       </BackgroundSection>
 
       <SectionDivider />

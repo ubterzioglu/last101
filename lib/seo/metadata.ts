@@ -14,6 +14,7 @@ export function createMetadata(options: {
   const { title, description, path = '', image = '/images/og-default.jpg', noIndex = false } = options;
 
   const url = `${SITE_URL}${path}`;
+  const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${SITE_URL}${image}`;
   const fullTitle = `${title} | ${SITE_NAME}`;
 
   return {
@@ -30,7 +31,7 @@ export function createMetadata(options: {
       url,
       images: [
         {
-          url: `${SITE_URL}${image}`,
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: title,
@@ -41,7 +42,7 @@ export function createMetadata(options: {
       ...DEFAULT_META.twitter,
       title: fullTitle,
       description,
-      images: [`${SITE_URL}${image}`],
+      images: [imageUrl],
     },
     robots: noIndex ? 'noindex, nofollow' : 'index, follow',
   };

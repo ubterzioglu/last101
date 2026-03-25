@@ -8,7 +8,7 @@ interface NewsItem {
   slug?: string;
   href?: string;
   title: string;
-  excerpt: string;
+  excerpt?: string;
   image: string;
   date: string;
   category?: string;
@@ -19,6 +19,17 @@ interface NewsCarouselProps {
 }
 
 export function NewsCarousel({ items }: NewsCarouselProps) {
+  if (items.length === 0) {
+    return (
+      <div className="mx-auto max-w-2xl rounded-3xl border border-white/15 bg-white/10 px-6 py-10 text-center text-white">
+        <h3 className="text-xl font-bold">Henüz yayında haber bulunmuyor.</h3>
+        <p className="mt-3 text-sm leading-7 text-white/75">
+          Admin panelinden yayınlanan haberler burada otomatik olarak görünecek.
+        </p>
+      </div>
+    );
+  }
+
   // Duplicate items many times for seamless infinite scroll
   const duplicatedItems = [...items, ...items, ...items, ...items, ...items, ...items];
 
@@ -56,9 +67,11 @@ export function NewsCarousel({ items }: NewsCarouselProps) {
                   <h3 className="text-base font-bold text-gray-900 mt-1 line-clamp-2 leading-tight">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">
-                    {item.excerpt}
-                  </p>
+                  {item.excerpt ? (
+                    <p className="text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">
+                      {item.excerpt}
+                    </p>
+                  ) : null}
                 </div>
                 <Link 
                   href={item.href || '/haberler'} 
