@@ -25,6 +25,7 @@ interface NewsRow {
   reading_minutes: number | null;
   published_at: string | null;
   created_at: string | null;
+  show_in_carousel: boolean | null;
   status: 'draft' | 'published';
 }
 
@@ -46,6 +47,7 @@ const initialForm = {
   sourceUrl: '',
   category: 'Almanya' as NewsCategory,
   readingMinutes: '3',
+  showInCarousel: true,
   status: 'draft' as 'draft' | 'published',
 };
 
@@ -190,6 +192,7 @@ export default function HomeNewsAdminClient() {
         sourceUrl: form.sourceUrl,
         category: form.category,
         readingMinutes: form.readingMinutes,
+        showInCarousel: form.showInCarousel,
         status: form.status,
       });
 
@@ -214,6 +217,11 @@ export default function HomeNewsAdminClient() {
 
   async function handleCategorySave(item: NewsRow, category: NewsCategory) {
     await runNewsAction({ action: 'set_category', id: item.id, category });
+    await loadNews();
+  }
+
+  async function handleCarouselToggle(item: NewsRow, showInCarousel: boolean) {
+    await runNewsAction({ action: 'set_carousel', id: item.id, showInCarousel });
     await loadNews();
   }
 
@@ -437,6 +445,23 @@ export default function HomeNewsAdminClient() {
               />
             </label>
 
+            <label className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
+              <input
+                type="checkbox"
+                checked={form.showInCarousel}
+                onChange={(event) =>
+                  setForm((prev) => ({ ...prev, showInCarousel: event.target.checked }))
+                }
+                className="mt-1 h-4 w-4 rounded border-white/20 bg-black"
+              />
+              <span>
+                <span className="block text-sm font-semibold text-white">Ana sayfa carousel'inde göster</span>
+                <span className="mt-1 block text-xs leading-6 text-white/60">
+                  Haber yayında olsa bile yalnızca bu seçenek açıksa ana sayfadaki carousel'de görünür.
+                </span>
+              </span>
+            </label>
+
             {submitMessage ? (
               <div className="rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
                 {submitMessage}
@@ -579,9 +604,30 @@ export default function HomeNewsAdminClient() {
                       <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-white/58">
                         <span>Okuma: {item.reading_minutes || 0} dk</span>
                         {item.source_name ? <span>Kaynak: {item.source_name}</span> : null}
+                        <span>
+                          Carousel: {item.show_in_carousel ? 'Açık' : 'Kapalı'}
+                        </span>
                       </div>
 
                       <div className="mt-5 flex flex-wrap gap-3">
+                        {item.show_in_carousel ? (
+                          <button
+                            type="button"
+                            onClick={() => void handleCarouselToggle(item, false)}
+                            className="rounded-full border border-yellow-300/20 bg-yellow-500/10 px-4 py-2 text-sm font-semibold text-yellow-100 transition hover:bg-yellow-500/20"
+                          >
+                            Carousel'den Kaldır
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => void handleCarouselToggle(item, true)}
+                            className="rounded-full border border-emerald-300/20 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/20"
+                          >
+                            Carousel'e Ekle
+                          </button>
+                        )}
+
                         {item.status === 'published' ? (
                           <button
                             type="button"

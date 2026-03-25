@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
   try {
     let query = supabase
       .from('news_posts')
-      .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status')
+      .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status, show_in_carousel')
       .order('published_at', { ascending: false, nullsFirst: false })
       .order('created_at', { ascending: false })
       .limit(limit);

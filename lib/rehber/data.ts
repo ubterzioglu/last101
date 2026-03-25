@@ -12,6 +12,46 @@ function getSupabase() {
   return supabaseClient!;
 }
 
+type ProviderRow = {
+  id: string;
+  type: ProviderType;
+  city: string;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  website?: string | null;
+  status: 'active' | 'pending' | 'inactive';
+  created_at: string;
+  updated_at: string;
+  name?: string | null;
+  display_name?: string | null;
+  description?: string | null;
+  notes_public?: string | null;
+  provider_tags?: { tag_id: string }[];
+  gastronomy_provider_tags?: { tag_id: string }[];
+};
+
+function normalizeProviders(rows: ProviderRow[] | null | undefined): Provider[] {
+  if (!rows) return [];
+
+  return rows.map((row) => ({
+    id: row.id,
+    type: row.type,
+    name: row.name ?? row.display_name ?? '',
+    city: row.city ?? '',
+    address: row.address ?? undefined,
+    phone: row.phone ?? undefined,
+    email: row.email ?? undefined,
+    website: row.website ?? undefined,
+    description: row.description ?? row.notes_public ?? undefined,
+    status: row.status,
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+    provider_tags: row.provider_tags,
+    gastronomy_provider_tags: row.gastronomy_provider_tags,
+  }));
+}
+
 // Eski sistemdeki tablolar:
 // - providers (hizmet rehberi)
 // - provider_tags (hizmet etiketleri ilişki)
@@ -44,7 +84,7 @@ export async function getServiceProviders(type: ProviderType, city?: string) {
     return [];
   }
 
-  return data as Provider[];
+  return normalizeProviders(data as ProviderRow[]);
 }
 
 /**
@@ -71,7 +111,7 @@ export async function getGastronomyProviders(type: ProviderType, city?: string) 
     return [];
   }
 
-  return data as Provider[];
+  return normalizeProviders(data as ProviderRow[]);
 }
 
 /**
@@ -100,7 +140,7 @@ export async function getTamirciProviders(city?: string) {
     return [];
   }
 
-  return data as Provider[];
+  return normalizeProviders(data as ProviderRow[]);
 }
 
 /**

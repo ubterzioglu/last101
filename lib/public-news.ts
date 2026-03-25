@@ -41,6 +41,7 @@ interface NewsRow {
   reading_minutes: number | null;
   published_at: string | null;
   created_at: string | null;
+  show_in_carousel?: boolean | null;
 }
 
 function normalizeEnvValue(value: unknown): string {
@@ -123,19 +124,23 @@ function mapRowToArticle(row: NewsRow): PublicNewsArticle {
   };
 }
 
-async function fetchPublishedNewsRows(limit = 24): Promise<NewsRow[]> {
+async function fetchPublishedNewsRows(limit = 24, onlyCarousel = false): Promise<NewsRow[]> {
   noStore();
 
   const supabase = createNewsServiceClient();
   if (!supabase) return [];
 
-  const { data, error } = await supabase
+  let query = supabase
     .from('news_posts')
-    .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at')
+    .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, show_in_carousel')
     .eq('status', 'published')
     .order('published_at', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false })
     .limit(limit);
+
+  if (onlyCarousel) query = query.eq('show_in_carousel', true);
+
+  const { data, error } = await query;
 
   if (error) {
     console.error('fetchPublishedNewsRows failed:', error);
@@ -151,7 +156,8 @@ export async function getPublishedNewsArticles(limit = 24): Promise<PublicNewsAr
 }
 
 export async function getPublishedNewsItems(limit = 12): Promise<PublicNewsItem[]> {
-  const articles = await getPublishedNewsArticles(limit);
+  const rows = await fetchPublishedNewsRows(limit, true);
+  const articles = rows.map(mapRowToArticle);
   return articles.map((article) => ({
     id: article.id,
     slug: article.slug,
@@ -175,7 +181,7 @@ export async function getPublishedNewsArticleBySlug(slug: string): Promise<Publi
 
   const { data, error } = await supabase
     .from('news_posts')
-    .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at')
+    .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, show_in_carousel')
     .eq('id', id)
     .eq('status', 'published')
     .maybeSingle();

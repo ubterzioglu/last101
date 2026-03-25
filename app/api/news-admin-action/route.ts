@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 
-const ALLOWED_ACTIONS = new Set(['create', 'set_category', 'set_status', 'delete']);
+const ALLOWED_ACTIONS = new Set(['create', 'set_category', 'set_status', 'set_carousel', 'delete']);
 const ALLOWED_CATEGORIES = new Set(['Almanya', 'Türkiye', 'Avrupa', 'Dünya']);
 const ALLOWED_STATUSES = new Set(['draft', 'published']);
 
@@ -52,6 +52,15 @@ function normalizeReadingMinutes(value: unknown): number {
   return Math.min(Math.max(parsed, 1), 60);
 }
 
+function normalizeBoolean(value: unknown, fallback = false): boolean {
+  if (typeof value === 'boolean') return value;
+  const safe = String(value || '').trim().toLowerCase();
+  if (!safe) return fallback;
+  if (['true', '1', 'yes', 'on'].includes(safe)) return true;
+  if (['false', '0', 'no', 'off'].includes(safe)) return false;
+  return fallback;
+}
+
 export async function POST(request: NextRequest) {
   const auth = await isAdminAuthorized(request);
   if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
@@ -97,6 +106,7 @@ export async function POST(request: NextRequest) {
       const sourceName = normalizeText(body.sourceName, 120);
       const sourceUrl = normalizeOptionalUrl(body.sourceUrl);
       const readingMinutes = normalizeReadingMinutes(body.readingMinutes);
+      const showInCarousel = normalizeBoolean(body.showInCarousel, true);
 
       if (!title) return NextResponse.json({ error: 'title is required' }, { status: 400 });
 
@@ -111,11 +121,12 @@ export async function POST(request: NextRequest) {
             source_name: sourceName || null,
             source_url: sourceUrl || null,
             reading_minutes: readingMinutes,
+            show_in_carousel: showInCarousel,
             status,
             published_at: status === 'published' ? new Date().toISOString() : null,
           },
         ])
-        .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status')
+        .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status, show_in_carousel')
         .maybeSingle();
 
       if (error) throw error;
@@ -164,6 +175,21 @@ export async function POST(request: NextRequest) {
       if (error) throw error;
       if (!data) return NextResponse.json({ error: 'Record not found' }, { status: 404 });
       return NextResponse.json({ ok: true, action: 'set_status', data });
+    }
+
+    if (action === 'set_carousel') {
+      const showInCarousel = normalizeBoolean(body.showInCarousel, false);
+
+      const { data, error } = await supabase
+        .from('news_posts')
+        .update({ show_in_carousel: showInCarousel })
+        .eq('id', id)
+        .select('*')
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) return NextResponse.json({ error: 'Record not found' }, { status: 404 });
+      return NextResponse.json({ ok: true, action: 'set_carousel', data });
     }
 
     return NextResponse.json({ error: 'Unsupported action' }, { status: 400 });
