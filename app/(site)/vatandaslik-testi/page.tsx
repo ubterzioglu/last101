@@ -375,7 +375,7 @@ export default function VatandaslikTestiPage() {
               <p className="text-gray-900 font-bold text-lg leading-tight mb-1">{mevcutSoru.soru_almanca}</p>
               <p className="text-gray-500 text-sm mb-4">{mevcutSoru.soru_turkce}</p>
 
-              <div className="space-y-2">
+              <div className="mx-auto w-full max-w-[560px] space-y-2 px-[50px] sm:px-0">
                 {Object.entries(mevcutSoru.secenekler).map(([key, value]) => {
                   const isSelected = secilenCevap === key;
                   const isCorrect = mevcutSoru.dogru_cevap === key;
@@ -416,7 +416,7 @@ export default function VatandaslikTestiPage() {
                 </button>
                 <button
                   onClick={testiSifirla}
-                  className="w-full rounded-lg border border-gray-200 text-gray-500 font-medium py-2.5 hover:bg-gray-50 transition-colors text-sm"
+                  className="w-full rounded-lg border-2 border-google-blue bg-google-blue text-white font-medium py-2.5 hover:opacity-90 transition-opacity text-sm"
                 >
                   Sınav Modunu Değiştir
                 </button>
@@ -462,7 +462,7 @@ export default function VatandaslikTestiPage() {
 
             <button
               onClick={testiSifirla}
-              className="w-full flex items-center justify-center rounded-xl border-2 border-google-orange bg-google-orange text-white font-semibold py-3 hover:opacity-90 transition-opacity"
+              className="w-full flex items-center justify-center rounded-xl border-2 border-google-blue bg-google-blue text-white font-semibold py-3 hover:opacity-90 transition-opacity"
             >
               Sınav Modunu Değiştir
             </button>

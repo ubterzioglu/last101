@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "node .next/standalone/server.js",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@supabase/ssr": "^0.9.0",
@@ -16,7 +16,7 @@
     "@types/react-dom": "^19.0.2",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
-    "eslint": "^8.57.1",
+    "eslint": "^9",
     "eslint-config-next": "^15.1.4",
     "lucide-react": "^0.468.0",
     "next": "^15.1.4",

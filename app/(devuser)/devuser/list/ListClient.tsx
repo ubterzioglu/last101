@@ -479,11 +479,11 @@ export function ListClient() {
   // Stats
   const [stats, setStats] = useState({ total: 0, jobSeekers: 0, freelancers: 0, mentors: 0, employers: 0 });
 
-  function setAuthStatus(message: string, type = '') {
+  const setAuthStatus = useCallback((message: string, type = '') => {
     setAuthStatusState({ message, type });
-  }
+  }, []);
 
-  async function getSessionToken(): Promise<string | null> {
+  const getSessionToken = useCallback(async (): Promise<string | null> => {
     try {
       const client = await getDevUserClient();
       const { data, error } = await client.auth.getSession();
@@ -492,9 +492,9 @@ export function ListClient() {
     } catch {
       return null;
     }
-  }
+  }, []);
 
-  async function fetchUsersWithToken(token: string) {
+  const fetchUsersWithToken = useCallback(async (token: string) => {
     const response = await withTimeout(
       fetch(USERS_API_URL, { method: 'GET', headers: { Authorization: `Bearer ${token}` } }),
       REQUEST_TIMEOUT_MS,
@@ -508,7 +508,22 @@ export function ListClient() {
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
     return { ok: true, unauthorized: false, forbidden: false, payload, data: (payload.data || []) as DevUser[] };
-  }
+  }, []);
+
+  const signOutSilently = useCallback(async () => {
+    try {
+      const client = await getDevUserClient();
+      await client.auth.signOut();
+    } catch {
+      // silent
+    }
+    setIsAuthed(false);
+    setAllUsers([]);
+    setFilteredUsers([]);
+    setUsersLoaded(false);
+    activeSessionUserIdRef.current = '';
+    setActiveAccountEmail('-');
+  }, []);
 
   const loadUsers = useCallback(async (): Promise<{ ok: boolean; reason: string }> => {
     setIsLoading(true);
@@ -572,23 +587,7 @@ export function ListClient() {
     } finally {
       setIsLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  async function signOutSilently() {
-    try {
-      const client = await getDevUserClient();
-      await client.auth.signOut();
-    } catch {
-      // silent
-    }
-    setIsAuthed(false);
-    setAllUsers([]);
-    setFilteredUsers([]);
-    setUsersLoaded(false);
-    activeSessionUserIdRef.current = '';
-    setActiveAccountEmail('-');
-  }
+  }, [fetchUsersWithToken, getSessionToken, setAuthStatus, signOutSilently]);
 
   async function signOut() {
     const client = await getDevUserClient();
@@ -700,7 +699,7 @@ export function ListClient() {
       }
     }
     initAuth();
-  }, [loadUsers]);
+  }, [loadUsers, setAuthStatus]);
 
   // Update stats when allUsers or totalRegisteredCount changes
   useEffect(() => {

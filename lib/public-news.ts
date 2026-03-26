@@ -53,18 +53,25 @@ function normalizeEnvValue(value: unknown): string {
   return raw;
 }
 
-function createNewsServiceClient() {
+function createNewsReadClient() {
   const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_SERVICE_KEY ||
-    process.env.SUPABASE_SECRET_KEY ||
-    ''
-  );
+  const keyCandidates = [
+    process.env.SUPABASE_ANON_KEY,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY,
+    process.env.SUPABASE_PUBLISHABLE_KEY,
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    process.env.SUPABASE_SERVICE_KEY,
+    process.env.SUPABASE_SECRET_KEY,
+  ].map(normalizeEnvValue);
+  const revokedKeys = new Set([
+    'sb_publishable_vBFFGmqZ3eKr5oqm_dbfMA_5euLMj2x',
+  ]);
+  const accessKey = keyCandidates.find((value) => value && !revokedKeys.has(value)) || '';
 
-  if (!supabaseUrl || !serviceRoleKey) return null;
+  if (!supabaseUrl || !accessKey) return null;
 
-  return createClient(supabaseUrl, serviceRoleKey, {
+  return createClient(supabaseUrl, accessKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }
@@ -127,7 +134,7 @@ function mapRowToArticle(row: NewsRow): PublicNewsArticle {
 async function fetchPublishedNewsRows(limit = 24, onlyCarousel = false): Promise<NewsRow[]> {
   noStore();
 
-  const supabase = createNewsServiceClient();
+  const supabase = createNewsReadClient();
   if (!supabase) return [];
 
   let query = supabase
@@ -176,7 +183,7 @@ export async function getPublishedNewsArticleBySlug(slug: string): Promise<Publi
 
   noStore();
 
-  const supabase = createNewsServiceClient();
+  const supabase = createNewsReadClient();
   if (!supabase) return undefined;
 
   const { data, error } = await supabase

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 
@@ -26,7 +27,7 @@ const css = `
   .grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 50px 50px; z-index: 0; pointer-events: none; }
   .container { max-width: 1400px; margin: 0 auto; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 1; }
   .top-logo { text-align: center; margin-bottom: 20px; padding-top: 10px; }
-  .top-logo img { width: 300px; height: auto; object-fit: contain; box-shadow: 0 8px 32px rgba(66,133,244,0.3); }
+  .top-logo-image { width: 300px; height: auto; object-fit: contain; box-shadow: 0 8px 32px rgba(66,133,244,0.3); }
   .header { display: flex; align-items: center; justify-content: center; padding: 10px 0 30px; border-bottom: 1px solid var(--glass-border); margin-bottom: 30px; position: relative; }
   .title-group h1 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.5px; }
   .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 14px; padding: 8px 16px; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 50px; backdrop-filter: blur(10px); transition: all 0.3s ease; position: absolute; left: 0; }
@@ -808,9 +809,16 @@ export default function AdminPage() {
         <style>{css}</style>
         <div className="bg-animation"><canvas ref={canvasRef} id="code-canvas" /></div>
         <div className="grid-overlay" />
-        <div className="auth-gate">
+          <div className="auth-gate">
           <div className="top-logo">
-            <img src="/almanya101lragetransparent.png" alt="almanya101" />
+            <Image
+              src="/almanya101lragetransparent.png"
+              alt="almanya101"
+              width={420}
+              height={140}
+              className="top-logo-image"
+              priority
+            />
           </div>
           <div className="auth-card">
             <div style={{ textAlign: 'center', fontSize: 14, fontWeight: 600, color: 'var(--google-red)', textTransform: 'lowercase', marginBottom: 8 }}>almanya101.de</div>
@@ -848,7 +856,14 @@ export default function AdminPage() {
 
       <div className="container">
         <div className="top-logo">
-          <img src="/almanya101lragetransparent.png" alt="almanya101" />
+          <Image
+            src="/almanya101lragetransparent.png"
+            alt="almanya101"
+            width={420}
+            height={140}
+            className="top-logo-image"
+            priority
+          />
         </div>
 
         <header className="header">

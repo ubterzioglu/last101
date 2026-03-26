@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { X } from 'lucide-react';
@@ -22,7 +23,14 @@ export function Header() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <img src="/almanya101header.png" alt={SITE_NAME} className="h-8 w-auto" />
+              <Image
+                src="/almanya101header.png"
+                alt={SITE_NAME}
+                width={420}
+                height={140}
+                className="h-8 w-auto"
+                priority
+              />
             </Link>
 
             {/* Menu Button + Home Button */}
