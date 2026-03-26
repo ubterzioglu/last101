@@ -85,7 +85,7 @@ export default async function HomePage() {
             title=""
             items={HOMEPAGE_ITEMS}
             className="bg-transparent min-h-0 h-auto py-0 mb-3"
-            gridClassName="grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 max-w-none"
+            gridClassName="grid-cols-[repeat(auto-fit,minmax(170px,1fr))] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 max-w-none"
             cardClassName="min-h-[190px] sm:min-h-[220px]"
             cardTitleClassName="text-xs sm:text-sm"
             cardDescriptionClassName="text-[11px] sm:text-xs leading-snug"
