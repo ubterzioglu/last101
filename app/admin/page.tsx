@@ -17,6 +17,14 @@ const ADMIN_SECTIONS = [
       'Ana sayfayı besleyen içerikleri ayrı bir panelde düzenle. İlk modül olarak haberler ve duyurular burada yer alıyor.',
     accent: 'border-[#FFBB00]/50 bg-[#FFBB00]/10',
   },
+  {
+    href: '/admin/hizmet-rehberi',
+    eyebrow: 'Hizmet Rehberi Admin',
+    title: 'Hizmet önerileri ve rehbere alma akışı',
+    description:
+      'Kullanıcıların gönderdiği doktor, avukat ve diğer hizmet önerilerini incele, onayla ve rehbere ekle.',
+    accent: 'border-[#F65314]/45 bg-[#F65314]/10',
+  },
 ];
 
 export default function AdminIndexPage() {

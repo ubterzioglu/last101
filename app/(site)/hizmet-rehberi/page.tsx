@@ -2,35 +2,34 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils/cn';
-import { 
-  PROVIDER_CATEGORIES, 
-  GERMAN_STATES, 
-  TAMIRCI_SUBTYPES,
+import {
+  PROVIDER_CATEGORIES,
+  type Category,
   type ProviderType,
   type Provider,
-  type Tag 
+  type Tag,
 } from '@/lib/rehber/types';
-import { 
-  getProvidersByCategory, 
+import {
+  getProvidersByCategory,
   getTagsByCategory,
   getAvailableCities,
-  getCategoryStats 
+  getCategoryStats,
 } from '@/lib/rehber/data';
-import { 
-  Search, 
-  MapPin, 
-  Filter, 
-  Phone, 
-  Mail, 
-  Globe, 
-  Building2,
+import {
+  Search,
+  MapPin,
+  Filter,
+  Phone,
+  Mail,
+  Globe,
   Users,
   Store,
   UtensilsCrossed,
@@ -47,47 +46,41 @@ import {
   Beef,
   Croissant,
   Brain,
-  UserPlus
+  UserPlus,
 } from 'lucide-react';
 
-// Kategori ikonları
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
-  doctor: <Stethoscope className="w-6 h-6" />,
-  lawyer: <Scale className="w-6 h-6" />,
-  terapist: <Brain className="w-6 h-6" />,
-  ebe: <UserPlus className="w-6 h-6" />,
-  tamir: <Wrench className="w-6 h-6" />,
-  nakliyat: <Truck className="w-6 h-6" />,
-  sigorta: <Shield className="w-6 h-6" />,
-  vergi_danismani: <Calculator className="w-6 h-6" />,
-  berber: <Scissors className="w-6 h-6" />,
-  kuafor: <Scissors className="w-6 h-6" />,
-  surucu_kursu: <Car className="w-6 h-6" />,
-  restaurant: <UtensilsCrossed className="w-6 h-6" />,
-  cafe: <Coffee className="w-6 h-6" />,
-  market: <ShoppingCart className="w-6 h-6" />,
-  kasap: <Beef className="w-6 h-6" />,
-  bakery: <Croissant className="w-6 h-6" />,
+  doctor: <Stethoscope className="h-5 w-5" />,
+  lawyer: <Scale className="h-5 w-5" />,
+  terapist: <Brain className="h-5 w-5" />,
+  ebe: <UserPlus className="h-5 w-5" />,
+  tamir: <Wrench className="h-5 w-5" />,
+  nakliyat: <Truck className="h-5 w-5" />,
+  sigorta: <Shield className="h-5 w-5" />,
+  vergi_danismani: <Calculator className="h-5 w-5" />,
+  berber: <Scissors className="h-5 w-5" />,
+  kuafor: <Scissors className="h-5 w-5" />,
+  surucu_kursu: <Car className="h-5 w-5" />,
+  restaurant: <UtensilsCrossed className="h-5 w-5" />,
+  cafe: <Coffee className="h-5 w-5" />,
+  market: <ShoppingCart className="h-5 w-5" />,
+  kasap: <Beef className="h-5 w-5" />,
+  bakery: <Croissant className="h-5 w-5" />,
 };
 
 export default function HizmetRehberiPage() {
-  // State
   const [selectedCategory, setSelectedCategory] = useState<ProviderType | 'all'>('doctor');
-  const [selectedCity, setSelectedCity] = useState<string>('');
+  const [selectedCity, setSelectedCity] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  
+
   const [providers, setProviders] = useState<Provider[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [cities, setCities] = useState<string[]>([]);
   const [stats, setStats] = useState<Record<string, number>>({});
-  
+
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'services' | 'gastronomy'>('services');
-
-  // İlk yükleme
-
-  // Kategori değiştiğinde verileri yükle
 
   const loadInitialData = useCallback(async () => {
     const statsData = await getCategoryStats();
@@ -107,6 +100,7 @@ export default function HizmetRehberiPage() {
       setTags([]);
       return;
     }
+
     const data = await getTagsByCategory(selectedCategory);
     setTags(data);
   }, [selectedCategory]);
@@ -116,50 +110,68 @@ export default function HizmetRehberiPage() {
     setCities(data);
   }, [selectedCategory]);
 
-  // Ä°lk yÃ¼kleme
   useEffect(() => {
     loadInitialData();
   }, [loadInitialData]);
 
-  // Kategori deÄŸiÅŸtiÄŸinde verileri yÃ¼kle
   useEffect(() => {
     loadProviders();
     loadTags();
     loadCities();
   }, [loadCities, loadProviders, loadTags]);
 
-  // Filtreleme
   const filteredProviders = useMemo(() => {
     let filtered = providers;
 
-    // Şehir filtresi
     if (selectedCity) {
-      filtered = filtered.filter(p => p.city === selectedCity);
+      filtered = filtered.filter((provider) => provider.city === selectedCity);
     }
 
-    // Arama filtresi
     if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(p => 
-        p.name.toLowerCase().includes(query) ||
-        p.city.toLowerCase().includes(query) ||
-        (p.description && p.description.toLowerCase().includes(query))
-      );
+      const query = searchQuery.toLocaleLowerCase('tr-TR');
+      filtered = filtered.filter((provider) => {
+        const haystack = [
+          provider.name,
+          provider.city,
+          provider.address || '',
+          provider.description || '',
+        ]
+          .join(' ')
+          .toLocaleLowerCase('tr-TR');
+
+        return haystack.includes(query);
+      });
     }
 
-    // Etiket filtresi
     if (selectedTags.length > 0) {
-      filtered = filtered.filter(p => {
-        const providerTagIds = p.provider_tags?.map(t => t.tag_id) || 
-                              p.gastronomy_provider_tags?.map(t => t.tag_id) || [];
-        return selectedTags.some(tagId => providerTagIds.includes(tagId));
+      filtered = filtered.filter((provider) => {
+        const providerTagIds =
+          provider.provider_tags?.map((tag) => tag.tag_id) ||
+          provider.gastronomy_provider_tags?.map((tag) => tag.tag_id) ||
+          [];
+
+        return selectedTags.some((tagId) => providerTagIds.includes(tagId));
       });
     }
 
     return filtered;
-  }, [providers, selectedCity, searchQuery, selectedTags]);
+  }, [providers, searchQuery, selectedCity, selectedTags]);
 
-  // Tab değiştiğinde kategori değiştir
+  const serviceCategories = PROVIDER_CATEGORIES.filter((category) => category.group === 'services');
+  const gastronomyCategories = PROVIDER_CATEGORIES.filter((category) => category.group === 'gastronomy');
+  const visibleCategories = activeTab === 'services' ? serviceCategories : gastronomyCategories;
+  const featuredCategories = visibleCategories.slice(0, 6);
+  const selectedCategoryMeta =
+    PROVIDER_CATEGORIES.find((category) => category.id === selectedCategory) || null;
+
+  const activeFilterPills = [
+    selectedCity ? `Şehir: ${selectedCity}` : '',
+    searchQuery ? `Arama: ${searchQuery}` : '',
+    selectedTags.length > 0 ? `Uzmanlık: ${selectedTags.length} seçili` : '',
+  ].filter(Boolean);
+
+  const hasActiveFilters = activeFilterPills.length > 0;
+
   const handleTabChange = (tab: 'services' | 'gastronomy') => {
     setActiveTab(tab);
     setSelectedCategory(tab === 'services' ? 'doctor' : 'restaurant');
@@ -168,48 +180,88 @@ export default function HizmetRehberiPage() {
     setSelectedTags([]);
   };
 
-  const toggleTag = (tagId: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tagId) 
-        ? prev.filter(id => id !== tagId)
-        : [...prev, tagId]
-    );
+  const clearFilters = () => {
+    setSelectedCity('');
+    setSearchQuery('');
+    setSelectedTags([]);
   };
 
-  const serviceCategories = PROVIDER_CATEGORIES.filter(c => c.group === 'services');
-  const gastronomyCategories = PROVIDER_CATEGORIES.filter(c => c.group === 'gastronomy');
+  const toggleTag = (tagId: string) => {
+    setSelectedTags((current) =>
+      current.includes(tagId) ? current.filter((id) => id !== tagId) : [...current, tagId]
+    );
+  };
 
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-black">
-        {/* Hero */}
-        <Section className="bg-gradient-to-br from-[#01A1F1] to-[#0077B6] py-12">
+      <main className="min-h-screen bg-[#050505] text-white">
+        <Section
+          contained={false}
+          className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.22),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(246,83,20,0.14),_transparent_34%),linear-gradient(180deg,#0b0b0c_0%,#050505_100%)] py-14 md:py-20"
+        >
           <Container>
-            <div className="text-center text-white">
-              <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                Türk Hizmet Rehberi
-              </h1>
-              <p className="text-lg text-white/90 mb-6">
-                Almanya'da Türkçe hizmet veren doktorlardan restoranlara,<br className="hidden md:block" />
-                tüm uzmanları tek yerde bulun.
-              </p>
-              
-              {/* İstatistikler */}
-              <div className="flex flex-wrap justify-center gap-4 mt-8">
-                <StatCard 
-                  icon={<Users className="w-5 h-5" />}
-                  value={stats['total'] || 0}
-                  label="Toplam Kayıt"
+            <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+              <div className="max-w-3xl">
+                <div className="inline-flex rounded-full border border-white/12 bg-white/[0.05] px-4 py-2 text-sm text-white/70">
+                  Türk Hizmet Rehberi
+                </div>
+                <h1 className="mt-6 text-4xl font-black leading-tight md:text-5xl">
+                  Aradığın hizmeti daha hızlı bul, eksik kaydı tek tıkla öner.
+                </h1>
+                <p className="mt-5 max-w-2xl text-base leading-8 text-white/72 md:text-lg">
+                  Almanya&apos;da Türkçe hizmet veren doktor, avukat, terapist, restoran ve daha fazlasını
+                  sade filtrelerle bul. Aradığın kayıt yoksa rehberi birlikte büyütelim.
+                </p>
+
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <Button asChild href="/hizmet-rehberi/oneri" size="lg" className="rounded-full">
+                    Hizmet Öner
+                  </Button>
+                  <a
+                    href="#rehber-arama"
+                    className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.05] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.1]"
+                  >
+                    Hizmet Ara
+                  </a>
+                </div>
+
+                <div className="mt-8 flex flex-wrap gap-3">
+                  {featuredCategories.map((category) => (
+                    <button
+                      key={category.id}
+                      onClick={() => {
+                        setSelectedCategory(category.id);
+                        setActiveTab(category.group === 'services' ? 'services' : 'gastronomy');
+                      }}
+                      className={cn(
+                        'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition',
+                        selectedCategory === category.id
+                          ? 'border-white/35 bg-white/15 text-white'
+                          : 'border-white/12 bg-white/[0.03] text-white/72 hover:border-white/25 hover:bg-white/[0.08] hover:text-white'
+                      )}
+                    >
+                      {CATEGORY_ICONS[category.id]}
+                      <span>{category.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+                <HeroStatCard
+                  icon={<Users className="h-5 w-5" />}
+                  value={stats.total || 0}
+                  label="Toplam kayıt"
                 />
-                <StatCard 
-                  icon={<Building2 className="w-5 h-5" />}
-                  value={stats['doctor'] || 0}
-                  label="Doktor"
+                <HeroStatCard
+                  icon={<Scale className="h-5 w-5" />}
+                  value={stats.lawyer || 0}
+                  label="Avukat"
                 />
-                <StatCard 
-                  icon={<Store className="w-5 h-5" />}
-                  value={stats['restaurant'] || 0}
+                <HeroStatCard
+                  icon={<Store className="h-5 w-5" />}
+                  value={stats.restaurant || 0}
                   label="Restoran"
                 />
               </div>
@@ -217,122 +269,131 @@ export default function HizmetRehberiPage() {
           </Container>
         </Section>
 
-        {/* Tab Seçimi */}
-        <div className="bg-[#0b0b0c] border-b border-white/10">
+        <div className="border-b border-white/10 bg-[#0b0b0c]">
           <Container>
-            <div className="flex gap-1 p-2">
+            <div className="flex gap-2 py-3">
               <button
                 onClick={() => handleTabChange('services')}
                 className={cn(
-                  'flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-medium transition-all',
-                  activeTab === 'services' 
-                    ? 'bg-[#F65314] text-white' 
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                  'flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition',
+                  activeTab === 'services'
+                    ? 'bg-[#F65314] text-white'
+                    : 'bg-white/[0.03] text-white/60 hover:bg-white/[0.08] hover:text-white'
                 )}
               >
-                <Users className="w-4 h-4" />
                 Hizmet Rehberi
               </button>
               <button
                 onClick={() => handleTabChange('gastronomy')}
                 className={cn(
-                  'flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-medium transition-all',
-                  activeTab === 'gastronomy' 
-                    ? 'bg-[#FF9900] text-white' 
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                  'flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition',
+                  activeTab === 'gastronomy'
+                    ? 'bg-[#FF9900] text-white'
+                    : 'bg-white/[0.03] text-white/60 hover:bg-white/[0.08] hover:text-white'
                 )}
               >
-                <UtensilsCrossed className="w-4 h-4" />
                 Gastronomi Rehberi
               </button>
             </div>
           </Container>
         </div>
 
-        <Section contained className="py-8">
-          <div className="grid lg:grid-cols-4 gap-6">
-            {/* Sol Sidebar - Filtreler */}
-            <div className="lg:col-span-1 space-y-6">
-              {/* Arama */}
-              <div className="bg-[#0b0b0c] border border-white/10 rounded-2xl p-4">
-                <label className="text-sm text-white/70 mb-2 block">Ara</label>
+        <Section contained className="py-8 md:py-10" id="rehber-arama">
+          <div className="grid gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
+            <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+              <div className="rounded-[1.8rem] border border-[#01A1F1]/20 bg-[linear-gradient(145deg,rgba(1,161,241,0.14),rgba(246,83,20,0.12))] p-5">
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">
+                  Rehberi büyüt
+                </div>
+                <h2 className="mt-3 text-xl font-bold text-white">Aradığın hizmet yok mu?</h2>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  Güvenilir bir uzman biliyorsan öner. Ekibimiz kontrol etsin, uygunsa rehbere ekleyelim.
+                </p>
+                <Button asChild href="/hizmet-rehberi/oneri" className="mt-4 w-full rounded-full">
+                  Kayıt Öner
+                </Button>
+              </div>
+
+              <div className="rounded-[1.8rem] border border-white/10 bg-[#0b0b0c] p-4">
+                <label className="mb-2 block text-sm font-medium text-white/70">Ara</label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" />
                   <input
                     type="text"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="İsim, şehir..."
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-white/30"
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                    placeholder="İsim, şehir, açıklama..."
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.04] py-3 pl-10 pr-4 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-white/30"
                   />
                 </div>
               </div>
 
-              {/* Şehir Filtresi */}
-              <div className="bg-[#0b0b0c] border border-white/10 rounded-2xl p-4">
-                <label className="text-sm text-white/70 mb-2 flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
+              <div className="rounded-[1.8rem] border border-white/10 bg-[#0b0b0c] p-4">
+                <label className="mb-2 flex items-center gap-2 text-sm font-medium text-white/70">
+                  <MapPin className="h-4 w-4" />
                   Şehir
                 </label>
                 <select
                   value={selectedCity}
-                  onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-white/30"
+                  onChange={(event) => setSelectedCity(event.target.value)}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 text-sm text-white outline-none transition focus:border-white/30"
                 >
-                  <option value="" className="bg-gray-800">Tüm Şehirler</option>
-                  {cities.map(city => (
-                    <option key={city} value={city} className="bg-gray-800">{city}</option>
+                  <option value="" className="bg-black">
+                    Tüm şehirler
+                  </option>
+                  {cities.map((city) => (
+                    <option key={city} value={city} className="bg-black">
+                      {city}
+                    </option>
                   ))}
                 </select>
               </div>
 
-              {/* Kategoriler */}
-              <div className="bg-[#0b0b0c] border border-white/10 rounded-2xl p-4">
-                <label className="text-sm text-white/70 mb-3 flex items-center gap-2">
-                  <Filter className="w-4 h-4" />
+              <div className="rounded-[1.8rem] border border-white/10 bg-[#0b0b0c] p-4">
+                <label className="mb-3 flex items-center gap-2 text-sm font-medium text-white/70">
+                  <Filter className="h-4 w-4" />
                   Kategori
                 </label>
                 <div className="space-y-2">
-                  {(activeTab === 'services' ? serviceCategories : gastronomyCategories).map(cat => (
+                  {visibleCategories.map((category) => (
                     <button
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id)}
+                      key={category.id}
+                      onClick={() => setSelectedCategory(category.id)}
                       className={cn(
-                        'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all text-left',
-                        selectedCategory === cat.id
-                          ? 'bg-white/10 text-white'
-                          : 'text-white/60 hover:text-white hover:bg-white/5'
+                        'flex w-full items-start gap-3 rounded-2xl px-3 py-3 text-left text-sm transition',
+                        selectedCategory === category.id
+                          ? 'border border-white/15 bg-white/[0.10] text-white'
+                          : 'border border-transparent bg-white/[0.02] text-white/62 hover:border-white/10 hover:bg-white/[0.06] hover:text-white'
                       )}
                     >
-                      <span className="text-lg">{cat.icon}</span>
-                      <div className="flex-1">
-                        <div className="font-medium">{cat.label}</div>
-                        <div className="text-xs text-white/40">{cat.description}</div>
+                      <div className="mt-0.5 rounded-xl bg-white/[0.06] p-2 text-white">
+                        {CATEGORY_ICONS[category.id]}
                       </div>
-                      {stats[cat.id] > 0 && (
-                        <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full">
-                          {stats[cat.id]}
-                        </span>
-                      )}
+                      <div className="min-w-0 flex-1">
+                        <div className="font-medium">{category.label}</div>
+                        <div className="mt-1 text-xs leading-5 text-white/42">{category.description}</div>
+                      </div>
+                      <div className="rounded-full bg-white/[0.06] px-2 py-1 text-[11px] text-white/65">
+                        {stats[category.id] || 0}
+                      </div>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Etiketler */}
-              {tags.length > 0 && (
-                <div className="bg-[#0b0b0c] border border-white/10 rounded-2xl p-4">
-                  <label className="text-sm text-white/70 mb-3 block">Uzmanlık</label>
+              {tags.length > 0 ? (
+                <div className="rounded-[1.8rem] border border-white/10 bg-[#0b0b0c] p-4">
+                  <label className="mb-3 block text-sm font-medium text-white/70">Uzmanlık</label>
                   <div className="flex flex-wrap gap-2">
-                    {tags.map(tag => (
+                    {tags.map((tag) => (
                       <button
                         key={tag.id}
                         onClick={() => toggleTag(tag.id)}
                         className={cn(
-                          'px-3 py-1.5 rounded-full text-xs font-medium transition-all',
+                          'rounded-full px-3 py-1.5 text-xs font-medium transition',
                           selectedTags.includes(tag.id)
                             ? 'bg-[#F65314] text-white'
-                            : 'bg-white/5 text-white/60 hover:text-white hover:bg-white/10'
+                            : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.1] hover:text-white'
                         )}
                       >
                         {tag.label}
@@ -340,57 +401,98 @@ export default function HizmetRehberiPage() {
                     ))}
                   </div>
                 </div>
-              )}
-            </div>
+              ) : null}
+            </aside>
 
-            {/* Sağ İçerik - Liste */}
-            <div className="lg:col-span-3">
-              {/* Sonuç Başlığı */}
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-xl font-semibold text-white">
-                    {PROVIDER_CATEGORIES.find(c => c.id === selectedCategory)?.label || 'Tümü'}
-                  </h2>
-                  <p className="text-sm text-white/50 mt-1">
-                    {filteredProviders.length} kayıt bulundu
-                  </p>
+            <div className="space-y-5">
+              <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-5 md:p-6">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div className="max-w-2xl">
+                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7fd5ff]">
+                      Hizmet Ara
+                    </div>
+                    <h2 className="mt-3 text-2xl font-black md:text-3xl">
+                      {selectedCategoryMeta?.label || 'Tüm hizmetler'}
+                    </h2>
+                    <p className="mt-2 text-sm leading-7 text-white/70">
+                      {selectedCategoryMeta?.description ||
+                        'İsim, şehir ve uzmanlık filtreleriyle en uygun kaydı bul.'}
+                    </p>
+                  </div>
+
+                  <div className="rounded-[1.4rem] border border-white/10 bg-black/20 px-4 py-3 text-right">
+                    <div className="text-xs uppercase tracking-[0.18em] text-white/45">Sonuç</div>
+                    <div className="mt-1 text-3xl font-black">{filteredProviders.length}</div>
+                  </div>
                 </div>
-                {(selectedCity || searchQuery || selectedTags.length > 0) && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      setSelectedCity('');
-                      setSearchQuery('');
-                      setSelectedTags([]);
-                    }}
-                    className="text-white/60 hover:text-white"
-                  >
-                    Filtreleri Temizle
-                  </Button>
+
+                {hasActiveFilters ? (
+                  <div className="mt-5 flex flex-wrap items-center gap-2">
+                    {activeFilterPills.map((pill) => (
+                      <span
+                        key={pill}
+                        className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-white/74"
+                      >
+                        {pill}
+                      </span>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={clearFilters}
+                      className="ml-auto rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-xs font-semibold text-white/72 transition hover:border-white/25 hover:bg-white/[0.08] hover:text-white"
+                    >
+                      Filtreleri Temizle
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {featuredCategories.map((category) => (
+                      <button
+                        key={`quick-${category.id}`}
+                        onClick={() => setSelectedCategory(category.id)}
+                        className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/70 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+                      >
+                        {category.label}
+                      </button>
+                    ))}
+                  </div>
                 )}
               </div>
 
-              {/* Liste */}
               {loading ? (
-                <div className="flex items-center justify-center py-20">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                <div className="flex items-center justify-center rounded-[2rem] border border-white/10 bg-[#0b0b0c] py-24">
+                  <div className="h-9 w-9 animate-spin rounded-full border-b-2 border-white" />
                 </div>
               ) : filteredProviders.length === 0 ? (
-                <div className="bg-[#0b0b0c] border border-white/10 rounded-2xl p-12 text-center">
-                  <div className="text-4xl mb-4">🔍</div>
-                  <h3 className="text-lg font-medium text-white mb-2">Sonuç bulunamadı</h3>
-                  <p className="text-sm text-white/50">
-                    Farklı bir kategori veya şehir seçmeyi deneyin.
+                <div className="rounded-[2rem] border border-white/10 bg-[#0b0b0c] p-10 text-center md:p-14">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/[0.05] text-3xl">
+                    0
+                  </div>
+                  <h3 className="mt-5 text-2xl font-bold">Bu filtrelerle sonuç çıkmadı.</h3>
+                  <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/60">
+                    Kategori veya şehir seçimini gevşetmeyi deneyin. Aradığınız kayıt gerçekten eksikse doğrudan öneri bırakabilirsiniz.
                   </p>
+                  <div className="mt-6 flex flex-wrap justify-center gap-3">
+                    <Button onClick={clearFilters} className="rounded-full">
+                      Filtreleri Sıfırla
+                    </Button>
+                    <Link
+                      href="/hizmet-rehberi/oneri"
+                      className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.05] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.08]"
+                    >
+                      Eksik hizmeti öner
+                    </Link>
+                  </div>
                 </div>
               ) : (
-                <div className="grid md:grid-cols-2 gap-4">
-                  {filteredProviders.map(provider => (
-                    <ProviderCard 
-                      key={provider.id} 
+                <div className="grid gap-4 xl:grid-cols-2">
+                  {filteredProviders.map((provider) => (
+                    <ProviderCard
+                      key={provider.id}
                       provider={provider}
-                      category={PROVIDER_CATEGORIES.find(c => c.id === provider.type)}
+                      category={
+                        PROVIDER_CATEGORIES.find((category) => category.id === provider.type) || undefined
+                      }
                     />
                   ))}
                 </div>
@@ -404,75 +506,104 @@ export default function HizmetRehberiPage() {
   );
 }
 
-// İstatistik Kartı
-function StatCard({ icon, value, label }: { icon: React.ReactNode; value: number; label: string }) {
+function HeroStatCard({
+  icon,
+  value,
+  label,
+}: {
+  icon: React.ReactNode;
+  value: number;
+  label: string;
+}) {
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 flex items-center gap-3">
-      <div className="text-white/80">{icon}</div>
-      <div>
-        <div className="text-xl font-bold text-white">{value}</div>
-        <div className="text-xs text-white/60">{label}</div>
+    <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm">
+      <div className="flex items-center gap-3">
+        <div className="rounded-xl bg-white/[0.08] p-2 text-white">{icon}</div>
+        <div>
+          <div className="text-2xl font-black text-white">{value}</div>
+          <div className="text-sm text-white/60">{label}</div>
+        </div>
       </div>
     </div>
   );
 }
 
-// Sağlayıcı Kartı
-function ProviderCard({ provider, category }: { provider: Provider; category?: { icon: string; label: string } }) {
+function ProviderCard({
+  provider,
+  category,
+}: {
+  provider: Provider;
+  category?: Category;
+}) {
   return (
-    <div className="bg-[#0b0b0c] border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors">
+    <article className="rounded-[1.8rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-5 transition hover:border-white/22">
       <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-2xl flex-shrink-0">
-          {category?.icon || '📍'}
+        <div className="rounded-2xl bg-white/[0.06] p-3 text-white">
+          {CATEGORY_ICONS[provider.type] || <MapPin className="h-5 w-5" />}
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-white truncate">{provider.name}</h3>
-          <p className="text-sm text-white/50 flex items-center gap-1 mt-1">
-            <MapPin className="w-3 h-3" />
-            {provider.city}
-          </p>
-          {provider.address && (
-            <p className="text-xs text-white/40 mt-1 line-clamp-1">{provider.address}</p>
-          )}
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            {category ? (
+              <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/60">
+                {category.label}
+              </span>
+            ) : null}
+            <span className="rounded-full bg-[#01A1F1]/12 px-3 py-1 text-[11px] font-semibold text-[#8fd9ff]">
+              {provider.city}
+            </span>
+          </div>
+
+          <h3 className="mt-3 text-xl font-bold text-white">{provider.name}</h3>
+
+          {provider.address ? (
+            <p className="mt-2 flex items-start gap-2 text-sm leading-6 text-white/62">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+              <span>{provider.address}</span>
+            </p>
+          ) : null}
         </div>
       </div>
 
-      {provider.description && (
-        <p className="text-sm text-white/60 mt-4 line-clamp-2">{provider.description}</p>
-      )}
+      {provider.description ? (
+        <div className="mt-5 rounded-2xl border border-white/8 bg-black/20 p-4">
+          <p className="text-sm leading-7 text-white/68">{provider.description}</p>
+        </div>
+      ) : null}
 
-      {/* İletişim Bilgileri */}
-      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
-        {provider.phone && (
+      <div className="mt-5 flex flex-wrap gap-2 border-t border-white/10 pt-4">
+        {provider.phone ? (
           <a
             href={`tel:${provider.phone}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-xs text-white/80 transition-colors"
+            className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.12]"
           >
-            <Phone className="w-3 h-3" />
+            <Phone className="h-4 w-4" />
             Ara
           </a>
-        )}
-        {provider.email && (
+        ) : null}
+
+        {provider.email ? (
           <a
             href={`mailto:${provider.email}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-xs text-white/80 transition-colors"
+            className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.12]"
           >
-            <Mail className="w-3 h-3" />
+            <Mail className="h-4 w-4" />
             E-posta
           </a>
-        )}
-        {provider.website && (
+        ) : null}
+
+        {provider.website ? (
           <a
             href={provider.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-xs text-white/80 transition-colors"
+            className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.12]"
           >
-            <Globe className="w-3 h-3" />
+            <Globe className="h-4 w-4" />
             Website
           </a>
-        )}
+        ) : null}
       </div>
-    </div>
+    </article>
   );
 }
