@@ -12,26 +12,35 @@
  *   node scripts/backfill-avukat24.mjs --max-pages 3            # only process first 3 pages
  */
 
-import '@next/env'
+import nextEnv from '@next/env'
 import { createClient } from '@supabase/supabase-js'
 import { load } from 'cheerio'
 import { decode } from 'html-entities'
 
 const USER_AGENT =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-const API_BASE_URL = 'https://avukat24.de/wp-json/wp/v2/avukat'
+const SITEMAP_URL = 'https://avukat24.de/avukat-sitemap.xml'
 const DEFAULT_PAGE_SIZE = 100
 const BATCH_SIZE = 50
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const { loadEnvConfig } = nextEnv
+loadEnvConfig(process.cwd())
 
-if (!supabaseUrl || !supabaseAnonKey) {
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const serviceRoleKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.SUPABASE_SERVICE_KEY ||
+  process.env.SUPABASE_SECRET_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !serviceRoleKey) {
   console.error('Missing Supabase environment variables')
   process.exit(1)
 }
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey)
+const supabase = createClient(supabaseUrl, serviceRoleKey, {
+  auth: { persistSession: false, autoRefreshToken: false },
+})
 
 // Parse CLI arguments
 const args = process.argv.slice(2)
@@ -56,6 +65,9 @@ function normalizeWhitespace(value) {
 
 function normalizeNameKey(name) {
   return normalizeWhitespace(name)
+    .replace(/^avukat\s+/i, '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9]/g, '')
     .substring(0, 50)
@@ -63,6 +75,8 @@ function normalizeNameKey(name) {
 
 function normalizeCityKey(city) {
   return normalizeWhitespace(city)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9]/g, '')
     .substring(0, 30)
@@ -84,6 +98,27 @@ function normalizeWebsite(raw) {
   if (/^https?:\/\//i.test(raw)) return raw
   if (/^www\./i.test(raw)) return `https://${raw}`
   return raw
+}
+
+function normalizeProfileUrl(raw) {
+  const value = normalizeWhitespace(raw)
+  if (!value) return ''
+
+  try {
+    const url = new URL(value)
+    const normalized = `${url.origin}${url.pathname}`.replace(/\/+$/, '/')
+    return normalized.includes('/avukat/') ? normalized : ''
+  } catch {
+    return ''
+  }
+}
+
+function extractSourceProfileUrl(row) {
+  const direct = normalizeProfileUrl(row.website)
+  if (direct) return direct
+
+  const noteMatch = String(row.notes_public || '').match(/https:\/\/avukat24\.de\/avukat\/[^)\s]+\/?/i)
+  return normalizeProfileUrl(noteMatch?.[0] || '')
 }
 
 function mapLanguage(rawLanguage) {
@@ -170,32 +205,16 @@ async function fetchHtml(url) {
 }
 
 async function fetchAllLawyerEntries() {
-  const firstResponse = await fetch(`${API_BASE_URL}?per_page=${DEFAULT_PAGE_SIZE}&page=1`, {
-    headers: {
-      'user-agent': USER_AGENT,
-      accept: 'application/json,text/plain,*/*',
-    },
-  })
+  const xml = await fetchHtml(SITEMAP_URL)
+  const profileUrls = unique(
+    [...xml.matchAll(/<loc>(.*?)<\/loc>/g)]
+      .map((match) => normalizeWhitespace(match[1]))
+      .filter((url) => url.includes('/avukat/'))
+  )
 
-  if (!firstResponse.ok) {
-    throw new Error(`Fetch failed (${firstResponse.status}) for first avukat24 page`)
-  }
+  console.log(`[scan] sitemap profiles: ${profileUrls.length}`)
 
-  const totalPages = Number(firstResponse.headers.get('x-wp-totalpages') || '1')
-  const firstPageItems = await firstResponse.json()
-  const allItems = [...firstPageItems]
-  const pagesToFetch =
-    limit > 0 ? Math.min(totalPages, Math.ceil(limit / DEFAULT_PAGE_SIZE)) : totalPages
-
-  console.log(`[scan] api page 1: ${firstPageItems.length} profiles`)
-
-  for (let page = 2; page <= pagesToFetch; page += 1) {
-    const items = await fetchJson(`${API_BASE_URL}?per_page=${DEFAULT_PAGE_SIZE}&page=${page}`)
-    allItems.push(...items)
-    console.log(`[scan] api page ${page}: ${items.length} profiles`)
-  }
-
-  return allItems
+  return profileUrls.map((link) => ({ link }))
 }
 
 function getContactWidget($) {
@@ -349,14 +368,20 @@ async function fetchExistingLawyers() {
   if (error) throw error
 
   const lawyerMap = new Map()
+  const lawyerByProfileUrl = new Map()
   for (const row of data || []) {
     const key = `${normalizeNameKey(row.display_name)}|${normalizeCityKey(row.city)}`
     if (!lawyerMap.has(key)) {
       lawyerMap.set(key, row)
     }
+
+    const profileUrl = extractSourceProfileUrl(row)
+    if (profileUrl && !lawyerByProfileUrl.has(profileUrl)) {
+      lawyerByProfileUrl.set(profileUrl, row)
+    }
   }
 
-  return lawyerMap
+  return { lawyerMap, lawyerByProfileUrl }
 }
 
 async function calculateUpdate(existing, parsed) {
@@ -446,8 +471,8 @@ async function main() {
     console.log('')
 
   // Fetch existing lawyers
-  const existingLawyers = await fetchExistingLawyers()
-    console.log(`[db] existing lawyers in DB: ${existingLawyers.size}`)
+  const { lawyerMap, lawyerByProfileUrl } = await fetchExistingLawyers()
+    console.log(`[db] existing lawyers in DB: ${lawyerMap.size}`)
     console.log('')
 
   // Process each profile
@@ -468,7 +493,9 @@ async function main() {
 
       // Match by dedupe key
       const key = `${normalizeNameKey(parsed.display_name)}|${normalizeCityKey(parsed.city)}`
-      const existing = existingLawyers.get(key)
+      const existing =
+        lawyerMap.get(key) ||
+        lawyerByProfileUrl.get(normalizeProfileUrl(entry.link))
 
       if (!existing) {
         console.warn(`[skip] no match for ${parsed.display_name} in ${parsed.city}`)
