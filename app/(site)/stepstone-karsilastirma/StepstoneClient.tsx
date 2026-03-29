@@ -203,10 +203,13 @@ export default function StepstoneClient() {
       </div>
 
       {/* Input Card */}
-      <div className="bg-white rounded-xl border-2 border-google-yellow p-5">
+      <div className="rounded-xl border-2 border-google-yellow bg-gradient-to-b from-white to-yellow-50/40 p-5 shadow-[0_20px_45px_-35px_rgba(251,188,5,0.9)]">
         <h2 className="text-gray-900 font-bold text-lg mb-4">Profil Bilgileri</h2>
+        <p className="mb-4 text-sm leading-6 text-gray-600">
+          Alanları doldurdukça form daha net okunur ve karşılaştırma daha isabetli olur.
+        </p>
 
-        <div className="space-y-3">
+        <div className="space-y-3 [&_label]:mb-2 [&_label]:block [&_label]:text-sm [&_label]:font-semibold [&_label]:text-gray-700 [&_input]:w-full [&_input]:rounded-xl [&_input]:border-2 [&_input]:border-gray-300 [&_input]:bg-white [&_input]:px-4 [&_input]:py-3 [&_input]:text-[15px] [&_input]:font-medium [&_input]:text-gray-900 [&_input]:shadow-sm [&_input]:transition-colors [&_input]:placeholder:text-gray-400 [&_input]:hover:border-google-yellow [&_input]:focus:border-google-orange [&_input]:focus:outline-none [&_input]:focus:ring-4 [&_input]:focus:ring-google-yellow/20 [&_select]:w-full [&_select]:rounded-xl [&_select]:border-2 [&_select]:border-gray-300 [&_select]:bg-white [&_select]:px-4 [&_select]:py-3 [&_select]:text-[15px] [&_select]:font-medium [&_select]:text-gray-900 [&_select]:shadow-sm [&_select]:transition-colors [&_select]:hover:border-google-yellow [&_select]:focus:border-google-orange [&_select]:focus:outline-none [&_select]:focus:ring-4 [&_select]:focus:ring-google-yellow/20">
           {/* Aylık Brüt */}
           <div>
             <label className="text-xs text-gray-500 block mb-1">Aylık Brüt Maaş (€)</label>
@@ -215,15 +218,15 @@ export default function StepstoneClient() {
               value={form.grossMonthly}
               onChange={set('grossMonthly')}
               placeholder="4500"
-              className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40"
+              className="w-full"
             />
           </div>
 
           {/* 2-column grid */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <label className="text-xs text-gray-500 block mb-1">Eyalet</label>
-              <select value={form.state} onChange={set('state')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40 bg-white">
+              <select value={form.state} onChange={set('state')} className="w-full">
                 <option value="">Seç</option>
                 {STATE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
@@ -231,7 +234,7 @@ export default function StepstoneClient() {
 
             <div>
               <label className="text-xs text-gray-500 block mb-1">Deneyim</label>
-              <select value={form.experience} onChange={set('experience')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40 bg-white">
+              <select value={form.experience} onChange={set('experience')} className="w-full">
                 <option value="">Seç</option>
                 {EXPERIENCE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
@@ -241,7 +244,7 @@ export default function StepstoneClient() {
           {/* Meslek grubu - full width */}
           <div>
             <label className="text-xs text-gray-500 block mb-1">Meslek Grubu</label>
-            <select value={form.jobGroup} onChange={set('jobGroup')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40 bg-white">
+            <select value={form.jobGroup} onChange={set('jobGroup')} className="w-full">
               <option value="">Seç</option>
               {JOB_GROUPS.map(k => <option key={k} value={k}>{k}</option>)}
             </select>
@@ -250,16 +253,16 @@ export default function StepstoneClient() {
           {/* Şehir - full width */}
           <div>
             <label className="text-xs text-gray-500 block mb-1">Şehir</label>
-            <select value={form.city} onChange={set('city')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40 bg-white">
+            <select value={form.city} onChange={set('city')} className="w-full">
               <option value="">Seç</option>
               {CITIES.map(k => <option key={k} value={k}>{k}</option>)}
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <label className="text-xs text-gray-500 block mb-1">Şirket Büyüklüğü</label>
-              <select value={form.companySize} onChange={set('companySize')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40 bg-white">
+              <select value={form.companySize} onChange={set('companySize')} className="w-full">
                 <option value="">Seç</option>
                 {COMPANY_SIZE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
@@ -267,17 +270,17 @@ export default function StepstoneClient() {
 
             <div>
               <label className="text-xs text-gray-500 block mb-1">Eğitim (Hochschulabschluss)</label>
-              <select value={form.education} onChange={set('education')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40 bg-white">
+              <select value={form.education} onChange={set('education')} className="w-full">
                 <option value="">Seç</option>
                 {EDUCATION_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <label className="text-xs text-gray-500 block mb-1">Personalverantwortung</label>
-              <select value={form.responsibility} onChange={set('responsibility')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40 bg-white">
+              <select value={form.responsibility} onChange={set('responsibility')} className="w-full">
                 <option value="">Seç</option>
                 {RESPONSIBILITY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
@@ -285,7 +288,7 @@ export default function StepstoneClient() {
 
             <div>
               <label className="text-xs text-gray-500 block mb-1">Cinsiyet</label>
-              <select value={form.gender} onChange={set('gender')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-google-yellow/40 bg-white">
+              <select value={form.gender} onChange={set('gender')} className="w-full">
                 <option value="">Seç</option>
                 {GENDER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>

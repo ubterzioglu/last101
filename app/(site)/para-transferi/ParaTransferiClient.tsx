@@ -104,6 +104,7 @@ const EXCHANGE_RATE = 0.032; // 1 EUR = 0.032 TRY (örnek)
 export default function ParaTransferiClient() {
   const [amount, setAmount] = useState<number>(1000);
   const [showResults, setShowResults] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   const calculateTransfer = (provider: TransferProvider) => {
     let fee = 0;
@@ -155,6 +156,26 @@ export default function ParaTransferiClient() {
             Almanya'dan Türkiye'ye en uygun transfer yöntemini bulun
           </p>
         </div>
+      </div>
+
+      <div
+        className="bg-white rounded-2xl overflow-hidden shadow-lg border-t-4 border-google-blue cursor-pointer select-none"
+        onClick={() => setShowInfo((prev) => !prev)}
+      >
+        <div className="flex items-center justify-between px-5 py-4">
+          <span className="font-semibold text-gray-900">Nasıl Çalışır?</span>
+          <span className={cn('text-google-blue text-xl transition-transform duration-200', showInfo && 'rotate-180')}>▾</span>
+        </div>
+        {showInfo && (
+          <div className="border-t border-blue-200 bg-blue-50 px-5 pb-4">
+            <ul className="space-y-2 pt-3 text-sm text-blue-900">
+              <li>• Göndermek istediğin Euro tutarını girersin.</li>
+              <li>• Araç her sağlayıcı için işlem ücreti ve kur marjını hesaplar.</li>
+              <li>• Eline geçecek net TL tutarına göre en avantajlı seçenekleri sıralar.</li>
+              <li>• Sonuçlar bilgilendirme amaçlıdır; transferden önce güncel kur ve ücreti kontrol et.</li>
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Input Form */}

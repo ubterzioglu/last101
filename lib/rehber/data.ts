@@ -87,6 +87,29 @@ export async function getServiceProviders(type: ProviderType, city?: string) {
   return normalizeProviders(data as ProviderRow[]);
 }
 
+async function getAllServiceProviders(city?: string) {
+  let query = getSupabase()
+    .from('providers')
+    .select(`
+      *,
+      provider_tags(tag_id)
+    `)
+    .eq('status', 'active');
+
+  if (city && city !== 'all') {
+    query = query.eq('city', city);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Error fetching all service providers:', error);
+    return [];
+  }
+
+  return normalizeProviders(data as ProviderRow[]);
+}
+
 /**
  * Gastronomi sağlayıcılarını getir
  */
@@ -108,6 +131,29 @@ export async function getGastronomyProviders(type: ProviderType, city?: string) 
 
   if (error) {
     console.error('Error fetching gastronomy providers:', error);
+    return [];
+  }
+
+  return normalizeProviders(data as ProviderRow[]);
+}
+
+async function getAllGastronomyProviders(city?: string) {
+  let query = getSupabase()
+    .from('gastronomy_providers')
+    .select(`
+      *,
+      gastronomy_provider_tags(tag_id)
+    `)
+    .eq('status', 'active');
+
+  if (city && city !== 'all') {
+    query = query.eq('city', city);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Error fetching all gastronomy providers:', error);
     return [];
   }
 
@@ -152,12 +198,11 @@ export async function getProvidersByCategory(
 ): Promise<Provider[]> {
   if (category === 'all') {
     // Tüm kategorileri getir
-    const [services, gastronomy, tamirci] = await Promise.all([
-      getServiceProviders('doctor', city),
-      getGastronomyProviders('restaurant', city),
-      getTamirciProviders(city),
+    const [services, gastronomy] = await Promise.all([
+      getAllServiceProviders(city),
+      getAllGastronomyProviders(city),
     ]);
-    return [...services, ...gastronomy, ...tamirci];
+    return [...services, ...gastronomy];
   }
 
   // Gastronomi kategorileri
@@ -227,6 +272,25 @@ export async function getTagsByCategory(category: ProviderType): Promise<Tag[]> 
  * Kullanılabilir şehirleri getir
  */
 export async function getAvailableCities(category?: ProviderType) {
+  if (!category || category === 'all') {
+    const [serviceData, gastronomyData] = await Promise.all([
+      getSupabase().from('providers').select('city').eq('status', 'active').order('city'),
+      getSupabase().from('gastronomy_providers').select('city').eq('status', 'active').order('city'),
+    ]);
+
+    if (serviceData.error || gastronomyData.error) {
+      console.error('Error fetching cities:', serviceData.error || gastronomyData.error);
+      return [];
+    }
+
+    const cities = [
+      ...(serviceData.data?.map(item => item.city) || []),
+      ...(gastronomyData.data?.map(item => item.city) || []),
+    ];
+
+    return [...new Set(cities)].filter(Boolean).sort();
+  }
+
   const table = category && ['restaurant', 'market', 'kasap', 'cafe', 'bakery'].includes(category)
     ? 'gastronomy_providers'
     : 'providers';

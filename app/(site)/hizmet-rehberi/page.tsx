@@ -4,8 +4,6 @@ export const dynamic = 'force-dynamic';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
@@ -69,7 +67,7 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 };
 
 export default function HizmetRehberiPage() {
-  const [selectedCategory, setSelectedCategory] = useState<ProviderType | 'all'>('doctor');
+  const [selectedCategory, setSelectedCategory] = useState<ProviderType | 'all'>('all');
   const [selectedCity, setSelectedCity] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -80,7 +78,6 @@ export default function HizmetRehberiPage() {
   const [stats, setStats] = useState<Record<string, number>>({});
 
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'services' | 'gastronomy'>('services');
 
   const loadInitialData = useCallback(async () => {
     const statsData = await getCategoryStats();
@@ -157,30 +154,22 @@ export default function HizmetRehberiPage() {
     return filtered;
   }, [providers, searchQuery, selectedCity, selectedTags]);
 
-  const serviceCategories = PROVIDER_CATEGORIES.filter((category) => category.group === 'services');
-  const gastronomyCategories = PROVIDER_CATEGORIES.filter((category) => category.group === 'gastronomy');
-  const visibleCategories = activeTab === 'services' ? serviceCategories : gastronomyCategories;
-  const featuredCategories = visibleCategories.slice(0, 6);
+  const allCategories = PROVIDER_CATEGORIES;
+  const featuredCategories = allCategories.slice(0, 8);
   const selectedCategoryMeta =
     PROVIDER_CATEGORIES.find((category) => category.id === selectedCategory) || null;
 
   const activeFilterPills = [
     selectedCity ? `Şehir: ${selectedCity}` : '',
+    selectedCategoryMeta ? `Kategori: ${selectedCategoryMeta.label}` : '',
     searchQuery ? `Arama: ${searchQuery}` : '',
     selectedTags.length > 0 ? `Uzmanlık: ${selectedTags.length} seçili` : '',
   ].filter(Boolean);
 
   const hasActiveFilters = activeFilterPills.length > 0;
 
-  const handleTabChange = (tab: 'services' | 'gastronomy') => {
-    setActiveTab(tab);
-    setSelectedCategory(tab === 'services' ? 'doctor' : 'restaurant');
-    setSelectedCity('');
-    setSearchQuery('');
-    setSelectedTags([]);
-  };
-
   const clearFilters = () => {
+    setSelectedCategory('all');
     setSelectedCity('');
     setSearchQuery('');
     setSelectedTags([]);
@@ -193,9 +182,7 @@ export default function HizmetRehberiPage() {
   };
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-[#050505] text-white">
+    <div className="min-h-screen bg-[#050505] text-white">
         <Section
           contained={false}
           className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.22),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(246,83,20,0.14),_transparent_34%),linear-gradient(180deg,#0b0b0c_0%,#050505_100%)] py-14 md:py-20"
@@ -222,7 +209,7 @@ export default function HizmetRehberiPage() {
                     href="#rehber-arama"
                     className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.05] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.1]"
                   >
-                    Hizmet Ara
+                    Rehber Ara
                   </a>
                 </div>
 
@@ -230,10 +217,7 @@ export default function HizmetRehberiPage() {
                   {featuredCategories.map((category) => (
                     <button
                       key={category.id}
-                      onClick={() => {
-                        setSelectedCategory(category.id);
-                        setActiveTab(category.group === 'services' ? 'services' : 'gastronomy');
-                      }}
+                      onClick={() => setSelectedCategory(category.id)}
                       className={cn(
                         'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition',
                         selectedCategory === category.id
@@ -268,35 +252,6 @@ export default function HizmetRehberiPage() {
             </div>
           </Container>
         </Section>
-
-        <div className="border-b border-white/10 bg-[#0b0b0c]">
-          <Container>
-            <div className="flex gap-2 py-3">
-              <button
-                onClick={() => handleTabChange('services')}
-                className={cn(
-                  'flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition',
-                  activeTab === 'services'
-                    ? 'bg-[#F65314] text-white'
-                    : 'bg-white/[0.03] text-white/60 hover:bg-white/[0.08] hover:text-white'
-                )}
-              >
-                Hizmet Rehberi
-              </button>
-              <button
-                onClick={() => handleTabChange('gastronomy')}
-                className={cn(
-                  'flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition',
-                  activeTab === 'gastronomy'
-                    ? 'bg-[#FF9900] text-white'
-                    : 'bg-white/[0.03] text-white/60 hover:bg-white/[0.08] hover:text-white'
-                )}
-              >
-                Gastronomi Rehberi
-              </button>
-            </div>
-          </Container>
-        </div>
 
         <Section contained className="py-8 md:py-10" id="rehber-arama">
           <div className="grid gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
@@ -355,7 +310,29 @@ export default function HizmetRehberiPage() {
                   Kategori
                 </label>
                 <div className="space-y-2">
-                  {visibleCategories.map((category) => (
+                  <button
+                    onClick={() => setSelectedCategory('all')}
+                    className={cn(
+                      'flex w-full items-start gap-3 rounded-2xl px-3 py-3 text-left text-sm transition',
+                      selectedCategory === 'all'
+                        ? 'border border-white/15 bg-white/[0.10] text-white'
+                        : 'border border-transparent bg-white/[0.02] text-white/62 hover:border-white/10 hover:bg-white/[0.06] hover:text-white'
+                    )}
+                  >
+                    <div className="mt-0.5 rounded-xl bg-white/[0.06] p-2 text-white">
+                      <Store className="h-5 w-5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-medium">Tüm Rehber</div>
+                      <div className="mt-1 text-xs leading-5 text-white/42">
+                        Hizmet ve gastronomi kayıtlarını birlikte göster
+                      </div>
+                    </div>
+                    <div className="rounded-full bg-white/[0.06] px-2 py-1 text-[11px] text-white/65">
+                      {stats.total || 0}
+                    </div>
+                  </button>
+                  {allCategories.map((category) => (
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id)}
@@ -409,14 +386,14 @@ export default function HizmetRehberiPage() {
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-2xl">
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7fd5ff]">
-                      Hizmet Ara
+                      Rehber Ara
                     </div>
                     <h2 className="mt-3 text-2xl font-black md:text-3xl">
-                      {selectedCategoryMeta?.label || 'Tüm hizmetler'}
+                      {selectedCategoryMeta?.label || 'Tüm hizmetler ve gastronomi'}
                     </h2>
                     <p className="mt-2 text-sm leading-7 text-white/70">
                       {selectedCategoryMeta?.description ||
-                        'İsim, şehir ve uzmanlık filtreleriyle en uygun kaydı bul.'}
+                        'İsim, şehir ve uzmanlık filtreleriyle tüm rehberde en uygun kaydı bul.'}
                     </p>
                   </div>
 
@@ -500,9 +477,7 @@ export default function HizmetRehberiPage() {
             </div>
           </div>
         </Section>
-      </main>
-      <Footer />
-    </>
+    </div>
   );
 }
 

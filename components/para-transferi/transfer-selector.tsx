@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/ui/Section';
 import { cn } from '@/lib/utils/cn';
-import { RotateCcw, Info, ChevronLeft, Check, Copy } from 'lucide-react';
+import { RotateCcw, ChevronLeft, Check, Copy } from 'lucide-react';
 
 // =====================================================
 // TİPLER
@@ -398,19 +398,16 @@ export function TransferSelector() {
 
   return (
     <Section contained className="!pt-0 pb-8">
+      <div className="mb-2 rounded-xl border-2 border-google-blue bg-white px-4 py-3">
+        <h1 className="text-2xl font-bold leading-tight">{'Para Transferi Se\u00e7im Arac\u0131'}</h1>
+      </div>
       {/* Başlık + Nasıl Çalışır accordion — tek kart */}
       <div
         className="mb-2 rounded-xl border-2 border-google-blue bg-white cursor-pointer select-none overflow-hidden"
         onClick={() => setShowInfo(!showInfo)}
       >
         <div className="flex items-center justify-between px-4 py-3">
-          <div>
-            <h1 className="text-2xl font-bold leading-tight">Para Transferi Seçim Aracı</h1>
-            <div className="flex items-center gap-1 mt-0.5 text-google-blue font-medium text-sm">
-              <Info className="w-3.5 h-3.5 shrink-0" />
-              Nasıl Çalışır?
-            </div>
-          </div>
+          <span className="font-semibold text-gray-900">{'Nas\u0131l \u00c7al\u0131\u015f\u0131r?'}</span>
           <span className={cn("text-google-blue text-xl transition-transform duration-200", showInfo && "rotate-180")}>
             ▾
           </span>

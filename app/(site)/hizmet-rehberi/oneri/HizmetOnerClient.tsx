@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
@@ -77,9 +75,7 @@ export default function HizmetOnerClient() {
   }
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-[#050505] text-white">
+    <div className="min-h-screen bg-[#050505] text-white">
         <Section className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.18),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(246,83,20,0.14),_transparent_34%),linear-gradient(180deg,#0b0b0c_0%,#050505_100%)] py-14 md:py-20">
           <Container>
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
@@ -286,9 +282,7 @@ export default function HizmetOnerClient() {
             </aside>
           </div>
         </Section>
-      </main>
-      <Footer />
-    </>
+    </div>
   );
 }
 
