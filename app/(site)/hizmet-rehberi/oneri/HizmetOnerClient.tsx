@@ -75,18 +75,18 @@ export default function HizmetOnerClient() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-        <Section className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.18),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(246,83,20,0.14),_transparent_34%),linear-gradient(180deg,#0b0b0c_0%,#050505_100%)] py-14 md:py-20">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+        <Section className="relative overflow-hidden border-b border-gray-200 bg-white py-10 md:py-14">
           <Container>
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
               <div className="max-w-3xl">
-                <div className="inline-flex rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-sm text-white/72">
+                <div className="inline-flex rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-600">
                   Hizmet Rehberi / Kayıt Öner
                 </div>
-                <h1 className="mt-6 text-4xl font-black leading-tight md:text-5xl">
+                <h1 className="mt-6 text-4xl font-black leading-tight md:text-5xl text-gray-900">
                   Eksik bir hizmet varsa bize bırak, birlikte rehberi büyütelim.
                 </h1>
-                <p className="mt-5 max-w-2xl text-base leading-8 text-white/72 md:text-lg">
+                <p className="mt-5 max-w-2xl text-base leading-8 text-gray-600 md:text-lg">
                   Bildiğiniz Türkçe hizmet veren bir uzmanı kısa bilgilerle önerin. Ekibimiz kontrol edip uygun
                   kaydı rehbere eklesin.
                 </p>
@@ -97,7 +97,7 @@ export default function HizmetOnerClient() {
                   </Button>
                   <Link
                     href="#oner-formu"
-                    className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.05] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.1]"
+                    className="inline-flex items-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
                   >
                     Forma git
                   </Link>
@@ -126,16 +126,16 @@ export default function HizmetOnerClient() {
           <div className="grid gap-6 xl:grid-cols-[minmax(0,0.72fr)_minmax(320px,0.28fr)]">
             <section
               id="oner-formu"
-              className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-6 md:p-8"
+              className="rounded-[2rem] border border-gray-200 bg-white p-6 md:p-8 shadow-sm"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#7fd5ff]">
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-google-blue">
                     Öneri Formu
                   </div>
-                  <h2 className="mt-3 text-3xl font-black">Yeni hizmet öner</h2>
+                  <h2 className="mt-3 text-3xl font-black text-gray-900">Yeni hizmet öner</h2>
                 </div>
-                <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-[0.16em] text-white/55">
+                <div className="rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-xs uppercase tracking-[0.16em] text-gray-500">
                   1-2 dakika
                 </div>
               </div>
@@ -149,7 +149,7 @@ export default function HizmetOnerClient() {
                       className={inputClassName}
                     >
                       {SERVICE_OPTIONS.map((option) => (
-                        <option key={option.value} value={option.value} className="bg-black">
+                        <option key={option.value} value={option.value} className="bg-white">
                           {option.label}
                         </option>
                       ))}
@@ -240,13 +240,13 @@ export default function HizmetOnerClient() {
                 </Field>
 
                 {submitMessage ? (
-                  <div className="rounded-2xl border border-emerald-300/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+                  <div className="rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
                     {submitMessage}
                   </div>
                 ) : null}
 
                 {submitError ? (
-                  <div className="rounded-2xl border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+                  <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
                     {submitError}
                   </div>
                 ) : null}
@@ -255,13 +255,13 @@ export default function HizmetOnerClient() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex items-center rounded-full bg-[#F65314] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#ff6c35] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex items-center rounded-full bg-google-orange px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {submitting ? 'Gönderiliyor...' : 'Öneriyi gönder'}
                   </button>
                   <Link
                     href="/hizmet-rehberi"
-                    className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white/82 transition hover:border-white/30 hover:bg-white/[0.08]"
+                    className="inline-flex items-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
                   >
                     Rehbere dön
                   </Link>
@@ -295,7 +295,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-sm font-medium text-white/72">{label}</span>
+      <span className="mb-2 block text-sm font-medium text-gray-700">{label}</span>
       {children}
     </label>
   );
@@ -309,9 +309,9 @@ function InfoCard({
   description: string;
 }) {
   return (
-    <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.05] p-5">
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="mt-2 text-sm leading-7 text-white/68">{description}</p>
+    <div className="rounded-[1.6rem] border border-gray-200 bg-white p-5 shadow-sm">
+      <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+      <p className="mt-2 text-sm leading-7 text-gray-600">{description}</p>
     </div>
   );
 }
@@ -324,9 +324,9 @@ function SideCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#ffd24a]">{title}</div>
-      <p className="mt-3 text-sm leading-7 text-white/68">{children}</p>
+    <div className="rounded-[1.6rem] border border-gray-200 bg-white p-5 shadow-sm">
+      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-google-yellow">{title}</div>
+      <p className="mt-3 text-sm leading-7 text-gray-600">{children}</p>
     </div>
   );
 }

@@ -304,89 +304,91 @@ export function TransferSelector() {
     const borderColors = ["border-google-yellow", "border-google-blue", "border-google-green"];
     return (
       <Section contained className="!pt-0 pb-8">
-        {/* Başlık kartı */}
-        <div className="mb-2 rounded-xl border-2 border-google-red bg-white p-4">
-          <h2 className="text-2xl font-bold">Sonuç</h2>
-          <p className="text-gray-500 text-sm mt-0.5">Cevaplarına göre en uygun para transferi sistemi profilleri:</p>
-        </div>
+        <div className="space-y-2">
+          {/* Başlık kartı */}
+          <div className="rounded-xl border-2 border-google-red bg-white p-4">
+            <h2 className="text-2xl font-bold">Sonuç</h2>
+            <p className="text-gray-500 text-sm mt-0.5">Cevaplarına göre en uygun para transferi sistemi profilleri:</p>
+          </div>
 
-        {/* Her sonuç ayrı kart */}
-        {results.map((sys, idx) => {
-          const chips = buildChips(sys, prefs);
-          const why = buildWhy(sys, prefs);
-          return (
-            <div
-              key={sys.id}
-              className={cn(
-                "mb-2 rounded-xl border-2 bg-white p-5",
-                borderColors[idx]
-              )}
-            >
-              <h3 className="text-lg font-bold mb-3">
-                {idx + 1} - {sys.name} - {labelForRank(idx)}
-              </h3>
+          {/* Her sonuç ayrı kart */}
+          {results.map((sys, idx) => {
+            const chips = buildChips(sys, prefs);
+            const why = buildWhy(sys, prefs);
+            return (
+              <div
+                key={sys.id}
+                className={cn(
+                  "rounded-xl border-2 bg-white p-5",
+                  borderColors[idx]
+                )}
+              >
+                <h3 className="text-lg font-bold mb-3">
+                  {idx + 1} - {sys.name} - {labelForRank(idx)}
+                </h3>
 
-              <div className="flex flex-wrap gap-1.5 mb-3">
-                {chips.map((c, i) => (
-                  <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
-                    {c}
-                  </span>
-                ))}
-              </div>
-
-              <p className="text-sm font-semibold text-gray-700 mb-2">
-                Uygunluk Skoru: <span className="text-google-green">{sys.score}/100</span>
-              </p>
-
-              <div className="bg-gray-50 rounded-lg p-3">
-                <p className="text-xs font-semibold text-gray-500 mb-1.5">Neden bu sistem?</p>
-                <ul className="space-y-1">
-                  {why.map((b, i) => (
-                    <li key={i} className="text-sm text-gray-700 flex gap-2">
-                      <span className="text-gray-400 shrink-0">•</span>
-                      {b}
-                    </li>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {chips.map((c, i) => (
+                    <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
+                      {c}
+                    </span>
                   ))}
-                </ul>
+                </div>
+
+                <p className="text-sm font-semibold text-gray-700 mb-2">
+                  Uygunluk Skoru: <span className="text-google-green">{sys.score}/100</span>
+                </p>
+
+                <div className="bg-gray-50 rounded-lg p-3">
+                  <p className="text-xs font-semibold text-gray-500 mb-1.5">Neden bu sistem?</p>
+                  <ul className="space-y-1">
+                    {why.map((b, i) => (
+                      <li key={i} className="text-sm text-gray-700 flex gap-2">
+                        <span className="text-gray-400 shrink-0">•</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
-        {/* Not kartı */}
-        <div className="mb-2 rounded-xl border border-blue-200 bg-blue-50 p-4">
-          <p className="text-sm text-blue-800">
-            <strong>Not:</strong> Bu araç yönlendirme amaçlıdır. Ücretler (kur farkı + sabit ücret),
-            teslim süresi, kimlik doğrulama ve limitler sağlayıcıya göre değişir.<br />
-            Karar vermeden önce sağlayıcının kendi fiyat hesaplayıcısında aynı tutar için &quot;toplam maliyeti&quot; kontrol edin.
-          </p>
+          {/* Not kartı */}
+          <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
+            <p className="text-sm text-blue-800">
+              <strong>Not:</strong> Bu araç yönlendirme amaçlıdır. Ücretler (kur farkı + sabit ücret),
+              teslim süresi, kimlik doğrulama ve limitler sağlayıcıya göre değişir.<br />
+              Karar vermeden önce sağlayıcının kendi fiyat hesaplayıcısında aynı tutar için &quot;toplam maliyeti&quot; kontrol edin.
+            </p>
+          </div>
+
+          {/* Sıfırla */}
+          <button
+            onClick={handleReset}
+            className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-orange bg-google-orange text-white font-semibold py-3 hover:opacity-90 transition-opacity"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Sıfırla
+          </button>
+
+          {/* Sonucu Kopyala */}
+          <button
+            onClick={copyResults}
+            className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-blue bg-google-blue text-white font-semibold py-3 hover:opacity-90 transition-opacity"
+          >
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? 'Kopyalandı' : 'Sonucu Kopyala'}
+          </button>
+
+          {/* Ana Sayfaya Dön */}
+          <Link
+            href="/"
+            className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity"
+          >
+            Ana Sayfaya Dön
+          </Link>
         </div>
-
-        {/* Sıfırla */}
-        <button
-          onClick={handleReset}
-          className="mb-2 w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-orange bg-google-orange text-white font-semibold py-3 hover:opacity-90 transition-opacity"
-        >
-          <RotateCcw className="w-4 h-4" />
-          Sıfırla
-        </button>
-
-        {/* Sonucu Kopyala */}
-        <button
-          onClick={copyResults}
-          className="mb-2 w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-blue bg-google-blue text-white font-semibold py-3 hover:opacity-90 transition-opacity"
-        >
-          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-          {copied ? 'Kopyalandı' : 'Sonucu Kopyala'}
-        </button>
-
-        {/* Ana Sayfaya Dön */}
-        <Link
-          href="/"
-          className="mt-2 w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity"
-        >
-          Ana Sayfaya Dön
-        </Link>
       </Section>
     );
   }
@@ -398,112 +400,114 @@ export function TransferSelector() {
 
   return (
     <Section contained className="!pt-0 pb-8">
-      <div className="mb-2 rounded-xl border-2 border-google-blue bg-white px-4 py-3">
-        <h1 className="text-2xl font-bold leading-tight">{'Para Transferi Se\u00e7im Arac\u0131'}</h1>
-      </div>
-      {/* Başlık + Nasıl Çalışır accordion — tek kart */}
-      <div
-        className="mb-2 rounded-xl border-2 border-google-blue bg-white cursor-pointer select-none overflow-hidden"
-        onClick={() => setShowInfo(!showInfo)}
-      >
-        <div className="flex items-center justify-between px-4 py-3">
-          <span className="font-semibold text-gray-900">{'Nas\u0131l \u00c7al\u0131\u015f\u0131r?'}</span>
-          <span className={cn("text-google-blue text-xl transition-transform duration-200", showInfo && "rotate-180")}>
-            ▾
-          </span>
+      <div className="space-y-2">
+        <div className="rounded-xl border-2 border-google-blue bg-white px-4 py-3">
+          <h1 className="text-2xl font-bold leading-tight">{'Para Transferi Se\u00e7im Arac\u0131'}</h1>
         </div>
-        {showInfo && (
-          <div className="px-4 pb-4 bg-blue-50 border-t border-blue-200">
-            <ul className="space-y-2 text-sm text-blue-800 pt-3">
-              <li>• Bu araç 20 soruyla size en uygun para transferi yöntemini önerir.</li>
-              <li>• Sonuçlar yönlendirme amaçlıdır; son kararınızı vermeden önce sağlayıcının güncel şartlarını kontrol edin.</li>
-              <li>• Ücretler (kur farkı + sabit ücret), teslim süresi, kimlik doğrulama ve limitler sağlayıcıya göre değişir.</li>
-            </ul>
+        {/* Başlık + Nasıl Çalışır accordion — tek kart */}
+        <div
+          className="rounded-xl border-2 border-google-blue bg-white cursor-pointer select-none overflow-hidden"
+          onClick={() => setShowInfo(!showInfo)}
+        >
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="font-semibold text-gray-900">{'Nas\u0131l \u00c7al\u0131\u015f\u0131r?'}</span>
+            <span className={cn("text-google-blue text-xl transition-transform duration-200", showInfo && "rotate-180")}>
+              ▾
+            </span>
           </div>
-        )}
-      </div>
-
-      {/* Bu araç neden var? */}
-      <div
-        className="mb-2 rounded-xl border-2 border-google-green bg-white cursor-pointer select-none overflow-hidden"
-        onClick={() => setShowWhy(!showWhy)}
-      >
-        <div className="flex items-center justify-between px-4 py-3">
-          <span className="font-semibold text-gray-900">Bu araç neden var?</span>
-          <span className={cn("text-google-green text-xl transition-transform duration-200", showWhy && "rotate-180")}>▾</span>
+          {showInfo && (
+            <div className="px-4 pb-4 bg-blue-50 border-t border-blue-200">
+              <ul className="space-y-2 text-sm text-blue-800 pt-3">
+                <li>• Bu araç 20 soruyla size en uygun para transferi yöntemini önerir.</li>
+                <li>• Sonuçlar yönlendirme amaçlıdır; son kararınızı vermeden önce sağlayıcının güncel şartlarını kontrol edin.</li>
+                <li>• Ücretler (kur farkı + sabit ücret), teslim süresi, kimlik doğrulama ve limitler sağlayıcıya göre değişir.</li>
+              </ul>
+            </div>
+          )}
         </div>
-        {showWhy && (
-          <div className="px-4 pb-4 bg-green-50 border-t border-green-200">
-            <p className="text-sm text-green-900 pt-3 leading-relaxed">
-              Almanya'dan Türkiye'ye ya da başka ülkelere para gönderirken banka havalesi çoğu zaman yetersiz kalır: komisyon oranları yüksek, döviz kurları banka lehine. Wise, Remitly, Western Union ve benzeri platformlar çok daha uygun koşullar sunabiliyor; ancak hangisinin senin için avantajlı olduğu transfer miktarına, sıklığına ve hedef ülkeye göre değişiyor. Bu araç, birkaç basit soruyla ihtiyacına en uygun para transfer servisini belirler ve gereksiz komisyon kaybını önlemene yardım eder.
-            </p>
+
+        {/* Bu araç neden var? */}
+        <div
+          className="rounded-xl border-2 border-google-green bg-white cursor-pointer select-none overflow-hidden"
+          onClick={() => setShowWhy(!showWhy)}
+        >
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="font-semibold text-gray-900">Bu araç neden var?</span>
+            <span className={cn("text-google-green text-xl transition-transform duration-200", showWhy && "rotate-180")}>▾</span>
           </div>
-        )}
-      </div>
-
-      {/* Progress — google-red border */}
-      <div className="mb-2 rounded-xl border-2 border-google-red bg-white p-4">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-google-red">Soru {currentQuestion + 1} / {QUESTIONS.length}</span>
-          <button
-            onClick={handleReset}
-            className="text-sm text-google-red hover:opacity-75 flex items-center gap-1"
-          >
-            <RotateCcw className="w-3 h-3" />
-            Sıfırla
-          </button>
+          {showWhy && (
+            <div className="px-4 pb-4 bg-green-50 border-t border-green-200">
+              <p className="text-sm text-green-900 pt-3 leading-relaxed">
+                Almanya'dan Türkiye'ye ya da başka ülkelere para gönderirken banka havalesi çoğu zaman yetersiz kalır: komisyon oranları yüksek, döviz kurları banka lehine. Wise, Remitly, Western Union ve benzeri platformlar çok daha uygun koşullar sunabiliyor; ancak hangisinin senin için avantajlı olduğu transfer miktarına, sıklığına ve hedef ülkeye göre değişiyor. Bu araç, birkaç basit soruyla ihtiyacına en uygun para transfer servisini belirler ve gereksiz komisyon kaybını önlemene yardım eder.
+              </p>
+            </div>
+          )}
         </div>
-        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-google-red transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </div>
 
-      {/* Soru kartı — google-yellow border */}
-      <div className="rounded-xl border-2 border-google-yellow bg-white p-6">
-        <h2 className="text-xl font-semibold mb-2">{question.title}</h2>
-        {question.desc && (
-          <p className="text-gray-500 mb-6 text-sm">{question.desc}</p>
-        )}
-
-        <div className="space-y-3">
-          {options.map((opt) => (
+        {/* Progress — google-red border */}
+        <div className="rounded-xl border-2 border-google-red bg-white p-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium text-google-red">Soru {currentQuestion + 1} / {QUESTIONS.length}</span>
             <button
-              key={opt.key}
-              onClick={() => handleAnswer(opt.key)}
-              className={cn(
-                "w-full text-left p-4 rounded-lg border-2 transition-all",
-                answers[question.id] === opt.key
-                  ? "border-google-blue bg-blue-100"
-                  : "border-google-blue/30 bg-blue-50/60 hover:bg-blue-100/80 hover:border-google-blue"
-              )}
+              onClick={handleReset}
+              className="text-sm text-google-red hover:opacity-75 flex items-center gap-1"
             >
-              <span className="font-medium">{opt.label}</span>
-              {opt.desc && <p className="text-sm text-gray-500 mt-0.5">{opt.desc}</p>}
+              <RotateCcw className="w-3 h-3" />
+              Sıfırla
             </button>
-          ))}
+          </div>
+          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-google-red transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
 
-        <div className="flex justify-between mt-6 pt-4 border-t border-gray-100">
-          <Button
-            variant="outline"
-            onClick={handleBack}
-            disabled={currentQuestion === 0}
-            className="flex items-center gap-2"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            Geri
-          </Button>
-          <span className="text-sm text-gray-400 self-center">
-            Bir şık seçince otomatik ilerler.
-          </span>
+        {/* Soru kartı — google-yellow border */}
+        <div className="rounded-xl border-2 border-google-yellow bg-white p-6">
+          <h2 className="text-xl font-semibold mb-2">{question.title}</h2>
+          {question.desc && (
+            <p className="text-gray-500 mb-6 text-sm">{question.desc}</p>
+          )}
+
+          <div className="space-y-3">
+            {options.map((opt) => (
+              <button
+                key={opt.key}
+                onClick={() => handleAnswer(opt.key)}
+                className={cn(
+                  "w-full text-left p-4 rounded-lg border-2 transition-all",
+                  answers[question.id] === opt.key
+                    ? "border-google-blue bg-blue-100"
+                    : "border-google-blue/30 bg-blue-50/60 hover:bg-blue-100/80 hover:border-google-blue"
+                )}
+              >
+                <span className="font-medium">{opt.label}</span>
+                {opt.desc && <p className="text-sm text-gray-500 mt-0.5">{opt.desc}</p>}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex justify-between mt-6 pt-4 border-t border-gray-100">
+            <Button
+              variant="outline"
+              onClick={handleBack}
+              disabled={currentQuestion === 0}
+              className="flex items-center gap-2"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Geri
+            </Button>
+            <span className="text-sm text-gray-400 self-center">
+              Bir şık seçince otomatik ilerler.
+            </span>
+          </div>
         </div>
+        <Link href="/" className="w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
+          Ana Sayfaya Dön
+        </Link>
       </div>
-      <Link href="/" className="mt-2 w-full flex items-center justify-center rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
-        Ana Sayfaya Dön
-      </Link>
     </Section>
   );
 }

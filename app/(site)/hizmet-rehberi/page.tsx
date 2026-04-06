@@ -72,6 +72,7 @@ export default function HizmetRehberiPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+  const [allProviders, setAllProviders] = useState<Provider[]>([]);
   const [providers, setProviders] = useState<Provider[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [cities, setCities] = useState<string[]>([]);
@@ -80,8 +81,12 @@ export default function HizmetRehberiPage() {
   const [loading, setLoading] = useState(true);
 
   const loadInitialData = useCallback(async () => {
-    const statsData = await getCategoryStats();
+    const [statsData, allProvidersData] = await Promise.all([
+      getCategoryStats(),
+      getProvidersByCategory('all'),
+    ]);
     setStats(statsData);
+    setAllProviders(allProvidersData);
     setLoading(false);
   }, []);
 
@@ -154,6 +159,81 @@ export default function HizmetRehberiPage() {
     return filtered;
   }, [providers, searchQuery, selectedCity, selectedTags]);
 
+  const sidebarCounts = useMemo(() => {
+    const counts: Record<string, number> = { total: 0 };
+    const normalizedQuery = searchQuery.toLocaleLowerCase('tr-TR').trim();
+
+    const matchesSharedFilters = (provider: Provider) => {
+      if (selectedCity && provider.city !== selectedCity) {
+        return false;
+      }
+
+      if (!normalizedQuery) {
+        return true;
+      }
+
+      const haystack = [
+        provider.name,
+        provider.city,
+        provider.address || '',
+        provider.description || '',
+      ]
+        .join(' ')
+        .toLocaleLowerCase('tr-TR');
+
+      return haystack.includes(normalizedQuery);
+    };
+
+    const matchesSelectedTags = (provider: Provider) => {
+      if (selectedTags.length === 0) {
+        return true;
+      }
+
+      const providerTagIds =
+        provider.provider_tags?.map((tag) => tag.tag_id) ||
+        provider.gastronomy_provider_tags?.map((tag) => tag.tag_id) ||
+        [];
+
+      return selectedTags.some((tagId) => providerTagIds.includes(tagId));
+    };
+
+    const getCategoryKey = (type: ProviderType) => {
+      if (
+        type === 'tamirci_otomobil' ||
+        type === 'tamirci_tesisat' ||
+        type === 'tamirci_boyaci'
+      ) {
+        return 'tamir';
+      }
+
+      return type;
+    };
+
+    for (const provider of allProviders) {
+      if (!matchesSharedFilters(provider)) {
+        continue;
+      }
+
+      const categoryKey = getCategoryKey(provider.type);
+      const shouldApplyTagFilter =
+        selectedTags.length > 0 &&
+        (selectedCategory === categoryKey ||
+          (selectedCategory === 'tamir' &&
+            (provider.type === 'tamirci_otomobil' ||
+              provider.type === 'tamirci_tesisat' ||
+              provider.type === 'tamirci_boyaci')));
+
+      if (shouldApplyTagFilter && !matchesSelectedTags(provider)) {
+        continue;
+      }
+
+      counts.total = (counts.total || 0) + 1;
+      counts[categoryKey] = (counts[categoryKey] || 0) + 1;
+    }
+
+    return counts;
+  }, [allProviders, searchQuery, selectedCity, selectedTags, selectedCategory]);
+
   const allCategories = PROVIDER_CATEGORIES;
   const featuredCategories = allCategories.slice(0, 8);
   const selectedCategoryMeta =
@@ -182,23 +262,19 @@ export default function HizmetRehberiPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
         <Section
           contained={false}
-          className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.22),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(246,83,20,0.14),_transparent_34%),linear-gradient(180deg,#0b0b0c_0%,#050505_100%)] py-14 md:py-20"
+          className="relative overflow-hidden border-b border-gray-200 bg-white py-6 md:py-8"
         >
           <Container>
             <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
               <div className="max-w-3xl">
-                <div className="inline-flex rounded-full border border-white/12 bg-white/[0.05] px-4 py-2 text-sm text-white/70">
+                <h1 className="text-4xl font-black leading-tight md:text-5xl text-gray-900">
                   Türk Hizmet Rehberi
-                </div>
-                <h1 className="mt-6 text-4xl font-black leading-tight md:text-5xl">
-                  Aradığın hizmeti daha hızlı bul, eksik kaydı tek tıkla öner.
                 </h1>
-                <p className="mt-5 max-w-2xl text-base leading-8 text-white/72 md:text-lg">
-                  Almanya&apos;da Türkçe hizmet veren doktor, avukat, terapist, restoran ve daha fazlasını
-                  sade filtrelerle bul. Aradığın kayıt yoksa rehberi birlikte büyütelim.
+                <p className="mt-4 text-lg text-gray-600">
+                  Almanya'da Türkçe hizmet veren doktorlardan restoranlara, tüm uzmanları tek yerde bulun.
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -207,7 +283,7 @@ export default function HizmetRehberiPage() {
                   </Button>
                   <a
                     href="#rehber-arama"
-                    className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.05] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.1]"
+                    className="inline-flex items-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
                   >
                     Rehber Ara
                   </a>
@@ -221,8 +297,8 @@ export default function HizmetRehberiPage() {
                       className={cn(
                         'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition',
                         selectedCategory === category.id
-                          ? 'border-white/35 bg-white/15 text-white'
-                          : 'border-white/12 bg-white/[0.03] text-white/72 hover:border-white/25 hover:bg-white/[0.08] hover:text-white'
+                          ? 'border-google-blue bg-blue-50 text-google-blue'
+                          : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900'
                       )}
                     >
                       {CATEGORY_ICONS[category.id]}
@@ -232,21 +308,31 @@ export default function HizmetRehberiPage() {
                 </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              <div className="grid gap-3 grid-cols-2 sm:grid-cols-5 lg:grid-cols-5">
                 <HeroStatCard
-                  icon={<Users className="h-5 w-5" />}
+                  icon={<Users className="h-4 w-4" />}
                   value={stats.total || 0}
-                  label="Toplam kayıt"
+                  label="Toplam"
                 />
                 <HeroStatCard
-                  icon={<Scale className="h-5 w-5" />}
+                  icon={<Stethoscope className="h-4 w-4" />}
+                  value={stats.doctor || 0}
+                  label="Doktor"
+                />
+                <HeroStatCard
+                  icon={<Scale className="h-4 w-4" />}
                   value={stats.lawyer || 0}
                   label="Avukat"
                 />
                 <HeroStatCard
-                  icon={<Store className="h-5 w-5" />}
+                  icon={<Store className="h-4 w-4" />}
                   value={stats.restaurant || 0}
                   label="Restoran"
+                />
+                <HeroStatCard
+                  icon={<Scissors className="h-4 w-4" />}
+                  value={stats.kuafor || 0}
+                  label="Kuaför"
                 />
               </div>
             </div>
@@ -256,12 +342,12 @@ export default function HizmetRehberiPage() {
         <Section contained className="py-8 md:py-10" id="rehber-arama">
           <div className="grid gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
             <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-[1.8rem] border border-[#01A1F1]/20 bg-[linear-gradient(145deg,rgba(1,161,241,0.14),rgba(246,83,20,0.12))] p-5">
-                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">
+              <div className="rounded-[1.8rem] border border-blue-100 bg-blue-50 p-5">
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">
                   Rehberi büyüt
                 </div>
-                <h2 className="mt-3 text-xl font-bold text-white">Aradığın hizmet yok mu?</h2>
-                <p className="mt-2 text-sm leading-7 text-white/70">
+                <h2 className="mt-3 text-xl font-bold text-gray-900">Aradığın hizmet yok mu?</h2>
+                <p className="mt-2 text-sm leading-7 text-gray-700">
                   Güvenilir bir uzman biliyorsan öner. Ekibimiz kontrol etsin, uygunsa rehbere ekleyelim.
                 </p>
                 <Button asChild href="/hizmet-rehberi/oneri" className="mt-4 w-full rounded-full">
@@ -269,43 +355,43 @@ export default function HizmetRehberiPage() {
                 </Button>
               </div>
 
-              <div className="rounded-[1.8rem] border border-white/10 bg-[#0b0b0c] p-4">
-                <label className="mb-2 block text-sm font-medium text-white/70">Ara</label>
+              <div className="rounded-[1.8rem] border border-gray-200 bg-white p-4">
+                <label className="mb-2 block text-sm font-medium text-gray-700">Ara</label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" />
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(event) => setSearchQuery(event.target.value)}
                     placeholder="İsim, şehir, açıklama..."
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.04] py-3 pl-10 pr-4 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-white/30"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-google-blue focus:ring-1 focus:ring-google-blue"
                   />
                 </div>
               </div>
 
-              <div className="rounded-[1.8rem] border border-white/10 bg-[#0b0b0c] p-4">
-                <label className="mb-2 flex items-center gap-2 text-sm font-medium text-white/70">
+              <div className="rounded-[1.8rem] border border-gray-200 bg-white p-4">
+                <label className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-700">
                   <MapPin className="h-4 w-4" />
                   Şehir
                 </label>
                 <select
                   value={selectedCity}
                   onChange={(event) => setSelectedCity(event.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 text-sm text-white outline-none transition focus:border-white/30"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm text-gray-900 outline-none transition focus:border-google-blue focus:ring-1 focus:ring-google-blue"
                 >
-                  <option value="" className="bg-black">
+                  <option value="" className="bg-white">
                     Tüm şehirler
                   </option>
                   {cities.map((city) => (
-                    <option key={city} value={city} className="bg-black">
+                    <option key={city} value={city} className="bg-white">
                       {city}
                     </option>
                   ))}
                 </select>
               </div>
 
-              <div className="rounded-[1.8rem] border border-white/10 bg-[#0b0b0c] p-4">
-                <label className="mb-3 flex items-center gap-2 text-sm font-medium text-white/70">
+              <div className="rounded-[1.8rem] border border-gray-200 bg-white p-4">
+                <label className="mb-3 flex items-center gap-2 text-sm font-medium text-gray-700">
                   <Filter className="h-4 w-4" />
                   Kategori
                 </label>
@@ -315,22 +401,22 @@ export default function HizmetRehberiPage() {
                     className={cn(
                       'flex w-full items-start gap-3 rounded-2xl px-3 py-3 text-left text-sm transition',
                       selectedCategory === 'all'
-                        ? 'border border-white/15 bg-white/[0.10] text-white'
-                        : 'border border-transparent bg-white/[0.02] text-white/62 hover:border-white/10 hover:bg-white/[0.06] hover:text-white'
+                        ? 'border border-blue-200 bg-blue-50 text-google-blue'
+                        : 'border border-transparent bg-white text-gray-600 hover:border-gray-200 hover:bg-gray-50 hover:text-gray-900'
                     )}
                   >
-                    <div className="mt-0.5 rounded-xl bg-white/[0.06] p-2 text-white">
+                    <div className={cn("mt-0.5 rounded-xl p-2", selectedCategory === 'all' ? "bg-blue-100 text-google-blue" : "bg-gray-100 text-gray-500")}>
                       <Store className="h-5 w-5" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="font-medium">Tüm Rehber</div>
-                      <div className="mt-1 text-xs leading-5 text-white/42">
+                      <div className={cn("mt-1 text-xs leading-5", selectedCategory === 'all' ? "text-blue-700" : "text-gray-500")}>
                         Hizmet ve gastronomi kayıtlarını birlikte göster
                       </div>
                     </div>
-                    <div className="rounded-full bg-white/[0.06] px-2 py-1 text-[11px] text-white/65">
-                      {stats.total || 0}
-                    </div>
+                      <div className={cn("rounded-full px-2 py-1 text-[11px]", selectedCategory === 'all' ? "bg-blue-100 text-google-blue" : "bg-gray-100 text-gray-500")}>
+                      {sidebarCounts.total || stats.total || 0}
+                      </div>
                   </button>
                   {allCategories.map((category) => (
                     <button
@@ -339,19 +425,19 @@ export default function HizmetRehberiPage() {
                       className={cn(
                         'flex w-full items-start gap-3 rounded-2xl px-3 py-3 text-left text-sm transition',
                         selectedCategory === category.id
-                          ? 'border border-white/15 bg-white/[0.10] text-white'
-                          : 'border border-transparent bg-white/[0.02] text-white/62 hover:border-white/10 hover:bg-white/[0.06] hover:text-white'
+                          ? 'border border-blue-200 bg-blue-50 text-google-blue'
+                          : 'border border-transparent bg-white text-gray-600 hover:border-gray-200 hover:bg-gray-50 hover:text-gray-900'
                       )}
                     >
-                      <div className="mt-0.5 rounded-xl bg-white/[0.06] p-2 text-white">
+                      <div className={cn("mt-0.5 rounded-xl p-2", selectedCategory === category.id ? "bg-blue-100 text-google-blue" : "bg-gray-100 text-gray-500")}>
                         {CATEGORY_ICONS[category.id]}
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="font-medium">{category.label}</div>
-                        <div className="mt-1 text-xs leading-5 text-white/42">{category.description}</div>
+                        <div className={cn("mt-1 text-xs leading-5", selectedCategory === category.id ? "text-blue-700" : "text-gray-500")}>{category.description}</div>
                       </div>
-                      <div className="rounded-full bg-white/[0.06] px-2 py-1 text-[11px] text-white/65">
-                        {stats[category.id] || 0}
+                      <div className={cn("rounded-full px-2 py-1 text-[11px]", selectedCategory === category.id ? "bg-blue-100 text-google-blue" : "bg-gray-100 text-gray-500")}>
+                        {sidebarCounts[category.id] || 0}
                       </div>
                     </button>
                   ))}
@@ -359,18 +445,18 @@ export default function HizmetRehberiPage() {
               </div>
 
               {tags.length > 0 ? (
-                <div className="rounded-[1.8rem] border border-white/10 bg-[#0b0b0c] p-4">
-                  <label className="mb-3 block text-sm font-medium text-white/70">Uzmanlık</label>
+                <div className="rounded-[1.8rem] border border-gray-200 bg-white p-4">
+                  <label className="mb-3 block text-sm font-medium text-gray-700">Uzmanlık</label>
                   <div className="flex flex-wrap gap-2">
                     {tags.map((tag) => (
                       <button
                         key={tag.id}
                         onClick={() => toggleTag(tag.id)}
                         className={cn(
-                          'rounded-full px-3 py-1.5 text-xs font-medium transition',
+                          'rounded-full px-3 py-1.5 text-xs font-medium transition border',
                           selectedTags.includes(tag.id)
-                            ? 'bg-[#F65314] text-white'
-                            : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.1] hover:text-white'
+                            ? 'border-google-blue bg-google-blue text-white'
+                            : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                         )}
                       >
                         {tag.label}
@@ -382,24 +468,24 @@ export default function HizmetRehberiPage() {
             </aside>
 
             <div className="space-y-5">
-              <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-5 md:p-6">
+              <div className="rounded-[2rem] border border-gray-200 bg-white p-5 md:p-6 shadow-sm">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-2xl">
-                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7fd5ff]">
+                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-google-blue">
                       Rehber Ara
                     </div>
-                    <h2 className="mt-3 text-2xl font-black md:text-3xl">
+                    <h2 className="mt-3 text-2xl font-black md:text-3xl text-gray-900">
                       {selectedCategoryMeta?.label || 'Tüm hizmetler ve gastronomi'}
                     </h2>
-                    <p className="mt-2 text-sm leading-7 text-white/70">
+                    <p className="mt-2 text-sm leading-7 text-gray-600">
                       {selectedCategoryMeta?.description ||
                         'İsim, şehir ve uzmanlık filtreleriyle tüm rehberde en uygun kaydı bul.'}
                     </p>
                   </div>
 
-                  <div className="rounded-[1.4rem] border border-white/10 bg-black/20 px-4 py-3 text-right">
-                    <div className="text-xs uppercase tracking-[0.18em] text-white/45">Sonuç</div>
-                    <div className="mt-1 text-3xl font-black">{filteredProviders.length}</div>
+                  <div className="rounded-[1.4rem] border border-gray-100 bg-gray-50 px-4 py-3 text-right">
+                    <div className="text-xs uppercase tracking-[0.18em] text-gray-500">Sonuç</div>
+                    <div className="mt-1 text-3xl font-black text-gray-900">{filteredProviders.length}</div>
                   </div>
                 </div>
 
@@ -408,7 +494,7 @@ export default function HizmetRehberiPage() {
                     {activeFilterPills.map((pill) => (
                       <span
                         key={pill}
-                        className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-white/74"
+                        className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-medium text-gray-700"
                       >
                         {pill}
                       </span>
@@ -416,7 +502,7 @@ export default function HizmetRehberiPage() {
                     <button
                       type="button"
                       onClick={clearFilters}
-                      className="ml-auto rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-xs font-semibold text-white/72 transition hover:border-white/25 hover:bg-white/[0.08] hover:text-white"
+                      className="ml-auto rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-600 transition hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900"
                     >
                       Filtreleri Temizle
                     </button>
@@ -427,7 +513,7 @@ export default function HizmetRehberiPage() {
                       <button
                         key={`quick-${category.id}`}
                         onClick={() => setSelectedCategory(category.id)}
-                        className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/70 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+                        className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900"
                       >
                         {category.label}
                       </button>
@@ -437,16 +523,16 @@ export default function HizmetRehberiPage() {
               </div>
 
               {loading ? (
-                <div className="flex items-center justify-center rounded-[2rem] border border-white/10 bg-[#0b0b0c] py-24">
-                  <div className="h-9 w-9 animate-spin rounded-full border-b-2 border-white" />
+                <div className="flex items-center justify-center rounded-[2rem] border border-gray-200 bg-white py-24 shadow-sm">
+                  <div className="h-9 w-9 animate-spin rounded-full border-b-2 border-google-blue" />
                 </div>
               ) : filteredProviders.length === 0 ? (
-                <div className="rounded-[2rem] border border-white/10 bg-[#0b0b0c] p-10 text-center md:p-14">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/[0.05] text-3xl">
+                <div className="rounded-[2rem] border border-gray-200 bg-white p-10 text-center md:p-14 shadow-sm">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-50 text-3xl text-gray-400">
                     0
                   </div>
-                  <h3 className="mt-5 text-2xl font-bold">Bu filtrelerle sonuç çıkmadı.</h3>
-                  <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/60">
+                  <h3 className="mt-5 text-2xl font-bold text-gray-900">Bu filtrelerle sonuç çıkmadı.</h3>
+                  <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-gray-600">
                     Kategori veya şehir seçimini gevşetmeyi deneyin. Aradığınız kayıt gerçekten eksikse doğrudan öneri bırakabilirsiniz.
                   </p>
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -455,7 +541,7 @@ export default function HizmetRehberiPage() {
                     </Button>
                     <Link
                       href="/hizmet-rehberi/oneri"
-                      className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.05] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.08]"
+                      className="inline-flex items-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
                     >
                       Eksik hizmeti öner
                     </Link>
@@ -491,12 +577,12 @@ function HeroStatCard({
   label: string;
 }) {
   return (
-    <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm">
-      <div className="flex items-center gap-3">
-        <div className="rounded-xl bg-white/[0.08] p-2 text-white">{icon}</div>
+    <div className="rounded-xl border border-gray-200 bg-white p-3 shadow-sm">
+      <div className="flex items-center gap-2.5">
+        <div className="rounded-lg bg-gray-50 p-2 text-gray-500">{icon}</div>
         <div>
-          <div className="text-2xl font-black text-white">{value}</div>
-          <div className="text-sm text-white/60">{label}</div>
+          <div className="text-lg font-bold text-gray-900 leading-none">{value}</div>
+          <div className="text-xs text-gray-500 mt-1">{label}</div>
         </div>
       </div>
     </div>
@@ -511,28 +597,28 @@ function ProviderCard({
   category?: Category;
 }) {
   return (
-    <article className="rounded-[1.8rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-5 transition hover:border-white/22">
+    <article className="rounded-[1.8rem] border border-gray-200 bg-white p-5 transition hover:border-google-blue shadow-sm">
       <div className="flex items-start gap-4">
-        <div className="rounded-2xl bg-white/[0.06] p-3 text-white">
+        <div className="rounded-2xl bg-gray-50 p-3 text-gray-500">
           {CATEGORY_ICONS[provider.type] || <MapPin className="h-5 w-5" />}
         </div>
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             {category ? (
-              <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/60">
+              <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-gray-500">
                 {category.label}
               </span>
             ) : null}
-            <span className="rounded-full bg-[#01A1F1]/12 px-3 py-1 text-[11px] font-semibold text-[#8fd9ff]">
+            <span className="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold text-google-blue">
               {provider.city}
             </span>
           </div>
 
-          <h3 className="mt-3 text-xl font-bold text-white">{provider.name}</h3>
+          <h3 className="mt-3 text-xl font-bold text-gray-900">{provider.name}</h3>
 
           {provider.address ? (
-            <p className="mt-2 flex items-start gap-2 text-sm leading-6 text-white/62">
+            <p className="mt-2 flex items-start gap-2 text-sm leading-6 text-gray-600">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
               <span>{provider.address}</span>
             </p>
@@ -541,16 +627,16 @@ function ProviderCard({
       </div>
 
       {provider.description ? (
-        <div className="mt-5 rounded-2xl border border-white/8 bg-black/20 p-4">
-          <p className="text-sm leading-7 text-white/68">{provider.description}</p>
+        <div className="mt-5 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+          <p className="text-sm leading-7 text-gray-700">{provider.description}</p>
         </div>
       ) : null}
 
-      <div className="mt-5 flex flex-wrap gap-2 border-t border-white/10 pt-4">
+      <div className="mt-5 flex flex-wrap gap-2 border-t border-gray-100 pt-4">
         {provider.phone ? (
           <a
             href={`tel:${provider.phone}`}
-            className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.12]"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:text-gray-900"
           >
             <Phone className="h-4 w-4" />
             Ara
@@ -560,7 +646,7 @@ function ProviderCard({
         {provider.email ? (
           <a
             href={`mailto:${provider.email}`}
-            className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.12]"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:text-gray-900"
           >
             <Mail className="h-4 w-4" />
             E-posta
@@ -572,7 +658,7 @@ function ProviderCard({
             href={provider.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-2 text-sm font-medium text-white transition hover:bg-white/[0.12]"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:text-gray-900"
           >
             <Globe className="h-4 w-4" />
             Website
