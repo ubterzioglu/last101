@@ -166,21 +166,16 @@ function loadDraftData(): Record<string, unknown> | null {
 
 const duStyles = `
   :root {
-    --google-blue: #4285F4;
-    --google-red: #EA4335;
-    --google-yellow: #FBBC05;
-    --google-green: #34A853;
-    --dark-bg: #000000;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --card-bg: rgba(255, 255, 255, 0.025);
+    --glass-border: rgba(255, 255, 255, 0.07);
     --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-secondary: rgba(255, 255, 255, 0.55);
     --gradient-1: linear-gradient(135deg, #4285F4 0%, #EA4335 50%, #FBBC05 100%);
     --gradient-2: linear-gradient(135deg, #34A853 0%, #4285F4 100%);
     --gradient-3: linear-gradient(135deg, #FBBC05 0%, #EA4335 100%);
   }
   .du-container {
-    max-width: 800px;
+    max-width: 720px;
     margin: 0 auto;
     padding: 12px 16px 80px;
     min-height: 100dvh;
@@ -191,13 +186,13 @@ const duStyles = `
   .du-card {
     background: var(--card-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 18px;
+    border-radius: 20px;
+    padding: 16px;
     backdrop-filter: blur(20px);
     margin-bottom: 12px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .du-card:hover { border-color: rgba(255,255,255,0.15); }
+  .du-card:hover { border-color: rgba(255,255,255,0.12); }
   #formCard { flex: 1; display: flex; flex-direction: column; overflow: visible; }
   #devuserForm { flex: 1; overflow: visible; }
   .hero-card { text-align: center; position: relative; overflow: hidden; }
@@ -215,11 +210,11 @@ const duStyles = `
   }
   .hero-card h3 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 24px; font-weight: 600; margin-bottom: 16px;
+    font-size: 20px; font-weight: 600;
     background: var(--gradient-1);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .hero-count { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
+  .hero-count { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; }
   .hero-count-label { color: var(--text-secondary); }
   .hero-count-value { font-weight: 600; color: var(--google-green); }
   .info-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 4px 0; }
@@ -229,105 +224,105 @@ const duStyles = `
   .info-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
   .info-content.open { max-height: 500px; padding-top: 16px; }
   .info-content p { color: var(--text-secondary); line-height: 1.6; font-size: 14px; }
-  .progress-container { margin-bottom: 8px; }
-  .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
-  .progress-fill { height: 100%; background: var(--gradient-1); border-radius: 4px; transition: width 0.4s ease; }
-  .progress-text { text-align: center; font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+  .progress-container { margin-bottom: 4px; }
+  .progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+  .progress-fill { height: 100%; background: var(--gradient-1); border-radius: 3px; transition: width 0.4s ease; }
+  .progress-text { text-align: center; font-size: 12px; color: var(--text-secondary); font-weight: 500; }
   .step-container { display: none; animation: fadeIn 0.3s ease; overflow: visible; }
   .step-container.active { display: block; min-height: 200px; }
   .step-inner { transform-origin: top center; transition: transform 0.18s ease; will-change: transform; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   .question-number {
-    font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600;
-    color: var(--google-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+    font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600;
+    color: var(--google-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
   }
   .question-title {
-    font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600;
     margin-bottom: 12px; color: var(--text-primary); line-height: 1.4;
   }
   .form-input {
-    width: 100%; padding: 11px 14px;
-    background: rgba(255,255,255,0.05);
+    width: 100%; padding: 10px 14px;
+    background: rgba(255,255,255,0.04);
     border: 1px solid var(--glass-border);
-    border-radius: 12px; color: var(--text-primary);
-    font-family: 'Inter', sans-serif; font-size: 14px;
+    border-radius: 10px; color: var(--text-primary);
+    font-family: 'Inter', sans-serif; font-size: 13px;
     transition: all 0.3s ease; outline: none;
   }
   .form-input::placeholder { color: rgba(255,255,255,0.3); }
-  .form-input:focus { border-color: var(--google-blue); background: rgba(255,255,255,0.08); box-shadow: 0 0 0 3px rgba(66,133,244,0.1); }
+  .form-input:focus { border-color: var(--google-blue); background: rgba(255,255,255,0.07); box-shadow: 0 0 0 3px rgba(66,133,244,0.1); }
   .form-input.invalid { border-color: var(--google-red); box-shadow: 0 0 0 3px rgba(234,67,53,0.18); }
-  .form-input.city-offset { margin-top: 16px; }
-  textarea.form-input { min-height: 120px; resize: vertical; }
-  .radio-group { display: flex; flex-direction: column; gap: 7px; }
-  .radio-group.role-two-col { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .form-input.city-offset { margin-top: 12px; }
+  textarea.form-input { min-height: 100px; resize: vertical; }
+  .radio-group { display: flex; flex-direction: column; gap: 6px; }
+  .radio-group.role-two-col { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
   .radio-label {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 12px; background: rgba(255,255,255,0.03);
-    border: 1px solid var(--glass-border); border-radius: 12px;
-    cursor: pointer; transition: all 0.3s ease;
-  }
-  .radio-label:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); }
-  .radio-label input[type="radio"] { width: 20px; height: 20px; accent-color: var(--google-blue); cursor: pointer; }
-  .radio-label span { font-size: 14px; color: var(--text-primary); }
-  .checkbox-group { display: flex; flex-direction: column; gap: 7px; }
-  .checkbox-group.checkbox-group-two-col { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
-  .checkbox-label {
-    display: flex; align-items: center; gap: 12px;
-    padding: 9px 11px; background: rgba(255,255,255,0.03);
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; background: rgba(255,255,255,0.025);
     border: 1px solid var(--glass-border); border-radius: 10px;
     cursor: pointer; transition: all 0.3s ease;
   }
-  .checkbox-label:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); }
-  .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--google-green); cursor: pointer; }
-  .checkbox-label span { font-size: 13px; color: var(--text-primary); }
-  .conditional-field { display: none; margin-top: 16px; animation: fadeIn 0.3s ease; }
+  .radio-label:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+  .radio-label input[type="radio"] { width: 18px; height: 18px; accent-color: var(--google-blue); cursor: pointer; }
+  .radio-label span { font-size: 13px; color: var(--text-primary); }
+  .checkbox-group { display: flex; flex-direction: column; gap: 6px; }
+  .checkbox-group.checkbox-group-two-col { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
+  .checkbox-label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 11px; background: rgba(255,255,255,0.025);
+    border: 1px solid var(--glass-border); border-radius: 9px;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .checkbox-label:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+  .checkbox-label input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--google-green); cursor: pointer; }
+  .checkbox-label span { font-size: 12px; color: var(--text-primary); }
+  .conditional-field { display: none; margin-top: 12px; animation: fadeIn 0.3s ease; }
   .conditional-field.active { display: block; }
-  .conditional-field .question-title { font-size: 14px; margin-bottom: 10px; color: var(--text-secondary); }
-  .nav-buttons { display: flex; gap: 12px; margin-top: 10px; }
+  .conditional-field .question-title { font-size: 13px; margin-bottom: 8px; color: var(--text-secondary); }
+  .nav-buttons { display: flex; gap: 10px; margin-top: 10px; }
   .du-btn {
-    flex: 1; padding: 11px 16px; border: none; border-radius: 12px;
-    font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600;
+    flex: 1; padding: 10px 14px; border: none; border-radius: 10px;
+    font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600;
     cursor: pointer; transition: all 0.3s ease; outline: none;
   }
   .du-btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .du-btn-primary { background: var(--gradient-1); color: white; }
-  .du-btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(66,133,244,0.4); }
-  .du-btn-secondary { background: rgba(255,255,255,0.05); color: var(--text-primary); border: 1px solid var(--glass-border); }
-  .du-btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
-  .success-message { display: none; text-align: center; padding: 40px 20px; animation: fadeIn 0.5s ease; }
+  .du-btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(66,133,244,0.35); }
+  .du-btn-secondary { background: rgba(255,255,255,0.04); color: var(--text-primary); border: 1px solid var(--glass-border); }
+  .du-btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,0.08); }
+  .success-message { display: none; text-align: center; padding: 30px 20px; animation: fadeIn 0.5s ease; }
   .success-message.active { display: block; }
-  .success-icon { font-size: 64px; margin-bottom: 20px; }
+  .success-icon { font-size: 56px; margin-bottom: 16px; }
   .success-title {
-    font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 16px;
+    font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 12px;
     background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .success-text { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
-  #charCount { font-size: 12px; color: var(--text-secondary); margin-top: 8px; text-align: right; }
-  .step7-compact .question-title { font-size: 15px; margin-bottom: 12px; }
-  .step7-compact .question-title:not(:first-of-type) { margin-top: 20px; }
-  .step17-compact .checkbox-label span { font-size: 12px; }
+  .success-text { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+  #charCount { font-size: 11px; color: var(--text-secondary); margin-top: 6px; text-align: right; }
+  .step7-compact .question-title { font-size: 14px; margin-bottom: 10px; }
+  .step7-compact .question-title:not(:first-of-type) { margin-top: 16px; }
+  .step17-compact .checkbox-label span { font-size: 11px; }
   @media (max-width: 768px) {
-    .du-container { padding: 15px 15px 100px; }
-    .du-card { padding: 20px; border-radius: 20px; }
-    .hero-card h3 { font-size: 20px; }
-    .question-title { font-size: 15px; line-height: 1.4; }
+    .du-container { padding: 12px 12px 100px; }
+    .du-card { padding: 16px; border-radius: 18px; }
+    .hero-card h3 { font-size: 18px; }
+    .question-title { font-size: 14px; line-height: 1.35; }
     .radio-group.role-two-col, .checkbox-group.checkbox-group-two-col { grid-template-columns: 1fr; }
-    .checkbox-label span, .radio-label span { font-size: 13px; }
-    .du-btn { padding: 14px 18px; font-size: 14px; }
-    .success-title { font-size: 22px; }
+    .checkbox-label span, .radio-label span { font-size: 12px; }
+    .du-btn { padding: 12px 16px; font-size: 13px; }
+    .success-title { font-size: 20px; }
     .step-container.active { min-height: 150px; }
-    textarea.form-input { min-height: 100px; }
+    textarea.form-input { min-height: 90px; }
     .nav-buttons {
       position: fixed; bottom: 0; left: 0; right: 0;
-      padding: 12px 16px; background: rgba(0,0,0,0.95);
+      padding: 10px 12px; background: rgba(0,0,0,0.95);
       backdrop-filter: blur(10px); border-top: 1px solid var(--glass-border);
       margin: 0; z-index: 100;
     }
   }
   @media (max-width: 480px) {
-    .form-input { padding: 12px 14px; font-size: 14px; }
-    .radio-label { padding: 12px 14px; }
-    .checkbox-label { padding: 10px 12px; }
+    .form-input { padding: 10px 12px; font-size: 13px; }
+    .radio-label { padding: 10px 12px; }
+    .checkbox-label { padding: 8px 10px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -656,27 +651,11 @@ export function DuClient() {
 
           {/* Hero Card */}
           <div className="du-card hero-card">
-            <div className="hero-domain">almanya101.de</div>
-            <h3>Software Veritabanı Kayıt</h3>
-            <div className="hero-count" aria-live="polite">
-              <span className="hero-count-label">Kayıtlı kullanıcı:</span>
-              <span className="hero-count-value">{registeredCount}</span>
-            </div>
-          </div>
-
-          {/* Info Card */}
-          <div className="du-card">
-            <div className="info-header" onClick={() => setInfoOpen((v) => !v)}>
-              <span className="info-title">💡 Neden?</span>
-              <span className={`info-toggle${infoOpen ? ' open' : ''}`}>▼</span>
-            </div>
-            <div className={`info-content${infoOpen ? ' open' : ''}`}>
-              <p>
-                Amaç veri toplamak değil; birbirimize destek olmak. Bu veritabanı, ihtiyaç duyduğumuzda
-                birbirimizin tecrübelerini, ilgi alanlarını ve yeteneklerini tanıyabilmek için oluşturuluyor.
-                Paylaşılan bilgiler yalnızca topluluk içinde networking, mentorluk, iş birlikleri ve bilgi
-                paylaşımı için kullanılacak.<br /><br />Birlikte daha güçlüyüz.
-              </p>
+            <div className="flex items-center justify-center gap-4">
+              <h3>Software Veritabanı</h3>
+              <div className="hero-count" aria-live="polite">
+                <span className="hero-count-value">{registeredCount}</span>
+              </div>
             </div>
           </div>
 
@@ -686,7 +665,9 @@ export function DuClient() {
               <div className="progress-bar">
                 <div className="progress-fill" style={{ width: `${progressPercent}%` }} />
               </div>
-              <div className="progress-text">Soru {currentStep} / {TOTAL_STEPS}</div>
+              <div className="progress-text">
+                Soru {currentStep} / {TOTAL_STEPS}
+              </div>
             </div>
           </div>
 

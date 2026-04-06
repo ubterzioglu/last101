@@ -39,14 +39,14 @@ const css = `
   }
   .dev-dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
   .dev-action-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
-    padding: 28px;
+    padding: 14px;
     backdrop-filter: blur(20px);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
@@ -95,24 +95,24 @@ const css = `
   }
   .dev-card-image-wrap {
     position: relative;
-    width: calc(100% + 56px);
-    height: 180px;
-    margin: -28px -28px 20px -28px;
+    width: calc(100% + 28px);
+    height: 90px;
+    margin: -14px -14px 10px -14px;
     border-radius: 24px 24px 0 0;
     overflow: hidden;
     flex-shrink: 0;
   }
   .dev-action-card h3 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: #fff;
   }
   .dev-action-card p {
     color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 11px;
+    line-height: 1.4;
     margin: 0;
   }
   .dev-action-card:nth-child(1) { animation-delay: 0.1s; }
@@ -132,18 +132,18 @@ const css = `
     to { opacity: 1; transform: translateY(0); }
   }
   @media (max-width: 768px) {
-    .dev-dashboard-grid { grid-template-columns: 1fr; gap: 15px; }
-    .dev-action-card { padding: 22px; border-radius: 20px; }
+    .dev-dashboard-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .dev-action-card { padding: 12px; border-radius: 16px; }
     .dev-card-image-wrap {
-      width: calc(100% + 44px);
-      height: 150px;
-      margin: -22px -22px 16px -22px;
-      border-radius: 20px 20px 0 0;
+      width: calc(100% + 24px);
+      height: 75px;
+      margin: -12px -12px 10px -12px;
+      border-radius: 16px 16px 0 0;
     }
-    .dev-action-card h3 { font-size: 13px; }
-    .dev-action-card p { font-size: 13px; }
-    .dev-welcome-banner { padding: 22px; border-radius: 20px; }
-    .dev-welcome-banner h2 { font-size: 20px; }
+    .dev-action-card h3 { font-size: 11px; margin-bottom: 6px; }
+    .dev-action-card p { font-size: 10px; }
+    .dev-welcome-banner { padding: 16px; border-radius: 16px; }
+    .dev-welcome-banner h2 { font-size: 18px; }
   }
   @media (hover: none) {
     .dev-action-card:active { transform: scale(0.98); transition: transform 0.1s ease; }
@@ -274,6 +274,15 @@ export default function DevPage() {
             </div>
             <h3>klavye hız yarışması</h3>
             <p>klavyende ne kadar hızlısın? yarış ve ödülü kazan!</p>
+          </Link>
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <Link 
+            href="/" 
+            className="inline-flex items-center justify-center rounded-full bg-white/10 px-8 py-3 text-sm font-medium text-white transition hover:bg-white/20"
+          >
+            Ana Sayfa
           </Link>
         </div>
       </DevUserShell>
