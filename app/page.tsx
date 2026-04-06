@@ -142,7 +142,7 @@ export default async function HomePage() {
               İletişim Kanallarımız & Sosyal Medya
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-9 gap-1.5 sm:gap-2 max-w-none mx-auto">
+          <div className="grid grid-cols-5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-9 gap-1.5 sm:gap-2 max-w-none mx-auto">
             {CONTACT_CHANNELS.map((channel) => (
               <ContactChannelCard
                 key={channel.id}

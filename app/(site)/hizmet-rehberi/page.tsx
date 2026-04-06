@@ -268,34 +268,62 @@ export default function HizmetRehberiPage() {
           className="relative overflow-hidden border-b border-gray-200 bg-white py-6 md:py-8"
         >
           <Container>
-            <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
-              <div className="max-w-3xl">
+            <div className="flex flex-col items-center text-center">
+              <div className="max-w-3xl w-full">
                 <h1 className="text-4xl font-black leading-tight md:text-5xl text-gray-900">
-                  Türk Hizmet Rehberi
+                  Tüm Türkler
                 </h1>
-                <p className="mt-4 text-lg text-gray-600">
+                <p className="mt-4 text-lg text-gray-600 mx-auto max-w-2xl">
                   Almanya'da Türkçe hizmet veren doktorlardan restoranlara, tüm uzmanları tek yerde bulun.
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Button asChild href="/hizmet-rehberi/oneri" size="lg" className="rounded-full">
-                    Hizmet Öner
-                  </Button>
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                   <a
                     href="#rehber-arama"
                     className="inline-flex items-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
                   >
-                    Rehber Ara
+                    Türk Bul
                   </a>
+                  <Button asChild href="/hizmet-rehberi/oneri" size="lg" className="rounded-full">
+                    Türk Öner
+                  </Button>
                 </div>
 
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-8 flex justify-center gap-3 flex-wrap">
+                  <HeroStatCard
+                    icon={<Users className="h-4 w-4" />}
+                    value={stats.total || 0}
+                    label="Toplam"
+                  />
+                  <HeroStatCard
+                    icon={<Stethoscope className="h-4 w-4" />}
+                    value={stats.doctor || 0}
+                    label="Doktor"
+                  />
+                  <HeroStatCard
+                    icon={<Scale className="h-4 w-4" />}
+                    value={stats.lawyer || 0}
+                    label="Avukat"
+                  />
+                  <HeroStatCard
+                    icon={<Store className="h-4 w-4" />}
+                    value={stats.restaurant || 0}
+                    label="Restoran"
+                  />
+                  <HeroStatCard
+                    icon={<Scissors className="h-4 w-4" />}
+                    value={stats.kuafor || 0}
+                    label="Kuaför"
+                  />
+                </div>
+
+                <div className="mt-8 flex overflow-x-auto no-scrollbar justify-start md:justify-center gap-3 pb-2 w-full">
                   {featuredCategories.map((category) => (
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id)}
                       className={cn(
-                        'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition',
+                        'inline-flex whitespace-nowrap items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition shrink-0',
                         selectedCategory === category.id
                           ? 'border-google-blue bg-blue-50 text-google-blue'
                           : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900'
@@ -307,48 +335,20 @@ export default function HizmetRehberiPage() {
                   ))}
                 </div>
               </div>
-
-              <div className="grid gap-3 grid-cols-2 sm:grid-cols-5 lg:grid-cols-5">
-                <HeroStatCard
-                  icon={<Users className="h-4 w-4" />}
-                  value={stats.total || 0}
-                  label="Toplam"
-                />
-                <HeroStatCard
-                  icon={<Stethoscope className="h-4 w-4" />}
-                  value={stats.doctor || 0}
-                  label="Doktor"
-                />
-                <HeroStatCard
-                  icon={<Scale className="h-4 w-4" />}
-                  value={stats.lawyer || 0}
-                  label="Avukat"
-                />
-                <HeroStatCard
-                  icon={<Store className="h-4 w-4" />}
-                  value={stats.restaurant || 0}
-                  label="Restoran"
-                />
-                <HeroStatCard
-                  icon={<Scissors className="h-4 w-4" />}
-                  value={stats.kuafor || 0}
-                  label="Kuaför"
-                />
-              </div>
             </div>
           </Container>
         </Section>
 
         <Section contained className="py-8 md:py-10" id="rehber-arama">
           <div className="grid gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
-            <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+            <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pb-6 no-scrollbar">
               <div className="rounded-[1.8rem] border border-blue-100 bg-blue-50 p-5">
                 <div className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">
-                  Rehberi büyüt
+                  Listeyi büyüt
                 </div>
                 <h2 className="mt-3 text-xl font-bold text-gray-900">Aradığın hizmet yok mu?</h2>
                 <p className="mt-2 text-sm leading-7 text-gray-700">
-                  Güvenilir bir uzman biliyorsan öner. Ekibimiz kontrol etsin, uygunsa rehbere ekleyelim.
+                  Güvenilir bir uzman biliyorsan öner. Ekibimiz kontrol etsin, uygunsa listeye ekleyelim.
                 </p>
                 <Button asChild href="/hizmet-rehberi/oneri" className="mt-4 w-full rounded-full">
                   Kayıt Öner
@@ -409,7 +409,7 @@ export default function HizmetRehberiPage() {
                       <Store className="h-5 w-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="font-medium">Tüm Rehber</div>
+                      <div className="font-medium">Tüm Türkler</div>
                       <div className={cn("mt-1 text-xs leading-5", selectedCategory === 'all' ? "text-blue-700" : "text-gray-500")}>
                         Hizmet ve gastronomi kayıtlarını birlikte göster
                       </div>
@@ -472,7 +472,7 @@ export default function HizmetRehberiPage() {
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-2xl">
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-google-blue">
-                      Rehber Ara
+                      Türk Bul
                     </div>
                     <h2 className="mt-3 text-2xl font-black md:text-3xl text-gray-900">
                       {selectedCategoryMeta?.label || 'Tüm hizmetler ve gastronomi'}
@@ -597,29 +597,29 @@ function ProviderCard({
   category?: Category;
 }) {
   return (
-    <article className="rounded-[1.8rem] border border-gray-200 bg-white p-5 transition hover:border-google-blue shadow-sm">
-      <div className="flex items-start gap-4">
-        <div className="rounded-2xl bg-gray-50 p-3 text-gray-500">
+    <article className="rounded-3xl border border-gray-200 bg-white p-4 transition hover:border-google-blue shadow-sm">
+      <div className="flex items-start gap-3">
+        <div className="rounded-xl bg-gray-50 p-2.5 text-gray-500">
           {CATEGORY_ICONS[provider.type] || <MapPin className="h-5 w-5" />}
         </div>
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             {category ? (
-              <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+              <span className="rounded-full border border-gray-200 bg-gray-50 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
                 {category.label}
               </span>
             ) : null}
-            <span className="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold text-google-blue">
+            <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[10px] font-semibold text-google-blue">
               {provider.city}
             </span>
           </div>
 
-          <h3 className="mt-3 text-xl font-bold text-gray-900">{provider.name}</h3>
+          <h3 className="mt-2 text-lg font-bold text-gray-900">{provider.name}</h3>
 
           {provider.address ? (
-            <p className="mt-2 flex items-start gap-2 text-sm leading-6 text-gray-600">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+            <p className="mt-1 flex items-start gap-1.5 text-sm leading-5 text-gray-600">
+              <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" />
               <span>{provider.address}</span>
             </p>
           ) : null}
@@ -627,43 +627,55 @@ function ProviderCard({
       </div>
 
       {provider.description ? (
-        <div className="mt-5 rounded-2xl border border-gray-100 bg-gray-50 p-4">
-          <p className="text-sm leading-7 text-gray-700">{provider.description}</p>
+        <div className="mt-4 rounded-xl border border-gray-100 bg-gray-50 p-3">
+          <p className="text-sm leading-6 text-gray-700">{provider.description}</p>
         </div>
       ) : null}
 
-      <div className="mt-5 flex flex-wrap gap-2 border-t border-gray-100 pt-4">
+      <div className="mt-4 flex gap-2 border-t border-gray-100 pt-3">
         {provider.phone ? (
           <a
             href={`tel:${provider.phone}`}
-            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:text-gray-900"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-google-blue transition hover:bg-blue-100"
+            title="Ara"
           >
             <Phone className="h-4 w-4" />
-            Ara
           </a>
-        ) : null}
+        ) : (
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-300" title="Telefon yok">
+            <Phone className="h-4 w-4" />
+          </div>
+        )}
 
         {provider.email ? (
           <a
             href={`mailto:${provider.email}`}
-            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:text-gray-900"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-green-50 text-google-green transition hover:bg-green-100"
+            title="E-posta gönder"
           >
             <Mail className="h-4 w-4" />
-            E-posta
           </a>
-        ) : null}
+        ) : (
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-300" title="E-posta yok">
+            <Mail className="h-4 w-4" />
+          </div>
+        )}
 
         {provider.website ? (
           <a
             href={provider.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:text-gray-900"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-50 text-google-orange transition hover:bg-orange-100"
+            title="Websiteye git"
           >
             <Globe className="h-4 w-4" />
-            Website
           </a>
-        ) : null}
+        ) : (
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-300" title="Website yok">
+            <Globe className="h-4 w-4" />
+          </div>
+        )}
       </div>
     </article>
   );

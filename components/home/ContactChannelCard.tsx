@@ -59,8 +59,8 @@ export function ContactChannelCard({
       aria-label={channel.label}
       className={cn(
         'flex rounded-xl',
-        iconOnly
-          ? 'h-[72px] w-[72px] items-center justify-center rounded-full border-white/12 bg-white/6 p-0 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 sm:h-[84px] sm:w-[84px]'
+          iconOnly
+            ? 'h-[52px] w-[52px] sm:h-[84px] sm:w-[84px] items-center justify-center rounded-full border-white/12 bg-white/6 p-0 backdrop-blur-md transition-all duration-300 hover:-translate-y-1'
           : compact
             ? 'flex-col items-center justify-start gap-3 p-3 text-center'
             : 'items-center gap-3 sm:gap-4 p-4 sm:p-5',
@@ -85,7 +85,7 @@ export function ContactChannelCard({
           className={cn(
             iconOnly ? ICON_ONLY_ACCENT_MAP[channel.icon] : 'text-white',
             iconOnly
-              ? 'h-[60px] w-[60px] drop-shadow-[0_10px_24px_rgba(255,255,255,0.15)] sm:h-[72px] sm:w-[72px]'
+              ? 'h-[40px] w-[40px] sm:h-[72px] sm:w-[72px] drop-shadow-[0_10px_24px_rgba(255,255,255,0.15)]'
               : compact
                 ? 'w-5 h-5'
                 : 'w-6 sm:w-7 h-6 sm:h-7'

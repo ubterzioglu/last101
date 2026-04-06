@@ -36,7 +36,7 @@ const initialState = {
 };
 
 const inputClassName =
-  'w-full rounded-[1.2rem] border border-white/10 bg-white/[0.04] px-4 py-3 text-white outline-none transition placeholder:text-white/35 focus:border-[#01A1F1]';
+  'w-full rounded-[1.2rem] border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#01A1F1] focus:ring-1 focus:ring-[#01A1F1]';
 
 export default function HizmetOnerClient() {
   const [form, setForm] = useState(initialState);
@@ -81,19 +81,19 @@ export default function HizmetOnerClient() {
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
               <div className="max-w-3xl">
                 <div className="inline-flex rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-600">
-                  Hizmet Rehberi / Kayıt Öner
+                  Tüm Türkler / Türk Öner
                 </div>
                 <h1 className="mt-6 text-4xl font-black leading-tight md:text-5xl text-gray-900">
-                  Eksik bir hizmet varsa bize bırak, birlikte rehberi büyütelim.
+                  Eksik bir hizmet varsa bize bırak, birlikte listeyi büyütelim.
                 </h1>
                 <p className="mt-5 max-w-2xl text-base leading-8 text-gray-600 md:text-lg">
                   Bildiğiniz Türkçe hizmet veren bir uzmanı kısa bilgilerle önerin. Ekibimiz kontrol edip uygun
-                  kaydı rehbere eklesin.
+                  kaydı listeye eklesin.
                 </p>
 
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button asChild href="/hizmet-rehberi" size="lg" className="rounded-full">
-                    Hizmet ara
+                    Türk Bul
                   </Button>
                   <Link
                     href="#oner-formu"
@@ -263,7 +263,7 @@ export default function HizmetOnerClient() {
                     href="/hizmet-rehberi"
                     className="inline-flex items-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
                   >
-                    Rehbere dön
+                    Listeye dön
                   </Link>
                 </div>
               </form>
@@ -271,7 +271,7 @@ export default function HizmetOnerClient() {
 
             <aside className="space-y-4">
               <SideCard title="Nasıl işliyor?">
-                Form gönderilir, admin öneriyi inceler, gerekli görürse kaydı rehbere aktif olarak ekler.
+                Form gönderilir, admin öneriyi inceler, gerekli görürse kaydı listeye aktif olarak ekler.
               </SideCard>
               <SideCard title="Hangi bilgiler faydalı?">
                 İsim, şehir, telefon, website, uzmanlık ve varsa Google Maps linki onay sürecini hızlandırır.
