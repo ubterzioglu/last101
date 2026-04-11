@@ -45,6 +45,15 @@
     text-wrap: balance;
   }
 
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Animations */
   @keyframes fade-in-up {
     from {
