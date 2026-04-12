@@ -131,7 +131,7 @@ export default function RecruitmentAgenciesAdminClient() {
 
     try {
       await verifyAdminKey(authPassword);
-      saveAdminAuth({ password: authPassword });
+      saveAdminAuth(authPassword);
       setAuthed(true);
     } catch (error) {
       setAuthError(error instanceof Error ? error.message : 'Geçersiz şifre');
