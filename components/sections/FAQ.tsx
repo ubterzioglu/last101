@@ -42,8 +42,8 @@ interface FAQItem {
 }
 
 interface FAQProps {
-  title?: string;
-  subtitle?: string;
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
   items: FAQItem[];
 }
 
@@ -112,7 +112,7 @@ export function FAQ({
   subtitle = 'Merak ettiğiniz her şeyin cevabı burada',
   items,
 }: FAQProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="bg-black py-16 text-white md:py-24">

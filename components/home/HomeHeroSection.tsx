@@ -8,7 +8,7 @@ interface HomeHeroSectionProps {
 
 export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
   return (
-    <section className="min-h-[920px] flex flex-col items-center relative bg-black pt-[25px] pb-10">
+    <section className="min-h-[600px] flex flex-col items-center justify-center relative bg-black pt-[25px] pb-6">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="mx-auto max-w-4xl text-center mb-10">
           <div className="inline-flex rounded-full border border-white/15 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/80">
@@ -39,7 +39,7 @@ export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
               href="/is-ilanlari"
               className="inline-flex items-center justify-center rounded-full bg-google-yellow px-6 py-3 text-sm font-semibold text-gray-900 transition hover:scale-[1.02] hover:bg-yellow-300"
             >
-              İş İlanlarını İncele
+              İşe Alım Firmaları
             </Link>
             <Link
               href="/haberler"

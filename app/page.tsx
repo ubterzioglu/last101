@@ -211,7 +211,7 @@ export default async function HomePage() {
       <section className="bg-[#050505] py-6 md:py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <LinkGridSection
-            title=""
+            title="Araçlar"
             items={HOMEPAGE_ITEMS}
             className="bg-transparent min-h-0 h-auto py-0 mb-0"
             gridClassName="grid-cols-[repeat(auto-fit,minmax(170px,1fr))] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 max-w-none"
@@ -220,11 +220,24 @@ export default async function HomePage() {
             cardDescriptionClassName="text-[11px] sm:text-xs leading-snug"
             overlayOpacity={false}
             backgroundImage={false}
-            titleMarginSmall
             noCenter
           />
         </div>
       </section>
+
+      <SectionDivider />
+
+      <BackgroundSection
+        backgroundImage="/images/backgrounds/berlin1.jpg"
+        heightClassName="h-[500px] sm:h-[540px] lg:h-[580px]"
+      >
+        <div className="text-center mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+            Haberler & Duyurular & Güncellemeler
+          </h2>
+        </div>
+        <NewsCarousel items={newsItems} />
+      </BackgroundSection>
 
       <SectionDivider />
 
@@ -233,7 +246,7 @@ export default async function HomePage() {
         title="Almanya'da düzen kurmak için ihtiyaç duyulan temel bilgileri tek bir sayfada birleştirdik."
         intro="Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
       >
-        <ContentCard title="Almanya'da yaşam rehberi" tone="blue" defaultOpen>
+        <ContentCard title="Almanya'da yaşam rehberi" tone="blue">
           <p>
             Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, bilgi dağınıklığıdır. Adres kaydı,
             vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,
@@ -326,17 +339,11 @@ export default async function HomePage() {
 
       <SectionDivider />
 
-      <BackgroundSection
-        backgroundImage="/images/backgrounds/berlin1.jpg"
-        heightClassName="h-[500px] sm:h-[540px] lg:h-[580px]"
-      >
-        <div className="text-center mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-            Haberler & Duyurular & Güncellemeler
-          </h2>
-        </div>
-        <NewsCarousel items={newsItems} />
-      </BackgroundSection>
+      <FAQ
+        title="Sık Sorulan Sorular"
+        subtitle={<>Almanya'ya taşınma, iş bulma ve topluluğa katılma sürecinde<br className="hidden md:block"/>en sık sorulan sorulara kısa cevaplar.</>}
+        items={HOMEPAGE_FAQ_ITEMS}
+      />
 
       <SectionDivider />
 
@@ -388,14 +395,6 @@ export default async function HomePage() {
           </div>
         </div>
       </BackgroundSection>
-
-      <SectionDivider />
-
-      <FAQ
-        title="Sık Sorulan Sorular"
-        subtitle="Almanya'ya taşınma, iş bulma ve topluluğa katılma sürecinde en sık sorulan sorulara kısa cevaplar."
-        items={HOMEPAGE_FAQ_ITEMS}
-      />
 
       <a
         href="#"
