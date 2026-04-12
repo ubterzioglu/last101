@@ -82,6 +82,7 @@ export default function HomeNewsAdminClient() {
   const [statusFilter, setStatusFilter] = useState<NewsStatus>('all');
 
   const [form, setForm] = useState(initialForm);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitError, setSubmitError] = useState('');
@@ -183,8 +184,10 @@ export default function HomeNewsAdminClient() {
     setSubmitMessage('');
 
     try {
+      const isEditing = Boolean(editingId);
       await runNewsAction({
-        action: 'create',
+        action: isEditing ? 'update' : 'create',
+        ...(editingId ? { id: editingId } : {}),
         title: form.title,
         summary: form.summary,
         coverImageUrl: form.coverImageUrl,
@@ -196,18 +199,47 @@ export default function HomeNewsAdminClient() {
         status: form.status,
       });
 
-      setSubmitMessage(
-        form.status === 'published'
-          ? 'Haber oluşturuldu ve yayına alındı.'
-          : 'Haber taslak olarak oluşturuldu.'
-      );
+      if (isEditing) {
+        setSubmitMessage('Haber başarıyla güncellendi.');
+      } else {
+        setSubmitMessage(
+          form.status === 'published'
+            ? 'Haber oluşturuldu ve yayına alındı.'
+            : 'Haber taslak olarak oluşturuldu.'
+        );
+      }
+      setEditingId(null);
       setForm(initialForm);
       await loadNews();
     } catch (error) {
-      setSubmitError((error as Error).message || 'Kayıt oluşturulamadı.');
+      setSubmitError((error as Error).message || 'Kayıt kaydedilemedi.');
     } finally {
       setSubmitLoading(false);
     }
+  }
+
+  function handleStartEdit(item: NewsRow) {
+    setEditingId(item.id);
+    setSubmitError('');
+    setSubmitMessage('');
+    setForm({
+      title: item.title || '',
+      summary: item.summary || '',
+      coverImageUrl: item.cover_image_url || '',
+      sourceName: item.source_name || '',
+      sourceUrl: item.source_url || '',
+      category: item.category,
+      readingMinutes: String(item.reading_minutes ?? 3),
+      showInCarousel: Boolean(item.show_in_carousel),
+      status: item.status,
+    });
+  }
+
+  function handleCancelEdit() {
+    setEditingId(null);
+    setSubmitError('');
+    setSubmitMessage('');
+    setForm(initialForm);
   }
 
   async function handleStatusChange(item: NewsRow, status: 'draft' | 'published') {
@@ -229,6 +261,7 @@ export default function HomeNewsAdminClient() {
     const confirmed = window.confirm(`"${item.title}" haberini silmek istediğinize emin misiniz?`);
     if (!confirmed) return;
     await runNewsAction({ action: 'delete', id: item.id });
+    if (editingId === item.id) handleCancelEdit();
     await loadNews();
   }
 
@@ -333,9 +366,11 @@ export default function HomeNewsAdminClient() {
 
       <section className="container grid gap-6 py-8 xl:grid-cols-[380px_minmax(0,1fr)]">
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-xl font-bold">Yeni haber ekle</h2>
+          <h2 className="text-xl font-bold">{editingId ? 'Haberi düzenle' : 'Yeni haber ekle'}</h2>
           <p className="mt-2 text-xs text-white/60">
-            Başlangıç sürümünde temel alanları kaydediyoruz.
+            {editingId
+              ? 'Düzenlemeyi bitirince güncelleyin, vazgeçerseniz düzenlemeyi iptal edin.'
+              : 'Başlangıç sürümünde temel alanları kaydediyoruz.'}
           </p>
 
           <form className="mt-5 space-y-3" onSubmit={handleCreateSubmit}>
@@ -463,13 +498,28 @@ export default function HomeNewsAdminClient() {
               </div>
             ) : null}
 
-            <button
-              type="submit"
-              disabled={submitLoading}
-              className="!mt-4 w-full rounded-lg bg-google-yellow px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {submitLoading ? 'Kaydediliyor...' : 'Kaydı Oluştur'}
-            </button>
+            <div className="!mt-4 flex items-center gap-2">
+              <button
+                type="submit"
+                disabled={submitLoading}
+                className="flex-1 rounded-lg bg-google-yellow px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {submitLoading
+                  ? 'Kaydediliyor...'
+                  : editingId
+                    ? 'Düzenlemeyi Kaydet'
+                    : 'Kaydı Oluştur'}
+              </button>
+              {editingId ? (
+                <button
+                  type="button"
+                  onClick={handleCancelEdit}
+                  className="rounded-lg border border-white/15 bg-white/[0.05] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
+                >
+                  İptal
+                </button>
+              ) : null}
+            </div>
           </form>
         </div>
 
@@ -596,6 +646,14 @@ export default function HomeNewsAdminClient() {
                       </div>
 
                       <div className="mt-4 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleStartEdit(item)}
+                          className="rounded-full border border-google-yellow/25 bg-google-yellow/10 px-3 py-1.5 text-xs font-semibold text-google-yellow transition hover:bg-google-yellow/20"
+                        >
+                          Düzenle
+                        </button>
+
                         {item.show_in_carousel ? (
                           <button
                             type="button"

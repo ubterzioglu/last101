@@ -350,7 +350,7 @@ export default async function HomePage() {
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
               Topluluğumuza Katılın
             </h2>
-            <p className="mx-auto max-w-3xl text-sm leading-7 text-white/78 sm:text-base">
+            <p className="mx-auto max-w-3xl text-sm leading-7 text-white sm:text-base">
               Almanya'da yaşamı daha hızlı çözmek isteyenler için topluluk; tavsiye, deneyim ve yönlendirme akışını hızlandırır.
               Güncel duyurular, şehir bazlı öneriler ve yeni gelenlerin en sık yaşadığı sorunlar için ortak hafıza oluşturan bu ağ,
               özellikle ilk aylarında desteğe ihtiyaç duyan kullanıcılar için doğrudan fayda sağlar.
@@ -376,13 +376,13 @@ export default async function HomePage() {
               İletişim Kanallarımız & Sosyal Medya
             </h2>
           </div>
-          <div className="grid grid-cols-5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-9 gap-1.5 sm:gap-2 max-w-none mx-auto">
+          <div className="mx-auto flex w-full max-w-5xl items-center justify-end gap-2 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-2.5">
             {CONTACT_CHANNELS.map((channel) => (
               <ContactChannelCard
                 key={channel.id}
                 channel={channel}
                 iconOnly
-                className="mx-auto"
+                className="flex-shrink-0"
               />
             ))}
           </div>

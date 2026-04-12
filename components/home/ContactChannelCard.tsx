@@ -24,18 +24,6 @@ const ICON_MAP = {
   facebook: FacebookIcon,
 } as const;
 
-const ICON_ONLY_ACCENT_MAP = {
-  whatsapp: 'text-green-400 shadow-[0_16px_40px_rgba(34,197,94,0.28)] hover:shadow-[0_20px_48px_rgba(34,197,94,0.38)]',
-  telegram: 'text-sky-300 shadow-[0_16px_40px_rgba(56,189,248,0.28)] hover:shadow-[0_20px_48px_rgba(56,189,248,0.38)]',
-  phone: 'text-indigo-300 shadow-[0_16px_40px_rgba(99,102,241,0.28)] hover:shadow-[0_20px_48px_rgba(99,102,241,0.38)]',
-  email: 'text-rose-300 shadow-[0_16px_40px_rgba(244,63,94,0.28)] hover:shadow-[0_20px_48px_rgba(244,63,94,0.38)]',
-  instagram: 'text-pink-300 shadow-[0_16px_40px_rgba(236,72,153,0.28)] hover:shadow-[0_20px_48px_rgba(236,72,153,0.38)]',
-  youtube: 'text-red-300 shadow-[0_16px_40px_rgba(239,68,68,0.28)] hover:shadow-[0_20px_48px_rgba(239,68,68,0.38)]',
-  linkedin: 'text-blue-300 shadow-[0_16px_40px_rgba(59,130,246,0.28)] hover:shadow-[0_20px_48px_rgba(59,130,246,0.38)]',
-  twitter: 'text-slate-200 shadow-[0_16px_40px_rgba(148,163,184,0.22)] hover:shadow-[0_20px_48px_rgba(148,163,184,0.32)]',
-  facebook: 'text-blue-200 shadow-[0_16px_40px_rgba(96,165,250,0.28)] hover:shadow-[0_20px_48px_rgba(96,165,250,0.38)]',
-} as const;
-
 interface ContactChannelCardProps {
   channel: ContactChannel;
   className?: string;
@@ -60,7 +48,7 @@ export function ContactChannelCard({
       className={cn(
         'flex rounded-xl',
           iconOnly
-            ? 'h-[52px] w-[52px] sm:h-[84px] sm:w-[84px] items-center justify-center rounded-full border-white/12 bg-white/6 p-0 backdrop-blur-md transition-all duration-300 hover:-translate-y-1'
+            ? 'h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-lg border border-google-yellow/45 bg-black/55 p-0 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-google-yellow/70 shadow-[0_0_0_1px_rgba(251,188,5,0.24),0_8px_20px_rgba(251,188,5,0.22),0_0_16px_rgba(251,188,5,0.28)] hover:shadow-[0_0_0_1px_rgba(251,188,5,0.35),0_10px_24px_rgba(251,188,5,0.32),0_0_22px_rgba(251,188,5,0.42)]'
           : compact
             ? 'flex-col items-center justify-start gap-3 p-3 text-center'
             : 'items-center gap-3 sm:gap-4 p-4 sm:p-5',
@@ -83,9 +71,9 @@ export function ContactChannelCard({
       >
         <IconComponent
           className={cn(
-            iconOnly ? ICON_ONLY_ACCENT_MAP[channel.icon] : 'text-white',
+            iconOnly ? 'text-google-yellow' : 'text-white',
             iconOnly
-              ? 'h-[40px] w-[40px] sm:h-[72px] sm:w-[72px] drop-shadow-[0_10px_24px_rgba(255,255,255,0.15)]'
+              ? 'h-5 w-5 sm:h-6 sm:w-6 drop-shadow-[0_0_8px_rgba(251,188,5,0.92)]'
               : compact
                 ? 'w-5 h-5'
                 : 'w-6 sm:w-7 h-6 sm:h-7'

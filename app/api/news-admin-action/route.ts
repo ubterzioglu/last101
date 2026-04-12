@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 
-const ALLOWED_ACTIONS = new Set(['create', 'set_category', 'set_status', 'set_carousel', 'delete']);
+const ALLOWED_ACTIONS = new Set(['create', 'update', 'set_category', 'set_status', 'set_carousel', 'delete']);
 const ALLOWED_CATEGORIES = new Set(['Almanya', 'Türkiye', 'Avrupa', 'Dünya']);
 const ALLOWED_STATUSES = new Set(['draft', 'published']);
 
@@ -132,6 +132,64 @@ export async function POST(request: NextRequest) {
       if (error) throw error;
 
       return NextResponse.json({ ok: true, action: 'create', data }, { status: 201 });
+    }
+
+    if (action === 'update') {
+      const title = normalizeText(body.title, 180);
+      const summary = normalizeText(body.summary, 600);
+      const category = normalizeCategory(body.category) || 'Almanya';
+      const status = normalizeStatus(body.status) || 'draft';
+      const coverImageUrl = normalizeOptionalUrl(body.coverImageUrl);
+      const sourceName = normalizeText(body.sourceName, 120);
+      const sourceUrl = normalizeOptionalUrl(body.sourceUrl);
+      const readingMinutes = normalizeReadingMinutes(body.readingMinutes);
+      const showInCarousel = normalizeBoolean(body.showInCarousel, true);
+
+      if (!title) return NextResponse.json({ error: 'title is required' }, { status: 400 });
+
+      const { data: existing, error: existingError } = await supabase
+        .from('news_posts')
+        .select('id, status, published_at')
+        .eq('id', id)
+        .maybeSingle();
+
+      if (existingError) throw existingError;
+      if (!existing) return NextResponse.json({ error: 'Record not found' }, { status: 404 });
+
+      const wasPublished = existing.status === 'published';
+      const willBePublished = status === 'published';
+      let nextPublishedAt = existing.published_at;
+
+      if (!wasPublished && willBePublished) {
+        nextPublishedAt = new Date().toISOString();
+      } else if (wasPublished && !willBePublished) {
+        nextPublishedAt = null;
+      } else if (willBePublished && !nextPublishedAt) {
+        nextPublishedAt = new Date().toISOString();
+      }
+
+      const { data, error } = await supabase
+        .from('news_posts')
+        .update({
+          category,
+          title,
+          summary: summary || null,
+          cover_image_url: coverImageUrl || null,
+          source_name: sourceName || null,
+          source_url: sourceUrl || null,
+          reading_minutes: readingMinutes,
+          show_in_carousel: showInCarousel,
+          status,
+          published_at: nextPublishedAt,
+        })
+        .eq('id', id)
+        .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status, show_in_carousel')
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) return NextResponse.json({ error: 'Record not found' }, { status: 404 });
+
+      return NextResponse.json({ ok: true, action: 'update', data });
     }
 
     if (action === 'delete') {
