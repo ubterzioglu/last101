@@ -1,0 +1,1885 @@
+- generic [active] [ref=e1]:
+  - link "Ana içeriğe atla" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "almanya101" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "almanya101" [ref=e7]
+      - generic [ref=e8]:
+        - button "Menüyü aç" [ref=e9] [cursor=pointer]: Menü
+        - link "Whatsapp Topluluğu" [ref=e11] [cursor=pointer]:
+          - /url: https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo
+          - text: Whatsapp
+        - link "Ana Sayfa" [ref=e13] [cursor=pointer]:
+          - /url: /
+          - button "Ana Sayfa" [ref=e14]
+  - generic [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e17]: almanya101
+      - button "Menüyü kapat" [ref=e18] [cursor=pointer]:
+        - img [ref=e19]
+    - navigation [ref=e22]:
+      - link "🏠 Ana Sayfa" [ref=e23] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e24]: 🏠 Ana Sayfa
+      - generic [ref=e25]:
+        - button "Araçlar" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: Araçlar
+          - img [ref=e28]
+        - generic:
+          - generic:
+            - link "Brütten Nete Maaş Hesaplama" [ref=e30] [cursor=pointer]:
+              - /url: /maas-hesaplama
+              - generic [ref=e31]: Brütten Nete Maaş Hesaplama
+            - link "Vatandaşlık Testi Denemesi" [ref=e32] [cursor=pointer]:
+              - /url: /vatandaslik-testi
+              - generic [ref=e33]: Vatandaşlık Testi Denemesi
+            - link "Banka Seçim Aracı" [ref=e34] [cursor=pointer]:
+              - /url: /banka-secim
+              - generic [ref=e35]: Banka Seçim Aracı
+            - link "Sigorta Seçim Aracı" [ref=e36] [cursor=pointer]:
+              - /url: /sigorta-secim
+              - generic [ref=e37]: Sigorta Seçim Aracı
+            - link "Para Transferi Seçim Aracı" [ref=e38] [cursor=pointer]:
+              - /url: /para-transferi
+              - generic [ref=e39]: Para Transferi Seçim Aracı
+            - link "Vize Seçim Aracı" [ref=e40] [cursor=pointer]:
+              - /url: /vize-secim
+              - generic [ref=e41]: Vize Seçim Aracı
+            - link "Tatil Planlayıcı 2026 Türkiye" [ref=e42] [cursor=pointer]:
+              - /url: /tatil/turkiye
+              - generic [ref=e43]: Tatil Planlayıcı 2026 Türkiye
+            - link "Tatil Planlayıcı 2026 Almanya" [ref=e44] [cursor=pointer]:
+              - /url: /tatil/almanya
+              - generic [ref=e45]: Tatil Planlayıcı 2026 Almanya
+            - link "Türk Hizmet Rehberi" [ref=e46] [cursor=pointer]:
+              - /url: /hizmet-rehberi
+              - generic [ref=e47]: Türk Hizmet Rehberi
+      - generic [ref=e48]:
+        - button "Topluluk" [ref=e49] [cursor=pointer]:
+          - generic [ref=e50]: Topluluk
+          - img [ref=e51]
+        - link "Topluluğa Katıl" [ref=e53] [cursor=pointer]:
+          - /url: /topluluk
+          - generic [ref=e54]: Topluluğa Katıl
+      - generic [ref=e55]:
+        - button "İçerik" [ref=e56] [cursor=pointer]:
+          - generic [ref=e57]: İçerik
+          - img [ref=e58]
+        - generic:
+          - generic:
+            - link "Yazı Dizisi" [ref=e60] [cursor=pointer]:
+              - /url: /yazi-dizisi
+              - generic [ref=e61]: Yazı Dizisi
+            - link "Haberler" [ref=e62] [cursor=pointer]:
+              - /url: /haberler
+              - generic [ref=e63]: Haberler
+            - link "Yararlı Belgeler" [ref=e64] [cursor=pointer]:
+              - /url: /belgeler
+              - generic [ref=e65]: Yararlı Belgeler
+            - link "Software Hub" [ref=e66] [cursor=pointer]:
+              - /url: /software-hub
+              - generic [ref=e67]: Software Hub
+      - generic [ref=e68]:
+        - button "İletişim" [ref=e69] [cursor=pointer]:
+          - generic [ref=e70]: İletişim
+          - img [ref=e71]
+        - generic:
+          - generic:
+            - link "Biz kimiz?" [ref=e73] [cursor=pointer]:
+              - /url: /hakkimizda
+              - generic [ref=e74]: Biz kimiz?
+            - link "Bize Katıl!" [ref=e75] [cursor=pointer]:
+              - /url: /ekibimize-katil
+              - generic [ref=e76]: Bize Katıl!
+            - link "İletişim" [ref=e77] [cursor=pointer]:
+              - /url: /iletisim
+              - generic [ref=e78]: İletişim
+  - main [ref=e79]:
+    - generic [ref=e80]:
+      - generic [ref=e83]:
+        - heading "Almanya'da İş Fırsatları" [level=1] [ref=e84]
+        - paragraph [ref=e85]: Türk iş verenler ve Türk dostu şirketlerden güncel iş ilanları. Hayalinizdeki işi bulun.
+      - generic [ref=e87]:
+        - generic [ref=e88]:
+          - heading "Son İş İlanları" [level=2] [ref=e89]
+          - paragraph [ref=e90]: En güncel iş fırsatlarını keşfedin. Yeni ilanlar her gün ekleniyor.
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - generic [ref=e94]: Tam Zamanlı
+              - heading "Senior Software Developer" [level=3] [ref=e95]
+              - paragraph [ref=e96]: TechCorp Berlin
+            - generic [ref=e97]:
+              - generic [ref=e98]:
+                - img [ref=e99]
+                - generic [ref=e102]: Berlin
+              - generic [ref=e103]:
+                - img [ref=e104]
+                - generic [ref=e106]: €60,000 - €80,000 / yıl
+            - generic [ref=e107]:
+              - generic [ref=e108]: 2 gün önce
+              - link "Başvur →" [ref=e109] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=e110]:
+            - generic [ref=e111]:
+              - generic [ref=e112]: Tam Zamanlı
+              - heading "Marketing Manager" [level=3] [ref=e113]
+              - paragraph [ref=e114]: DigitalAgency München
+            - generic [ref=e115]:
+              - generic [ref=e116]:
+                - img [ref=e117]
+                - generic [ref=e120]: Münih
+              - generic [ref=e121]:
+                - img [ref=e122]
+                - generic [ref=e124]: €50,000 - €65,000 / yıl
+            - generic [ref=e125]:
+              - generic [ref=e126]: 3 gün önce
+              - link "Başvur →" [ref=e127] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e130]: Tam Zamanlı
+              - heading "Web Designer" [level=3] [ref=e131]
+              - paragraph [ref=e132]: Creative Studio Hamburg
+            - generic [ref=e133]:
+              - generic [ref=e134]:
+                - img [ref=e135]
+                - generic [ref=e138]: Hamburg
+              - generic [ref=e139]:
+                - img [ref=e140]
+                - generic [ref=e142]: €45,000 - €55,000 / yıl
+            - generic [ref=e143]:
+              - generic [ref=e144]: 5 gün önce
+              - link "Başvur →" [ref=e145] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=e146]:
+            - generic [ref=e147]:
+              - generic [ref=e148]: Yarı Zamanlı
+              - heading "Customer Support Specialist" [level=3] [ref=e149]
+              - paragraph [ref=e150]: ServicePro Berlin
+            - generic [ref=e151]:
+              - generic [ref=e152]:
+                - img [ref=e153]
+                - generic [ref=e156]: Berlin
+              - generic [ref=e157]:
+                - img [ref=e158]
+                - generic [ref=e160]: €35,000 - €40,000 / yıl
+            - generic [ref=e161]:
+              - generic [ref=e162]: 1 hafta önce
+              - link "Başvur →" [ref=e163] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - generic [ref=e166]: Tam Zamanlı
+              - heading "Junior Data Analyst" [level=3] [ref=e167]
+              - paragraph [ref=e168]: DataDriven Frankfurt
+            - generic [ref=e169]:
+              - generic [ref=e170]:
+                - img [ref=e171]
+                - generic [ref=e174]: Frankfurt
+              - generic [ref=e175]:
+                - img [ref=e176]
+                - generic [ref=e178]: €40,000 - €50,000 / yıl
+            - generic [ref=e179]:
+              - generic [ref=e180]: 1 hafta önce
+              - link "Başvur →" [ref=e181] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - generic [ref=e184]: Tam Zamanlı
+              - heading "UX/UI Designer" [level=3] [ref=e185]
+              - paragraph [ref=e186]: DesignHub Stuttgart
+            - generic [ref=e187]:
+              - generic [ref=e188]:
+                - img [ref=e189]
+                - generic [ref=e192]: Stuttgart
+              - generic [ref=e193]:
+                - img [ref=e194]
+                - generic [ref=e196]: €55,000 - €70,000 / yıl
+            - generic [ref=e197]:
+              - generic [ref=e198]: 2 hafta önce
+              - link "Başvur →" [ref=e199] [cursor=pointer]:
+                - /url: "#"
+      - generic [ref=e202]:
+        - generic [ref=e203]:
+          - generic [ref=e204]:
+            - generic [ref=e205]: "204"
+            - generic [ref=e206]: Recruitment Agency
+          - heading "Recruitment Agencies in Germany" [level=2] [ref=e207]
+          - paragraph [ref=e208]: Comprehensive list of recruitment agencies, headhunters, and staffing companies operating in Germany. Find the right agency for your career or hiring needs.
+        - generic [ref=e209]:
+          - generic [ref=e210]:
+            - img [ref=e211]
+            - textbox "Search agencies..." [ref=e214]
+          - generic [ref=e215]:
+            - img [ref=e216]
+            - combobox [ref=e218]:
+              - option "All Categories" [selected]
+              - option "Executive Search"
+              - option "General Staffing"
+              - option "IT & Digital"
+              - option "Tech & Engineering"
+              - option "Finance & Legal"
+              - option "Healthcare & Medical"
+              - option "Energy & Engineering"
+              - option "HR Consulting"
+              - option "International"
+              - option "Freelancer & Project"
+              - option "Creative & Design"
+        - generic [ref=e219]: Showing 204 of 204 agencies
+        - generic [ref=e220]:
+          - generic [ref=e222]:
+            - generic [ref=e223]:
+              - heading "DIA-AG" [level=3] [ref=e224]
+              - paragraph [ref=e225]: Executive search & HR consulting
+              - generic [ref=e226]: Recruitment Agencies
+            - link "Visit DIA-AG" [ref=e227] [cursor=pointer]:
+              - /url: https://dia-ag.com
+              - img [ref=e228]
+          - generic [ref=e233]:
+            - generic [ref=e234]:
+              - heading "Randstad" [level=3] [ref=e235]
+              - paragraph [ref=e236]: Global staffing & temp solutions
+              - generic [ref=e237]: Recruitment Agencies
+            - link "Visit Randstad" [ref=e238] [cursor=pointer]:
+              - /url: https://randstad.de
+              - img [ref=e239]
+          - generic [ref=e244]:
+            - generic [ref=e245]:
+              - heading "ManpowerGroup" [level=3] [ref=e246]
+              - paragraph [ref=e247]: Workforce solutions & talent placement
+              - generic [ref=e248]: Recruitment Agencies
+            - link "Visit ManpowerGroup" [ref=e249] [cursor=pointer]:
+              - /url: https://manpower.de
+              - img [ref=e250]
+          - generic [ref=e255]:
+            - generic [ref=e256]:
+              - heading "JobBasel" [level=3] [ref=e257]
+              - paragraph [ref=e258]: Job board & career portal
+              - generic [ref=e259]: Recruitment Agencies
+            - link "Visit JobBasel" [ref=e260] [cursor=pointer]:
+              - /url: https://jobbasel.com
+              - img [ref=e261]
+          - generic [ref=e266]:
+            - generic [ref=e267]:
+              - heading "Michael Page" [level=3] [ref=e268]
+              - paragraph [ref=e269]: Professional & leadership recruitment
+              - generic [ref=e270]: Recruitment Agencies
+            - link "Visit Michael Page" [ref=e271] [cursor=pointer]:
+              - /url: https://michaelpage.de
+              - img [ref=e272]
+          - generic [ref=e277]:
+            - generic [ref=e278]:
+              - heading "Hays" [level=3] [ref=e279]
+              - paragraph [ref=e280]: Specialist recruitment across industries
+              - generic [ref=e281]: Recruitment Agencies
+            - link "Visit Hays" [ref=e282] [cursor=pointer]:
+              - /url: https://hays.de
+              - img [ref=e283]
+          - generic [ref=e288]:
+            - generic [ref=e289]:
+              - heading "Gi Group" [level=3] [ref=e290]
+              - paragraph [ref=e291]: Gi Group staffing & HR services
+              - generic [ref=e292]: Recruitment Agencies
+            - link "Visit Gi Group" [ref=e293] [cursor=pointer]:
+              - /url: https://de.gigroup.com
+              - img [ref=e294]
+          - generic [ref=e299]:
+            - generic [ref=e300]:
+              - heading "Page Personnel" [level=3] [ref=e301]
+              - paragraph [ref=e302]: Junior & mid-level talent placement
+              - generic [ref=e303]: Recruitment Agencies
+            - link "Visit Page Personnel" [ref=e304] [cursor=pointer]:
+              - /url: https://pagepersonnel.de
+              - img [ref=e305]
+          - generic [ref=e310]:
+            - generic [ref=e311]:
+              - heading "Progress Professionals" [level=3] [ref=e312]
+              - paragraph [ref=e313]: Finance & legal recruitment
+              - generic [ref=e314]: Recruitment Agencies
+            - link "Visit Progress Professionals" [ref=e315] [cursor=pointer]:
+              - /url: https://progressprofessionals.de
+              - img [ref=e316]
+          - generic [ref=e321]:
+            - generic [ref=e322]:
+              - heading "Adecco" [level=3] [ref=e323]
+              - paragraph [ref=e324]: Temporary & permanent hiring
+              - generic [ref=e325]: Recruitment Agencies
+            - link "Visit Adecco" [ref=e326] [cursor=pointer]:
+              - /url: https://adecco.de
+              - img [ref=e327]
+          - generic [ref=e332]:
+            - generic [ref=e333]:
+              - heading "Brunel" [level=3] [ref=e334]
+              - paragraph [ref=e335]: Engineering & technical staffing
+              - generic [ref=e336]: Recruitment Agencies
+            - link "Visit Brunel" [ref=e337] [cursor=pointer]:
+              - /url: https://brunel.net/de-de
+              - img [ref=e338]
+          - generic [ref=e343]:
+            - generic [ref=e344]:
+              - heading "Experts & Talents" [level=3] [ref=e345]
+              - paragraph [ref=e346]: Expert-level professional matching
+              - generic [ref=e347]: Recruitment Agencies
+            - link "Visit Experts & Talents" [ref=e348] [cursor=pointer]:
+              - /url: https://experts-talents.de
+              - img [ref=e349]
+          - generic [ref=e354]:
+            - generic [ref=e355]:
+              - heading "GULP" [level=3] [ref=e356]
+              - paragraph [ref=e357]: Freelancer & project staffing
+              - generic [ref=e358]: Recruitment Agencies
+            - link "Visit GULP" [ref=e359] [cursor=pointer]:
+              - /url: https://gulp.de
+              - img [ref=e360]
+          - generic [ref=e365]:
+            - generic [ref=e366]:
+              - heading "Kontrast" [level=3] [ref=e367]
+              - paragraph [ref=e368]: IT & digital recruitment
+              - generic [ref=e369]: Recruitment Agencies
+            - link "Visit Kontrast" [ref=e370] [cursor=pointer]:
+              - /url: https://kontrast-gmbh.de
+              - img [ref=e371]
+          - generic [ref=e376]:
+            - generic [ref=e377]:
+              - heading "Robert Half" [level=3] [ref=e378]
+              - paragraph [ref=e379]: Finance, admin & tech roles
+              - generic [ref=e380]: Recruitment Agencies
+            - link "Visit Robert Half" [ref=e381] [cursor=pointer]:
+              - /url: https://roberthalf.com/de
+              - img [ref=e382]
+          - generic [ref=e387]:
+            - generic [ref=e388]:
+              - heading "Kelly Services" [level=3] [ref=e389]
+              - paragraph [ref=e390]: Flexible workforce & staffing
+              - generic [ref=e391]: Recruitment Agencies
+            - link "Visit Kelly Services" [ref=e392] [cursor=pointer]:
+              - /url: https://kelly-services.de
+              - img [ref=e393]
+          - generic [ref=e398]:
+            - generic [ref=e399]:
+              - heading "Engaged Company" [level=3] [ref=e400]
+              - paragraph [ref=e401]: HR consulting & talent strategy
+              - generic [ref=e402]: Recruitment Agencies
+            - link "Visit Engaged Company" [ref=e403] [cursor=pointer]:
+              - /url: https://engaged-company.com
+              - img [ref=e404]
+          - generic [ref=e409]:
+            - generic [ref=e410]:
+              - heading "Frankfurt Fitch" [level=3] [ref=e411]
+              - paragraph [ref=e412]: Executive search & leadership hiring
+              - generic [ref=e413]: Recruitment Agencies
+            - link "Visit Frankfurt Fitch" [ref=e414] [cursor=pointer]:
+              - /url: https://frankfurtfitch.com/de
+              - img [ref=e415]
+          - generic [ref=e420]:
+            - generic [ref=e421]:
+              - heading "Ratbacher" [level=3] [ref=e422]
+              - paragraph [ref=e423]: Senior management & board search
+              - generic [ref=e424]: Recruitment Agencies
+            - link "Visit Ratbacher" [ref=e425] [cursor=pointer]:
+              - /url: https://ratbacher.de
+              - img [ref=e426]
+          - generic [ref=e431]:
+            - generic [ref=e432]:
+              - heading "Optimise Search" [level=3] [ref=e433]
+              - paragraph [ref=e434]: Executive & specialist recruitment
+              - generic [ref=e435]: Recruitment Agencies
+            - link "Visit Optimise Search" [ref=e436] [cursor=pointer]:
+              - /url: https://optimisesearch.com
+              - img [ref=e437]
+          - generic [ref=e442]:
+            - generic [ref=e443]:
+              - heading "K Resources" [level=3] [ref=e444]
+              - paragraph [ref=e445]: Tech & IT staffing
+              - generic [ref=e446]: Recruitment Agencies
+            - link "Visit K Resources" [ref=e447] [cursor=pointer]:
+              - /url: https://kresources.com
+              - img [ref=e448]
+          - generic [ref=e453]:
+            - generic [ref=e454]:
+              - heading "Academic Work" [level=3] [ref=e455]
+              - paragraph [ref=e456]: Nordic-German academic & professional roles
+              - generic [ref=e457]: Recruitment Agencies
+            - link "Visit Academic Work" [ref=e458] [cursor=pointer]:
+              - /url: https://academicwork.de
+              - img [ref=e459]
+          - generic [ref=e464]:
+            - generic [ref=e465]:
+              - heading "get-in-IT" [level=3] [ref=e466]
+              - paragraph [ref=e467]: IT & software job platform
+              - generic [ref=e468]: Recruitment Agencies
+            - link "Visit get-in-IT" [ref=e469] [cursor=pointer]:
+              - /url: https://get-in-it.de
+              - img [ref=e470]
+          - generic [ref=e475]:
+            - generic [ref=e476]:
+              - heading "Robert Walters" [level=3] [ref=e477]
+              - paragraph [ref=e478]: International professional recruitment
+              - generic [ref=e479]: Recruitment Agencies
+            - link "Visit Robert Walters" [ref=e480] [cursor=pointer]:
+              - /url: https://robertwalters.de
+              - img [ref=e481]
+          - generic [ref=e486]:
+            - generic [ref=e487]:
+              - heading "SHREE" [level=3] [ref=e488]
+              - paragraph [ref=e489]: SAP & IT consulting staffing
+              - generic [ref=e490]: Recruitment Agencies
+            - link "Visit SHREE" [ref=e491] [cursor=pointer]:
+              - /url: https://shree.com/de-de
+              - img [ref=e492]
+          - generic [ref=e497]:
+            - generic [ref=e498]:
+              - heading "WeMatch" [level=3] [ref=e499]
+              - paragraph [ref=e500]: Tech & digital talent matching
+              - generic [ref=e501]: Recruitment Agencies
+            - link "Visit WeMatch" [ref=e502] [cursor=pointer]:
+              - /url: https://wematch.de
+              - img [ref=e503]
+          - generic [ref=e508]:
+            - generic [ref=e509]:
+              - heading "TA Management" [level=3] [ref=e510]
+              - paragraph [ref=e511]: Interim management & HR consulting
+              - generic [ref=e512]: Recruitment Agencies
+            - link "Visit TA Management" [ref=e513] [cursor=pointer]:
+              - /url: https://ta-management.de
+              - img [ref=e514]
+          - generic [ref=e519]:
+            - generic [ref=e520]:
+              - heading "Grafton" [level=3] [ref=e521]
+              - paragraph [ref=e522]: Multisector recruitment agency
+              - generic [ref=e523]: Recruitment Agencies
+            - link "Visit Grafton" [ref=e524] [cursor=pointer]:
+              - /url: https://de.grafton.com
+              - img [ref=e525]
+          - generic [ref=e530]:
+            - generic [ref=e531]:
+              - heading "4 Chill Consulting" [level=3] [ref=e532]
+              - paragraph [ref=e533]: IT & project staffing
+              - generic [ref=e534]: Recruitment Agencies
+            - link "Visit 4 Chill Consulting" [ref=e535] [cursor=pointer]:
+              - /url: https://4chillconsulting.de
+              - img [ref=e536]
+          - generic [ref=e541]:
+            - generic [ref=e542]:
+              - heading "HeadMatch" [level=3] [ref=e543]
+              - paragraph [ref=e544]: Executive & leadership search
+              - generic [ref=e545]: Recruitment Agencies
+            - link "Visit HeadMatch" [ref=e546] [cursor=pointer]:
+              - /url: https://headmatch.de
+              - img [ref=e547]
+          - generic [ref=e552]:
+            - generic [ref=e553]:
+              - heading "IHH Healthcare" [level=3] [ref=e554]
+              - paragraph [ref=e555]: Healthcare & medical recruitment
+              - generic [ref=e556]: Recruitment Agencies
+            - link "Visit IHH Healthcare" [ref=e557] [cursor=pointer]:
+              - /url: https://ihh.com/de
+              - img [ref=e558]
+          - generic [ref=e563]:
+            - generic [ref=e564]:
+              - heading "Solua" [level=3] [ref=e565]
+              - paragraph [ref=e566]: International HR & talent solutions
+              - generic [ref=e567]: Recruitment Agencies
+            - link "Visit Solua" [ref=e568] [cursor=pointer]:
+              - /url: https://solua.com
+              - img [ref=e569]
+          - generic [ref=e574]:
+            - generic [ref=e575]:
+              - heading "Perm4" [level=3] [ref=e576]
+              - paragraph [ref=e577]: Permanent tech & finance roles
+              - generic [ref=e578]: Recruitment Agencies
+            - link "Visit Perm4" [ref=e579] [cursor=pointer]:
+              - /url: https://perm4.com
+              - img [ref=e580]
+          - generic [ref=e585]:
+            - generic [ref=e586]:
+              - heading "Vires Consulting" [level=3] [ref=e587]
+              - paragraph [ref=e588]: Life sciences & pharma staffing
+              - generic [ref=e589]: Recruitment Agencies
+            - link "Visit Vires Consulting" [ref=e590] [cursor=pointer]:
+              - /url: https://viresconsulting.com
+              - img [ref=e591]
+          - generic [ref=e596]:
+            - generic [ref=e597]:
+              - heading "Skallbach" [level=3] [ref=e598]
+              - paragraph [ref=e599]: Executive search & HR advisory
+              - generic [ref=e600]: Recruitment Agencies
+            - link "Visit Skallbach" [ref=e601] [cursor=pointer]:
+              - /url: https://skallbach.de
+              - img [ref=e602]
+          - generic [ref=e607]:
+            - generic [ref=e608]:
+              - heading "TechPunk" [level=3] [ref=e609]
+              - paragraph [ref=e610]: IT & startup tech hiring
+              - generic [ref=e611]: Recruitment Agencies
+            - link "Visit TechPunk" [ref=e612] [cursor=pointer]:
+              - /url: https://techpunk.com
+              - img [ref=e613]
+          - generic [ref=e618]:
+            - generic [ref=e619]:
+              - heading "Ignite SAP" [level=3] [ref=e620]
+              - paragraph [ref=e621]: SAP specialist recruitment
+              - generic [ref=e622]: Recruitment Agencies
+            - link "Visit Ignite SAP" [ref=e623] [cursor=pointer]:
+              - /url: https://ignitesap.com
+              - img [ref=e624]
+          - generic [ref=e629]:
+            - generic [ref=e630]:
+              - heading "Antal International" [level=3] [ref=e631]
+              - paragraph [ref=e632]: Global specialist recruitment firm
+              - generic [ref=e633]: Recruitment Agencies
+            - link "Visit Antal International" [ref=e634] [cursor=pointer]:
+              - /url: https://antal.com
+              - img [ref=e635]
+          - generic [ref=e640]:
+            - generic [ref=e641]:
+              - heading "Progressive Recruitment" [level=3] [ref=e642]
+              - paragraph [ref=e643]: Engineering & energy staffing
+              - generic [ref=e644]: Recruitment Agencies
+            - link "Visit Progressive Recruitment" [ref=e645] [cursor=pointer]:
+              - /url: https://progressive-recruitment.de
+              - img [ref=e646]
+          - generic [ref=e651]:
+            - generic [ref=e652]:
+              - heading "ISG" [level=3] [ref=e653]
+              - paragraph [ref=e654]: Executive search & leadership advisory
+              - generic [ref=e655]: Recruitment Agencies
+            - link "Visit ISG" [ref=e656] [cursor=pointer]:
+              - /url: https://isg.com/de
+              - img [ref=e657]
+          - generic [ref=e662]:
+            - generic [ref=e663]:
+              - heading "Linking Talents" [level=3] [ref=e664]
+              - paragraph [ref=e665]: Tech & digital recruitment
+              - generic [ref=e666]: Recruitment Agencies
+            - link "Visit Linking Talents" [ref=e667] [cursor=pointer]:
+              - /url: https://linkingtalents.de
+              - img [ref=e668]
+          - generic [ref=e673]:
+            - generic [ref=e674]:
+              - heading "Noir Consulting" [level=3] [ref=e675]
+              - paragraph [ref=e676]: Tech & cybersecurity staffing
+              - generic [ref=e677]: Recruitment Agencies
+            - link "Visit Noir Consulting" [ref=e678] [cursor=pointer]:
+              - /url: https://noirconsulting.co.uk
+              - img [ref=e679]
+          - generic [ref=e684]:
+            - generic [ref=e685]:
+              - heading "Amore Bond" [level=3] [ref=e686]
+              - paragraph [ref=e687]: Executive & board-level search
+              - generic [ref=e688]: Recruitment Agencies
+            - link "Visit Amore Bond" [ref=e689] [cursor=pointer]:
+              - /url: https://amorebond.com/de
+              - img [ref=e690]
+          - generic [ref=e695]:
+            - generic [ref=e696]:
+              - heading "Ital Staffing" [level=3] [ref=e697]
+              - paragraph [ref=e698]: Bilingual & international staffing
+              - generic [ref=e699]: Recruitment Agencies
+            - link "Visit Ital Staffing" [ref=e700] [cursor=pointer]:
+              - /url: https://italstaffing.com/de-de
+              - img [ref=e701]
+          - generic [ref=e706]:
+            - generic [ref=e707]:
+              - heading "Green Recruitment Company" [level=3] [ref=e708]
+              - paragraph [ref=e709]: Energy & sustainability roles
+              - generic [ref=e710]: Recruitment Agencies
+            - link "Visit Green Recruitment Company" [ref=e711] [cursor=pointer]:
+              - /url: https://greenrecruitmentcompany.com
+              - img [ref=e712]
+          - generic [ref=e717]:
+            - generic [ref=e718]:
+              - heading "Mason Frank" [level=3] [ref=e719]
+              - paragraph [ref=e720]: Salesforce & cloud specialists
+              - generic [ref=e721]: Recruitment Agencies
+            - link "Visit Mason Frank" [ref=e722] [cursor=pointer]:
+              - /url: https://masonfrank.com
+              - img [ref=e723]
+          - generic [ref=e728]:
+            - generic [ref=e729]:
+              - heading "Coamos" [level=3] [ref=e730]
+              - paragraph [ref=e731]: Digital & creative talent
+              - generic [ref=e732]: Recruitment Agencies
+            - link "Visit Coamos" [ref=e733] [cursor=pointer]:
+              - /url: https://coamos.de
+              - img [ref=e734]
+          - generic [ref=e739]:
+            - generic [ref=e740]:
+              - heading "OXIN" [level=3] [ref=e741]
+              - paragraph [ref=e742]: Tech & transformation staffing
+              - generic [ref=e743]: Recruitment Agencies
+            - link "Visit OXIN" [ref=e744] [cursor=pointer]:
+              - /url: https://weareoxin.com
+              - img [ref=e745]
+          - generic [ref=e750]:
+            - generic [ref=e751]:
+              - heading "Design Deck" [level=3] [ref=e752]
+              - paragraph [ref=e753]: Creative & design recruitment
+              - generic [ref=e754]: Recruitment Agencies
+            - link "Visit Design Deck" [ref=e755] [cursor=pointer]:
+              - /url: https://designdeck.com
+              - img [ref=e756]
+          - generic [ref=e761]:
+            - generic [ref=e762]:
+              - heading "Goodman Masson" [level=3] [ref=e763]
+              - paragraph [ref=e764]: Finance & risk professionals
+              - generic [ref=e765]: Recruitment Agencies
+            - link "Visit Goodman Masson" [ref=e766] [cursor=pointer]:
+              - /url: https://goodmanmasson.de
+              - img [ref=e767]
+          - generic [ref=e772]:
+            - generic [ref=e773]:
+              - heading "G2 Recruitment" [level=3] [ref=e774]
+              - paragraph [ref=e775]: Energy & engineering specialists
+              - generic [ref=e776]: Recruitment Agencies
+            - link "Visit G2 Recruitment" [ref=e777] [cursor=pointer]:
+              - /url: https://g2recruitment.com
+              - img [ref=e778]
+          - generic [ref=e783]:
+            - generic [ref=e784]:
+              - heading "Radial Bud" [level=3] [ref=e785]
+              - paragraph [ref=e786]: Interim & project staffing
+              - generic [ref=e787]: Recruitment Agencies
+            - link "Visit Radial Bud" [ref=e788] [cursor=pointer]:
+              - /url: https://radialbud.de
+              - img [ref=e789]
+          - generic [ref=e794]:
+            - generic [ref=e795]:
+              - heading "Mercuri Urval" [level=3] [ref=e796]
+              - paragraph [ref=e797]: Leadership assessment & search
+              - generic [ref=e798]: Recruitment Agencies
+            - link "Visit Mercuri Urval" [ref=e799] [cursor=pointer]:
+              - /url: https://mercuriurval.com/de-de
+              - img [ref=e800]
+          - generic [ref=e805]:
+            - generic [ref=e806]:
+              - heading "Emplion" [level=3] [ref=e807]
+              - paragraph [ref=e808]: HR tech & talent platform
+              - generic [ref=e809]: Recruitment Agencies
+            - link "Visit Emplion" [ref=e810] [cursor=pointer]:
+              - /url: https://emplion.de
+              - img [ref=e811]
+          - generic [ref=e816]:
+            - generic [ref=e817]:
+              - heading "PMS" [level=3] [ref=e818]
+              - paragraph [ref=e819]: Personnel & management solutions
+              - generic [ref=e820]: Recruitment Agencies
+            - link "Visit PMS" [ref=e821] [cursor=pointer]:
+              - /url: https://pms.de
+              - img [ref=e822]
+          - generic [ref=e827]:
+            - generic [ref=e828]:
+              - heading "LEW Group" [level=3] [ref=e829]
+              - paragraph [ref=e830]: Sales, marketing & finance roles
+              - generic [ref=e831]: Recruitment Agencies
+            - link "Visit LEW Group" [ref=e832] [cursor=pointer]:
+              - /url: https://lewgroup.com
+              - img [ref=e833]
+          - generic [ref=e838]:
+            - generic [ref=e839]:
+              - heading "Valiy One" [level=3] [ref=e840]
+              - paragraph [ref=e841]: Digital transformation & IT hiring
+              - generic [ref=e842]: Recruitment Agencies
+            - link "Visit Valiy One" [ref=e843] [cursor=pointer]:
+              - /url: https://valiyone.com
+              - img [ref=e844]
+          - generic [ref=e849]:
+            - generic [ref=e850]:
+              - heading "Morgan McKinley" [level=3] [ref=e851]
+              - paragraph [ref=e852]: Finance & professional services
+              - generic [ref=e853]: Recruitment Agencies
+            - link "Visit Morgan McKinley" [ref=e854] [cursor=pointer]:
+              - /url: https://de.morganmckinley.com
+              - img [ref=e855]
+          - generic [ref=e860]:
+            - generic [ref=e861]:
+              - heading "Aventis Group" [level=3] [ref=e862]
+              - paragraph [ref=e863]: Life sciences & medtech talent
+              - generic [ref=e864]: Recruitment Agencies
+            - link "Visit Aventis Group" [ref=e865] [cursor=pointer]:
+              - /url: https://aventisgroup.com
+              - img [ref=e866]
+          - generic [ref=e871]:
+            - generic [ref=e872]:
+              - heading "Darwin Recruitment" [level=3] [ref=e873]
+              - paragraph [ref=e874]: Tech & data specialists
+              - generic [ref=e875]: Recruitment Agencies
+            - link "Visit Darwin Recruitment" [ref=e876] [cursor=pointer]:
+              - /url: https://darwinrecruitment.com
+              - img [ref=e877]
+          - generic [ref=e882]:
+            - generic [ref=e883]:
+              - heading "Zabel Global" [level=3] [ref=e884]
+              - paragraph [ref=e885]: International executive search
+              - generic [ref=e886]: Recruitment Agencies
+            - link "Visit Zabel Global" [ref=e887] [cursor=pointer]:
+              - /url: https://zabelglobal.com
+              - img [ref=e888]
+          - generic [ref=e893]:
+            - generic [ref=e894]:
+              - heading "Page Executive" [level=3] [ref=e895]
+              - paragraph [ref=e896]: C-level & board recruitment
+              - generic [ref=e897]: Recruitment Agencies
+            - link "Visit Page Executive" [ref=e898] [cursor=pointer]:
+              - /url: https://pageexecutive.com
+              - img [ref=e899]
+          - generic [ref=e904]:
+            - generic [ref=e905]:
+              - heading "HIT Consulting" [level=3] [ref=e906]
+              - paragraph [ref=e907]: Digital & IT staffing
+              - generic [ref=e908]: Recruitment Agencies
+            - link "Visit HIT Consulting" [ref=e909] [cursor=pointer]:
+              - /url: https://wearehitconsulting.com
+              - img [ref=e910]
+          - generic [ref=e915]:
+            - generic [ref=e916]:
+              - heading "Aristo Group" [level=3] [ref=e917]
+              - paragraph [ref=e918]: Finance & interim management
+              - generic [ref=e919]: Recruitment Agencies
+            - link "Visit Aristo Group" [ref=e920] [cursor=pointer]:
+              - /url: https://aristo-group.com
+              - img [ref=e921]
+          - generic [ref=e926]:
+            - generic [ref=e927]:
+              - heading "SGEN CIS" [level=3] [ref=e928]
+              - paragraph [ref=e929]: Tech & project recruitment
+              - generic [ref=e930]: Recruitment Agencies
+            - link "Visit SGEN CIS" [ref=e931] [cursor=pointer]:
+              - /url: https://sgencis.de
+              - img [ref=e932]
+          - generic [ref=e937]:
+            - generic [ref=e938]:
+              - heading "Konnekt" [level=3] [ref=e939]
+              - paragraph [ref=e940]: Malta-based, global staffing
+              - generic [ref=e941]: Recruitment Agencies
+            - link "Visit Konnekt" [ref=e942] [cursor=pointer]:
+              - /url: https://konnekt.net
+              - img [ref=e943]
+          - generic [ref=e948]:
+            - generic [ref=e949]:
+              - heading "IC Resources" [level=3] [ref=e950]
+              - paragraph [ref=e951]: Semiconductor & electronics staffing
+              - generic [ref=e952]: Recruitment Agencies
+            - link "Visit IC Resources" [ref=e953] [cursor=pointer]:
+              - /url: https://ic-resources.com/de
+              - img [ref=e954]
+          - generic [ref=e959]:
+            - generic [ref=e960]:
+              - heading "Kooku" [level=3] [ref=e961]
+              - paragraph [ref=e962]: HR tech & job matching
+              - generic [ref=e963]: Recruitment Agencies
+            - link "Visit Kooku" [ref=e964] [cursor=pointer]:
+              - /url: https://kooku.de
+              - img [ref=e965]
+          - generic [ref=e970]:
+            - generic [ref=e971]:
+              - heading "Taylor Hopkinson" [level=3] [ref=e972]
+              - paragraph [ref=e973]: Renewable energy recruitment
+              - generic [ref=e974]: Recruitment Agencies
+            - link "Visit Taylor Hopkinson" [ref=e975] [cursor=pointer]:
+              - /url: https://taylorhopkinson.com
+              - img [ref=e976]
+          - generic [ref=e981]:
+            - generic [ref=e982]:
+              - heading "Trans Personal Group" [level=3] [ref=e983]
+              - paragraph [ref=e984]: Tech & transformation roles
+              - generic [ref=e985]: Recruitment Agencies
+            - link "Visit Trans Personal Group" [ref=e986] [cursor=pointer]:
+              - /url: https://transpersonalgroup.co.uk
+              - img [ref=e987]
+          - generic [ref=e992]:
+            - generic [ref=e993]:
+              - heading "ALSES" [level=3] [ref=e994]
+              - paragraph [ref=e995]: Central European IT staffing
+              - generic [ref=e996]: Recruitment Agencies
+            - link "Visit ALSES" [ref=e997] [cursor=pointer]:
+              - /url: https://alses.sk
+              - img [ref=e998]
+          - generic [ref=e1003]:
+            - generic [ref=e1004]:
+              - heading "Xelentia" [level=3] [ref=e1005]
+              - paragraph [ref=e1006]: Finance & fintech talent
+              - generic [ref=e1007]: Recruitment Agencies
+            - link "Visit Xelentia" [ref=e1008] [cursor=pointer]:
+              - /url: https://xelentia.com
+              - img [ref=e1009]
+          - generic [ref=e1014]:
+            - generic [ref=e1015]:
+              - heading "Evolutionary Cyber Solutions" [level=3] [ref=e1016]
+              - paragraph [ref=e1017]: Cybersecurity & IT staffing
+              - generic [ref=e1018]: Recruitment Agencies
+            - link "Visit Evolutionary Cyber Solutions" [ref=e1019] [cursor=pointer]:
+              - /url: https://evolutionarycybersolutions.com
+              - img [ref=e1020]
+          - generic [ref=e1025]:
+            - generic [ref=e1026]:
+              - heading "Precision ICT" [level=3] [ref=e1027]
+              - paragraph [ref=e1028]: ICT & infrastructure specialists
+              - generic [ref=e1029]: Recruitment Agencies
+            - link "Visit Precision ICT" [ref=e1030] [cursor=pointer]:
+              - /url: https://precisionict.com
+              - img [ref=e1031]
+          - generic [ref=e1036]:
+            - generic [ref=e1037]:
+              - heading "Press Link Services" [level=3] [ref=e1038]
+              - paragraph [ref=e1039]: Media & press staffing
+              - generic [ref=e1040]: Recruitment Agencies
+            - link "Visit Press Link Services" [ref=e1041] [cursor=pointer]:
+              - /url: https://presslinkservices.com
+              - img [ref=e1042]
+          - generic [ref=e1047]:
+            - generic [ref=e1048]:
+              - heading "Locke Staffing" [level=3] [ref=e1049]
+              - paragraph [ref=e1050]: US-German bilingual recruitment
+              - generic [ref=e1051]: Recruitment Agencies
+            - link "Visit Locke Staffing" [ref=e1052] [cursor=pointer]:
+              - /url: https://locke-staffing.com
+              - img [ref=e1053]
+          - generic [ref=e1058]:
+            - generic [ref=e1059]:
+              - heading "Harvey Nash" [level=3] [ref=e1060]
+              - paragraph [ref=e1061]: Tech, digital & leadership roles
+              - generic [ref=e1062]: Recruitment Agencies
+            - link "Visit Harvey Nash" [ref=e1063] [cursor=pointer]:
+              - /url: https://harveynash.de
+              - img [ref=e1064]
+          - generic [ref=e1069]:
+            - generic [ref=e1070]:
+              - heading "Approach People" [level=3] [ref=e1071]
+              - paragraph [ref=e1072]: Multilingual & EU staffing
+              - generic [ref=e1073]: Recruitment Agencies
+            - link "Visit Approach People" [ref=e1074] [cursor=pointer]:
+              - /url: https://approachpeople.com
+              - img [ref=e1075]
+          - generic [ref=e1080]:
+            - generic [ref=e1081]:
+              - heading "Recruiting Evolution" [level=3] [ref=e1082]
+              - paragraph [ref=e1083]: HR innovation & talent
+              - generic [ref=e1084]: Recruitment Agencies
+            - link "Visit Recruiting Evolution" [ref=e1085] [cursor=pointer]:
+              - /url: https://recruitingevolution.de
+              - img [ref=e1086]
+          - generic [ref=e1091]:
+            - generic [ref=e1092]:
+              - heading "UI Staffing" [level=3] [ref=e1093]
+              - paragraph [ref=e1094]: UI/UX & design talent
+              - generic [ref=e1095]: Recruitment Agencies
+            - link "Visit UI Staffing" [ref=e1096] [cursor=pointer]:
+              - /url: https://uistaffing.de
+              - img [ref=e1097]
+          - generic [ref=e1102]:
+            - generic [ref=e1103]:
+              - heading "Senasis Group" [level=3] [ref=e1104]
+              - paragraph [ref=e1105]: Tech & engineering staffing
+              - generic [ref=e1106]: Recruitment Agencies
+            - link "Visit Senasis Group" [ref=e1107] [cursor=pointer]:
+              - /url: https://senasis.group.de
+              - img [ref=e1108]
+          - generic [ref=e1113]:
+            - generic [ref=e1114]:
+              - heading "IQ Talent Partners" [level=3] [ref=e1115]
+              - paragraph [ref=e1116]: Tech & startup recruitment
+              - generic [ref=e1117]: Recruitment Agencies
+            - link "Visit IQ Talent Partners" [ref=e1118] [cursor=pointer]:
+              - /url: https://iqtalentpartners.com
+              - img [ref=e1119]
+          - generic [ref=e1124]:
+            - generic [ref=e1125]:
+              - heading "Discover International" [level=3] [ref=e1126]
+              - paragraph [ref=e1127]: Global bilingual recruitment
+              - generic [ref=e1128]: Recruitment Agencies
+            - link "Visit Discover International" [ref=e1129] [cursor=pointer]:
+              - /url: https://discoverinternational.com
+              - img [ref=e1130]
+          - generic [ref=e1135]:
+            - generic [ref=e1136]:
+              - heading "Etengo" [level=3] [ref=e1137]
+              - paragraph [ref=e1138]: Interim & freelance experts
+              - generic [ref=e1139]: Recruitment Agencies
+            - link "Visit Etengo" [ref=e1140] [cursor=pointer]:
+              - /url: https://etengo.de
+              - img [ref=e1141]
+          - generic [ref=e1146]:
+            - generic [ref=e1147]:
+              - heading "Euro Job Consult" [level=3] [ref=e1148]
+              - paragraph [ref=e1149]: Multilingual European job portal
+              - generic [ref=e1150]: Recruitment Agencies
+            - link "Visit Euro Job Consult" [ref=e1151] [cursor=pointer]:
+              - /url: https://eurojobconsult.com
+              - img [ref=e1152]
+          - generic [ref=e1157]:
+            - generic [ref=e1158]:
+              - heading "M2 Talents" [level=3] [ref=e1159]
+              - paragraph [ref=e1160]: Sales & marketing staffing
+              - generic [ref=e1161]: Recruitment Agencies
+            - link "Visit M2 Talents" [ref=e1162] [cursor=pointer]:
+              - /url: https://m2talents.com
+              - img [ref=e1163]
+          - generic [ref=e1168]:
+            - generic [ref=e1169]:
+              - heading "Data Talent" [level=3] [ref=e1170]
+              - paragraph [ref=e1171]: Data science & analytics roles
+              - generic [ref=e1172]: Recruitment Agencies
+            - link "Visit Data Talent" [ref=e1173] [cursor=pointer]:
+              - /url: https://data-talent.de
+              - img [ref=e1174]
+          - generic [ref=e1179]:
+            - generic [ref=e1180]:
+              - heading "Brink Holding" [level=3] [ref=e1181]
+              - paragraph [ref=e1182]: Executive & finance search
+              - generic [ref=e1183]: Recruitment Agencies
+            - link "Visit Brink Holding" [ref=e1184] [cursor=pointer]:
+              - /url: https://brink-holding.com
+              - img [ref=e1185]
+          - generic [ref=e1190]:
+            - generic [ref=e1191]:
+              - heading "Opus RS" [level=3] [ref=e1192]
+              - paragraph [ref=e1193]: Recruitment process outsourcing
+              - generic [ref=e1194]: Recruitment Agencies
+            - link "Visit Opus RS" [ref=e1195] [cursor=pointer]:
+              - /url: https://opusrs.com
+              - img [ref=e1196]
+          - generic [ref=e1201]:
+            - generic [ref=e1202]:
+              - heading "Alpha Consult Gruppe" [level=3] [ref=e1203]
+              - paragraph [ref=e1204]: HR consulting & placement
+              - generic [ref=e1205]: Recruitment Agencies
+            - link "Visit Alpha Consult Gruppe" [ref=e1206] [cursor=pointer]:
+              - /url: https://alphaconsultgruppe.org
+              - img [ref=e1207]
+          - generic [ref=e1212]:
+            - generic [ref=e1213]:
+              - heading "Search Talent" [level=3] [ref=e1214]
+              - paragraph [ref=e1215]: Executive & niche recruitment
+              - generic [ref=e1216]: Recruitment Agencies
+            - link "Visit Search Talent" [ref=e1217] [cursor=pointer]:
+              - /url: https://searchtalent.de
+              - img [ref=e1218]
+          - generic [ref=e1223]:
+            - generic [ref=e1224]:
+              - heading "LP Associates" [level=3] [ref=e1225]
+              - paragraph [ref=e1226]: Finance & legal staffing
+              - generic [ref=e1227]: Recruitment Agencies
+            - link "Visit LP Associates" [ref=e1228] [cursor=pointer]:
+              - /url: https://lpassociates.com
+              - img [ref=e1229]
+          - generic [ref=e1234]:
+            - generic [ref=e1235]:
+              - heading "Hardenberg Group" [level=3] [ref=e1236]
+              - paragraph [ref=e1237]: US-German executive search
+              - generic [ref=e1238]: Recruitment Agencies
+            - link "Visit Hardenberg Group" [ref=e1239] [cursor=pointer]:
+              - /url: https://hardenberegroupllc.com
+              - img [ref=e1240]
+          - generic [ref=e1245]:
+            - generic [ref=e1246]:
+              - heading "IT Workforce" [level=3] [ref=e1247]
+              - paragraph [ref=e1248]: IT & tech staffing
+              - generic [ref=e1249]: Recruitment Agencies
+            - link "Visit IT Workforce" [ref=e1250] [cursor=pointer]:
+              - /url: https://itworkforce.de
+              - img [ref=e1251]
+          - generic [ref=e1256]:
+            - generic [ref=e1257]:
+              - heading "Schulmeister Consulting" [level=3] [ref=e1258]
+              - paragraph [ref=e1259]: HR & interim management
+              - generic [ref=e1260]: Recruitment Agencies
+            - link "Visit Schulmeister Consulting" [ref=e1261] [cursor=pointer]:
+              - /url: https://schulmeistereconsulting.com/de
+              - img [ref=e1262]
+          - generic [ref=e1267]:
+            - generic [ref=e1268]:
+              - heading "Skill Recruit" [level=3] [ref=e1269]
+              - paragraph [ref=e1270]: Skilled trades & tech roles
+              - generic [ref=e1271]: Recruitment Agencies
+            - link "Visit Skill Recruit" [ref=e1272] [cursor=pointer]:
+              - /url: https://skillrecruit.com
+              - img [ref=e1273]
+          - generic [ref=e1278]:
+            - generic [ref=e1279]:
+              - heading "Division One" [level=3] [ref=e1280]
+              - paragraph [ref=e1281]: Swiss-German finance recruitment
+              - generic [ref=e1282]: Recruitment Agencies
+            - link "Visit Division One" [ref=e1283] [cursor=pointer]:
+              - /url: https://division-one.ch
+              - img [ref=e1284]
+          - generic [ref=e1289]:
+            - generic [ref=e1290]:
+              - heading "JAC Group" [level=3] [ref=e1291]
+              - paragraph [ref=e1292]: Global talent solutions
+              - generic [ref=e1293]: Recruitment Agencies
+            - link "Visit JAC Group" [ref=e1294] [cursor=pointer]:
+              - /url: https://jacgroup.com
+              - img [ref=e1295]
+          - generic [ref=e1300]:
+            - generic [ref=e1301]:
+              - heading "TON HR Evolution" [level=3] [ref=e1302]
+              - paragraph [ref=e1303]: Creative & digital staffing
+              - generic [ref=e1304]: Recruitment Agencies
+            - link "Visit TON HR Evolution" [ref=e1305] [cursor=pointer]:
+              - /url: https://tonhrevolution.com
+              - img [ref=e1306]
+          - generic [ref=e1311]:
+            - generic [ref=e1312]:
+              - heading "Expert Scout" [level=3] [ref=e1313]
+              - paragraph [ref=e1314]: Executive & expert matching
+              - generic [ref=e1315]: Recruitment Agencies
+            - link "Visit Expert Scout" [ref=e1316] [cursor=pointer]:
+              - /url: https://expertscout.com
+              - img [ref=e1317]
+          - generic [ref=e1322]:
+            - generic [ref=e1323]:
+              - heading "K Recruiting" [level=3] [ref=e1324]
+              - paragraph [ref=e1325]: Tech & engineering roles
+              - generic [ref=e1326]: Recruitment Agencies
+            - link "Visit K Recruiting" [ref=e1327] [cursor=pointer]:
+              - /url: https://k-recruiting.com
+              - img [ref=e1328]
+          - generic [ref=e1333]:
+            - generic [ref=e1334]:
+              - heading "Future Select Consult" [level=3] [ref=e1335]
+              - paragraph [ref=e1336]: Future-focused talent solutions
+              - generic [ref=e1337]: Recruitment Agencies
+            - link "Visit Future Select Consult" [ref=e1338] [cursor=pointer]:
+              - /url: https://futureselectconsult.de
+              - img [ref=e1339]
+          - generic [ref=e1344]:
+            - generic [ref=e1345]:
+              - heading "LRC" [level=3] [ref=e1346]
+              - paragraph [ref=e1347]: Legal & compliance recruitment
+              - generic [ref=e1348]: Recruitment Agencies
+            - link "Visit LRC" [ref=e1349] [cursor=pointer]:
+              - /url: https://lrcgmbh.de
+              - img [ref=e1350]
+          - generic [ref=e1355]:
+            - generic [ref=e1356]:
+              - heading "TheQS Consulting" [level=3] [ref=e1357]
+              - paragraph [ref=e1358]: Quality & regulatory staffing
+              - generic [ref=e1359]: Recruitment Agencies
+            - link "Visit TheQS Consulting" [ref=e1360] [cursor=pointer]:
+              - /url: https://theqs-consulting.de
+              - img [ref=e1361]
+          - generic [ref=e1366]:
+            - generic [ref=e1367]:
+              - heading "Constares" [level=3] [ref=e1368]
+              - paragraph [ref=e1369]: Tech & transformation hiring
+              - generic [ref=e1370]: Recruitment Agencies
+            - link "Visit Constares" [ref=e1371] [cursor=pointer]:
+              - /url: https://constares.de
+              - img [ref=e1372]
+          - generic [ref=e1377]:
+            - generic [ref=e1378]:
+              - heading "Market Expanded" [level=3] [ref=e1379]
+              - paragraph [ref=e1380]: Sales & marketing talent
+              - generic [ref=e1381]: Recruitment Agencies
+            - link "Visit Market Expanded" [ref=e1382] [cursor=pointer]:
+              - /url: https://marketexpanded.de
+              - img [ref=e1383]
+          - generic [ref=e1388]:
+            - generic [ref=e1389]:
+              - heading "Klug Executive Search" [level=3] [ref=e1390]
+              - paragraph [ref=e1391]: Executive & leadership search
+              - generic [ref=e1392]: Recruitment Agencies
+            - link "Visit Klug Executive Search" [ref=e1393] [cursor=pointer]:
+              - /url: https://klug-executivesearch.de
+              - img [ref=e1394]
+          - generic [ref=e1399]:
+            - generic [ref=e1400]:
+              - heading "Private Personal" [level=3] [ref=e1401]
+              - paragraph [ref=e1402]: Personal & household staffing
+              - generic [ref=e1403]: Recruitment Agencies
+            - link "Visit Private Personal" [ref=e1404] [cursor=pointer]:
+              - /url: https://privatepersonal.de
+              - img [ref=e1405]
+          - generic [ref=e1410]:
+            - generic [ref=e1411]:
+              - heading "Morgan Philips" [level=3] [ref=e1412]
+              - paragraph [ref=e1413]: Global executive search
+              - generic [ref=e1414]: Recruitment Agencies
+            - link "Visit Morgan Philips" [ref=e1415] [cursor=pointer]:
+              - /url: https://morganphilips.com
+              - img [ref=e1416]
+          - generic [ref=e1421]:
+            - generic [ref=e1422]:
+              - heading "Spencer Ogden" [level=3] [ref=e1423]
+              - paragraph [ref=e1424]: Energy & infrastructure roles
+              - generic [ref=e1425]: Recruitment Agencies
+            - link "Visit Spencer Ogden" [ref=e1426] [cursor=pointer]:
+              - /url: https://spencer-ogden.com
+              - img [ref=e1427]
+          - generic [ref=e1432]:
+            - generic [ref=e1433]:
+              - heading "Skills Alliance" [level=3] [ref=e1434]
+              - paragraph [ref=e1435]: Tech & digital staffing
+              - generic [ref=e1436]: Recruitment Agencies
+            - link "Visit Skills Alliance" [ref=e1437] [cursor=pointer]:
+              - /url: https://skillsalliance.com
+              - img [ref=e1438]
+          - generic [ref=e1443]:
+            - generic [ref=e1444]:
+              - heading "SCRO Global" [level=3] [ref=e1445]
+              - paragraph [ref=e1446]: Global recruitment solutions
+              - generic [ref=e1447]: Recruitment Agencies
+            - link "Visit SCRO Global" [ref=e1448] [cursor=pointer]:
+              - /url: https://scroglobbal.com
+              - img [ref=e1449]
+          - generic [ref=e1454]:
+            - generic [ref=e1455]:
+              - heading "eBlue Net" [level=3] [ref=e1456]
+              - paragraph [ref=e1457]: IT & network specialists
+              - generic [ref=e1458]: Recruitment Agencies
+            - link "Visit eBlue Net" [ref=e1459] [cursor=pointer]:
+              - /url: https://eblue-net.de
+              - img [ref=e1460]
+          - generic [ref=e1465]:
+            - generic [ref=e1466]:
+              - heading "DA Connection" [level=3] [ref=e1467]
+              - paragraph [ref=e1468]: Bilingual & international staffing
+              - generic [ref=e1469]: Recruitment Agencies
+            - link "Visit DA Connection" [ref=e1470] [cursor=pointer]:
+              - /url: https://daconnection.de
+              - img [ref=e1471]
+          - generic [ref=e1476]:
+            - generic [ref=e1477]:
+              - heading "Optimize Exe" [level=3] [ref=e1478]
+              - paragraph [ref=e1479]: Executive & interim leadership
+              - generic [ref=e1480]: Recruitment Agencies
+            - link "Visit Optimize Exe" [ref=e1481] [cursor=pointer]:
+              - /url: https://optimizeexe.com
+              - img [ref=e1482]
+          - generic [ref=e1487]:
+            - generic [ref=e1488]:
+              - heading "Veredus Consulting" [level=3] [ref=e1489]
+              - paragraph [ref=e1490]: Tech & healthcare staffing
+              - generic [ref=e1491]: Recruitment Agencies
+            - link "Visit Veredus Consulting" [ref=e1492] [cursor=pointer]:
+              - /url: https://veredusconsulting.com
+              - img [ref=e1493]
+          - generic [ref=e1498]:
+            - generic [ref=e1499]:
+              - heading "HR Recruitment" [level=3] [ref=e1500]
+              - paragraph [ref=e1501]: General HR & staffing
+              - generic [ref=e1502]: Recruitment Agencies
+            - link "Visit HR Recruitment" [ref=e1503] [cursor=pointer]:
+              - /url: https://hr-recruitment.de
+              - img [ref=e1504]
+          - generic [ref=e1509]:
+            - generic [ref=e1510]:
+              - heading "Intention Business" [level=3] [ref=e1511]
+              - paragraph [ref=e1512]: Business & HR consulting
+              - generic [ref=e1513]: Recruitment Agencies
+            - link "Visit Intention Business" [ref=e1514] [cursor=pointer]:
+              - /url: https://intentionbusiness.com
+              - img [ref=e1515]
+          - generic [ref=e1520]:
+            - generic [ref=e1521]:
+              - heading "Digital Waffle" [level=3] [ref=e1522]
+              - paragraph [ref=e1523]: Digital & creative talent
+              - generic [ref=e1524]: Recruitment Agencies
+            - link "Visit Digital Waffle" [ref=e1525] [cursor=pointer]:
+              - /url: https://digitalwaffle.co.uk
+              - img [ref=e1526]
+          - generic [ref=e1531]:
+            - generic [ref=e1532]:
+              - heading "WeMe" [level=3] [ref=e1533]
+              - paragraph [ref=e1534]: Personalized job matching
+              - generic [ref=e1535]: Recruitment Agencies
+            - link "Visit WeMe" [ref=e1536] [cursor=pointer]:
+              - /url: https://weme.de
+              - img [ref=e1537]
+          - generic [ref=e1542]:
+            - generic [ref=e1543]:
+              - heading "One Hiring" [level=3] [ref=e1544]
+              - paragraph [ref=e1545]: Tech & startup recruitment
+              - generic [ref=e1546]: Recruitment Agencies
+            - link "Visit One Hiring" [ref=e1547] [cursor=pointer]:
+              - /url: https://onehiring.com/de
+              - img [ref=e1548]
+          - generic [ref=e1553]:
+            - generic [ref=e1554]:
+              - heading "Quantum Consultancy" [level=3] [ref=e1555]
+              - paragraph [ref=e1556]: IT & project staffing
+              - generic [ref=e1557]: Recruitment Agencies
+            - link "Visit Quantum Consultancy" [ref=e1558] [cursor=pointer]:
+              - /url: https://quantum-consultancy.com
+              - img [ref=e1559]
+          - generic [ref=e1564]:
+            - generic [ref=e1565]:
+              - heading "Progress Association" [level=3] [ref=e1566]
+              - paragraph [ref=e1567]: Professional & association roles
+              - generic [ref=e1568]: Recruitment Agencies
+            - link "Visit Progress Association" [ref=e1569] [cursor=pointer]:
+              - /url: https://progressassociation.de
+              - img [ref=e1570]
+          - generic [ref=e1575]:
+            - generic [ref=e1576]:
+              - heading "Pack TM" [level=3] [ref=e1577]
+              - paragraph [ref=e1578]: E-commerce & logistics staffing
+              - generic [ref=e1579]: Recruitment Agencies
+            - link "Visit Pack TM" [ref=e1580] [cursor=pointer]:
+              - /url: https://packtm.com
+              - img [ref=e1581]
+          - generic [ref=e1586]:
+            - generic [ref=e1587]:
+              - heading "Evolve Ltd" [level=3] [ref=e1588]
+              - paragraph [ref=e1589]: Tech & transformation roles
+              - generic [ref=e1590]: Recruitment Agencies
+            - link "Visit Evolve Ltd" [ref=e1591] [cursor=pointer]:
+              - /url: https://evolve-ltd.co.uk
+              - img [ref=e1592]
+          - generic [ref=e1597]:
+            - generic [ref=e1598]:
+              - heading "Career Factory" [level=3] [ref=e1599]
+              - paragraph [ref=e1600]: Career coaching & jobs
+              - generic [ref=e1601]: Recruitment Agencies
+            - link "Visit Career Factory" [ref=e1602] [cursor=pointer]:
+              - /url: https://career-factory.eu
+              - img [ref=e1603]
+          - generic [ref=e1608]:
+            - generic [ref=e1609]:
+              - heading "Medicopec" [level=3] [ref=e1610]
+              - paragraph [ref=e1611]: Medical & healthcare staffing
+              - generic [ref=e1612]: Recruitment Agencies
+            - link "Visit Medicopec" [ref=e1613] [cursor=pointer]:
+              - /url: https://medicopec.mk
+              - img [ref=e1614]
+          - generic [ref=e1619]:
+            - generic [ref=e1620]:
+              - heading "NXT Hero" [level=3] [ref=e1621]
+              - paragraph [ref=e1622]: Digital & gaming talent
+              - generic [ref=e1623]: Recruitment Agencies
+            - link "Visit NXT Hero" [ref=e1624] [cursor=pointer]:
+              - /url: https://nxt-hero.com
+              - img [ref=e1625]
+          - generic [ref=e1630]:
+            - generic [ref=e1631]:
+              - heading "Intelligent People" [level=3] [ref=e1632]
+              - paragraph [ref=e1633]: Creative & marketing staffing
+              - generic [ref=e1634]: Recruitment Agencies
+            - link "Visit Intelligent People" [ref=e1635] [cursor=pointer]:
+              - /url: https://intelligentpeople.com
+              - img [ref=e1636]
+          - generic [ref=e1641]:
+            - generic [ref=e1642]:
+              - heading "Evolve Talent" [level=3] [ref=e1643]
+              - paragraph [ref=e1644]: Tech & digital recruitment
+              - generic [ref=e1645]: Recruitment Agencies
+            - link "Visit Evolve Talent" [ref=e1646] [cursor=pointer]:
+              - /url: https://evolvetalent.eu
+              - img [ref=e1647]
+          - generic [ref=e1652]:
+            - generic [ref=e1653]:
+              - heading "ITS Jobs We R Online" [level=3] [ref=e1654]
+              - paragraph [ref=e1655]: IT job board
+              - generic [ref=e1656]: Recruitment Agencies
+            - link "Visit ITS Jobs We R Online" [ref=e1657] [cursor=pointer]:
+              - /url: https://itsjobswereonline.com
+              - img [ref=e1658]
+          - generic [ref=e1663]:
+            - generic [ref=e1664]:
+              - heading "Joanne Hart" [level=3] [ref=e1665]
+              - paragraph [ref=e1666]: Admin & support staffing
+              - generic [ref=e1667]: Recruitment Agencies
+            - link "Visit Joanne Hart" [ref=e1668] [cursor=pointer]:
+              - /url: https://joannehart.co.uk
+              - img [ref=e1669]
+          - generic [ref=e1674]:
+            - generic [ref=e1675]:
+              - heading "Rizer Recruitment" [level=3] [ref=e1676]
+              - paragraph [ref=e1677]: Tech & niche roles
+              - generic [ref=e1678]: Recruitment Agencies
+            - link "Visit Rizer Recruitment" [ref=e1679] [cursor=pointer]:
+              - /url: https://rizerrecruitment.com
+              - img [ref=e1680]
+          - generic [ref=e1685]:
+            - generic [ref=e1686]:
+              - heading "Consultason" [level=3] [ref=e1687]
+              - paragraph [ref=e1688]: HR & interim consulting
+              - generic [ref=e1689]: Recruitment Agencies
+            - link "Visit Consultason" [ref=e1690] [cursor=pointer]:
+              - /url: https://consultason.de
+              - img [ref=e1691]
+          - generic [ref=e1696]:
+            - generic [ref=e1697]:
+              - heading "Infotech Recruitment" [level=3] [ref=e1698]
+              - paragraph [ref=e1699]: IT & software specialists
+              - generic [ref=e1700]: Recruitment Agencies
+            - link "Visit Infotech Recruitment" [ref=e1701] [cursor=pointer]:
+              - /url: https://infotechrecruitment.com
+              - img [ref=e1702]
+          - generic [ref=e1707]:
+            - generic [ref=e1708]:
+              - heading "Makk Rohr" [level=3] [ref=e1709]
+              - paragraph [ref=e1710]: German-speaking tech staffing
+              - generic [ref=e1711]: Recruitment Agencies
+            - link "Visit Makk Rohr" [ref=e1712] [cursor=pointer]:
+              - /url: https://makkrohr.com
+              - img [ref=e1713]
+          - generic [ref=e1718]:
+            - generic [ref=e1719]:
+              - heading "Viru Sourcing" [level=3] [ref=e1720]
+              - paragraph [ref=e1721]: IT & digital outsourcing
+              - generic [ref=e1722]: Recruitment Agencies
+            - link "Visit Viru Sourcing" [ref=e1723] [cursor=pointer]:
+              - /url: https://virusourcing.com
+              - img [ref=e1724]
+          - generic [ref=e1729]:
+            - generic [ref=e1730]:
+              - heading "Hiber Roy Consultants" [level=3] [ref=e1731]
+              - paragraph [ref=e1732]: Executive & HR consulting
+              - generic [ref=e1733]: Recruitment Agencies
+            - link "Visit Hiber Roy Consultants" [ref=e1734] [cursor=pointer]:
+              - /url: https://hiberlin-royconsultants.de
+              - img [ref=e1735]
+          - generic [ref=e1740]:
+            - generic [ref=e1741]:
+              - heading "Medipoint" [level=3] [ref=e1742]
+              - paragraph [ref=e1743]: Medical & life sciences
+              - generic [ref=e1744]: Recruitment Agencies
+            - link "Visit Medipoint" [ref=e1745] [cursor=pointer]:
+              - /url: https://medipointag.ch
+              - img [ref=e1746]
+          - generic [ref=e1751]:
+            - generic [ref=e1752]:
+              - heading "Essmann Beratung" [level=3] [ref=e1753]
+              - paragraph [ref=e1754]: HR & leadership consulting
+              - generic [ref=e1755]: Recruitment Agencies
+            - link "Visit Essmann Beratung" [ref=e1756] [cursor=pointer]:
+              - /url: https://essmann-beratung.de
+              - img [ref=e1757]
+          - generic [ref=e1762]:
+            - generic [ref=e1763]:
+              - heading "ERSG Global" [level=3] [ref=e1764]
+              - paragraph [ref=e1765]: Energy & engineering staffing
+              - generic [ref=e1766]: Recruitment Agencies
+            - link "Visit ERSG Global" [ref=e1767] [cursor=pointer]:
+              - /url: https://ersg-global.com
+              - img [ref=e1768]
+          - generic [ref=e1773]:
+            - generic [ref=e1774]:
+              - heading "ISIS Technical" [level=3] [ref=e1775]
+              - paragraph [ref=e1776]: Technical & engineering roles
+              - generic [ref=e1777]: Recruitment Agencies
+            - link "Visit ISIS Technical" [ref=e1778] [cursor=pointer]:
+              - /url: https://isistechnical.co.uk
+              - img [ref=e1779]
+          - generic [ref=e1784]:
+            - generic [ref=e1785]:
+              - heading "Fortech Consulting" [level=3] [ref=e1786]
+              - paragraph [ref=e1787]: IT & engineering staffing
+              - generic [ref=e1788]: Recruitment Agencies
+            - link "Visit Fortech Consulting" [ref=e1789] [cursor=pointer]:
+              - /url: https://fortechconsulting.de
+              - img [ref=e1790]
+          - generic [ref=e1795]:
+            - generic [ref=e1796]:
+              - heading "Talentania" [level=3] [ref=e1797]
+              - paragraph [ref=e1798]: Talent acquisition platform
+              - generic [ref=e1799]: Recruitment Agencies
+            - link "Visit Talentania" [ref=e1800] [cursor=pointer]:
+              - /url: https://talentania.de
+              - img [ref=e1801]
+          - generic [ref=e1806]:
+            - generic [ref=e1807]:
+              - heading "Career People" [level=3] [ref=e1808]
+              - paragraph [ref=e1809]: Sales, marketing & tech jobs
+              - generic [ref=e1810]: Recruitment Agencies
+            - link "Visit Career People" [ref=e1811] [cursor=pointer]:
+              - /url: https://careerpeople.com
+              - img [ref=e1812]
+          - generic [ref=e1817]:
+            - generic [ref=e1818]:
+              - heading "Tech Global" [level=3] [ref=e1819]
+              - paragraph [ref=e1820]: Global tech recruitment
+              - generic [ref=e1821]: Recruitment Agencies
+            - link "Visit Tech Global" [ref=e1822] [cursor=pointer]:
+              - /url: https://techglobal.com
+              - img [ref=e1823]
+          - generic [ref=e1828]:
+            - generic [ref=e1829]:
+              - heading "Pantheon Recruitment" [level=3] [ref=e1830]
+              - paragraph [ref=e1831]: Executive & specialist search
+              - generic [ref=e1832]: Recruitment Agencies
+            - link "Visit Pantheon Recruitment" [ref=e1833] [cursor=pointer]:
+              - /url: https://pantheon-recruitment.de
+              - img [ref=e1834]
+          - generic [ref=e1839]:
+            - generic [ref=e1840]:
+              - heading "Spartacus IT" [level=3] [ref=e1841]
+              - paragraph [ref=e1842]: Dutch-German IT staffing
+              - generic [ref=e1843]: Recruitment Agencies
+            - link "Visit Spartacus IT" [ref=e1844] [cursor=pointer]:
+              - /url: https://spartacusit.nl
+              - img [ref=e1845]
+          - generic [ref=e1850]:
+            - generic [ref=e1851]:
+              - heading "MaxMatch" [level=3] [ref=e1852]
+              - paragraph [ref=e1853]: AI-powered job matching
+              - generic [ref=e1854]: Recruitment Agencies
+            - link "Visit MaxMatch" [ref=e1855] [cursor=pointer]:
+              - /url: https://maxmatch.de
+              - img [ref=e1856]
+          - generic [ref=e1861]:
+            - generic [ref=e1862]:
+              - heading "Zync Group" [level=3] [ref=e1863]
+              - paragraph [ref=e1864]: Tech & digital talent
+              - generic [ref=e1865]: Recruitment Agencies
+            - link "Visit Zync Group" [ref=e1866] [cursor=pointer]:
+              - /url: https://zyncgroup.com
+              - img [ref=e1867]
+          - generic [ref=e1872]:
+            - generic [ref=e1873]:
+              - heading "About You" [level=3] [ref=e1874]
+              - paragraph [ref=e1875]: E-commerce fashion platform with English job opportunities
+              - generic [ref=e1876]: English Hiring Companies
+            - link "Visit About You" [ref=e1877] [cursor=pointer]:
+              - /url: https://corporate.aboutyou.de/de/career/our-jobs
+              - img [ref=e1878]
+          - generic [ref=e1883]:
+            - generic [ref=e1884]:
+              - heading "Accenture" [level=3] [ref=e1885]
+              - paragraph [ref=e1886]: Global consulting with English-speaking positions in Berlin
+              - generic [ref=e1887]: English Hiring Companies
+            - link "Visit Accenture" [ref=e1888] [cursor=pointer]:
+              - /url: https://www.accenture.com/de-de/careers/jobsearch
+              - img [ref=e1889]
+          - generic [ref=e1894]:
+            - generic [ref=e1895]:
+              - heading "Accountable" [level=3] [ref=e1896]
+              - paragraph [ref=e1897]: Financial services startup with English job openings
+              - generic [ref=e1898]: English Hiring Companies
+            - link "Visit Accountable" [ref=e1899] [cursor=pointer]:
+              - /url: https://join.com/companies/accountable
+              - img [ref=e1900]
+          - generic [ref=e1905]:
+            - generic [ref=e1906]:
+              - heading "Acemate.ai" [level=3] [ref=e1907]
+              - paragraph [ref=e1908]: AI-powered platform offering English-speaking roles
+              - generic [ref=e1909]: English Hiring Companies
+            - link "Visit Acemate.ai" [ref=e1910] [cursor=pointer]:
+              - /url: https://join.com/companies/acemate
+              - img [ref=e1911]
+          - generic [ref=e1916]:
+            - generic [ref=e1917]:
+              - heading "Babbel" [level=3] [ref=e1918]
+              - paragraph [ref=e1919]: Language learning platform with international team opportunities
+              - generic [ref=e1920]: English Hiring Companies
+            - link "Visit Babbel" [ref=e1921] [cursor=pointer]:
+              - /url: https://jobs.babbel.com/en/
+              - img [ref=e1922]
+          - generic [ref=e1927]:
+            - generic [ref=e1928]:
+              - heading "Personio" [level=3] [ref=e1929]
+              - paragraph [ref=e1930]: HR software company with English-speaking work environment
+              - generic [ref=e1931]: English Hiring Companies
+            - link "Visit Personio" [ref=e1932] [cursor=pointer]:
+              - /url: https://www.personio.com/about-personio/careers/
+              - img [ref=e1933]
+          - generic [ref=e1938]:
+            - generic [ref=e1939]:
+              - heading "Banxware" [level=3] [ref=e1940]
+              - paragraph [ref=e1941]: Fintech startup offering English job opportunities
+              - generic [ref=e1942]: English Hiring Companies
+            - link "Visit Banxware" [ref=e1943] [cursor=pointer]:
+              - /url: https://www.banxware.com/careers
+              - img [ref=e1944]
+          - generic [ref=e1949]:
+            - generic [ref=e1950]:
+              - heading "BASF" [level=3] [ref=e1951]
+              - paragraph [ref=e1952]: Chemical industry leader with international English positions
+              - generic [ref=e1953]: English Hiring Companies
+            - link "Visit BASF" [ref=e1954] [cursor=pointer]:
+              - /url: https://basf.jobs/
+              - img [ref=e1955]
+          - generic [ref=e1960]:
+            - generic [ref=e1961]:
+              - heading "BearingPoint" [level=3] [ref=e1962]
+              - paragraph [ref=e1963]: Management consulting with English-speaking opportunities
+              - generic [ref=e1964]: English Hiring Companies
+            - link "Visit BearingPoint" [ref=e1965] [cursor=pointer]:
+              - /url: https://www.bearingpoint.com/en/careers/open-roles/
+              - img [ref=e1966]
+          - generic [ref=e1971]:
+            - generic [ref=e1972]:
+              - heading "Bettermile" [level=3] [ref=e1973]
+              - paragraph [ref=e1974]: Logistics optimization platform with English job openings
+              - generic [ref=e1975]: English Hiring Companies
+            - link "Visit Bettermile" [ref=e1976] [cursor=pointer]:
+              - /url: https://bettermile.com/careers/
+              - img [ref=e1977]
+          - generic [ref=e1982]:
+            - generic [ref=e1983]:
+              - heading "Carbon One" [level=3] [ref=e1984]
+              - paragraph [ref=e1985]: Carbon management startup with English-speaking roles
+              - generic [ref=e1986]: English Hiring Companies
+            - link "Visit Carbon One" [ref=e1987] [cursor=pointer]:
+              - /url: https://www.carbon.one/#jobs
+              - img [ref=e1988]
+          - generic [ref=e1993]:
+            - generic [ref=e1994]:
+              - heading "Caidera" [level=3] [ref=e1995]
+              - paragraph [ref=e1996]: AI technology company offering English job opportunities
+              - generic [ref=e1997]: English Hiring Companies
+            - link "Visit Caidera" [ref=e1998] [cursor=pointer]:
+              - /url: https://www.caidera.ai/de/karriere
+              - img [ref=e1999]
+          - generic [ref=e2004]:
+            - generic [ref=e2005]:
+              - heading "Calima" [level=3] [ref=e2006]
+              - paragraph [ref=e2007]: Clean energy platform with English-speaking positions
+              - generic [ref=e2008]: English Hiring Companies
+            - link "Visit Calima" [ref=e2009] [cursor=pointer]:
+              - /url: https://www.calima.io/jobs
+              - img [ref=e2010]
+          - generic [ref=e2015]:
+            - generic [ref=e2016]:
+              - heading "Canva" [level=3] [ref=e2017]
+              - paragraph [ref=e2018]: Design platform with international English job opportunities
+              - generic [ref=e2019]: English Hiring Companies
+            - link "Visit Canva" [ref=e2020] [cursor=pointer]:
+              - /url: https://www.lifeatcanva.com/en/jobs/
+              - img [ref=e2021]
+          - generic [ref=e2026]:
+            - generic [ref=e2027]:
+              - heading "Caresyntax" [level=3] [ref=e2028]
+              - paragraph [ref=e2029]: Healthcare AI company with English-speaking opportunities
+              - generic [ref=e2030]: English Hiring Companies
+            - link "Visit Caresyntax" [ref=e2031] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/caresyntax/
+              - img [ref=e2032]
+          - generic [ref=e2037]:
+            - generic [ref=e2038]:
+              - heading "Cloover" [level=3] [ref=e2039]
+              - paragraph [ref=e2040]: Clean technology startup offering English job openings
+              - generic [ref=e2041]: English Hiring Companies
+            - link "Visit Cloover" [ref=e2042] [cursor=pointer]:
+              - /url: https://cloover.notion.site/Join-us-Cloover-73ec11a2660748ecb6b66be87c10d4b8
+              - img [ref=e2043]
+          - generic [ref=e2048]:
+            - generic [ref=e2049]:
+              - heading "Claire" [level=3] [ref=e2050]
+              - paragraph [ref=e2051]: Digital assistant platform with English-speaking roles
+              - generic [ref=e2052]: English Hiring Companies
+            - link "Visit Claire" [ref=e2053] [cursor=pointer]:
+              - /url: https://clareandme.notion.site/Clare-needs-YOU-3acc2ce1815d402c8c6c6ea0ca5e3fd9
+              - img [ref=e2054]
+          - generic [ref=e2059]:
+            - generic [ref=e2060]:
+              - heading "Elearnio" [level=3] [ref=e2061]
+              - paragraph [ref=e2062]: E-learning platform with English job opportunities
+              - generic [ref=e2063]: English Hiring Companies
+            - link "Visit Elearnio" [ref=e2064] [cursor=pointer]:
+              - /url: https://careers.elearnio.com/jobs/Careers
+              - img [ref=e2065]
+          - generic [ref=e2070]:
+            - generic [ref=e2071]:
+              - heading "Finmid" [level=3] [ref=e2072]
+              - paragraph [ref=e2073]: Financial services with English-speaking finance positions
+              - generic [ref=e2074]: English Hiring Companies
+            - link "Visit Finmid" [ref=e2075] [cursor=pointer]:
+              - /url: https://jobs.ashbyhq.com/finmid.com
+              - img [ref=e2076]
+          - generic [ref=e2081]:
+            - generic [ref=e2082]:
+              - heading "Finanztip" [level=3] [ref=e2083]
+              - paragraph [ref=e2084]: Financial advice platform with English job openings
+              - generic [ref=e2085]: English Hiring Companies
+            - link "Visit Finanztip" [ref=e2086] [cursor=pointer]:
+              - /url: https://finanztip.jobs.personio.de/
+              - img [ref=e2087]
+          - generic [ref=e2092]:
+            - generic [ref=e2093]:
+              - heading "FICUS" [level=3] [ref=e2094]
+              - paragraph [ref=e2095]: Healthcare platform with English engineering and product roles
+              - generic [ref=e2096]: English Hiring Companies
+            - link "Visit FICUS" [ref=e2097] [cursor=pointer]:
+              - /url: https://ficushealth.jobs.personio.com/
+              - img [ref=e2098]
+          - generic [ref=e2103]:
+            - generic [ref=e2104]:
+              - heading "Finoa" [level=3] [ref=e2105]
+              - paragraph [ref=e2106]: Digital asset custody with English-speaking opportunities
+              - generic [ref=e2107]: English Hiring Companies
+            - link "Visit Finoa" [ref=e2108] [cursor=pointer]:
+              - /url: https://finoa.jobs.personio.com/
+              - img [ref=e2109]
+          - generic [ref=e2114]:
+            - generic [ref=e2115]:
+              - heading "FION Energy" [level=3] [ref=e2116]
+              - paragraph [ref=e2117]: Energy technology company with English job opportunities
+              - generic [ref=e2118]: English Hiring Companies
+            - link "Visit FION Energy" [ref=e2119] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/fion-energy/jobs/
+              - img [ref=e2120]
+          - generic [ref=e2125]:
+            - generic [ref=e2126]:
+              - heading "goodcarbon" [level=3] [ref=e2127]
+              - paragraph [ref=e2128]: Carbon management platform with English sales and service roles
+              - generic [ref=e2129]: English Hiring Companies
+            - link "Visit goodcarbon" [ref=e2130] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/goodcarbon/jobs/
+              - img [ref=e2131]
+          - generic [ref=e2136]:
+            - generic [ref=e2137]:
+              - heading "GetYourGuide" [level=3] [ref=e2138]
+              - paragraph [ref=e2139]: Travel platform with international English job opportunities
+              - generic [ref=e2140]: English Hiring Companies
+            - link "Visit GetYourGuide" [ref=e2141] [cursor=pointer]:
+              - /url: https://www.getyourguide.careers/open-roles
+              - img [ref=e2142]
+          - generic [ref=e2147]:
+            - generic [ref=e2148]:
+              - heading "gematik" [level=3] [ref=e2149]
+              - paragraph [ref=e2150]: Digital health infrastructure with English-speaking positions
+              - generic [ref=e2151]: English Hiring Companies
+            - link "Visit gematik" [ref=e2152] [cursor=pointer]:
+              - /url: https://www.gematik.de/stellenangebote/stellenangebote.html
+              - img [ref=e2153]
+          - generic [ref=e2158]:
+            - generic [ref=e2159]:
+              - heading "JOIN" [level=3] [ref=e2160]
+              - paragraph [ref=e2161]: Recruitment platform with English job opportunities
+              - generic [ref=e2162]: English Hiring Companies
+            - link "Visit JOIN" [ref=e2163] [cursor=pointer]:
+              - /url: https://join.com/careers#openpositions
+              - img [ref=e2164]
+          - generic [ref=e2169]:
+            - generic [ref=e2170]:
+              - heading "Jungwild" [level=3] [ref=e2171]
+              - paragraph [ref=e2172]: Digital agency with English-speaking work environment
+              - generic [ref=e2173]: English Hiring Companies
+            - link "Visit Jungwild" [ref=e2174] [cursor=pointer]:
+              - /url: https://jungwild.io/jobs/
+              - img [ref=e2175]
+          - generic [ref=e2180]:
+            - generic [ref=e2181]:
+              - heading "JustWatch" [level=3] [ref=e2182]
+              - paragraph [ref=e2183]: Movie streaming search with English job openings
+              - generic [ref=e2184]: English Hiring Companies
+            - link "Visit JustWatch" [ref=e2185] [cursor=pointer]:
+              - /url: https://jobs.lever.co/justwatch
+              - img [ref=e2186]
+          - generic [ref=e2191]:
+            - generic [ref=e2192]:
+              - heading "ETERNO" [level=3] [ref=e2193]
+              - paragraph [ref=e2194]: Business services group with English-speaking opportunities
+              - generic [ref=e2195]: English Hiring Companies
+            - link "Visit ETERNO" [ref=e2196] [cursor=pointer]:
+              - /url: https://careers.eterno.group/en/jobs
+              - img [ref=e2197]
+          - generic [ref=e2202]:
+            - generic [ref=e2203]:
+              - heading "KAIKO Systems" [level=3] [ref=e2204]
+              - paragraph [ref=e2205]: Maritime technology with English job opportunities
+              - generic [ref=e2206]: English Hiring Companies
+            - link "Visit KAIKO Systems" [ref=e2207] [cursor=pointer]:
+              - /url: https://job-boards.eu.greenhouse.io/kaikosystems
+              - img [ref=e2208]
+          - generic [ref=e2213]:
+            - generic [ref=e2214]:
+              - heading "KAYAK" [level=3] [ref=e2215]
+              - paragraph [ref=e2216]: Travel search platform with English positions in Berlin
+              - generic [ref=e2217]: English Hiring Companies
+            - link "Visit KAYAK" [ref=e2218] [cursor=pointer]:
+              - /url: https://www.kayak.com/careers/berlin/all
+              - img [ref=e2219]
+          - generic [ref=e2224]:
+            - generic [ref=e2225]:
+              - heading "kertos" [level=3] [ref=e2226]
+              - paragraph [ref=e2227]: Data analytics platform with English job openings
+              - generic [ref=e2228]: English Hiring Companies
+            - link "Visit kertos" [ref=e2229] [cursor=pointer]:
+              - /url: https://www.kertos.io/en/jobs
+              - img [ref=e2230]
+          - generic [ref=e2235]:
+            - generic [ref=e2236]:
+              - heading "kiron" [level=3] [ref=e2237]
+              - paragraph [ref=e2238]: Educational nonprofit with English-speaking opportunities
+              - generic [ref=e2239]: English Hiring Companies
+            - link "Visit kiron" [ref=e2240] [cursor=pointer]:
+              - /url: https://www.kiron.ngo/careers#Positions
+              - img [ref=e2241]
+          - generic [ref=e2246]:
+            - generic [ref=e2247]:
+              - heading "kittl" [level=3] [ref=e2248]
+              - paragraph [ref=e2249]: Design platform with English job opportunities
+              - generic [ref=e2250]: English Hiring Companies
+            - link "Visit kittl" [ref=e2251] [cursor=pointer]:
+              - /url: https://jobs.ashbyhq.com/kittl
+              - img [ref=e2252]
+          - generic [ref=e2257]:
+            - generic [ref=e2258]:
+              - heading "KNIME" [level=3] [ref=e2259]
+              - paragraph [ref=e2260]: Data analytics platform with English-speaking positions
+              - generic [ref=e2261]: English Hiring Companies
+            - link "Visit KNIME" [ref=e2262] [cursor=pointer]:
+              - /url: https://knime.jobs.personio.de/
+              - img [ref=e2263]
+          - generic [ref=e2268]:
+            - generic [ref=e2269]:
+              - heading "Knowunity" [level=3] [ref=e2270]
+              - paragraph [ref=e2271]: Educational platform with English job opportunities
+              - generic [ref=e2272]: English Hiring Companies
+            - link "Visit Knowunity" [ref=e2273] [cursor=pointer]:
+              - /url: https://jobs.ashbyhq.com/knowunity
+              - img [ref=e2274]
+          - generic [ref=e2279]:
+            - generic [ref=e2280]:
+              - heading "Formo" [level=3] [ref=e2281]
+              - paragraph [ref=e2282]: Food technology company with English-speaking roles
+              - generic [ref=e2283]: English Hiring Companies
+            - link "Visit Formo" [ref=e2284] [cursor=pointer]:
+              - /url: https://eatformo.com/work/
+              - img [ref=e2285]
+          - generic [ref=e2290]:
+            - generic [ref=e2291]:
+              - heading "Forto" [level=3] [ref=e2292]
+              - paragraph [ref=e2293]: Digital freight platform with English job opportunities
+              - generic [ref=e2294]: English Hiring Companies
+            - link "Visit Forto" [ref=e2295] [cursor=pointer]:
+              - /url: https://careers.forto.com/forto-jobs/
+              - img [ref=e2296]
+          - generic [ref=e2301]:
+            - generic [ref=e2302]:
+              - heading "FREE NOW" [level=3] [ref=e2303]
+              - paragraph [ref=e2304]: Mobility platform with English positions across Europe
+              - generic [ref=e2305]: English Hiring Companies
+            - link "Visit FREE NOW" [ref=e2306] [cursor=pointer]:
+              - /url: https://job-boards.greenhouse.io/freenow
+              - img [ref=e2307]
+          - generic [ref=e2312]:
+            - generic [ref=e2313]:
+              - heading "Friendsurance" [level=3] [ref=e2314]
+              - paragraph [ref=e2315]: Digital insurance with English-speaking opportunities
+              - generic [ref=e2316]: English Hiring Companies
+            - link "Visit Friendsurance" [ref=e2317] [cursor=pointer]:
+              - /url: https://www.friendsurance.com/en/careers/
+              - img [ref=e2318]
+          - generic [ref=e2323]:
+            - generic [ref=e2324]:
+              - heading "FUNKE" [level=3] [ref=e2325]
+              - paragraph [ref=e2326]: Media group with English job opportunities
+              - generic [ref=e2327]: English Hiring Companies
+            - link "Visit FUNKE" [ref=e2328] [cursor=pointer]:
+              - /url: https://karriere.funkemedien.de/de/
+              - img [ref=e2329]
+          - generic [ref=e2334]:
+            - generic [ref=e2335]:
+              - heading "LucaNet" [level=3] [ref=e2336]
+              - paragraph [ref=e2337]: Financial software with English-speaking positions
+              - generic [ref=e2338]: English Hiring Companies
+            - link "Visit LucaNet" [ref=e2339] [cursor=pointer]:
+              - /url: https://www.lucanet.com/en/careers/jobs/
+              - img [ref=e2340]
+          - generic [ref=e2345]:
+            - generic [ref=e2346]:
+              - heading "Logistica OS" [level=3] [ref=e2347]
+              - paragraph [ref=e2348]: Logistics platform with English job opportunities
+              - generic [ref=e2349]: English Hiring Companies
+            - link "Visit Logistica OS" [ref=e2350] [cursor=pointer]:
+              - /url: https://join.com/companies/logistica-oscom
+              - img [ref=e2351]
+          - generic [ref=e2356]:
+            - generic [ref=e2357]:
+              - heading "Metiundo" [level=3] [ref=e2358]
+              - paragraph [ref=e2359]: Property technology with English-speaking roles
+              - generic [ref=e2360]: English Hiring Companies
+            - link "Visit Metiundo" [ref=e2361] [cursor=pointer]:
+              - /url: https://jobs.metiundo.io/eng
+              - img [ref=e2362]
+          - generic [ref=e2367]:
+            - generic [ref=e2368]:
+              - heading "Merantix" [level=3] [ref=e2369]
+              - paragraph [ref=e2370]: AI venture studio with English job opportunities
+              - generic [ref=e2371]: English Hiring Companies
+            - link "Visit Merantix" [ref=e2372] [cursor=pointer]:
+              - /url: https://careers.merantix.com/companies/deltia-2
+              - img [ref=e2373]
+          - generic [ref=e2378]:
+            - generic [ref=e2379]:
+              - heading "Mercanis" [level=3] [ref=e2380]
+              - paragraph [ref=e2381]: Supply chain platform with English-speaking positions
+              - generic [ref=e2382]: English Hiring Companies
+            - link "Visit Mercanis" [ref=e2383] [cursor=pointer]:
+              - /url: https://mercanis.jobs.personio.de/
+              - img [ref=e2384]
+          - generic [ref=e2389]:
+            - generic [ref=e2390]:
+              - heading "mgm-tp" [level=3] [ref=e2391]
+              - paragraph [ref=e2392]: Technology consulting with English job opportunities
+              - generic [ref=e2393]: English Hiring Companies
+            - link "Visit mgm-tp" [ref=e2394] [cursor=pointer]:
+              - /url: https://jobs.mgm-tp.com/
+              - img [ref=e2395]
+          - generic [ref=e2400]:
+            - generic [ref=e2401]:
+              - heading "Mindspace" [level=3] [ref=e2402]
+              - paragraph [ref=e2403]: Coworking spaces with English-speaking opportunities
+              - generic [ref=e2404]: English Hiring Companies
+            - link "Visit Mindspace" [ref=e2405] [cursor=pointer]:
+              - /url: https://www.mindspace.me/careers/
+              - img [ref=e2406]
+          - generic [ref=e2411]:
+            - generic [ref=e2412]:
+              - heading "Needle" [level=3] [ref=e2413]
+              - paragraph [ref=e2414]: Customer service platform with English sales and service roles
+              - generic [ref=e2415]: English Hiring Companies
+            - link "Visit Needle" [ref=e2416] [cursor=pointer]:
+              - /url: https://needle.app/careers
+              - img [ref=e2417]
+          - generic [ref=e2422]:
+            - generic [ref=e2423]:
+              - heading "Peec AI" [level=3] [ref=e2424]
+              - paragraph [ref=e2425]: AI technology company with English job opportunities
+              - generic [ref=e2426]: English Hiring Companies
+            - link "Visit Peec AI" [ref=e2427] [cursor=pointer]:
+              - /url: https://peec.ai/careers
+              - img [ref=e2428]
+          - generic [ref=e2433]:
+            - generic [ref=e2434]:
+              - heading "pplwise" [level=3] [ref=e2435]
+              - paragraph [ref=e2436]: HR analytics platform with English-speaking positions
+              - generic [ref=e2437]: English Hiring Companies
+            - link "Visit pplwise" [ref=e2438] [cursor=pointer]:
+              - /url: https://pplwise.com/career/
+              - img [ref=e2439]
+          - generic [ref=e2444]:
+            - generic [ref=e2445]:
+              - heading "ppro" [level=3] [ref=e2446]
+              - paragraph [ref=e2447]: Payment technology with English job opportunities
+              - generic [ref=e2448]: English Hiring Companies
+            - link "Visit ppro" [ref=e2449] [cursor=pointer]:
+              - /url: https://www.ppro.com/about-us/careers/
+              - img [ref=e2450]
+          - generic [ref=e2455]:
+            - generic [ref=e2456]:
+              - heading "Purpose Green" [level=3] [ref=e2457]
+              - paragraph [ref=e2458]: Sustainable business solutions with English-speaking roles
+              - generic [ref=e2459]: English Hiring Companies
+            - link "Visit Purpose Green" [ref=e2460] [cursor=pointer]:
+              - /url: https://purpose-green.jobs.personio.de/
+              - img [ref=e2461]
+        - generic [ref=e2465]:
+          - paragraph [ref=e2466]: 150 Recruitment Agencies in Germany with Short Descriptions
+          - paragraph [ref=e2467]:
+            - text: by
+            - link "Umut Barış Terzioğlu" [ref=e2468] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/ubterzioglu/
+      - generic [ref=e2471]:
+        - heading "İş İlanı Paylaşın" [level=2] [ref=e2472]
+        - paragraph [ref=e2473]: Şirketinizde açık pozisyonlar var mı? Türk topluluğuna ulaşmak için iş ilanınızı bizimle paylaşın.
+        - generic [ref=e2474]:
+          - link "İş İlanı Ekle" [ref=e2475] [cursor=pointer]:
+            - /url: "#contact"
+          - link "İletişime Geçin" [ref=e2476] [cursor=pointer]:
+            - /url: /iletisim
+  - contentinfo [ref=e2477]:
+    - generic [ref=e2479]:
+      - paragraph [ref=e2480]: yalnız değilsin! almanya101 seninle!
+      - paragraph [ref=e2481]:
+        - link "Seo Aracı" [ref=e2482] [cursor=pointer]:
+          - /url: https://www.spindorai.com
+        - text: ve Seo Hizmetleri Spindora

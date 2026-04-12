@@ -4,1430 +4,1430 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
   {
     name: 'DIA-AG',
     url: 'https://dia-ag.com',
-    description: 'Executive search & HR consulting',
+    description: 'Üst düzey yönetici arama & İK danışmanlığı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Randstad',
     url: 'https://randstad.de',
-    description: 'Global staffing & temp solutions',
+    description: 'Küresel personel & geçici çalışan çözümleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'ManpowerGroup',
     url: 'https://manpower.de',
-    description: 'Workforce solutions & talent placement',
+    description: 'İşgücü çözümleri & yetenek yerleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'JobBasel',
     url: 'https://jobbasel.com',
-    description: 'Job board & career portal',
+    description: 'İş ilanları & kariyer portalı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Michael Page',
     url: 'https://michaelpage.de',
-    description: 'Professional & leadership recruitment',
+    description: 'Profesyonel & liderlik kadrosu işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Hays',
     url: 'https://hays.de',
-    description: 'Specialist recruitment across industries',
+    description: 'Sektörler arası uzman işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Gi Group',
     url: 'https://de.gigroup.com',
-    description: 'Gi Group staffing & HR services',
+    description: 'Gi Group personel & İK hizmetleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Page Personnel',
     url: 'https://pagepersonnel.de',
-    description: 'Junior & mid-level talent placement',
+    description: 'Junior & orta kademe yetenek yerleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Progress Professionals',
     url: 'https://progressprofessionals.de',
-    description: 'Finance & legal recruitment',
+    description: 'Finans & hukuk işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Adecco',
     url: 'https://adecco.de',
-    description: 'Temporary & permanent hiring',
+    description: 'Geçici & kalıcı işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Brunel',
     url: 'https://brunel.net/de-de',
-    description: 'Engineering & technical staffing',
+    description: 'Mühendislik & teknik personel',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Experts & Talents',
     url: 'https://experts-talents.de',
-    description: 'Expert-level professional matching',
+    description: 'Uzman düzeyinde profesyonel eşleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'GULP',
     url: 'https://gulp.de',
-    description: 'Freelancer & project staffing',
+    description: 'Freelance & proje personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Kontrast',
     url: 'https://kontrast-gmbh.de',
-    description: 'IT & digital recruitment',
+    description: 'BT & dijital işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Robert Half',
     url: 'https://roberthalf.com/de',
-    description: 'Finance, admin & tech roles',
+    description: 'Finans, idari & teknoloji pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Kelly Services',
     url: 'https://kelly-services.de',
-    description: 'Flexible workforce & staffing',
+    description: 'Esnek iş gücü & personel',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Engaged Company',
     url: 'https://engaged-company.com',
-    description: 'HR consulting & talent strategy',
+    description: 'İK danışmanlığı & yetenek stratejisi',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Frankfurt Fitch',
     url: 'https://frankfurtfitch.com/de',
-    description: 'Executive search & leadership hiring',
+    description: 'Üst düzey yönetici arama & liderlik işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Ratbacher',
     url: 'https://ratbacher.de',
-    description: 'Senior management & board search',
+    description: 'Üst yönetim & yönetim kurulu araması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Optimise Search',
     url: 'https://optimisesearch.com',
-    description: 'Executive & specialist recruitment',
+    description: 'Yönetici & uzman işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'K Resources',
     url: 'https://kresources.com',
-    description: 'Tech & IT staffing',
+    description: 'Teknoloji & BT personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Academic Work',
     url: 'https://academicwork.de',
-    description: 'Nordic-German academic & professional roles',
+    description: 'İskandinav-Alman akademik & profesyonel pozisyonlar',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'get-in-IT',
     url: 'https://get-in-it.de',
-    description: 'IT & software job platform',
+    description: 'BT & yazılım iş platformu',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Robert Walters',
     url: 'https://robertwalters.de',
-    description: 'International professional recruitment',
+    description: 'Uluslararası profesyonel işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'SHREE',
     url: 'https://shree.com/de-de',
-    description: 'SAP & IT consulting staffing',
+    description: 'SAP & BT danışmanlık personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'WeMatch',
     url: 'https://wematch.de',
-    description: 'Tech & digital talent matching',
+    description: 'Teknoloji & dijital yetenek eşleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'TA Management',
     url: 'https://ta-management.de',
-    description: 'Interim management & HR consulting',
+    description: 'Geçici yönetim & İK danışmanlığı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Grafton',
     url: 'https://de.grafton.com',
-    description: 'Multisector recruitment agency',
+    description: 'Çok sektörlü işe alım ajansı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: '4 Chill Consulting',
     url: 'https://4chillconsulting.de',
-    description: 'IT & project staffing',
+    description: 'BT & proje personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'HeadMatch',
     url: 'https://headmatch.de',
-    description: 'Executive & leadership search',
+    description: 'Yönetici & liderlik araması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'IHH Healthcare',
     url: 'https://ihh.com/de',
-    description: 'Healthcare & medical recruitment',
+    description: 'Sağlık & tıbbi işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Solua',
     url: 'https://solua.com',
-    description: 'International HR & talent solutions',
+    description: 'Uluslararası İK & yetenek çözümleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Perm4',
     url: 'https://perm4.com',
-    description: 'Permanent tech & finance roles',
+    description: 'Kalıcı teknoloji & finans pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Vires Consulting',
     url: 'https://viresconsulting.com',
-    description: 'Life sciences & pharma staffing',
+    description: 'Yaşam bilimleri & ilaç personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Skallbach',
     url: 'https://skallbach.de',
-    description: 'Executive search & HR advisory',
+    description: 'Yönetici arama & İK danışmanlığı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'TechPunk',
     url: 'https://techpunk.com',
-    description: 'IT & startup tech hiring',
+    description: 'BT & girişim teknolojisi işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Ignite SAP',
     url: 'https://ignitesap.com',
-    description: 'SAP specialist recruitment',
+    description: 'SAP uzmanı işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Antal International',
     url: 'https://antal.com',
-    description: 'Global specialist recruitment firm',
+    description: 'Küresel uzman işe alım firması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Progressive Recruitment',
     url: 'https://progressive-recruitment.de',
-    description: 'Engineering & energy staffing',
+    description: 'Mühendislik & enerji personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'ISG',
     url: 'https://isg.com/de',
-    description: 'Executive search & leadership advisory',
+    description: 'Yönetici arama & liderlik danışmanlığı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Linking Talents',
     url: 'https://linkingtalents.de',
-    description: 'Tech & digital recruitment',
+    description: 'Teknoloji & dijital işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Noir Consulting',
     url: 'https://noirconsulting.co.uk',
-    description: 'Tech & cybersecurity staffing',
+    description: 'Teknoloji & siber güvenlik personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Amore Bond',
     url: 'https://amorebond.com/de',
-    description: 'Executive & board-level search',
+    description: 'Yönetici & yönetim kurulu düzeyinde arama',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Ital Staffing',
     url: 'https://italstaffing.com/de-de',
-    description: 'Bilingual & international staffing',
+    description: 'İki dilli & uluslararası personel',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Green Recruitment Company',
     url: 'https://greenrecruitmentcompany.com',
-    description: 'Energy & sustainability roles',
+    description: 'Enerji & sürdürülebilirlik pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Mason Frank',
     url: 'https://masonfrank.com',
-    description: 'Salesforce & cloud specialists',
+    description: 'Salesforce & bulut uzmanları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Coamos',
     url: 'https://coamos.de',
-    description: 'Digital & creative talent',
+    description: 'Dijital & yaratıcı yetenek',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'OXIN',
     url: 'https://weareoxin.com',
-    description: 'Tech & transformation staffing',
+    description: 'Teknoloji & dönüşüm personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Design Deck',
     url: 'https://designdeck.com',
-    description: 'Creative & design recruitment',
+    description: 'Yaratıcı & tasarım işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Goodman Masson',
     url: 'https://goodmanmasson.de',
-    description: 'Finance & risk professionals',
+    description: 'Finans & risk profesyonelleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'G2 Recruitment',
     url: 'https://g2recruitment.com',
-    description: 'Energy & engineering specialists',
+    description: 'Enerji & mühendislik uzmanları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Radial Bud',
     url: 'https://radialbud.de',
-    description: 'Interim & project staffing',
+    description: 'Geçici & proje personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Mercuri Urval',
     url: 'https://mercuriurval.com/de-de',
-    description: 'Leadership assessment & search',
+    description: 'Liderlik değerlendirme & arama',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Emplion',
     url: 'https://emplion.de',
-    description: 'HR tech & talent platform',
+    description: 'İK teknolojisi & yetenek platformu',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'PMS',
     url: 'https://pms.de',
-    description: 'Personnel & management solutions',
+    description: 'Personel & yönetim çözümleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'LEW Group',
     url: 'https://lewgroup.com',
-    description: 'Sales, marketing & finance roles',
+    description: 'Satış, pazarlama & finans pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Valiy One',
     url: 'https://valiyone.com',
-    description: 'Digital transformation & IT hiring',
+    description: 'Dijital dönüşüm & BT işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Morgan McKinley',
     url: 'https://de.morganmckinley.com',
-    description: 'Finance & professional services',
+    description: 'Finans & profesyonel hizmetler',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Aventis Group',
     url: 'https://aventisgroup.com',
-    description: 'Life sciences & medtech talent',
+    description: 'Yaşam bilimleri & medikal teknoloji yeteneği',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Darwin Recruitment',
     url: 'https://darwinrecruitment.com',
-    description: 'Tech & data specialists',
+    description: 'Teknoloji & veri uzmanları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Zabel Global',
     url: 'https://zabelglobal.com',
-    description: 'International executive search',
+    description: 'Uluslararası yönetici araması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Page Executive',
     url: 'https://pageexecutive.com',
-    description: 'C-level & board recruitment',
+    description: 'C seviyesi & yönetim kurulu işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'HIT Consulting',
     url: 'https://wearehitconsulting.com',
-    description: 'Digital & IT staffing',
+    description: 'Dijital & BT personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Aristo Group',
     url: 'https://aristo-group.com',
-    description: 'Finance & interim management',
+    description: 'Finans & geçici yönetim',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'SGEN CIS',
     url: 'https://sgencis.de',
-    description: 'Tech & project recruitment',
+    description: 'Teknoloji & proje işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Konnekt',
     url: 'https://konnekt.net',
-    description: 'Malta-based, global staffing',
+    description: 'Malta merkezli küresel personel',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'IC Resources',
     url: 'https://ic-resources.com/de',
-    description: 'Semiconductor & electronics staffing',
+    description: 'Yarı iletken & elektronik personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Kooku',
     url: 'https://kooku.de',
-    description: 'HR tech & job matching',
+    description: 'İK teknolojisi & iş eşleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Taylor Hopkinson',
     url: 'https://taylorhopkinson.com',
-    description: 'Renewable energy recruitment',
+    description: 'Yenilenebilir enerji işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Trans Personal Group',
     url: 'https://transpersonalgroup.co.uk',
-    description: 'Tech & transformation roles',
+    description: 'Teknoloji & dönüşüm pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'ALSES',
     url: 'https://alses.sk',
-    description: 'Central European IT staffing',
+    description: 'Orta Avrupa BT personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Xelentia',
     url: 'https://xelentia.com',
-    description: 'Finance & fintech talent',
+    description: 'Finans & fintech yeteneği',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Evolutionary Cyber Solutions',
     url: 'https://evolutionarycybersolutions.com',
-    description: 'Cybersecurity & IT staffing',
+    description: 'Siber güvenlik & BT personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Precision ICT',
     url: 'https://precisionict.com',
-    description: 'ICT & infrastructure specialists',
+    description: 'BİT & altyapı uzmanları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Press Link Services',
     url: 'https://presslinkservices.com',
-    description: 'Media & press staffing',
+    description: 'Medya & basın personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Locke Staffing',
     url: 'https://locke-staffing.com',
-    description: 'US-German bilingual recruitment',
+    description: 'ABD-Alman iki dilli işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Harvey Nash',
     url: 'https://harveynash.de',
-    description: 'Tech, digital & leadership roles',
+    description: 'Teknoloji, dijital & liderlik pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Approach People',
     url: 'https://approachpeople.com',
-    description: 'Multilingual & EU staffing',
+    description: 'Çok dilli & AB personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Recruiting Evolution',
     url: 'https://recruitingevolution.de',
-    description: 'HR innovation & talent',
+    description: 'İK inovasyonu & yetenek',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'UI Staffing',
     url: 'https://uistaffing.de',
-    description: 'UI/UX & design talent',
+    description: 'UI/UX & tasarım yeteneği',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Senasis Group',
     url: 'https://senasis.group.de',
-    description: 'Tech & engineering staffing',
+    description: 'Teknoloji & mühendislik personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'IQ Talent Partners',
     url: 'https://iqtalentpartners.com',
-    description: 'Tech & startup recruitment',
+    description: 'Teknoloji & girişim işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Discover International',
     url: 'https://discoverinternational.com',
-    description: 'Global bilingual recruitment',
+    description: 'Küresel iki dilli işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Etengo',
     url: 'https://etengo.de',
-    description: 'Interim & freelance experts',
+    description: 'Geçici & serbest uzmanlar',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Euro Job Consult',
     url: 'https://eurojobconsult.com',
-    description: 'Multilingual European job portal',
+    description: 'Çok dilli Avrupa iş portalı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'M2 Talents',
     url: 'https://m2talents.com',
-    description: 'Sales & marketing staffing',
+    description: 'Satış & pazarlama personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Data Talent',
     url: 'https://data-talent.de',
-    description: 'Data science & analytics roles',
+    description: 'Veri bilimi & analitik pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Brink Holding',
     url: 'https://brink-holding.com',
-    description: 'Executive & finance search',
+    description: 'Yönetici & finans araması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Opus RS',
     url: 'https://opusrs.com',
-    description: 'Recruitment process outsourcing',
+    description: 'İşe alım süreci dış kaynak kullanımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Alpha Consult Gruppe',
     url: 'https://alphaconsultgruppe.org',
-    description: 'HR consulting & placement',
+    description: 'İK danışmanlığı & yerleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Search Talent',
     url: 'https://searchtalent.de',
-    description: 'Executive & niche recruitment',
+    description: 'Yönetici & niş işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'LP Associates',
     url: 'https://lpassociates.com',
-    description: 'Finance & legal staffing',
+    description: 'Finans & hukuk personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Hardenberg Group',
     url: 'https://hardenberegroupllc.com',
-    description: 'US-German executive search',
+    description: 'ABD-Alman yönetici araması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'IT Workforce',
     url: 'https://itworkforce.de',
-    description: 'IT & tech staffing',
+    description: 'BT & teknoloji personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Schulmeister Consulting',
     url: 'https://schulmeistereconsulting.com/de',
-    description: 'HR & interim management',
+    description: 'İK & geçici yönetim',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Skill Recruit',
     url: 'https://skillrecruit.com',
-    description: 'Skilled trades & tech roles',
+    description: 'Nitelikli meslek & teknoloji pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Division One',
     url: 'https://division-one.ch',
-    description: 'Swiss-German finance recruitment',
+    description: 'İsviçre-Alman finans işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'JAC Group',
     url: 'https://jacgroup.com',
-    description: 'Global talent solutions',
+    description: 'Küresel yetenek çözümleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'TON HR Evolution',
     url: 'https://tonhrevolution.com',
-    description: 'Creative & digital staffing',
+    description: 'Yaratıcı & dijital personel',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Expert Scout',
     url: 'https://expertscout.com',
-    description: 'Executive & expert matching',
+    description: 'Yönetici & uzman eşleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'K Recruiting',
     url: 'https://k-recruiting.com',
-    description: 'Tech & engineering roles',
+    description: 'Teknoloji & mühendislik pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Future Select Consult',
     url: 'https://futureselectconsult.de',
-    description: 'Future-focused talent solutions',
+    description: 'Geleceğe yönelik yetenek çözümleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'LRC',
     url: 'https://lrcgmbh.de',
-    description: 'Legal & compliance recruitment',
+    description: 'Hukuk & uyum işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'TheQS Consulting',
     url: 'https://theqs-consulting.de',
-    description: 'Quality & regulatory staffing',
+    description: 'Kalite & mevzuat uyum personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Constares',
     url: 'https://constares.de',
-    description: 'Tech & transformation hiring',
+    description: 'Teknoloji & dönüşüm işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Market Expanded',
     url: 'https://marketexpanded.de',
-    description: 'Sales & marketing talent',
+    description: 'Satış & pazarlama yeteneği',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Klug Executive Search',
     url: 'https://klug-executivesearch.de',
-    description: 'Executive & leadership search',
+    description: 'Yönetici & liderlik araması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Private Personal',
     url: 'https://privatepersonal.de',
-    description: 'Personal & household staffing',
+    description: 'Bireysel & ev personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Morgan Philips',
     url: 'https://morganphilips.com',
-    description: 'Global executive search',
+    description: 'Küresel yönetici araması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Spencer Ogden',
     url: 'https://spencer-ogden.com',
-    description: 'Energy & infrastructure roles',
+    description: 'Enerji & altyapı pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Skills Alliance',
     url: 'https://skillsalliance.com',
-    description: 'Tech & digital staffing',
+    description: 'Teknoloji & dijital personel',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'SCRO Global',
     url: 'https://scroglobbal.com',
-    description: 'Global recruitment solutions',
+    description: 'Küresel işe alım çözümleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'eBlue Net',
     url: 'https://eblue-net.de',
-    description: 'IT & network specialists',
+    description: 'BT & ağ uzmanları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'DA Connection',
     url: 'https://daconnection.de',
-    description: 'Bilingual & international staffing',
+    description: 'İki dilli & uluslararası personel',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Optimize Exe',
     url: 'https://optimizeexe.com',
-    description: 'Executive & interim leadership',
+    description: 'Yönetici & geçici liderlik',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Veredus Consulting',
     url: 'https://veredusconsulting.com',
-    description: 'Tech & healthcare staffing',
+    description: 'Teknoloji & sağlık personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'HR Recruitment',
     url: 'https://hr-recruitment.de',
-    description: 'General HR & staffing',
+    description: 'Genel İK & personel',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Intention Business',
     url: 'https://intentionbusiness.com',
-    description: 'Business & HR consulting',
+    description: 'İş & İK danışmanlığı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Digital Waffle',
     url: 'https://digitalwaffle.co.uk',
-    description: 'Digital & creative talent',
+    description: 'Dijital & yaratıcı yetenek',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'WeMe',
     url: 'https://weme.de',
-    description: 'Personalized job matching',
+    description: 'Kişiselleştirilmiş iş eşleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'One Hiring',
     url: 'https://onehiring.com/de',
-    description: 'Tech & startup recruitment',
+    description: 'Teknoloji & girişim işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Quantum Consultancy',
     url: 'https://quantum-consultancy.com',
-    description: 'IT & project staffing',
+    description: 'BT & proje personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Progress Association',
     url: 'https://progressassociation.de',
-    description: 'Professional & association roles',
+    description: 'Profesyonel & dernek pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Pack TM',
     url: 'https://packtm.com',
-    description: 'E-commerce & logistics staffing',
+    description: 'E-ticaret & lojistik personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Evolve Ltd',
     url: 'https://evolve-ltd.co.uk',
-    description: 'Tech & transformation roles',
+    description: 'Teknoloji & dönüşüm pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Career Factory',
     url: 'https://career-factory.eu',
-    description: 'Career coaching & jobs',
+    description: 'Kariyer koçluğu & iş ilanları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Medicopec',
     url: 'https://medicopec.mk',
-    description: 'Medical & healthcare staffing',
+    description: 'Tıbbi & sağlık personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'NXT Hero',
     url: 'https://nxt-hero.com',
-    description: 'Digital & gaming talent',
+    description: 'Dijital & oyun yeteneği',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Intelligent People',
     url: 'https://intelligentpeople.com',
-    description: 'Creative & marketing staffing',
+    description: 'Yaratıcı & pazarlama personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Evolve Talent',
     url: 'https://evolvetalent.eu',
-    description: 'Tech & digital recruitment',
+    description: 'Teknoloji & dijital işe alım',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'ITS Jobs We R Online',
     url: 'https://itsjobswereonline.com',
-    description: 'IT job board',
+    description: 'BT iş ilanları platformu',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Joanne Hart',
     url: 'https://joannehart.co.uk',
-    description: 'Admin & support staffing',
+    description: 'İdari & destek personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Rizer Recruitment',
     url: 'https://rizerrecruitment.com',
-    description: 'Tech & niche roles',
+    description: 'Teknoloji & niş pozisyonlar',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Consultason',
     url: 'https://consultason.de',
-    description: 'HR & interim consulting',
+    description: 'İK & geçici danışmanlık',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Infotech Recruitment',
     url: 'https://infotechrecruitment.com',
-    description: 'IT & software specialists',
+    description: 'BT & yazılım uzmanları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Makk Rohr',
     url: 'https://makkrohr.com',
-    description: 'German-speaking tech staffing',
+    description: 'Almanca konuşan teknoloji personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Viru Sourcing',
     url: 'https://virusourcing.com',
-    description: 'IT & digital outsourcing',
+    description: 'BT & dijital dış kaynak kullanımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Hiber Roy Consultants',
     url: 'https://hiberlin-royconsultants.de',
-    description: 'Executive & HR consulting',
+    description: 'Yönetici & İK danışmanlığı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Medipoint',
     url: 'https://medipointag.ch',
-    description: 'Medical & life sciences',
+    description: 'Tıbbi & yaşam bilimleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Essmann Beratung',
     url: 'https://essmann-beratung.de',
-    description: 'HR & leadership consulting',
+    description: 'İK & liderlik danışmanlığı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'ERSG Global',
     url: 'https://ersg-global.com',
-    description: 'Energy & engineering staffing',
+    description: 'Enerji & mühendislik personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'ISIS Technical',
     url: 'https://isistechnical.co.uk',
-    description: 'Technical & engineering roles',
+    description: 'Teknik & mühendislik pozisyonları',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Fortech Consulting',
     url: 'https://fortechconsulting.de',
-    description: 'IT & engineering staffing',
+    description: 'BT & mühendislik personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Talentania',
     url: 'https://talentania.de',
-    description: 'Talent acquisition platform',
+    description: 'Yetenek kazanım platformu',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Career People',
     url: 'https://careerpeople.com',
-    description: 'Sales, marketing & tech jobs',
+    description: 'Satış, pazarlama & teknoloji işleri',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Tech Global',
     url: 'https://techglobal.com',
-    description: 'Global tech recruitment',
+    description: 'Küresel teknoloji işe alımı',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Pantheon Recruitment',
     url: 'https://pantheon-recruitment.de',
-    description: 'Executive & specialist search',
+    description: 'Yönetici & uzman araması',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Spartacus IT',
     url: 'https://spartacusit.nl',
-    description: 'Dutch-German IT staffing',
+    description: 'Hollanda-Alman BT personeli',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'MaxMatch',
     url: 'https://maxmatch.de',
-    description: 'AI-powered job matching',
+    description: 'Yapay zeka destekli iş eşleştirme',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
   {
     name: 'Zync Group',
     url: 'https://zyncgroup.com',
-    description: 'Tech & digital talent',
+    description: 'Teknoloji & dijital yetenek',
     status: 'active',
-    category: 'Recruitment Agencies'
+    category: 'İş Bulma Ajansları'
   },
-  // English-speaking companies in Germany
+  // İngilizce iş ilanları veren şirketler
   {
     name: 'About You',
     url: 'https://corporate.aboutyou.de/de/career/our-jobs',
-    description: 'E-commerce fashion platform with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan e-ticaret moda platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Accenture',
     url: 'https://www.accenture.com/de-de/careers/jobsearch',
-    description: 'Global consulting with English-speaking positions in Berlin',
+    description: 'Berlin\'de İngilizce konuşulan pozisyonlar sunan küresel danışmanlık firması',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Accountable',
     url: 'https://join.com/companies/accountable',
-    description: 'Financial services startup with English job openings',
+    description: 'İngilizce iş ilanları sunan finans hizmetleri girişimi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Acemate.ai',
     url: 'https://join.com/companies/acemate',
-    description: 'AI-powered platform offering English-speaking roles',
+    description: 'İngilizce pozisyonlar sunan yapay zeka destekli platform',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Babbel',
     url: 'https://jobs.babbel.com/en/',
-    description: 'Language learning platform with international team opportunities',
+    description: 'Uluslararası ekip fırsatları sunan dil öğrenme platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Personio',
     url: 'https://www.personio.com/about-personio/careers/',
-    description: 'HR software company with English-speaking work environment',
+    description: 'İngilizce çalışma ortamına sahip İK yazılım şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Banxware',
     url: 'https://www.banxware.com/careers',
-    description: 'Fintech startup offering English job opportunities',
+    description: 'İngilizce iş fırsatları sunan fintech girişimi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'BASF',
     url: 'https://basf.jobs/',
-    description: 'Chemical industry leader with international English positions',
+    description: 'Uluslararası İngilizce pozisyonlara sahip kimya sektörü lideri',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'BearingPoint',
     url: 'https://www.bearingpoint.com/en/careers/open-roles/',
-    description: 'Management consulting with English-speaking opportunities',
+    description: 'İngilizce konuşulan fırsatlar sunan yönetim danışmanlığı',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Bettermile',
     url: 'https://bettermile.com/careers/',
-    description: 'Logistics optimization platform with English job openings',
+    description: 'İngilizce iş açıklamaları sunan lojistik optimizasyon platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Carbon One',
     url: 'https://www.carbon.one/#jobs',
-    description: 'Carbon management startup with English-speaking roles',
+    description: 'İngilizce pozisyonlar sunan karbon yönetimi girişimi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Caidera',
     url: 'https://www.caidera.ai/de/karriere',
-    description: 'AI technology company offering English job opportunities',
+    description: 'İngilizce iş fırsatları sunan yapay zeka teknoloji şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Calima',
     url: 'https://www.calima.io/jobs',
-    description: 'Clean energy platform with English-speaking positions',
+    description: 'İngilizce konuşulan pozisyonlara sahip temiz enerji platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Canva',
     url: 'https://www.lifeatcanva.com/en/jobs/',
-    description: 'Design platform with international English job opportunities',
+    description: 'Uluslararası İngilizce iş fırsatları sunan tasarım platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Caresyntax',
     url: 'https://www.linkedin.com/company/caresyntax/',
-    description: 'Healthcare AI company with English-speaking opportunities',
+    description: 'İngilizce fırsatlar sunan sağlık alanında yapay zeka şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Cloover',
     url: 'https://cloover.notion.site/Join-us-Cloover-73ec11a2660748ecb6b66be87c10d4b8',
-    description: 'Clean technology startup offering English job openings',
+    description: 'İngilizce iş ilanları sunan temiz teknoloji girişimi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Claire',
     url: 'https://clareandme.notion.site/Clare-needs-YOU-3acc2ce1815d402c8c6c6ea0ca5e3fd9',
-    description: 'Digital assistant platform with English-speaking roles',
+    description: 'İngilizce pozisyonlar sunan dijital asistan platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Elearnio',
     url: 'https://careers.elearnio.com/jobs/Careers',
-    description: 'E-learning platform with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan e-öğrenim platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Finmid',
     url: 'https://jobs.ashbyhq.com/finmid.com',
-    description: 'Financial services with English-speaking finance positions',
+    description: 'İngilizce konuşulan finans pozisyonlarına sahip finans hizmetleri',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Finanztip',
     url: 'https://finanztip.jobs.personio.de/',
-    description: 'Financial advice platform with English job openings',
+    description: 'İngilizce iş ilanları sunan finansal tavsiye platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'FICUS',
     url: 'https://ficushealth.jobs.personio.com/',
-    description: 'Healthcare platform with English engineering and product roles',
+    description: 'İngilizce mühendislik ve ürün pozisyonlarına sahip sağlık platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Finoa',
     url: 'https://finoa.jobs.personio.com/',
-    description: 'Digital asset custody with English-speaking opportunities',
+    description: 'İngilizce fırsatlar sunan dijital varlık saklama hizmeti',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'FION Energy',
     url: 'https://www.linkedin.com/company/fion-energy/jobs/',
-    description: 'Energy technology company with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan enerji teknolojisi şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'goodcarbon',
     url: 'https://www.linkedin.com/company/goodcarbon/jobs/',
-    description: 'Carbon management platform with English sales and service roles',
+    description: 'İngilizce satış ve hizmet pozisyonlarına sahip karbon yönetimi platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'GetYourGuide',
     url: 'https://www.getyourguide.careers/open-roles',
-    description: 'Travel platform with international English job opportunities',
+    description: 'Uluslararası İngilizce iş fırsatları sunan seyahat platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'gematik',
     url: 'https://www.gematik.de/stellenangebote/stellenangebote.html',
-    description: 'Digital health infrastructure with English-speaking positions',
+    description: 'İngilizce konuşulan pozisyonlara sahip dijital sağlık altyapısı',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'JOIN',
     url: 'https://join.com/careers#openpositions',
-    description: 'Recruitment platform with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan işe alım platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Jungwild',
     url: 'https://jungwild.io/jobs/',
-    description: 'Digital agency with English-speaking work environment',
+    description: 'İngilizce çalışma ortamına sahip dijital ajans',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'JustWatch',
     url: 'https://jobs.lever.co/justwatch',
-    description: 'Movie streaming search with English job openings',
+    description: 'İngilizce iş ilanları sunan film akış arama platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'ETERNO',
     url: 'https://careers.eterno.group/en/jobs',
-    description: 'Business services group with English-speaking opportunities',
+    description: 'İngilizce fırsatlar sunan iş hizmetleri grubu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'KAIKO Systems',
     url: 'https://job-boards.eu.greenhouse.io/kaikosystems',
-    description: 'Maritime technology with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan denizcilik teknolojisi şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'KAYAK',
     url: 'https://www.kayak.com/careers/berlin/all',
-    description: 'Travel search platform with English positions in Berlin',
+    description: 'Berlin\'de İngilizce pozisyonlara sahip seyahat arama platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'kertos',
     url: 'https://www.kertos.io/en/jobs',
-    description: 'Data analytics platform with English job openings',
+    description: 'İngilizce iş ilanları sunan veri analitiği platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'kiron',
     url: 'https://www.kiron.ngo/careers#Positions',
-    description: 'Educational nonprofit with English-speaking opportunities',
+    description: 'İngilizce fırsatlar sunan eğitim odaklı kar amacı gütmeyen kuruluş',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'kittl',
     url: 'https://jobs.ashbyhq.com/kittl',
-    description: 'Design platform with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan tasarım platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'KNIME',
     url: 'https://knime.jobs.personio.de/',
-    description: 'Data analytics platform with English-speaking positions',
+    description: 'İngilizce konuşulan pozisyonlara sahip veri analitiği platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Knowunity',
     url: 'https://jobs.ashbyhq.com/knowunity',
-    description: 'Educational platform with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan eğitim platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Formo',
     url: 'https://eatformo.com/work/',
-    description: 'Food technology company with English-speaking roles',
+    description: 'İngilizce pozisyonlar sunan gıda teknolojisi şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Forto',
     url: 'https://careers.forto.com/forto-jobs/',
-    description: 'Digital freight platform with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan dijital kargo platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'FREE NOW',
     url: 'https://job-boards.greenhouse.io/freenow',
-    description: 'Mobility platform with English positions across Europe',
+    description: 'Avrupa genelinde İngilizce pozisyonlara sahip mobilite platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Friendsurance',
     url: 'https://www.friendsurance.com/en/careers/',
-    description: 'Digital insurance with English-speaking opportunities',
+    description: 'İngilizce fırsatlar sunan dijital sigorta şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'FUNKE',
     url: 'https://karriere.funkemedien.de/de/',
-    description: 'Media group with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan medya grubu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'LucaNet',
     url: 'https://www.lucanet.com/en/careers/jobs/',
-    description: 'Financial software with English-speaking positions',
+    description: 'İngilizce konuşulan pozisyonlara sahip finansal yazılım şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Logistica OS',
     url: 'https://join.com/companies/logistica-oscom',
-    description: 'Logistics platform with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan lojistik platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Metiundo',
     url: 'https://jobs.metiundo.io/eng',
-    description: 'Property technology with English-speaking roles',
+    description: 'İngilizce pozisyonlar sunan gayrimenkul teknolojisi şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Merantix',
     url: 'https://careers.merantix.com/companies/deltia-2',
-    description: 'AI venture studio with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan yapay zeka girişim stüdyosu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Mercanis',
     url: 'https://mercanis.jobs.personio.de/',
-    description: 'Supply chain platform with English-speaking positions',
+    description: 'İngilizce konuşulan pozisyonlara sahip tedarik zinciri platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'mgm-tp',
     url: 'https://jobs.mgm-tp.com/',
-    description: 'Technology consulting with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan teknoloji danışmanlık firması',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Mindspace',
     url: 'https://www.mindspace.me/careers/',
-    description: 'Coworking spaces with English-speaking opportunities',
+    description: 'İngilizce fırsatlar sunan ortak çalışma alanları',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Needle',
     url: 'https://needle.app/careers',
-    description: 'Customer service platform with English sales and service roles',
+    description: 'İngilizce satış ve hizmet pozisyonlarına sahip müşteri hizmetleri platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Peec AI',
     url: 'https://peec.ai/careers',
-    description: 'AI technology company with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan yapay zeka teknoloji şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'pplwise',
     url: 'https://pplwise.com/career/',
-    description: 'HR analytics platform with English-speaking positions',
+    description: 'İngilizce konuşulan pozisyonlara sahip İK analitiği platformu',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'ppro',
     url: 'https://www.ppro.com/about-us/careers/',
-    description: 'Payment technology with English job opportunities',
+    description: 'İngilizce iş fırsatları sunan ödeme teknolojisi şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   },
   {
     name: 'Purpose Green',
     url: 'https://purpose-green.jobs.personio.de/',
-    description: 'Sustainable business solutions with English-speaking roles',
+    description: 'İngilizce pozisyonlar sunan sürdürülebilir iş çözümleri şirketi',
     status: 'active',
-    category: 'English Hiring Companies'
+    category: 'İngilizce İşe Alan Şirketler'
   }
 ];

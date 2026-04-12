@@ -230,7 +230,7 @@ export default async function HomePage() {
 
       <EditorialSection
         eyebrow="Ana Sayfa Rehberi"
-        title="Almanya'da düzen kurmak için ihtiyaç duyulan temel bilgileri tek landing page içinde birleştirdik."
+        title="Almanya'da düzen kurmak için ihtiyaç duyulan temel bilgileri tek bir sayfada birleştirdik."
         intro="Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
       >
         <ContentCard title="Almanya'da yaşam rehberi" tone="blue" defaultOpen>

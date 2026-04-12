@@ -11,7 +11,7 @@ import {
 } from '@/lib/admin/clientAuth';
 
 type AgencyStatus = 'all' | 'active' | 'inactive';
-type AgencyCategory = 'Recruitment Agencies' | 'English Hiring Companies';
+type AgencyCategory = 'İş Bulma Ajansları' | 'İngilizce İşe Alan Şirketler';
 
 interface AgencyRow {
   id: string;
@@ -33,15 +33,15 @@ interface AgencyStats {
 const AGENCIES_API_URL = '/api/recruitment-agencies-admin-list';
 const AGENCIES_ACTION_API_URL = '/api/recruitment-agencies-admin-action';
 const CATEGORIES: AgencyCategory[] = [
-  'Recruitment Agencies',
-  'English Hiring Companies'
+  'İş Bulma Ajansları',
+  'İngilizce İşe Alan Şirketler'
 ];
 
 const initialForm = {
   name: '',
   url: '',
   description: '',
-  category: 'Recruitment Agencies' as AgencyCategory,
+  category: 'İş Bulma Ajansları' as AgencyCategory,
   status: 'active' as 'active' | 'inactive',
 };
 
@@ -203,7 +203,7 @@ export default function RecruitmentAgenciesAdminClient() {
       name: agency.name,
       url: agency.url,
       description: agency.description,
-      category: agency.category as AgencyCategory || 'Recruitment Agencies',
+      category: agency.category as AgencyCategory || 'İş Bulma Ajansları',
       status: agency.status,
     });
     setEditingId(agency.id);

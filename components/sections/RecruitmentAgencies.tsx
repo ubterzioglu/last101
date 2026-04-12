@@ -11,29 +11,29 @@ interface RecruitmentAgenciesProps {
 }
 
 const CATEGORIES = [
-  'All Categories',
-  'Executive Search',
-  'General Staffing',
-  'IT & Digital',
-  'Tech & Engineering',
-  'Finance & Legal',
-  'Healthcare & Medical',
-  'Energy & Engineering',
-  'HR Consulting',
-  'International',
-  'Freelancer & Project',
-  'Creative & Design'
+  'Tüm Kategoriler',
+  'Üst Düzey Yönetici Arama',
+  'Genel İşe Alım',
+  'BT & Dijital',
+  'Teknoloji & Mühendislik',
+  'Finans & Hukuk',
+  'Sağlık & Tıp',
+  'Enerji & Mühendislik',
+  'İK Danışmanlığı',
+  'Uluslararası',
+  'Freelance & Proje',
+  'Yaratıcı & Tasarım'
 ];
 
 export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All Categories');
+  const [selectedCategory, setSelectedCategory] = useState('Tüm Kategoriler');
 
   const filteredAgencies = useMemo(() => {
     return agencies.filter(agency => {
       const matchesSearch = agency.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           agency.description.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === 'All Categories' || 
+      const matchesCategory = selectedCategory === 'Tüm Kategoriler' || 
                             agency.category === selectedCategory ||
                             agency.category?.includes(selectedCategory.split(' & ')[0]) ||
                             agency.category?.includes(selectedCategory.split(' & ')[1]);
@@ -48,14 +48,14 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
       <div className="text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-google-blue/20 bg-google-blue/10 px-4 py-2 text-sm text-google-blue">
           <span className="font-semibold">{agencies.length}</span>
-          <span>Recruitment Agency</span>
+          <span>İş Bulma Ajansı</span>
         </div>
         <h2 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
-          Recruitment Agencies in Germany
+          Almanya&apos;daki İş Bulma Ajansları
         </h2>
         <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-          Comprehensive list of recruitment agencies, headhunters, and staffing companies operating in Germany. 
-          Find the right agency for your career or hiring needs.
+          Almanya&apos;da faaliyet gösteren işe alım ajansları, kafa avcıları ve personel şirketlerinin kapsamlı listesi.
+          Kariyer veya işe alım ihtiyaçlarınız için doğru ajansı bulun.
         </p>
       </div>
 
@@ -65,7 +65,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Search agencies..."
+            placeholder="Ajans ara..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full rounded-lg border border-gray-200 bg-white py-2 pl-10 pr-4 text-sm focus:border-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue/20"
@@ -88,7 +88,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
 
       {/* Results Count */}
       <div className="text-sm text-gray-600">
-        Showing {filteredAgencies.length} of {agencies.length} agencies
+        {agencies.length} ajansdan {filteredAgencies.length} tanesi gösteriliyor
       </div>
 
       {/* Agencies Grid */}
@@ -117,7 +117,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-google-blue hover:text-white"
-                title={`Visit ${agency.name}`}
+                title={`${agency.name} sitesine git`}
               >
                 <ExternalLink className="h-4 w-4" />
               </Link>
@@ -129,15 +129,15 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
       {/* No Results */}
       {filteredAgencies.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">No agencies found matching your criteria.</p>
+          <p className="text-gray-500">Aramanızla eşleşen ajans bulunamadı.</p>
           <button 
             onClick={() => {
               setSearchTerm('');
-              setSelectedCategory('All Categories');
+              setSelectedCategory('Tüm Kategoriler');
             }}
             className="mt-2 text-google-blue hover:underline"
           >
-            Clear filters
+            Filtreleri temizle
           </button>
         </div>
       )}
@@ -145,7 +145,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
       {/* Author Credit */}
       <div className="text-center py-8 border-t border-gray-200">
         <p className="text-sm text-gray-600">
-          <span className="font-medium">150 Recruitment Agencies in Germany</span> with Short Descriptions
+          <span className="font-medium">Almanya&apos;daki 204 İş Bulma Ajansı</span> — Kısa Açıklamalar
         </p>
         <p className="text-xs text-gray-500 mt-1">
           by <Link 
