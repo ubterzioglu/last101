@@ -67,7 +67,7 @@ interface EditorialSectionProps {
 
 interface ContentCardProps {
   title: string;
-  tone: 'blue' | 'yellow' | 'green' | 'neutral';
+  tone: 'blue' | 'red' | 'yellow' | 'green';
   children: React.ReactNode;
   defaultOpen?: boolean;
 }
@@ -75,27 +75,27 @@ interface ContentCardProps {
 const GUIDE_CARD_STYLES = {
   blue: {
     border: 'border-google-blue/45',
-    background: 'bg-google-blue/10',
+    background: 'bg-google-blue/10 group-open:bg-google-blue/16',
     icon: 'border-google-blue/40 bg-google-blue/15 text-white',
     hover: 'hover:text-google-blue',
   },
+  red: {
+    border: 'border-google-red/45',
+    background: 'bg-google-red/10 group-open:bg-google-red/16',
+    icon: 'border-google-red/40 bg-google-red/15 text-white',
+    hover: 'hover:text-google-red',
+  },
   yellow: {
-    border: 'border-google-yellow/45',
-    background: 'bg-google-yellow/10',
+    border: 'border-google-yellow/40',
+    background: 'bg-google-yellow/8 group-open:bg-google-yellow/12',
     icon: 'border-google-yellow/40 bg-google-yellow/12 text-google-yellow',
     hover: 'hover:text-google-yellow',
   },
   green: {
     border: 'border-google-green/45',
-    background: 'bg-google-green/10',
+    background: 'bg-google-green/10 group-open:bg-google-green/16',
     icon: 'border-google-green/40 bg-google-green/15 text-white',
     hover: 'hover:text-google-green',
-  },
-  neutral: {
-    border: 'border-white/20',
-    background: 'bg-white/[0.04]',
-    icon: 'border-white/20 bg-white/10 text-white',
-    hover: 'hover:text-white',
   },
 } as const;
 
@@ -136,21 +136,23 @@ function SectionDivider() {
 
 function EditorialSection({ eyebrow, title, intro, children }: EditorialSectionProps) {
   return (
-    <section className="relative overflow-hidden bg-black py-16 text-white md:py-24">
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-5xl rounded-[2rem] border border-white/10 bg-black/35 p-6 shadow-[0_30px_120px_rgba(0,0,0,0.4)] backdrop-blur-sm md:p-8">
+    <section className="bg-black py-16 text-white md:py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl text-center">
           <div className="inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
             {eyebrow}
           </div>
-          <h2 className="mt-6 max-w-3xl text-3xl font-black leading-tight md:text-5xl">
+          <h2 className="mt-6 text-3xl font-black leading-tight md:text-5xl">
             {title}
           </h2>
-          <p className="mt-5 max-w-3xl text-base leading-8 text-white/74 md:text-lg">
+          <p className="mt-5 text-base leading-8 text-white/74 md:text-lg">
             {intro}
           </p>
         </div>
 
-        <div className="mt-8 max-w-5xl space-y-4">{children}</div>
+        <div className="mx-auto mt-12 max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-sm md:p-6">
+          <div className="space-y-4">{children}</div>
+        </div>
       </div>
     </section>
   );
@@ -163,21 +165,21 @@ function ContentCard({ title, tone, children, defaultOpen = false }: ContentCard
     <details
       open={defaultOpen}
       className={cn(
-        'group overflow-hidden rounded-[1.6rem] border shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md transition-all duration-300',
+        'group overflow-hidden rounded-[1.6rem] border transition-all duration-300',
         accent.border,
         accent.background
       )}
     >
       <summary
         className={cn(
-          'flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 text-left text-white transition-colors marker:hidden md:px-8 md:py-6 [&::-webkit-details-marker]:hidden',
+          'flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 text-left text-white transition-colors marker:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:px-8 md:py-6 [&::-webkit-details-marker]:hidden',
           accent.hover
         )}
       >
-        <h3 className="text-xl font-bold tracking-tight text-white md:text-2xl">{title}</h3>
+        <h3 className="text-lg font-semibold leading-snug text-white md:text-[1.95rem]">{title}</h3>
         <span
           className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-full border text-lg transition group-open:rotate-180',
+            'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border text-lg transition group-open:rotate-180',
             accent.icon
           )}
           aria-hidden="true"
@@ -253,7 +255,7 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="İş bulma süreci" tone="yellow">
+        <ContentCard title="İş bulma süreci" tone="red">
           <p>
             Almanya'da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. Özgeçmişin Alman işveren beklentilerine
             göre düzenlenmesi, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
@@ -278,7 +280,7 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="Topluluk avantajları" tone="green">
+        <ContentCard title="Topluluk avantajları" tone="yellow">
           <p>
             Yeni bir ülkede doğru insanlara ulaşmak, bazen en doğru belgeyi bulmaktan bile daha değerlidir. Çünkü taşınma sürecinde
             sorular yalnızca resmi işlemlerle sınırlı kalmaz; hangi şehir daha uygundur, ilk ev nasıl bulunur, hangi banka daha hızlı
@@ -296,7 +298,7 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="Belgeler, içerikler ve günlük aksiyon planı" tone="neutral">
+        <ContentCard title="Belgeler, içerikler ve günlük aksiyon planı" tone="green">
           <p>
             Taşınma veya yerleşme sürecinde en çok zaman kaybettiren şeylerden biri, doğru belgenin doğru anda elinizde olmamasıdır.
             Başvuru yapılacak kurumlar değiştikçe istenen evrak listeleri de değişebilir. Bu nedenle belgeleri, haberleri ve rehber içerikleri
