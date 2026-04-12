@@ -42,7 +42,7 @@ const CATEGORIES: NewsCategory[] = ['Almanya', 'Türkiye', 'Avrupa', 'Dünya'];
 const initialForm = {
   title: '',
   summary: '',
-  coverImageUrl: '',
+  coverImageUrl: 'https://ldptefnpiudquipdsezr.supabase.co/storage/v1/object/public/news/ansgar-scheffold-mtfTz0FnwBw-unsplash.jpg',
   sourceName: '',
   sourceUrl: '',
   category: 'Almanya' as NewsCategory,
