@@ -87,9 +87,9 @@ const GUIDE_CARD_STYLES = {
     hover: 'hover:text-google-red',
   },
   yellow: {
-    border: 'border-google-yellow/50',
-    background: 'bg-google-yellow/12 group-open:bg-google-yellow/18',
-    icon: 'border-google-yellow/50 bg-google-yellow/18 text-google-yellow',
+    border: 'border-google-yellow/45',
+    background: 'bg-google-yellow/10 group-open:bg-google-yellow/16',
+    icon: 'border-google-yellow/40 bg-google-yellow/15 text-white',
     hover: 'hover:text-google-yellow',
   },
   green: {

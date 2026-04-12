@@ -24,7 +24,7 @@ const FAQ_ACCENT_STYLES = [
     border: 'border-google-yellow/50',
     background: 'bg-google-yellow/12',
     openBackground: 'bg-google-yellow/18',
-    icon: 'border-google-yellow/50 bg-google-yellow/18 text-google-yellow',
+    icon: 'border-google-yellow/40 bg-google-yellow/15 text-white',
     hover: 'hover:text-google-yellow',
   },
   {
