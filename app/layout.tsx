@@ -96,6 +96,12 @@ export default function RootLayout({
         {/* Preconnect to Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-GNYJ39RG89"
+          strategy="afterInteractive"
+        />
       </head>
       <body className="font-sans antialiased min-h-screen flex flex-col">
         {/* Skip to main content link for accessibility */}
@@ -114,6 +120,14 @@ export default function RootLayout({
           data-goatcounter={GOATCOUNTER_ENDPOINT}
           strategy="afterInteractive"
         />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-GNYJ39RG89');
+          `}
+        </Script>
       </body>
     </html>
   );

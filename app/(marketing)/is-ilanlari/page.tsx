@@ -2,8 +2,10 @@ import { createMetadata } from '@/lib/seo/metadata';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { JobList } from '@/components/sections/JobCard';
 import { CTASection } from '@/components/sections/CTASection';
+import { RecruitmentAgencies } from '@/components/sections/RecruitmentAgencies';
 import { Section } from '@/components/ui/Section';
-import type { Job } from '@/types';
+import { RECRUITMENT_AGENCIES } from '@/constants/recruitment-agencies';
+import type { Job, RecruitmentAgency } from '@/types';
 
 export const metadata = createMetadata({
   title: 'İş İlanları',
@@ -69,6 +71,14 @@ export default function IsIlanlariPage() {
     },
   ];
 
+  // Convert agencies data to proper format
+  const agencies: RecruitmentAgency[] = RECRUITMENT_AGENCIES.map((agency, index) => ({
+    ...agency,
+    id: (index + 1).toString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }));
+
   return (
     <>
       <HeroSection
@@ -86,6 +96,10 @@ export default function IsIlanlariPage() {
           </p>
         </div>
         <JobList jobs={jobs} columns={2} />
+      </Section>
+
+      <Section contained className="bg-gray-50">
+        <RecruitmentAgencies agencies={agencies} />
       </Section>
 
       <CTASection

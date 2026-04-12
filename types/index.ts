@@ -35,6 +35,17 @@ export type Job = {
   postedDate: string;
 };
 
+export type RecruitmentAgency = {
+  id: string;
+  name: string;
+  url: string;
+  description: string;
+  status: 'active' | 'inactive';
+  category?: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Feature = {
   id: string;
   title: string;

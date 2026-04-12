@@ -48,7 +48,7 @@ export function ContactChannelCard({
       className={cn(
         'flex rounded-xl',
           iconOnly
-            ? 'h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-lg border border-google-yellow/45 bg-black/55 p-0 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-google-yellow/70 shadow-[0_0_0_1px_rgba(251,188,5,0.24),0_8px_20px_rgba(251,188,5,0.22),0_0_16px_rgba(251,188,5,0.28)] hover:shadow-[0_0_0_1px_rgba(251,188,5,0.35),0_10px_24px_rgba(251,188,5,0.32),0_0_22px_rgba(251,188,5,0.42)]'
+            ? 'h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-lg border border-google-yellow/45 bg-black/55 p-0 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-google-yellow/70 shadow-[0_0_0_1px_rgba(251,188,5,0.24),0_8px_20px_rgba(251,188,5,0.22),0_0_16px_rgba(251,188,5,0.28)] hover:shadow-[0_0_0_1px_rgba(251,188,5,0.35),0_10px_24px_rgba(251,188,5,0.32),0_0_22px_rgba(251,188,5,0.42)]'
           : compact
             ? 'flex-col items-center justify-start gap-3 p-3 text-center'
             : 'items-center gap-3 sm:gap-4 p-4 sm:p-5',
@@ -73,7 +73,7 @@ export function ContactChannelCard({
           className={cn(
             iconOnly ? 'text-google-yellow' : 'text-white',
             iconOnly
-              ? 'h-5 w-5 sm:h-6 sm:w-6 drop-shadow-[0_0_8px_rgba(251,188,5,0.92)]'
+              ? 'h-6 w-6 sm:h-8 sm:w-8 drop-shadow-[0_0_8px_rgba(251,188,5,0.92)]'
               : compact
                 ? 'w-5 h-5'
                 : 'w-6 sm:w-7 h-6 sm:h-7'

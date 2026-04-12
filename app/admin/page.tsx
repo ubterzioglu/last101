@@ -19,6 +19,12 @@ const ADMIN_SECTIONS = [
     description: 'Doktor, avukat ve diğer hizmet önerilerini onayla.',
     accent: 'border-google-red/45 bg-google-red/10',
   },
+  {
+    href: '/admin/recruitment-agencies',
+    title: 'Recruitment Agencies',
+    description: '150 recruitment agency listesini yönet ve düzenle.',
+    accent: 'border-google-green/45 bg-google-green/10',
+  },
 ];
 
 export default function AdminIndexPage() {
