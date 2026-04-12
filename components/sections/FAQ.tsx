@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Container } from '@/components/ui/Container';
 import { ChevronDown } from 'lucide-react';
+import { Container } from '@/components/ui/Container';
 import { cn } from '@/lib/utils/cn';
 
 const FAQ_ACCENT_STYLES = [
@@ -21,10 +21,10 @@ const FAQ_ACCENT_STYLES = [
     hover: 'hover:text-google-red',
   },
   {
-    border: 'border-google-yellow/55',
-    background: 'bg-google-yellow/12',
-    openBackground: 'bg-google-yellow/18',
-    icon: 'border-google-yellow/50 bg-google-yellow text-black',
+    border: 'border-google-yellow/40',
+    background: 'bg-google-yellow/8',
+    openBackground: 'bg-google-yellow/12',
+    icon: 'border-google-yellow/40 bg-google-yellow/12 text-google-yellow',
     hover: 'hover:text-google-yellow',
   },
   {
@@ -47,13 +47,20 @@ interface FAQProps {
   items: FAQItem[];
 }
 
-function FAQAccordion({ item, isOpen, onToggle, index }: {
+function FAQAccordion({
+  item,
+  isOpen,
+  onToggle,
+  index,
+}: {
   item: FAQItem;
-  isOpen: boolean; 
+  isOpen: boolean;
   onToggle: () => void;
   index: number;
 }) {
   const accent = FAQ_ACCENT_STYLES[index % FAQ_ACCENT_STYLES.length];
+  const buttonId = `faq-button-${index}`;
+  const panelId = `faq-panel-${index}`;
 
   return (
     <div
@@ -64,7 +71,11 @@ function FAQAccordion({ item, isOpen, onToggle, index }: {
       )}
     >
       <button
+        id={buttonId}
+        type="button"
         onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         className={cn(
           'flex w-full items-center justify-between gap-4 px-5 py-5 text-left text-white transition-colors',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black',
@@ -72,16 +83,19 @@ function FAQAccordion({ item, isOpen, onToggle, index }: {
         )}
       >
         <span className="pr-4 text-lg font-semibold leading-snug">{item.question}</span>
-        <ChevronDown 
+        <ChevronDown
           className={cn(
             'h-10 w-10 flex-shrink-0 rounded-full border p-2 transition-transform duration-300',
             accent.icon,
             isOpen && 'rotate-180'
-          )} 
+          )}
           aria-hidden="true"
         />
       </button>
-      <div 
+      <div
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
         className={cn(
           'overflow-hidden transition-all duration-300',
           isOpen ? 'max-h-96 px-5 pb-5' : 'max-h-0 px-5'
@@ -93,23 +107,19 @@ function FAQAccordion({ item, isOpen, onToggle, index }: {
   );
 }
 
-export function FAQ({ 
-  title = 'Sık Sorulan Sorular', 
+export function FAQ({
+  title = 'Sık Sorulan Sorular',
   subtitle = 'Merak ettiğiniz her şeyin cevabı burada',
-  items 
+  items,
 }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section className="bg-black py-16 text-white md:py-24">
       <Container>
-        <div className="text-center mb-12">
-          <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-            {title}
-          </h2>
-          <p className="mx-auto max-w-2xl text-lg text-white/72">
-            {subtitle}
-          </p>
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">{title}</h2>
+          <p className="mx-auto max-w-2xl text-lg text-white/72">{subtitle}</p>
         </div>
 
         <div className="mx-auto max-w-4xl space-y-4 rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-sm md:p-6">

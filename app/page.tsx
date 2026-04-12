@@ -9,7 +9,7 @@ import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/Jso
 import { ArrowUpIcon, WhatsAppIcon } from '@/components/icons/ContactIcons';
 import { cn } from '@/lib/utils/cn';
 import { getPublishedNewsItems } from '@/lib/public-news';
-import { DEFAULT_META_DESCRIPTION, DEFAULT_SEO_TITLE, SITE_URL } from '@/lib/utils/constants';
+import { CANONICAL_SITE_URL, DEFAULT_META_DESCRIPTION, DEFAULT_SEO_TITLE } from '@/lib/utils/constants';
 import {
   TOOL_ITEMS,
   OTHER_LINK_ITEMS,
@@ -33,7 +33,7 @@ export const metadata = createMetadata({
 export const dynamic = 'force-dynamic';
 
 const HOMEPAGE_ITEMS = [...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
-const HOME_PAGE_URL = new URL('/', SITE_URL).toString();
+const HOME_PAGE_URL = CANONICAL_SITE_URL;
 const WHATSAPP_COMMUNITY_CHANNEL = CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp');
 const HOMEPAGE_FAQ_ITEMS = [
   {

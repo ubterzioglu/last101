@@ -5,6 +5,7 @@
 export const SITE_NAME = 'almanya101';
 export const SEO_SITE_NAME = 'Almanya101';
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://almanya101.com';
+export const CANONICAL_SITE_URL = SITE_URL.replace(/\/+$/, '');
 export const SITE_LOCALE = 'tr_TR';
 export const DEFAULT_OG_IMAGE = '/images/og-default.jpg';
 export const DEFAULT_SEO_TITLE = `${SEO_SITE_NAME} | Almanya'da Yaşam, İş ve Türk Topluluğu`;
@@ -26,7 +27,7 @@ export const DEFAULT_META = {
     type: 'website',
     locale: SITE_LOCALE,
     siteName: SEO_SITE_NAME,
-    url: SITE_URL,
+    url: CANONICAL_SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',

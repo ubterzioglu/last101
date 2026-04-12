@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { createMetadata } from '@/lib/seo/metadata';
 
 export const metadata = createMetadata({
-  title: 'Sayfa Bulunamadı',
+  title: 'sayfa Bulunamadı',
   description: 'Aradığınız içerik şu anda burada değil, ama merak etme yalnız değilsin. almanya101 seninle!',
   path: '/404',
   noIndex: true,
@@ -40,7 +40,7 @@ export default function NotFound() {
 
           <div className="mt-10 space-y-4">
             <h1 className="text-4xl font-black tracking-[-0.05em] text-white md:text-6xl">
-              Sayfa bulunamadı
+              sayfa bulunamadı
             </h1>
             <p className="mx-auto max-w-xl text-base leading-8 text-white/72 md:text-lg">
               Aradığınız içerik şu anda burada değil, ama merak etme yalnız değilsin! almanya101 seninle!

@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import {
+  CANONICAL_SITE_URL,
   DEFAULT_KEYWORDS,
   DEFAULT_META,
   DEFAULT_OG_IMAGE,
   SEO_SITE_NAME,
-  SITE_URL,
 } from '@/lib/utils/constants';
 
 /**
@@ -31,8 +31,9 @@ export function createMetadata(options: {
     openGraphType = 'website',
   } = options;
 
-  const url = new URL(path || '/', SITE_URL).toString();
-  const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${SITE_URL}${image}`;
+  const normalizedPath = !path || path === '/' ? '' : path;
+  const url = normalizedPath ? new URL(normalizedPath, CANONICAL_SITE_URL).toString() : CANONICAL_SITE_URL;
+  const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${CANONICAL_SITE_URL}${image}`;
   const resolvedTitle = absoluteTitle ? title : `${title} | ${SEO_SITE_NAME}`;
 
   return {
