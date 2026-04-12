@@ -1,5 +1,4 @@
 import { createMetadata } from '@/lib/seo/metadata';
-import { CTASection } from '@/components/sections/CTASection';
 import { RecruitmentAgencies } from '@/components/sections/RecruitmentAgencies';
 import { Section } from '@/components/ui/Section';
 import { RECRUITMENT_AGENCIES } from '@/constants/recruitment-agencies';
@@ -25,13 +24,6 @@ export default function IsIlanlariPage() {
       <Section contained className="bg-gray-50">
         <RecruitmentAgencies agencies={agencies} />
       </Section>
-
-      <CTASection
-        title="İş İlanı Paylaşın"
-        description="Şirketinizde açık pozisyonlar var mı? Türk topluluğuna ulaşmak için iş ilanınızı bizimle paylaşın."
-        primaryAction={{ label: 'İş İlanı Ekle', href: '#contact' }}
-        secondaryAction={{ label: 'İletişime Geçin', href: '/iletisim' }}
-      />
     </>
   );
 }

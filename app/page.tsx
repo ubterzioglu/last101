@@ -211,7 +211,7 @@ export default async function HomePage() {
       <section className="bg-[#050505] py-6 md:py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <LinkGridSection
-            title="Araçlar"
+            title="Yalnız değilsin! Araçlarımız ve bir sürü içerik seninle!"
             items={HOMEPAGE_ITEMS}
             className="bg-transparent min-h-0 h-auto py-0 mb-0"
             gridClassName="grid-cols-[repeat(auto-fit,minmax(170px,1fr))] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 max-w-none"
