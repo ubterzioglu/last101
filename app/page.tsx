@@ -67,10 +67,37 @@ interface EditorialSectionProps {
 
 interface ContentCardProps {
   title: string;
-  accentClassName: string;
+  tone: 'blue' | 'yellow' | 'green' | 'neutral';
   children: React.ReactNode;
   defaultOpen?: boolean;
 }
+
+const GUIDE_CARD_STYLES = {
+  blue: {
+    border: 'border-google-blue/45',
+    background: 'bg-google-blue/10',
+    icon: 'border-google-blue/40 bg-google-blue/15 text-white',
+    hover: 'hover:text-google-blue',
+  },
+  yellow: {
+    border: 'border-google-yellow/45',
+    background: 'bg-google-yellow/10',
+    icon: 'border-google-yellow/40 bg-google-yellow/12 text-google-yellow',
+    hover: 'hover:text-google-yellow',
+  },
+  green: {
+    border: 'border-google-green/45',
+    background: 'bg-google-green/10',
+    icon: 'border-google-green/40 bg-google-green/15 text-white',
+    hover: 'hover:text-google-green',
+  },
+  neutral: {
+    border: 'border-white/20',
+    background: 'bg-white/[0.04]',
+    icon: 'border-white/20 bg-white/10 text-white',
+    hover: 'hover:text-white',
+  },
+} as const;
 
 interface SectionProps {
   backgroundImage: string;
@@ -129,22 +156,36 @@ function EditorialSection({ eyebrow, title, intro, children }: EditorialSectionP
   );
 }
 
-function ContentCard({ title, accentClassName, children, defaultOpen = false }: ContentCardProps) {
+function ContentCard({ title, tone, children, defaultOpen = false }: ContentCardProps) {
+  const accent = GUIDE_CARD_STYLES[tone];
+
   return (
     <details
       open={defaultOpen}
       className={cn(
-        'group overflow-hidden rounded-[2rem] border bg-black/45 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md',
-        accentClassName
+        'group overflow-hidden rounded-[1.6rem] border shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md transition-all duration-300',
+        accent.border,
+        accent.background
       )}
     >
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 marker:hidden md:px-8 md:py-6 [&::-webkit-details-marker]:hidden">
+      <summary
+        className={cn(
+          'flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 text-left text-white transition-colors marker:hidden md:px-8 md:py-6 [&::-webkit-details-marker]:hidden',
+          accent.hover
+        )}
+      >
         <h3 className="text-xl font-bold tracking-tight text-white md:text-2xl">{title}</h3>
-        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/6 text-lg text-white/80 transition group-open:rotate-180">
-          ↓
+        <span
+          className={cn(
+            'flex h-10 w-10 items-center justify-center rounded-full border text-lg transition group-open:rotate-180',
+            accent.icon
+          )}
+          aria-hidden="true"
+        >
+          <span className="-translate-y-[1px]">↓</span>
         </span>
       </summary>
-      <div className="border-t border-white/10 px-6 pb-6 pt-5 text-sm leading-8 text-white/78 md:px-8 md:pb-8 md:text-base">
+      <div className="border-t border-white/10 px-5 pb-6 pt-5 text-sm leading-8 text-white/84 md:px-8 md:pb-8 md:text-base">
         <div className="space-y-4">{children}</div>
       </div>
     </details>
@@ -191,7 +232,7 @@ export default async function HomePage() {
         title="Almanya'da düzen kurmak için ihtiyaç duyulan temel bilgileri tek landing page içinde birleştirdik."
         intro="Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
       >
-        <ContentCard title="Almanya'da yaşam rehberi" accentClassName="border-google-blue/45" defaultOpen>
+        <ContentCard title="Almanya'da yaşam rehberi" tone="blue" defaultOpen>
           <p>
             Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, bilgi dağınıklığıdır. Adres kaydı,
             vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,
@@ -212,7 +253,7 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="İş bulma süreci" accentClassName="border-google-yellow/45">
+        <ContentCard title="İş bulma süreci" tone="yellow">
           <p>
             Almanya'da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. Özgeçmişin Alman işveren beklentilerine
             göre düzenlenmesi, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
@@ -237,7 +278,7 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="Topluluk avantajları" accentClassName="border-google-green/45">
+        <ContentCard title="Topluluk avantajları" tone="green">
           <p>
             Yeni bir ülkede doğru insanlara ulaşmak, bazen en doğru belgeyi bulmaktan bile daha değerlidir. Çünkü taşınma sürecinde
             sorular yalnızca resmi işlemlerle sınırlı kalmaz; hangi şehir daha uygundur, ilk ev nasıl bulunur, hangi banka daha hızlı
@@ -255,7 +296,7 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="Belgeler, içerikler ve günlük aksiyon planı" accentClassName="border-white/20">
+        <ContentCard title="Belgeler, içerikler ve günlük aksiyon planı" tone="neutral">
           <p>
             Taşınma veya yerleşme sürecinde en çok zaman kaybettiren şeylerden biri, doğru belgenin doğru anda elinizde olmamasıdır.
             Başvuru yapılacak kurumlar değiştikçe istenen evrak listeleri de değişebilir. Bu nedenle belgeleri, haberleri ve rehber içerikleri
