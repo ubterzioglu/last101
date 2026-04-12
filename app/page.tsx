@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { createMetadata } from '@/lib/seo/metadata';
 import { NewsCarousel } from '@/components/sections/NewsCarousel';
 import { FAQ } from '@/components/sections/FAQ';
+import { HomeHeroSection } from '@/components/home/HomeHeroSection';
 import { LinkGridSection } from '@/components/home/LinkGridSection';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
@@ -69,6 +69,7 @@ interface ContentCardProps {
   title: string;
   accentClassName: string;
   children: React.ReactNode;
+  defaultOpen?: boolean;
 }
 
 interface SectionProps {
@@ -89,11 +90,10 @@ function BackgroundSection({
   return (
     <section
       className={cn(
-        'flex items-center relative bg-cover bg-center py-12',
+        'flex items-center relative bg-black py-12',
         heightClassName,
         className
       )}
-      style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className={`absolute inset-0 ${overlayOpacity}`} />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -109,9 +109,9 @@ function SectionDivider() {
 
 function EditorialSection({ eyebrow, title, intro, children }: EditorialSectionProps) {
   return (
-    <section className="bg-[#050505] py-16 md:py-24 text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl">
+    <section className="relative overflow-hidden bg-black py-16 text-white md:py-24">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-5xl rounded-[2rem] border border-white/10 bg-black/35 p-6 shadow-[0_30px_120px_rgba(0,0,0,0.4)] backdrop-blur-sm md:p-8">
           <div className="inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
             {eyebrow}
           </div>
@@ -123,23 +123,31 @@ function EditorialSection({ eyebrow, title, intro, children }: EditorialSectionP
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">{children}</div>
+        <div className="mt-8 max-w-5xl space-y-4">{children}</div>
       </div>
     </section>
   );
 }
 
-function ContentCard({ title, accentClassName, children }: ContentCardProps) {
+function ContentCard({ title, accentClassName, children, defaultOpen = false }: ContentCardProps) {
   return (
-    <article
+    <details
+      open={defaultOpen}
       className={cn(
-        'rounded-[2rem] border bg-white/[0.03] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-sm md:p-8',
+        'group overflow-hidden rounded-[2rem] border bg-black/45 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-md',
         accentClassName
       )}
     >
-      <h3 className="text-2xl font-bold tracking-tight text-white">{title}</h3>
-      <div className="mt-5 space-y-4 text-sm leading-8 text-white/78 md:text-base">{children}</div>
-    </article>
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 marker:hidden md:px-8 md:py-6 [&::-webkit-details-marker]:hidden">
+        <h3 className="text-xl font-bold tracking-tight text-white md:text-2xl">{title}</h3>
+        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/6 text-lg text-white/80 transition group-open:rotate-180">
+          ↓
+        </span>
+      </summary>
+      <div className="border-t border-white/10 px-6 pb-6 pt-5 text-sm leading-8 text-white/78 md:px-8 md:pb-8 md:text-base">
+        <div className="space-y-4">{children}</div>
+      </div>
+    </details>
   );
 }
 
@@ -156,81 +164,14 @@ export default async function HomePage() {
       <BreadcrumbJsonLd items={[{ name: 'Ana Sayfa', url: HOME_PAGE_URL }]} />
       <FaqJsonLd items={HOMEPAGE_FAQ_ITEMS} />
 
-      <section
-        className="min-h-[920px] flex flex-col items-center relative bg-cover bg-center pt-[25px] pb-10"
-        style={{ backgroundImage: 'url(/images/backgrounds/hero.jpg)' }}
-      >
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="mx-auto max-w-4xl text-center mb-10">
-            <div className="inline-flex rounded-full border border-white/15 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/80">
-              Almanya yaşam rehberi, iş fırsatları ve güçlü topluluk bağlantıları
-            </div>
-            <Image
-              src="/almanya101lragetransparent.png"
-              alt="almanya101"
-              width={420}
-              height={140}
-              priority
-              className="mx-auto mt-6 h-24 w-auto drop-shadow-2xl sm:h-32 md:h-40"
-            />
+      <HomeHeroSection whatsappHref={WHATSAPP_COMMUNITY_CHANNEL?.href} />
 
-            <h1 className="mt-6 text-3xl font-black leading-tight tracking-[-0.04em] text-white sm:text-4xl md:text-5xl lg:text-6xl">
-              Almanya'da Yaşam ve İş İçin Türkçe Rehber
-            </h1>
-            <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-white/80 sm:text-lg">
-              Almanya'ya taşınmayı planlayan ya da halihazırda burada yaşayan Türkler için; günlük yaşam,
-              resmi işlemler, iş bulma süreci, belgeler ve topluluk bağlantıları aynı yerde toparlandı.
-              Nereden başlayacağınızı düşünmek yerine doğru sırayı, doğru kaynakları ve güvenilir yönlendirmeleri kullanın.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/is-ilanlari"
-                className="inline-flex items-center justify-center rounded-full bg-google-yellow px-6 py-3 text-sm font-semibold text-gray-900 transition hover:scale-[1.02] hover:bg-yellow-300"
-              >
-                İş İlanlarını İncele
-              </Link>
-              <Link
-                href="/haberler"
-                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/8 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/12"
-              >
-                Güncel Haberleri Oku
-              </Link>
-              {WHATSAPP_COMMUNITY_CHANNEL ? (
-                <a
-                  href={WHATSAPP_COMMUNITY_CHANNEL.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-green-400/40 bg-green-500/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-green-300 hover:bg-green-500/25"
-                >
-                  <WhatsAppIcon className="h-5 w-5" />
-                  WhatsApp Topluluğuna Katıl
-                </a>
-              ) : null}
-            </div>
-
-            <p className="mx-auto mt-6 max-w-3xl text-sm leading-7 text-white/66 sm:text-base">
-              Ana araçlarımızla banka, sigorta, maaş, vize ve para transferi gibi pratik kararları hızlandırabilir;{' '}
-              <Link href="/belgeler" className="font-semibold text-white underline decoration-google-blue underline-offset-4">
-                belgeler
-              </Link>
-              ,{' '}
-              <Link href="/yazi-dizisi" className="font-semibold text-white underline decoration-google-yellow underline-offset-4">
-                yazı dizileri
-              </Link>
-              {' '}ve{' '}
-              <Link href="/topluluk" className="font-semibold text-white underline decoration-google-green underline-offset-4">
-                topluluk kanalları
-              </Link>
-              üzerinden bir sonraki adımınızı netleştirebilirsiniz.
-            </p>
-          </div>
-
+      <section className="bg-[#050505] py-6 md:py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <LinkGridSection
             title=""
             items={HOMEPAGE_ITEMS}
-            className="bg-transparent min-h-0 h-auto py-0 mb-3"
+            className="bg-transparent min-h-0 h-auto py-0 mb-0"
             gridClassName="grid-cols-[repeat(auto-fit,minmax(170px,1fr))] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 max-w-none"
             cardClassName="min-h-[190px] sm:min-h-[220px]"
             cardTitleClassName="text-xs sm:text-sm"
@@ -250,7 +191,7 @@ export default async function HomePage() {
         title="Almanya'da düzen kurmak için ihtiyaç duyulan temel bilgileri tek landing page içinde birleştirdik."
         intro="Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
       >
-        <ContentCard title="Almanya'da yaşam rehberi" accentClassName="border-google-blue/45">
+        <ContentCard title="Almanya'da yaşam rehberi" accentClassName="border-google-blue/45" defaultOpen>
           <p>
             Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, bilgi dağınıklığıdır. Adres kaydı,
             vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,

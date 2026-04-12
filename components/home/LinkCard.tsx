@@ -25,8 +25,8 @@ export function LinkCard({
         className
       )}
     >
-      <div className="flex min-h-[34px] items-center border-b border-black/5 bg-slate-950 px-3 py-1 text-center sm:min-h-[40px] sm:px-4 sm:py-1.5">
-        <span className="w-full text-[11px] font-semibold uppercase tracking-[0.22em] text-google-yellow sm:text-xs">
+      <div className="flex min-h-[34px] items-center border-b border-black/10 bg-google-yellow px-3 py-1 text-center sm:min-h-[40px] sm:px-4 sm:py-1.5">
+        <span className="w-full text-[11px] font-semibold uppercase tracking-[0.22em] text-black sm:text-xs">
           {item.topLabel}
         </span>
       </div>
