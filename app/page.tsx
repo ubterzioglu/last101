@@ -376,7 +376,7 @@ export default async function HomePage() {
               İletişim Kanallarımız & Sosyal Medya
             </h2>
           </div>
-          <div className="mx-auto flex w-full max-w-5xl items-center justify-center gap-3 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4">
+          <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-center gap-4 py-4 sm:gap-6">
             {CONTACT_CHANNELS.map((channel) => (
               <ContactChannelCard
                 key={channel.id}

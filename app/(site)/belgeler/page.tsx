@@ -1,10 +1,11 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
 import { SITE_URL } from '@/lib/utils/constants';
+import { BelgelerClient } from './BelgelerClient';
 
 export const metadata = createMetadata({
-  title: 'Belgeler',
-  description: 'Bu içerik çok yakında sizlerle! Yalnız değilsin almanya101 seninle!',
+  title: 'Yararlı Belgeler',
+  description: 'Almanya’da yaşayan Türkiye kökenli kişiler için en sık gereken resmî belgelerin kapsamlı rehberi.',
   path: '/belgeler',
 });
 
@@ -14,26 +15,19 @@ export default function BelgelerPage() {
   return (
     <>
       <WebPageJsonLd
-        title="Belgeler"
-        description="Bu içerik çok yakında sizlerle! Yalnız değilsin almanya101 seninle!"
+        title="Yararlı Belgeler"
+        description="Almanya’da yaşayan Türkiye kökenli kişiler için en sık gereken resmî belgelerin kapsamlı rehberi."
         url={pageUrl}
       />
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Belgeler', url: pageUrl },
+          { name: 'Yararlı Belgeler', url: pageUrl },
         ]}
       />
 
-      <div className="min-h-screen bg-black px-4 py-8">
-        <div className="mx-auto max-w-xl">
-          <div className="rounded-2xl bg-[#01A1F1] p-6 text-white sm:p-8">
-            <h1 className="mb-3 text-2xl font-bold sm:text-3xl">Belgeler</h1>
-            <p className="text-base leading-7 text-white/95">
-              Bu içerik çok yakında sizlerle! Yalnız değilsin almanya101 seninle!
-            </p>
-          </div>
-        </div>
+      <div className="min-h-screen bg-black">
+        <BelgelerClient />
       </div>
     </>
   );
