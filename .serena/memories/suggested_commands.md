@@ -1,0 +1,5 @@
+- `npm run dev` start local development server.
+- `npm run build` create production build.
+- `npm run start` run standalone production server.
+- `npm run lint` run ESLint across the repo.
+- Windows shell commands commonly used: `Get-ChildItem`, `Get-Content`, `Select-String`, `Get-Location`, `git status`, `git diff`.

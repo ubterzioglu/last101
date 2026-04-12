@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 
-export default function NotFound(): JSX.Element {
+export default function NotFound() {
   return (
     <section className="relative isolate overflow-hidden bg-[#f6f3ea] text-slate-900">
       <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top_left,_rgba(66,133,244,0.18),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(52,168,83,0.18),_transparent_32%),linear-gradient(135deg,_#f6f3ea_0%,_#fffdf8_45%,_#f3efe4_100%)]" />

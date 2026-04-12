@@ -1,0 +1,5 @@
+- Project: almanya101, a Next.js 15 app for Turks living in or moving to Germany.
+- Stack: Next.js App Router, TypeScript, React 19, Tailwind CSS, Supabase.
+- Key conventions: all user-facing content must be Turkish; use createMetadata()/createArticleMetadata() for SEO; use cn() for class merging; prefer Server Components unless client hooks/browser APIs are needed.
+- Structure: app/(marketing) public pages, app/(site) interactive tools/content, app/(devuser) authenticated dashboard, app/admin password-protected admin.
+- Deployment/build notes: standalone Next output, npm is the package manager.

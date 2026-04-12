@@ -1,0 +1,4 @@
+- Run `npm run lint` after code changes.
+- Keep user-facing strings in Turkish.
+- Preserve Next.js route patterns and use Link/Button asChild for internal navigation.
+- Do not use bun; use npm for package operations.
