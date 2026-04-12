@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "node .next/standalone/server.js",
     "lint": "eslint .",
+    "verify:seo": "node scripts/verify-seo.mjs",
     "import:tuerkische-aerzte": "node scripts/import-tuerkische-aerzte.mjs",
     "import:tuerkische-aerzte:apply": "node scripts/import-tuerkische-aerzte.mjs --apply",
     "import:avukat24": "node scripts/import-avukat24.mjs",

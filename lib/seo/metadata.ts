@@ -1,5 +1,11 @@
 import type { Metadata } from 'next';
-import { SITE_NAME, SITE_URL, DEFAULT_META } from '@/lib/utils/constants';
+import {
+  DEFAULT_KEYWORDS,
+  DEFAULT_META,
+  DEFAULT_OG_IMAGE,
+  SEO_SITE_NAME,
+  SITE_URL,
+} from '@/lib/utils/constants';
 
 /**
  * Create metadata for a page
@@ -10,23 +16,37 @@ export function createMetadata(options: {
   path?: string;
   image?: string;
   noIndex?: boolean;
+  absoluteTitle?: boolean;
+  keywords?: readonly string[];
+  openGraphType?: 'website' | 'article';
 }): Metadata {
-  const { title, description, path = '', image = '/images/og-default.jpg', noIndex = false } = options;
+  const {
+    title,
+    description,
+    path = '',
+    image = DEFAULT_OG_IMAGE,
+    noIndex = false,
+    absoluteTitle = false,
+    keywords = DEFAULT_KEYWORDS,
+    openGraphType = 'website',
+  } = options;
 
-  const url = `${SITE_URL}${path}`;
+  const url = new URL(path || '/', SITE_URL).toString();
   const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${SITE_URL}${image}`;
-  const fullTitle = `${title} | ${SITE_NAME}`;
+  const resolvedTitle = absoluteTitle ? title : `${title} | ${SEO_SITE_NAME}`;
 
   return {
     ...DEFAULT_META,
-    title: fullTitle,
+    title: resolvedTitle,
     description,
+    keywords: [...keywords],
     alternates: {
       canonical: url,
     },
     openGraph: {
       ...DEFAULT_META.openGraph,
-      title: fullTitle,
+      type: openGraphType,
+      title: resolvedTitle,
       description,
       url,
       images: [
@@ -34,13 +54,13 @@ export function createMetadata(options: {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: resolvedTitle,
         },
       ],
     },
     twitter: {
       ...DEFAULT_META.twitter,
-      title: fullTitle,
+      title: resolvedTitle,
       description,
       images: [imageUrl],
     },
@@ -66,19 +86,18 @@ export function createArticleMetadata(options: {
     description,
     publishedTime,
     modifiedTime,
-    authors = ['almanya101'],
+    authors = [SEO_SITE_NAME],
     tags = [],
     path,
-    image = '/images/og-default.jpg',
+    image = DEFAULT_OG_IMAGE,
   } = options;
 
-  const baseMetadata = createMetadata({ title, description, path, image });
+  const baseMetadata = createMetadata({ title, description, path, image, openGraphType: 'article' });
 
   return {
     ...baseMetadata,
     openGraph: {
       ...baseMetadata.openGraph!,
-      type: 'article',
       publishedTime,
       modifiedTime,
       authors,

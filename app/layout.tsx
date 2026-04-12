@@ -5,6 +5,14 @@ import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/components/seo/JsonLd';
+import {
+  DEFAULT_KEYWORDS,
+  DEFAULT_META_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  DEFAULT_SEO_TITLE,
+  SEO_SITE_NAME,
+  SITE_URL,
+} from '@/lib/utils/constants';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,39 +23,36 @@ const inter = Inter({
 const GOATCOUNTER_ENDPOINT = 'https://almanya101de.goatcounter.com/count';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://almanya101.com'),
-  title: {
-    default: 'almanya101',
-    template: '%s | almanya101',
-  },
-  description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi, iş ilanları ve topluluk platformu.",
-  keywords: ['Almanya', 'Türkler', 'yaşam rehberi', 'iş ilanı', 'rehber', 'topluluk'],
-  authors: [{ name: 'almanya101' }],
-  creator: 'almanya101',
-  publisher: 'almanya101',
+  metadataBase: new URL(SITE_URL),
+  title: DEFAULT_SEO_TITLE,
+  description: DEFAULT_META_DESCRIPTION,
+  keywords: [...DEFAULT_KEYWORDS],
+  authors: [{ name: SEO_SITE_NAME }],
+  creator: SEO_SITE_NAME,
+  publisher: SEO_SITE_NAME,
 
   openGraph: {
     type: 'website',
     locale: 'tr_TR',
-    siteName: 'almanya101',
-    url: 'https://almanya101.com',
-    title: 'almanya101',
-    description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi",
+    siteName: SEO_SITE_NAME,
+    url: SITE_URL,
+    title: DEFAULT_SEO_TITLE,
+    description: DEFAULT_META_DESCRIPTION,
     images: [
       {
-        url: 'https://almanya101.com/images/og-default.jpg',
+        url: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
         width: 1200,
         height: 630,
-        alt: 'almanya101',
+        alt: DEFAULT_SEO_TITLE,
       },
     ],
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: 'almanya101',
-    description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi",
-    images: ['https://almanya101.com/images/og-default.jpg'],
+    title: DEFAULT_SEO_TITLE,
+    description: DEFAULT_META_DESCRIPTION,
+    images: [`${SITE_URL}${DEFAULT_OG_IMAGE}`],
   },
 
   robots: {

@@ -3,9 +3,34 @@
  * Renders JSON-LD script tags for SEO
  */
 
+import {
+  CONTACT_INFO,
+  DEFAULT_META_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  SEO_SITE_NAME,
+  SITE_URL,
+  SOCIAL_LINKS,
+} from '@/lib/utils/constants';
+
 type JsonLdProps = {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 };
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface WebPageJsonLdProps {
+  title: string;
+  description: string;
+  url: string;
+}
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
 
 export function JsonLd({ data }: JsonLdProps) {
   return (
@@ -25,20 +50,16 @@ export function OrganizationJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'almanya101',
-    url: 'https://almanya101.com',
-    logo: 'https://almanya101.com/logo.png',
-    description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi, iş ilanları ve topluluk platformu.",
-    sameAs: [
-      'https://twitter.com/almanya101',
-      'https://facebook.com/almanya101',
-      'https://instagram.com/almanya101',
-    ],
+    name: SEO_SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/almanya101.png`,
+    description: DEFAULT_META_DESCRIPTION,
+    sameAs: Object.values(SOCIAL_LINKS),
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+491234567890',
+      telephone: CONTACT_INFO.phone,
       contactType: 'customer service',
-      email: 'info@almanya101.com',
+      email: CONTACT_INFO.email,
       availableLanguage: ['Turkish', 'German', 'English'],
     },
   };
@@ -53,18 +74,60 @@ export function WebSiteJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'almanya101',
-    url: 'https://almanya101.com',
-    description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi",
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: 'https://almanya101.com/search?q={search_term_string}',
-      },
-      'query-input': 'required name=search_term_string',
-    },
+    name: SEO_SITE_NAME,
+    url: SITE_URL,
+    description: DEFAULT_META_DESCRIPTION,
     inLanguage: 'tr',
+  };
+
+  return <JsonLd data={data} />;
+}
+
+export function WebPageJsonLd({ title, description, url }: WebPageJsonLdProps) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url,
+    inLanguage: 'tr',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: SEO_SITE_NAME,
+      url: SITE_URL,
+    },
+  };
+
+  return <JsonLd data={data} />;
+}
+
+export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+
+  return <JsonLd data={data} />;
+}
+
+export function FaqJsonLd({ items }: { items: FaqItem[] }) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
   };
 
   return <JsonLd data={data} />;
@@ -80,6 +143,7 @@ interface ArticleJsonLdProps {
   dateModified?: string;
   author?: string;
   url: string;
+  image?: string;
 }
 
 export function ArticleJsonLd({
@@ -87,15 +151,18 @@ export function ArticleJsonLd({
   description,
   datePublished,
   dateModified,
-  author = 'almanya101',
+  author = SEO_SITE_NAME,
   url,
+  image = `${SITE_URL}${DEFAULT_OG_IMAGE}`,
 }: ArticleJsonLdProps) {
+  const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${SITE_URL}${image}`;
+
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: title,
     description,
-    image: 'https://almanya101.com/images/og-default.jpg',
+    image: imageUrl,
     datePublished,
     dateModified: dateModified || datePublished,
     author: {
@@ -104,10 +171,10 @@ export function ArticleJsonLd({
     },
     publisher: {
       '@type': 'Organization',
-      name: 'almanya101',
+      name: SEO_SITE_NAME,
       logo: {
         '@type': 'ImageObject',
-        url: 'https://almanya101.com/logo.png',
+        url: `${SITE_URL}/almanya101.png`,
       },
     },
     url,
@@ -127,9 +194,9 @@ export function LocalBusinessJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: 'almanya101',
-    description: "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi",
-    url: 'https://almanya101.com',
+    name: SEO_SITE_NAME,
+    description: DEFAULT_META_DESCRIPTION,
+    url: SITE_URL,
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'DE',

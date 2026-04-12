@@ -1,9 +1,12 @@
+import Link from 'next/link';
 import { createMetadata } from '@/lib/seo/metadata';
+import { BreadcrumbJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { InfoGrid } from '@/components/sections/InfoBlock';
 import { ArticleGrid } from '@/components/sections/ArticleCard';
 import { Section } from '@/components/ui/Section';
 import type { InfoBlock as InfoBlockType, Article } from '@/types';
+import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
   title: 'Almanya\'da Yaşam',
@@ -12,6 +15,7 @@ export const metadata = createMetadata({
 });
 
 export default function AlmanyaYasamPage() {
+  const pageUrl = new URL('/almanyada-yasam', SITE_URL).toString();
   const infoBlocks: InfoBlockType[] = [
     {
       id: 'ikamet',
@@ -80,6 +84,18 @@ export default function AlmanyaYasamPage() {
 
   return (
     <>
+      <WebPageJsonLd
+        title="Almanya'da Yaşam"
+        description="Almanya'da yaşamla ilgili kapsamlı bilgi rehberi. İkamet izni, sağlık sigortası, dil öğrenimi ve daha fazlası."
+        url={pageUrl}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
+          { name: "Almanya'da Yaşam", url: pageUrl },
+        ]}
+      />
+
       <HeroSection
         title="Almanya'da Yaşam Rehberi"
         description="Almanya'da yeni bir hayat kurmak isteyenler için kapsamlı rehber. Resmi işlemler, yaşam koşulları ve daha fazlası."
@@ -106,12 +122,12 @@ export default function AlmanyaYasamPage() {
         </div>
         <ArticleGrid articles={articles} columns={3} />
         <div className="text-center mt-8">
-          <a
+          <Link
             href="/rehber"
             className="text-google-blue hover:text-blue-700 font-medium transition-colors"
           >
             Tüm Rehberleri Gör →
-          </a>
+          </Link>
         </div>
       </Section>
     </>

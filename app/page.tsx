@@ -1,11 +1,15 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { createMetadata } from '@/lib/seo/metadata';
 import { NewsCarousel } from '@/components/sections/NewsCarousel';
+import { FAQ } from '@/components/sections/FAQ';
 import { LinkGridSection } from '@/components/home/LinkGridSection';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
+import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
 import { ArrowUpIcon, WhatsAppIcon } from '@/components/icons/ContactIcons';
 import { cn } from '@/lib/utils/cn';
 import { getPublishedNewsItems } from '@/lib/public-news';
+import { DEFAULT_META_DESCRIPTION, DEFAULT_SEO_TITLE, SITE_URL } from '@/lib/utils/constants';
 import {
   TOOL_ITEMS,
   OTHER_LINK_ITEMS,
@@ -13,15 +17,59 @@ import {
 import { CONTACT_CHANNELS } from '@/constants/contact-channels';
 
 export const metadata = createMetadata({
-  title: 'Ana Sayfa',
-  description:
-    "Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi rehberi, iş ilanları ve topluluk platformu.",
+  title: DEFAULT_SEO_TITLE,
+  description: DEFAULT_META_DESCRIPTION,
   path: '/',
+  absoluteTitle: true,
+  keywords: [
+    'Almanya yaşam rehberi',
+    'Almanya iş bulma',
+    'Almanya Türk topluluğu',
+    'Almanya iş ilanları',
+    'Almanya belgeler',
+  ],
 });
 
 export const dynamic = 'force-dynamic';
 
 const HOMEPAGE_ITEMS = [...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
+const HOME_PAGE_URL = new URL('/', SITE_URL).toString();
+const WHATSAPP_COMMUNITY_CHANNEL = CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp');
+const HOMEPAGE_FAQ_ITEMS = [
+  {
+    question: "Almanya'ya yeni taşınan biri önce hangi adımları tamamlamalı?",
+    answer:
+      "İlk haftalarda adres kaydı, vergi numarası, sağlık sigortası, banka hesabı ve telefon hattı gibi temel adımları tamamlamak gerekir. Ardından oturum süreci, iş arama planı ve günlük yaşam maliyetleri için güvenilir kaynaklarla ilerlemek en sağlıklı yoldur.",
+  },
+  {
+    question: 'Almanya iş bulma sürecinde hangi kaynaklara odaklanmalıyım?',
+    answer:
+      "İş ilanı platformları, sektör bazlı topluluklar, LinkedIn bağlantıları ve Almanca özgeçmiş hazırlığı birlikte yürütülmelidir. Sadece ilan bakmak yerine profilinizi, belgelerinizi ve başvuru stratejinizi aynı anda güçlendirmek daha hızlı sonuç verir.",
+  },
+  {
+    question: 'Almanya101 hangi konularda yardımcı olur?',
+    answer:
+      "Almanya101; yaşam rehberleri, iş ilanları, belgeler, uzman önerileri, araçlar ve topluluk bağlantılarıyla taşınma ve yerleşme sürecini daha net hale getirir. Amaç tek bir içerik değil, karar vermeyi kolaylaştıran bütüncül bir yol haritası sunmaktır.",
+  },
+  {
+    question: 'Topluluk neden önemli?',
+    answer:
+      "Yeni bir ülkede doğru insanlara hızlı ulaşmak zaman ve hata maliyetini ciddi biçimde azaltır. Deneyim paylaşımı, güncel tavsiyeler ve doğru yönlendirmeler; özellikle ilk aylarda resmi işlemlerden iş arayışına kadar birçok konuda fark yaratır.",
+  },
+];
+
+interface EditorialSectionProps {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  children: React.ReactNode;
+}
+
+interface ContentCardProps {
+  title: string;
+  accentClassName: string;
+  children: React.ReactNode;
+}
 
 interface SectionProps {
   backgroundImage: string;
@@ -59,26 +107,124 @@ function SectionDivider() {
   return <div className="h-[10px] bg-black" />;
 }
 
+function EditorialSection({ eyebrow, title, intro, children }: EditorialSectionProps) {
+  return (
+    <section className="bg-[#050505] py-16 md:py-24 text-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl">
+          <div className="inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+            {eyebrow}
+          </div>
+          <h2 className="mt-6 max-w-3xl text-3xl font-black leading-tight md:text-5xl">
+            {title}
+          </h2>
+          <p className="mt-5 max-w-3xl text-base leading-8 text-white/74 md:text-lg">
+            {intro}
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+function ContentCard({ title, accentClassName, children }: ContentCardProps) {
+  return (
+    <article
+      className={cn(
+        'rounded-[2rem] border bg-white/[0.03] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-sm md:p-8',
+        accentClassName
+      )}
+    >
+      <h3 className="text-2xl font-bold tracking-tight text-white">{title}</h3>
+      <div className="mt-5 space-y-4 text-sm leading-8 text-white/78 md:text-base">{children}</div>
+    </article>
+  );
+}
+
 export default async function HomePage() {
   const newsItems = await getPublishedNewsItems(12);
 
   return (
     <>
+      <WebPageJsonLd
+        title="Almanya'da Yaşam ve İş İçin Türkçe Rehber"
+        description={DEFAULT_META_DESCRIPTION}
+        url={HOME_PAGE_URL}
+      />
+      <BreadcrumbJsonLd items={[{ name: 'Ana Sayfa', url: HOME_PAGE_URL }]} />
+      <FaqJsonLd items={HOMEPAGE_FAQ_ITEMS} />
+
       <section
-        className="min-h-[820px] flex flex-col items-center relative bg-cover bg-center pt-[25px] pb-4"
+        className="min-h-[920px] flex flex-col items-center relative bg-cover bg-center pt-[25px] pb-10"
         style={{ backgroundImage: 'url(/images/backgrounds/hero.jpg)' }}
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="text-center mb-10">
+          <div className="mx-auto max-w-4xl text-center mb-10">
+            <div className="inline-flex rounded-full border border-white/15 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/80">
+              Almanya yaşam rehberi, iş fırsatları ve güçlü topluluk bağlantıları
+            </div>
             <Image
               src="/almanya101lragetransparent.png"
               alt="almanya101"
               width={420}
               height={140}
               priority
-              className="mx-auto h-24 w-auto drop-shadow-2xl sm:h-32 md:h-40"
+              className="mx-auto mt-6 h-24 w-auto drop-shadow-2xl sm:h-32 md:h-40"
             />
+
+            <h1 className="mt-6 text-3xl font-black leading-tight tracking-[-0.04em] text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              Almanya'da Yaşam ve İş İçin Türkçe Rehber
+            </h1>
+            <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-white/80 sm:text-lg">
+              Almanya'ya taşınmayı planlayan ya da halihazırda burada yaşayan Türkler için; günlük yaşam,
+              resmi işlemler, iş bulma süreci, belgeler ve topluluk bağlantıları aynı yerde toparlandı.
+              Nereden başlayacağınızı düşünmek yerine doğru sırayı, doğru kaynakları ve güvenilir yönlendirmeleri kullanın.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/is-ilanlari"
+                className="inline-flex items-center justify-center rounded-full bg-google-yellow px-6 py-3 text-sm font-semibold text-gray-900 transition hover:scale-[1.02] hover:bg-yellow-300"
+              >
+                İş İlanlarını İncele
+              </Link>
+              <Link
+                href="/haberler"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/8 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/12"
+              >
+                Güncel Haberleri Oku
+              </Link>
+              {WHATSAPP_COMMUNITY_CHANNEL ? (
+                <a
+                  href={WHATSAPP_COMMUNITY_CHANNEL.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-green-400/40 bg-green-500/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-green-300 hover:bg-green-500/25"
+                >
+                  <WhatsAppIcon className="h-5 w-5" />
+                  WhatsApp Topluluğuna Katıl
+                </a>
+              ) : null}
+            </div>
+
+            <p className="mx-auto mt-6 max-w-3xl text-sm leading-7 text-white/66 sm:text-base">
+              Ana araçlarımızla banka, sigorta, maaş, vize ve para transferi gibi pratik kararları hızlandırabilir;{' '}
+              <Link href="/belgeler" className="font-semibold text-white underline decoration-google-blue underline-offset-4">
+                belgeler
+              </Link>
+              ,{' '}
+              <Link href="/yazi-dizisi" className="font-semibold text-white underline decoration-google-yellow underline-offset-4">
+                yazı dizileri
+              </Link>
+              {' '}ve{' '}
+              <Link href="/topluluk" className="font-semibold text-white underline decoration-google-green underline-offset-4">
+                topluluk kanalları
+              </Link>
+              üzerinden bir sonraki adımınızı netleştirebilirsiniz.
+            </p>
           </div>
 
           <LinkGridSection
@@ -99,6 +245,104 @@ export default async function HomePage() {
 
       <SectionDivider />
 
+      <EditorialSection
+        eyebrow="Ana Sayfa Rehberi"
+        title="Almanya'da düzen kurmak için ihtiyaç duyulan temel bilgileri tek landing page içinde birleştirdik."
+        intro="Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
+      >
+        <ContentCard title="Almanya'da yaşam rehberi" accentClassName="border-google-blue/45">
+          <p>
+            Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, bilgi dağınıklığıdır. Adres kaydı,
+            vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,
+            insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Bu nedenle Almanya101 ana sayfasında yalnızca içerik
+            listelemek yerine, kullanıcıyı günlük hayatta en çok etkileyecek başlıklara doğrudan yönlendiren bir yapı kurduk.
+          </p>
+          <p>
+            Eğer hedefiniz yeni bir başlangıcı daha az stresle yönetmekse, önce{' '}
+            <Link href="/almanyada-yasam" className="font-semibold text-white underline decoration-google-blue underline-offset-4">
+              Almanya'da yaşam rehberi
+            </Link>
+            {' '}ve ardından{' '}
+            <Link href="/hizmet-rehberi" className="font-semibold text-white underline decoration-google-green underline-offset-4">
+              hizmet rehberi
+            </Link>
+            gibi kaynaklardan temel çerçeveyi kurmak gerekir. Böylece resmi işlem, günlük yaşam ve yerel destek başlıkları
+            ayrı ayrı değil, birbirini tamamlayan tek bir yol haritası halinde okunabilir.
+          </p>
+        </ContentCard>
+
+        <ContentCard title="İş bulma süreci" accentClassName="border-google-yellow/45">
+          <p>
+            Almanya'da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. Özgeçmişin Alman işveren beklentilerine
+            göre düzenlenmesi, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
+            dilinin anlaşılması gerekir. Birçok aday iyi profillere sahip olmasına rağmen başvuru stratejisi eksik olduğu için geri
+            dönüş alamaz. Bu yüzden ana sayfada hem araçlara hem de doğrudan iş fırsatlarına giden linkleri görünür hale getirdik.
+          </p>
+          <p>
+            Özellikle{' '}
+            <Link href="/is-ilanlari" className="font-semibold text-white underline decoration-google-yellow underline-offset-4">
+              iş ilanları
+            </Link>
+            ,{' '}
+            <Link href="/stepstone-karsilastirma" className="font-semibold text-white underline decoration-google-blue underline-offset-4">
+              maaş karşılaştırma
+            </Link>
+            {' '}ve{' '}
+            <Link href="/maas-hesaplama" className="font-semibold text-white underline decoration-google-green underline-offset-4">
+              maaş hesaplama
+            </Link>
+            sayfaları birlikte kullanıldığında kullanıcı yalnızca bir ilana başvurmakla kalmaz; aynı zamanda teklifin gerçek hayatta
+            nasıl karşılık bulacağını da görür. Bu yaklaşım, Almanya iş bulma arayışını daha ölçülebilir ve kontrollü hale getirir.
+          </p>
+        </ContentCard>
+
+        <ContentCard title="Topluluk avantajları" accentClassName="border-google-green/45">
+          <p>
+            Yeni bir ülkede doğru insanlara ulaşmak, bazen en doğru belgeyi bulmaktan bile daha değerlidir. Çünkü taşınma sürecinde
+            sorular yalnızca resmi işlemlerle sınırlı kalmaz; hangi şehir daha uygundur, ilk ev nasıl bulunur, hangi banka daha hızlı
+            hesap açar, hangi işverenler Türkçe iletişim konusunda daha rahattır gibi gündelik ama kritik kararlar ortaya çıkar.
+            Topluluk, bu noktada hazır cevap değil; deneyim filtresi sağlar.
+          </p>
+          <p>
+            Bu nedenle ana sayfada{' '}
+            <Link href="/topluluk" className="font-semibold text-white underline decoration-google-green underline-offset-4">
+              topluluk sayfası
+            </Link>
+            ve WhatsApp erişimi, yalnızca bir sosyal kanal olarak değil, güvenilir bilgi dolaşımı için temel bir yapı olarak konumlandı.
+            İnsanların birbirine yön verdiği, güncel deneyimleri paylaştığı ve yanlış bilgi maliyetini azalttığı bir topluluk; Almanya
+            Türk topluluğu arayan kullanıcılar için arama sonucundan çok daha yüksek bir değere dönüşür.
+          </p>
+        </ContentCard>
+
+        <ContentCard title="Belgeler, içerikler ve günlük aksiyon planı" accentClassName="border-white/20">
+          <p>
+            Taşınma veya yerleşme sürecinde en çok zaman kaybettiren şeylerden biri, doğru belgenin doğru anda elinizde olmamasıdır.
+            Başvuru yapılacak kurumlar değiştikçe istenen evrak listeleri de değişebilir. Bu nedenle belgeleri, haberleri ve rehber içerikleri
+            aynı yapıda görünür kılmak çok önemlidir. Kullanıcı bir yandan bilgi okurken, diğer yandan hemen kullanabileceği kontrol listelerine
+            ulaşabilmelidir.
+          </p>
+          <p>
+            Bunun için{' '}
+            <Link href="/belgeler" className="font-semibold text-white underline decoration-google-blue underline-offset-4">
+              belgeler
+            </Link>
+            ,{' '}
+            <Link href="/haberler" className="font-semibold text-white underline decoration-google-yellow underline-offset-4">
+              güncel haberler
+            </Link>
+            {' '}ve{' '}
+            <Link href="/yazi-dizisi" className="font-semibold text-white underline decoration-google-red underline-offset-4">
+              yazı dizileri
+            </Link>
+            birbirini tamamlayan modüller olarak öne çıkarıldı. Böylece kullanıcı yalnızca “ne yapmalıyım?” sorusuna değil, “bugün hangi adımı
+            tamamlamalıyım?” sorusuna da net bir cevap bulabilir. SEO açısından da bu yaklaşım, iç linkleme gücünü artırırken sayfalar arası niyet
+            geçişlerini daha doğal hale getirir.
+          </p>
+        </ContentCard>
+      </EditorialSection>
+
+      <SectionDivider />
+
       <BackgroundSection
         backgroundImage="/images/backgrounds/berlin1.jpg"
         heightClassName="h-[500px] sm:h-[540px] lg:h-[580px]"
@@ -116,26 +360,33 @@ export default async function HomePage() {
       <BackgroundSection
         backgroundImage="/images/backgrounds/berlin4.jpg"
         overlayOpacity="bg-black/70"
-        heightClassName="h-[360px]"
+        heightClassName="h-auto py-14 md:py-16"
       >
         <div className="w-full">
           <div className="text-center mb-4 sm:mb-5">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
               Topluluğumuza Katılın
             </h2>
+            <p className="mx-auto max-w-3xl text-sm leading-7 text-white/78 sm:text-base">
+              Almanya'da yaşamı daha hızlı çözmek isteyenler için topluluk; tavsiye, deneyim ve yönlendirme akışını hızlandırır.
+              Güncel duyurular, şehir bazlı öneriler ve yeni gelenlerin en sık yaşadığı sorunlar için ortak hafıza oluşturan bu ağ,
+              özellikle ilk aylarında desteğe ihtiyaç duyan kullanıcılar için doğrudan fayda sağlar.
+            </p>
           </div>
 
-          <div className="flex justify-center mb-4 sm:mb-5">
-            <a
-              href="https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-500 text-white text-sm sm:text-base font-medium rounded-md hover:bg-green-600 transition-colors"
-            >
-              <WhatsAppIcon className="w-5 h-5" />
-              WhatsApp Topluluğuna Katıl
-            </a>
-          </div>
+          {WHATSAPP_COMMUNITY_CHANNEL ? (
+            <div className="flex justify-center mb-4 sm:mb-5">
+              <a
+                href={WHATSAPP_COMMUNITY_CHANNEL.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-500 text-white text-sm sm:text-base font-medium rounded-md hover:bg-green-600 transition-colors"
+              >
+                <WhatsAppIcon className="w-5 h-5" />
+                WhatsApp Topluluğuna Katıl
+              </a>
+            </div>
+          ) : null}
 
           <div className="text-center mb-4 sm:mb-6">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
@@ -154,6 +405,14 @@ export default async function HomePage() {
           </div>
         </div>
       </BackgroundSection>
+
+      <SectionDivider />
+
+      <FAQ
+        title="Sık Sorulan Sorular"
+        subtitle="Almanya'ya taşınma, iş bulma ve topluluğa katılma sürecinde en sık sorulan sorulara kısa cevaplar."
+        items={HOMEPAGE_FAQ_ITEMS}
+      />
 
       <a
         href="#"

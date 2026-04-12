@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
+import { SEO_SITE_NAME } from '@/lib/utils/constants';
 
 export const metadata: Metadata = {
-  title: 'Admin Panel - almanya101',
+  title: `Admin Panel | ${SEO_SITE_NAME}`,
   robots: {
     index: false,
     follow: false,

@@ -1,5 +1,13 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
+import { createMetadata } from '@/lib/seo/metadata';
+
+export const metadata = createMetadata({
+  title: 'Sayfa Bulunamadı',
+  description: 'Aradığınız sayfa bulunamadı. Almanya101 ana sayfasından devam edebilirsiniz.',
+  path: '/404',
+  noIndex: true,
+});
 
 export default function NotFound() {
   return (
