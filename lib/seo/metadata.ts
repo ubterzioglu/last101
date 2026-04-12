@@ -93,15 +93,18 @@ export function createArticleMetadata(options: {
   } = options;
 
   const baseMetadata = createMetadata({ title, description, path, image, openGraphType: 'article' });
+  const baseOpenGraph = baseMetadata.openGraph ?? {};
+  const openGraph = {
+    ...baseOpenGraph,
+    type: 'article' as const,
+    publishedTime,
+    modifiedTime,
+    authors,
+    tags,
+  } satisfies NonNullable<Metadata['openGraph']>;
 
   return {
     ...baseMetadata,
-    openGraph: {
-      ...baseMetadata.openGraph!,
-      publishedTime,
-      modifiedTime,
-      authors,
-      tags,
-    },
+    openGraph,
   };
 }
