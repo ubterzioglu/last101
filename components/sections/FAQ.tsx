@@ -21,10 +21,10 @@ const FAQ_ACCENT_STYLES = [
     hover: 'hover:text-google-red',
   },
   {
-    border: 'border-google-yellow/40',
-    background: 'bg-google-yellow/8',
-    openBackground: 'bg-google-yellow/12',
-    icon: 'border-google-yellow/40 bg-google-yellow/12 text-google-yellow',
+    border: 'border-google-yellow/50',
+    background: 'bg-google-yellow/12',
+    openBackground: 'bg-google-yellow/18',
+    icon: 'border-google-yellow/50 bg-google-yellow/18 text-google-yellow',
     hover: 'hover:text-google-yellow',
   },
   {

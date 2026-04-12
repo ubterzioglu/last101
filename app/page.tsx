@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
 import { createMetadata } from '@/lib/seo/metadata';
 import { NewsCarousel } from '@/components/sections/NewsCarousel';
 import { FAQ } from '@/components/sections/FAQ';
@@ -86,9 +87,9 @@ const GUIDE_CARD_STYLES = {
     hover: 'hover:text-google-red',
   },
   yellow: {
-    border: 'border-google-yellow/40',
-    background: 'bg-google-yellow/8 group-open:bg-google-yellow/12',
-    icon: 'border-google-yellow/40 bg-google-yellow/12 text-google-yellow',
+    border: 'border-google-yellow/50',
+    background: 'bg-google-yellow/12 group-open:bg-google-yellow/18',
+    icon: 'border-google-yellow/50 bg-google-yellow/18 text-google-yellow',
     hover: 'hover:text-google-yellow',
   },
   green: {
@@ -176,16 +177,14 @@ function ContentCard({ title, tone, children, defaultOpen = false }: ContentCard
           accent.hover
         )}
       >
-        <h3 className="text-lg font-semibold leading-snug text-white md:text-[1.95rem]">{title}</h3>
-        <span
+        <h3 className="pr-4 text-lg font-semibold leading-snug text-white">{title}</h3>
+        <ChevronDown
           className={cn(
-            'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border text-lg transition group-open:rotate-180',
+            'h-10 w-10 flex-shrink-0 rounded-full border p-2 transition-transform duration-300 group-open:rotate-180',
             accent.icon
           )}
           aria-hidden="true"
-        >
-          <span className="-translate-y-[1px]">↓</span>
-        </span>
+        />
       </summary>
       <div className="border-t border-white/10 px-5 pb-6 pt-5 text-sm leading-8 text-white/84 md:px-8 md:pb-8 md:text-base">
         <div className="space-y-4">{children}</div>
