@@ -34,17 +34,14 @@ export default async function HaberlerPage() {
       <div className="min-h-screen bg-black text-white">
         <section className="relative overflow-hidden border-b border-white/10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.24),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(255,187,0,0.2),_transparent_35%)]" />
-          <div className="container relative py-16 md:py-24">
+          <div className="container relative py-12 md:py-16">
             <div className="max-w-3xl">
               <div className="inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/72">
                 Almanya101 Haber Merkezi
               </div>
               <h1 className="mt-6 text-4xl font-black leading-tight md:text-5xl">
-                Almanya, Avrupa ve topluluk gündemini tek yerde toplayalım.
+                Haberler
               </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/75">
-                Admin panelinde yayınlanan haberler ve duyurular burada otomatik olarak listelenir.
-              </p>
             </div>
           </div>
         </section>
@@ -84,9 +81,9 @@ export default async function HaberlerPage() {
                     <div className="text-sm text-white/55">
                       {article.dateLabel} · {article.readingMinutes} dk
                     </div>
-                    <h2 className="mt-3 text-2xl font-bold leading-snug">{article.title}</h2>
+                    <h2 className="mt-3 text-2xl font-bold leading-snug line-clamp-2">{article.title}</h2>
                     {article.excerpt ? (
-                      <p className="mt-3 text-sm leading-7 text-white/72">{article.excerpt}</p>
+                      <p className="mt-3 text-sm leading-6 text-white/72 line-clamp-3">{article.excerpt}</p>
                     ) : null}
                     <div className="mt-5 inline-flex items-center text-sm font-semibold text-[#7fd5ff]">
                       Haberi aç

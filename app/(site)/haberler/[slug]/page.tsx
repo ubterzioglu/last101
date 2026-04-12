@@ -108,42 +108,11 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           </div>
         </section>
 
-        <section className="container grid gap-12 py-14 md:grid-cols-[minmax(0,1fr)_320px] md:py-20">
-          <article className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 md:p-10">
+        <section className="container py-14 md:py-20">
+          <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 md:p-10">
             <div className="space-y-6 text-base leading-8 text-white/84 md:text-lg">
-              {article.excerpt ? (
-                <div>
-                  <h2 className="text-2xl font-bold">Özet</h2>
-                  <p className="mt-4">{article.excerpt}</p>
-                </div>
-              ) : (
-                <div>
-                  <h2 className="text-2xl font-bold">Özet</h2>
-                  <p className="mt-4 text-white/70">Bu kayıt için ayrıca özet metni girilmemiş.</p>
-                </div>
-              )}
-
-              <div className="grid gap-4 rounded-[1.5rem] border border-white/10 bg-black/20 p-5 md:grid-cols-2">
-                <div>
-                  <div className="text-sm uppercase tracking-[0.16em] text-white/45">Yayın Tarihi</div>
-                  <div className="mt-2 font-semibold">{article.dateLabel}</div>
-                </div>
-                <div>
-                  <div className="text-sm uppercase tracking-[0.16em] text-white/45">Kategori</div>
-                  <div className="mt-2 font-semibold">{article.category}</div>
-                </div>
-                <div>
-                  <div className="text-sm uppercase tracking-[0.16em] text-white/45">Okuma Süresi</div>
-                  <div className="mt-2 font-semibold">{article.readingMinutes} dakika</div>
-                </div>
-                <div>
-                  <div className="text-sm uppercase tracking-[0.16em] text-white/45">Kaynak</div>
-                  <div className="mt-2 font-semibold">{article.sourceName || 'Belirtilmedi'}</div>
-                </div>
-              </div>
-
               {article.sourceUrl ? (
-                <div>
+                <div className="text-center">
                   <a
                     href={article.sourceUrl}
                     target="_blank"
@@ -155,32 +124,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
                 </div>
               ) : null}
             </div>
-          </article>
-
-          <aside className="space-y-6">
-            <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
-              <h2 className="text-xl font-bold">Diğer Haberler</h2>
-              <div className="mt-5 space-y-4">
-                {relatedArticles.length === 0 ? (
-                  <p className="text-sm leading-7 text-white/65">Şu anda başka yayınlanmış haber bulunmuyor.</p>
-                ) : (
-                  relatedArticles.map((related) => (
-                    <Link
-                      key={related.slug}
-                      href={related.href}
-                      className="block rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-white/25 hover:bg-white/[0.06]"
-                    >
-                      <div className="text-xs uppercase tracking-[0.16em] text-white/45">
-                        {related.category}
-                      </div>
-                      <div className="mt-2 font-semibold leading-6">{related.title}</div>
-                      <div className="mt-2 text-sm text-white/60">{related.dateLabel}</div>
-                    </Link>
-                  ))
-                )}
-              </div>
-            </div>
-          </aside>
+          </div>
         </section>
       </div>
     </>

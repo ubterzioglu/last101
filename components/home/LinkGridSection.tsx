@@ -45,7 +45,7 @@ export function LinkGridSection({
         {(title || subtitle) && (
           <div className={cn('text-center', titleMarginSmall ? 'mb-2' : 'mb-6')}>
             {title && (
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
                 {title}
               </h2>
             )}
