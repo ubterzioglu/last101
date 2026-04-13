@@ -369,70 +369,40 @@ export default function HomeNewsAdminClient() {
         </div>
       </section>
 
-      <section className="container grid gap-6 py-8 xl:grid-cols-[380px_minmax(0,1fr)]">
+      <section className="container py-8 space-y-6">
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-xl font-bold">{editingId ? 'Düzenle' : 'Yeni haber / duyuru ekle'}</h2>
-          <p className="mt-2 text-xs text-white/60">
-            {editingId
-              ? 'Düzenlemeyi bitirince güncelleyin, vazgeçerseniz düzenlemeyi iptal edin.'
-              : 'Başlangıç sürümünde temel alanları kaydediyoruz.'}
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h2 className="text-xl font-bold">{editingId ? 'Düzenle' : 'Yeni haber / duyuru ekle'}</h2>
+              <p className="mt-2 text-xs text-white/60">
+                {editingId
+                  ? 'Düzenlemeyi bitirince güncelleyin, vazgeçerseniz düzenlemeyi iptal edin.'
+                  : 'Başlangıç sürümünde temel alanları kaydediyoruz.'}
+              </p>
+            </div>
+            {editingId ? (
+              <button
+                type="button"
+                onClick={handleCancelEdit}
+                className="rounded-lg border border-white/15 bg-white/[0.05] px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
+              >
+                İptal
+              </button>
+            ) : null}
+          </div>
 
-          <form className="mt-5 space-y-3" onSubmit={handleCreateSubmit}>
-            <label className="block">
-              <span className="mb-1.5 block text-xs text-white/70">Başlık</span>
-              <input
-                value={form.title}
-                onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
-                className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
-                placeholder="Haber başlığı"
-              />
-            </label>
+          <form className="space-y-3" onSubmit={handleCreateSubmit}>
+            <div className="grid gap-3 md:grid-cols-[1fr_200px_200px]">
+              <label className="block">
+                <span className="mb-1.5 block text-xs text-white/70">Başlık</span>
+                <input
+                  value={form.title}
+                  onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
+                  className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                  placeholder="Haber başlığı"
+                />
+              </label>
 
-            <label className="block">
-              <span className="mb-1.5 block text-xs text-white/70">Özet (kısa açıklama)</span>
-              <textarea
-                value={form.summary}
-                onChange={(event) => setForm((prev) => ({ ...prev, summary: event.target.value }))}
-                className="min-h-24 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
-                placeholder="Listelerde görünecek kısa özet (150-200 karakter)"
-                maxLength={500}
-              />
-              <div className="mt-1 text-[10px] text-white/40">{form.summary.length}/500 karakter</div>
-            </label>
-
-            <label className="block !mt-4">
-              <span className="mb-1.5 block text-xs text-white/70">İçerik (tam metin - Markdown destekli)</span>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <textarea
-                    value={form.content}
-                    onChange={(event) => setForm((prev) => ({ ...prev, content: event.target.value }))}
-                    className="min-h-96 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue font-mono"
-                    placeholder="Haber içeriğini buraya yazın. Markdown desteklenir.
-
-Örnek:
-## Başlık
-Alt metin...
-
-### Alt başlık
-- Madde 1
-- Madde 2
-
-**Kalın** ve *italik* metin kullanabilirsiniz."
-                  />
-                  <div className="mt-1 text-[10px] text-white/40">Markdown formatında yazın</div>
-                </div>
-                <div>
-                  <span className="mb-2 block text-xs text-white/60">Önizleme</span>
-                  <div className="min-h-96 rounded-lg border border-white/10 bg-white/[0.02] p-4">
-                    <MarkdownPreview content={form.content} />
-                  </div>
-                </div>
-              </div>
-            </label>
-
-            <div className="grid grid-cols-2 gap-3">
               <label className="block">
                 <span className="mb-1.5 block text-xs text-white/70">Kategori</span>
                 <select
@@ -473,16 +443,59 @@ Alt metin...
             </div>
 
             <label className="block">
-              <span className="mb-1.5 block text-xs text-white/70">Kapak görseli URL</span>
-              <input
-                value={form.coverImageUrl}
-                onChange={(event) => setForm((prev) => ({ ...prev, coverImageUrl: event.target.value }))}
-                className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
-                placeholder="https://..."
+              <span className="mb-1.5 block text-xs text-white/70">Özet (kısa açıklama)</span>
+              <textarea
+                value={form.summary}
+                onChange={(event) => setForm((prev) => ({ ...prev, summary: event.target.value }))}
+                className="min-h-20 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                placeholder="Listelerde görünecek kısa özet (150-200 karakter)"
+                maxLength={500}
               />
+              <div className="mt-1 text-[10px] text-white/40">{form.summary.length}/500 karakter</div>
             </label>
 
-            <div className="grid grid-cols-2 gap-3">
+            <label className="block !mt-4">
+              <span className="mb-1.5 block text-xs text-white/70">İçerik (tam metin - Markdown destekli)</span>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <textarea
+                    value={form.content}
+                    onChange={(event) => setForm((prev) => ({ ...prev, content: event.target.value }))}
+                    className="min-h-80 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue font-mono"
+                    placeholder="Haber içeriğini buraya yazın. Markdown desteklenir.
+
+Örnek:
+## Başlık
+Alt metin...
+
+### Alt başlık
+- Madde 1
+- Madde 2
+
+**Kalın** ve *italik* metin kullanabilirsiniz."
+                  />
+                  <div className="mt-1 text-[10px] text-white/40">Markdown formatında yazın</div>
+                </div>
+                <div>
+                  <span className="mb-2 block text-xs text-white/60">Önizleme</span>
+                  <div className="min-h-80 rounded-lg border border-white/10 bg-white/[0.02] p-4">
+                    <MarkdownPreview content={form.content} />
+                  </div>
+                </div>
+              </div>
+            </label>
+
+            <div className="grid gap-3 md:grid-cols-3">
+              <label className="block">
+                <span className="mb-1.5 block text-xs text-white/70">Kapak görseli URL</span>
+                <input
+                  value={form.coverImageUrl}
+                  onChange={(event) => setForm((prev) => ({ ...prev, coverImageUrl: event.target.value }))}
+                  className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                  placeholder="https://..."
+                />
+              </label>
+
               <label className="block">
                 <span className="mb-1.5 block text-xs text-white/70">Kaynak adı</span>
                 <input
@@ -548,74 +561,64 @@ Alt metin...
                     ? 'Düzenlemeyi Kaydet'
                     : 'Kaydı Oluştur'}
               </button>
-              {editingId ? (
-                <button
-                  type="button"
-                  onClick={handleCancelEdit}
-                  className="rounded-lg border border-white/15 bg-white/[0.05] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
-                >
-                  İptal
-                </button>
-              ) : null}
             </div>
           </form>
         </div>
 
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-              <div className="text-xs text-white/55">Toplam</div>
-              <div className="mt-1 text-2xl font-black">{stats.total}</div>
-            </div>
-            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-              <div className="text-xs text-white/55">Taslak</div>
-              <div className="mt-1 text-2xl font-black">{stats.draft}</div>
-            </div>
-            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-              <div className="text-xs text-white/55">Yayında</div>
-              <div className="mt-1 text-2xl font-black">{stats.published}</div>
-            </div>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+            <div className="text-xs text-white/55">Toplam</div>
+            <div className="mt-1 text-2xl font-black">{stats.total}</div>
           </div>
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+            <div className="text-xs text-white/55">Taslak</div>
+            <div className="mt-1 text-2xl font-black">{stats.draft}</div>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+            <div className="text-xs text-white/55">Yayında</div>
+            <div className="mt-1 text-2xl font-black">{stats.published}</div>
+          </div>
+        </div>
 
-          {editingId ? (() => {
-            const editingItem = rows.find((item) => item.id === editingId);
-            if (!editingItem) return null;
-            const effectiveDate = editingItem.published_at || editingItem.created_at;
+        {editingId ? (() => {
+          const editingItem = rows.find((item) => item.id === editingId);
+          if (!editingItem) return null;
+          const effectiveDate = editingItem.published_at || editingItem.created_at;
 
-            return (
-              <div className="rounded-xl border border-google-yellow/30 bg-google-yellow/5 p-5">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="rounded-full bg-google-yellow/20 border border-google-yellow/30 px-3 py-1 text-xs font-semibold text-google-yellow">
-                    Düzenleniyor
-                  </div>
-                  <span className="text-xs text-white/60">{formatDate(effectiveDate)}</span>
+          return (
+            <div className="rounded-xl border border-google-yellow/30 bg-google-yellow/5 p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="rounded-full bg-google-yellow/20 border border-google-yellow/30 px-3 py-1 text-xs font-semibold text-google-yellow">
+                  Düzenleniyor
                 </div>
+                <span className="text-xs text-white/60">{formatDate(effectiveDate)}</span>
+              </div>
 
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="max-w-xl">
-                    <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-wider text-white/45">
-                      <span className={editingItem.category === 'Duyuru' ? 'text-google-yellow' : ''}>{editingItem.category}</span>
-                      <span>{editingItem.status === 'published' ? 'Yayında' : 'Taslak'}</span>
-                    </div>
-                    <h3 className="mt-2 text-lg font-bold">{editingItem.title}</h3>
-                    {editingItem.summary ? (
-                      <p className="mt-2 text-xs leading-relaxed text-white/60">
-                        {editingItem.summary}
-                      </p>
-                    ) : null}
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="max-w-xl">
+                  <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-wider text-white/45">
+                    <span className={editingItem.category === 'Duyuru' ? 'text-google-yellow' : ''}>{editingItem.category}</span>
+                    <span>{editingItem.status === 'published' ? 'Yayında' : 'Taslak'}</span>
                   </div>
-                </div>
-
-                <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-white/50">
-                  <span>Okuma: {editingItem.reading_minutes || 0} dk</span>
-                  {editingItem.source_name ? <span>Kaynak: {editingItem.source_name}</span> : null}
-                  <span>Carousel: {editingItem.show_in_carousel ? 'Açık' : 'Kapalı'}</span>
+                  <h3 className="mt-2 text-lg font-bold">{editingItem.title}</h3>
+                  {editingItem.summary ? (
+                    <p className="mt-2 text-xs leading-relaxed text-white/60">
+                      {editingItem.summary}
+                    </p>
+                  ) : null}
                 </div>
               </div>
-            );
-          })() : null}
 
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-white/50">
+                <span>Okuma: {editingItem.reading_minutes || 0} dk</span>
+                {editingItem.source_name ? <span>Kaynak: {editingItem.source_name}</span> : null}
+                <span>Carousel: {editingItem.show_in_carousel ? 'Açık' : 'Kapalı'}</span>
+              </div>
+            </div>
+          );
+        })() : null}
+
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <h2 className="text-xl font-bold">Haber akışı</h2>
               <div className="text-xs text-white/55">{filteredCountLabel}</div>
@@ -780,7 +783,6 @@ Alt metin...
               )}
             </div>
           </div>
-        </div>
       </section>
     </div>
   );
