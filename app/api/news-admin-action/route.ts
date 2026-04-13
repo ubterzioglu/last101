@@ -98,8 +98,8 @@ export async function POST(request: NextRequest) {
 
   try {
     if (action === 'create') {
-      const title = normalizeText(body.title, 180);
-      const summary = normalizeText(body.summary, 600);
+      const title = normalizeText(body.title, 255);
+      const summary = normalizeText(body.summary, 100000);
       const category = normalizeCategory(body.category) || 'Almanya';
       const status = normalizeStatus(body.status) || 'draft';
       const coverImageUrl = normalizeOptionalUrl(body.coverImageUrl);
@@ -135,8 +135,8 @@ export async function POST(request: NextRequest) {
     }
 
     if (action === 'update') {
-      const title = normalizeText(body.title, 180);
-      const summary = normalizeText(body.summary, 600);
+      const title = normalizeText(body.title, 255);
+      const summary = normalizeText(body.summary, 100000);
       const category = normalizeCategory(body.category) || 'Almanya';
       const status = normalizeStatus(body.status) || 'draft';
       const coverImageUrl = normalizeOptionalUrl(body.coverImageUrl);

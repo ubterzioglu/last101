@@ -108,10 +108,10 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           </div>
         </section>
 
-        <section className="container py-14 md:py-20">
-          <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 md:p-10">
-            <div className="space-y-6 text-base leading-8 text-white/84 md:text-lg">
-              {article.sourceUrl ? (
+        {article.sourceUrl ? (
+          <section className="container py-14 md:py-20">
+            <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 md:p-10">
+              <div className="space-y-6 text-base leading-8 text-white/84 md:text-lg">
                 <div className="text-center">
                   <a
                     href={article.sourceUrl}
@@ -122,10 +122,10 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
                     Kaynak bağlantısını aç
                   </a>
                 </div>
-              ) : null}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
       </div>
     </>
   );

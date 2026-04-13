@@ -1,5 +1,4 @@
 import { createMetadata } from '@/lib/seo/metadata';
-import { HeroSection } from '@/components/sections/HeroSection';
 import { Section } from '@/components/ui/Section';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
 import { CONTACT_CHANNELS } from '@/constants/contact-channels';
@@ -12,19 +11,12 @@ export const metadata = createMetadata({
 
 export default function IletisimPage() {
   return (
-    <>
-      <HeroSection
-        title="İletişim"
-        description="Bizimle sosyal medya hesaplarımız üzerinden iletişime geçebilirsiniz."
-        centered={true}
-        className="bg-google-green"
-      />
-
+    <div className="min-h-screen bg-black pt-32 pb-16">
       <Section contained>
         <div className="flex flex-col items-center justify-center min-h-[40vh]">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Sosyal Medya Kanallarımız</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Sosyal Medya Kanallarımız</h2>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
               Aşağıdaki platformlar üzerinden bizi takip edebilir ve iletişime geçebilirsiniz.
             </p>
           </div>
@@ -41,6 +33,6 @@ export default function IletisimPage() {
           </div>
         </div>
       </Section>
-    </>
+    </div>
   );
 }

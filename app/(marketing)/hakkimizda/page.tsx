@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import { createMetadata } from '@/lib/seo/metadata';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { InfoGrid } from '@/components/sections/InfoBlock';
 import { FeatureGrid } from '@/components/sections/FeatureGrid';
 import { Section } from '@/components/ui/Section';
-import type { InfoBlock as InfoBlockType, Feature } from '@/types';
+import type { Feature } from '@/types';
 
 export const metadata = createMetadata({
   title: 'Hakkımızda',
@@ -13,31 +12,6 @@ export const metadata = createMetadata({
 });
 
 export default function HakkimizdaPage() {
-  const infoBlocks: InfoBlockType[] = [
-    {
-      id: 'misyon',
-      title: 'Misyonumuz',
-      icon: '🎯',
-      items: [
-        'Almanya\'da yaşayan Türklerin yaşamlarını kolaylaştırmak',
-        'Doğru ve güncel bilgileri sağlamak',
-        'Topluluk bilinci oluşturmak',
-        'Birbirimizi desteklemeyi teşvik etmek',
-      ],
-    },
-    {
-      id: 'vizyon',
-      title: 'Vizyonumuz',
-      icon: '🌟',
-      items: [
-        'Türk topluluğunun en güvenilir bilgi kaynağı olmak',
-        'Almanya ile Türkiye arasında köprü olmak',
-        'Herkesin eşit şartlarda fırsatlara erişmesini sağlamak',
-        'Kapsayıcı bir topluluk oluşturmak',
-      ],
-    },
-  ];
-
   const features: Feature[] = [
     {
       id: '1',
@@ -66,75 +40,52 @@ export default function HakkimizdaPage() {
   ];
 
   return (
-    <>
+    <div className="bg-black min-h-screen text-white">
       <HeroSection
         title="Hakkımızda"
         description="almanya101 hakkında bilgi edinin. Biz kimiz, ne yapıyoruz ve neden yapıyoruz?"
         centered={false}
-        className="bg-google-blue"
+        className="bg-black border-b border-white/10"
       />
 
-      <Section contained>
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Biz Kimiz?</h2>
-          <p className="text-lg text-gray-600 max-w-3xl">
-            almanya101, Almanya'da yaşayan veya taşınmayı planlayan Türkler için oluşturulmuş kapsamlı bir bilgi ve topluluk platformudur.
-            Amacımız, Almanya'daki Türk topluluğunun yaşamlarını kolaylaştırmak ve onları birbirleriyle birleştirmektir.
-          </p>
-        </div>
-
-        <InfoGrid blocks={infoBlocks} columns={2} />
-      </Section>
-
       {/* Biz Kimiz - Ekip Kartları */}
-      <Section contained className="bg-gray-50 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Biz Kimiz?</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+      <Section contained className="py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-black text-white mb-6">Biz Kimiz?</h2>
+          <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
             almanya101'i birlikte büyüten, bilgi ve deneyimlerini paylaşan ekibimizle tanışın.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
           {/* Umut Barış Terzioğlu */}
-          <div className="relative rounded-2xl overflow-hidden shadow-xl">
-            {/* Background Image */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: 'url(/images/backgrounds/berlin-skyline.jpg)' }}
-            />
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/60" />
+          <div className="relative rounded-[2rem] overflow-hidden border border-google-yellow/30 bg-google-yellow/5 backdrop-blur-md transition-all duration-500 hover:bg-google-yellow/10 hover:border-google-yellow/50 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(251,188,4,0.15)] group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-google-yellow/10 rounded-full blur-[80px] -z-10 group-hover:bg-google-yellow/20 transition-all duration-500"></div>
             
-            {/* Content */}
-            <div className="relative z-10 p-8 md:p-10 flex flex-col items-center text-center">
-              {/* Profile Image */}
-              <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-google-yellow mb-6 shadow-lg">
+            <div className="relative z-10 p-8 md:p-12 flex flex-col items-center text-center">
+              <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-google-yellow mb-8 shadow-[0_0_20px_rgba(251,188,4,0.3)] group-hover:scale-105 transition-transform duration-500">
                 <Image
                   src="/images/profil.jpg"
                   alt="Umut Barış Terzioğlu"
                   className="w-full h-full object-cover"
-                  width={144}
-                  height={144}
+                  width={160}
+                  height={160}
                 />
               </div>
               
-              {/* Name & Title */}
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">Umut Barış Terzioğlu</h3>
-              <p className="text-gray-300 mb-6">Kurucu</p>
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Umut Barış Terzioğlu</h3>
+              <p className="text-google-yellow font-medium text-lg mb-8 tracking-wide uppercase">Kurucu</p>
               
-              {/* Button */}
               <a
                 href="https://ubterzioglu.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-2.5 bg-google-yellow text-gray-900 font-medium rounded-md hover:bg-yellow-400 transition-colors mb-6"
+                className="inline-flex items-center justify-center px-8 py-3 bg-google-yellow text-black font-bold rounded-full hover:bg-yellow-400 hover:shadow-[0_0_20px_rgba(251,188,4,0.4)] transition-all duration-300 mb-10"
               >
                 Kişisel Web Sayfam
               </a>
               
-              {/* Bio Text */}
-              <div className="text-gray-200 text-sm md:text-base leading-relaxed space-y-4 text-left">
+              <div className="text-white/80 text-base md:text-lg leading-relaxed space-y-5 text-left font-light">
                 <p>
                   Ben Umut Barış Terzioğlu. Türkiye'de Barış, Almanya'da Umut :) 1985 doğumluyum. 
                   Aslen Makine Mühendisiyim; bugünlerde yazılım tarafında çalışıyorum. 2021'den beri 
@@ -159,50 +110,38 @@ export default function HakkimizdaPage() {
                 </p>
               </div>
               
-              {/* Highlighted Text */}
-              <p className="text-google-yellow font-medium text-sm md:text-base mt-6 text-left">
-                almanya101.de yaşayan bir platform. Zamanla gelişiyor, büyüyor ve katkılarla daha da güçleniyor. 
-                Eğer burada birine yardımcı olabiliyorsak, doğru yoldayız demektir.
-              </p>
+              <div className="mt-8 p-6 rounded-2xl bg-google-yellow/10 border border-google-yellow/20">
+                <p className="text-google-yellow font-medium text-base md:text-lg text-left italic">
+                  "almanya101.de yaşayan bir platform. Zamanla gelişiyor, büyüyor ve katkılarla daha da güçleniyor. 
+                  Eğer burada birine yardımcı olabiliyorsak, doğru yoldayız demektir."
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Şahincan Özbakır */}
-          <div className="relative rounded-2xl overflow-hidden shadow-xl">
-            {/* Background Image */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: 'url(/images/backgrounds/berlin-skyline.jpg)' }}
-            />
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/60" />
+          <div className="relative rounded-[2rem] overflow-hidden border border-google-blue/30 bg-google-blue/5 backdrop-blur-md transition-all duration-500 hover:bg-google-blue/10 hover:border-google-blue/50 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(66,133,244,0.15)] group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-google-blue/10 rounded-full blur-[80px] -z-10 group-hover:bg-google-blue/20 transition-all duration-500"></div>
             
-            {/* Content */}
-            <div className="relative z-10 p-8 md:p-10 flex flex-col items-center text-center">
-              {/* Profile Image */}
-              <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-google-blue mb-6 shadow-lg">
+            <div className="relative z-10 p-8 md:p-12 flex flex-col items-center text-center">
+              <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-google-blue mb-8 shadow-[0_0_20px_rgba(66,133,244,0.3)] group-hover:scale-105 transition-transform duration-500">
                 <Image
                   src="/images/sahin-profil.jpeg"
                   alt="Şahincan Özbakır"
                   className="w-full h-full object-cover"
-                  width={144}
-                  height={144}
+                  width={160}
+                  height={160}
                 />
               </div>
               
-              {/* Name & Title */}
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">Şahincan Özbakır</h3>
-              <p className="text-gray-300 mb-6">Kurucu & Yazılım Geliştirici</p>
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Şahincan Özbakır</h3>
+              <p className="text-google-blue font-medium text-lg mb-8 tracking-wide uppercase">Kurucu & Yazılım Geliştirici</p>
               
-              {/* Button */}
-              <button
-                className="inline-flex items-center justify-center px-6 py-2.5 bg-google-blue text-white font-medium rounded-md hover:bg-blue-600 transition-colors mb-6 cursor-default"
-              >
+              <div className="inline-flex items-center justify-center px-8 py-3 bg-google-blue/20 border border-google-blue/50 text-white font-semibold rounded-full mb-10">
                 2026'dan Beri Ekibimizde
-              </button>
+              </div>
               
-              {/* Bio Text */}
-              <div className="text-gray-200 text-sm md:text-base leading-relaxed space-y-4 text-left">
+              <div className="text-white/80 text-base md:text-lg leading-relaxed space-y-5 text-left font-light">
                 <p>
                   1994 İstanbul doğumluyum. Aslen turizm profesyoneli olarak başladığım kariyerime, 
                   2021 tarihinden beri yazılım geliştirme alanında çalışıyorum.
@@ -224,40 +163,45 @@ export default function HakkimizdaPage() {
                 </p>
               </div>
               
-              {/* Highlighted Text */}
-              <p className="text-google-blue font-medium text-sm md:text-base mt-6 text-left">
-                2026 yılında almanya101 ailesine katıldım ve UBT ile bir şeyler yapmaya uğraşıyoruz. 
-                Gelin beraber büyümeye devam edelim. Paylaşalım, eğitelim, destek olalım.
-              </p>
+              <div className="mt-auto pt-8 w-full">
+                <div className="p-6 rounded-2xl bg-google-blue/10 border border-google-blue/20">
+                  <p className="text-google-blue font-medium text-base md:text-lg text-left italic">
+                    "2026 yılında almanya101 ailesine katıldım ve UBT ile bir şeyler yapmaya uğraşıyoruz. 
+                    Gelin beraber büyümeye devam edelim. Paylaşalım, eğitelim, destek olalım."
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </Section>
 
-      <Section contained>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Değerlerimiz</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+      <Section contained className="py-20 border-t border-white/10">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-black text-white mb-6">Değerlerimiz</h2>
+          <p className="text-xl text-white/70 max-w-2xl mx-auto">
             Her şeyi yaparken bu değerleri dikkate alıyoruz.
           </p>
         </div>
-        <FeatureGrid features={features} columns={4} />
+        <div className="rounded-2xl bg-white/5 border border-white/10 p-8">
+          <FeatureGrid features={features} columns={4} />
+        </div>
       </Section>
 
-      <Section contained>
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Bize Katılın</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+      <Section contained className="py-20 mb-10">
+        <div className="text-center py-16 px-6 bg-gradient-to-br from-white/5 to-white/10 border border-white/10 rounded-[2rem] backdrop-blur-sm max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-black text-white mb-6">Bize Katılın</h2>
+          <p className="text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
             Eğer bizimle çalışmak, içerik üretmek veya diğer şekillerde katkıda bulunmak istiyorsanız, bizimle iletişime geçin.
           </p>
           <a
             href="/iletisim"
-            className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-google-blue rounded-md hover:bg-blue-600 transition-colors"
+            className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-black bg-white rounded-full hover:bg-gray-200 hover:scale-105 transition-all duration-300"
           >
             İletişime Geçin
           </a>
         </div>
       </Section>
-    </>
+    </div>
   );
 }

@@ -23,7 +23,7 @@ export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
             className="mx-auto mt-6 h-24 w-auto drop-shadow-2xl sm:h-32 md:h-40"
           />
 
-          <h1 className="mt-6 text-3xl font-black leading-tight tracking-[-0.04em] text-white sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="mt-6 mb-4 text-3xl font-bold text-white md:text-4xl">
             Almanya&apos;da Yaşam ve İş İçin Türkçe Rehber
           </h1>
           <p className="mx-auto mt-5 max-w-4xl text-base leading-8 text-white sm:text-lg">
