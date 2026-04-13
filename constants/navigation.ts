@@ -66,6 +66,18 @@ export const DRAWER_ITEMS: DrawerItem[] = [
     description: 'Doktor, avukat, restoran, market için Türkçe destek bulun.',
     category: 'tools',
   },
+  {
+    href: '/is-ilanlari',
+    label: 'İş İlanları',
+    description: 'Almanya\'daki işe alım ajanslarını inceleyin.',
+    category: 'tools',
+  },
+  {
+    href: '/stepstone-karsilastirma',
+    label: 'StepStone Maaş Karşılaştırma',
+    description: 'StepStone\'da maaşlarınızı karşılaştırın.',
+    category: 'tools',
+  },
 
   // Community
   {
@@ -98,6 +110,12 @@ export const DRAWER_ITEMS: DrawerItem[] = [
     href: '/software-hub',
     label: 'Software Hub',
     description: 'Yazılım projeleri ve araçları.',
+    category: 'content',
+  },
+  {
+    href: '/hizmet-rehberi/oneri',
+    label: 'Hizmet Öner',
+    description: 'Yeni uzman ekleyin veya hizmet önerin.',
     category: 'content',
   },
 
