@@ -7,7 +7,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     description: 'Üst düzey yönetici arama & İK danışmanlığı',
     status: 'active',
     category: 'İş Bulma Ajansları',
-    subCategory: 'Üst Düzey Yönetici Arama',
     subCategory: 'Üst Düzey Yönetici Arama'
   },
   {
