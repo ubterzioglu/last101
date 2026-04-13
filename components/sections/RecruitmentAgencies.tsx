@@ -198,13 +198,14 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
       {filteredAgencies.length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-500">Aramanızla eşleşen ajans bulunamadı.</p>
-          <button 
-            onClick={() => {
-              setSearchTerm('');
-              setSelectedCategory('Tüm Kategoriler');
-            }}
-            className="mt-2 text-google-blue hover:underline"
-          >
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedMainCategory('Tüm Kategoriler');
+                setSelectedSubCategory('Tümü');
+              }}
+              className="mt-2 text-google-blue hover:underline"
+            >
             Filtreleri temizle
           </button>
         </div>
