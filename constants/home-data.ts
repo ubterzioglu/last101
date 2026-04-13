@@ -128,6 +128,13 @@ export const TOOL_ITEMS: ToolItem[] = [
     description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop',
   },
+  {
+    href: '/is-ilanlari',
+    topLabel: 'İŞE ALIM',
+    label: 'İşe Alım Firmaları',
+    description: 'Almanya\'daki işe alım ajanslarını inceleyin.',
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
+  },
 ];
 
 export const OTHER_LINK_ITEMS: LinkItem[] = [

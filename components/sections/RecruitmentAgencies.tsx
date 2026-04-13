@@ -46,12 +46,18 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
     <div className="space-y-8">
       {/* Header Stats */}
       <div className="text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-google-blue/20 bg-google-blue/10 px-4 py-2 text-sm text-google-blue">
-          <span className="font-semibold">{agencies.length}</span>
-          <span>İş Bulma Ajansı</span>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-google-blue/20 bg-google-blue/10 px-4 py-2 text-sm text-google-blue">
+            <span className="font-semibold">{agencies.filter(a => a.category === 'İş Bulma Ajansları').length}</span>
+            <span>İş Bulma Ajansı</span>
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-google-green/20 bg-google-green/10 px-4 py-2 text-sm text-google-green">
+            <span className="font-semibold">{agencies.filter(a => a.category === 'İngilizce İşe Alan Şirketler').length}</span>
+            <span>İngilizce İşe Alan Şirket</span>
+          </div>
         </div>
         <h2 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
-          Almanya&apos;daki İş Bulma Ajansları
+          Almanya&apos;daki İş Bulma Ajansları ve Şirketler
         </h2>
         <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
           Almanya&apos;da faaliyet gösteren işe alım ajansları, kafa avcıları ve personel şirketlerinin kapsamlı listesi.
@@ -145,7 +151,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
       {/* Author Credit */}
       <div className="text-center py-8 border-t border-gray-200">
         <p className="text-sm text-gray-600">
-          <span className="font-medium">Almanya&apos;daki 204 İş Bulma Ajansı</span> — Kısa Açıklamalar
+          <span className="font-medium">Almanya&apos;daki {agencies.length} İş Bulma Ajansı ve Şirket</span> — Kısa Açıklamalar
         </p>
         <p className="text-xs text-gray-500 mt-1">
           by <Link 

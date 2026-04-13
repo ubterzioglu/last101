@@ -1,63 +1,44 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { InfoGrid } from '@/components/sections/InfoBlock';
-import { ContactForm } from '@/components/sections/ContactForm';
 import { Section } from '@/components/ui/Section';
-import { CONTACT_INFO } from '@/lib/utils/constants';
-import type { InfoBlock as InfoBlockType } from '@/types';
+import { ContactChannelCard } from '@/components/home/ContactChannelCard';
+import { CONTACT_CHANNELS } from '@/constants/contact-channels';
 
 export const metadata = createMetadata({
   title: 'İletişim',
-  description: 'almanya101 ile iletişime geçin. Sorularınız mı var? Bize yazın, yardımcı olalım.',
+  description: 'almanya101 ile iletişime geçin. Sosyal medya hesaplarımız üzerinden bize ulaşabilirsiniz.',
   path: '/iletisim',
 });
 
 export default function IletisimPage() {
-  const contactInfo: InfoBlockType[] = [
-    {
-      id: 'contact',
-      title: 'İletişim Bilgileri',
-      icon: '📞',
-      items: [
-        `E-posta: ${CONTACT_INFO.email}`,
-        `Telefon: ${CONTACT_INFO.phone}`,
-        `Adres: ${CONTACT_INFO.address}`,
-        'Çalışma Saatleri: Pazartesi - Cuma, 09:00 - 18:00',
-      ],
-    },
-    {
-      id: 'social',
-      title: 'Sosyal Medya',
-      icon: '📱',
-      items: [
-        'Twitter: @almanya101',
-        'Facebook: almanya101',
-        'Instagram: @almanya101',
-        'YouTube: almanya101',
-      ],
-    },
-  ];
-
   return (
     <>
       <HeroSection
         title="İletişim"
-        description="Sorularınız mı var? Bizimle iletişime geçin, yardımcı olalım."
-        centered={false}
+        description="Bizimle sosyal medya hesaplarımız üzerinden iletişime geçebilirsiniz."
+        centered={true}
         className="bg-google-green"
       />
 
       <Section contained>
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Bize Ulaşın</h2>
-          <p className="text-lg text-gray-600 max-w-2xl">
-            Aşağıdaki iletişim bilgilerini kullanarak bizimle irtibata geçebilirsiniz.
-          </p>
-        </div>
+        <div className="flex flex-col items-center justify-center min-h-[40vh]">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Sosyal Medya Kanallarımız</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Aşağıdaki platformlar üzerinden bizi takip edebilir ve iletişime geçebilirsiniz.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <InfoGrid blocks={contactInfo} columns={1} />
-          <ContactForm />
+          <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-center gap-4 py-4 sm:gap-6">
+            {CONTACT_CHANNELS.map((channel) => (
+              <ContactChannelCard
+                key={channel.id}
+                channel={channel}
+                iconOnly
+                className="flex-shrink-0"
+              />
+            ))}
+          </div>
         </div>
       </Section>
     </>
