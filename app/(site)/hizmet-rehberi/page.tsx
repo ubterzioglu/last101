@@ -317,22 +317,13 @@ export default function HizmetRehberiPage() {
                   />
                 </div>
 
-                <div className="mt-8 flex overflow-x-auto no-scrollbar justify-start md:justify-center gap-3 pb-2 w-full">
-                  {featuredCategories.map((category) => (
-                    <button
-                      key={category.id}
-                      onClick={() => setSelectedCategory(category.id)}
-                      className={cn(
-                        'inline-flex whitespace-nowrap items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition shrink-0',
-                        selectedCategory === category.id
-                          ? 'border-google-blue bg-blue-50 text-google-blue'
-                          : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900'
-                      )}
-                    >
-                      {CATEGORY_ICONS[category.id]}
-                      <span>{category.label}</span>
-                    </button>
-                  ))}
+                <div className="mt-8 text-center space-y-2">
+                  <p className="text-sm text-gray-600">
+                    Doktor • Avukat • Terapist • Ebe/Hemşire • Tamirci • Nakliyat • Sigortacı • Vergi Danışmanı • Berber • Kuaför • Sürücü Kursu
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Restoran • Kafe • Market • Kasap • Fırın/Pastane
+                  </p>
                 </div>
               </div>
             </div>
