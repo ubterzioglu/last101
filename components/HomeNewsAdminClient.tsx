@@ -12,7 +12,7 @@ import {
 } from '@/lib/admin/clientAuth';
 
 type NewsStatus = 'all' | 'draft' | 'published';
-type NewsCategory = 'Almanya' | 'Türkiye' | 'Avrupa' | 'Dünya';
+type NewsCategory = 'Almanya' | 'Türkiye' | 'Avrupa' | 'Dünya' | 'Duyuru';
 
 interface NewsRow {
   id: string;
@@ -37,7 +37,7 @@ interface NewsStats {
 
 const NEWS_API_URL = '/api/news-admin-list';
 const NEWS_ACTION_API_URL = '/api/news-admin-action';
-const CATEGORIES: NewsCategory[] = ['Almanya', 'Türkiye', 'Avrupa', 'Dünya'];
+const CATEGORIES: NewsCategory[] = ['Almanya', 'Türkiye', 'Avrupa', 'Dünya', 'Duyuru'];
 
 const initialForm = {
   title: '',
@@ -366,7 +366,7 @@ export default function HomeNewsAdminClient() {
 
       <section className="container grid gap-6 py-8 xl:grid-cols-[380px_minmax(0,1fr)]">
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-xl font-bold">{editingId ? 'Haberi düzenle' : 'Yeni haber ekle'}</h2>
+          <h2 className="text-xl font-bold">{editingId ? 'Düzenle' : 'Yeni haber / duyuru ekle'}</h2>
           <p className="mt-2 text-xs text-white/60">
             {editingId
               ? 'Düzenlemeyi bitirince güncelleyin, vazgeçerseniz düzenlemeyi iptal edin.'
@@ -608,7 +608,7 @@ export default function HomeNewsAdminClient() {
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div className="max-w-xl">
                           <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-wider text-white/45">
-                            <span>{item.category}</span>
+                            <span className={item.category === 'Duyuru' ? 'text-google-yellow' : ''}>{item.category}</span>
                             <span>{item.status === 'published' ? 'Yayında' : 'Taslak'}</span>
                             <span>{formatDate(effectiveDate)}</span>
                           </div>
