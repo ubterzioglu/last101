@@ -42,6 +42,7 @@ export type RecruitmentAgency = {
   description: string;
   status: 'active' | 'inactive';
   category?: string;
+  subCategory?: string;
   createdAt: string;
   updatedAt: string;
 };

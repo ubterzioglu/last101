@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { ExternalLink, Search, Filter, AlertCircle } from 'lucide-react';
+import { ExternalLink, Search, Filter, AlertCircle, ChevronDown } from 'lucide-react';
 import type { RecruitmentAgency } from '@/types';
 import { cn } from '@/lib/utils/cn';
 import { BrokenLinkReportModal } from '@/components/ui/BrokenLinkReportModal';
@@ -11,24 +11,45 @@ interface RecruitmentAgenciesProps {
   agencies: RecruitmentAgency[];
 }
 
-const CATEGORIES = [
-  'Tüm Kategoriler',
-  'Üst Düzey Yönetici Arama',
-  'Genel İşe Alım',
-  'BT & Dijital',
-  'Teknoloji & Mühendislik',
-  'Finans & Hukuk',
-  'Sağlık & Tıp',
-  'Enerji & Mühendislik',
-  'İK Danışmanlığı',
-  'Uluslararası',
-  'Freelance & Proje',
-  'Yaratıcı & Tasarım'
-];
+const MAIN_CATEGORIES = ['Tüm Kategoriler', 'İş Bulma Ajansları', 'İngilizce İşe Alan Şirketler'];
+
+const SUB_CATEGORIES = {
+  'İş Bulma Ajansları': [
+    'Tümü',
+    'Üst Düzey Yönetici Arama',
+    'Genel İşe Alım',
+    'BT & Dijital',
+    'Teknoloji & Mühendislik',
+    'Finans & Hukuk',
+    'Sağlık & Tıp',
+    'Enerji & Mühendislik',
+    'İK Danışmanlığı',
+    'Uluslararası',
+    'Freelance & Proje',
+    'Yaratıcı & Tasarım'
+  ],
+  'İngilizce İşe Alan Şirketler': [
+    'Tümü',
+    'E-ticaret & Moda',
+    'Danışmanlık',
+    'Fintech & Finans',
+    'Yapay Zeka & Teknoloji',
+    'Dil Öğrenme',
+    'İK Yazılım',
+    'Lojistik',
+    'Sağlık & Tıp Teknolojisi',
+    'Yenilenebilir Enerji',
+    'Gıda Teknolojisi',
+    'E-öğrenim',
+    'Siber Güvenlik',
+    'Sigorta'
+  ]
+};
 
 export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Tüm Kategoriler');
+  const [selectedMainCategory, setSelectedMainCategory] = useState('Tüm Kategoriler');
+  const [selectedSubCategory, setSelectedSubCategory] = useState('Tümü');
   const [selectedAgency, setSelectedAgency] = useState<RecruitmentAgency | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,14 +57,23 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
     return agencies.filter(agency => {
       const matchesSearch = agency.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           agency.description.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === 'Tüm Kategoriler' || 
-                            agency.category === selectedCategory ||
-                            agency.category?.includes(selectedCategory.split(' & ')[0]) ||
-                            agency.category?.includes(selectedCategory.split(' & ')[1]);
+      const matchesMainCategory = selectedMainCategory === 'Tüm Kategoriler' ||
+                              agency.category === selectedMainCategory;
+      const matchesSubCategory = selectedSubCategory === 'Tümü' ||
+                              agency.description.includes(selectedSubCategory.split(' ')[0]);
       
-      return matchesSearch && matchesCategory;
+      return matchesSearch && matchesMainCategory && matchesSubCategory;
     });
-  }, [agencies, searchTerm, selectedCategory]);
+  }, [agencies, searchTerm, selectedMainCategory, selectedSubCategory]);
+
+  const availableSubCategories = selectedMainCategory === 'Tüm Kategoriler' 
+    ? ['Tümü']
+    : SUB_CATEGORIES[selectedMainCategory as keyof typeof SUB_CATEGORIES] || ['Tümü'];
+
+  const handleMainCategoryChange = (category: string) => {
+    setSelectedMainCategory(category);
+    setSelectedSubCategory('Tümü');
+  };
 
   const handleReportBrokenLink = (agency: RecruitmentAgency) => {
     setSelectedAgency(agency);
@@ -85,18 +115,33 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
             className="w-full rounded-lg border border-gray-200 bg-white py-2 pl-10 pr-4 text-sm focus:border-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue/20"
           />
         </div>
-        
-        <div className="relative">
-          <Filter className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="appearance-none rounded-lg border border-gray-200 bg-white py-2 pl-10 pr-8 text-sm focus:border-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue/20"
-          >
-            {CATEGORIES.map(category => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
+
+        <div className="flex gap-2">
+          <div className="relative">
+            <select
+              value={selectedMainCategory}
+              onChange={(e) => handleMainCategoryChange(e.target.value)}
+              className="appearance-none rounded-lg border border-gray-200 bg-white py-2 px-3 pr-8 text-sm focus:border-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue/20"
+            >
+              {MAIN_CATEGORIES.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+
+          {selectedMainCategory !== 'Tüm Kategoriler' && (
+            <div className="relative">
+              <select
+                value={selectedSubCategory}
+                onChange={(e) => setSelectedSubCategory(e.target.value)}
+                className="appearance-none rounded-lg border border-gray-200 bg-white py-2 px-3 pr-8 text-sm focus:border-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue/20"
+              >
+                {availableSubCategories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
       </div>
 

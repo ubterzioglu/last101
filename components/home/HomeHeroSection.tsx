@@ -37,13 +37,13 @@ export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/is-ilanlari"
-              className="inline-flex items-center justify-center rounded-full bg-google-yellow px-6 py-3 text-sm font-semibold text-gray-900 transition hover:scale-[1.02] hover:bg-yellow-300"
+              className="inline-flex items-center justify-center rounded-full border border-google-yellow/40 bg-google-yellow/10 px-6 py-3 text-sm font-semibold text-google-yellow transition hover:scale-[1.02] hover:border-google-yellow/60 hover:bg-google-yellow/20"
             >
               İşe Alım Firmaları
             </Link>
             <Link
               href="/haberler"
-              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/8 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/12"
+              className="inline-flex items-center justify-center rounded-full border border-google-red/40 bg-google-red/10 px-6 py-3 text-sm font-semibold text-google-red transition hover:border-google-red/60 hover:bg-google-red/20"
             >
               Güncel Haberleri Oku
             </Link>
