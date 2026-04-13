@@ -577,6 +577,44 @@ Alt metin...
             </div>
           </div>
 
+          {editingId ? (() => {
+            const editingItem = rows.find((item) => item.id === editingId);
+            if (!editingItem) return null;
+            const effectiveDate = editingItem.published_at || editingItem.created_at;
+
+            return (
+              <div className="rounded-xl border border-google-yellow/30 bg-google-yellow/5 p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="rounded-full bg-google-yellow/20 border border-google-yellow/30 px-3 py-1 text-xs font-semibold text-google-yellow">
+                    Düzenleniyor
+                  </div>
+                  <span className="text-xs text-white/60">{formatDate(effectiveDate)}</span>
+                </div>
+
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div className="max-w-xl">
+                    <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-wider text-white/45">
+                      <span className={editingItem.category === 'Duyuru' ? 'text-google-yellow' : ''}>{editingItem.category}</span>
+                      <span>{editingItem.status === 'published' ? 'Yayında' : 'Taslak'}</span>
+                    </div>
+                    <h3 className="mt-2 text-lg font-bold">{editingItem.title}</h3>
+                    {editingItem.summary ? (
+                      <p className="mt-2 text-xs leading-relaxed text-white/60">
+                        {editingItem.summary}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-white/50">
+                  <span>Okuma: {editingItem.reading_minutes || 0} dk</span>
+                  {editingItem.source_name ? <span>Kaynak: {editingItem.source_name}</span> : null}
+                  <span>Carousel: {editingItem.show_in_carousel ? 'Açık' : 'Kapalı'}</span>
+                </div>
+              </div>
+            );
+          })() : null}
+
           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <h2 className="text-xl font-bold">Haber akışı</h2>
