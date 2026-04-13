@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAdminKey } from '@/lib/admin/serverAuth';
+import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -9,13 +9,11 @@ const supabase = createClient(
 
 export async function GET(request: NextRequest) {
   try {
-    const adminKey = request.headers.get('x-admin-key');
+    const authResult = await isAdminAuthorized(request);
 
-    if (!adminKey) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!authResult.ok) {
+      return NextResponse.json({ error: authResult.reason }, { status: authResult.status });
     }
-
-    await verifyAdminKey(adminKey);
 
     const searchParams = request.nextUrl.searchParams;
     const search = searchParams.get('search') || '';
