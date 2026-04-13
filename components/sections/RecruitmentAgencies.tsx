@@ -2,9 +2,10 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { ExternalLink, Search, Filter } from 'lucide-react';
+import { ExternalLink, Search, Filter, AlertCircle } from 'lucide-react';
 import type { RecruitmentAgency } from '@/types';
 import { cn } from '@/lib/utils/cn';
+import { BrokenLinkReportModal } from '@/components/ui/BrokenLinkReportModal';
 
 interface RecruitmentAgenciesProps {
   agencies: RecruitmentAgency[];
@@ -28,6 +29,8 @@ const CATEGORIES = [
 export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Tüm Kategoriler');
+  const [selectedAgency, setSelectedAgency] = useState<RecruitmentAgency | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredAgencies = useMemo(() => {
     return agencies.filter(agency => {
@@ -41,6 +44,11 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
       return matchesSearch && matchesCategory;
     });
   }, [agencies, searchTerm, selectedCategory]);
+
+  const handleReportBrokenLink = (agency: RecruitmentAgency) => {
+    setSelectedAgency(agency);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="space-y-8">
@@ -105,29 +113,38 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
             className="group rounded-xl border border-gray-200 bg-white p-5 transition-all hover:border-google-blue/40 hover:shadow-md"
           >
             <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-gray-900 group-hover:text-google-blue transition-colors">
-                  {agency.name}
-                </h3>
-                <p className="mt-1 text-sm text-gray-600 line-clamp-2">
-                  {agency.description}
-                </p>
-                {agency.category && (
-                  <span className="mt-2 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
-                    {agency.category}
-                  </span>
-                )}
-              </div>
-              <Link
-                href={agency.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-google-blue hover:text-white"
-                title={`${agency.name} sitesine git`}
-              >
-                <ExternalLink className="h-4 w-4" />
-              </Link>
-            </div>
+               <div className="min-w-0 flex-1">
+                 <h3 className="font-semibold text-gray-900 group-hover:text-google-blue transition-colors">
+                   {agency.name}
+                 </h3>
+                 <p className="mt-1 text-sm text-gray-600 line-clamp-2">
+                   {agency.description}
+                 </p>
+                 {agency.category && (
+                   <span className="mt-2 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
+                     {agency.category}
+                   </span>
+                 )}
+               </div>
+               <div className="flex gap-2">
+                 <button
+                   onClick={() => handleReportBrokenLink(agency)}
+                   className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-google-red hover:text-white"
+                   title="Kırık link bildir"
+                 >
+                   <AlertCircle className="h-4 w-4" />
+                 </button>
+                 <Link
+                   href={agency.url}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-google-blue hover:text-white"
+                   title={`${agency.name} sitesine git`}
+                 >
+                   <ExternalLink className="h-4 w-4" />
+                 </Link>
+               </div>
+             </div>
           </div>
         ))}
       </div>
@@ -164,6 +181,13 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
           </Link>
         </p>
       </div>
+
+      <BrokenLinkReportModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        agencyId={selectedAgency?.id}
+        agencyName={selectedAgency?.name || ''}
+      />
     </div>
   );
 }

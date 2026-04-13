@@ -25,6 +25,12 @@ const ADMIN_SECTIONS = [
     description: '150 recruitment agency listesini yönet ve düzenle.',
     accent: 'border-google-green/45 bg-google-green/10',
   },
+  {
+    href: '/admin/broken-link-reports',
+    title: 'Kırık Link Bildirimleri',
+    description: 'Kullanıcıların gönderdiği kırık link bildirimlerini görüntüle.',
+    accent: 'border-google-orange/45 bg-google-orange/10',
+  },
 ];
 
 export default function AdminIndexPage() {
@@ -37,7 +43,7 @@ export default function AdminIndexPage() {
       </section>
 
       <section className="container py-8">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {ADMIN_SECTIONS.map((section) => (
             <Link
               key={section.href}
