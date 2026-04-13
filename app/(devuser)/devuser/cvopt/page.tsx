@@ -31,7 +31,7 @@ export default function CvoptPage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
             <a
-              href="https://ubterzioglu.de/cv-optimize"
+              href="https://ubterzioglu.de"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-google-yellow px-8 py-4 text-base font-bold text-black transition hover:bg-yellow-400"
