@@ -99,7 +99,8 @@ export async function POST(request: NextRequest) {
   try {
     if (action === 'create') {
       const title = normalizeText(body.title, 255);
-      const summary = normalizeText(body.summary, 100000);
+      const summary = normalizeText(body.summary, 500);
+      const content = normalizeText(body.content, 1000000);
       const category = normalizeCategory(body.category) || 'Almanya';
       const status = normalizeStatus(body.status) || 'draft';
       const coverImageUrl = normalizeOptionalUrl(body.coverImageUrl);
@@ -117,6 +118,7 @@ export async function POST(request: NextRequest) {
             category,
             title,
             summary: summary || null,
+            content: content || null,
             cover_image_url: coverImageUrl || null,
             source_name: sourceName || null,
             source_url: sourceUrl || null,
@@ -126,7 +128,7 @@ export async function POST(request: NextRequest) {
             published_at: status === 'published' ? new Date().toISOString() : null,
           },
         ])
-        .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status, show_in_carousel')
+        .select('id, category, title, summary, content, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status, show_in_carousel')
         .maybeSingle();
 
       if (error) throw error;
@@ -136,7 +138,8 @@ export async function POST(request: NextRequest) {
 
     if (action === 'update') {
       const title = normalizeText(body.title, 255);
-      const summary = normalizeText(body.summary, 100000);
+      const summary = normalizeText(body.summary, 500);
+      const content = normalizeText(body.content, 1000000);
       const category = normalizeCategory(body.category) || 'Almanya';
       const status = normalizeStatus(body.status) || 'draft';
       const coverImageUrl = normalizeOptionalUrl(body.coverImageUrl);
@@ -174,6 +177,7 @@ export async function POST(request: NextRequest) {
           category,
           title,
           summary: summary || null,
+          content: content || null,
           cover_image_url: coverImageUrl || null,
           source_name: sourceName || null,
           source_url: sourceUrl || null,
@@ -183,7 +187,7 @@ export async function POST(request: NextRequest) {
           published_at: nextPublishedAt,
         })
         .eq('id', id)
-        .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status, show_in_carousel')
+        .select('id, category, title, summary, content, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, status, show_in_carousel')
         .maybeSingle();
 
       if (error) throw error;

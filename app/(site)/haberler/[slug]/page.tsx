@@ -5,6 +5,7 @@ import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { createArticleMetadata } from '@/lib/seo/metadata';
 import { getPublishedNewsArticleBySlug, getRelatedPublishedNewsArticles } from '@/lib/public-news';
 import { SITE_URL } from '@/lib/utils/constants';
+import MarkdownPreview from '@/components/MarkdownPreview';
 
 interface NewsDetailPageProps {
   params: Promise<{
@@ -107,6 +108,14 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
             </div>
           </div>
         </section>
+
+        {article.content ? (
+          <section className="container py-14 md:py-20">
+            <div className="mx-auto max-w-4xl">
+              <MarkdownPreview content={article.content} />
+            </div>
+          </section>
+        ) : null}
 
         {article.sourceUrl ? (
           <section className="container py-14 md:py-20">

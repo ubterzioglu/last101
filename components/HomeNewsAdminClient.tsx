@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import MarkdownPreview from '@/components/MarkdownPreview';
 import {
   clearAdminAuth,
   getAdminHeaders,
@@ -19,6 +20,7 @@ interface NewsRow {
   category: NewsCategory;
   title: string;
   summary: string | null;
+  content: string | null;
   cover_image_url: string | null;
   source_name: string | null;
   source_url: string | null;
@@ -42,6 +44,7 @@ const CATEGORIES: NewsCategory[] = ['Almanya', 'Türkiye', 'Avrupa', 'Dünya', '
 const initialForm = {
   title: '',
   summary: '',
+  content: '',
   coverImageUrl: 'https://ldptefnpiudquipdsezr.supabase.co/storage/v1/object/public/news/ansgar-scheffold-mtfTz0FnwBw-unsplash.jpg',
   sourceName: '',
   sourceUrl: '',
@@ -190,6 +193,7 @@ export default function HomeNewsAdminClient() {
         ...(editingId ? { id: editingId } : {}),
         title: form.title,
         summary: form.summary,
+        content: form.content,
         coverImageUrl: form.coverImageUrl,
         sourceName: form.sourceName,
         sourceUrl: form.sourceUrl,
@@ -225,6 +229,7 @@ export default function HomeNewsAdminClient() {
     setForm({
       title: item.title || '',
       summary: item.summary || '',
+      content: item.content || '',
       coverImageUrl: item.cover_image_url || '',
       sourceName: item.source_name || '',
       sourceUrl: item.source_url || '',
@@ -385,13 +390,46 @@ export default function HomeNewsAdminClient() {
             </label>
 
             <label className="block">
-              <span className="mb-1.5 block text-xs text-white/70">Özet</span>
+              <span className="mb-1.5 block text-xs text-white/70">Özet (kısa açıklama)</span>
               <textarea
                 value={form.summary}
                 onChange={(event) => setForm((prev) => ({ ...prev, summary: event.target.value }))}
                 className="min-h-24 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
-                placeholder="Kısa özet"
+                placeholder="Listelerde görünecek kısa özet (150-200 karakter)"
+                maxLength={500}
               />
+              <div className="mt-1 text-[10px] text-white/40">{form.summary.length}/500 karakter</div>
+            </label>
+
+            <label className="block !mt-4">
+              <span className="mb-1.5 block text-xs text-white/70">İçerik (tam metin - Markdown destekli)</span>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <textarea
+                    value={form.content}
+                    onChange={(event) => setForm((prev) => ({ ...prev, content: event.target.value }))}
+                    className="min-h-96 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue font-mono"
+                    placeholder="Haber içeriğini buraya yazın. Markdown desteklenir.
+
+Örnek:
+## Başlık
+Alt metin...
+
+### Alt başlık
+- Madde 1
+- Madde 2
+
+**Kalın** ve *italik* metin kullanabilirsiniz."
+                  />
+                  <div className="mt-1 text-[10px] text-white/40">Markdown formatında yazın</div>
+                </div>
+                <div>
+                  <span className="mb-2 block text-xs text-white/60">Önizleme</span>
+                  <div className="min-h-96 rounded-lg border border-white/10 bg-white/[0.02] p-4">
+                    <MarkdownPreview content={form.content} />
+                  </div>
+                </div>
+              </div>
             </label>
 
             <div className="grid grid-cols-2 gap-3">

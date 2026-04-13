@@ -9,6 +9,7 @@ export interface PublicNewsArticle {
   href: string;
   title: string;
   excerpt: string;
+  content: string | null;
   image: string;
   publishedAt: string;
   createdAt: string | null;
@@ -35,6 +36,7 @@ interface NewsRow {
   category: string | null;
   title: string | null;
   summary: string | null;
+  content: string | null;
   cover_image_url: string | null;
   source_name: string | null;
   source_url: string | null;
@@ -120,6 +122,7 @@ function mapRowToArticle(row: NewsRow): PublicNewsArticle {
     href: `/haberler/${slug}`,
     title,
     excerpt: String(row.summary || '').trim(),
+    content: row.content || null,
     image: String(row.cover_image_url || '/images/og-default.jpg').trim(),
     publishedAt,
     createdAt: row.created_at,
@@ -139,7 +142,7 @@ async function fetchPublishedNewsRows(limit = 24, onlyCarousel = false): Promise
 
   let query = supabase
     .from('news_posts')
-    .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, show_in_carousel')
+    .select('id, category, title, summary, content, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, show_in_carousel')
     .eq('status', 'published')
     .order('published_at', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false })
@@ -188,7 +191,7 @@ export async function getPublishedNewsArticleBySlug(slug: string): Promise<Publi
 
   const { data, error } = await supabase
     .from('news_posts')
-    .select('id, category, title, summary, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, show_in_carousel')
+    .select('id, category, title, summary, content, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, show_in_carousel')
     .eq('id', id)
     .eq('status', 'published')
     .maybeSingle();
