@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils/cn';
 
 interface NewsItem {
   id: string;
@@ -66,30 +67,32 @@ export function NewsCarousel({ items }: NewsCarouselProps) {
   }
 
   return (
-    <div className="relative">
-      {canScrollLeft && (
-        <button
-          onClick={() => scroll('left')}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition hover:bg-black/80 hover:scale-110"
-          aria-label="Sola kaydır"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-      )}
+    <div className="relative group/carousel">
+      <button
+        onClick={() => scroll('left')}
+        className={cn(
+          "absolute left-2 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-sm transition hover:bg-black/90 hover:scale-110",
+          canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        aria-label="Sola kaydır"
+      >
+        <ChevronLeft className="h-6 w-6" />
+      </button>
 
-      {canScrollRight && (
-        <button
-          onClick={() => scroll('right')}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition hover:bg-black/80 hover:scale-110"
-          aria-label="Sağa kaydır"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
-      )}
+      <button
+        onClick={() => scroll('right')}
+        className={cn(
+          "absolute right-2 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-sm transition hover:bg-black/90 hover:scale-110",
+          canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        aria-label="Sağa kaydır"
+      >
+        <ChevronRight className="h-6 w-6" />
+      </button>
 
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide px-4 py-2"
+        className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-12 py-2"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {items.map((item) => (
