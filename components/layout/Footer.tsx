@@ -20,6 +20,17 @@ export function Footer() {
             </a>
             {' '}ve Seo Hizmetleri Spindora
           </p>
+          <p className="text-xs text-gray-700">
+            <a
+              href="https://www.corteqs.net"
+              rel="dofollow"
+              target="_blank"
+              className="hover:underline"
+            >
+              Corteqs
+            </a>
+            {' '}— Diasporayı Birleştiren Platform
+          </p>
         </div>
       </Container>
     </footer>
