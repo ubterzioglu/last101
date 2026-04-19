@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next';
+import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://almanya101.com';
+  const baseUrl = CANONICAL_SITE_URL;
 
   const routes = [
     {

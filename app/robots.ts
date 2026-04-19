@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/_next/', '/private/'],
     },
-    sitemap: 'https://almanya101.com/sitemap.xml',
+    sitemap: `${CANONICAL_SITE_URL}/sitemap.xml`,
   };
 }

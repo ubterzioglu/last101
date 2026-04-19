@@ -4,7 +4,7 @@
 
 export const SITE_NAME = 'almanya101';
 export const SEO_SITE_NAME = 'Almanya101';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://almanya101.com';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://almanya101.de';
 export const CANONICAL_SITE_URL = SITE_URL.replace(/\/+$/, '');
 export const SITE_LOCALE = 'tr_TR';
 export const DEFAULT_OG_IMAGE = '/images/og-default.jpg';

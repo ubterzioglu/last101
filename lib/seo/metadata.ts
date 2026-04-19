@@ -32,7 +32,7 @@ export function createMetadata(options: {
   } = options;
 
   const normalizedPath = !path || path === '/' ? '' : path;
-  const url = normalizedPath ? new URL(normalizedPath, CANONICAL_SITE_URL).toString() : CANONICAL_SITE_URL;
+  const url = normalizedPath ? new URL(normalizedPath, CANONICAL_SITE_URL).toString() : `${CANONICAL_SITE_URL}/`;
   const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${CANONICAL_SITE_URL}${image}`;
   const resolvedTitle = absoluteTitle ? title : `${title} | ${SEO_SITE_NAME}`;
 

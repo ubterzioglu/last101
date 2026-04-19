@@ -11,9 +11,21 @@ const devuserRedirects = [
   permanent: true,
 }));
 
+const wwwRedirect = {
+  source: '/:path*',
+  has: [
+    {
+      type: 'host',
+      value: 'www.almanya101.de',
+    },
+  ],
+  destination: 'https://almanya101.de/:path*',
+  permanent: true,
+};
+
 const nextConfig: NextConfig = {
   async redirects() {
-    return devuserRedirects;
+    return [wwwRedirect, ...devuserRedirects];
   },
   // Coolify/Docker için standalone output
   output: 'standalone',
