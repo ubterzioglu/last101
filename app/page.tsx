@@ -36,7 +36,6 @@ export const dynamic = 'force-dynamic';
 const HOMEPAGE_ITEMS = [...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
 const HOME_PAGE_URL = CANONICAL_SITE_URL;
 const WHATSAPP_COMMUNITY_CHANNEL = CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp');
-const YOUTUBE_CHANNEL = CONTACT_CHANNELS.find((channel) => channel.id === 'youtube');
 const HOMEPAGE_FAQ_ITEMS = [
   {
     question: "Almanya'ya yeni taşınan biri önce hangi adımları tamamlamalı?",
@@ -454,79 +453,34 @@ export default async function HomePage() {
 
       <SectionDivider />
 
-      <section className="relative overflow-hidden bg-black py-14 md:py-18">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(66,133,244,0.22),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(52,168,83,0.18),transparent_32%)]" />
-        <div className="container relative z-10 grid items-center gap-8 lg:grid-cols-[1.05fr_1.15fr]">
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-google-yellow">
-              Networking • Etkinlik • Haber Akışı
-            </p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
-              Almanya&apos;da çevre kurmak bazen tek bir doğru bağlantıyla başlar.
-            </h2>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-white/82 sm:text-base">
-              İş fuarları, topluluk buluşmaları, teknoloji etkinlikleri ve sahadan gelen kısa haberler; yeni
-              gelenlerin hem ritmi yakalamasını hem de doğru insanlara daha hızlı ulaşmasını kolaylaştırır.
-            </p>
-
-            <div className="mt-6 flex flex-wrap gap-3 text-sm">
-              <span className="rounded-md border border-google-blue/40 bg-google-blue/12 px-3 py-2 text-white">
-                Köln, Berlin, Münih gibi şehirlerden akış
-              </span>
-              <span className="rounded-md border border-google-green/40 bg-google-green/12 px-3 py-2 text-white">
-                İş fuarı ve topluluk görünürlüğü
-              </span>
-              <span className="rounded-md border border-google-red/40 bg-google-red/12 px-3 py-2 text-white">
-                Kariyer, networking ve güncel gelişmeler
-              </span>
-            </div>
-
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link
-                href="/haberler"
-                className="inline-flex items-center justify-center rounded-md bg-google-yellow px-5 py-3 text-sm font-semibold text-black transition hover:opacity-90"
-              >
-                Haberleri keşfet
-              </Link>
-              {YOUTUBE_CHANNEL ? (
-                <a
-                  href={YOUTUBE_CHANNEL.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-md border border-white/18 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/8"
-                >
-                  YouTube kanalına git
-                </a>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.03] shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
-            <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.03] px-4 py-3">
-              <div>
-                <p className="text-sm font-semibold text-white">Öne çıkan video</p>
-                <p className="text-xs text-white/60">Almanya&apos;da networking ve teknoloji etkinliği</p>
-              </div>
-              <span className="rounded-md border border-google-yellow/35 bg-google-yellow/12 px-2.5 py-1 text-xs font-medium text-google-yellow">
-                ITCS Köln
-              </span>
-            </div>
-            <div className="aspect-video w-full">
-              <iframe
-                className="h-full w-full"
-                src="https://www.youtube.com/embed/AhCsgdV__k0?rel=0"
-                title="ITCS Köln teknoloji konferansı ve iş fuarı videosu"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
-            <div className="border-t border-white/10 px-4 py-3 text-xs leading-6 text-white/68">
-              Almanya&apos;da iş fuarı, networking ve teknoloji topluluklarıyla ilgili daha fazla içerik için
-              haber akışını ve topluluk duyurularını birlikte takip edin.
-            </div>
-          </div>
+      <section className="relative h-[42vh] overflow-hidden bg-black sm:h-[50vh] md:h-[58vh]">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/images/backgrounds/berlin4.jpg"
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source
+            src="https://assets.mixkit.co/active_storage/video_items/100328/1722991554/100328-video-720.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/55 to-black/28" />
+        <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-8 text-center sm:px-6 sm:pb-12 md:pb-16">
+          <h2 className="text-xl font-bold text-white drop-shadow-lg sm:text-2xl md:text-3xl lg:text-4xl">
+            Almanya&apos;da networking çoğu zaman doğru çevreye görünür olmakla başlar.
+          </h2>
+          <p className="mx-auto mt-3 max-w-3xl text-sm leading-7 text-white/90 drop-shadow-md sm:text-base">
+            Berlin, Köln ve Münih gibi şehirlerde iş fırsatları, etkinlikler, topluluk buluşmaları ve güncel
+            haber akışı; Almanya&apos;da yeni bir çevre kurmak isteyenler için güçlü bir başlangıç zemini oluşturur.
+            Doğru bilgiye ve doğru insanlara daha hızlı ulaşmak, yerleşme ve profesyonel ilerleme sürecini
+            belirgin şekilde kolaylaştırır.
+          </p>
+          <p className="mt-3 text-xs italic text-white/60 drop-shadow-sm">
+            Arka plan video: Mixkit
+          </p>
         </div>
       </section>
 
