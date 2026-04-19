@@ -6,7 +6,7 @@ import { FAQ } from '@/components/sections/FAQ';
 import { HomeHeroSection } from '@/components/home/HomeHeroSection';
 import { LinkGridSection } from '@/components/home/LinkGridSection';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
-import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { BreadcrumbJsonLd, FaqJsonLd, HowToJsonLd, SpeakableJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
 import { ArrowUpIcon, WhatsAppIcon } from '@/components/icons/ContactIcons';
 import { cn } from '@/lib/utils/cn';
 import { getPublishedNewsItems } from '@/lib/public-news';
@@ -40,22 +40,22 @@ const HOMEPAGE_FAQ_ITEMS = [
   {
     question: "Almanya'ya yeni taşınan biri önce hangi adımları tamamlamalı?",
     answer:
-      "İlk haftalarda adres kaydı, vergi numarası, sağlık sigortası, banka hesabı ve telefon hattı gibi temel adımları tamamlamak gerekir. Ardından oturum süreci, iş arama planı ve günlük yaşam maliyetleri için güvenilir kaynaklarla ilerlemek en sağlıklı yoldur.",
+      "İlk haftalarda adres kaydı, vergi numarası, sağlık sigortası, banka hesabı ve telefon hattı gibi temel adımları tamamlamak gerekir. Adres kaydı ortalama 2-4 hafta, oturum izni süreci ise 6-12 hafta sürebilir. Ardından oturum süreci, iş arama planı ve günlük yaşam maliyetleri için güvenilir kaynaklarla ilerlemek en sağlıklı yoldur.",
   },
   {
     question: 'Almanya iş bulma sürecinde hangi kaynaklara odaklanmalıyım?',
     answer:
-      "İş ilanı platformları, sektör bazlı topluluklar, LinkedIn bağlantıları ve Almanca özgeçmiş hazırlığı birlikte yürütülmelidir. Sadece ilan bakmak yerine profilinizi, belgelerinizi ve başvuru stratejinizi aynı anda güçlendirmek daha hızlı sonuç verir.",
+      "İş ilanı platformları, sektör bazlı topluluklar, LinkedIn bağlantıları ve Almanca özgeçmiş hazırlığı birlikte yürütülmelidir. Ortalama 50-80 başvuru sonrası ilk mülakat daveti gelmektedir. Sadece ilan bakmak yerine profilinizi, belgelerinizi ve başvuru stratejinizi aynı anda güçlendirmek daha hızlı sonuç verir.",
   },
   {
     question: 'Almanya101 hangi konularda yardımcı olur?',
     answer:
-      "Almanya101; yaşam rehberleri, iş ilanları, belgeler, uzman önerileri, araçlar ve topluluk bağlantılarıyla taşınma ve yerleşme sürecini daha net hale getirir. Amaç tek bir içerik değil, karar vermeyi kolaylaştıran bütüncül bir yol haritası sunmaktır.",
+      "Almanya101; yaşam rehberleri, iş ilanları, belgeler, uzman önerileri, araçlar ve topluluk bağlantılarıyla taşınma ve yerleşme sürecini daha net hale getirir. ~3,5 milyon Türk kökenli insanın yaşadığı Almanya'da, doğru bilgiye hızlı erişim kritik öneme sahiptir. Amaç tek bir içerik değil, karar vermeyi kolaylaştıran bütüncül bir yol haritası sunmaktır.",
   },
   {
     question: 'Topluluk neden önemli?',
     answer:
-      "Yeni bir ülkede doğru insanlara hızlı ulaşmak zaman ve hata maliyetini ciddi biçimde azaltır. Deneyim paylaşımı, güncel tavsiyeler ve doğru yönlendirmeler; özellikle ilk aylarda resmi işlemlerden iş arayışına kadar birçok konuda fark yaratır.",
+      "Yeni bir ülkede doğru insanlara hızlı ulaşmak zaman ve hata maliyetini ciddi biçimde azaltır. İlk yıl içinde %60'ı en az bir kez iş değiştirmektedir. Deneyim paylaşımı, güncel tavsiyeler ve doğru yönlendirmeler; özellikle ilk aylarda resmi işlemlerden iş arayışına kadar birçok konuda fark yaratır.",
   },
 ];
 
@@ -218,6 +218,19 @@ export default async function HomePage() {
       />
       <BreadcrumbJsonLd items={[{ name: 'Ana Sayfa', url: HOME_PAGE_URL }]} />
       <FaqJsonLd items={HOMEPAGE_FAQ_ITEMS} />
+      <HowToJsonLd
+        name="Almanya'da Düzen Kurmak İçin İlk 6 Adım"
+        description="Almanya'ya taşınan birinin tamamlaması gereken temel adımlar: adres kaydı, vergi numarası, sağlık sigortası, banka hesabı, telefon hattı ve oturum izni."
+        steps={[
+          { name: 'Adres kaydı (Anmeldung)', text: 'İlk 14 gün içinde belediyeye adres kaydı yaptırın. Ortalama 2-4 hafta içinde tamamlanır.' },
+          { name: 'Vergi numarası (Steuernummer)', text: 'Adres kaydından sonra Federal Vergi Dairesi (Bundeszentralamt für Steuern) otomatik olarak vergi numaranızı gönderir.' },
+          { name: 'Sağlık sigortası (Krankenversicherung)', text: 'Aylık €200-€400 arası değişen kamu veya özel sigorta seçeneklerinden birini belirleyin.' },
+          { name: 'Banka hesabı açma', text: 'Girokonto (vadesiz hesap) açarak maaş ve kira ödemelerinizi yönetin.' },
+          { name: 'Telefon hattı ve internet', text: 'Aylık €30-€50 arası tarifelerle mobil ve sabit internet bağlantınızı kurun.' },
+          { name: 'Oturum izni (Aufenthaltstitel)', text: 'Vize sürenize göre yerel Ausländerbehörde&apos;de oturum izni başvurusu yapın.' },
+        ]}
+      />
+      <SpeakableJsonLd cssSelector={['section.min-h-\\[600px\\] p', '.faq-section p']} />
 
       <HomeHeroSection whatsappHref={WHATSAPP_COMMUNITY_CHANNEL?.href} />
 
@@ -246,7 +259,7 @@ export default async function HomePage() {
       >
         <div className="text-center mb-4 sm:mb-6">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-            Haberler & Duyurular & Güncellemeler
+            Almanya Haberleri Neleri Takip Etmeli?
           </h2>
         </div>
         <NewsCarousel items={newsItems} />
@@ -256,8 +269,8 @@ export default async function HomePage() {
 
       <EditorialSection
         eyebrow="Ana Sayfa Rehberi"
-        title="Almanya'da düzen kurmak için ihtiyaç duyulan temel bilgileri tek bir sayfada birleştirdik."
-        intro="Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
+        title="Almanya'da Düzen Kurmak İçin Nereden Başlamalı?"
+        intro="~3,5 milyon Türk kökenli insan Almanya'da yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
         listItems={[
           'Adres kaydı (Anmeldung)',
           'Vergi numarası (Steuernummer)',
@@ -267,11 +280,12 @@ export default async function HomePage() {
           'Oturum izni (Aufenthaltstitel)',
         ]}
       >
-        <ContentCard title="Almanya'da yaşam rehberi" tone="blue">
+        <ContentCard title="Almanya'da Yaşam Rehberi Nedir, Neden Gerekli?" tone="blue">
           <p>
             Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, <strong>bilgi dağınıklığı</strong>tır. <strong>Adres kaydı</strong>,
             vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,
-            insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Bu nedenle Almanya101 ana sayfasında yalnızca içerik
+            insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Ortalama <strong>2-4 hafta</strong> içinde adres kaydı tamamlanır;
+            ardından kalan adımlar 6-8 hafta daha sürebilir. Bu nedenle Almanya101 ana sayfasında yalnızca içerik
             listelemek yerine, kullanıcıyı <strong>günlük hayatta en çok etkileyecek başlıklara</strong> doğrudan yönlendiren bir yapı kurduk.
           </p>
           <p>
@@ -288,12 +302,12 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="İş bulma süreci" tone="red">
+        <ContentCard title="Almanya'da İş Bulma Süreci Nasıl İşler?" tone="red">
           <p>
             Almanya'da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. <strong>Özgeçmişin Alman işveren beklentilerine
             göre düzenlenmesi</strong>, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
             dilinin anlaşılması gerekir. Birçok aday iyi profillere sahip olmasına rağmen <strong>başvuru stratejisi eksik</strong> olduğu için geri
-            dönüş alamaz. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
+            dönüş alamaz. Araştırmalara göre <strong>ortalama 50-80 başvuru</strong> sonrası ilk mülakat daveti gelmektedir. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
           </p>
           <p>
             Özellikle{' '}
@@ -313,11 +327,12 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="Topluluk avantajları" tone="yellow">
+        <ContentCard title="Almanya'da Türk Topluluğuyla Bağ Kurmak Neden Önemli?" tone="yellow">
           <p>
             Yeni bir ülkede doğru insanlara ulaşmak, bazen en doğru belgeyi bulmaktan bile daha değerlidir. Çünkü taşınma sürecinde
             sorular yalnızca resmi işlemlerle sınırlı kalmaz; hangi şehir daha uygundur, ilk ev nasıl bulunur, hangi banka daha hızlı
             hesap açar, hangi işverenler Türkçe iletişim konusunda daha rahattır gibi <strong>gündelik ama kritik kararlar</strong> ortaya çıkar.
+            Almanya'da <strong>~3,5 milyon Türk kökenli insan</strong> yaşıyor ve ilk yıl içinde <strong>%60'ı en az bir kez iş değiştirmektedir</strong>.
             Topluluk, bu noktada hazır cevap değil; <strong>deneyim filtresi</strong> sağlar.
           </p>
           <p>
@@ -331,10 +346,11 @@ export default async function HomePage() {
           </p>
         </ContentCard>
 
-        <ContentCard title="Belgeler, içerikler ve günlük aksiyon planı" tone="green">
+        <ContentCard title="Almanya İçin Hangi Belgeler Hazırlanmalı?" tone="green">
           <p>
             Taşınma veya yerleşme sürecinde en çok zaman kaybettiren şeylerden biri, <strong>doğru belgenin doğru anda elinizde olmaması</strong>dır.
-            Başvuru yapılacak kurumlar değiştikçe istenen evrak listeleri de değişebilir. Bu nedenle belgeleri, haberleri ve rehber içerikleri
+            Başvuru yapılacak kurumlar değiştikçe istenen evrak listeleri de değişebilir. Ortalama bir taşınma sürecinde <strong>10-15 farklı belge</strong> ve
+            <strong> 5-7 ayrı kurum</strong> ziyareti gerekebilir. Bu nedenle belgeleri, haberleri ve rehber içerikleri
             aynı yapıda görünür kılmak çok önemlidir. Kullanıcı bir yandan bilgi okurken, diğer yandan hemen kullanabileceği <strong>kontrol listeleri</strong>ne
             ulaşabilmelidir.
           </p>
@@ -360,8 +376,60 @@ export default async function HomePage() {
 
       <SectionDivider />
 
+      <section className="bg-black py-16 text-white md:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold text-white md:text-4xl">
+              Almanya&apos;da Yaşam Maliyeti Ne Kadar?
+            </h2>
+            <p className="mt-4 text-base leading-8 text-white/74 md:text-lg">
+              2026 yılı itibarıyla Almanya&apos;da tek kişi için tahmini aylık temel gider kalemleri aşağıdadır.
+              Şehir ve yaşam tarzına göre değişiklik gösterebilir.
+            </p>
+          </div>
+          <div className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+            <table className="w-full text-left text-sm md:text-base">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.04]">
+                  <th className="px-5 py-3 font-semibold text-white/90">Kalem</th>
+                  <th className="px-5 py-3 text-right font-semibold text-white/90">Tahmini Aylık Maliyet</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/8">
+                <tr>
+                  <td className="px-5 py-3 text-white/80">Kira (tek kişi, WG)</td>
+                  <td className="px-5 py-3 text-right text-white/90">€400 – €700</td>
+                </tr>
+                <tr>
+                  <td className="px-5 py-3 text-white/80">Sağlık sigortası</td>
+                  <td className="px-5 py-3 text-right text-white/90">€200 – €400</td>
+                </tr>
+                <tr>
+                  <td className="px-5 py-3 text-white/80">Yemek &amp; market</td>
+                  <td className="px-5 py-3 text-right text-white/90">€200 – €350</td>
+                </tr>
+                <tr>
+                  <td className="px-5 py-3 text-white/80">Ulaşım (aylık bilet — Deutschlandticket)</td>
+                  <td className="px-5 py-3 text-right text-white/90">€49 – €90</td>
+                </tr>
+                <tr>
+                  <td className="px-5 py-3 text-white/80">İnternet &amp; telefon</td>
+                  <td className="px-5 py-3 text-right text-white/90">€30 – €50</td>
+                </tr>
+                <tr className="border-t-2 border-white/15 bg-white/[0.04] font-semibold">
+                  <td className="px-5 py-3 text-white">Toplam (tahmini)</td>
+                  <td className="px-5 py-3 text-right text-google-yellow">€879 – €1.590</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       <FAQ
-        title="Sık Sorulan Sorular"
+        title="Almanya'ya Taşınırken En Çok Merak Edilen Sorular"
         subtitle={<>Almanya'ya taşınma, iş bulma ve topluluğa katılma sürecinde<br className="hidden md:block"/>en sık sorulan sorulara kısa cevaplar.</>}
         items={HOMEPAGE_FAQ_ITEMS}
       />
@@ -385,10 +453,13 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 z-10 pb-8 sm:pb-12 md:pb-16 text-center px-4">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 drop-shadow-lg">
-            Almanya'da Yeni Bir Başlangıç
+            Almanya'da Yeni Başlangıç İçin İlk Adım Ne Olmalı?
           </h2>
           <p className="mx-auto max-w-2xl text-sm sm:text-base text-white/90 drop-shadow-md">
             Binlerce Türk'ün deneyimlerinden oluşan ağımızla Almanya maceranıza güçlü bir başlangıç yapın.
+          </p>
+          <p className="mx-auto max-w-2xl text-xs text-white/50 mt-3">
+            Almanya'da şehir yaşamından bir kesim — Berlin sokaklarından görüntü
           </p>
         </div>
       </section>
@@ -401,7 +472,7 @@ export default async function HomePage() {
         <div className="w-full">
           <div className="text-center mb-4 sm:mb-5">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-              Topluluğumuza Katılın
+              Almanya101 Topluluğuna Nasıl Katılabilirsiniz?
             </h2>
             <p className="mx-auto max-w-3xl text-sm leading-7 text-white sm:text-base">
               Almanya'da yaşamı daha hızlı çözmek isteyenler için topluluk; tavsiye, deneyim ve yönlendirme akışını hızlandırır.
@@ -426,7 +497,7 @@ export default async function HomePage() {
 
           <div className="text-center mb-4 sm:mb-6">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
-              İletişim Kanallarımız & Sosyal Medya
+              Bize Nasıl Ulaşabilirsiniz?
             </h2>
           </div>
           <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-center gap-4 py-4 sm:gap-6">
@@ -441,6 +512,12 @@ export default async function HomePage() {
           </div>
         </div>
       </BackgroundSection>
+
+      <div className="bg-black py-6 text-center">
+        <p className="text-xs text-white/40">
+          Yayın tarihi: Haziran 2024 &middot; Son güncelleme: Nisan 2026
+        </p>
+      </div>
 
       <a
         href="#"

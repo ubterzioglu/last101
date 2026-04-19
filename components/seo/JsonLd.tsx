@@ -191,6 +191,45 @@ export function ArticleJsonLd({
   return <JsonLd data={data} />;
 }
 
+interface HowToStep {
+  name: string;
+  text: string;
+}
+
+export function HowToJsonLd({ name, description, steps }: { name: string; description: string; steps: HowToStep[] }) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name,
+    description,
+    step: steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+  };
+
+  return <JsonLd data={data} />;
+}
+
+export function SpeakableJsonLd({ xpath, cssSelector }: { xpath?: string[]; cssSelector?: string[] }) {
+  const speakable: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'SpeakableSpecification',
+  };
+  if (xpath) speakable.xpath = xpath;
+  if (cssSelector) speakable.cssSelector = cssSelector;
+
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    speakable,
+  };
+
+  return <JsonLd data={data} />;
+}
+
 /**
  * LocalBusiness Schema (for Germany targeting)
  */
