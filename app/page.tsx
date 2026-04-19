@@ -57,6 +57,11 @@ const HOMEPAGE_FAQ_ITEMS = [
     answer:
       "Yeni bir ülkede doğru insanlara hızlı ulaşmak zaman ve hata maliyetini ciddi biçimde azaltır. İlk yıl içinde %60'ı en az bir kez iş değiştirmektedir. Deneyim paylaşımı, güncel tavsiyeler ve doğru yönlendirmeler; özellikle ilk aylarda resmi işlemlerden iş arayışına kadar birçok konuda fark yaratır.",
   },
+  {
+    question: 'Almanya\'ya taşınırken en sık yapılan hatalar neler?',
+    answer:
+      "En yaygın hatalar: adres kaydı süresini kaçırmak (14 gün sınırı var), sağlık sigortası seçimini ertelemek, Almanca özgeçmiş hazırlamadan başvuru yapmak ve kira sözleşmesi okumadan imzalamaktır. Adres kaydını zamanında yaptırmayanlar, vergi numarası gecikmesi nedeniyle maaş ödemelerinde sorun yaşayabilir. Bu tür sorunların çözümü için topluluk kanallarımızda güncel deneyimler paylaşılmaktadır.",
+  },
 ];
 
 interface EditorialSectionProps {
@@ -151,14 +156,14 @@ function EditorialSection({ eyebrow, title, intro, listItems, children }: Editor
             {intro}
           </p>
           {listItems && listItems.length > 0 && (
-            <ul className="mx-auto mt-8 max-w-md list-none space-y-3 text-left text-white/84">
+            <ol className="mx-auto mt-8 max-w-md list-none space-y-3 text-left text-white/84 counter-reset-[step]">
               {listItems.map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-google-blue" />
+                <li key={i} className="flex items-start gap-3 counter-increment-[step]">
+                  <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-google-blue/20 text-xs font-bold text-google-blue before:content-[counter(step)]" />
                   {item}
                 </li>
               ))}
-            </ul>
+            </ol>
           )}
         </div>
 
@@ -270,7 +275,7 @@ export default async function HomePage() {
       <EditorialSection
         eyebrow="Ana Sayfa Rehberi"
         title="Almanya'da Düzen Kurmak İçin Nereden Başlamalı?"
-        intro="~3,5 milyon Türk kökenli insan Almanya'da yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
+        intro="Almanya101 nedir? Kısaca Almanya101, Almanya'ya taşınan veya burada yaşayan Türkler için Türkçe rehber, araç ve topluluk platformudur. ~3,5 milyon Türk kökenli insan Almanya'da yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
         listItems={[
           'Adres kaydı (Anmeldung)',
           'Vergi numarası (Steuernummer)',
@@ -297,7 +302,14 @@ export default async function HomePage() {
             <Link href="/hizmet-rehberi" className="font-semibold text-white underline decoration-google-green underline-offset-4">
               hizmet rehberi
             </Link>
-            gibi kaynaklardan <strong>temel çerçeveyi kurmak</strong> gerekir. Böylece resmi işlem, günlük yaşam ve yerel destek başlıkları
+            gibi kaynaklardan <strong>temel çerçeveyi kurmak</strong> gerekir. Adres kaydı için{' '}
+            <a href="https://www.berlin.de/buergeramt/" target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline decoration-google-blue underline-offset-2">
+              Bürgeramt
+            </a>, oturum izni için{' '}
+            <a href="https://www.bamf.de" target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline decoration-google-blue underline-offset-2">
+              BAMF
+            </a>{' '}
+            gibi resmi kurumlar süreçlerin ilk durağıdır. Böylece resmi işlem, günlük yaşam ve yerel destek başlıkları
             ayrı ayrı değil, <strong>birbirini tamamlayan tek bir yol haritası</strong> halinde okunabilir.
           </p>
         </ContentCard>
@@ -307,7 +319,11 @@ export default async function HomePage() {
             Almanya'da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. <strong>Özgeçmişin Alman işveren beklentilerine
             göre düzenlenmesi</strong>, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
             dilinin anlaşılması gerekir. Birçok aday iyi profillere sahip olmasına rağmen <strong>başvuru stratejisi eksik</strong> olduğu için geri
-            dönüş alamaz. Araştırmalara göre <strong>ortalama 50-80 başvuru</strong> sonrası ilk mülakat daveti gelmektedir. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
+            dönüş alamaz. Araştırmalara göre <strong>ortalama 50-80 başvuru</strong> sonrası ilk mülakat daveti gelmektedir.{' '}
+            <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline decoration-google-red underline-offset-2">
+              Bundesagentur für Arbeit
+            </a>{' '}
+            verilerine göre Almanya&apos;da işsizlik oranı %6 civarındadır ve Türk kökenli adaylar için dil seviyesi en kritik faktördür. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
           </p>
           <p>
             Özellikle{' '}
@@ -384,7 +400,8 @@ export default async function HomePage() {
             </h2>
             <p className="mt-4 text-base leading-8 text-white/74 md:text-lg">
               2026 yılı itibarıyla Almanya&apos;da tek kişi için tahmini aylık temel gider kalemleri aşağıdadır.
-              Şehir ve yaşam tarzına göre değişiklik gösterebilir.
+              Şehir ve yaşam tarzına göre değişiklik gösterir; örneğin Berlin&apos;de kira €450–€750, Münih&apos;te €600–€900, Hamburg&apos;da ise €500–€800 arasındadır.
+              Kaynak: <a href="https://www.destatis.de" target="_blank" rel="noopener noreferrer" className="text-google-blue underline underline-offset-2">Destatis</a>, <a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Germany" target="_blank" rel="noopener noreferrer" className="text-google-blue underline underline-offset-2">Numbeo</a>.
             </p>
           </div>
           <div className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
@@ -455,12 +472,8 @@ export default async function HomePage() {
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 drop-shadow-lg">
             Almanya'da Yeni Başlangıç İçin İlk Adım Ne Olmalı?
           </h2>
-          <p className="mx-auto max-w-2xl text-sm sm:text-base text-white/90 drop-shadow-md">
-            Binlerce Türk'ün deneyimlerinden oluşan ağımızla Almanya maceranıza güçlü bir başlangıç yapın.
-          </p>
-          <p className="mx-auto max-w-2xl text-xs text-white/50 mt-3">
-            Almanya'da doğa ve şehir yaşamından görüntüler
-          </p>
+          <p className="mx-auto max-w-2xl text-sm sm:text-base text-white/90 drop-shadow-md">Binlerce Türk'ün deneyimlerinden oluşan ağımızla Almanya maceranıza güçlü bir başlangıç yapın.</p>
+          <p className="mt-2 text-xs text-white/40 drop-shadow-sm">Berlin skyline — video: Pexels</p>
         </div>
       </section>
 
@@ -515,7 +528,7 @@ export default async function HomePage() {
 
       <div className="bg-black py-6 text-center">
         <p className="text-xs text-white/40">
-          Yayın tarihi: Haziran 2024 &middot; Son güncelleme: Nisan 2026
+          Yayın tarihi: <time dateTime="2024-06-01">Haziran 2024</time> &middot; Son güncelleme: <time dateTime="2026-04-19">Nisan 2026</time>
         </p>
       </div>
 
