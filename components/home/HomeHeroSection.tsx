@@ -28,11 +28,9 @@ export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
             Almanya&apos;da Yaşam ve İş İçin Türkçe Rehber
           </h1>
           <p className="mx-auto mt-5 max-w-4xl text-base leading-8 text-white sm:text-lg">
-            Almanya&apos;ya taşınmayı planlayan ya da halihazırda burada yaşayan Türkler için; günlük yaşam,
-            resmi işlemler, iş bulma süreci, belgeler ve topluluk bağlantıları aynı yerde toparlandı.
-            Nereden başlayacağınızı düşünmek yerine doğru sırayı, doğru kaynakları ve güvenilir yönlendirmeleri kullanın.
-            {' '}Ana araçlarımızla banka, sigorta, maaş, vize ve para transferi gibi pratik kararları hızlandırabilir; belgeler,
-            yazı dizileri ve topluluk kanalları üzerinden bir sonraki adımınızı netleştirebilirsiniz.
+            Almanya101, Almanya&apos;ya taşınmayı planlayan veya burada yaşayan Türkler için hazırlanmış kapsamlı bir Türkçe rehber platformudur.
+            Günlük yaşam, resmi işlemler, iş bulma süreci, belgeler ve topluluk bağlantıları gibi konularda adım adım yönlendirme sunar.
+            Banka, sigorta, maaş hesaplama, vize ve para transferi gibi pratik kararlar için araçlar; belgeler, yazı dizileri ve topluluk kanallarıyla ise bir sonraki adımınızı netleştirmenizi sağlar.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

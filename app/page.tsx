@@ -459,7 +459,7 @@ export default async function HomePage() {
             Binlerce Türk'ün deneyimlerinden oluşan ağımızla Almanya maceranıza güçlü bir başlangıç yapın.
           </p>
           <p className="mx-auto max-w-2xl text-xs text-white/50 mt-3">
-            Almanya'da şehir yaşamından bir kesim — Berlin sokaklarından görüntü
+            Almanya'da doğa ve şehir yaşamından görüntüler
           </p>
         </div>
       </section>
