@@ -467,19 +467,19 @@ export default async function HomePage() {
             type="video/mp4"
           />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/55 to-black/28" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/72 to-black/42" />
         <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-8 text-center sm:px-6 sm:pb-12 md:pb-16">
-          <div className="mx-auto max-w-5xl rounded-md bg-black/18 px-3 py-2 backdrop-blur-[1px] sm:px-5 sm:py-3">
-            <h2 className="text-xl font-bold text-white drop-shadow-lg sm:text-2xl md:text-3xl lg:text-4xl">
+          <div className="mx-auto max-w-5xl rounded-md bg-black/58 px-4 py-3 shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:px-6 sm:py-4">
+            <h2 className="text-xl font-bold text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.85)] sm:text-2xl md:text-3xl lg:text-4xl">
               Almanya&apos;da networking çoğu zaman doğru çevreye görünür olmakla başlar.
             </h2>
-            <p className="mx-auto mt-3 max-w-3xl text-sm leading-7 text-white/90 drop-shadow-md sm:text-base">
+            <p className="mx-auto mt-3 max-w-3xl text-sm leading-7 text-white/95 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] sm:text-base">
               Berlin, Köln ve Münih gibi şehirlerde iş fırsatları, etkinlikler, topluluk buluşmaları ve güncel
               haber akışı; Almanya&apos;da yeni bir çevre kurmak isteyenler için güçlü bir başlangıç zemini oluşturur.
               Doğru bilgiye ve doğru insanlara daha hızlı ulaşmak, yerleşme ve profesyonel ilerleme sürecini
               belirgin şekilde kolaylaştırır.
             </p>
-            <p className="mt-3 text-xs italic text-white/60 drop-shadow-sm">
+            <p className="mt-3 text-xs italic text-white/75 drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
               Arka plan video: Mixkit
             </p>
           </div>
