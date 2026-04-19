@@ -368,6 +368,31 @@ export default async function HomePage() {
 
       <SectionDivider />
 
+      <section className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] overflow-hidden bg-black">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/images/backgrounds/berlin4.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source
+            src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 z-10 pb-8 sm:pb-12 md:pb-16 text-center px-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 drop-shadow-lg">
+            Almanya'da Yeni Bir Başlangıç
+          </h2>
+          <p className="mx-auto max-w-2xl text-sm sm:text-base text-white/90 drop-shadow-md">
+            Binlerce Türk'ün deneyimlerinden oluşan ağımızla Almanya maceranıza güçlü bir başlangıç yapın.
+          </p>
+        </div>
+      </section>
+
       <BackgroundSection
         backgroundImage="/images/backgrounds/berlin4.jpg"
         overlayOpacity="bg-black/70"
