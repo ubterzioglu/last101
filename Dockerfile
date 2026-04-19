@@ -12,6 +12,10 @@ COPY package*.json ./
 ARG CACHE_BUST=20260319
 RUN npm ci
 
+# Build-time env for NEXT_PUBLIC_ vars (baked into client bundle)
+ARG NEXT_PUBLIC_SITE_URL=https://almanya101.com
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+
 # Copy source and build
 COPY . .
 RUN npm run build

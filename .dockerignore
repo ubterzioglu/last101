@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.gitignore
+.env*.local
+.env
+.env.example
+*.md
+.vscode
+.idea
+.serena
+.kilo
+.kilocode
+.playwright-mcp
