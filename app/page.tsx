@@ -63,6 +63,7 @@ interface EditorialSectionProps {
   eyebrow: string;
   title: string;
   intro: string;
+  listItems?: string[];
   children: React.ReactNode;
 }
 
@@ -135,7 +136,7 @@ function SectionDivider() {
   return <div className="h-[10px] bg-black" />;
 }
 
-function EditorialSection({ eyebrow, title, intro, children }: EditorialSectionProps) {
+function EditorialSection({ eyebrow, title, intro, listItems, children }: EditorialSectionProps) {
   return (
     <section className="bg-black py-16 text-white md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -149,6 +150,16 @@ function EditorialSection({ eyebrow, title, intro, children }: EditorialSectionP
           <p className="mt-5 text-base leading-8 text-white/74 md:text-lg">
             {intro}
           </p>
+          {listItems && listItems.length > 0 && (
+            <ul className="mx-auto mt-8 max-w-md list-none space-y-3 text-left text-white/84">
+              {listItems.map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-google-blue" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className="mx-auto mt-12 max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-sm md:p-6">
@@ -202,6 +213,8 @@ export default async function HomePage() {
         title="Almanya'da Yaşam ve İş İçin Türkçe Rehber"
         description={DEFAULT_META_DESCRIPTION}
         url={HOME_PAGE_URL}
+        datePublished="2024-06-01"
+        dateModified="2026-04-19"
       />
       <BreadcrumbJsonLd items={[{ name: 'Ana Sayfa', url: HOME_PAGE_URL }]} />
       <FaqJsonLd items={HOMEPAGE_FAQ_ITEMS} />
@@ -245,13 +258,21 @@ export default async function HomePage() {
         eyebrow="Ana Sayfa Rehberi"
         title="Almanya'da düzen kurmak için ihtiyaç duyulan temel bilgileri tek bir sayfada birleştirdik."
         intro="Bu sayfa yalnızca birkaç linki bir araya getiren bir giriş ekranı değil; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
+        listItems={[
+          'Adres kaydı (Anmeldung)',
+          'Vergi numarası (Steuernummer)',
+          'Sağlık sigortası (Krankenversicherung)',
+          'Banka hesabı açma',
+          'Telefon hattı ve internet',
+          'Oturum izni (Aufenthaltstitel)',
+        ]}
       >
         <ContentCard title="Almanya'da yaşam rehberi" tone="blue">
           <p>
-            Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, bilgi dağınıklığıdır. Adres kaydı,
+            Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, <strong>bilgi dağınıklığı</strong>tır. <strong>Adres kaydı</strong>,
             vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,
             insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Bu nedenle Almanya101 ana sayfasında yalnızca içerik
-            listelemek yerine, kullanıcıyı günlük hayatta en çok etkileyecek başlıklara doğrudan yönlendiren bir yapı kurduk.
+            listelemek yerine, kullanıcıyı <strong>günlük hayatta en çok etkileyecek başlıklara</strong> doğrudan yönlendiren bir yapı kurduk.
           </p>
           <p>
             Eğer hedefiniz yeni bir başlangıcı daha az stresle yönetmekse, önce{' '}
@@ -262,17 +283,17 @@ export default async function HomePage() {
             <Link href="/hizmet-rehberi" className="font-semibold text-white underline decoration-google-green underline-offset-4">
               hizmet rehberi
             </Link>
-            gibi kaynaklardan temel çerçeveyi kurmak gerekir. Böylece resmi işlem, günlük yaşam ve yerel destek başlıkları
-            ayrı ayrı değil, birbirini tamamlayan tek bir yol haritası halinde okunabilir.
+            gibi kaynaklardan <strong>temel çerçeveyi kurmak</strong> gerekir. Böylece resmi işlem, günlük yaşam ve yerel destek başlıkları
+            ayrı ayrı değil, <strong>birbirini tamamlayan tek bir yol haritası</strong> halinde okunabilir.
           </p>
         </ContentCard>
 
         <ContentCard title="İş bulma süreci" tone="red">
           <p>
-            Almanya'da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. Özgeçmişin Alman işveren beklentilerine
-            göre düzenlenmesi, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
-            dilinin anlaşılması gerekir. Birçok aday iyi profillere sahip olmasına rağmen başvuru stratejisi eksik olduğu için geri
-            dönüş alamaz. Bu yüzden ana sayfada hem araçlara hem de doğrudan iş fırsatlarına giden linkleri görünür hale getirdik.
+            Almanya'da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. <strong>Özgeçmişin Alman işveren beklentilerine
+            göre düzenlenmesi</strong>, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
+            dilinin anlaşılması gerekir. Birçok aday iyi profillere sahip olmasına rağmen <strong>başvuru stratejisi eksik</strong> olduğu için geri
+            dönüş alamaz. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
           </p>
           <p>
             Özellikle{' '}
@@ -287,8 +308,8 @@ export default async function HomePage() {
             <Link href="/maas-hesaplama" className="font-semibold text-white underline decoration-google-green underline-offset-4">
               maaş hesaplama
             </Link>
-            sayfaları birlikte kullanıldığında kullanıcı yalnızca bir ilana başvurmakla kalmaz; aynı zamanda teklifin gerçek hayatta
-            nasıl karşılık bulacağını da görür. Bu yaklaşım, Almanya iş bulma arayışını daha ölçülebilir ve kontrollü hale getirir.
+            sayfaları birlikte kullanıldığında kullanıcı yalnızca bir ilana başvurmakla kalmaz; aynı zamanda <strong>teklifin gerçek hayatta
+            nasıl karşılık bulacağını</strong> da görür. Bu yaklaşım, Almanya iş bulma arayışını daha <strong>ölçülebilir ve kontrollü</strong> hale getirir.
           </p>
         </ContentCard>
 
@@ -296,25 +317,25 @@ export default async function HomePage() {
           <p>
             Yeni bir ülkede doğru insanlara ulaşmak, bazen en doğru belgeyi bulmaktan bile daha değerlidir. Çünkü taşınma sürecinde
             sorular yalnızca resmi işlemlerle sınırlı kalmaz; hangi şehir daha uygundur, ilk ev nasıl bulunur, hangi banka daha hızlı
-            hesap açar, hangi işverenler Türkçe iletişim konusunda daha rahattır gibi gündelik ama kritik kararlar ortaya çıkar.
-            Topluluk, bu noktada hazır cevap değil; deneyim filtresi sağlar.
+            hesap açar, hangi işverenler Türkçe iletişim konusunda daha rahattır gibi <strong>gündelik ama kritik kararlar</strong> ortaya çıkar.
+            Topluluk, bu noktada hazır cevap değil; <strong>deneyim filtresi</strong> sağlar.
           </p>
           <p>
             Bu nedenle ana sayfada{' '}
             <Link href="/topluluk" className="font-semibold text-white underline decoration-google-green underline-offset-4">
               topluluk sayfası
             </Link>
-            ve WhatsApp erişimi, yalnızca bir sosyal kanal olarak değil, güvenilir bilgi dolaşımı için temel bir yapı olarak konumlandı.
-            İnsanların birbirine yön verdiği, güncel deneyimleri paylaştığı ve yanlış bilgi maliyetini azalttığı bir topluluk; Almanya
+            ve WhatsApp erişimi, yalnızca bir sosyal kanal olarak değil, <strong>güvenilir bilgi dolaşımı için temel bir yapı</strong> olarak konumlandı.
+            İnsanların birbirine yön verdiği, güncel deneyimleri paylaştığı ve <strong>yanlış bilgi maliyetini azalttığı</strong> bir topluluk; Almanya
             Türk topluluğu arayan kullanıcılar için arama sonucundan çok daha yüksek bir değere dönüşür.
           </p>
         </ContentCard>
 
         <ContentCard title="Belgeler, içerikler ve günlük aksiyon planı" tone="green">
           <p>
-            Taşınma veya yerleşme sürecinde en çok zaman kaybettiren şeylerden biri, doğru belgenin doğru anda elinizde olmamasıdır.
+            Taşınma veya yerleşme sürecinde en çok zaman kaybettiren şeylerden biri, <strong>doğru belgenin doğru anda elinizde olmaması</strong>dır.
             Başvuru yapılacak kurumlar değiştikçe istenen evrak listeleri de değişebilir. Bu nedenle belgeleri, haberleri ve rehber içerikleri
-            aynı yapıda görünür kılmak çok önemlidir. Kullanıcı bir yandan bilgi okurken, diğer yandan hemen kullanabileceği kontrol listelerine
+            aynı yapıda görünür kılmak çok önemlidir. Kullanıcı bir yandan bilgi okurken, diğer yandan hemen kullanabileceği <strong>kontrol listeleri</strong>ne
             ulaşabilmelidir.
           </p>
           <p>
@@ -330,8 +351,8 @@ export default async function HomePage() {
             <Link href="/yazi-dizisi" className="font-semibold text-white underline decoration-google-red underline-offset-4">
               yazı dizileri
             </Link>
-            birbirini tamamlayan modüller olarak öne çıkarıldı. Böylece kullanıcı yalnızca “ne yapmalıyım?” sorusuna değil, “bugün hangi adımı
-            tamamlamalıyım?” sorusuna da net bir cevap bulabilir. SEO açısından da bu yaklaşım, iç linkleme gücünü artırırken sayfalar arası niyet
+            birbirini tamamlayan modüller olarak öne çıkarıldı. Böylece kullanıcı yalnızca <strong>&quot;ne yapmalıyım?&quot;</strong> sorusuna değil, <strong>&quot;bugün hangi adımı
+            tamamlamalıyım?&quot;</strong> sorusuna da net bir cevap bulabilir. SEO açısından da bu yaklaşım, <strong>iç linkleme gücünü artırırken</strong> sayfalar arası niyet
             geçişlerini daha doğal hale getirir.
           </p>
         </ContentCard>

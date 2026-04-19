@@ -25,6 +25,8 @@ interface WebPageJsonLdProps {
   title: string;
   description: string;
   url: string;
+  datePublished?: string;
+  dateModified?: string;
 }
 
 interface FaqItem {
@@ -83,7 +85,7 @@ export function WebSiteJsonLd() {
   return <JsonLd data={data} />;
 }
 
-export function WebPageJsonLd({ title, description, url }: WebPageJsonLdProps) {
+export function WebPageJsonLd({ title, description, url, datePublished, dateModified }: WebPageJsonLdProps) {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -91,6 +93,8 @@ export function WebPageJsonLd({ title, description, url }: WebPageJsonLdProps) {
     description,
     url,
     inLanguage: 'tr',
+    ...(datePublished && { datePublished }),
+    ...(dateModified && { dateModified }),
     isPartOf: {
       '@type': 'WebSite',
       name: SEO_SITE_NAME,
