@@ -90,8 +90,8 @@ export const DRAWER_ITEMS: DrawerItem[] = [
   // Content
   {
     href: '/yazi-dizisi',
-    label: 'Yazı Dizisi',
-    description: 'Adım adım rehberler ve yazılar.',
+    label: 'Arkadaşın Köşesi',
+    description: 'Kişisel yazılar ve Almanya notları.',
     category: 'content',
   },
   {

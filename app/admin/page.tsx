@@ -14,6 +14,12 @@ const ADMIN_SECTIONS = [
     accent: 'border-google-yellow/50 bg-google-yellow/10',
   },
   {
+    href: '/admin/yazi-dizisi',
+    title: 'Arkadaşın Köşesi',
+    description: 'Köşe profili, yazılar ve görsel yüklemeleri.',
+    accent: 'border-google-blue/40 bg-google-blue/10',
+  },
+  {
     href: '/admin/hizmet-rehberi',
     title: 'Hizmet Rehberi',
     description: 'Doktor, avukat ve diğer hizmet önerilerini onayla.',
