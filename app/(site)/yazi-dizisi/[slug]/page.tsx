@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import MarkdownPreview from '@/components/MarkdownPreview';
 import { createArticleMetadata } from '@/lib/seo/metadata';
-import { getCornerAuthorProfile, getPublishedCornerPostBySlug } from '@/lib/corner';
+import { getPublishedCornerPostBySlug } from '@/lib/corner';
 import { SITE_URL } from '@/lib/utils/constants';
 
 interface CornerPostDetailPageProps {
@@ -17,10 +17,7 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: CornerPostDetailPageProps) {
   const { slug } = await params;
-  const [post, profile] = await Promise.all([
-    getPublishedCornerPostBySlug(slug),
-    getCornerAuthorProfile(),
-  ]);
+  const post = await getPublishedCornerPostBySlug(slug);
 
   if (!post) {
     return createArticleMetadata({
@@ -36,7 +33,7 @@ export async function generateMetadata({ params }: CornerPostDetailPageProps) {
     description: post.summary || post.title,
     publishedTime: post.publishedAt,
     modifiedTime: post.updatedAt || undefined,
-    authors: [profile.displayName],
+    authors: [post.authorName || 'Arkadaşın Köşesi'],
     tags: ['Arkadaşın Köşesi', 'Yazı Dizisi', 'Almanya'],
     path: post.href,
     image: post.coverImageUrl,
@@ -45,10 +42,7 @@ export async function generateMetadata({ params }: CornerPostDetailPageProps) {
 
 export default async function CornerPostDetailPage({ params }: CornerPostDetailPageProps) {
   const { slug } = await params;
-  const [post, profile] = await Promise.all([
-    getPublishedCornerPostBySlug(slug),
-    getCornerAuthorProfile(),
-  ]);
+  const post = await getPublishedCornerPostBySlug(slug);
 
   if (!post) notFound();
 
@@ -61,7 +55,7 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
         description={post.summary || post.title}
         datePublished={post.publishedAt}
         dateModified={post.updatedAt || undefined}
-        author={profile.displayName}
+        author={post.authorName || 'Arkadaşın Köşesi'}
         url={pageUrl}
         image={post.coverImageUrl}
       />
@@ -104,16 +98,9 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
 
                 <div className="mt-6 flex items-center gap-3 text-sm text-white/64">
                   <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/10">
-                    <Image
-                      src={profile.avatarImageUrl}
-                      alt={profile.displayName}
-                      fill
-                      unoptimized
-                      sizes="40px"
-                      className="object-cover"
-                    />
+                    <Image src={post.authorAvatarImageUrl || '/images/profil.jpg'} alt={post.authorName || 'Arkadaşın Köşesi'} fill unoptimized sizes="40px" className="object-cover" />
                   </div>
-                  <span>{profile.displayName}</span>
+                  <span>{post.authorName || 'Arkadaşın Köşesi'}</span>
                 </div>
               </div>
 

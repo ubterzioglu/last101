@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { createMetadata } from '@/lib/seo/metadata';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { FeatureGrid } from '@/components/sections/FeatureGrid';
@@ -194,12 +195,12 @@ export default function HakkimizdaPage() {
           <p className="text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
             Eğer bizimle çalışmak, içerik üretmek veya diğer şekillerde katkıda bulunmak istiyorsanız, bizimle iletişime geçin.
           </p>
-          <a
+          <Link
             href="/iletisim"
             className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-black bg-white rounded-full hover:bg-gray-200 hover:scale-105 transition-all duration-300"
           >
             İletişime Geçin
-          </a>
+          </Link>
         </div>
       </Section>
     </div>

@@ -867,7 +867,7 @@ export default function AdminPage() {
         </div>
 
         <header className="header">
-          <a href="/devuser" className="back-link">← dashboard&apos;a dön</a>
+          <Link href="/devuser" className="back-link">← dashboard&apos;a dön</Link>
           <div className="title-group"><h1>de tr software dashboard</h1></div>
         </header>
 
