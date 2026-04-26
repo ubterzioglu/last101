@@ -37,13 +37,13 @@ export default async function YaziDizisiPage() {
       <div className="min-h-screen bg-black text-white">
         <section className="relative overflow-hidden border-b border-white/10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.20),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(255,187,0,0.18),_transparent_36%)]" />
-          <div className="container relative py-14 md:py-20">
+          <div className="container relative py-10 md:py-14">
             <div className="max-w-3xl">
               <div className="inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/72">
                 almanya101 yazı dizisi
               </div>
-              <h1 className="mt-6 text-4xl font-black leading-tight md:text-6xl">Arkadaşın Köşesi</h1>
-              <p className="mt-5 text-lg leading-8 text-white/76">
+              <h1 className="mt-5 text-3xl font-black leading-tight md:text-5xl">Arkadaşın Köşesi</h1>
+              <p className="mt-4 text-base leading-7 text-white/76 md:text-lg">
                 almanya101 içindeki yazarların kendi sesleriyle anlattığı deneyimler, notlar ve yol arkadaşlığı.
               </p>
             </div>

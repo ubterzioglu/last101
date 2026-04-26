@@ -21,7 +21,7 @@ export function Header() {
     <>
       <header className="sticky top-0 z-50 bg-black border-b border-white/10 shadow-sm">
         <Container size="xl">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex h-12 items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <Image
@@ -29,7 +29,7 @@ export function Header() {
                 alt={SITE_NAME}
                 width={420}
                 height={140}
-                className="h-8 w-auto"
+                className="h-6 w-auto"
                 priority
               />
             </Link>
