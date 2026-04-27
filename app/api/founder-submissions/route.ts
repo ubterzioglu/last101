@@ -15,6 +15,12 @@ function normalizeEnvValue(value: unknown): string {
   return raw;
 }
 
+function assignNullableIfPresent(target: Record<string, unknown>, key: string, value: string) {
+  if (value) {
+    target[key] = value;
+  }
+}
+
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });
 }
@@ -71,18 +77,15 @@ export async function POST(request: NextRequest) {
 
     if (existing?.id) {
       const updatePayload: Record<string, unknown> = {
-        full_name: fullName || null,
-        linkedin_url: linkedinUrl || null,
-        whatsapp: whatsapp || null,
-        project_name: projectName || null,
-        project_url: null,
-        short_description: shortDescription || null,
         updated_at: new Date().toISOString(),
       };
 
-      if (phone) {
-        updatePayload.phone = phone;
-      }
+      assignNullableIfPresent(updatePayload, 'full_name', fullName);
+      assignNullableIfPresent(updatePayload, 'linkedin_url', linkedinUrl);
+      assignNullableIfPresent(updatePayload, 'whatsapp', whatsapp);
+      assignNullableIfPresent(updatePayload, 'phone', phone);
+      assignNullableIfPresent(updatePayload, 'project_name', projectName);
+      assignNullableIfPresent(updatePayload, 'short_description', shortDescription);
 
       const { data, error } = await supabase
         .from('founder_submissions')
@@ -108,14 +111,13 @@ export async function POST(request: NextRequest) {
       .from('founder_submissions')
       .insert([
         {
-          full_name: fullName || null,
-          linkedin_url: linkedinUrl || null,
-          whatsapp: whatsapp || null,
-          phone: phone || null,
-          project_name: projectName || null,
-          project_url: null,
-          short_description: shortDescription || null,
           status: 'pending',
+          ...(fullName ? { full_name: fullName } : {}),
+          ...(linkedinUrl ? { linkedin_url: linkedinUrl } : {}),
+          ...(whatsapp ? { whatsapp } : {}),
+          ...(phone ? { phone } : {}),
+          ...(projectName ? { project_name: projectName } : {}),
+          ...(shortDescription ? { short_description: shortDescription } : {}),
         },
       ])
       .select('id, status')
