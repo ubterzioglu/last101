@@ -167,12 +167,12 @@ export default function DevPage() {
         </div>
 
         <div className="dev-dashboard-grid">
-          <Link href="/devuser/survey" className="dev-action-card accent">
+          <Link href="/devuser/founder" className="dev-action-card accent">
             <div className="dev-card-image-wrap">
-              <Image src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop" alt="survey" fill style={{ objectFit: 'cover' }} unoptimized />
+              <Image src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=600&auto=format&fit=crop" alt="founder kayıt" fill style={{ objectFit: 'cover' }} unoptimized />
             </div>
-            <h3>tanışma toplantısı anketi</h3>
-            <p>1 saatlik tanışma kaynaşma proje fikirleri oylama toplantısı için uygun tarihlerini belirt.</p>
+            <h3>founder kayıt</h3>
+            <p>projeni topluluğa bırak, founder havuzuna gir ve onay sonrası etkinlik tarih anketi linkini al.</p>
           </Link>
 
           <a

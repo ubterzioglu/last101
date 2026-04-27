@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import FounderSubmissionsAdminSection from '@/components/admin/FounderSubmissionsAdminSection';
+import FounderEventSurveyAdminSection from '@/components/admin/FounderEventSurveyAdminSection';
 
 const css = `
   :root {
@@ -166,6 +168,8 @@ const NEWS_ADMIN_LIST_API_URL = '/api/news-admin-list';
 const NEWS_ADMIN_ACTION_API_URL = '/api/news-admin-action';
 const MEETING_ADMIN_LIST_API_URL = '/api/meeting-attendance-admin-list';
 const MEETING_RESET_API_URL = '/api/meeting-attendance-reset';
+const FOUNDER_SUBMISSIONS_ADMIN_LIST_API_URL = '/api/founder-submissions-admin-list';
+const FOUNDER_EVENT_ADMIN_LIST_API_URL = '/api/founder-event-admin-list';
 
 const DATE_MAP: Record<string, string> = {
   '2026-03-20': '20 Mart Cuma', '2026-03-21': '21 Mart Cumartesi', '2026-03-22': '22 Mart Pazar',
@@ -471,6 +475,18 @@ export default function AdminPage() {
       const meetPayload = await meetRes.json().catch(() => ({}));
       newBadges.meeting = meetRes.ok ? Number(meetPayload?.stats?.total || 0) : 0;
 
+      const founderRes = await fetch(`${FOUNDER_SUBMISSIONS_ADMIN_LIST_API_URL}?status=pending&limit=1`, {
+        headers: getAdminHeaders({ Accept: 'application/json' }),
+      });
+      const founderPayload = await founderRes.json().catch(() => ({}));
+      newBadges.founders = founderRes.ok ? Number(founderPayload?.stats?.pending || 0) : 0;
+
+      const founderEventRes = await fetch(FOUNDER_EVENT_ADMIN_LIST_API_URL, {
+        headers: getAdminHeaders({ Accept: 'application/json' }),
+      });
+      const founderEventPayload = await founderEventRes.json().catch(() => ({}));
+      newBadges.founderSurvey = founderEventRes.ok ? Number(founderEventPayload?.stats?.total_votes || 0) : 0;
+
       setBadges(newBadges);
     } catch { /* silent */ }
   }, [authed]);
@@ -494,6 +510,8 @@ export default function AdminPage() {
     else if (section === 'discussion') loadDiscussionData();
     else if (section === 'news') loadNewsAdminData('all', '', false);
     else if (section === 'meeting') loadMeetingData();
+    else if (section === 'founders') updateBadges();
+    else if (section === 'founderSurvey') updateBadges();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const showMenu = () => {
@@ -936,6 +954,20 @@ export default function AdminPage() {
                 <div className="menu-title">News Yönetimi</div>
                 <div className="menu-desc">Haberleri listele, kategori/durum güncelle ve gereksiz haberleri sil.</div>
                 {Number(badges.news) > 0 && <div className="menu-badge">{badges.news} taslak</div>}
+              </div>
+
+              <div className="menu-card" style={{ borderColor: 'rgba(251,188,5,0.3)' }} onClick={() => showSection('founders')}>
+                <div className="menu-icon">🚀</div>
+                <div className="menu-title">Founder Başvuruları</div>
+                <div className="menu-desc">Founder kayıtlarını incele, onayla ve survey linkini paylaş.</div>
+                {Number(badges.founders) > 0 && <div className="menu-badge">{badges.founders} onay bekliyor</div>}
+              </div>
+
+              <div className="menu-card" style={{ borderColor: 'rgba(66,133,244,0.3)' }} onClick={() => showSection('founderSurvey')}>
+                <div className="menu-icon">🗓️</div>
+                <div className="menu-title">Founder Event Survey</div>
+                <div className="menu-desc">Tarih slotlarını yönet ve founder oylarını canlı takip et.</div>
+                <div className="menu-badge" style={{ display: 'inline-block' }}>{badges.founderSurvey ?? 0} oy kaydı</div>
               </div>
 
               <div className="menu-card" style={{ borderColor: 'rgba(52,168,83,0.3)' }} onClick={() => showSection('meeting')}>
@@ -1483,6 +1515,10 @@ export default function AdminPage() {
               )}
             </div>
           </div>
+
+          <FounderSubmissionsAdminSection active={activeSection === 'founders'} onBack={showMenu} />
+
+          <FounderEventSurveyAdminSection active={activeSection === 'founderSurvey'} onBack={showMenu} />
 
           {/* ==================== MEETING SECTION ==================== */}
           <div className={`section ${activeSection === 'meeting' ? 'active' : ''}`}>
