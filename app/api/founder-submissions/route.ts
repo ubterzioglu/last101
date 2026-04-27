@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import {
+  normalizeFounderStatus,
   sanitizeLinkedinUrl,
   sanitizePhone,
   sanitizeText,
@@ -23,6 +24,45 @@ function assignNullableIfPresent(target: Record<string, unknown>, key: string, v
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });
+}
+
+export async function GET() {
+  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const serviceRoleKey = normalizeEnvValue(process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
+  }
+
+  const supabase: any = createClient(supabaseUrl, serviceRoleKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+
+  try {
+    const { data, error } = await supabase
+      .from('founder_submissions')
+      .select('id, full_name, project_name, short_description, status, created_at')
+      .order('created_at', { ascending: false })
+      .limit(100);
+
+    if (error) throw error;
+
+    const items = Array.isArray(data)
+      ? data.map((item) => ({
+          id: item.id,
+          full_name: item.full_name || null,
+          project_name: item.project_name || null,
+          short_description: item.short_description || null,
+          status: normalizeFounderStatus(item.status),
+          created_at: item.created_at || null,
+        }))
+      : [];
+
+    return NextResponse.json({ ok: true, items });
+  } catch (error) {
+    console.error('founder-submissions GET failed:', error);
+    return NextResponse.json({ error: (error as Error)?.message || 'Founder kayıtları yüklenemedi.' }, { status: 500 });
+  }
 }
 
 export async function POST(request: NextRequest) {

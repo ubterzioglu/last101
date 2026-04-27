@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
+import { normalizeFounderStatus } from '@/lib/founder';
 
 const css = `
   .founder-main {
@@ -163,6 +164,93 @@ const css = `
     color: #ffb0a8;
   }
 
+  .list-grid {
+    display: grid;
+    gap: 14px;
+  }
+
+  .list-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.025);
+    display: grid;
+    gap: 12px;
+  }
+
+  .list-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .list-title {
+    margin: 0;
+    font-size: 20px;
+    color: #fff;
+  }
+
+  .list-subtitle {
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 14px;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .status-badge.pending {
+    background: rgba(251, 188, 5, 0.14);
+    border: 1px solid rgba(251, 188, 5, 0.3);
+    color: #fbd66b;
+  }
+
+  .status-badge.approved {
+    background: rgba(52, 168, 83, 0.14);
+    border: 1px solid rgba(52, 168, 83, 0.3);
+    color: #a4efb8;
+  }
+
+  .status-badge.rejected {
+    background: rgba(234, 67, 53, 0.14);
+    border: 1px solid rgba(234, 67, 53, 0.3);
+    color: #ffb0a8;
+  }
+
+  .status-badge.muted {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.66);
+  }
+
+  .list-description {
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.65;
+    white-space: pre-wrap;
+  }
+
+  .empty-list {
+    padding: 22px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.7);
+  }
+
   @media (max-width: 768px) {
     .two-col {
       grid-template-columns: 1fr;
@@ -175,6 +263,15 @@ const css = `
 `;
 
 type StatusType = 'success' | 'error' | null;
+
+interface FounderListItem {
+  id: string;
+  full_name: string | null;
+  project_name: string | null;
+  short_description: string | null;
+  status: 'pending' | 'approved' | 'rejected';
+  created_at: string | null;
+}
 
 const INITIAL_FORM = {
   fullName: '',
@@ -189,6 +286,9 @@ export function FounderClient() {
   const [statusMsg, setStatusMsg] = useState('');
   const [statusType, setStatusType] = useState<StatusType>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [listLoading, setListLoading] = useState(true);
+  const [listError, setListError] = useState('');
+  const [submissions, setSubmissions] = useState<FounderListItem[]>([]);
 
   const showStatus = useCallback((message: string, type: StatusType) => {
     setStatusMsg(message);
@@ -201,6 +301,34 @@ export function FounderClient() {
     },
     []
   );
+
+  const loadSubmissions = useCallback(async () => {
+    setListLoading(true);
+    setListError('');
+
+    try {
+      const response = await fetch('/api/founder-submissions', {
+        headers: { Accept: 'application/json' },
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error((payload as { error?: string }).error || 'Founder kayıtları yüklenemedi.');
+      }
+
+      const items = Array.isArray((payload as { items?: FounderListItem[] }).items)
+        ? (payload as { items: FounderListItem[] }).items
+        : [];
+      setSubmissions(items);
+    } catch (error) {
+      setListError((error as Error)?.message || 'Founder kayıtları yüklenemedi.');
+    } finally {
+      setListLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadSubmissions();
+  }, [loadSubmissions]);
 
   const handleSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -235,14 +363,35 @@ export function FounderClient() {
           'success'
         );
         setForm(INITIAL_FORM);
+        await loadSubmissions();
       } catch (error) {
         showStatus((error as Error)?.message || 'Bir hata oluştu.', 'error');
       } finally {
         setSubmitting(false);
       }
     },
-    [form, showStatus]
+    [form, loadSubmissions, showStatus]
   );
+
+  function formatDate(value: string | null) {
+    if (!value) return '-';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '-';
+    return date.toLocaleString('tr-TR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
+  function getStatusLabel(value: FounderListItem['status']) {
+    const status = normalizeFounderStatus(value);
+    if (status === 'approved') return 'Onaylandı';
+    if (status === 'rejected') return 'Reddedildi';
+    return 'İncelemede';
+  }
 
   return (
     <>
@@ -334,6 +483,48 @@ export function FounderClient() {
                 {submitting ? 'Gönderiliyor...' : 'Founder Başvurusunu Gönder'}
               </button>
             </form>
+          </section>
+
+          <section className="founder-card">
+            <div className="list-head" style={{ marginBottom: 18 }}>
+              <div>
+                <h3 className="section-title">Kayıt Olan Founderlar</h3>
+                <div className="list-subtitle">
+                  Son başvurular aşağıda görünüyor. Survey linki burada değil; admin onaylı kayıt için özel link üretip paylaşır.
+                </div>
+              </div>
+            </div>
+
+            {listLoading ? (
+              <div className="empty-list">Founder kayıtları yükleniyor...</div>
+            ) : listError ? (
+              <div className="status-message error">{listError}</div>
+            ) : submissions.length === 0 ? (
+              <div className="empty-list">Henüz founder kaydı görünmüyor.</div>
+            ) : (
+              <div className="list-grid">
+                {submissions.map((item) => {
+                  const status = normalizeFounderStatus(item.status);
+                  return (
+                    <article key={item.id} className="list-card">
+                      <div className="list-head">
+                        <div>
+                          <h4 className="list-title">{item.full_name || 'İsimsiz founder'}</h4>
+                          <div className="list-subtitle">{item.project_name || 'Proje adı paylaşılmadı'}</div>
+                        </div>
+                        <div className="badge-row">
+                          <span className={`status-badge ${status}`}>{getStatusLabel(status)}</span>
+                          <span className="status-badge muted">{formatDate(item.created_at)}</span>
+                        </div>
+                      </div>
+                      <div className="list-description">
+                        {item.short_description || 'Henüz kısa açıklama eklenmedi.'}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
           </section>
         </main>
       </DevUserShell>
