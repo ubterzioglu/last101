@@ -1,20 +1,22 @@
 create table if not exists public.founder_submissions (
   id uuid primary key default gen_random_uuid(),
-  full_name text not null,
-  linkedin_url text not null,
-  whatsapp text not null,
-  phone text not null,
-  project_name text not null,
-  project_url text not null,
-  short_description text not null,
+  full_name text,
+  linkedin_url text,
+  whatsapp text,
+  phone text,
+  project_name text,
+  project_url text,
+  short_description text,
   status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
   admin_comment text,
   created_at timestamptz not null default timezone('utc'::text, now()),
   updated_at timestamptz not null default timezone('utc'::text, now())
 );
 
+drop index if exists founder_submissions_whatsapp_uidx;
 create unique index if not exists founder_submissions_whatsapp_uidx
-  on public.founder_submissions (whatsapp);
+  on public.founder_submissions (whatsapp)
+  where whatsapp is not null and btrim(whatsapp) <> '';
 
 create index if not exists founder_submissions_status_idx
   on public.founder_submissions (status, created_at desc);

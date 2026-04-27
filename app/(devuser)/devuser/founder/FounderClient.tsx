@@ -180,9 +180,7 @@ const INITIAL_FORM = {
   fullName: '',
   linkedinUrl: '',
   whatsapp: '',
-  phone: '',
   projectName: '',
-  projectUrl: '',
   shortDescription: '',
 };
 
@@ -219,9 +217,7 @@ export function FounderClient() {
             full_name: form.fullName,
             linkedin_url: form.linkedinUrl,
             whatsapp: form.whatsapp,
-            phone: form.phone,
             project_name: form.projectName,
-            project_url: form.projectUrl,
             short_description: form.shortDescription,
           }),
         });
@@ -256,13 +252,9 @@ export function FounderClient() {
           <section className="founder-card hero-card">
             <div className="hero-kicker">almanya101.de</div>
             <h2>Founder Kayıt</h2>
-            <p>
-              Projeni topluluğa taşı, founder havuzuna gir ve uygun görülürsen etkinlik tarih anketi
-              linkini admin tarafından al.
-            </p>
+            <p>Projeni topluluğa taşı ve founder havuzuna gir.</p>
             <div className="info-box">
-              Başvuru sonrası kayıt doğrudan admin onayına düşer. Survey linki herkese açık değildir;
-              yalnızca onaylanan founder kayıtlarına manuel olarak paylaşılır.
+              Başvuru sonrası kayıt admin onayına düşer. Survey linki yalnızca uygun görülen kayıtlarla paylaşılır.
             </div>
           </section>
 
@@ -279,19 +271,18 @@ export function FounderClient() {
             <form onSubmit={handleSubmit} className="form-grid">
               <div className="two-col">
                 <div className="form-group">
-                  <label htmlFor="fullName">İsim Soyisim *</label>
+                  <label htmlFor="fullName">İsim Soyisim</label>
                   <input
                     id="fullName"
                     className="form-input"
                     value={form.fullName}
                     onChange={(event) => handleChange('fullName', event.target.value)}
                     placeholder="Örn: Ayşe Yılmaz"
-                    required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="linkedinUrl">LinkedIn *</label>
+                  <label htmlFor="linkedinUrl">LinkedIn</label>
                   <input
                     id="linkedinUrl"
                     type="url"
@@ -299,14 +290,13 @@ export function FounderClient() {
                     value={form.linkedinUrl}
                     onChange={(event) => handleChange('linkedinUrl', event.target.value)}
                     placeholder="https://www.linkedin.com/in/..."
-                    required
                   />
                 </div>
               </div>
 
               <div className="two-col">
                 <div className="form-group">
-                  <label htmlFor="whatsapp">WhatsApp *</label>
+                  <label htmlFor="whatsapp">WhatsApp</label>
                   <input
                     id="whatsapp"
                     type="tel"
@@ -314,60 +304,29 @@ export function FounderClient() {
                     value={form.whatsapp}
                     onChange={(event) => handleChange('whatsapp', event.target.value)}
                     placeholder="+49 171 123 45 67"
-                    required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="phone">Telefon No *</label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    className="form-input"
-                    value={form.phone}
-                    onChange={(event) => handleChange('phone', event.target.value)}
-                    placeholder="+49 171 123 45 67"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="two-col">
-                <div className="form-group">
-                  <label htmlFor="projectName">Proje Adı *</label>
+                  <label htmlFor="projectName">Proje Adı</label>
                   <input
                     id="projectName"
                     className="form-input"
                     value={form.projectName}
                     onChange={(event) => handleChange('projectName', event.target.value)}
                     placeholder="Örn: yapay zeka destekli işe alım aracı"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="projectUrl">Proje URL *</label>
-                  <input
-                    id="projectUrl"
-                    type="url"
-                    className="form-input"
-                    value={form.projectUrl}
-                    onChange={(event) => handleChange('projectUrl', event.target.value)}
-                    placeholder="https://..."
-                    required
                   />
                 </div>
               </div>
 
               <div className="form-group">
-                <label htmlFor="shortDescription">Kısa Açıklama *</label>
+                <label htmlFor="shortDescription">Kısa Açıklama</label>
                 <textarea
                   id="shortDescription"
                   className="form-input"
                   value={form.shortDescription}
                   onChange={(event) => handleChange('shortDescription', event.target.value)}
                   placeholder="Projen ne yapıyor, kimin problemini çözüyor ve şu an hangi aşamada?"
-                  required
                 />
               </div>
 

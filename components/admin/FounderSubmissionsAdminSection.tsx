@@ -9,13 +9,13 @@ type FounderSubmissionAction = 'approve' | 'reject' | 'pending' | 'delete';
 
 interface FounderSubmissionRow {
   id: string;
-  full_name: string;
-  linkedin_url: string;
-  whatsapp: string;
-  phone: string;
-  project_name: string;
-  project_url: string;
-  short_description: string;
+  full_name: string | null;
+  linkedin_url: string | null;
+  whatsapp: string | null;
+  phone: string | null;
+  project_name: string | null;
+  project_url: string | null;
+  short_description: string | null;
   status: 'pending' | 'approved' | 'rejected';
   admin_comment: string | null;
   created_at: string | null;
@@ -38,7 +38,7 @@ function formatDate(value: string | null) {
   });
 }
 
-function buildWaUrl(value: string) {
+function buildWaUrl(value: string | null) {
   const digits = String(value || '').replace(/\D/g, '');
   return digits ? `https://wa.me/${digits}` : '';
 }
@@ -232,8 +232,8 @@ export default function FounderSubmissionsAdminSection({
                           </span>
                           <span className="status-badge muted">{formatDate(row.created_at)}</span>
                         </div>
-                        <h4 style={{ fontSize: 24, margin: 0 }}>{row.full_name}</h4>
-                        <div style={{ color: 'var(--text-secondary)', marginTop: 6 }}>{row.project_name}</div>
+                        <h4 style={{ fontSize: 24, margin: 0 }}>{row.full_name || 'İsimsiz kayıt'}</h4>
+                        <div style={{ color: 'var(--text-secondary)', marginTop: 6 }}>{row.project_name || 'Proje adı belirtilmedi'}</div>
                       </div>
                       {status === 'approved' ? (
                         <button className="action-btn view" onClick={() => void copySurveyLink(row)}>
@@ -245,15 +245,13 @@ export default function FounderSubmissionsAdminSection({
                     <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginBottom: 14 }}>
                       <InfoChip label="LinkedIn" value={row.linkedin_url} href={row.linkedin_url} />
                       <InfoChip label="WhatsApp" value={row.whatsapp} href={waUrl || null} />
-                      <InfoChip label="Telefon" value={row.phone} />
-                      <InfoChip label="Proje URL" value={row.project_url} href={row.project_url} />
                     </div>
 
                     <div style={{ border: '1px solid var(--glass-border)', borderRadius: 14, padding: 14, background: 'rgba(255,255,255,0.03)' }}>
                       <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>
                         Kısa Açıklama
                       </div>
-                      <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>{row.short_description}</div>
+                      <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>{row.short_description || 'Açıklama bırakılmadı.'}</div>
                     </div>
 
                     <div style={{ marginTop: 14 }}>
