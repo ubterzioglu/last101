@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
   const fullName = sanitizeText(body.full_name, 120);
   const linkedinUrl = sanitizeLinkedinUrl(body.linkedin_url);
   const whatsapp = sanitizePhone(body.whatsapp, 32);
+  const phone = sanitizePhone(body.phone, 32);
   const projectName = sanitizeText(body.project_name, 160);
   const shortDescription = sanitizeText(body.short_description, 1200);
 
@@ -69,18 +70,23 @@ export async function POST(request: NextRequest) {
     }
 
     if (existing?.id) {
+      const updatePayload: Record<string, unknown> = {
+        full_name: fullName || null,
+        linkedin_url: linkedinUrl || null,
+        whatsapp: whatsapp || null,
+        project_name: projectName || null,
+        project_url: null,
+        short_description: shortDescription || null,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (phone) {
+        updatePayload.phone = phone;
+      }
+
       const { data, error } = await supabase
         .from('founder_submissions')
-        .update({
-          full_name: fullName || null,
-          linkedin_url: linkedinUrl || null,
-          whatsapp: whatsapp || null,
-          phone: null,
-          project_name: projectName || null,
-          project_url: null,
-          short_description: shortDescription || null,
-          updated_at: new Date().toISOString(),
-        })
+        .update(updatePayload)
         .eq('id', existing.id)
         .select('id, status')
         .single();
@@ -105,7 +111,7 @@ export async function POST(request: NextRequest) {
           full_name: fullName || null,
           linkedin_url: linkedinUrl || null,
           whatsapp: whatsapp || null,
-          phone: null,
+          phone: phone || whatsapp || '',
           project_name: projectName || null,
           project_url: null,
           short_description: shortDescription || null,
