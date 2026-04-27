@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
           full_name: fullName || null,
           linkedin_url: linkedinUrl || null,
           whatsapp: whatsapp || null,
-          phone: phone || whatsapp || '',
+          phone: phone || null,
           project_name: projectName || null,
           project_url: null,
           short_description: shortDescription || null,

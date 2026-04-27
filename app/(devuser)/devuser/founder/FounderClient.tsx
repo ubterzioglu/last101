@@ -254,7 +254,7 @@ export function FounderClient() {
             <h2>Founder Kayıt</h2>
             <p>Projeni topluluğa taşı ve founder havuzuna gir.</p>
             <div className="info-box">
-              Başvuru sonrası kayıt admin onayına düşer. Survey linki yalnızca uygun görülen kayıtlarla paylaşılır.
+              Başvuru sonrası kayıt admin onayına düşer. Tüm alanlar opsiyoneldir; ne kadar bilgi paylaşırsan değerlendirme o kadar kolay olur. Survey linki yalnızca uygun görülen kayıtlarla paylaşılır.
             </div>
           </section>
 
