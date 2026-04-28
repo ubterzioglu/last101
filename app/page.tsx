@@ -245,10 +245,11 @@ export default async function HomePage() {
             title="Yalnız değilsin! Araçlarımız ve bir sürü içerik seninle!"
             items={HOMEPAGE_ITEMS}
             className="bg-transparent min-h-0 h-auto py-0 mb-0"
-            gridClassName="grid-cols-[repeat(auto-fit,minmax(170px,1fr))] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 max-w-none"
-            cardClassName="min-h-[190px] sm:min-h-[220px]"
-            cardTitleClassName="text-xs sm:text-sm"
+            gridClassName="grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 max-w-none"
+            cardClassName="min-h-[210px] sm:min-h-[220px] md:min-h-[220px]"
+            cardTitleClassName="text-[13px] sm:text-sm"
             cardDescriptionClassName="text-[11px] sm:text-xs leading-snug"
+            cardVariant="devuserMobile"
             overlayOpacity={false}
             backgroundImage={false}
             noCenter

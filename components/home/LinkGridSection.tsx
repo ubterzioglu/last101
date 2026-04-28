@@ -15,6 +15,7 @@ interface LinkGridSectionProps {
   backgroundImage?: string | false;
   titleMarginSmall?: boolean;
   noCenter?: boolean;
+  cardVariant?: 'default' | 'devuserMobile';
 }
 
 export function LinkGridSection({
@@ -30,6 +31,7 @@ export function LinkGridSection({
   backgroundImage = '/images/backgrounds/hero.jpg',
   titleMarginSmall = false,
   noCenter = false,
+  cardVariant = 'default',
 }: LinkGridSectionProps) {
   return (
     <section
@@ -62,6 +64,7 @@ export function LinkGridSection({
             <LinkCard
               key={item.href}
               item={item}
+              variant={cardVariant}
               className={cardClassName}
               titleClassName={cardTitleClassName}
               descriptionClassName={cardDescriptionClassName}

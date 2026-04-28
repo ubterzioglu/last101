@@ -216,9 +216,10 @@ const listStyles = `
     --gradient-3: linear-gradient(135deg, #FBBC05 0%, #EA4335 100%);
   }
   .list-container {
-    max-width: 1400px;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px 0 28px;
     min-height: 100vh;
   }
   .list-card {
@@ -279,7 +280,7 @@ const listStyles = `
   .list-btn-primary:hover { background: #3367d6; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(66,133,244,0.3); }
   .list-btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--glass-border); }
   .list-btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); }
-  .dashboard-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+  .dashboard-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; margin-bottom: 24px; }
   .dashboard-card {
     background: var(--card-bg); border: 1px solid var(--glass-border);
     border-radius: 20px; padding: 20px; backdrop-filter: blur(20px);
@@ -294,8 +295,8 @@ const listStyles = `
   .dashboard-value { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 4px; }
   .dashboard-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
   .dashboard-icon { position: absolute; top: 16px; right: 16px; font-size: 24px; opacity: 0.5; }
-  .main-layout { display: flex; gap: 20px; min-height: calc(100vh - 40px); }
-  .sidebar { width: 300px; flex-shrink: 0; position: sticky; top: 20px; height: fit-content; max-height: calc(100vh - 40px); overflow-y: auto; }
+  .main-layout { display: grid; grid-template-columns: minmax(260px,320px) minmax(0,1fr); gap: 20px; min-height: calc(100vh - 40px); align-items: start; }
+  .sidebar { width: 100%; position: sticky; top: 20px; height: fit-content; max-height: calc(100vh - 40px); overflow-y: auto; }
   .sidebar::-webkit-scrollbar { width: 6px; }
   .sidebar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
   .sidebar::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }
@@ -360,7 +361,7 @@ const listStyles = `
   .view-all-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(66,133,244,0.3); }
   .view-all-btn.hidden { display: none; }
   .content-area { flex: 1; min-width: 0; }
-  .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 4px; }
+  .results-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; padding: 0 4px; }
   .results-title { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600; color: #fff; margin: 0; }
   .results-count { font-size: 14px; color: var(--text-secondary); background: var(--card-bg); padding: 8px 16px; border-radius: 20px; border: 1px solid var(--glass-border); }
   .user-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
@@ -372,7 +373,7 @@ const listStyles = `
     transition: all 0.3s ease;
   }
   .user-card:hover { transform: translateY(-3px); border-color: rgba(66,133,244,0.3); box-shadow: 0 16px 40px rgba(66,133,244,0.15); }
-  .user-card-main { display: grid; grid-template-columns: minmax(280px,320px) 1fr; gap: 24px; align-items: stretch; }
+  .user-card-main { display: grid; grid-template-columns: minmax(260px,320px) minmax(0,1fr); gap: 24px; align-items: stretch; }
   .user-card-left { background: linear-gradient(165deg,rgba(66,133,244,0.1),rgba(255,255,255,0.02)); border: 1px solid rgba(66,133,244,0.2); border-radius: 16px; padding: 20px; }
   .user-card-right { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; }
   .user-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
@@ -409,20 +410,27 @@ const listStyles = `
   .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .list-card, .user-card, .dashboard-card { animation: fadeInUp 0.5s ease backwards; }
+  @media (max-width: 1180px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .sidebar { width: 100%; position: static; max-height: none; }
+    .dashboard-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .user-card-main { grid-template-columns: 1fr; }
+    .results-header { align-items: flex-start; }
+  }
   @media (max-width: 1024px) {
-    .main-layout { flex-direction: column; }
     .sidebar { width: 100%; position: static; max-height: none; }
     .sidebar-mobile-toggle { display: flex !important; }
     .sidebar-content { display: none; }
     .sidebar-content.open { display: block; }
-    .dashboard-grid { grid-template-columns: repeat(2,1fr); }
-    .user-card-main { grid-template-columns: 1fr; }
+    .hero-top1 { align-items: flex-start; }
+    .hero-actions { width: 100%; }
   }
   @media (max-width: 768px) {
-    .list-container { padding: 15px; }
+    .list-container { padding: 15px 0 24px; }
     .dashboard-grid { grid-template-columns: 1fr; gap: 12px; }
     .dashboard-card { padding: 16px; }
     .dashboard-value { font-size: 28px; }
+    .list-card { padding: 18px; border-radius: 20px; }
     .user-card { padding: 18px; }
     .user-card-left, .user-card-right { padding: 16px; }
     .user-name { font-size: 18px; }
@@ -430,10 +438,13 @@ const listStyles = `
     .action-btn { justify-content: center; }
     .hero-top1 { flex-direction: column; align-items: flex-start; }
     .hero-actions { width: 100%; justify-content: flex-start; }
+    .hero-actions .list-btn { width: 100%; }
+    .results-count { width: 100%; text-align: center; }
     .modal-content { padding: 24px; }
     .modal-actions { flex-direction: column; }
   }
   @media (max-width: 480px) {
+    .results-title { font-size: 18px; }
     .checkbox-filter-row { flex-direction: column; align-items: stretch; }
     .checkbox-filter-row .checkbox-filter-item { max-width: 100%; }
   }
@@ -894,7 +905,7 @@ export function ListClient() {
 
       {/* Protected Content */}
       {isAuthed && (
-        <DevUserShell backHref="/devuser/dev" backLabel="← dashboard'a dön">
+        <DevUserShell backHref="/devuser/dev" backLabel="← dashboard'a dön" frameVariant="wide">
           <div className="list-container">
 
             {/* Hero */}
