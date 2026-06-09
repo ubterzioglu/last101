@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+import { createMetadata } from '@/lib/seo/metadata';
 import { ListClient } from './ListClient';
 
-export const metadata: Metadata = {
-  title: 'de tr software dashboard | Developer Topluluğu - almanya101',
-  description: 'Almanya\'da yaşayan Türk developer, QA, DevOps ve tech profesyonellerini keşfet.',
-  robots: { index: false, follow: false },
-};
+export const metadata = createMetadata({
+  title: 'Developer Topluluğu',
+  description: 'Almanya\'da yaşayan Türk developer, QA, DevOps ve teknoloji profesyonellerini keşfet.',
+  path: '/devuser/list',
+  noIndex: true,
+});
 
 export default function ListPage() {
   return <ListClient />;

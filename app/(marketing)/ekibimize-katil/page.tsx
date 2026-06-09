@@ -77,7 +77,7 @@ export default function EkibimizeKatilPage() {
               </a>
 
               <a
-                href="https://instagram.com/almanya101"
+                href="https://instagram.com/almanya101de"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-4 rounded-xl bg-white/10 hover:bg-white/20 transition-all duration-300 group"

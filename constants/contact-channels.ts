@@ -50,9 +50,9 @@ export const CONTACT_CHANNELS: ContactChannel[] = [
   },
   {
     id: 'instagram',
-    href: 'https://instagram.com/almanya101',
+    href: 'https://instagram.com/almanya101de',
     label: 'Instagram',
-    description: '@almanya101',
+    description: '@almanya101de',
     icon: 'instagram',
     bgColor: 'bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400',
     external: true,

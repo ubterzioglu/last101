@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { createMetadata } from '@/lib/seo/metadata';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { FeatureGrid } from '@/components/sections/FeatureGrid';
 import { Section } from '@/components/ui/Section';
 import type { Feature } from '@/types';
 
@@ -184,8 +183,17 @@ export default function HakkimizdaPage() {
             Her şeyi yaparken bu değerleri dikkate alıyoruz.
           </p>
         </div>
-        <div className="rounded-2xl bg-white/5 border border-white/10 p-8">
-          <FeatureGrid features={features} columns={4} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {features.map((feature) => (
+            <div
+              key={feature.id}
+              className="flex flex-col items-center text-center rounded-2xl bg-white/5 border border-white/10 p-8 backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1"
+            >
+              <div className="text-5xl mb-5">{feature.icon}</div>
+              <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+              <p className="text-white/70 leading-relaxed">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </Section>
 

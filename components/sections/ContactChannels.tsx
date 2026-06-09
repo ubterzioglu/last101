@@ -64,9 +64,9 @@ const contactChannels: ContactChannel[] = [
   {
     id: 'instagram',
     name: 'Instagram',
-    description: '@almanya101',
+    description: '@almanya101de',
     icon: Instagram,
-    href: 'https://instagram.com/almanya101',
+    href: 'https://instagram.com/almanya101de',
     color: 'bg-pink-500',
     hoverColor: 'hover:bg-pink-600',
   },

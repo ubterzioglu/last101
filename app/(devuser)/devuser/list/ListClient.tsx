@@ -221,6 +221,7 @@ const listStyles = `
     margin: 0 auto;
     padding: 20px 0 28px;
     min-height: 100vh;
+    overflow-x: clip;
   }
   .list-card {
     background: var(--card-bg);
@@ -295,7 +296,7 @@ const listStyles = `
   .dashboard-value { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 4px; }
   .dashboard-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
   .dashboard-icon { position: absolute; top: 16px; right: 16px; font-size: 24px; opacity: 0.5; }
-  .main-layout { display: grid; grid-template-columns: minmax(260px,320px) minmax(0,1fr); gap: 20px; min-height: calc(100vh - 40px); align-items: start; }
+  .main-layout { display: grid; grid-template-columns: minmax(280px,320px) minmax(0,1fr); gap: 20px; min-height: calc(100vh - 40px); align-items: start; }
   .sidebar { width: 100%; position: sticky; top: 20px; height: fit-content; max-height: calc(100vh - 40px); overflow-y: auto; }
   .sidebar::-webkit-scrollbar { width: 6px; }
   .sidebar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
@@ -373,7 +374,7 @@ const listStyles = `
     transition: all 0.3s ease;
   }
   .user-card:hover { transform: translateY(-3px); border-color: rgba(66,133,244,0.3); box-shadow: 0 16px 40px rgba(66,133,244,0.15); }
-  .user-card-main { display: grid; grid-template-columns: minmax(260px,320px) minmax(0,1fr); gap: 24px; align-items: stretch; }
+  .user-card-main { display: grid; grid-template-columns: minmax(220px,280px) minmax(0,1fr); gap: 24px; align-items: stretch; }
   .user-card-left { background: linear-gradient(165deg,rgba(66,133,244,0.1),rgba(255,255,255,0.02)); border: 1px solid rgba(66,133,244,0.2); border-radius: 16px; padding: 20px; }
   .user-card-right { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; }
   .user-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
@@ -394,6 +395,7 @@ const listStyles = `
   .user-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 0; padding-top: 16px; border-top: 1px dashed var(--glass-border); }
   .action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 999px; border: 1px solid rgba(66,133,244,0.3); background: rgba(66,133,244,0.08); color: #fff; text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.3s; }
   .action-btn:hover { background: rgba(66,133,244,0.2); border-color: var(--google-blue); transform: translateY(-1px); }
+  .user-name, .user-role, .badge, .tech-tag, .action-btn, .info-row, .results-count { overflow-wrap: anywhere; }
   .empty-state { text-align: center; padding: 60px 20px; color: var(--text-secondary); }
   .empty-state h4 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 12px; color: #fff; }
   .loading { text-align: center; padding: 40px; color: var(--text-secondary); }
@@ -424,6 +426,8 @@ const listStyles = `
     .sidebar-content.open { display: block; }
     .hero-top1 { align-items: flex-start; }
     .hero-actions { width: 100%; }
+    .main-layout { gap: 16px; }
+    .user-card-main { gap: 18px; }
   }
   @media (max-width: 768px) {
     .list-container { padding: 15px 0 24px; }
@@ -439,14 +443,37 @@ const listStyles = `
     .hero-top1 { flex-direction: column; align-items: flex-start; }
     .hero-actions { width: 100%; justify-content: flex-start; }
     .hero-actions .list-btn { width: 100%; }
+    .auth-actions .list-btn, .modal-actions .list-btn { width: 100%; }
+    .main-layout { gap: 14px; }
+    .user-card-main { gap: 14px; }
     .results-count { width: 100%; text-align: center; }
     .modal-content { padding: 24px; }
     .modal-actions { flex-direction: column; }
   }
+  @media (max-width: 640px) {
+    .list-card { padding: 16px; border-radius: 18px; }
+    .user-card { padding: 16px; border-radius: 18px; }
+    .dashboard-card { border-radius: 18px; }
+    .dashboard-icon { top: 14px; right: 14px; font-size: 20px; }
+    .hero-domain1, .dashboard-label, .sidebar-label { font-size: 11px; }
+    .results-header { padding: 0; margin-bottom: 16px; }
+    .results-title { font-size: 18px; }
+    .user-card-left, .user-card-right { padding: 14px; }
+    .info-row { padding: 10px 12px; }
+    .badge, .tech-tag, .action-btn { width: 100%; justify-content: center; }
+  }
   @media (max-width: 480px) {
+    .list-container { padding-top: 12px; }
+    .list-btn { width: 100%; padding: 12px 16px; }
+    .hero-actions { gap: 8px; }
+    .dashboard-value { font-size: 24px; }
+    .user-name { font-size: 17px; }
+    .user-role { width: 100%; justify-content: center; padding-inline: 12px; }
     .results-title { font-size: 18px; }
     .checkbox-filter-row { flex-direction: column; align-items: stretch; }
     .checkbox-filter-row .checkbox-filter-item { max-width: 100%; }
+    .modal-overlay { padding: 12px; }
+    .modal-content { padding: 18px; border-radius: 20px; }
   }
   @media (hover: none) {
     .category-btn:active, .action-btn:active, .list-btn:active { transform: scale(0.98); transition: transform 0.1s ease; }

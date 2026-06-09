@@ -37,7 +37,7 @@ export const DEFAULT_META = {
 export const SOCIAL_LINKS = {
   twitter: 'https://twitter.com/almanya101',
   facebook: 'https://facebook.com/almanya101',
-  instagram: 'https://instagram.com/almanya101',
+  instagram: 'https://instagram.com/almanya101de',
   youtube: 'https://youtube.com/@almanya101',
 } as const;
 
