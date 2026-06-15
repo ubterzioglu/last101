@@ -24,10 +24,10 @@ const css = `
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--dark-bg); min-height: 100vh; color: var(--text-primary); overflow-x: hidden; }
-  .admin-wrap { min-height: 100vh; background: #000; color: #fff; font-family: 'Inter', -apple-system, sans-serif; overflow-x: hidden; }
-  .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: #000; }
+  .admin-wrap { position: relative; min-height: 100vh; background: #000; color: #fff; font-family: 'Inter', -apple-system, sans-serif; overflow: hidden; }
+  .bg-animation { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: #000; }
   #code-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.28; }
-  .grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 50px 50px; z-index: 0; pointer-events: none; }
+  .grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 50px 50px; z-index: 0; pointer-events: none; }
   .container { max-width: 1400px; margin: 0 auto; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 1; }
   .top-logo { text-align: center; margin-bottom: 20px; padding-top: 10px; }
   .top-logo-image { width: 300px; height: auto; object-fit: contain; box-shadow: 0 8px 32px rgba(66,133,244,0.3); }

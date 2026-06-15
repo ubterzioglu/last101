@@ -2,6 +2,14 @@
 
 const ADMIN_AUTH_STORAGE_KEY = 'dad_admin_auth_v1';
 
+/** Emitted on login/logout so same-tab listeners (e.g. the admin shell) can react. */
+export const ADMIN_AUTH_CHANGED_EVENT = 'admin-auth-changed';
+
+function emitAuthChanged() {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(new Event(ADMIN_AUTH_CHANGED_EVENT));
+}
+
 export interface StoredAdminAuth {
   email: string;
   password: string;
@@ -11,6 +19,7 @@ export function saveAdminAuth(password: string, email = 'admin@almanya101.de') {
   if (typeof window === 'undefined') return;
   const auth = { email: String(email || '').trim().toLowerCase(), password: String(password || '') };
   sessionStorage.setItem(ADMIN_AUTH_STORAGE_KEY, JSON.stringify(auth));
+  emitAuthChanged();
 }
 
 export function loadAdminAuth(): StoredAdminAuth {
@@ -30,6 +39,7 @@ export function loadAdminAuth(): StoredAdminAuth {
 export function clearAdminAuth() {
   if (typeof window === 'undefined') return;
   sessionStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
+  emitAuthChanged();
 }
 
 export function getAdminHeaders(extra: Record<string, string> = {}): Record<string, string> {

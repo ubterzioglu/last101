@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SEO_SITE_NAME } from '@/lib/utils/constants';
+import { AdminLayoutShell } from '@/components/admin/AdminLayoutShell';
 
 export const metadata: Metadata = {
   title: `Admin Panel | ${SEO_SITE_NAME}`,
@@ -10,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <AdminLayoutShell>{children}</AdminLayoutShell>;
 }
