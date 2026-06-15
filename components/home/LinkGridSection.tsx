@@ -15,7 +15,6 @@ interface LinkGridSectionProps {
   backgroundImage?: string | false;
   titleMarginSmall?: boolean;
   noCenter?: boolean;
-  cardVariant?: 'default' | 'devuserMobile';
 }
 
 export function LinkGridSection({
@@ -31,7 +30,6 @@ export function LinkGridSection({
   backgroundImage = '/images/backgrounds/hero.jpg',
   titleMarginSmall = false,
   noCenter = false,
-  cardVariant = 'default',
 }: LinkGridSectionProps) {
   return (
     <section
@@ -47,7 +45,7 @@ export function LinkGridSection({
         {(title || subtitle) && (
           <div className={cn('text-center', titleMarginSmall ? 'mb-2' : 'mb-6')}>
             {title && (
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-4">
                 {title}
               </h2>
             )}
@@ -64,7 +62,6 @@ export function LinkGridSection({
             <LinkCard
               key={item.href}
               item={item}
-              variant={cardVariant}
               className={cardClassName}
               titleClassName={cardTitleClassName}
               descriptionClassName={cardDescriptionClassName}

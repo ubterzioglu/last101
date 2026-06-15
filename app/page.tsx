@@ -138,7 +138,11 @@ function BackgroundSection({
 }
 
 function SectionDivider() {
-  return <div className="h-[10px] bg-black" />;
+  return (
+    <div className="relative h-[10px] bg-black">
+      <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-google-blue/40 to-transparent" />
+    </div>
+  );
 }
 
 function EditorialSection({ eyebrow, title, intro, listItems, children }: EditorialSectionProps) {
@@ -149,7 +153,7 @@ function EditorialSection({ eyebrow, title, intro, listItems, children }: Editor
           <div className="inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
             {eyebrow}
           </div>
-          <h2 className="mt-6 mb-4 text-3xl font-bold text-white md:text-4xl">
+          <h2 className="mt-6 mb-4 font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
             {title}
           </h2>
           <p className="mt-5 text-base leading-8 text-white/74 md:text-lg">
@@ -235,12 +239,17 @@ export default async function HomePage() {
           { name: 'Oturum izni (Aufenthaltstitel)', text: 'Vize sürenize göre yerel Ausländerbehörde&apos;de oturum izni başvurusu yapın.' },
         ]}
       />
-      <SpeakableJsonLd cssSelector={['section.min-h-\\[600px\\] p', '.faq-section p']} />
+      <SpeakableJsonLd cssSelector={['section.min-h-\\[640px\\] p', '.faq-section p']} />
 
       <HomeHeroSection whatsappHref={WHATSAPP_COMMUNITY_CHANNEL?.href} />
 
-      <section className="bg-[#050505] py-6 md:py-8">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-[#050505] py-8 md:py-12">
+        <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+          <div className="absolute inset-0 bg-grid" />
+          <div className="absolute -left-32 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-google-blue/12 blur-[140px]" />
+          <div className="absolute -right-32 top-1/3 h-72 w-72 rounded-full bg-google-green/12 blur-[140px]" />
+        </div>
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
           <LinkGridSection
             title="Yalnız değilsin! Araçlarımız ve bir sürü içerik seninle!"
             items={HOMEPAGE_ITEMS}
@@ -249,7 +258,6 @@ export default async function HomePage() {
             cardClassName="min-h-[210px] sm:min-h-[220px] md:min-h-[220px]"
             cardTitleClassName="text-[13px] sm:text-sm"
             cardDescriptionClassName="text-[11px] sm:text-xs leading-snug"
-            cardVariant="devuserMobile"
             overlayOpacity={false}
             backgroundImage={false}
             noCenter
@@ -264,7 +272,7 @@ export default async function HomePage() {
         heightClassName="h-[500px] sm:h-[540px] lg:h-[580px]"
       >
         <div className="text-center mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+          <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-4">
             Almanya Haberleri Neleri Takip Etmeli?
           </h2>
         </div>
@@ -396,7 +404,7 @@ export default async function HomePage() {
       <section className="bg-black py-16 text-white md:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold text-white md:text-4xl">
+            <h2 className="font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
               Almanya&apos;da Yaşam Maliyeti Ne Kadar?
             </h2>
             <p className="mt-4 text-base leading-8 text-white/74 md:text-lg">
@@ -471,7 +479,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/72 to-black/42" />
         <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-8 text-center sm:px-6 sm:pb-12 md:pb-16">
           <div className="mx-auto max-w-5xl rounded-md bg-black/58 px-4 py-3 shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:px-6 sm:py-4">
-            <h2 className="text-xl font-bold text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.85)] sm:text-2xl md:text-3xl lg:text-4xl">
+            <h2 className="font-display text-xl font-bold tracking-tight text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.85)] sm:text-2xl md:text-3xl lg:text-4xl">
               Almanya&apos;da networking çoğu zaman doğru çevreye görünür olmakla başlar.
             </h2>
             <p className="mx-auto mt-3 max-w-3xl text-sm leading-7 text-white/95 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] sm:text-base">
@@ -494,7 +502,7 @@ export default async function HomePage() {
       >
         <div className="w-full">
           <div className="text-center mb-4 sm:mb-5">
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-4">
               Almanya101 Topluluğuna Nasıl Katılabilirsiniz?
             </h2>
             <p className="mx-auto max-w-3xl text-sm leading-7 text-white sm:text-base">
@@ -519,7 +527,7 @@ export default async function HomePage() {
           ) : null}
 
           <div className="text-center mb-4 sm:mb-6">
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-4">
               Bize Nasıl Ulaşabilirsiniz?
             </h2>
           </div>
@@ -544,10 +552,10 @@ export default async function HomePage() {
 
       <a
         href="#"
-        className="fixed bottom-4 right-4 z-50 w-8 h-8 sm:w-10 sm:h-10 bg-google-yellow rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-400 hover:scale-110 transition-all duration-300"
+        className="fixed bottom-4 right-4 z-50 flex h-9 w-9 items-center justify-center rounded-full bg-google-yellow shadow-glow-yellow transition-all duration-300 hover:scale-110 hover:bg-yellow-400 sm:h-11 sm:w-11"
         aria-label="Yukarı git"
       >
-        <ArrowUpIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-900" />
+        <ArrowUpIcon className="h-4 w-4 text-gray-900 sm:h-5 sm:w-5" />
       </a>
     </>
   );

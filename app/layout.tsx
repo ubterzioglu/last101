@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Inter } from 'next/font/google';
+import { Sora, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -14,10 +14,16 @@ import {
   SITE_URL,
 } from '@/lib/utils/constants';
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-sans',
+});
+
+const sora = Sora({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-display',
 });
 
 const GOATCOUNTER_ENDPOINT = 'https://almanya101de.goatcounter.com/count';
@@ -86,7 +92,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={inter.variable}>
+    <html lang="tr" className={`${jakarta.variable} ${sora.variable}`}>
       <head>
         {/* Structured Data */}
         <OrganizationJsonLd />
