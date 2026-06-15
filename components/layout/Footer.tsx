@@ -31,6 +31,27 @@ export function Footer() {
             </a>
             {' '}— Diasporayı Birleştiren Platform
           </p>
+          <p className="text-xs text-gray-700">
+            <a
+              href="https://chatio.com.tr/"
+              rel="dofollow"
+              target="_blank"
+              className="hover:underline"
+            >
+              Canlı Destek Yazılımı
+            </a>
+          </p>
+          <p className="text-xs text-gray-700">
+            <a
+              href="https://www.spindorai.com/seo/izmir-seo"
+              rel="dofollow"
+              target="_blank"
+              className="hover:underline"
+            >
+              İzmir Seo Ajansı
+            </a>
+            {' '}Spindora Tarafından Seosu Yapılmıştır.
+          </p>
         </div>
       </Container>
     </footer>

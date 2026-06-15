@@ -539,7 +539,7 @@ export default async function HomePage() {
 
       <div className="bg-black py-6 text-center">
         <p className="text-xs text-white/40">
-          Yayın tarihi: <time dateTime="2024-06-01">Haziran 2024</time> &middot; Son güncelleme: <time dateTime="2026-04-19">Nisan 2026</time>
+          Yayın tarihi: <time dateTime="2024-06-01">Haziran 2024</time> &middot; Son güncelleme: <time dateTime="2026-06-15">Haziran 2026</time>
         </p>
       </div>
 
