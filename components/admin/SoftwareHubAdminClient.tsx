@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import FounderSubmissionsAdminSection from '@/components/admin/FounderSubmissionsAdminSection';
 import FounderEventSurveyAdminSection from '@/components/admin/FounderEventSurveyAdminSection';
+import { useAdminGate } from '@/hooks/useAdminGate';
 
 const css = `
   :root {
@@ -248,12 +249,9 @@ function normalizeDiscussionStatus(status: string | undefined): string {
 }
 
 // ==================== AUTH HELPERS ====================
-function saveAdminAuth(email: string, password: string) {
-  if (typeof window === 'undefined') return;
-  const auth = { email: String(email || '').trim().toLowerCase(), password: String(password || '') };
-  sessionStorage.setItem(ADMIN_AUTH_STORAGE_KEY, JSON.stringify(auth));
-}
-
+// Session is established once at /admin (single-door gate). Here we only read
+// the shared session to build authorized API headers; the password form lives
+// on the main /admin page.
 function loadAdminAuth(): { email: string; password: string } {
   if (typeof window === 'undefined') return { email: '', password: '' };
   try {
@@ -267,11 +265,6 @@ function loadAdminAuth(): { email: string; password: string } {
   }
 }
 
-function clearAdminAuth() {
-  if (typeof window === 'undefined') return;
-  sessionStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
-}
-
 function getAdminHeaders(extra: Record<string, string> = {}): Record<string, string> {
   const current = loadAdminAuth();
   return {
@@ -282,18 +275,6 @@ function getAdminHeaders(extra: Record<string, string> = {}): Record<string, str
   };
 }
 
-async function verifyAdminKey(password: string): Promise<true> {
-  const response = await fetch('/api/admin-auth-verify', {
-    method: 'GET',
-    headers: { Accept: 'application/json', 'x-admin-key': String(password || '').trim() },
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    if (response.status === 401) throw new Error('Sifre hatali.');
-    throw new Error(payload.error || `Admin dogrulama basarisiz (${response.status})`);
-  }
-  return true;
-}
 
 // ==================== MAIN COMPONENT ====================
 export default function AdminPage() {
@@ -301,11 +282,9 @@ export default function AdminPage() {
   const codeRainRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const badgeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Auth state
-  const [authed, setAuthed] = useState(false);
-  const [authPassword, setAuthPassword] = useState('');
-  const [authError, setAuthError] = useState('');
-  const [authLoading, setAuthLoading] = useState(false);
+  // Auth state — single-door gate via /admin
+  const gateStatus = useAdminGate();
+  const authed = gateStatus === 'authed';
 
   // Navigation
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -406,36 +385,11 @@ export default function AdminPage() {
 
   // ==================== AUTH ====================
   useEffect(() => {
-    const saved = loadAdminAuth();
-    if (saved.password) {
-      verifyAdminKey(saved.password)
-        .then(() => setAuthed(true))
-        .catch(() => clearAdminAuth());
-    }
-  }, []);
-
-  useEffect(() => {
     if (authed) {
       const cleanup = startCodeRain();
       return cleanup;
     }
   }, [authed, startCodeRain]);
-
-  const handleAuthSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthError('');
-    if (!authPassword) { setAuthError('Lutfen sifre girin.'); return; }
-    setAuthLoading(true);
-    try {
-      await verifyAdminKey(authPassword);
-      saveAdminAuth('admin@almanya101.de', authPassword);
-      setAuthed(true);
-    } catch (err: any) {
-      setAuthError(err.message || 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.');
-    } finally {
-      setAuthLoading(false);
-    }
-  };
 
   // ==================== BADGES ====================
   const updateBadges = useCallback(async () => {
@@ -823,45 +777,8 @@ export default function AdminPage() {
   // ==================== RENDER ====================
   if (!authed) {
     return (
-      <div className="admin-wrap">
-        <style>{css}</style>
-        <div className="bg-animation"><canvas ref={canvasRef} id="code-canvas" /></div>
-        <div className="grid-overlay" />
-          <div className="auth-gate">
-          <div className="top-logo">
-            <Image
-              src="/almanya101lragetransparent.png"
-              alt="almanya101"
-              width={420}
-              height={140}
-              className="top-logo-image"
-              priority
-            />
-          </div>
-          <div className="auth-card">
-            <div style={{ textAlign: 'center', fontSize: 14, fontWeight: 600, color: 'var(--google-red)', textTransform: 'lowercase', marginBottom: 8 }}>almanya101.de</div>
-            <h2 className="auth-title">🔐 Admin Girişi</h2>
-            <p className="auth-subtitle">Devam etmek için giriş yapın</p>
-            {authError && <div className="auth-error">{authError}</div>}
-            <form onSubmit={handleAuthSubmit}>
-              <div className="form-group">
-                <label htmlFor="authPassword">Şifre</label>
-                <input
-                  type="password"
-                  id="authPassword"
-                  placeholder="••••••••"
-                  required
-                  autoComplete="current-password"
-                  value={authPassword}
-                  onChange={(e) => setAuthPassword(e.target.value)}
-                />
-              </div>
-              <button type="submit" className="auth-btn" disabled={authLoading}>
-                {authLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-              </button>
-            </form>
-          </div>
-        </div>
+      <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
+        <div className="text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }

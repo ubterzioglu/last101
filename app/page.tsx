@@ -3,6 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import { createMetadata } from '@/lib/seo/metadata';
 import { NewsCarousel } from '@/components/sections/NewsCarousel';
 import { FAQ } from '@/components/sections/FAQ';
+import { KenBurnsSlideshow } from '@/components/sections/KenBurnsSlideshow';
 import { HomeHeroSection } from '@/components/home/HomeHeroSection';
 import { LinkGridSection } from '@/components/home/LinkGridSection';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
@@ -36,6 +37,13 @@ export const dynamic = 'force-dynamic';
 const HOMEPAGE_ITEMS = [...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
 const HOME_PAGE_URL = CANONICAL_SITE_URL;
 const WHATSAPP_COMMUNITY_CHANNEL = CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp');
+const HOMEPAGE_FOOTER_SLIDES = [
+  { src: '/images/backgrounds/berlin1.jpg', alt: 'Berlin şehir manzarası' },
+  { src: '/images/backgrounds/frankfurt1.jpg', alt: 'Frankfurt finans merkezi' },
+  { src: '/images/backgrounds/munih.jpg', alt: 'Münih şehir manzarası' },
+  { src: '/images/backgrounds/koln.jpg', alt: 'Köln şehir manzarası' },
+  { src: '/images/backgrounds/berlin3.jpg', alt: 'Berlin sokak manzarası' },
+];
 const HOMEPAGE_FAQ_ITEMS = [
   {
     question: "Almanya'ya yeni taşınan biri önce hangi adımları tamamlamalı?",
@@ -463,19 +471,7 @@ export default async function HomePage() {
       <SectionDivider />
 
       <section className="relative h-[42vh] overflow-hidden bg-black sm:h-[50vh] md:h-[58vh]">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster="/images/backgrounds/berlin4.jpg"
-          className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source
-            src="https://assets.mixkit.co/active_storage/video_items/100328/1722991554/100328-video-720.mp4"
-            type="video/mp4"
-          />
-        </video>
+        <KenBurnsSlideshow slides={HOMEPAGE_FOOTER_SLIDES} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/72 to-black/42" />
         <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-8 text-center sm:px-6 sm:pb-12 md:pb-16">
           <div className="mx-auto max-w-5xl rounded-md bg-black/58 px-4 py-3 shadow-[0_18px_50px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:px-6 sm:py-4">
@@ -487,9 +483,6 @@ export default async function HomePage() {
               haber akışı; Almanya&apos;da yeni bir çevre kurmak isteyenler için güçlü bir başlangıç zemini oluşturur.
               Doğru bilgiye ve doğru insanlara daha hızlı ulaşmak, yerleşme ve profesyonel ilerleme sürecini
               belirgin şekilde kolaylaştırır.
-            </p>
-            <p className="mt-3 text-xs italic text-white/75 drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
-              Arka plan video: Mixkit
             </p>
           </div>
         </div>

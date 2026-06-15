@@ -2,13 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import {
-  clearAdminAuth,
-  getAdminHeaders,
-  loadAdminAuth,
-  saveAdminAuth,
-  verifyAdminKey,
-} from '@/lib/admin/clientAuth';
+import { getAdminHeaders } from '@/lib/admin/clientAuth';
+import { useAdminGate } from '@/hooks/useAdminGate';
 
 interface BrokenLinkReport {
   id: number;
@@ -35,24 +30,13 @@ function formatDate(dateValue: string) {
 }
 
 export default function BrokenLinkReportsAdminClient() {
-  const [authed, setAuthed] = useState(false);
-  const [authLoading, setAuthLoading] = useState(false);
-  const [authPassword, setAuthPassword] = useState('');
-  const [authError, setAuthError] = useState('');
+  const gateStatus = useAdminGate();
+  const authed = gateStatus === 'authed';
 
   const [reports, setReports] = useState<BrokenLinkReport[]>([]);
   const [listLoading, setListLoading] = useState(false);
   const [listError, setListError] = useState('');
   const [search, setSearch] = useState('');
-
-  useEffect(() => {
-    const saved = loadAdminAuth();
-    if (!saved.password) return;
-
-    verifyAdminKey(saved.password)
-      .then(() => setAuthed(true))
-      .catch(() => clearAdminAuth());
-  }, []);
 
   const loadReports = useCallback(async () => {
     setListLoading(true);
@@ -85,22 +69,6 @@ export default function BrokenLinkReportsAdminClient() {
       loadReports();
     }
   }, [authed, loadReports]);
-
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthLoading(true);
-    setAuthError('');
-
-    try {
-      await verifyAdminKey(authPassword);
-      saveAdminAuth(authPassword);
-      setAuthed(true);
-    } catch (error) {
-      setAuthError(error instanceof Error ? error.message : 'Geçersiz şifre');
-    } finally {
-      setAuthLoading(false);
-    }
-  };
 
   const handleDelete = async (id: number) => {
     if (!confirm('Bu rapor silinecek. Emin misiniz?')) return;
@@ -138,29 +106,7 @@ export default function BrokenLinkReportsAdminClient() {
   if (!authed) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <h1 className="text-2xl font-bold text-center mb-8">Kırık Link Bildirimleri Admin</h1>
-          <form onSubmit={handleAuth} className="space-y-4">
-            <input
-              type="password"
-              placeholder="Admin şifresi"
-              value={authPassword}
-              onChange={(e) => setAuthPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-google-yellow"
-              disabled={authLoading}
-            />
-            <button
-              type="submit"
-              disabled={authLoading}
-              className="w-full px-4 py-3 bg-google-yellow text-black font-semibold rounded-lg hover:bg-google-yellow/90 disabled:opacity-50"
-            >
-              {authLoading ? 'Kontrol ediliyor...' : 'Giriş Yap'}
-            </button>
-            {authError && (
-              <div className="text-red-400 text-sm text-center">{authError}</div>
-            )}
-          </form>
-        </div>
+        <div className="text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }

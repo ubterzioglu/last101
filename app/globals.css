@@ -166,6 +166,19 @@
     100% { background-position: 60px 60px; }
   }
 
+  /* Ken Burns slideshow (homepage footer) */
+  @keyframes ken-burns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+  }
+
+  .kb-zoom-active {
+    animation: ken-burns 9s ease-out forwards;
+  }
+  .kb-zoom-idle {
+    transform: scale(1);
+  }
+
   /* Respect reduced motion preferences */
   @media (prefers-reduced-motion: reduce) {
     .bg-aurora,
@@ -174,9 +187,12 @@
     .animate-float-slow,
     .animate-aurora,
     .animate-grid-pan,
-    .animate-pulse-glow {
+    .animate-pulse-glow,
+    .kb-zoom-active,
+    .kb-zoom-idle {
       animation: none !important;
     }
     .reveal { opacity: 1; transform: none; }
+    .kb-zoom-active, .kb-zoom-idle { transform: scale(1); }
   }
 }

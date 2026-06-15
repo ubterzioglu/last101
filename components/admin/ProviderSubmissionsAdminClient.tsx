@@ -2,13 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import {
-  clearAdminAuth,
-  getAdminHeaders,
-  loadAdminAuth,
-  saveAdminAuth,
-  verifyAdminKey,
-} from '@/lib/admin/clientAuth';
+import { useRouter } from 'next/navigation';
+import { clearAdminAuth, getAdminHeaders } from '@/lib/admin/clientAuth';
+import { useAdminGate } from '@/hooks/useAdminGate';
 import { cn } from '@/lib/utils/cn';
 
 type SubmissionStatus = 'all' | 'pending' | 'approved' | 'rejected';
@@ -75,10 +71,9 @@ function getTypeLabel(value: string) {
 }
 
 export default function ProviderSubmissionsAdminClient() {
-  const [authed, setAuthed] = useState(false);
-  const [authPassword, setAuthPassword] = useState('');
-  const [authLoading, setAuthLoading] = useState(false);
-  const [authError, setAuthError] = useState('');
+  const router = useRouter();
+  const gateStatus = useAdminGate();
+  const authed = gateStatus === 'authed';
 
   const [rows, setRows] = useState<SubmissionRow[]>([]);
   const [stats, setStats] = useState<SubmissionStats>({
@@ -95,15 +90,6 @@ export default function ProviderSubmissionsAdminClient() {
   const [actionError, setActionError] = useState('');
   const [busyIds, setBusyIds] = useState<string[]>([]);
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    const saved = loadAdminAuth();
-    if (!saved.password) return;
-
-    verifyAdminKey(saved.password)
-      .then(() => setAuthed(true))
-      .catch(() => clearAdminAuth());
-  }, []);
 
   const loadRows = useCallback(
     async (nextStatus = statusFilter, nextType = typeFilter, nextSearch = search) => {
@@ -124,7 +110,7 @@ export default function ProviderSubmissionsAdminClient() {
 
         if (response.status === 401) {
           clearAdminAuth();
-          setAuthed(false);
+          router.replace('/admin');
           throw new Error('Oturum süresi doldu. Lütfen tekrar giriş yapın.');
         }
 
@@ -152,7 +138,7 @@ export default function ProviderSubmissionsAdminClient() {
         setListLoading(false);
       }
     },
-    [search, statusFilter, typeFilter]
+    [router, search, statusFilter, typeFilter]
   );
 
   useEffect(() => {
@@ -161,22 +147,6 @@ export default function ProviderSubmissionsAdminClient() {
   }, [authed, loadRows]);
 
   const countLabel = useMemo(() => `${rows.length} kayıt`, [rows.length]);
-
-  async function handleAuthSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setAuthLoading(true);
-    setAuthError('');
-
-    try {
-      await verifyAdminKey(authPassword);
-      saveAdminAuth(authPassword);
-      setAuthed(true);
-    } catch (error) {
-      setAuthError((error as Error).message || 'Giriş başarısız.');
-    } finally {
-      setAuthLoading(false);
-    }
-  }
 
   async function runAction(id: string, action: SubmissionAction) {
     setBusyIds((prev) => [...prev, id]);
@@ -200,7 +170,7 @@ export default function ProviderSubmissionsAdminClient() {
 
       if (response.status === 401) {
         clearAdminAuth();
-        setAuthed(false);
+        router.replace('/admin');
         throw new Error('Oturum süresi doldu. Lütfen tekrar giriş yapın.');
       }
 
@@ -217,53 +187,8 @@ export default function ProviderSubmissionsAdminClient() {
   if (!authed) {
     return (
       <div className="min-h-screen bg-[#050505] text-white">
-        <div className="container flex min-h-screen items-center justify-center py-12">
-          <div className="w-full max-w-md rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 shadow-2xl shadow-black/40">
-            <div className="text-center">
-              <div className="text-sm font-semibold uppercase tracking-[0.22em] text-[#7fd5ff]">
-                Hizmet Rehberi Admin
-              </div>
-              <h1 className="mt-3 text-3xl font-black">Öneri Yönetimi Girişi</h1>
-              <p className="mt-3 text-sm leading-7 text-white/68">
-                Kullanıcıların gönderdiği hizmet önerilerini görmek ve onaylamak için admin şifresini girin.
-              </p>
-            </div>
-
-            <form className="mt-8 space-y-4" onSubmit={handleAuthSubmit}>
-              <label className="block">
-                <span className="mb-2 block text-sm text-white/70">Şifre</span>
-                <input
-                  type="password"
-                  autoComplete="current-password"
-                  value={authPassword}
-                  onChange={(event) => setAuthPassword(event.target.value)}
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition focus:border-[#01A1F1]"
-                  placeholder="••••••••"
-                />
-              </label>
-
-              {authError ? (
-                <div className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                  {authError}
-                </div>
-              ) : null}
-
-              <button
-                type="submit"
-                disabled={authLoading}
-                className="w-full rounded-2xl bg-[#01A1F1] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#139ce6] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {authLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-              </button>
-
-              <Link
-                href="/admin"
-                className="block text-center text-sm text-white/55 transition hover:text-white"
-              >
-                Admin ana ekrana geri dön
-              </Link>
-            </form>
-          </div>
+        <div className="container flex min-h-screen items-center justify-center py-12 text-sm text-white/60">
+          Admin oturumu doğrulanıyor...
         </div>
       </div>
     );

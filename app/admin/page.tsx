@@ -1,67 +1,16 @@
-import Link from 'next/link';
-
-const ADMIN_SECTIONS = [
-  {
-    href: '/admin/software-hub',
-    title: 'Software Hub',
-    description: 'Devuser, turnuva ve diğer topluluk operasyonları.',
-    accent: 'border-google-blue/40 bg-google-blue/10',
-  },
-  {
-    href: '/admin/haberler',
-    title: 'Haber Yönetimi',
-    description: 'Yeni haber pipeline, kuyruk, kaynak ve ayar ekranları.',
-    accent: 'border-google-yellow/50 bg-google-yellow/10',
-  },
-  {
-    href: '/admin/yazi-dizisi',
-    title: 'Arkadaşın Köşesi',
-    description: 'Köşe profili, yazılar ve görsel yüklemeleri.',
-    accent: 'border-google-blue/40 bg-google-blue/10',
-  },
-  {
-    href: '/admin/hizmet-rehberi',
-    title: 'Hizmet Rehberi',
-    description: 'Doktor, avukat ve diğer hizmet önerilerini onayla.',
-    accent: 'border-google-red/45 bg-google-red/10',
-  },
-  {
-    href: '/admin/recruitment-agencies',
-    title: 'Recruitment Agencies',
-    description: '150 recruitment agency listesini yönet ve düzenle.',
-    accent: 'border-google-green/45 bg-google-green/10',
-  },
-  {
-    href: '/admin/broken-link-reports',
-    title: 'Kırık Link Bildirimleri',
-    description: 'Kullanıcıların gönderdiği kırık link bildirimlerini görüntüle.',
-    accent: 'border-google-orange/45 bg-google-orange/10',
-  },
-];
+import { Suspense } from 'react';
+import { AdminHomeClient } from '@/components/admin/AdminHomeClient';
 
 export default function AdminIndexPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <section className="border-b border-white/10 px-6 py-8">
-        <div className="container">
-          <h1 className="text-3xl font-bold">Admin Paneli</h1>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-black text-white">
+          <div className="container py-20 text-center text-sm text-white/60">Yükleniyor...</div>
         </div>
-      </section>
-
-      <section className="container py-8">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {ADMIN_SECTIONS.map((section) => (
-            <Link
-              key={section.href}
-              href={section.href}
-              className={`group rounded-xl border p-6 transition hover:bg-white/[0.06] ${section.accent}`}
-            >
-              <h2 className="text-xl font-bold">{section.title}</h2>
-              <p className="mt-2 text-sm text-white/72">{section.description}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-    </div>
+      }
+    >
+      <AdminHomeClient />
+    </Suspense>
   );
 }

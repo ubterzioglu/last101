@@ -2,13 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import {
-  clearAdminAuth,
-  getAdminHeaders,
-  loadAdminAuth,
-  saveAdminAuth,
-  verifyAdminKey,
-} from '@/lib/admin/clientAuth';
+import { getAdminHeaders } from '@/lib/admin/clientAuth';
+import { useAdminGate } from '@/hooks/useAdminGate';
 
 type AgencyStatus = 'all' | 'active' | 'inactive';
 type AgencyCategory = 'İş Bulma Ajansları' | 'İngilizce İşe Alan Şirketler';
@@ -63,10 +58,8 @@ function normalizeStatus(value: string): 'active' | 'inactive' {
 }
 
 export default function RecruitmentAgenciesAdminClient() {
-  const [authed, setAuthed] = useState(false);
-  const [authLoading, setAuthLoading] = useState(false);
-  const [authPassword, setAuthPassword] = useState('');
-  const [authError, setAuthError] = useState('');
+  const gateStatus = useAdminGate();
+  const authed = gateStatus === 'authed';
 
   const [rows, setRows] = useState<AgencyRow[]>([]);
   const [stats, setStats] = useState<AgencyStats>({ total: 0, active: 0, inactive: 0 });
@@ -80,15 +73,6 @@ export default function RecruitmentAgenciesAdminClient() {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitError, setSubmitError] = useState('');
-
-  useEffect(() => {
-    const saved = loadAdminAuth();
-    if (!saved.password) return;
-
-    verifyAdminKey(saved.password)
-      .then(() => setAuthed(true))
-      .catch(() => clearAdminAuth());
-  }, []);
 
   const loadAgencies = useCallback(async (status = statusFilter, query = search) => {
     setListLoading(true);
@@ -123,22 +107,6 @@ export default function RecruitmentAgenciesAdminClient() {
       loadAgencies();
     }
   }, [authed, loadAgencies]);
-
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthLoading(true);
-    setAuthError('');
-
-    try {
-      await verifyAdminKey(authPassword);
-      saveAdminAuth(authPassword);
-      setAuthed(true);
-    } catch (error) {
-      setAuthError(error instanceof Error ? error.message : 'Geçersiz şifre');
-    } finally {
-      setAuthLoading(false);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -249,29 +217,7 @@ export default function RecruitmentAgenciesAdminClient() {
   if (!authed) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <h1 className="text-2xl font-bold text-center mb-8">Recruitment Agencies Admin</h1>
-          <form onSubmit={handleAuth} className="space-y-4">
-            <input
-              type="password"
-              placeholder="Admin şifresi"
-              value={authPassword}
-              onChange={(e) => setAuthPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-google-yellow"
-              disabled={authLoading}
-            />
-            <button
-              type="submit"
-              disabled={authLoading}
-              className="w-full px-4 py-3 bg-google-yellow text-black font-semibold rounded-lg hover:bg-google-yellow/90 disabled:opacity-50"
-            >
-              {authLoading ? 'Kontrol ediliyor...' : 'Giriş Yap'}
-            </button>
-            {authError && (
-              <div className="text-red-400 text-sm text-center">{authError}</div>
-            )}
-          </form>
-        </div>
+        <div className="text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }

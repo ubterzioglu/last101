@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   NewsAdminShell,
@@ -12,12 +12,8 @@ import { NewsEditorAdminClient } from '@/components/admin/news/NewsEditorAdminCl
 import { NewsSourcesAdminClient } from '@/components/admin/news/NewsSourcesAdminClient';
 import { NewsPipelineAdminClient } from '@/components/admin/news/NewsPipelineAdminClient';
 import { NewsSettingsAdminClient } from '@/components/admin/news/NewsSettingsAdminClient';
-import {
-  clearAdminAuth,
-  loadAdminAuth,
-  saveAdminAuth,
-  verifyAdminKey,
-} from '@/lib/admin/clientAuth';
+import { clearAdminAuth } from '@/lib/admin/clientAuth';
+import { useAdminGate } from '@/hooks/useAdminGate';
 
 const TABS: NewsAdminTabItem[] = [
   { id: 'kuyruk', label: 'Kuyruk' },
@@ -64,27 +60,10 @@ export function NewsAdminPanel({ initialTab, initialPostId }: NewsAdminPanelProp
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [authed, setAuthed] = useState(false);
-  const [authLoading, setAuthLoading] = useState(true);
-  const [authPassword, setAuthPassword] = useState('');
-  const [authError, setAuthError] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const gateStatus = useAdminGate();
 
   const [activeTab, setActiveTab] = useState<NewsAdminTab>(isNewsAdminTab(initialTab ?? null) ? (initialTab as NewsAdminTab) : 'kuyruk');
   const [editingPostId, setEditingPostId] = useState<string | null>(initialPostId ?? null);
-
-  useEffect(() => {
-    const current = loadAdminAuth();
-    if (!current.password) {
-      setAuthLoading(false);
-      return;
-    }
-
-    verifyAdminKey(current.password)
-      .then(() => setAuthed(true))
-      .catch(() => clearAdminAuth())
-      .finally(() => setAuthLoading(false));
-  }, []);
 
   const syncUrl = useCallback(
     (tab: NewsAdminTab, postId: string | null) => {
@@ -119,78 +98,17 @@ export function NewsAdminPanel({ initialTab, initialPostId }: NewsAdminPanelProp
     [syncUrl],
   );
 
-  function handleLogin(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSubmitting(true);
-    setAuthError('');
-    verifyAdminKey(authPassword)
-      .then(() => {
-        saveAdminAuth(authPassword);
-        setAuthed(true);
-      })
-      .catch((error: unknown) => {
-        setAuthError(error instanceof Error ? error.message : 'Giriş başarısız.');
-      })
-      .finally(() => setSubmitting(false));
-  }
-
   function handleLogout() {
     clearAdminAuth();
-    setAuthed(false);
     setActiveTab('kuyruk');
     setEditingPostId(null);
+    router.replace('/admin');
   }
 
-  if (authLoading) {
+  if (gateStatus !== 'authed') {
     return (
       <div className="min-h-screen bg-black text-white">
         <div className="container py-20 text-center text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
-      </div>
-    );
-  }
-
-  if (!authed) {
-    return (
-      <div className="min-h-screen bg-black text-white">
-        <div className="container flex min-h-screen items-center justify-center py-12">
-          <div className="w-full max-w-md rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 shadow-2xl shadow-black/40">
-            <div className="text-center">
-              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#ffd24a]">Haber Admin</div>
-              <h1 className="mt-3 text-3xl font-bold">Haber Yönetimi</h1>
-              <p className="mt-3 text-sm leading-7 text-white/68">
-                İnceleme kuyruğu, editör, kaynaklar, pipeline ve ayarları tek panelden yönetin.
-              </p>
-            </div>
-
-            <form className="mt-8 space-y-4" onSubmit={handleLogin}>
-              <label className="block">
-                <span className="mb-2 block text-sm text-white/70">Şifre</span>
-                <input
-                  type="password"
-                  autoComplete="current-password"
-                  value={authPassword}
-                  onChange={(event) => setAuthPassword(event.target.value)}
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition focus:border-[#01A1F1] focus-visible:ring-2 focus-visible:ring-google-blue"
-                  placeholder="••••••••"
-                />
-              </label>
-
-              {authError ? (
-                <div className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                  {authError}
-                </div>
-              ) : null}
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full rounded-2xl bg-[#01A1F1] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#139ce6] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              >
-                {submitting ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-              </button>
-            </form>
-          </div>
-        </div>
       </div>
     );
   }
