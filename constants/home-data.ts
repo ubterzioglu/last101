@@ -18,6 +18,19 @@ export interface ToolItem {
   label: string;
   description: string;
   image: string;
+  kind?: 'tool' | 'link';
+  categoryKey?:
+    | 'tool'
+    | 'career'
+    | 'content'
+    | 'news'
+    | 'document'
+    | 'team'
+    | 'about'
+    | 'community'
+    | 'contact'
+    | 'software';
+  categoryLabel?: string;
 }
 
 export interface LinkItem extends ToolItem {}
@@ -64,6 +77,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'Banka Seçim Aracı',
     description: 'Banka profilinizi belirleyin.',
     image: 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/sigorta-secim',
@@ -71,6 +87,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'Sigorta Seçim Aracı',
     description: 'Sigortaları önceliklendirin.',
     image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/maas-hesaplama',
@@ -78,6 +97,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'Brüt Net Maaş Hesaplama',
     description: 'Net maaşınızı anında görün.',
     image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/stepstone-karsilastirma',
@@ -85,6 +107,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'StepStone 2026 Maaş Karşılaştırma',
     description: 'Maaşlarınızı karşılaştırın.',
     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/vatandaslik-testi',
@@ -92,6 +117,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'Vatandaşlık Testi',
     description: 'Deneme sınavı çözün.',
     image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/para-transferi',
@@ -99,6 +127,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'Para Transferi Seçim Aracı',
     description: 'Uygun aracı bulun!',
     image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/vize-secim',
@@ -106,6 +137,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'Almanya Vize Seçim Aracı',
     description: 'Hangi vizeye başvurmanız gerektiğini öğrenin.',
     image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/tatil/almanya',
@@ -113,6 +147,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: '2026 Almanya Tatil Planlayıcı',
     description: '2026 tatilinizi planlayın.',
     image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/tatil/turkiye',
@@ -120,6 +157,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: '2026 Türkiye Tatil Planlayıcı',
     description: '2026 tatilinizi planlayın.',
     image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/hizmet-rehberi',
@@ -127,6 +167,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'Türk Hizmet Rehberi',
     description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
   {
     href: '/is-ilanlari',
@@ -134,6 +177,9 @@ export const TOOL_ITEMS: ToolItem[] = [
     label: 'İşe Alım Firmaları',
     description: 'Almanya\'daki işe alım ajanslarını inceleyin.',
     image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
+    kind: 'tool',
+    categoryKey: 'tool',
+    categoryLabel: 'ARAÇ',
   },
 ];
 
@@ -144,6 +190,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'İş İlanları',
     description: 'Almanya iş fırsatlarını hızlıca takip edin.',
     image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'career',
+    categoryLabel: 'KARİYER',
   },
   {
     href: '/yazi-dizisi',
@@ -151,6 +200,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Yazı Dizisi',
     description: 'Adım adım rehberler ve yazılar.',
     image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'content',
+    categoryLabel: 'İÇERİK',
   },
   {
     href: '/haberler',
@@ -158,6 +210,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Haberler',
     description: 'Güncel haberler ve gelişmeler.',
     image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'news',
+    categoryLabel: 'HABER',
   },
   {
     href: '/belgeler',
@@ -165,6 +220,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Yararlı Belgeler',
     description: 'İhtiyacınız olan belgeler ve formlar.',
     image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'document',
+    categoryLabel: 'BELGE',
   },
   {
     href: '/ekibimize-katil',
@@ -172,6 +230,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Bize Katıl!',
     description: 'Ekibimize katılmak için tıkla!',
     image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'team',
+    categoryLabel: 'EKİP',
   },
   {
     href: '/hakkimizda',
@@ -179,6 +240,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Biz kimiz?',
     description: 'almanya101 ekibini tanıyın!',
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'about',
+    categoryLabel: 'KURUMSAL',
   },
   {
     href: '/hizmet-rehberi/oneri',
@@ -186,6 +250,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Hizmet Öner',
     description: 'Uzman ekleyin!',
     image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'community',
+    categoryLabel: 'ÖNERİ',
   },
   {
     href: '/iletisim',
@@ -193,6 +260,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'İletişim',
     description: 'Bize hızlıca ulaşın.',
     image: 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'contact',
+    categoryLabel: 'İLETİŞİM',
   },
   {
     href: '/software-hub',
@@ -200,6 +270,9 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Software Hub',
     description: 'Yazılım projelerimizi keşfedin!',
     image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'software',
+    categoryLabel: 'YAZILIM',
   },
   {
     href: '/topluluk',
@@ -207,5 +280,8 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     label: 'Topluluğa Katıl',
     description: 'Türk topluluğuna dahil olun!',
     image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=300&fit=crop',
+    kind: 'link',
+    categoryKey: 'community',
+    categoryLabel: 'TOPLULUK',
   },
 ];
