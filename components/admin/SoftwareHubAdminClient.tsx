@@ -3,9 +3,11 @@
 import Image from 'next/image';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import FounderSubmissionsAdminSection from '@/components/admin/FounderSubmissionsAdminSection';
 import FounderEventSurveyAdminSection from '@/components/admin/FounderEventSurveyAdminSection';
 import { useAdminGate } from '@/hooks/useAdminGate';
+import { SOFTWARE_HUB_SECTION_KEYS } from '@/constants/adminSoftwareHubSections';
 
 const css = `
   :root {
@@ -286,7 +288,9 @@ export default function AdminPage() {
   const gateStatus = useAdminGate();
   const authed = gateStatus === 'authed';
 
-  // Navigation
+  // Navigation — `?section=` query param drives which section is open.
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   // Badges
@@ -377,11 +381,8 @@ export default function AdminPage() {
     };
   }, []);
 
-  // Hide site header/footer (same as devuser pages)
-  useEffect(() => {
-    document.body.setAttribute('data-devuser', 'true');
-    return () => { document.body.removeAttribute('data-devuser'); };
-  }, []);
+  // Site header/footer hiding is owned by the admin layout (data-devuser is
+  // set before paint in app/admin/layout.tsx and managed by AdminLayoutShell).
 
   // ==================== AUTH ====================
   useEffect(() => {
@@ -453,8 +454,10 @@ export default function AdminPage() {
   }, [authed, updateBadges]);
 
   // ==================== NAVIGATION ====================
-  const showSection = useCallback((section: string) => {
-    setActiveSection(section);
+  // `?section=` is the single source of truth. Navigation helpers update the
+  // URL; the effect below reconciles `activeSection` + lazy data loading. The
+  // intermediate menu page is `/admin/software-hub` with no `?section=`.
+  const loadSectionData = useCallback((section: string) => {
     if (section === 'devuser') loadDevUsers();
     else if (section === 'tournament') loadTournamentData();
     else if (section === 'hackathon') loadHackathonData();
@@ -468,10 +471,32 @@ export default function AdminPage() {
     else if (section === 'founderSurvey') updateBadges();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const showSection = useCallback((section: string) => {
+    router.push(`/admin/software-hub?section=${section}`, { scroll: false });
+  }, [router]);
+
   const showMenu = () => {
-    setActiveSection(null);
-    updateBadges();
+    router.push('/admin/software-hub', { scroll: false });
   };
+
+  // The `?section=` query param is the source of truth for which section is
+  // open. This keeps deep links and the left-sidebar shortcuts working even
+  // when navigating between sections without a full remount. `useSearchParams`
+  // is reactive to client navigation, so this re-runs on every section change.
+  const requestedSection = searchParams.get('section');
+  const loadedSectionRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!authed) return;
+    const next = requestedSection && SOFTWARE_HUB_SECTION_KEYS.has(requestedSection)
+      ? requestedSection
+      : null;
+    setActiveSection(next);
+    // Lazy-load each section's data the first time it becomes active.
+    if (loadedSectionRef.current === next) return;
+    loadedSectionRef.current = next;
+    if (next) loadSectionData(next);
+    else updateBadges();
+  }, [authed, requestedSection, loadSectionData, updateBadges]);
 
   // ==================== DEV USERS ====================
   const loadDevUsers = async () => {
@@ -800,11 +825,6 @@ export default function AdminPage() {
             priority
           />
         </div>
-
-        <header className="header">
-          <Link href="/devuser" className="back-link">← dashboard&apos;a dön</Link>
-          <div className="title-group"><h1>de tr software dashboard</h1></div>
-        </header>
 
         <main className="main-content">
           {/* Hero */}

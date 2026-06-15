@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
 import { clearAdminAuth, getAdminHeaders } from '@/lib/admin/clientAuth';
+import { SOFTWARE_HUB_SECTIONS } from '@/constants/adminSoftwareHubSections';
+
+const SOFTWARE_HUB_HREF = '/admin/software-hub';
 
 type BadgeKey = 'hizmet' | 'broken';
 
@@ -136,6 +139,23 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
   const router = useRouter();
   const [badges, setBadges] = useState<Record<BadgeKey, number>>({ hizmet: 0, broken: 0 });
 
+  const onSoftwareHub = pathname === SOFTWARE_HUB_HREF || pathname.startsWith(`${SOFTWARE_HUB_HREF}/`);
+
+  // Active Software Hub sub-section, derived from `?section=`. `usePathname`
+  // does not observe query changes, so we read `window.location.search` and
+  // refresh it on pathname changes and on history navigation.
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    const readSection = () => {
+      if (typeof window === 'undefined') return;
+      setActiveSection(new URLSearchParams(window.location.search).get('section'));
+    };
+    readSection();
+    window.addEventListener('popstate', readSection);
+    return () => window.removeEventListener('popstate', readSection);
+  }, [pathname]);
+
   useEffect(() => {
     let cancelled = false;
     fetchBadgeCounts().then((counts) => {
@@ -194,35 +214,73 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4" aria-label="Admin bölümleri">
           {NAV_ITEMS.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const isSoftwareHub = item.href === SOFTWARE_HUB_HREF;
+            const onRoute = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            // Software Hub's main link only counts as "active" on its menu page
+            // (no `?section=`); otherwise a sub-section is highlighted instead.
+            const active = isSoftwareHub ? onRoute && !activeSection : onRoute;
             const badgeCount = item.badgeKey ? badges[item.badgeKey] : 0;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                aria-current={active ? 'page' : undefined}
-                className={cn(
-                  'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black',
-                  active ? 'bg-white/[0.08] text-white' : 'text-white/65 hover:bg-white/[0.05] hover:text-white',
-                )}
-              >
-                {active ? (
-                  <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-google-blue" aria-hidden="true" />
-                ) : null}
-                <span className={cn('shrink-0 transition', active ? item.accent : 'text-white/50 group-hover:text-white/80')}>
-                  {item.icon}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-semibold leading-tight">{item.label}</span>
-                  <span className="block truncate text-[11px] text-white/40">{item.description}</span>
-                </span>
-                {badgeCount > 0 ? (
-                  <span className="ml-1 inline-flex min-w-5 items-center justify-center rounded-full bg-google-red/20 px-1.5 py-0.5 text-[11px] font-bold text-red-200">
-                    {badgeCount > 99 ? '99+' : badgeCount}
+              <div key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => {
+                    if (isSoftwareHub) setActiveSection(null);
+                    onClose();
+                  }}
+                  aria-current={active ? 'page' : undefined}
+                  className={cn(
+                    'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black',
+                    active ? 'bg-white/[0.08] text-white' : 'text-white/65 hover:bg-white/[0.05] hover:text-white',
+                  )}
+                >
+                  {active ? (
+                    <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-google-blue" aria-hidden="true" />
+                  ) : null}
+                  <span className={cn('shrink-0 transition', active ? item.accent : 'text-white/50 group-hover:text-white/80')}>
+                    {item.icon}
                   </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-semibold leading-tight">{item.label}</span>
+                    <span className="block truncate text-[11px] text-white/40">{item.description}</span>
+                  </span>
+                  {badgeCount > 0 ? (
+                    <span className="ml-1 inline-flex min-w-5 items-center justify-center rounded-full bg-google-red/20 px-1.5 py-0.5 text-[11px] font-bold text-red-200">
+                      {badgeCount > 99 ? '99+' : badgeCount}
+                    </span>
+                  ) : null}
+                </Link>
+
+                {/* Software Hub alt bölümleri — sadece bu sayfadayken göster.
+                    Ara menü sayfası /admin/software-hub olarak erişilebilir kalır. */}
+                {isSoftwareHub && onSoftwareHub ? (
+                  <ul className="mt-1 space-y-0.5 border-l border-white/10 pl-3 ml-4">
+                    {SOFTWARE_HUB_SECTIONS.map((section) => {
+                      const sectionActive = activeSection === section.key;
+                      return (
+                        <li key={section.key}>
+                          <Link
+                            href={`${SOFTWARE_HUB_HREF}?section=${section.key}`}
+                            onClick={() => {
+                              setActiveSection(section.key);
+                              onClose();
+                            }}
+                            aria-current={sectionActive ? 'page' : undefined}
+                            className={cn(
+                              'block truncate rounded-lg px-3 py-1.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black',
+                              sectionActive
+                                ? 'bg-white/[0.08] font-semibold text-white'
+                                : 'text-white/55 hover:bg-white/[0.05] hover:text-white',
+                            )}
+                          >
+                            {section.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 ) : null}
-              </Link>
+              </div>
             );
           })}
         </nav>
