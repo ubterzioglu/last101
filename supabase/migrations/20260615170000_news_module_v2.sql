@@ -134,6 +134,15 @@ create index if not exists news_sources_priority_idx
 create index if not exists news_ingest_runs_started_at_idx
   on public.news_ingest_runs (started_at desc);
 
+-- Drop legacy check constraints before normalizing rows, otherwise the
+-- UPDATE below writes lowercase/new values that violate the old constraints
+-- (legacy category check expected 'Almanya','Türkiye',... with capitals).
+-- The new constraints are re-added further down (idempotent).
+alter table public.news_posts
+  drop constraint if exists news_posts_category_check;
+alter table public.news_posts
+  drop constraint if exists news_posts_status_check;
+
 update public.news_posts
 set
   category = case
