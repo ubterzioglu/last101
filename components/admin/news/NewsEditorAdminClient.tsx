@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import MarkdownPreview from '@/components/MarkdownPreview';
-import { NewsAdminShell } from '@/components/admin/news/NewsAdminShell';
 import { adminJsonFetch, toDateTimeLocalValue } from '@/components/admin/news/api';
 import { getAdminHeaders } from '@/lib/admin/clientAuth';
 import { NEWS_CATEGORIES, getNewsCategoryLabel } from '@/lib/news/shared';
@@ -59,7 +58,17 @@ function formatDate(value: string | null | undefined) {
   });
 }
 
-export function NewsEditorAdminClient({ postId }: { postId?: string }) {
+interface NewsEditorAdminClientProps {
+  postId?: string;
+  /**
+   * SPA hook: when provided, a successful create calls this with the new post
+   * id instead of navigating to `/admin/haberler/[id]`. When omitted, the
+   * standalone route behavior (router.push) is preserved.
+   */
+  onCreated?: (id: string) => void;
+}
+
+export function NewsEditorAdminClient({ postId, onCreated }: NewsEditorAdminClientProps) {
   const router = useRouter();
   const [form, setForm] = useState(initialForm);
   const [detail, setDetail] = useState<PostDetailResponse | null>(null);
@@ -178,7 +187,11 @@ export function NewsEditorAdminClient({ postId }: { postId?: string }) {
             body: JSON.stringify({}),
           });
         }
-        router.push(`/admin/haberler/${created.item.id}`);
+        if (onCreated) {
+          onCreated(created.item.id);
+        } else {
+          router.push(`/admin/haberler/${created.item.id}`);
+        }
         return;
       }
       setMessage(mode === 'publish' ? 'Haber yayına alındı.' : 'Haber kaydedildi.');
@@ -219,10 +232,7 @@ export function NewsEditorAdminClient({ postId }: { postId?: string }) {
   }
 
   return (
-    <NewsAdminShell
-      title={postId ? 'Haber Düzenle' : 'Yeni Haber'}
-      description="Başlığı, özeti, kaynak bilgilerini ve hero ayarlarını düzenleyin. Sağ panelde ham veri ve işlem geçmişi görünür."
-    >
+    <>
       {loading ? (
         <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] px-6 py-16 text-center text-sm text-white/60">
           Haber yükleniyor...
@@ -436,7 +446,7 @@ export function NewsEditorAdminClient({ postId }: { postId?: string }) {
           </div>
         </div>
       )}
-    </NewsAdminShell>
+    </>
   );
 }
 

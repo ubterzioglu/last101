@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { NewsAdminShell } from '@/components/admin/news/NewsAdminShell';
 import { adminJsonFetch } from '@/components/admin/news/api';
 import { NEWS_CATEGORIES, getNewsCategoryLabel } from '@/lib/news/shared';
 import type { NewsSourceRecord } from '@/types/news';
@@ -111,11 +110,7 @@ export function NewsSourcesAdminClient() {
   }
 
   return (
-    <NewsAdminShell
-      title="Kaynak Yönetimi"
-      description="RSS, MRSS ve manuel kaynakları yönetin; test edin, öncelik verin ve tekil çalıştırın."
-    >
-      <div className="grid gap-6 xl:grid-cols-[420px_minmax(0,1fr)]">
+    <div className="grid gap-6 xl:grid-cols-[420px_minmax(0,1fr)]">
         <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
           <h2 className="text-2xl font-bold">{editingId ? 'Kaynağı Düzenle' : 'Yeni Kaynak'}</h2>
           <p className="mt-2 text-sm text-white/60">Feed URL, kategori ve öncelik alanlarını doldurun.</p>
@@ -199,7 +194,6 @@ export function NewsSourcesAdminClient() {
           </div>
         </div>
       </div>
-    </NewsAdminShell>
   );
 }
 

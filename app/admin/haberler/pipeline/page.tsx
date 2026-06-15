@@ -1,5 +1,5 @@
-import { NewsPipelineAdminClient } from '@/components/admin/news/NewsPipelineAdminClient';
+import { redirect } from 'next/navigation';
 
 export default function AdminNewsPipelinePage() {
-  return <NewsPipelineAdminClient />;
+  redirect('/admin/haberler?tab=pipeline');
 }

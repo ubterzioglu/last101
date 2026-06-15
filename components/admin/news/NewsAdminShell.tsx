@@ -1,119 +1,57 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import {
-  clearAdminAuth,
-  loadAdminAuth,
-  saveAdminAuth,
-  verifyAdminKey,
-} from '@/lib/admin/clientAuth';
+import { useRef } from 'react';
 
-const NAV_ITEMS = [
-  { href: '/admin/haberler', label: 'Kuyruk' },
-  { href: '/admin/haberler/yeni', label: 'Yeni Haber' },
-  { href: '/admin/haberler/kaynaklar', label: 'Kaynaklar' },
-  { href: '/admin/haberler/pipeline', label: 'Pipeline' },
-  { href: '/admin/haberler/ayarlar', label: 'Ayarlar' },
-];
+export type NewsAdminTab = 'kuyruk' | 'editor' | 'kaynaklar' | 'pipeline' | 'ayarlar';
 
+export interface NewsAdminTabItem {
+  id: NewsAdminTab;
+  label: string;
+}
+
+interface NewsAdminShellProps {
+  title: string;
+  description: string;
+  tabs: NewsAdminTabItem[];
+  activeTab: NewsAdminTab;
+  onTabChange: (tab: NewsAdminTab) => void;
+  onLogout: () => void;
+  children: React.ReactNode;
+}
+
+/**
+ * Pure presentation frame for the single-page news admin panel.
+ *
+ * Owns no auth or routing logic: it renders the header band (title,
+ * description, logout) and an accessible tablist, then renders the active
+ * section as `children`. State and auth live in `NewsAdminPanel`.
+ */
 export function NewsAdminShell({
   title,
   description,
+  tabs,
+  activeTab,
+  onTabChange,
+  onLogout,
   children,
-}: {
-  title: string;
-  description: string;
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname();
-  const [authed, setAuthed] = useState(false);
-  const [authLoading, setAuthLoading] = useState(true);
-  const [authPassword, setAuthPassword] = useState('');
-  const [authError, setAuthError] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+}: NewsAdminShellProps) {
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
-  useEffect(() => {
-    const current = loadAdminAuth();
-    if (!current.password) {
-      setAuthLoading(false);
+  function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'Home' && event.key !== 'End') {
       return;
     }
-
-    verifyAdminKey(current.password)
-      .then(() => setAuthed(true))
-      .catch(() => clearAdminAuth())
-      .finally(() => setAuthLoading(false));
-  }, []);
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitting(true);
-    setAuthError('');
-    try {
-      await verifyAdminKey(authPassword);
-      saveAdminAuth(authPassword);
-      setAuthed(true);
-    } catch (error) {
-      setAuthError((error as Error).message || 'Giriş başarısız.');
-    } finally {
-      setSubmitting(false);
-    }
-  }
+    let nextIndex = index;
+    if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+    if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+    if (event.key === 'Home') nextIndex = 0;
+    if (event.key === 'End') nextIndex = tabs.length - 1;
 
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-black text-white">
-        <div className="container py-20 text-center text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
-      </div>
-    );
-  }
-
-  if (!authed) {
-    return (
-      <div className="min-h-screen bg-black text-white">
-        <div className="container flex min-h-screen items-center justify-center py-12">
-          <div className="w-full max-w-md rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 shadow-2xl shadow-black/40">
-            <div className="text-center">
-              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#ffd24a]">
-                Haber Admin
-              </div>
-              <h1 className="mt-3 text-3xl font-bold">{title}</h1>
-              <p className="mt-3 text-sm leading-7 text-white/68">{description}</p>
-            </div>
-
-            <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
-              <label className="block">
-                <span className="mb-2 block text-sm text-white/70">Şifre</span>
-                <input
-                  type="password"
-                  autoComplete="current-password"
-                  value={authPassword}
-                  onChange={(event) => setAuthPassword(event.target.value)}
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition focus:border-[#01A1F1]"
-                  placeholder="••••••••"
-                />
-              </label>
-
-              {authError ? (
-                <div className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                  {authError}
-                </div>
-              ) : null}
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full rounded-2xl bg-[#01A1F1] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#139ce6] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {submitting ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
+    const nextTab = tabs[nextIndex];
+    onTabChange(nextTab.id);
+    tabRefs.current[nextIndex]?.focus();
   }
 
   return (
@@ -124,7 +62,7 @@ export function NewsAdminShell({
             <div>
               <Link
                 href="/admin"
-                className="inline-flex rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/68 transition hover:bg-white/[0.1]"
+                className="inline-flex rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 text-xs uppercase tracking-[0.18em] text-white/68 transition hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 Admin Ana Menü
               </Link>
@@ -133,45 +71,56 @@ export function NewsAdminShell({
             </div>
             <button
               type="button"
-              onClick={() => {
-                clearAdminAuth();
-                setAuthed(false);
-              }}
-              className="rounded-full border border-red-400/20 bg-red-500/10 px-4 py-2 text-xs font-semibold text-red-100 transition hover:bg-red-500/20"
+              onClick={onLogout}
+              className="rounded-full border border-red-400/20 bg-red-500/10 px-4 py-2 text-xs font-semibold text-red-100 transition hover:bg-red-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Çıkış Yap
             </button>
           </div>
 
-          <nav className="mt-8 flex flex-wrap gap-2">
-            {NAV_ITEMS.map((item) => {
-              const active =
-                pathname === item.href ||
-                (item.href === '/admin/haberler' &&
-                  pathname.startsWith('/admin/haberler/') &&
-                  !pathname.startsWith('/admin/haberler/yeni') &&
-                  !pathname.startsWith('/admin/haberler/kaynaklar') &&
-                  !pathname.startsWith('/admin/haberler/pipeline') &&
-                  !pathname.startsWith('/admin/haberler/ayarlar'));
+          <nav
+            className="mt-8 flex flex-wrap gap-2"
+            role="tablist"
+            aria-label="Haber yönetimi bölümleri"
+          >
+            {tabs.map((tab, index) => {
+              const active = tab.id === activeTab;
               return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                <button
+                  key={tab.id}
+                  ref={(node) => {
+                    tabRefs.current[index] = node;
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`news-admin-tab-${tab.id}`}
+                  aria-selected={active}
+                  aria-controls="news-admin-panel"
+                  tabIndex={active ? 0 : -1}
+                  onClick={() => onTabChange(tab.id)}
+                  onKeyDown={(event) => handleKeyDown(event, index)}
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black ${
                     active
-                      ? 'bg-google-yellow text-black'
-                      : 'border border-white/10 bg-white/[0.04] text-white/74 hover:bg-white/[0.08]'
+                      ? 'bg-google-yellow text-black focus-visible:ring-google-yellow'
+                      : 'border border-white/10 bg-white/[0.04] text-white/74 hover:bg-white/[0.08] focus-visible:ring-google-blue'
                   }`}
                 >
-                  {item.label}
-                </Link>
+                  {tab.label}
+                </button>
               );
             })}
           </nav>
         </div>
       </section>
 
-      <section className="container py-8">{children}</section>
+      <section
+        className="container py-8"
+        id="news-admin-panel"
+        role="tabpanel"
+        aria-labelledby={`news-admin-tab-${activeTab}`}
+      >
+        {children}
+      </section>
     </div>
   );
 }

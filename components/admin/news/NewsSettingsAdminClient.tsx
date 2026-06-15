@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { NewsAdminShell } from '@/components/admin/news/NewsAdminShell';
 import { adminJsonFetch } from '@/components/admin/news/api';
 import type { NewsPipelineSettingsRecord } from '@/types/news';
 
@@ -50,10 +49,7 @@ export function NewsSettingsAdminClient() {
   }
 
   return (
-    <NewsAdminShell
-      title="Pipeline Ayarları"
-      description="Kod değiştirmeden pipeline davranışını, retention sürelerini ve AI limitlerini güncelleyin."
-    >
+    <>
       {loading ? (
         <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] px-6 py-16 text-center text-sm text-white/60">
           Ayarlar yükleniyor...
@@ -95,7 +91,7 @@ export function NewsSettingsAdminClient() {
           Ayar kaydı bulunamadı.
         </div>
       )}
-    </NewsAdminShell>
+    </>
   );
 }
 

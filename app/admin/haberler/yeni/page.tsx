@@ -1,5 +1,5 @@
-import { NewsEditorAdminClient } from '@/components/admin/news/NewsEditorAdminClient';
+import { redirect } from 'next/navigation';
 
 export default function AdminNewsCreatePage() {
-  return <NewsEditorAdminClient />;
+  redirect('/admin/haberler?tab=editor');
 }

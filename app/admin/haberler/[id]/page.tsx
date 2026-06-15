@@ -1,4 +1,4 @@
-import { NewsEditorAdminClient } from '@/components/admin/news/NewsEditorAdminClient';
+import { redirect } from 'next/navigation';
 
 interface PageProps {
   params: Promise<{
@@ -8,5 +8,5 @@ interface PageProps {
 
 export default async function AdminNewsDetailPage({ params }: PageProps) {
   const { id } = await params;
-  return <NewsEditorAdminClient postId={id} />;
+  redirect(`/admin/haberler?tab=editor&id=${encodeURIComponent(id)}`);
 }

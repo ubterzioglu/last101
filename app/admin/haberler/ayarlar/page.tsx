@@ -1,5 +1,5 @@
-import { NewsSettingsAdminClient } from '@/components/admin/news/NewsSettingsAdminClient';
+import { redirect } from 'next/navigation';
 
 export default function AdminNewsSettingsPage() {
-  return <NewsSettingsAdminClient />;
+  redirect('/admin/haberler?tab=ayarlar');
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { NewsAdminShell } from '@/components/admin/news/NewsAdminShell';
 import { adminJsonFetch } from '@/components/admin/news/api';
 import type { NewsIngestRunRecord, NewsSourceRecord } from '@/types/news';
 
@@ -55,11 +54,7 @@ export function NewsPipelineAdminClient() {
   }
 
   return (
-    <NewsAdminShell
-      title="Pipeline"
-      description="Manuel tetikleme, son ingest çalışmaları ve kaynak bazlı operasyon durumu burada görünür."
-    >
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
           <div className="flex flex-wrap items-center gap-3">
             <select value={selectedSourceId} onChange={(e) => setSelectedSourceId(e.target.value)} className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue">
@@ -116,6 +111,5 @@ export function NewsPipelineAdminClient() {
           </div>
         </div>
       </div>
-    </NewsAdminShell>
   );
 }

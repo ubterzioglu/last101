@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
-import { NewsAdminShell } from '@/components/admin/news/NewsAdminShell';
 import { adminJsonFetch } from '@/components/admin/news/api';
 import { NEWS_CATEGORIES, NEWS_STATUSES, getNewsCategoryLabel, getNewsStatusLabel } from '@/lib/news/shared';
 import type { NewsPostAdminRecord, NewsStatus } from '@/types/news';
@@ -25,7 +24,12 @@ function formatDate(value: string | null | undefined) {
   });
 }
 
-export function NewsQueueAdminClient() {
+interface NewsQueueAdminClientProps {
+  onEdit?: (id: string) => void;
+  onCreateNew?: () => void;
+}
+
+export function NewsQueueAdminClient({ onEdit, onCreateNew }: NewsQueueAdminClientProps = {}) {
   const [items, setItems] = useState<NewsPostAdminRecord[]>([]);
   const [stats, setStats] = useState<Record<string, number>>({});
   const [status, setStatus] = useState<NewsStatus | 'all'>('all');
@@ -84,11 +88,7 @@ export function NewsQueueAdminClient() {
   }, [loadItems]);
 
   return (
-    <NewsAdminShell
-      title="Haber Yönetimi"
-      description="İnceleme kuyruğunu, yayınlanan içerikleri ve editoryal aksiyonları tek operatörlü akışla yönetin."
-    >
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
           <StatCard label="Toplam" value={stats.total || 0} />
           <StatCard label="İnceleme" value={stats.pending_review || 0} />
@@ -112,12 +112,22 @@ export function NewsQueueAdminClient() {
               >
                 Yenile
               </button>
-              <Link
-                href="/admin/haberler/yeni"
-                className="rounded-full bg-google-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
-              >
-                Yeni Haber
-              </Link>
+              {onCreateNew ? (
+                <button
+                  type="button"
+                  onClick={onCreateNew}
+                  className="rounded-full bg-google-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                >
+                  Yeni Haber
+                </button>
+              ) : (
+                <Link
+                  href="/admin/haberler/yeni"
+                  className="rounded-full bg-google-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+                >
+                  Yeni Haber
+                </Link>
+              )}
             </div>
           </div>
 
@@ -207,12 +217,22 @@ export function NewsQueueAdminClient() {
                       </td>
                       <td className="rounded-r-[1.4rem] px-4 py-4 align-top">
                         <div className="flex flex-wrap gap-2">
-                          <Link
-                            href={`/admin/haberler/${item.id}`}
-                            className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
-                          >
-                            Düzenle
-                          </Link>
+                          {onEdit ? (
+                            <button
+                              type="button"
+                              onClick={() => onEdit(item.id)}
+                              className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                            >
+                              Düzenle
+                            </button>
+                          ) : (
+                            <Link
+                              href={`/admin/haberler/${item.id}`}
+                              className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
+                            >
+                              Düzenle
+                            </Link>
+                          )}
                           {item.status !== 'published' ? (
                             <button
                               type="button"
@@ -254,7 +274,6 @@ export function NewsQueueAdminClient() {
           </div>
         </div>
       </div>
-    </NewsAdminShell>
   );
 }
 

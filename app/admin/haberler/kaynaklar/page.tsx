@@ -1,5 +1,5 @@
-import { NewsSourcesAdminClient } from '@/components/admin/news/NewsSourcesAdminClient';
+import { redirect } from 'next/navigation';
 
 export default function AdminNewsSourcesPage() {
-  return <NewsSourcesAdminClient />;
+  redirect('/admin/haberler?tab=kaynaklar');
 }
