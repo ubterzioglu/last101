@@ -8,9 +8,9 @@ const ADMIN_SECTIONS = [
     accent: 'border-google-blue/40 bg-google-blue/10',
   },
   {
-    href: '/admin/home',
-    title: 'Ana Sayfa',
-    description: 'Haberler, duyurular ve diğer editoryal içerikler.',
+    href: '/admin/haberler',
+    title: 'Haber Yönetimi',
+    description: 'Yeni haber pipeline, kuyruk, kaynak ve ayar ekranları.',
     accent: 'border-google-yellow/50 bg-google-yellow/10',
   },
   {

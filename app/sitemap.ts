@@ -1,8 +1,10 @@
 import type { MetadataRoute } from 'next';
+import { getAllPublishedNewsEntriesForSitemap } from '@/lib/public-news';
 import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = CANONICAL_SITE_URL;
+  const newsEntries = await getAllPublishedNewsEntriesForSitemap();
 
   const routes = [
     {
@@ -42,6 +44,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/haberler`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/iletisim`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
@@ -49,5 +57,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  return routes;
+  return [
+    ...routes,
+    ...newsEntries.map((entry) => ({
+      url: `${baseUrl}/haberler/${entry.slug}`,
+      lastModified: new Date(entry.updatedAt),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    })),
+  ];
 }

@@ -2,48 +2,47 @@ import 'server-only';
 
 import { unstable_noStore as noStore } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
-
-export interface PublicNewsArticle {
-  id: string;
-  slug: string;
-  href: string;
-  title: string;
-  excerpt: string;
-  content: string | null;
-  image: string;
-  publishedAt: string;
-  createdAt: string | null;
-  dateLabel: string;
-  category: string;
-  readingMinutes: number;
-  sourceName?: string;
-  sourceUrl?: string;
-}
-
-export interface PublicNewsItem {
-  id: string;
-  slug: string;
-  href: string;
-  title: string;
-  excerpt: string;
-  image: string;
-  date: string;
-  category?: string;
-}
+import {
+  buildStableNewsSlug,
+  buildWhatsAppShareText,
+  clampNewsLimit,
+  createNewsCursor,
+  formatNewsDate,
+  getNewsCategoryLabel,
+  maybeExtractIdFromLegacySlug,
+  normalizeNewsCategory,
+  parseNewsCursor,
+} from '@/lib/news/shared';
+import type {
+  NewsCategory,
+  NewsListItem,
+  PublicNewsArticle,
+  PublicNewsListResponse,
+} from '@/types/news';
+import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
 
 interface NewsRow {
   id: string;
-  category: string | null;
+  slug: string | null;
   title: string | null;
+  category: string | null;
   summary: string | null;
   content: string | null;
   cover_image_url: string | null;
+  cover_image_alt: string | null;
+  cover_image_credit: string | null;
   source_name: string | null;
   source_url: string | null;
+  source_published_at: string | null;
   reading_minutes: number | null;
+  whatsapp_share_text: string | null;
+  relevance_score: number | null;
+  relevance_reason: string | null;
   published_at: string | null;
   created_at: string | null;
-  show_in_carousel?: boolean | null;
+  is_featured: boolean | null;
+  featured_rank: number | null;
+  show_in_carousel: boolean | null;
 }
 
 function normalizeEnvValue(value: unknown): string {
@@ -56,20 +55,14 @@ function normalizeEnvValue(value: unknown): string {
 }
 
 function createNewsReadClient() {
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL);
   const keyCandidates = [
     process.env.SUPABASE_ANON_KEY,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY,
     process.env.SUPABASE_PUBLISHABLE_KEY,
-    process.env.SUPABASE_SERVICE_ROLE_KEY,
-    process.env.SUPABASE_SERVICE_KEY,
-    process.env.SUPABASE_SECRET_KEY,
   ].map(normalizeEnvValue);
-  const revokedKeys = new Set([
-    'sb_publishable_vBFFGmqZ3eKr5oqm_dbfMA_5euLMj2x',
-  ]);
-  const accessKey = keyCandidates.find((value) => value && !revokedKeys.has(value)) || '';
+  const accessKey = keyCandidates.find(Boolean) || '';
 
   if (!supabaseUrl || !accessKey) return null;
 
@@ -78,133 +71,255 @@ function createNewsReadClient() {
   });
 }
 
-function slugify(value: string): string {
-  return value
-    .toLocaleLowerCase('tr-TR')
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .replace(/-{2,}/g, '-');
-}
-
-function buildNewsSlug(row: Pick<NewsRow, 'id' | 'title'>): string {
-  const titlePart = slugify(String(row.title || 'haber'));
-  return `${titlePart || 'haber'}--${row.id}`;
-}
-
-function getIdFromNewsSlug(slug: string): string {
-  const separatorIndex = slug.lastIndexOf('--');
-  if (separatorIndex === -1) return '';
-  return slug.slice(separatorIndex + 2).trim();
-}
-
-function formatNewsDate(dateValue: string | null): string {
-  if (!dateValue) return 'Tarih belirtilmedi';
-  const parsed = new Date(dateValue);
-  if (Number.isNaN(parsed.getTime())) return 'Tarih belirtilmedi';
-
-  return parsed.toLocaleDateString('tr-TR', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-}
-
-function mapRowToArticle(row: NewsRow): PublicNewsArticle {
+function mapRowToListItem(row: NewsRow): NewsListItem {
   const title = String(row.title || 'Başlıksız haber').trim();
+  const slug = String(row.slug || '').trim() || buildStableNewsSlug(title, row.id);
+  const category = normalizeNewsCategory(row.category);
+  const summary = String(row.summary || '').trim();
   const publishedAt = row.published_at || row.created_at || new Date().toISOString();
-  const slug = buildNewsSlug(row);
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || CANONICAL_SITE_URL;
 
   return {
     id: row.id,
     slug,
-    href: `/haberler/${slug}`,
     title,
-    excerpt: String(row.summary || '').trim(),
-    content: row.content || null,
-    image: String(row.cover_image_url || '/images/og-default.jpg').trim(),
+    summary,
+    coverImageUrl: String(row.cover_image_url || '/images/og-default.jpg').trim(),
+    coverImageAlt: String(row.cover_image_alt || title).trim(),
+    category,
+    categoryLabel: getNewsCategoryLabel(category),
     publishedAt,
-    createdAt: row.created_at,
-    dateLabel: formatNewsDate(publishedAt),
-    category: String(row.category || 'Almanya').trim(),
-    readingMinutes: Math.max(1, Number(row.reading_minutes || 3)),
-    sourceName: String(row.source_name || '').trim() || undefined,
+    publishedLabel: formatNewsDate(publishedAt),
+    sourceName: String(row.source_name || 'Almanya101').trim(),
     sourceUrl: String(row.source_url || '').trim() || undefined,
+    sourcePublishedAt: row.source_published_at,
+    sourcePublishedLabel: row.source_published_at ? formatNewsDate(row.source_published_at, true) : undefined,
+    readingMinutes: Math.max(1, Number(row.reading_minutes || 3)),
+    whatsappShareText: String(row.whatsapp_share_text || '').trim() || buildWhatsAppShareText({
+      title,
+      summary,
+      slug,
+      siteUrl,
+    }),
   };
 }
 
-async function fetchPublishedNewsRows(limit = 24, onlyCarousel = false): Promise<NewsRow[]> {
+function mapRowToArticle(row: NewsRow): PublicNewsArticle {
+  const item = mapRowToListItem(row);
+  return {
+    ...item,
+    content: row.content || null,
+    coverImageCredit: String(row.cover_image_credit || '').trim() || undefined,
+    relevanceScore: row.relevance_score,
+    relevanceReason: row.relevance_reason,
+  };
+}
+
+async function fetchPublishedNewsRows(options?: {
+  limit?: number;
+  cursor?: string | null;
+  category?: NewsCategory | 'all';
+  excludeId?: string | null;
+  onlyCarousel?: boolean;
+}): Promise<PublicNewsListResponse> {
   noStore();
 
   const supabase = createNewsReadClient();
-  if (!supabase) return [];
+  if (!supabase) return { items: [], nextCursor: null };
+
+  const limit = clampNewsLimit(options?.limit, options?.onlyCarousel ? 12 : 12, 48);
+  const offset = parseNewsCursor(options?.cursor);
 
   let query = supabase
     .from('news_posts')
-    .select('id, category, title, summary, content, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, show_in_carousel')
+    .select('id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel')
     .eq('status', 'published')
+    .lte('published_at', new Date().toISOString())
     .order('published_at', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false })
-    .limit(limit);
+    .range(offset, offset + limit);
 
-  if (onlyCarousel) query = query.eq('show_in_carousel', true);
+  if (options?.category && options.category !== 'all') query = query.eq('category', options.category);
+  if (options?.excludeId) query = query.neq('id', options.excludeId);
+  if (options?.onlyCarousel) query = query.eq('show_in_carousel', true);
 
   const { data, error } = await query;
-
   if (error) {
     console.error('fetchPublishedNewsRows failed:', error);
-    return [];
+    return { items: [], nextCursor: null };
   }
 
-  return Array.isArray(data) ? (data as NewsRow[]) : [];
+  const rows = Array.isArray(data) ? (data as NewsRow[]) : [];
+  const nextCursor = rows.length > limit ? createNewsCursor(offset + limit) : null;
+  const usableRows = rows.slice(0, limit);
+
+  return {
+    items: usableRows.map(mapRowToListItem),
+    nextCursor,
+  };
 }
 
-export async function getPublishedNewsArticles(limit = 24): Promise<PublicNewsArticle[]> {
-  const rows = await fetchPublishedNewsRows(limit);
-  return rows.map(mapRowToArticle);
-}
-
-export async function getPublishedNewsItems(limit = 12): Promise<PublicNewsItem[]> {
-  const rows = await fetchPublishedNewsRows(limit, true);
-  const articles = rows.map(mapRowToArticle);
-  return articles.map((article) => ({
-    id: article.id,
-    slug: article.slug,
-    href: article.href,
-    title: article.title,
-    excerpt: article.excerpt,
-    image: article.image,
-    date: article.dateLabel,
-    category: article.category,
-  }));
-}
-
-export async function getPublishedNewsArticleBySlug(slug: string): Promise<PublicNewsArticle | undefined> {
-  const id = getIdFromNewsSlug(slug);
-  if (!id) return undefined;
-
+export async function getFeaturedNewsArticle(): Promise<PublicNewsArticle | undefined> {
   noStore();
 
   const supabase = createNewsReadClient();
   if (!supabase) return undefined;
 
-  const { data, error } = await supabase
+  const baseSelect = 'id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel';
+
+  const featuredResult = await supabase
     .from('news_posts')
-    .select('id, category, title, summary, content, cover_image_url, source_name, source_url, reading_minutes, published_at, created_at, show_in_carousel')
-    .eq('id', id)
+    .select(baseSelect)
     .eq('status', 'published')
+    .eq('is_featured', true)
+    .lte('published_at', new Date().toISOString())
+    .order('featured_rank', { ascending: true, nullsFirst: false })
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .limit(1)
     .maybeSingle();
 
-  if (error || !data) {
-    if (error) console.error('getPublishedNewsArticleBySlug failed:', error);
+  if (featuredResult.data) return mapRowToArticle(featuredResult.data as NewsRow);
+
+  const fallbackResult = await supabase
+    .from('news_posts')
+    .select(baseSelect)
+    .eq('status', 'published')
+    .lte('published_at', new Date().toISOString())
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (fallbackResult.error || !fallbackResult.data) {
+    if (fallbackResult.error) console.error('getFeaturedNewsArticle fallback failed:', fallbackResult.error);
     return undefined;
   }
 
-  return mapRowToArticle(data as NewsRow);
+  return mapRowToArticle(fallbackResult.data as NewsRow);
+}
+
+export async function getPublishedNewsFeed(options?: {
+  category?: NewsCategory | 'all';
+  limit?: number;
+  cursor?: string | null;
+  excludeId?: string | null;
+}): Promise<PublicNewsListResponse> {
+  return fetchPublishedNewsRows(options);
+}
+
+export async function getPublishedNewsArticles(limit = 24): Promise<PublicNewsArticle[]> {
+  const response = await fetchPublishedNewsRows({ limit });
+  return response.items.map((item) => ({
+    ...item,
+    content: null,
+  }));
+}
+
+export async function getPublishedNewsItems(limit = 12): Promise<Array<{
+  id: string;
+  slug: string;
+  href: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  date: string;
+  category?: string;
+}>> {
+  const response = await fetchPublishedNewsRows({ limit, onlyCarousel: true });
+  return response.items.map((item) => ({
+    id: item.id,
+    slug: item.slug,
+    href: `/haberler/${item.slug}`,
+    title: item.title,
+    excerpt: item.summary,
+    image: item.coverImageUrl,
+    date: item.publishedLabel,
+    category: item.categoryLabel,
+  }));
+}
+
+export async function getPublishedNewsArticleBySlug(slug: string): Promise<PublicNewsArticle | undefined> {
+  noStore();
+
+  const supabase = createNewsReadClient();
+  if (!supabase) return undefined;
+
+  const select = 'id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel';
+
+  const { data, error } = await supabase
+    .from('news_posts')
+    .select(select)
+    .eq('slug', slug)
+    .eq('status', 'published')
+    .lte('published_at', new Date().toISOString())
+    .maybeSingle();
+
+  if (data) return mapRowToArticle(data as NewsRow);
+  if (error) console.error('getPublishedNewsArticleBySlug failed:', error);
+
+  const legacyId = maybeExtractIdFromLegacySlug(slug);
+  if (!legacyId) return undefined;
+
+  const fallback = await supabase
+    .from('news_posts')
+    .select(select)
+    .eq('id', legacyId)
+    .eq('status', 'published')
+    .lte('published_at', new Date().toISOString())
+    .maybeSingle();
+
+  if (!fallback.data) {
+    if (fallback.error) console.error('getPublishedNewsArticleBySlug legacy fallback failed:', fallback.error);
+    return undefined;
+  }
+
+  return mapRowToArticle(fallback.data as NewsRow);
 }
 
 export async function getRelatedPublishedNewsArticles(currentId: string, limit = 3): Promise<PublicNewsArticle[]> {
-  const articles = await getPublishedNewsArticles(limit + 6);
-  return articles.filter((article) => article.id !== currentId).slice(0, limit);
+  noStore();
+
+  const supabase = createNewsReadClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from('news_posts')
+    .select('id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel')
+    .eq('status', 'published')
+    .neq('id', currentId)
+    .lte('published_at', new Date().toISOString())
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('getRelatedPublishedNewsArticles failed:', error);
+    return [];
+  }
+
+  return (Array.isArray(data) ? data : []).map((row) => mapRowToArticle(row as NewsRow));
+}
+
+export async function getAllPublishedNewsEntriesForSitemap(): Promise<Array<{ slug: string; updatedAt: string }>> {
+  noStore();
+
+  const supabase = createNewsReadClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from('news_posts')
+    .select('id, slug, title, updated_at, published_at, created_at')
+    .eq('status', 'published')
+    .lte('published_at', new Date().toISOString())
+    .order('published_at', { ascending: false, nullsFirst: false });
+
+  if (error) {
+    console.error('getAllPublishedNewsEntriesForSitemap failed:', error);
+    return [];
+  }
+
+  return (Array.isArray(data) ? data : []).map((row: any) => ({
+    slug: String(row.slug || '').trim() || buildStableNewsSlug(String(row.title || 'haber'), row.id),
+    updatedAt: row.updated_at || row.published_at || row.created_at || new Date().toISOString(),
+  }));
 }

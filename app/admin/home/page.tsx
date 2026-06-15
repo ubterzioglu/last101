@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const HOME_ADMIN_MODULES = [
   {
-    href: '/admin/home/news',
+    href: '/admin/haberler',
     title: 'Haberler ve Duyurular',
     description: 'Ana sayfadaki haber ve duyuru akışını yönet.',
     status: 'Aktif',

@@ -1,5 +1,5 @@
-import HomeNewsAdminClient from '@/components/HomeNewsAdminClient';
+import { redirect } from 'next/navigation';
 
 export default function HomeNewsAdminPage() {
-  return <HomeNewsAdminClient />;
+  redirect('/admin/haberler');
 }

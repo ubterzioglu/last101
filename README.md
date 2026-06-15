@@ -163,3 +163,137 @@ The site follows WCAG AA guidelines:
 ## License
 
 This project is licensed under the MIT License.
+
+## News Module V2
+
+The repository now includes a Supabase-backed news workflow with:
+
+- Public pages: `/haberler`, `/haberler/[slug]`
+- Admin pages: `/admin/haberler`, `/admin/haberler/yeni`, `/admin/haberler/[id]`, `/admin/haberler/kaynaklar`, `/admin/haberler/pipeline`, `/admin/haberler/ayarlar`
+- Public API: `GET /api/news`, `GET /api/news/[slug]`
+- Admin API: `/api/admin/news/*`
+- Supabase Edge Function: `supabase/functions/news-ingest`
+
+### Required Environment Variables
+
+Keep these in `.env.local` for local development and in your hosting platform for production:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+SUPABASE_SERVICE_KEY=
+
+NEXT_PUBLIC_SITE_URL=https://almanya101.de
+NEXT_PUBLIC_SITE_NAME=Almanya101
+
+ADMIN_PANEL_PASSWORD=
+NEWS_PIPELINE_SECRET=
+GEMINI_API_KEY=
+THENEWSAPI_TOKEN=
+```
+
+Rules:
+
+- Never expose `SUPABASE_SERVICE_ROLE_KEY` to the browser.
+- `NEWS_PIPELINE_SECRET`, `GEMINI_API_KEY`, and `THENEWSAPI_TOKEN` are optional for development but required for the full pipeline.
+- The canonical storage bucket for news images is `news`.
+
+### Local Setup
+
+```bash
+npm install
+```
+
+Apply the new migration:
+
+```bash
+supabase db push
+```
+
+If your project is not linked yet:
+
+```bash
+supabase login
+supabase link --project-ref ldptefnpiudquipdsezr
+```
+
+### Edge Function Deploy
+
+Deploy the ingest function after the migration:
+
+```bash
+supabase functions deploy news-ingest
+```
+
+The function expects these secrets in Supabase:
+
+```bash
+supabase secrets set SUPABASE_URL=...
+supabase secrets set SUPABASE_SERVICE_ROLE_KEY=...
+supabase secrets set NEWS_PIPELINE_SECRET=...
+supabase secrets set GEMINI_API_KEY=...
+supabase secrets set THENEWSAPI_TOKEN=...
+```
+
+### Cron / Scheduler
+
+Recommended daily ingest trigger:
+
+```sql
+select
+  cron.schedule(
+    'news-ingest-daily',
+    '0 6 * * *',
+    $$
+    select
+      net.http_post(
+        url := 'https://ldptefnpiudquipdsezr.supabase.co/functions/v1/news-ingest',
+        headers := jsonb_build_object(
+          'Content-Type', 'application/json',
+          'x-pipeline-secret', vault.decrypted_secret('NEWS_PIPELINE_SECRET')
+        ),
+        body := '{"trigger":"cron"}'::jsonb
+      );
+    $$
+  );
+```
+
+Weekly cleanup suggestion:
+
+```sql
+select
+  cron.schedule(
+    'news-cleanup-weekly',
+    '15 6 * * 0',
+    $$
+    delete from public.news_raw_items
+    where fetched_at < now() - interval '30 days';
+    $$
+  );
+```
+
+### Manual Test Flow
+
+1. Open `/admin/haberler/kaynaklar` and create at least one RSS source.
+2. Open `/admin/haberler/pipeline` and trigger a manual run.
+3. Confirm `pending_review` records appear in `/admin/haberler`.
+4. Open a post detail, refine title/content/source data, and publish it.
+5. Verify `/haberler` hero, filters, load-more flow, and `/haberler/[slug]`.
+
+### Verification Commands
+
+Run these after installing dependencies:
+
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
+
+### Rollback Notes
+
+- UI rollback: revert the news module commit and redeploy the Next.js app.
+- DB rollback: create a compensating migration instead of mutating the applied migration file.
+- If the ingest function causes issues, disable `pipeline_enabled` in `/admin/haberler/ayarlar` or remove the cron job first, then roll back code.
