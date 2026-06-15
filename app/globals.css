@@ -33,6 +33,15 @@
     margin: 0;
   }
 
+  /* Admin shell keeps a left offset for its fixed sidebar on desktop. This
+     selector is more specific than `body[data-devuser] main`, so the sidebar
+     gutter survives the devuser margin reset above (≥ lg breakpoint only). */
+  @media (min-width: 1024px) {
+    body[data-devuser] main[data-admin-main] {
+      margin-left: 264px;
+    }
+  }
+
   /* Skip to main content link for accessibility */
   .skip-to-main {
     @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-google-blue focus:text-white focus:px-4 focus:py-2 focus:rounded-md;

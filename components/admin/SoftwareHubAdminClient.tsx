@@ -348,9 +348,13 @@ export default function AdminPage() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Size the drawing buffer to the canvas element (which fills `.admin-wrap`,
+    // already offset from the fixed sidebar) rather than the full viewport, so
+    // the matrix rain never paints under the sidebar.
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.max(1, Math.floor(rect.width));
+      canvas.height = Math.max(1, Math.floor(rect.height));
     };
     resize();
     window.addEventListener('resize', resize);

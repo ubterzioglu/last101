@@ -62,7 +62,9 @@ export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
         <span className="text-sm font-semibold">Admin Paneli</span>
       </div>
 
-      <main className="min-w-0 lg:ml-[264px]">{children}</main>
+      {/* `data-admin-main` lets globals.css restore the sidebar gutter that the
+          `body[data-devuser] main { margin: 0 }` reset would otherwise strip. */}
+      <main data-admin-main className="min-w-0 lg:ml-[264px]">{children}</main>
     </div>
   );
 }
