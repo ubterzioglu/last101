@@ -223,7 +223,7 @@ export default function ProviderSubmissionsAdminClient() {
                 type="button"
                 onClick={() => {
                   clearAdminAuth();
-                  setAuthed(false);
+                  router.replace('/admin');
                 }}
                 className="rounded-full border border-red-400/20 bg-red-500/10 px-4 py-2 text-sm text-red-100 transition hover:border-red-300/35 hover:bg-red-500/20"
               >
