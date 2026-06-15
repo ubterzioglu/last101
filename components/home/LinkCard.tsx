@@ -137,6 +137,13 @@ export function LinkCard({
           </span>
           <span
             className={cn(
+              'block h-px w-14 rounded-full',
+              isDevuserMobile ? 'bg-white/25 md:bg-black/15' : 'bg-black/15'
+            )}
+            aria-hidden="true"
+          />
+          <span
+            className={cn(
               'text-[11px] font-semibold uppercase tracking-[0.22em] sm:text-xs',
               isDevuserMobile ? 'text-white md:text-black' : 'text-black'
             )}
