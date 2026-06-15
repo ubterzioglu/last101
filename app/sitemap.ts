@@ -1,10 +1,14 @@
 import type { MetadataRoute } from 'next';
 import { getAllPublishedNewsEntriesForSitemap } from '@/lib/public-news';
+import { getAllRehberArticlesForSitemap } from '@/lib/rehber-articles';
 import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = CANONICAL_SITE_URL;
-  const newsEntries = await getAllPublishedNewsEntriesForSitemap();
+  const [newsEntries, rehberArticles] = await Promise.all([
+    getAllPublishedNewsEntriesForSitemap(),
+    getAllRehberArticlesForSitemap(),
+  ]);
 
   const routes = [
     {
@@ -64,6 +68,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(entry.updatedAt),
       changeFrequency: 'daily' as const,
       priority: 0.8,
+    })),
+    ...rehberArticles.map((article) => ({
+      url: `${baseUrl}/rehber/${article.slug}`,
+      lastModified: new Date(article.updatedAt),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
     })),
   ];
 }

@@ -62,7 +62,7 @@ export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
         <span className="text-sm font-semibold">Admin Paneli</span>
       </div>
 
-      <main className="lg:pl-[264px]">{children}</main>
+      <main className="min-w-0 lg:ml-[264px]">{children}</main>
     </div>
   );
 }

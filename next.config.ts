@@ -27,6 +27,27 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [wwwRedirect, ...devuserRedirects];
   },
+
+  async headers() {
+    return [
+      {
+        // Tüm rotalar için temel güvenlik başlıkları
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
+      {
+        // Statik görseller için uzun süreli cache (Core Web Vitals)
+        source: '/images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+    ];
+  },
   // Coolify/Docker için standalone output
   output: 'standalone',
   

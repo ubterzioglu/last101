@@ -1,0 +1,27 @@
+# almanya101
+
+> Almanya'da yaşayan veya Almanya'ya taşınmayı planlayan Türkler için yaşam rehberi, iş fırsatları, resmî belgeler, pratik araçlar ve güçlü bir topluluk. Tüm içerik Türkçedir. Site Almanya'daki Türk topluluğunu hedefler (almanya101.de).
+
+## Araçlar (interaktif)
+
+- [Maaş Hesaplayıcı](https://almanya101.de/maas-hesaplama): Almanya'da brüt↔net maaş hesaplama; vergi sınıfı (Steuerklasse), eyalet, kilise vergisi ve sosyal sigorta kesintileri.
+- [Banka Seçim Aracı](https://almanya101.de/banka-secim): 20 soruda Almanya için en uygun banka türünü (dijital, direkt, yerel, yatırım) bulma.
+- [Sigorta Seçim Aracı](https://almanya101.de/sigorta-secim): Almanya'da sigortaları önceliklendirme (zorunlu sağlık sigortası, sorumluluk/Haftpflicht, hukuk, ev eşyası).
+- [Vize Seçim Aracı](https://almanya101.de/vize-secim): Hangi Almanya vizesine başvurulacağını belirleme (EU Mavi Kart, Fachkräftevisa, Chancenkarte, IT uzmanı vizesi).
+- [Para Transferi Seçim Aracı](https://almanya101.de/para-transferi): Almanya'dan Türkiye'ye en uygun para transfer yöntemini bulma (komisyon, hız, güvenilirlik).
+- [Vatandaşlık Testi Denemesi](https://almanya101.de/vatandaslik-testi): Almanya vatandaşlık testi (Einbürgerungstest) için 33 soruluk deneme sınavı.
+- [Yararlı Belgeler](https://almanya101.de/belgeler): Almanya'da en sık gereken resmî belgeler (Anmeldung, Aufenthaltstitel, Steuer-ID, Führungszeugnis, tercümeler).
+
+## İçerik
+
+- [Rehber](https://almanya101.de/rehber): Almanya'da yaşam, iş, konut, eğitim ve bürokrasi hakkında kapsamlı rehber makaleleri.
+- [Haberler](https://almanya101.de/haberler): Almanya'daki Türk topluluğunu ilgilendiren güncel haberler.
+- [Almanya'da Yaşam](https://almanya101.de/almanyada-yasam): Almanya'da günlük yaşam, kültür ve uyum içeriği.
+- [İş İlanları](https://almanya101.de/is-ilanlari): Almanya'da iş arama ve fırsatlar.
+- [Arkadaşın Köşesi](https://almanya101.de/yazi-dizisi): almanya101 yazarlarının kişisel deneyim ve notları.
+
+## Topluluk ve Kurumsal
+
+- [Topluluk](https://almanya101.de/topluluk): Almanya'daki Türk topluluğu ve etkinlikler.
+- [Hakkımızda](https://almanya101.de/hakkimizda): almanya101 hakkında.
+- [İletişim](https://almanya101.de/iletisim): İletişim ve konu önerisi.

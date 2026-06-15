@@ -1,9 +1,12 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { createMetadata } from '@/lib/seo/metadata';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { ArticleGrid } from '@/components/sections/ArticleCard';
 import { CTASection } from '@/components/sections/CTASection';
 import { Section } from '@/components/ui/Section';
-import type { Article } from '@/types';
+import { BreadcrumbJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { getPublishedRehberArticles } from '@/lib/rehber-articles';
+import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
   title: 'Rehber',
@@ -11,60 +14,26 @@ export const metadata = createMetadata({
   path: '/rehber',
 });
 
-export default function RehberPage() {
-  const articles: Article[] = [
-    {
-      id: '1',
-      title: 'Almanya\'da İş Bulmak: Kapsamlı Rehber',
-      excerpt: 'Almanya\'da iş arama süreci, CV hazırlama, mülakat teknikleri ve iş bulma stratejileri hakkında bilmeniz gereken her şey.',
-      category: 'Kariyer',
-      date: '15 Ocak 2025',
-      readTime: '8 dk',
-    },
-    {
-      id: '2',
-      title: 'İkamet İzni Türleri ve Başvuru Süreci',
-      excerpt: 'Almanya\'daki farklı ikamet izni türleri, başvuru şartları ve adım adım başvuru süreci.',
-      category: 'Vize',
-      date: '12 Ocak 2025',
-      readTime: '12 dk',
-    },
-    {
-      id: '3',
-      title: 'Almanya\'da Sağlık Sigortası Nasıl Alınır?',
-      excerpt: 'Zorunlu sağlık sigortası sistemleri, karşılaştırma ve doğru sigortayı seçme rehberi.',
-      category: 'Sağlık',
-      date: '10 Ocak 2025',
-      readTime: '6 dk',
-    },
-    {
-      id: '4',
-      title: 'Almanya\'da Konut Kiralama Rehberi',
-      excerpt: 'Kiracı hakları, sözleşme koşulları, depozito ve taşınma süreci hakkında bilmeniz gerekenler.',
-      category: 'Konut',
-      date: '14 Ocak 2025',
-      readTime: '10 dk',
-    },
-    {
-      id: '5',
-      title: 'Almanya\'da Banka Hesabı Açmak',
-      excerpt: 'Gerekli belgeler, hesap türleri, online bankacılık ve önerilen bankalar.',
-      category: 'Finans',
-      date: '11 Ocak 2025',
-      readTime: '7 dk',
-    },
-    {
-      id: '6',
-      title: 'Almanya\'da Eğitim Sistemi',
-      excerpt: 'Okul sistemi, üniversite başvuruları, burslar ve eğitim olanakları.',
-      category: 'Eğitim',
-      date: '8 Ocak 2025',
-      readTime: '15 dk',
-    },
-  ];
+export const dynamic = 'force-dynamic';
+
+export default async function RehberPage() {
+  const articles = await getPublishedRehberArticles(120);
+  const pageUrl = new URL('/rehber', SITE_URL).toString();
 
   return (
     <>
+      <WebPageJsonLd
+        title="Kapsamlı Rehberler"
+        description="Almanya ile ilgili her konuda detaylı rehberler ve makaleler."
+        url={pageUrl}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
+          { name: 'Rehber', url: pageUrl },
+        ]}
+      />
+
       <HeroSection
         title="Kapsamlı Rehberler"
         description="Almanya ile ilgili her konuda detaylı rehberler ve makaleler. Uzmanlardan güvenilir bilgiler."
@@ -76,10 +45,50 @@ export default function RehberPage() {
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Tüm Rehberler</h2>
           <p className="text-lg text-gray-600 max-w-2xl">
-            Kategorilere göre filtreleyin veya arayın. İhtiyacınız olan bilgiyi hızlıca bulun.
+            İhtiyacınız olan bilgiyi hızlıca bulun. Rehberlerimiz düzenli olarak güncellenir.
           </p>
         </div>
-        <ArticleGrid articles={articles} columns={3} />
+
+        {articles.length === 0 ? (
+          <div className="rounded-2xl border border-gray-200 bg-gray-50 px-6 py-14 text-center">
+            <h3 className="text-2xl font-bold text-gray-900">Henüz yayınlanmış rehber yok.</h3>
+            <p className="mt-4 text-gray-600">İlk rehber yayına alındığında burada görünecek.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {articles.map((article) => (
+              <Link
+                key={article.id}
+                href={article.href}
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-google-blue hover:shadow-lg"
+              >
+                <div className="relative aspect-[16/9] overflow-hidden bg-gray-100">
+                  <Image
+                    src={article.coverImageUrl}
+                    alt={article.title}
+                    fill
+                    unoptimized
+                    sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-grow flex-col p-6">
+                  <span className="mb-2 inline-flex w-fit rounded-full bg-google-blue/10 px-3 py-1 text-xs font-semibold text-google-blue">
+                    {article.category}
+                  </span>
+                  <h3 className="mb-2 text-xl font-semibold text-gray-900 line-clamp-2">{article.title}</h3>
+                  {article.summary ? (
+                    <p className="mb-4 text-gray-600 line-clamp-3">{article.summary}</p>
+                  ) : null}
+                  <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4 text-sm text-gray-500">
+                    <span>{article.dateLabel}</span>
+                    <span>{article.readingMinutes} dk okuma</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </Section>
 
       <CTASection

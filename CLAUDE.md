@@ -156,7 +156,7 @@ Key variables:
 - `ADMIN_PANEL_PASSWORD`
 - `IP_HASH_SALT`
 - `DEVUSER_AUTH_SECRET`
-- `NEXT_PUBLIC_SITE_URL` (default: `https://almanya101.com`)
+- `NEXT_PUBLIC_SITE_URL` (default: `https://almanya101.de`)
 - `NEXT_PUBLIC_SITE_NAME` (default: `almanya101`)
 
 ## Path Aliases (`tsconfig.json`)

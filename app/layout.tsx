@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { Sora, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
@@ -73,10 +73,22 @@ export const metadata: Metadata = {
     },
   },
 
+  manifest: '/manifest.webmanifest',
+
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
+
   verification: {
-    // Add your verification codes here when deploying
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
+    // NEXT_PUBLIC_GSC_VERIFICATION ortam değişkeni set edildiğinde Google Search Console doğrulaması aktifleşir.
+    ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
+      ? { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION }
+      : {}),
   },
 
   // Geographic targeting
@@ -84,6 +96,12 @@ export const metadata: Metadata = {
     'content-language': 'tr',
     'target-country': 'DE',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
