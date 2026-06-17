@@ -10,6 +10,7 @@ const FOOTER_LEGAL_LINKS: { href: string; label: string }[] = [
   { href: '/kullanim-sartlari', label: 'Kullanım Şartları' },
   { href: '/kvkk-gdpr-ccpa', label: 'KVKK / GDPR / CCPA' },
   { href: '/cerez-politikasi', label: 'Çerez Politikası' },
+  { href: '/impressum', label: 'Impressum' },
 ];
 
 export function Footer() {
