@@ -27,6 +27,18 @@ export default function KvkkGdprCcpaPage() {
           </Link>{' '}
           sayfasına bakınız.
         </p>
+        <p>Veri sorumlusu:</p>
+        <address className="not-italic text-white/75">
+          Umut Barış Terzioğlu
+          <br />
+          Gutenbergstraße 28
+          <br />
+          44139 Dortmund, Almanya
+          <br />
+          <a href="mailto:info@almanya101.de" className="text-google-yellow hover:underline">
+            info@almanya101.de
+          </a>
+        </address>
       </LegalSection>
 
       <LegalSection heading="2. KVKK (Türkiye)">

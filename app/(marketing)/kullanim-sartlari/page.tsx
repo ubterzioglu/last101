@@ -16,7 +16,22 @@ export default function KullanimSartlariPage() {
       description="almanya101’i kullanarak aşağıdaki şartları kabul etmiş olursunuz. Lütfen platformu kullanmadan önce bu koşulları okuyun."
       lastUpdated="17 Haziran 2026"
     >
-      <LegalSection heading="1. Hizmet Kapsamı">
+      <LegalSection heading="1. İşletmeci">
+        <p>almanya101 aşağıdaki kişi tarafından işletilmektedir:</p>
+        <address className="not-italic text-white/75">
+          Umut Barış Terzioğlu
+          <br />
+          Gutenbergstraße 28
+          <br />
+          44139 Dortmund, Almanya
+          <br />
+          <a href="mailto:info@almanya101.de" className="text-google-yellow hover:underline">
+            info@almanya101.de
+          </a>
+        </address>
+      </LegalSection>
+
+      <LegalSection heading="2. Hizmet Kapsamı">
         <p>
           almanya101, Almanya’da yaşayan veya yaşamayı düşünen Türkler için
           bilgilendirici içerikler, hesaplama araçları ve rehberler sunan bir
@@ -24,7 +39,7 @@ export default function KullanimSartlariPage() {
         </p>
       </LegalSection>
 
-      <LegalSection heading="2. Sorumluluk Reddi">
+      <LegalSection heading="3. Sorumluluk Reddi">
         <p>
           Platformdaki tüm içerik ve araçlar yalnızca bilgilendirme amaçlıdır.
           Maaş hesaplama, vize seçimi, sigorta gibi araçların sonuçları tahmini
@@ -37,7 +52,7 @@ export default function KullanimSartlariPage() {
         </p>
       </LegalSection>
 
-      <LegalSection heading="3. Fikri Mülkiyet">
+      <LegalSection heading="4. Fikri Mülkiyet">
         <p>
           Platformdaki metin, görsel, logo ve yazılımlar almanya101’e veya ilgili
           hak sahiplerine aittir. İzinsiz kopyalanamaz, çoğaltılamaz veya ticari
@@ -45,7 +60,7 @@ export default function KullanimSartlariPage() {
         </p>
       </LegalSection>
 
-      <LegalSection heading="4. Hesap ve Kullanıcı Kuralları">
+      <LegalSection heading="5. Hesap ve Kullanıcı Kuralları">
         <ul className="list-disc space-y-2 pl-6">
           <li>Hesap bilgilerinizin gizliliğinden siz sorumlusunuz.</li>
           <li>Platformu yasalara aykırı amaçlarla kullanamazsınız.</li>
@@ -56,14 +71,14 @@ export default function KullanimSartlariPage() {
         </ul>
       </LegalSection>
 
-      <LegalSection heading="5. Üçüncü Taraf Bağlantıları">
+      <LegalSection heading="6. Üçüncü Taraf Bağlantıları">
         <p>
           Platform, üçüncü taraf web sitelerine bağlantılar içerebilir. Bu
           sitelerin içeriğinden veya gizlilik uygulamalarından sorumlu değiliz.
         </p>
       </LegalSection>
 
-      <LegalSection heading="6. Değişiklikler">
+      <LegalSection heading="7. Değişiklikler">
         <p>
           Bu kullanım şartlarını dilediğimiz zaman güncelleyebiliriz. Güncel
           sürüm bu sayfada yayımlanır. Gizlilikle ilgili bilgi için{' '}
