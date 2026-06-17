@@ -24,7 +24,8 @@ export const candidateResultSchema = z.object({
   contacts: z.array(contactSchema),
   website_url: z.string().nullable(),
   appointment_url: z.string().nullable(),
-  evidence_quotes: z.array(z.string()).max(6),
+  // Gemini bazen 6'dan fazla alıntı döndürür; reddetmek yerine ilk 6'ya kırp (veri kaybetme).
+  evidence_quotes: z.array(z.string()).transform((arr) => arr.slice(0, 6)),
 })
 
 export type CandidateResult = z.infer<typeof candidateResultSchema>

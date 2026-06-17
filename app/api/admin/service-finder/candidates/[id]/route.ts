@@ -68,8 +68,28 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
         .insert(providerPayload)
         .select('id')
         .single();
-      if (insErr) throw insErr;
-      providerId = String(inserted?.id || '');
+      if (insErr) {
+        // unique_provider (type, display_name, city) çakışması: aynı uzman zaten var.
+        // Mevcut kaydı bulup güncelle ve adayı ona bağla (yinelenen kayıt oluşturma).
+        if (insErr.code === '23505') {
+          const { data: existing, error: findErr } = await client
+            .from('providers')
+            .select('id')
+            .eq('type', providerPayload.type)
+            .eq('display_name', providerPayload.display_name)
+            .eq('city', providerPayload.city)
+            .maybeSingle();
+          if (findErr) throw findErr;
+          if (!existing) throw insErr;
+          providerId = String(existing.id);
+          const { error: updExistingErr } = await client.from('providers').update(providerPayload).eq('id', providerId);
+          if (updExistingErr) throw updExistingErr;
+        } else {
+          throw insErr;
+        }
+      } else {
+        providerId = String(inserted?.id || '');
+      }
     }
 
     const { error: candErr } = await client
