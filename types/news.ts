@@ -73,7 +73,7 @@ export interface NewsPostAdminRecord {
 export interface NewsSourceRecord {
   id: string;
   name: string;
-  source_type: 'rss' | 'mrss' | 'api' | 'manual';
+  source_type: 'rss' | 'mrss' | 'atom' | 'api' | 'gdelt' | 'manual';
   feed_url: string | null;
   homepage_url: string | null;
   default_category: NewsCategory;
@@ -83,6 +83,7 @@ export interface NewsSourceRecord {
   priority: number;
   is_active: boolean;
   fetch_limit: number;
+  config: Record<string, unknown>;
   last_fetched_at: string | null;
   last_success_at: string | null;
   last_error: string | null;

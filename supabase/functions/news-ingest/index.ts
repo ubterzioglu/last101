@@ -2,10 +2,14 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
 import { parseRssItems } from './adapters/rss.ts'
 import { parseMrssItems } from './adapters/mrss.ts'
+import { parseAtomItems } from './adapters/atom.ts'
 import { fetchTheNewsApiItems } from './adapters/thenewsapi.ts'
+import { fetchGdeltItems, type GdeltConfig } from './adapters/gdelt.ts'
 import { createUniqueHash } from './dedupe.ts'
 import { generateGeminiDraft } from './gemini.ts'
 import { normalizeFeedItem, type NewsSourceLike } from './normalize.ts'
+import { computeRelevance } from './relevance.ts'
+import { validateSourceUrl } from './source-security.ts'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -27,58 +31,58 @@ function normalizeSecret(value: string | null): string {
   return String(value || '').trim()
 }
 
-function computeRelevance(item: { category: string; title: string; description: string; sourceName: string; publishedAt: string | null }) {
-  const text = `${item.title} ${item.description}`.toLocaleLowerCase('tr-TR')
-  let score = 0
-  const reasons: string[] = []
+async function fetchSourceItems(
+  source: NewsSourceLike & {
+    source_type: string
+    feed_url?: string | null
+    fetch_limit?: number | null
+    config?: Record<string, unknown> | null
+  },
+  maxItems: number
+) {
+  if (source.source_type === 'manual') return []
 
-  if (item.category === 'almanya') {
-    score += 30
-    reasons.push('Almanya kategorisinde')
-  }
-  if (/(oturum|goc|göç|vatandas|vatandaş|is|iş|vergi|sigorta|kindergeld|egitim|eğitim|saglik|sağlık|ulasim|ulaşım)/.test(text)) {
-    score += 30
-    reasons.push('Günlük hayatı doğrudan etkileyen konu')
-  }
-  if (item.publishedAt) {
-    const diffHours = (Date.now() - new Date(item.publishedAt).getTime()) / (1000 * 60 * 60)
-    if (diffHours <= 24) {
-      score += 20
-      reasons.push('Son 24 saat içinde yayınlanmış')
-    }
-  }
-  if (/(bamf|bundesregierung|arbeitsagentur)/i.test(item.sourceName)) {
-    score += 20
-    reasons.push('Resmi kurum kaynağı')
-  }
-  if (/(spor|magazin|celebrity|yarisma|yarışma)/.test(text)) {
-    score -= 40
-    reasons.push('Düşük öncelikli içerik')
+  // GDELT API key gerektirmez; endpoint feed_url'den (boşsa varsayılan) gelir.
+  if (source.source_type === 'gdelt') {
+    return fetchGdeltItems(
+      String(source.feed_url || '').trim(),
+      (source.config as GdeltConfig) || {},
+      { maxItems, timeoutMs: 20000 }
+    )
   }
 
-  return {
-    score: Math.max(score, 0),
-    reason: reasons.join(', ') || 'Varsayılan değerlendirme',
-  }
-}
-
-async function fetchSourceItems(source: NewsSourceLike & { source_type: string; feed_url?: string | null }) {
   const feedUrl = String(source.feed_url || '').trim()
-  if (source.source_type === 'manual' || !feedUrl) return []
+  if (!feedUrl) return []
 
   if (source.source_type === 'api') {
     return fetchTheNewsApiItems(feedUrl, normalizeSecret(Deno.env.get('THENEWSAPI_TOKEN')))
   }
 
-  const response = await fetch(feedUrl, {
-    headers: { 'user-agent': 'almanya101-news-ingest/1.0' },
-  })
+  // RSS/MRSS/Atom: fetch öncesi SSRF doğrulaması.
+  const security = validateSourceUrl(feedUrl)
+  if (!security.ok) {
+    throw new Error(`SSRF engeli: ${security.reason}`)
+  }
+
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 20000)
+  let response: Response
+  try {
+    response = await fetch(feedUrl, {
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: { 'user-agent': 'almanya101-news-ingest/1.0' },
+    })
+  } finally {
+    clearTimeout(timer)
+  }
 
   if (!response.ok) {
     throw new Error(`Source fetch failed (${response.status})`)
   }
 
   const xml = await response.text()
+  if (source.source_type === 'atom') return parseAtomItems(xml)
   return source.source_type === 'mrss' ? parseMrssItems(xml) : parseRssItems(xml)
 }
 
@@ -120,7 +124,7 @@ serve(async (req: Request) => {
 
   const { data: settingsRow, error: settingsError } = await supabase
     .from('news_pipeline_settings')
-    .select('pipeline_enabled, ai_enabled, ai_daily_limit, max_items_per_source, auto_create_pending_review')
+    .select('pipeline_enabled, ai_enabled, ai_daily_limit, max_items_per_source, auto_create_pending_review, excluded_keywords, high_priority_keywords')
     .eq('id', true)
     .maybeSingle()
 
@@ -134,6 +138,8 @@ serve(async (req: Request) => {
     ai_daily_limit: 10,
     max_items_per_source: 10,
     auto_create_pending_review: true,
+    excluded_keywords: [] as string[],
+    high_priority_keywords: [] as string[],
   }
 
   const { data: run, error: runError } = await supabase
@@ -166,7 +172,7 @@ serve(async (req: Request) => {
 
   const sourcesQuery = supabase
     .from('news_sources')
-    .select('id, name, source_type, feed_url, homepage_url, default_category, fetch_limit, is_active')
+    .select('id, name, source_type, feed_url, homepage_url, default_category, fetch_limit, is_active, config')
     .eq('is_active', true)
     .order('priority', { ascending: false })
 
@@ -196,7 +202,15 @@ serve(async (req: Request) => {
   const runLog: Record<string, unknown>[] = []
   let aiUsed = 0
 
+  let sourceIndex = 0
   for (const source of sources) {
+    // Kaynaklar arası küçük gecikme: paylaşılan egress IP'sinde rate-limit (429)
+    // riskini azaltır. İlk kaynaktan önce beklemeye gerek yok.
+    if (sourceIndex > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+    }
+    sourceIndex += 1
+
     const logEntry: Record<string, unknown> = {
       sourceId: source.id,
       sourceName: source.name,
@@ -207,11 +221,11 @@ serve(async (req: Request) => {
     }
 
     try {
-      const items = await fetchSourceItems(source)
       const maxItems = Number.isFinite(requestedMaxItems)
         ? Math.min(Math.max(requestedMaxItems, 1), 50)
         : Math.min(source.fetch_limit || settings.max_items_per_source || 10, settings.max_items_per_source || 10)
 
+      const items = await fetchSourceItems(source, maxItems)
       const slicedItems = items.slice(0, maxItems)
       logEntry.fetched = slicedItems.length
       fetchedCount += slicedItems.length
@@ -265,6 +279,8 @@ serve(async (req: Request) => {
           description: normalized.description,
           sourceName: normalized.sourceName,
           publishedAt: normalized.publishedAt,
+          excludedKeywords: Array.isArray(settings.excluded_keywords) ? settings.excluded_keywords : [],
+          highPriorityKeywords: Array.isArray(settings.high_priority_keywords) ? settings.high_priority_keywords : [],
         })
 
         let title = normalized.title

@@ -63,6 +63,7 @@ export const NEWS_SOURCE_SELECT = `
   priority,
   is_active,
   fetch_limit,
+  config,
   last_fetched_at,
   last_success_at,
   last_error,
@@ -102,6 +103,8 @@ export const NEWS_SETTINGS_SELECT = `
 `;
 
 type JsonRecord = Record<string, unknown>;
+
+const NEWS_SOURCE_TYPES: readonly string[] = ['rss', 'mrss', 'atom', 'api', 'gdelt', 'manual'];
 
 function normalizeEnvValue(value: unknown): string {
   const raw = String(value || '').trim();
@@ -568,7 +571,7 @@ export async function createNewsSource(body: JsonRecord, client?: SupabaseClient
   const serviceClient = client || getNewsServiceClient();
   const payload = {
     name: normalizeText(body.name, 120),
-    source_type: ['rss', 'mrss', 'api', 'manual'].includes(String(body.source_type || body.sourceType))
+    source_type: NEWS_SOURCE_TYPES.includes(String(body.source_type || body.sourceType))
       ? String(body.source_type || body.sourceType)
       : 'rss',
     feed_url: normalizeOptionalUrl(body.feed_url ?? body.feedUrl),
@@ -582,6 +585,7 @@ export async function createNewsSource(body: JsonRecord, client?: SupabaseClient
     priority: normalizeInteger(body.priority, 0, 100, 50),
     is_active: normalizeBoolean(body.is_active ?? body.isActive, true),
     fetch_limit: normalizeInteger(body.fetch_limit ?? body.fetchLimit, 1, 50, 10),
+    config: normalizeJsonRecord(body.config),
     updated_at: new Date().toISOString(),
   };
 
@@ -602,7 +606,7 @@ export async function updateNewsSource(id: string, body: JsonRecord, client?: Su
   const serviceClient = client || getNewsServiceClient();
   const payload = {
     name: normalizeText(body.name, 120),
-    source_type: ['rss', 'mrss', 'api', 'manual'].includes(String(body.source_type || body.sourceType))
+    source_type: NEWS_SOURCE_TYPES.includes(String(body.source_type || body.sourceType))
       ? String(body.source_type || body.sourceType)
       : 'rss',
     feed_url: normalizeOptionalUrl(body.feed_url ?? body.feedUrl),
@@ -616,6 +620,7 @@ export async function updateNewsSource(id: string, body: JsonRecord, client?: Su
     priority: normalizeInteger(body.priority, 0, 100, 50),
     is_active: normalizeBoolean(body.is_active ?? body.isActive, true),
     fetch_limit: normalizeInteger(body.fetch_limit ?? body.fetchLimit, 1, 50, 10),
+    config: normalizeJsonRecord(body.config),
     last_error: normalizeNullableText(body.last_error ?? body.lastError, 2000),
     updated_at: new Date().toISOString(),
   };

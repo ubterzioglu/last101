@@ -19,7 +19,15 @@ const emptyForm = {
   priority: 50,
   fetch_limit: 10,
   is_active: true,
+  config: {} as Record<string, unknown>,
 };
+
+const GDELT_CONFIG_PLACEHOLDER = `{
+  "query": "Turkish diaspora Germany",
+  "timespan": "1d",
+  "maxrecords": 100,
+  "allowedLanguages": "Turkish,German,English"
+}`;
 
 export function NewsSourcesAdminClient() {
   const [items, setItems] = useState<NewsSourceRecord[]>([]);
@@ -122,7 +130,15 @@ export function NewsSourcesAdminClient() {
             <Input label="Kaynak Adı" value={form.name} onChange={(value) => setForm((s) => ({ ...s, name: value }))} />
             <Input label="Feed URL" value={form.feed_url} onChange={(value) => setForm((s) => ({ ...s, feed_url: value }))} />
             <Input label="Homepage URL" value={form.homepage_url} onChange={(value) => setForm((s) => ({ ...s, homepage_url: value }))} />
-            <Select label="Tür" value={form.source_type} onChange={(value) => setForm((s) => ({ ...s, source_type: value }))} options={['rss', 'mrss', 'api', 'manual']} />
+            <Select label="Tür" value={form.source_type} onChange={(value) => setForm((s) => ({ ...s, source_type: value }))} options={['rss', 'mrss', 'atom', 'api', 'gdelt', 'manual']} />
+            {form.source_type === 'gdelt' ? (
+              <ConfigTextarea
+                label="GDELT Config (JSON)"
+                value={form.config}
+                placeholder={GDELT_CONFIG_PLACEHOLDER}
+                onChange={(value) => setForm((s) => ({ ...s, config: value }))}
+              />
+            ) : null}
             <Select label="Kategori" value={form.default_category} onChange={(value) => setForm((s) => ({ ...s, default_category: value }))} options={NEWS_CATEGORIES} labels={Object.fromEntries(NEWS_CATEGORIES.map((item) => [item, getNewsCategoryLabel(item)]))} />
             <Select label="Usage Mode" value={form.usage_mode} onChange={(value) => setForm((s) => ({ ...s, usage_mode: value }))} options={['signal_only', 'short_excerpt_allowed', 'licensed', 'manual_only']} />
             <Input label="Öncelik" type="number" value={String(form.priority)} onChange={(value) => setForm((s) => ({ ...s, priority: Number(value) || 50 }))} />
@@ -202,6 +218,59 @@ function Input({ label, value, onChange, type = 'text' }: { label: string; value
     <label className="block">
       <span className="mb-2 block text-sm text-white/70">{label}</span>
       <input type={type} value={value} onChange={(e) => onChange(e.target.value)} className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue" />
+    </label>
+  );
+}
+
+function ConfigTextarea({
+  label,
+  value,
+  placeholder,
+  onChange,
+}: {
+  label: string;
+  value: Record<string, unknown>;
+  placeholder?: string;
+  onChange: (value: Record<string, unknown>) => void;
+}) {
+  const [text, setText] = useState(() => {
+    const hasValue = value && Object.keys(value).length > 0;
+    return hasValue ? JSON.stringify(value, null, 2) : '';
+  });
+  const [parseError, setParseError] = useState('');
+
+  function handleChange(next: string) {
+    setText(next);
+    const trimmed = next.trim();
+    if (!trimmed) {
+      setParseError('');
+      onChange({});
+      return;
+    }
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        setParseError('');
+        onChange(parsed as Record<string, unknown>);
+      } else {
+        setParseError('JSON bir nesne olmalı.');
+      }
+    } catch {
+      setParseError('Geçersiz JSON.');
+    }
+  }
+
+  return (
+    <label className="block">
+      <span className="mb-2 block text-sm text-white/70">{label}</span>
+      <textarea
+        value={text}
+        placeholder={placeholder}
+        onChange={(e) => handleChange(e.target.value)}
+        rows={6}
+        className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 font-mono text-xs text-white outline-none transition focus:border-google-blue"
+      />
+      {parseError ? <span className="mt-1 block text-xs text-red-300">{parseError}</span> : null}
     </label>
   );
 }
