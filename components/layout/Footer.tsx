@@ -1,6 +1,17 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 
+const FOOTER_LEGAL_LINKS: { href: string; label: string }[] = [
+  { href: '/hakkimizda', label: 'Hakkımızda' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/iletisim', label: 'İletişim' },
+  { href: '/kariyer', label: 'Kariyer' },
+  { href: '/gizlilik-politikasi', label: 'Gizlilik Politikası' },
+  { href: '/kullanim-sartlari', label: 'Kullanım Şartları' },
+  { href: '/kvkk-gdpr-ccpa', label: 'KVKK / GDPR / CCPA' },
+  { href: '/cerez-politikasi', label: 'Çerez Politikası' },
+];
+
 export function Footer() {
   return (
     <footer className="bg-black text-white py-8">
@@ -9,29 +20,43 @@ export function Footer() {
           <p className="text-sm">
             yalnız değilsin! almanya101 seninle!
           </p>
-          <p className="text-xs text-gray-700">
-            <a
-              href="https://www.spindorai.com"
-              rel="dofollow"
-              target="_blank"
-              className="hover:underline"
-            >
-              Seo Aracı
-            </a>
-            {' '}ve Seo Hizmetleri Spindora
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-gray-400">
+            {FOOTER_LEGAL_LINKS.map((item, i) => (
+              <span key={item.href} className="flex items-center gap-x-2">
+                {i > 0 && (
+                  <span className="text-gray-600" aria-hidden="true">|</span>
+                )}
+                <Link href={item.href} className="hover:underline hover:text-white transition-colors">
+                  {item.label}
+                </Link>
+              </span>
+            ))}
           </p>
-          <p className="text-xs text-gray-700">
-            <a
-              href="https://www.corteqs.net"
-              rel="dofollow"
-              target="_blank"
-              className="hover:underline"
-            >
-              Corteqs
-            </a>
-            {' '}— Diasporayı Birleştiren Platform
-          </p>
-          <p className="text-xs text-gray-700">
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-gray-700">
+            <span>
+              <a
+                href="https://www.spindorai.com"
+                rel="dofollow"
+                target="_blank"
+                className="hover:underline"
+              >
+                Seo Aracı
+              </a>
+              {' '}ve Seo Hizmetleri Spindora
+            </span>
+            <span className="text-gray-700" aria-hidden="true">|</span>
+            <span>
+              <a
+                href="https://www.corteqs.net"
+                rel="dofollow"
+                target="_blank"
+                className="hover:underline"
+              >
+                Corteqs
+              </a>
+              {' '}— Diasporayı Birleştiren Platform
+            </span>
+            <span className="text-gray-700" aria-hidden="true">|</span>
             <a
               href="https://chatio.com.tr/"
               rel="dofollow"
@@ -40,17 +65,18 @@ export function Footer() {
             >
               Canlı Destek Yazılımı
             </a>
-          </p>
-          <p className="text-xs text-gray-700">
-            <a
-              href="https://www.spindorai.com/seo/izmir-seo"
-              rel="dofollow"
-              target="_blank"
-              className="hover:underline"
-            >
-              İzmir Seo Ajansı
-            </a>
-            {' '}Spindora Tarafından Seosu Yapılmıştır.
+            <span className="text-gray-700" aria-hidden="true">|</span>
+            <span>
+              <a
+                href="https://www.spindorai.com/seo/izmir-seo"
+                rel="dofollow"
+                target="_blank"
+                className="hover:underline"
+              >
+                İzmir Seo Ajansı
+              </a>
+              {' '}Spindora Tarafından Seosu Yapılmıştır.
+            </span>
           </p>
         </div>
       </Container>
