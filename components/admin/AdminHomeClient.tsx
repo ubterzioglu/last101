@@ -196,6 +196,24 @@ export function AdminHomeClient() {
             router={router}
           />
         </div>
+
+        <div className="mt-5">
+          <button
+            type="button"
+            onClick={() => router.push('/admin/rehber')}
+            className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-google-green/30 bg-white/[0.03] p-6 text-left transition hover:-translate-y-0.5 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-green focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+          >
+            <span>
+              <span className="block text-xs font-semibold uppercase tracking-wider text-google-green">Rehberler</span>
+              <span className="mt-1 block text-lg font-bold text-white">Admin Paneli Kullanım Kılavuzu</span>
+              <span className="mt-1 block text-sm text-white/55">Tüm bölümlerin ne işe yaradığını ve butonları öğren.</span>
+            </span>
+            <span className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition group-hover:gap-2">
+              Aç
+              <span aria-hidden="true">→</span>
+            </span>
+          </button>
+        </div>
       </section>
     </div>
   );

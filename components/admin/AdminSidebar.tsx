@@ -109,6 +109,20 @@ const NAV_ITEMS: AdminNavItem[] = [
       </svg>
     ),
   },
+  {
+    href: '/admin/rehber',
+    label: 'Rehberler',
+    description: 'Tüm panel kılavuzu',
+    accent: 'text-google-green',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        <circle cx="12" cy="9.5" r="2.2" />
+        <path d="M12 11.7v2.3" />
+      </svg>
+    ),
+  },
 ];
 
 async function fetchBadgeCounts(): Promise<Record<BadgeKey, number>> {
