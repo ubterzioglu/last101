@@ -19,12 +19,20 @@ export interface Provider {
   phone?: string;
   email?: string;
   website?: string;
+  appointment_url?: string;
   description?: string;
+  region?: string;
+  country_code?: string;
+  languages?: string[];
+  services?: string[];
+  source?: 'manual' | 'submission' | 'scraper';
+  relevance_score?: number | null;
   status: 'active' | 'pending' | 'inactive';
   created_at: string;
   updated_at: string;
-  // Joined fields
+  // Joined fields (tek providers tablosu -> provider_tags)
   provider_tags?: { tag_id: string }[];
+  /** @deprecated gastronomi artık tek providers tablosunda; provider_tags kullanılır. */
   gastronomy_provider_tags?: { tag_id: string }[];
 }
 

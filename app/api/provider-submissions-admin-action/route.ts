@@ -41,6 +41,7 @@ function buildProviderPayload(submission: Record<string, unknown>) {
     website: truncate(submission.website, 400) || null,
     notes_public: buildProviderNotes(submission),
     status: 'active',
+    source: 'submission',
     google_maps_url: truncate(submission.google_maps_url, 400) || null,
     google_place_id: truncate(submission.google_place_id, 140) || null,
   };

@@ -1,7 +1,9 @@
 // Hizmet Rehberi - Supabase Data Fetching
+// Birleşik model: tek `providers` tablosu, `type` ile yönetilir (hizmet + gastronomi).
+// Tag'ler tek `tags` tablosundan `type` ile gelir, ilişki `provider_tags`.
 
 import { createClient } from '@/lib/supabase/client';
-import type { Provider, Tag, ProviderWithTags, ProviderType } from './types';
+import type { Provider, Tag, ProviderType } from './types';
 
 // Lazy initialization to avoid build-time errors
 let supabaseClient: ReturnType<typeof createClient> | null = null;
@@ -12,6 +14,9 @@ function getSupabase() {
   return supabaseClient!;
 }
 
+// Tamirci alt tipleri tek "tamir" kategorisinde toplanır.
+const TAMIRCI_TYPES: ProviderType[] = ['tamirci_otomobil', 'tamirci_tesisat', 'tamirci_boyaci'];
+
 type ProviderRow = {
   id: string;
   type: ProviderType;
@@ -20,6 +25,7 @@ type ProviderRow = {
   phone?: string | null;
   email?: string | null;
   website?: string | null;
+  appointment_url?: string | null;
   status: 'active' | 'pending' | 'inactive';
   created_at: string;
   updated_at: string;
@@ -27,8 +33,13 @@ type ProviderRow = {
   display_name?: string | null;
   description?: string | null;
   notes_public?: string | null;
+  region?: string | null;
+  country_code?: string | null;
+  languages?: string[] | null;
+  services?: string[] | null;
+  source?: 'manual' | 'submission' | 'scraper' | null;
+  relevance_score?: number | null;
   provider_tags?: { tag_id: string }[];
-  gastronomy_provider_tags?: { tag_id: string }[];
 };
 
 function normalizeProviders(rows: ProviderRow[] | null | undefined): Provider[] {
@@ -43,325 +54,162 @@ function normalizeProviders(rows: ProviderRow[] | null | undefined): Provider[] 
     phone: row.phone ?? undefined,
     email: row.email ?? undefined,
     website: row.website ?? undefined,
+    appointment_url: row.appointment_url ?? undefined,
     description: row.description ?? row.notes_public ?? undefined,
+    region: row.region ?? undefined,
+    country_code: row.country_code ?? undefined,
+    languages: row.languages ?? undefined,
+    services: row.services ?? undefined,
+    source: row.source ?? undefined,
+    relevance_score: row.relevance_score ?? null,
     status: row.status,
     created_at: row.created_at,
     updated_at: row.updated_at,
     provider_tags: row.provider_tags,
-    gastronomy_provider_tags: row.gastronomy_provider_tags,
   }));
 }
 
-// Eski sistemdeki tablolar:
-// - providers (hizmet rehberi)
-// - provider_tags (hizmet etiketleri ilişki)
-// - tags (hizmet etiketleri)
-// - gastronomy_providers (gastronomi)
-// - gastronomy_provider_tags (gastronomi etiketleri ilişki)
-// - gastronomy_tags (gastronomi etiketleri)
+const PROVIDER_SELECT = `
+  *,
+  provider_tags(tag_id)
+` as const;
 
 /**
- * Hizmet rehberi sağlayıcılarını getir
- */
-export async function getServiceProviders(type: ProviderType, city?: string) {
-  let query = getSupabase()
-    .from('providers')
-    .select(`
-      *,
-      provider_tags(tag_id)
-    `)
-    .eq('type', type)
-    .eq('status', 'active');
-
-  if (city && city !== 'all') {
-    query = query.eq('city', city);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error('Error fetching service providers:', error);
-    return [];
-  }
-
-  return normalizeProviders(data as ProviderRow[]);
-}
-
-async function getAllServiceProviders(city?: string) {
-  let query = getSupabase()
-    .from('providers')
-    .select(`
-      *,
-      provider_tags(tag_id)
-    `)
-    .eq('status', 'active');
-
-  if (city && city !== 'all') {
-    query = query.eq('city', city);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error('Error fetching all service providers:', error);
-    return [];
-  }
-
-  return normalizeProviders(data as ProviderRow[]);
-}
-
-/**
- * Gastronomi sağlayıcılarını getir
- */
-export async function getGastronomyProviders(type: ProviderType, city?: string) {
-  let query = getSupabase()
-    .from('gastronomy_providers')
-    .select(`
-      *,
-      gastronomy_provider_tags(tag_id)
-    `)
-    .eq('type', type)
-    .eq('status', 'active');
-
-  if (city && city !== 'all') {
-    query = query.eq('city', city);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error('Error fetching gastronomy providers:', error);
-    return [];
-  }
-
-  return normalizeProviders(data as ProviderRow[]);
-}
-
-async function getAllGastronomyProviders(city?: string) {
-  let query = getSupabase()
-    .from('gastronomy_providers')
-    .select(`
-      *,
-      gastronomy_provider_tags(tag_id)
-    `)
-    .eq('status', 'active');
-
-  if (city && city !== 'all') {
-    query = query.eq('city', city);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error('Error fetching all gastronomy providers:', error);
-    return [];
-  }
-
-  return normalizeProviders(data as ProviderRow[]);
-}
-
-/**
- * Tamirci kategorisi için özel sorgu (3 farklı tip)
- */
-export async function getTamirciProviders(city?: string) {
-  const tamirciTypes = ['tamirci_otomobil', 'tamirci_tesisat', 'tamirci_boyaci'];
-  
-  let query = getSupabase()
-    .from('providers')
-    .select(`
-      *,
-      provider_tags(tag_id)
-    `)
-    .in('type', tamirciTypes)
-    .eq('status', 'active');
-
-  if (city && city !== 'all') {
-    query = query.eq('city', city);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error('Error fetching tamirci providers:', error);
-    return [];
-  }
-
-  return normalizeProviders(data as ProviderRow[]);
-}
-
-/**
- * Kategoriye göre sağlayıcıları getir (hem hizmet hem gastronomi)
+ * Kategoriye göre sağlayıcıları getir (tek providers tablosu, type ile).
+ * 'all' -> tüm aktif kayıtlar; 'tamir' -> tamirci alt tipleri; diğer -> tek type.
  */
 export async function getProvidersByCategory(
-  category: ProviderType | 'all', 
+  category: ProviderType | 'all',
   city?: string
 ): Promise<Provider[]> {
-  if (category === 'all') {
-    // Tüm kategorileri getir
-    const [services, gastronomy] = await Promise.all([
-      getAllServiceProviders(city),
-      getAllGastronomyProviders(city),
-    ]);
-    return [...services, ...gastronomy];
-  }
+  let query = getSupabase()
+    .from('providers')
+    .select(PROVIDER_SELECT)
+    .eq('status', 'active');
 
-  // Gastronomi kategorileri
-  if (['restaurant', 'market', 'kasap', 'cafe', 'bakery'].includes(category)) {
-    return getGastronomyProviders(category, city);
-  }
-
-  // Tamirci kategorisi
   if (category === 'tamir') {
-    return getTamirciProviders(city);
+    query = query.in('type', TAMIRCI_TYPES);
+  } else if (category !== 'all') {
+    query = query.eq('type', category);
   }
 
-  // Diğer hizmet kategorileri
-  return getServiceProviders(category, city);
-}
+  if (city && city !== 'all') {
+    query = query.eq('city', city);
+  }
 
-/**
- * Hizmet etiketlerini getir
- */
-export async function getServiceTags(type: ProviderType) {
-  const { data, error } = await getSupabase()
-    .from('tags')
-    .select('*')
-    .eq('type', type);
-
+  const { data, error } = await query;
   if (error) {
-    console.error('Error fetching service tags:', error);
+    console.error('Error fetching providers:', error);
     return [];
   }
+  return normalizeProviders(data as ProviderRow[]);
+}
 
-  return data as Tag[];
+/** Geriye dönük uyum: hizmet kategorisi tek getter. */
+export async function getServiceProviders(type: ProviderType, city?: string) {
+  return getProvidersByCategory(type, city);
+}
+
+/** Geriye dönük uyum: gastronomi de aynı tablodan gelir. */
+export async function getGastronomyProviders(type: ProviderType, city?: string) {
+  return getProvidersByCategory(type, city);
+}
+
+/** Geriye dönük uyum: tamirci alt tipleri. */
+export async function getTamirciProviders(city?: string) {
+  return getProvidersByCategory('tamir', city);
 }
 
 /**
- * Gastronomi etiketlerini getir
- */
-export async function getGastronomyTags(type: ProviderType) {
-  const { data, error } = await getSupabase()
-    .from('gastronomy_tags')
-    .select('*')
-    .eq('type', type);
-
-  if (error) {
-    console.error('Error fetching gastronomy tags:', error);
-    return [];
-  }
-
-  return data as Tag[];
-}
-
-/**
- * Kategoriye göre etiketleri getir
+ * Kategoriye göre etiketleri getir (tek tags tablosu, type ile).
  */
 export async function getTagsByCategory(category: ProviderType): Promise<Tag[]> {
   if (category === 'all') return [];
 
-  // Gastronomi kategorileri
-  if (['restaurant', 'market', 'kasap', 'cafe', 'bakery'].includes(category)) {
-    return getGastronomyTags(category);
-  }
+  const types = category === 'tamir' ? TAMIRCI_TYPES : [category];
+  const { data, error } = await getSupabase()
+    .from('tags')
+    .select('*')
+    .in('type', types);
 
-  // Hizmet kategorileri
-  return getServiceTags(category);
+  if (error) {
+    console.error('Error fetching tags:', error);
+    return [];
+  }
+  return (data ?? []) as Tag[];
+}
+
+/** Geriye dönük uyum. */
+export async function getServiceTags(type: ProviderType) {
+  return getTagsByCategory(type);
+}
+export async function getGastronomyTags(type: ProviderType) {
+  return getTagsByCategory(type);
 }
 
 /**
- * Kullanılabilir şehirleri getir
+ * Kullanılabilir şehirleri getir (tek providers tablosu).
  */
-export async function getAvailableCities(category?: ProviderType) {
-  if (!category || category === 'all') {
-    const [serviceData, gastronomyData] = await Promise.all([
-      getSupabase().from('providers').select('city').eq('status', 'active').order('city'),
-      getSupabase().from('gastronomy_providers').select('city').eq('status', 'active').order('city'),
-    ]);
-
-    if (serviceData.error || gastronomyData.error) {
-      console.error('Error fetching cities:', serviceData.error || gastronomyData.error);
-      return [];
-    }
-
-    const cities = [
-      ...(serviceData.data?.map(item => item.city) || []),
-      ...(gastronomyData.data?.map(item => item.city) || []),
-    ];
-
-    return [...new Set(cities)].filter(Boolean).sort();
-  }
-
-  const table = category && ['restaurant', 'market', 'kasap', 'cafe', 'bakery'].includes(category)
-    ? 'gastronomy_providers'
-    : 'providers';
-
-  const { data, error } = await getSupabase()
-    .from(table)
+export async function getAvailableCities(category?: ProviderType): Promise<string[]> {
+  let query = getSupabase()
+    .from('providers')
     .select('city')
     .eq('status', 'active')
     .order('city');
 
+  if (category && category !== 'all') {
+    if (category === 'tamir') query = query.in('type', TAMIRCI_TYPES);
+    else query = query.eq('type', category);
+  }
+
+  const { data, error } = await query;
   if (error) {
     console.error('Error fetching cities:', error);
     return [];
   }
 
-  // Benzersiz şehirleri döndür
-  const cities = [...new Set(data?.map(item => item.city) || [])];
+  const cities = [...new Set((data ?? []).map((item) => item.city as string))];
   return cities.filter(Boolean).sort();
 }
 
 /**
- * Kategoriye göre istatistikleri getir
+ * Kategoriye göre istatistikleri getir (tek providers tablosu).
  */
-export async function getCategoryStats() {
-  // Hizmet sağlayıcıları
-  const { data: serviceData, error: serviceError } = await getSupabase()
+export async function getCategoryStats(): Promise<Record<string, number>> {
+  const { data, error } = await getSupabase()
     .from('providers')
-    .select('type', { count: 'exact' })
+    .select('type')
     .eq('status', 'active');
 
-  // Gastronomi sağlayıcıları
-  const { data: gastroData, error: gastroError } = await getSupabase()
-    .from('gastronomy_providers')
-    .select('type', { count: 'exact' })
-    .eq('status', 'active');
-
-  if (serviceError || gastroError) {
-    console.error('Error fetching stats:', serviceError || gastroError);
+  if (error) {
+    console.error('Error fetching stats:', error);
     return {};
   }
 
-  // İstatistikleri hesapla
   const stats: Record<string, number> = {};
-
-  serviceData?.forEach((item: { type: string }) => {
+  for (const item of (data ?? []) as { type: string }[]) {
     stats[item.type] = (stats[item.type] || 0) + 1;
-  });
-
-  gastroData?.forEach((item: { type: string }) => {
-    stats[item.type] = (stats[item.type] || 0) + 1;
-  });
-
-  // Toplam
-  const totalService = serviceData?.length || 0;
-  const totalGastro = gastroData?.length || 0;
-  stats['total'] = totalService + totalGastro;
-
+    // Tamirci alt tiplerini tek "tamir" altında da topla.
+    if (TAMIRCI_TYPES.includes(item.type as ProviderType)) {
+      stats['tamir'] = (stats['tamir'] || 0) + 1;
+    }
+  }
+  stats['total'] = (data ?? []).length;
   return stats;
 }
 
 /**
- * Tüm sağlayıcıları arama indeksi için getir
+ * Tüm aktif sağlayıcıları arama indeksi için getir (tek providers tablosu).
  */
-export async function getAllProvidersForSearch() {
-  const [serviceProviders, gastroProviders] = await Promise.all([
-    getSupabase().from('providers').select('*').eq('status', 'active'),
-    getSupabase().from('gastronomy_providers').select('*').eq('status', 'active'),
-  ]);
+export async function getAllProvidersForSearch(): Promise<Provider[]> {
+  const { data, error } = await getSupabase()
+    .from('providers')
+    .select(PROVIDER_SELECT)
+    .eq('status', 'active');
 
-  const services = serviceProviders.data?.map(p => ({ ...p, source: 'service' })) || [];
-  const gastronomy = gastroProviders.data?.map(p => ({ ...p, source: 'gastronomy' })) || [];
-
-  return [...services, ...gastronomy] as (Provider & { source: string })[];
+  if (error) {
+    console.error('Error fetching providers for search:', error);
+    return [];
+  }
+  return normalizeProviders(data as ProviderRow[]);
 }

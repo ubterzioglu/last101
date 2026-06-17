@@ -188,6 +188,13 @@ export function AdminHomeClient() {
             href="/admin/broken-link-reports"
             router={router}
           />
+          <DashboardStatCard
+            label="Service Finder (Uzman Tarama)"
+            value={0}
+            accent="text-google-blue"
+            href="/admin/service-finder"
+            router={router}
+          />
         </div>
       </section>
     </div>
