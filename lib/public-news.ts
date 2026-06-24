@@ -19,7 +19,7 @@ import type {
   PublicNewsArticle,
   PublicNewsListResponse,
 } from '@/types/news';
-import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
+import { CANONICAL_SITE_URL, DEFAULT_OG_IMAGE } from '@/lib/utils/constants';
 
 interface NewsRow {
   id: string;
@@ -84,7 +84,7 @@ function mapRowToListItem(row: NewsRow): NewsListItem {
     slug,
     title,
     summary,
-    coverImageUrl: String(row.cover_image_url || '/og.png').trim(),
+    coverImageUrl: String(row.cover_image_url || DEFAULT_OG_IMAGE).trim(),
     coverImageAlt: String(row.cover_image_alt || title).trim(),
     category,
     categoryLabel: getNewsCategoryLabel(category),
