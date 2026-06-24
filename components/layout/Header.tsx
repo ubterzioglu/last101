@@ -3,19 +3,29 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { X, ChevronDown } from 'lucide-react';
 import { SITE_NAME } from '@/lib/utils/constants';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { cn } from '@/lib/utils/cn';
 import { DRAWER_ITEMS, DRAWER_CATEGORIES } from '@/constants/navigation';
+import { useAuthUser } from '@/hooks/useAuthUser';
 
 export function Header() {
+  const router = useRouter();
+  const { status, signOut } = useAuthUser();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    closeDrawer();
+    router.refresh();
+  };
 
   return (
     <>
@@ -56,10 +66,29 @@ export function Header() {
                 Whatsapp
               </a>
               <span className="h-3 w-px bg-white/20 mx-1" aria-hidden="true" />
+              {status === 'authed' ? (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  aria-label="Çıkış yap"
+                  className="inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-medium text-white transition-colors hover:bg-white/20 h-auto"
+                >
+                  Çıkış
+                </button>
+              ) : (
+                <Link
+                  href="/giris"
+                  aria-label="Üye Ol"
+                  className="inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-medium text-google-yellow transition-colors hover:bg-white/20 h-auto"
+                >
+                  Üye Ol
+                </Link>
+              )}
+              <span className="h-3 w-px bg-white/20 mx-1" aria-hidden="true" />
               <Link href="/">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   aria-label="Ana Sayfa"
                   className="text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
                 >

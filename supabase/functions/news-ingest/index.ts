@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
 import { parseRssItems } from './adapters/rss.ts'
 import { parseMrssItems } from './adapters/mrss.ts'
 import { parseAtomItems } from './adapters/atom.ts'
+import { parseTrtHaberItems } from './adapters/trthaber.ts'
 import { fetchTheNewsApiItems } from './adapters/thenewsapi.ts'
 import { fetchGdeltItems, type GdeltConfig } from './adapters/gdelt.ts'
 import { createUniqueHash } from './dedupe.ts'
@@ -83,6 +84,7 @@ async function fetchSourceItems(
 
   const xml = await response.text()
   if (source.source_type === 'atom') return parseAtomItems(xml)
+  if (source.source_type === 'trthaber') return parseTrtHaberItems(xml)
   return source.source_type === 'mrss' ? parseMrssItems(xml) : parseRssItems(xml)
 }
 
