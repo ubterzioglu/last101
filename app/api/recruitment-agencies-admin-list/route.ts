@@ -4,8 +4,9 @@ import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 
 export async function GET(request: NextRequest) {
   try {
-    if (!(await isAdminAuthorized(request))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const auth = await isAdminAuthorized(request);
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.reason || 'Unauthorized' }, { status: auth.status });
     }
 
     const supabase = await createClient();
