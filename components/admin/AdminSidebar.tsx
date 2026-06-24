@@ -10,7 +10,7 @@ import { SOFTWARE_HUB_SECTIONS } from '@/constants/adminSoftwareHubSections';
 
 const SOFTWARE_HUB_HREF = '/admin/software-hub';
 
-type BadgeKey = 'hizmet' | 'broken';
+type BadgeKey = 'hizmet' | 'broken' | 'security';
 
 interface AdminNavItem {
   href: string;
@@ -123,10 +123,23 @@ const NAV_ITEMS: AdminNavItem[] = [
       </svg>
     ),
   },
+  {
+    href: '/admin/guvenlik-notlari',
+    label: 'Güvenlik Notları',
+    description: 'Uyarılar & aksiyonlar',
+    accent: 'text-google-red',
+    badgeKey: 'security',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    ),
+  },
 ];
 
 async function fetchBadgeCounts(): Promise<Record<BadgeKey, number>> {
-  const counts: Record<BadgeKey, number> = { hizmet: 0, broken: 0 };
+  const counts: Record<BadgeKey, number> = { hizmet: 0, broken: 0, security: 0 };
 
   try {
     const response = await fetch('/api/provider-submissions-admin-list?status=pending&limit=1', {
@@ -152,6 +165,18 @@ async function fetchBadgeCounts(): Promise<Record<BadgeKey, number>> {
     // Sessizce yok say.
   }
 
+  try {
+    const response = await fetch('/api/admin/security-notes?status=open', {
+      headers: getAdminHeaders({ Accept: 'application/json' }),
+    });
+    if (response.ok) {
+      const payload = await response.json().catch(() => ({}));
+      counts.security = Number(payload?.stats?.open || 0);
+    }
+  } catch {
+    // Sessizce yok say.
+  }
+
   return counts;
 }
 
@@ -164,7 +189,7 @@ interface AdminSidebarProps {
 export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [badges, setBadges] = useState<Record<BadgeKey, number>>({ hizmet: 0, broken: 0 });
+  const [badges, setBadges] = useState<Record<BadgeKey, number>>({ hizmet: 0, broken: 0, security: 0 });
 
   const onSoftwareHub = pathname === SOFTWARE_HUB_HREF || pathname.startsWith(`${SOFTWARE_HUB_HREF}/`);
 

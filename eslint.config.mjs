@@ -11,7 +11,19 @@ const compat = new FlatCompat({
 
 export default defineConfig([
   {
-    ignores: ['.next/**', '.0temp/**', 'build/**', 'out/**', 'node_modules/**', 'next-env.d.ts'],
+    ignores: [
+      '.next/**',
+      '.0temp/**',
+      'build/**',
+      'out/**',
+      'node_modules/**',
+      'next-env.d.ts',
+      // Test/CI artifact'leri — derlenmiş bundle'lar lint'lenmemeli.
+      'playwright-report/**',
+      'test-results/**',
+      'blob-report/**',
+      'playwright/.cache/**',
+    ],
   },
   ...compat.config({
     extends: ['next/core-web-vitals'],
