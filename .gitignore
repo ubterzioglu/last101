@@ -27,6 +27,10 @@ yarn-error.log*
 .env
 .env.example
 
+# secrets (Supabase PAT vb. — asla commit'lenmemeli)
+.secret
+*.secret
+
 # vercel
 .vercel
 
