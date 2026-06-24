@@ -11,7 +11,10 @@
     "import:tuerkische-aerzte": "node scripts/import-tuerkische-aerzte.mjs",
     "import:tuerkische-aerzte:apply": "node scripts/import-tuerkische-aerzte.mjs --apply",
     "import:avukat24": "node scripts/import-avukat24.mjs",
-    "import:avukat24:apply": "node scripts/import-avukat24.mjs --apply"
+    "import:avukat24:apply": "node scripts/import-avukat24.mjs --apply",
+    "e2e": "playwright test",
+    "e2e:smoke": "playwright test e2e/smoke",
+    "e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@supabase/ssr": "^0.9.0",
@@ -39,6 +42,7 @@
     "typescript": "^5.7.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "cheerio": "^1.2.0"
   }
 }
