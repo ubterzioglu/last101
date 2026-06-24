@@ -84,7 +84,7 @@ function mapRowToListItem(row: NewsRow): NewsListItem {
     slug,
     title,
     summary,
-    coverImageUrl: String(row.cover_image_url || '/images/og-default.jpg').trim(),
+    coverImageUrl: String(row.cover_image_url || '/og.png').trim(),
     coverImageAlt: String(row.cover_image_alt || title).trim(),
     category,
     categoryLabel: getNewsCategoryLabel(category),

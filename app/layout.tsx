@@ -50,6 +50,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: DEFAULT_SEO_TITLE,
+        type: 'image/png',
       },
     ],
   },

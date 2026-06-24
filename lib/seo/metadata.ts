@@ -56,6 +56,7 @@ export function createMetadata(options: {
           width: 1200,
           height: 630,
           alt: resolvedTitle,
+          ...(imageUrl.endsWith('.png') ? { type: 'image/png' } : {}),
         },
       ],
     },
