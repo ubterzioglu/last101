@@ -20,8 +20,9 @@ function normalizeStatus(value: unknown): 'active' | 'inactive' {
 
 export async function POST(request: NextRequest) {
   try {
-    if (!(await isAdminAuthorized(request))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const auth = await isAdminAuthorized(request);
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.reason || 'Unauthorized' }, { status: auth.status });
     }
 
     const supabase = await createClient();
