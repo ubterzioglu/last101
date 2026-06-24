@@ -1,4 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="45" fill="#000000" stroke="#FBBC05" stroke-width="5"/>
-  <text x="50" y="66" fill="#FBBC05" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="bold" text-anchor="middle" letter-spacing="-2">101</text>
+  <!-- Outer border ring: yellow, then black, then white -->
+  <circle cx="50" cy="50" r="49" fill="#FBBC05"/>
+  <circle cx="50" cy="50" r="46" fill="#000000"/>
+  <circle cx="50" cy="50" r="44" fill="#FFFFFF"/>
+  <!-- Yin-yang body (inside the white border), radius 42 -->
+  <!-- Left half black -->
+  <path d="M50 8 A42 42 0 0 0 50 92 Z" fill="#000000"/>
+  <!-- Right half yellow -->
+  <path d="M50 8 A42 42 0 0 1 50 92 Z" fill="#FBBC05"/>
+  <!-- S-curve: top lobe black, bottom lobe yellow -->
+  <path d="M50 8 A21 21 0 0 1 50 50 A21 21 0 0 0 50 92 A42 42 0 0 1 50 8 Z" fill="#000000"/>
+  <!-- Top small dot: white on black lobe -->
+  <circle cx="50" cy="29" r="7" fill="#FFFFFF"/>
+  <!-- Bottom small dot: black on yellow lobe -->
+  <circle cx="50" cy="71" r="7" fill="#000000"/>
 </svg>
