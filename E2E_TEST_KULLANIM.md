@@ -48,8 +48,36 @@ BASE_URL=https://almanya101.de npm run e2e:smoke
 | `playwright.config.ts` | Test runner ayarı. `BASE_URL` verilirse ona, verilmezse lokal `next build && next start`'a bağlanır. HTML rapor üretir. |
 | `e2e/smoke/public-routes.spec.ts` | Public sayfaların açıldığını + login-gated araçların anonim erişime kapalı olduğunu doğrular. |
 | `e2e/smoke/admin-guards.spec.ts` | Admin API'lerinin anonim isteği reddettiğini (200 dönmediğini) doğrular. |
+| `e2e/auth.setup.ts` | Test kullanıcısıyla bir kez login olup oturumu `storageState`'e kaydeder (gated araç testleri için). |
+| `e2e/tools/*.spec.ts` | **8 login-gated aracın derin fonksiyonel testleri** (authenticated). |
+| `scripts/e2e-create-test-user.mjs` | Supabase'de idempotent test kullanıcısı oluşturur. |
 | `.github/workflows/e2e.yml` | Her PR/main push'ta CI'da smoke koşar, HTML raporu artifact olarak yükler. |
 | `package.json` | `e2e`, `e2e:smoke`, `e2e:report` script'leri + `@playwright/test` dev bağımlılığı. |
+
+### Gated araç testleri (e2e/tools/) — 29 test, production'da yeşil
+
+Bu 8 araç login arkasında olduğu için authenticated (`chromium-auth`) projesi
+altında, `auth.setup.ts`'in ürettiği oturumla koşar:
+
+| Araç | Test sayısı | Kapsam |
+|---|---|---|
+| `maas-hesaplama` | 5 | Hesapla → 6 kart, brüt>net, kırılım, tersine (net→brüt) mod |
+| `vatandaslik-testi` | 4 | Mod seçimi, disabled buton, tam sınav akışı → sonuç |
+| `banka-secim` | 5 | 20 soruluk quiz → 3 öneri + skor + sıfırla |
+| `sigorta-secim` | 5 | 20 soru → must/should/nice skorlu sonuç |
+| `vize-secim` | 5 | Dallanmalı karar ağacı → vize sonucu |
+| `para-transferi` | 5 | 20 soruluk quiz → öneri (prod versiyonu) |
+| `stepstone-karsilastirma` | 4 | Profil formu → eksik-alan uyarısı + medyan karşılaştırma |
+| `software-hub` | 3 | Devuser paneline redirect doğrulaması |
+
+Çalıştırma:
+```bash
+BASE_URL=https://almanya101.de npx playwright test --project=chromium-auth
+```
+
+> Test kullanıcısı: `e2e-test@almanya101.de` (production Supabase'de oluşturuldu).
+> Kimlik bilgileri `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` env değişkenleriyle
+> override edilebilir; CI'da bunları GitHub Secrets olarak tanımlayın.
 
 ---
 
