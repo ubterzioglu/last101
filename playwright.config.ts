@@ -26,7 +26,24 @@ export default defineConfig({
     testIdAttribute: 'data-pw',
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    // Public/anonymous smoke — no auth.
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+      testIgnore: /tools\/.*\.spec\.ts/,
+    },
+    // One-time login that produces the shared storage state.
+    { name: 'setup', testMatch: /auth\.setup\.ts/ },
+    // Authenticated project for gated tool tests under e2e/tools/.
+    {
+      name: 'chromium-auth',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'e2e/.auth/user.json',
+      },
+      dependencies: ['setup'],
+      testMatch: /tools\/.*\.spec\.ts/,
+    },
   ],
   // Only build+serve locally when BASE_URL is not provided.
   webServer: process.env.BASE_URL
