@@ -27,10 +27,21 @@ export function LegalPage({
         title={title}
         description={description}
         centered={false}
-        className="bg-black border-b border-white/10"
-      />
+        density="compact"
+        className="border-b border-white/10 bg-black"
+        contentClassName="max-w-2xl"
+        titleClassName="mb-4 text-3xl md:text-4xl lg:text-5xl"
+        descriptionClassName="mb-0 text-base text-white/70 md:text-lg"
+      >
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="bg-aurora absolute inset-0 opacity-35" />
+          <div className="bg-grid bg-grid-animated absolute inset-0 opacity-20" />
+          <div className="bg-noise absolute inset-0 opacity-40" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black" />
+        </div>
+      </HeroSection>
 
-      <Section contained size="md" className="py-16">
+      <Section contained size="md" className="py-12 md:py-14">
         {lastUpdated && (
           <p className="mb-8 text-sm text-white/50">
             Son güncelleme: {lastUpdated}

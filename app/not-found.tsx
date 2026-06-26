@@ -24,12 +24,13 @@ export default function NotFound() {
 
       <div className="container relative flex items-center justify-center">
         <div className="w-full max-w-2xl rounded-[2.5rem] border border-white/10 bg-white/[0.03] px-8 py-12 text-center shadow-[0_36px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl md:px-12 md:py-14">
-          <div className="relative mx-auto flex h-24 w-80 items-center justify-center md:h-32 md:w-[26rem]">
-            <div className="absolute inset-x-10 top-1/2 h-16 -translate-y-1/2 rounded-full bg-google-yellow/35 blur-3xl" />
-            <div className="absolute inset-x-16 top-1/2 h-12 -translate-y-1/2 rounded-full bg-white/18 blur-2xl" />
-            <div className="relative h-full w-full drop-shadow-[0_0_28px_rgba(251,188,5,0.35)]">
+          <div className="relative mx-auto flex h-24 w-[20rem] items-center justify-center md:h-32 md:w-[30rem]">
+            <div className="absolute inset-0 -z-10 rounded-full bg-google-blue/25 blur-3xl" />
+            <div className="absolute left-1/2 top-1/2 h-16 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-google-yellow/30 blur-3xl md:h-20 md:w-64" />
+            <div className="absolute left-1/2 top-1/2 h-12 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/16 blur-2xl md:h-16 md:w-56" />
+            <div className="relative h-full w-full drop-shadow-[0_0_32px_rgba(66,133,244,0.28)]">
               <Image
-                src="/almanya101.png"
+                src="/yeniherologo.png"
                 alt="almanya101 logosu"
                 fill
                 className="object-contain"

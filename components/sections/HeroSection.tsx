@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
 
 interface HeroSectionProps extends HTMLAttributes<HTMLElement> {
@@ -17,6 +17,11 @@ interface HeroSectionProps extends HTMLAttributes<HTMLElement> {
   centered?: boolean;
   backgroundImage?: string;
   overlay?: boolean;
+  density?: 'default' | 'compact';
+  contentClassName?: string;
+  titleClassName?: string;
+  descriptionClassName?: string;
+  children?: ReactNode;
 }
 
 export function HeroSection({
@@ -27,14 +32,19 @@ export function HeroSection({
   centered = true,
   backgroundImage,
   overlay = false,
+  density = 'default',
+  contentClassName,
+  titleClassName,
+  descriptionClassName,
+  children,
   className,
   ...props
 }: HeroSectionProps) {
   return (
     <section
       className={cn(
-        'py-32 md:py-48 lg:py-64',
-        backgroundImage ? 'relative' : 'bg-gray-50',
+        density === 'compact' ? 'py-16 md:py-20 lg:py-24' : 'py-32 md:py-48 lg:py-64',
+        backgroundImage || children ? 'relative overflow-hidden' : 'bg-gray-50',
         className
       )}
       {...props}
@@ -53,23 +63,35 @@ export function HeroSection({
           }}
         />
       )}
+      {overlay && backgroundImage ? (
+        <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+      ) : null}
+      {children}
 
       <Container>
-        <div className={cn(
-          'max-w-3xl relative z-10',
-          centered ? 'text-center mx-auto' : '',
-          'animate-fade-in-up'
-        )}>
-          <h1 className={cn(
-            'text-4xl md:text-5xl lg:text-6xl font-bold mb-6',
-            backgroundImage ? 'text-white' : 'text-gray-900'
-          )}>
+        <div
+          className={cn(
+            'relative z-10 max-w-3xl animate-fade-in-up',
+            centered ? 'mx-auto text-center' : '',
+            contentClassName
+          )}
+        >
+          <h1
+            className={cn(
+              'mb-6 text-4xl font-bold md:text-5xl lg:text-6xl',
+              backgroundImage ? 'text-white' : 'text-gray-900',
+              titleClassName
+            )}
+          >
             {title}
           </h1>
-          <p className={cn(
-            'text-lg md:text-xl mb-8 leading-relaxed',
-            backgroundImage ? 'text-gray-100' : 'text-gray-700'
-          )}>
+          <p
+            className={cn(
+              'mb-8 text-lg leading-relaxed md:text-xl',
+              backgroundImage ? 'text-gray-100' : 'text-gray-700',
+              descriptionClassName
+            )}
+          >
             {description}
           </p>
           {(primaryAction || secondaryAction) && (
