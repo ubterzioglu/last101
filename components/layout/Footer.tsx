@@ -69,12 +69,12 @@ export function Footer() {
             <span className="text-gray-700" aria-hidden="true">|</span>
             <span>
               <a
-                href="https://www.spindorai.com/seo/izmir-seo"
+                href="https://www.spindorai.com/seo/en-iyi-seo-ajansi"
                 rel="dofollow"
                 target="_blank"
                 className="hover:underline"
               >
-                İzmir Seo Ajansı
+                Seo Ajansı
               </a>
               {' '}Spindora Tarafından Seosu Yapılmıştır.
             </span>
