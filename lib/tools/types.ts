@@ -138,6 +138,9 @@ export interface ToolCatalogItem {
   title: string;
   description: string;
   ctaLabel: string;
+  category: 'Rota ve Strateji' | 'Kariyer ve Gelir' | 'Hazırlık ve Yerleşim' | 'Yaşam ve Destek';
+  questionCount: number;
+  spotlight: string;
 }
 
 export interface ToolConfig {
