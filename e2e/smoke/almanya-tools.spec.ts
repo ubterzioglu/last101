@@ -16,7 +16,7 @@ const TOOLS = [
 async function walkToResult(page: import('@playwright/test').Page, pick: 'first' | 'last') {
   const result = page.getByTestId('tool-result');
 
-  for (let step = 0; step < 8; step += 1) {
+  for (let step = 0; step < 20; step += 1) {
     if (await result.isVisible().catch(() => false)) {
       break;
     }
