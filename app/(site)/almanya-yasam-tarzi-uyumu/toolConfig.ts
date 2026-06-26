@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { pickHighestScore } from '@/lib/tools/helpers';
+import { almanyaYasamTarziUyumuQuestionnaire } from '@/lib/tools/surveys/almanya-yasam-tarzi-uyumu';
 import type { ToolConfig } from '@/lib/tools/types';
 
 const PROFILE_TITLES: Record<string, string> = {
@@ -37,6 +38,7 @@ export const toolConfig: ToolConfig = {
     OFFICIAL_SOURCES.makeItInGermany,
   ],
   relatedTools: ['hangi-sehir-sana-uygun', 'ilk-90-gun-planlayici', 'topluluk-ve-danismanlik'],
+  questionnaire: almanyaYasamTarziUyumuQuestionnaire,
   faqs: [
     {
       question: 'Bu araç şehir seçiminin yerini tutar mı?',
@@ -129,4 +131,3 @@ export const toolConfig: ToolConfig = {
     };
   },
 };
-

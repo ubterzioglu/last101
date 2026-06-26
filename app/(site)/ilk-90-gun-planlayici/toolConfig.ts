@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { getFact } from '@/lib/tools/helpers';
+import { ilk90GunPlanlayiciQuestionnaire } from '@/lib/tools/surveys/ilk-90-gun-planlayici';
 import type { ToolConfig } from '@/lib/tools/types';
 
 export const toolConfig: ToolConfig = {
@@ -31,6 +32,7 @@ export const toolConfig: ToolConfig = {
     OFFICIAL_SOURCES.handbookGermany,
   ],
   relatedTools: ['almanyaya-hazir-misin', 'topluluk-ve-danismanlik', 'hangi-sehir-sana-uygun'],
+  questionnaire: ilk90GunPlanlayiciQuestionnaire,
   faqs: [
     {
       question: 'Bu araç resmi randevu tarihlerini hesaplar mı?',

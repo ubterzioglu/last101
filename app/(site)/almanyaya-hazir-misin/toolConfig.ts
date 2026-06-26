@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { getScore } from '@/lib/tools/helpers';
+import { almanyayaHazirMisinQuestionnaire } from '@/lib/tools/surveys/almanyaya-hazir-misin';
 import type { ToolConfig } from '@/lib/tools/types';
 
 const GAP_LABELS: Record<string, string> = {
@@ -39,6 +40,7 @@ export const toolConfig: ToolConfig = {
     OFFICIAL_SOURCES.bamf,
   ],
   relatedTools: ['almanya-yolunu-sec', 'once-hangi-sorunu-cozmelisin', 'ilk-90-gun-planlayici'],
+  questionnaire: almanyayaHazirMisinQuestionnaire,
   faqs: [
     {
       question: 'Hazır çıkarsam hemen başvuru yapmalı mıyım?',
@@ -176,4 +178,3 @@ export const toolConfig: ToolConfig = {
     };
   },
 };
-

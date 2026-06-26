@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { getFact } from '@/lib/tools/helpers';
+import { kariyerVeEgitimRotasiQuestionnaire } from '@/lib/tools/surveys/kariyer-ve-egitim-rotasi';
 import type { ToolConfig } from '@/lib/tools/types';
 
 export const toolConfig: ToolConfig = {
@@ -31,6 +32,7 @@ export const toolConfig: ToolConfig = {
     OFFICIAL_SOURCES.arbeitsagentur,
   ],
   relatedTools: ['almanya-yolunu-sec', 'almanyada-is-bulma-olasiligi', 'almanyaya-hazir-misin'],
+  questionnaire: kariyerVeEgitimRotasiQuestionnaire,
   faqs: [
     {
       question: 'Bu araç kariyer koçluğu yerine geçer mi?',

@@ -30,6 +30,12 @@ async function walkToResult(page: import('@playwright/test').Page, pick: 'first'
   await expect(result).toBeVisible();
 }
 
+async function walkQuestionnaire(page: import('@playwright/test').Page) {
+  for (let step = 0; step < 15; step += 1) {
+    await page.getByTestId('questionnaire-option').first().click();
+  }
+}
+
 for (const tool of TOOLS) {
   test.describe(tool.heading, () => {
     test('anonim kullanıcı için açılır ve temel bloklar görünür', async ({ page }) => {
@@ -53,5 +59,31 @@ for (const tool of TOOLS) {
       await page.goto(tool.route);
       await walkToResult(page, 'last');
     });
+
+    if (tool.route === '/almanyaya-hazir-misin') {
+      test('sonuç sonrası anket tamamlanır ve başarı durumu görünür', async ({ page }) => {
+        await page.route('**/api/tool-questionnaires', async (route) => {
+          await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+              ok: true,
+              toolScore: 72.4,
+              dimensionScores: {
+                readiness: 74,
+              },
+              answerCount: 15,
+            }),
+          });
+        });
+
+        await page.goto(tool.route);
+        await walkToResult(page, 'first');
+        await expect(page.getByTestId('questionnaire-card')).toBeVisible();
+        await walkQuestionnaire(page);
+        await expect(page.getByTestId('questionnaire-result')).toBeVisible();
+        await expect(page.getByText('Anket yanıtların başarıyla kaydedildi.')).toBeVisible();
+      });
+    }
   });
 }

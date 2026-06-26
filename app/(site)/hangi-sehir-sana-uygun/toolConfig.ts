@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { getFact, pickTopScores } from '@/lib/tools/helpers';
+import { hangiSehirSanaUygunQuestionnaire } from '@/lib/tools/surveys/hangi-sehir-sana-uygun';
 import type { ToolConfig } from '@/lib/tools/types';
 
 const CITY_LABELS: Record<string, string> = {
@@ -47,6 +48,7 @@ export const toolConfig: ToolConfig = {
     OFFICIAL_SOURCES.handbookGermany,
   ],
   relatedTools: ['almanya-maas-beklentisi', 'almanya-yasam-tarzi-uyumu', 'ilk-90-gun-planlayici'],
+  questionnaire: hangiSehirSanaUygunQuestionnaire,
   faqs: [
     {
       question: 'Bu araç bana tek bir şehir mi önerir?',

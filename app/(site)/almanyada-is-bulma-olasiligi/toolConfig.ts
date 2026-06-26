@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { getFact, getScore } from '@/lib/tools/helpers';
+import { almanyadaIsBulmaOlasiligiQuestionnaire } from '@/lib/tools/surveys/almanyada-is-bulma-olasiligi';
 import type { ToolConfig, ToolTone } from '@/lib/tools/types';
 
 export const toolConfig: ToolConfig = {
@@ -31,6 +32,7 @@ export const toolConfig: ToolConfig = {
     OFFICIAL_SOURCES.recognition,
   ],
   relatedTools: ['almanya-maas-beklentisi', 'kariyer-ve-egitim-rotasi', 'almanya-yolunu-sec'],
+  questionnaire: almanyadaIsBulmaOlasiligiQuestionnaire,
   faqs: [
     {
       question: 'Güçlü sonuç çıkarsa iş garantisi var mı?',

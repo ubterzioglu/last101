@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { getFact } from '@/lib/tools/helpers';
+import { toplulukVeDanismanlikQuestionnaire } from '@/lib/tools/surveys/topluluk-ve-danismanlik';
 import type { ToolConfig, ToolSource } from '@/lib/tools/types';
 
 export const toolConfig: ToolConfig = {
@@ -32,6 +33,7 @@ export const toolConfig: ToolConfig = {
     OFFICIAL_SOURCES.handbookGermany,
   ],
   relatedTools: ['almanyaya-hazir-misin', 'once-hangi-sorunu-cozmelisin', 'ilk-90-gun-planlayici'],
+  questionnaire: toplulukVeDanismanlikQuestionnaire,
   faqs: [
     {
       question: 'Bu araç bana avukat veya özel danışman önerir mi?',

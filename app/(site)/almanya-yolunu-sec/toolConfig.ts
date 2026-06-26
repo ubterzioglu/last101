@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { getFact, getScore } from '@/lib/tools/helpers';
+import { almanyaYolunuSecQuestionnaire } from '@/lib/tools/surveys/almanya-yolunu-sec';
 import type { ToolConfig, ToolResult, ToolTone } from '@/lib/tools/types';
 
 type RouteKey =
@@ -360,6 +361,7 @@ export const toolConfig: ToolConfig = {
     'kariyer-ve-egitim-rotasi',
     'ilk-90-gun-planlayici',
   ],
+  questionnaire: almanyaYolunuSecQuestionnaire,
   faqs: [
     {
       question: 'Bu araç bana kesin vize türü söyler mi?',

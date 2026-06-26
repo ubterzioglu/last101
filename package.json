@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "node scripts/start-standalone.mjs",
     "lint": "eslint .",
+    "test:unit": "vitest run",
     "verify:seo": "node scripts/verify-seo.mjs",
     "import:tuerkische-aerzte": "node scripts/import-tuerkische-aerzte.mjs",
     "import:tuerkische-aerzte:apply": "node scripts/import-tuerkische-aerzte.mjs --apply",
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "cheerio": "^1.2.0"
+    "cheerio": "^1.2.0",
+    "vitest": "^3.2.4"
   }
 }

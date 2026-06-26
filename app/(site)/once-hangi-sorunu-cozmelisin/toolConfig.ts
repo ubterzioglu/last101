@@ -1,5 +1,6 @@
 import { DEFAULT_TOOL_LEGAL_NOTE, OFFICIAL_SOURCES } from '@/lib/tools/catalog';
 import { getScore } from '@/lib/tools/helpers';
+import { onceHangiSorunuCozmelisinQuestionnaire } from '@/lib/tools/surveys/once-hangi-sorunu-cozmelisin';
 import type { ToolConfig } from '@/lib/tools/types';
 
 const ISSUE_TITLES: Record<string, string> = {
@@ -40,6 +41,7 @@ export const toolConfig: ToolConfig = {
     OFFICIAL_SOURCES.mbe,
   ],
   relatedTools: ['almanyaya-hazir-misin', 'topluluk-ve-danismanlik', 'almanya-yolunu-sec'],
+  questionnaire: onceHangiSorunuCozmelisinQuestionnaire,
   faqs: [
     {
       question: 'Birden fazla büyük sorunum varsa araç ne yapar?',
@@ -152,4 +154,3 @@ export const toolConfig: ToolConfig = {
     };
   },
 };
-

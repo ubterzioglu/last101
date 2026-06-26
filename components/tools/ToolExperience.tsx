@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { QuestionnaireRenderer } from '@/components/tools/QuestionnaireRenderer';
 import { cn } from '@/lib/utils/cn';
 import { getToolCatalogItem, getToolHref } from '@/lib/tools/catalog';
 import type { ToolConfig, ToolResult, ToolState, ToolTone } from '@/lib/tools/types';
@@ -369,6 +370,13 @@ export function ToolExperience({ config }: { config: ToolConfig }) {
       {resolvedResult && (
         <div className="space-y-3">
           <ResultCard result={resolvedResult} />
+          {config.questionnaire && (
+            <QuestionnaireRenderer
+              config={config.questionnaire}
+              toolSlug={config.slug}
+              resultId={resolvedResult.id}
+            />
+          )}
           <div className="flex flex-col gap-2 sm:flex-row">
             <button
               type="button"

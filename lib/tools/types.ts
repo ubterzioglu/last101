@@ -18,6 +18,73 @@ export interface ToolMetric {
   tone?: ToolTone;
 }
 
+export type QuestionnaireAnswerType =
+  | 'likert_1_5'
+  | 'boolean'
+  | 'single_choice'
+  | 'numeric';
+
+export interface QuestionnaireOption {
+  key: string;
+  label: string;
+  score: number;
+}
+
+export interface QuestionnaireNumericBand {
+  min: number;
+  max: number;
+  label: string;
+  score: number;
+}
+
+export interface QuestionnaireQuestion {
+  id: string;
+  text: string;
+  answerType: QuestionnaireAnswerType;
+  weight: number;
+  rationale: string;
+  dimension?: string;
+  reverse?: boolean;
+  options?: QuestionnaireOption[];
+  numericRange?: {
+    min: number;
+    max: number;
+    bands: QuestionnaireNumericBand[];
+  };
+}
+
+export interface ToolQuestionnaireConfig {
+  toolSlug: string;
+  version: string;
+  completionMode: 'post-result';
+  questions: QuestionnaireQuestion[];
+}
+
+export type QuestionnaireAnswerValue = string | number | boolean;
+
+export interface QuestionnaireAnswerPayload {
+  questionId: string;
+  value: QuestionnaireAnswerValue;
+  score: number;
+}
+
+export interface ToolQuestionnaireSubmissionMeta {
+  pathname: string;
+  submittedAt: string;
+  userAgent?: string | null;
+}
+
+export interface ToolQuestionnaireSubmission {
+  toolSlug: string;
+  version: string;
+  sessionId: string;
+  resultId?: string | null;
+  answers: QuestionnaireAnswerPayload[];
+  toolScore: number;
+  dimensionScores: Record<string, number>;
+  meta: ToolQuestionnaireSubmissionMeta;
+}
+
 export interface ToolOptionEffects {
   scores?: Record<string, number>;
   facts?: Record<string, ToolPrimitive>;
@@ -89,7 +156,7 @@ export interface ToolConfig {
   faqs: ToolFaq[];
   officialSources: ToolSource[];
   relatedTools?: string[];
+  questionnaire?: ToolQuestionnaireConfig;
   results?: Record<string, ToolResult>;
   resolveResult?: (params: { resultId: string; state: ToolState }) => ToolResult;
 }
-
