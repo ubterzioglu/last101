@@ -14,7 +14,21 @@ import { test, expect } from '@playwright/test';
  */
 
 // Strictly public — must return 200 for anonymous users.
-const STRICT_PUBLIC: string[] = ['/', '/haberler'];
+const STRICT_PUBLIC: string[] = [
+  '/',
+  '/haberler',
+  '/almanya-araclari',
+  '/almanya-yolunu-sec',
+  '/almanya-maas-beklentisi',
+  '/almanyaya-hazir-misin',
+  '/hangi-sehir-sana-uygun',
+  '/topluluk-ve-danismanlik',
+  '/kariyer-ve-egitim-rotasi',
+  '/almanya-yasam-tarzi-uyumu',
+  '/ilk-90-gun-planlayici',
+  '/once-hangi-sorunu-cozmelisin',
+  '/almanyada-is-bulma-olasiligi',
+];
 
 // Content routes that should at least not error (200/3xx/404 acceptable; never 5xx, never JS crash).
 const LENIENT_PUBLIC: string[] = [
