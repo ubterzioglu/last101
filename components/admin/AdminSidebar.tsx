@@ -110,6 +110,17 @@ const NAV_ITEMS: AdminNavItem[] = [
     ),
   },
   {
+    href: '/admin/araclar',
+    label: 'Araçlar',
+    description: 'İnteraktif araçlar & soru sayıları',
+    accent: 'text-google-blue',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
+        <path d="M14.7 6.3a4 4 0 0 0-5.4 5.3L3 18l3 3 6.4-6.3a4 4 0 0 0 5.3-5.4l-2.8 2.8-2.1-.6-.6-2.1z" />
+      </svg>
+    ),
+  },
+  {
     href: '/admin/rehber',
     label: 'Rehberler',
     description: 'Tüm panel kılavuzu',
