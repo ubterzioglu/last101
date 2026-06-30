@@ -7,6 +7,7 @@ import { updateSession } from '@/lib/supabase/middleware';
  * home page, and the existing admin/devuser/kose auth systems are NOT gated.
  */
 const GATED_PREFIXES = [
+  // Existing gated tools
   '/banka-secim',
   '/sigorta-secim',
   '/maas-hesaplama',
@@ -15,6 +16,20 @@ const GATED_PREFIXES = [
   '/para-transferi',
   '/vize-secim',
   '/software-hub',
+  // Additional interactive tools (ToolPageScaffold-based)
+  '/almanya-maas-beklentisi',
+  '/almanya-yasam-tarzi-uyumu',
+  '/almanya-yolunu-sec',
+  '/almanyada-is-bulma-olasiligi',
+  '/almanyaya-hazir-misin',
+  '/hangi-sehir-sana-uygun',
+  '/ilk-90-gun-planlayici',
+  '/kariyer-ve-egitim-rotasi',
+  '/once-hangi-sorunu-cozmelisin',
+  '/topluluk-ve-danismanlik',
+  // NOTE: /belgeler, /almanya-araclari and /yeniarachub stay public on purpose
+  // (SEO content + tool hub/catalog pages). The tool links inside the hubs are
+  // gated by their own prefixes above.
 ];
 
 function isGatedPath(pathname: string): boolean {
