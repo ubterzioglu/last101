@@ -3,6 +3,9 @@
  * Extracted from app/page.tsx for maintainability
  */
 
+import { TOOL_CATALOG } from '@/lib/tools/catalog';
+import type { ToolCatalogItem } from '@/lib/tools/types';
+
 export interface NewsItem {
   id: string;
   title: string;
@@ -285,3 +288,51 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
     categoryLabel: 'TOPLULUK',
   },
 ];
+
+/**
+ * New interactive planning tools derived from the shared TOOL_CATALOG.
+ * Keeping a single slug -> image map here (and deriving everything else from
+ * the catalog) means the homepage grid stays in sync as the catalog grows.
+ */
+const NEW_TOOL_IMAGES: Record<string, string> = {
+  'almanya-yolunu-sec': 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=300&fit=crop',
+  'almanya-maas-beklentisi': 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400&h=300&fit=crop',
+  'almanyaya-hazir-misin': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop',
+  'hangi-sehir-sana-uygun': 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop',
+  'topluluk-ve-danismanlik': 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=300&fit=crop',
+  'kariyer-ve-egitim-rotasi': 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop',
+  'almanya-yasam-tarzi-uyumu': 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&h=300&fit=crop',
+  'ilk-90-gun-planlayici': 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&h=300&fit=crop',
+  'once-hangi-sorunu-cozmelisin': 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop',
+  'almanyada-is-bulma-olasiligi': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
+};
+
+const FALLBACK_NEW_TOOL_IMAGE =
+  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop';
+
+const CATALOG_CATEGORY_TO_CARD: Record<
+  ToolCatalogItem['category'],
+  { categoryKey: NonNullable<ToolItem['categoryKey']>; categoryLabel: string }
+> = {
+  'Rota ve Strateji': { categoryKey: 'career', categoryLabel: 'ROTA & STRATEJİ' },
+  'Kariyer ve Gelir': { categoryKey: 'tool', categoryLabel: 'KARİYER & GELİR' },
+  'Hazırlık ve Yerleşim': { categoryKey: 'document', categoryLabel: 'HAZIRLIK & YERLEŞİM' },
+  'Yaşam ve Destek': { categoryKey: 'community', categoryLabel: 'YAŞAM & DESTEK' },
+};
+
+function toToolItem(tool: ToolCatalogItem): ToolItem {
+  const card = CATALOG_CATEGORY_TO_CARD[tool.category];
+
+  return {
+    href: `/${tool.slug}`,
+    topLabel: tool.title.toLocaleUpperCase('tr'),
+    label: tool.title,
+    description: tool.description,
+    image: NEW_TOOL_IMAGES[tool.slug] ?? FALLBACK_NEW_TOOL_IMAGE,
+    kind: 'tool',
+    categoryKey: card.categoryKey,
+    categoryLabel: card.categoryLabel,
+  };
+}
+
+export const NEW_TOOL_ITEMS: ToolItem[] = TOOL_CATALOG.map(toToolItem);

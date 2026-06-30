@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils/cn';
 import { getPublishedNewsItems } from '@/lib/public-news';
 import { CANONICAL_SITE_URL, DEFAULT_META_DESCRIPTION, DEFAULT_SEO_TITLE } from '@/lib/utils/constants';
 import {
+  NEW_TOOL_ITEMS,
   TOOL_ITEMS,
   OTHER_LINK_ITEMS,
 } from '@/constants/home-data';
@@ -34,7 +35,7 @@ export const metadata = createMetadata({
 
 export const dynamic = 'force-dynamic';
 
-const HOMEPAGE_ITEMS = [...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
+const HOMEPAGE_ITEMS = [...NEW_TOOL_ITEMS, ...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
 const HOME_PAGE_URL = CANONICAL_SITE_URL;
 const WHATSAPP_COMMUNITY_CHANNEL = CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp');
 const HOMEPAGE_FOOTER_SLIDES = [
