@@ -58,6 +58,10 @@
   "exclude": [
     "node_modules",
     "supabase",
-    ".next"
+    ".next",
+    "tests",
+    "e2e",
+    "vitest.config.ts",
+    "playwright.config.ts"
   ]
 }
