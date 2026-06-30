@@ -21,10 +21,8 @@ export default async function GirisPage({
   const safeNext = next && next.startsWith('/') && !next.startsWith('//') ? next : '/';
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center bg-black px-4 py-16">
-      <Suspense fallback={null}>
-        <GirisClient next={safeNext} />
-      </Suspense>
-    </div>
+    <Suspense fallback={null}>
+      <GirisClient next={safeNext} />
+    </Suspense>
   );
 }

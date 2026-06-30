@@ -23,6 +23,19 @@ interface AdminNavItem {
 
 const NAV_ITEMS: AdminNavItem[] = [
   {
+    href: '/admin/uyeler',
+    label: 'Üyeler',
+    description: 'Yeni kayıtlar & profiller',
+    accent: 'text-google-blue',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    ),
+  },
+  {
     href: '/admin/software-hub',
     label: 'Software Hub',
     description: 'Topluluk & turnuva',
@@ -120,6 +133,18 @@ const NAV_ITEMS: AdminNavItem[] = [
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
         <circle cx="12" cy="9.5" r="2.2" />
         <path d="M12 11.7v2.3" />
+      </svg>
+    ),
+  },
+  {
+    href: '/admin/uygulama-rehberi',
+    label: 'Uygulama Rehberi',
+    description: 'Kullanıcı tarafı kılavuzu',
+    accent: 'text-google-green',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
       </svg>
     ),
   },

@@ -64,6 +64,47 @@ const GUIDES: GuideEntry[] = [
     ),
   },
   {
+    key: 'uyeler',
+    title: 'Üyeler — Yeni Kayıtlar & Profiller',
+    summary: 'Araçlara giriş yapan tüm Supabase üyeleri ve devuser profilleri.',
+    accent: 'border-google-blue',
+    eyebrow: 'text-google-blue',
+    href: '/admin/uyeler',
+    hrefLabel: 'Üyeler Bölümüne Git',
+    body: (
+      <>
+        <p className="mt-3 text-sm leading-7 text-white/72">
+          Araçların tamamı artık <strong className="text-white">üyelik (giriş) zorunlu</strong> çalışıyor. Bu bölüm,{' '}
+          <strong className="text-white">yeni üye olan herkesi</strong> tek listede gösterir. İki sekmeye ayrılır:
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          <Mini title="👥 Üyeler (Auth)">
+            Araçlara erişmek için <strong className="text-white">Supabase hesabı</strong> oluşturan herkes (e-posta veya
+            Google ile). Her satırda e-posta, kayıt tarihi, son giriş, sağlayıcı, e-posta doğrulama durumu ve devuser
+            profili olup olmadığı görünür.
+          </Mini>
+          <Mini title="🧑‍💻 DevUser Profili">
+            Developer topluluğuna katılmak için <strong className="text-white">detaylı profil</strong> oluşturanlar.
+            Ad-soyad, şehir, rol, kayıt tarihi ve <strong className="text-white">onay durumu</strong> (Bekliyor / Onaylı /
+            Reddedildi) ile listelenir.
+          </Mini>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
+          <Bullet><strong className="text-white">İstatistik kartları</strong>: Toplam üye, devuser profili, onay bekleyen devuser ve profilsiz üye sayısı.</Bullet>
+          <Bullet><strong className="text-white">Arama</strong>: E-posta, isim, şehir veya role göre anlık filtreleme.</Bullet>
+          <Bullet><strong className="text-white">Yenile</strong>: Listeyi en güncel haliyle yeniden çeker. En yeni kayıt her zaman en üstte.</Bullet>
+          <Bullet><strong className="text-white">Toplam Üye</strong> sayısı ana panel ekranındaki kartta da görünür.</Bullet>
+        </ul>
+        <Tip>
+          “Üyeler” sekmesindeki bir kişide <strong className="text-white">DevUser ✓ Var</strong> görmüyorsan, o kişi araca
+          giriş yapmış ama henüz developer profili oluşturmamış demektir. DevUser onaylarını{' '}
+          <Link href="/admin/software-hub" className="font-semibold text-google-blue hover:underline">Software Hub → Yeni Üye Onayla</Link>{' '}
+          bölümünden yaparsın.
+        </Tip>
+      </>
+    ),
+  },
+  {
     key: 'software-hub',
     title: 'Software Hub — Topluluk & Turnuva',
     summary: '11 alt bölüm: üye onayı, turnuvalar, tartışma, news, founder başvuruları.',
@@ -205,10 +246,31 @@ const GUIDES: GuideEntry[] = [
     href: '/admin/yazi-dizisi',
     hrefLabel: 'Arkadaşın Köşesine Git',
     body: (
-      <p className="mt-3 text-sm leading-7 text-white/72">
-        Sitedeki köşe yazısı / yazı dizisi içeriklerini yönettiğin bölüm. Yeni yazı ekleyebilir, mevcut yazıları
-        düzenleyebilir ve yayın durumlarını yönetebilirsin. İçerik tamamen senin kontrolündedir.
-      </p>
+      <>
+        <p className="mt-3 text-sm leading-7 text-white/72">
+          Çok yazarlı köşe yazısı sistemini buradan yönetirsin. Her yazarın kendi public sayfası (
+          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/&lt;yazar&gt;</code>), kendi{' '}
+          <strong className="text-white">ayrı giriş ekranı</strong> (
+          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/kose-giris/&lt;yazar&gt;</code>) ve kendi{' '}
+          <strong className="text-white">yönetim paneli</strong> (
+          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/kose-panel/&lt;yazar&gt;</code>) vardır.
+        </p>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
+          <Bullet><strong className="text-white">Yazarlar</strong> sekmesi: public link, giriş linki, düzenle, aktif/pasif toggle ve <strong className="text-white">şifre sıfırlama</strong>.</Bullet>
+          <Bullet><strong className="text-white">Yeni Yazar</strong>: Ad, slug (otomatik üretilir), profil görseli, kısa bio, profil metni, sıralama ve <strong className="text-white">yazar şifresi</strong> (min 6 karakter) gir.</Bullet>
+          <Bullet><strong className="text-white">Yazılar</strong> sekmesi: tüm yazarların yazıları; tek tıkla taslak ↔ yayında.</Bullet>
+        </ul>
+        <Tip>
+          Yeni bir yazar eklediğinde ona <strong className="text-white">giriş linkini</strong> (
+          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/kose-giris/&lt;yazar&gt;</code>) ve belirlediğin{' '}
+          <strong className="text-white">şifreyi</strong> ilet. Yazar kendi panelinden yazı + kapak görseli yükleyip
+          yayınlar; içerik onayı için sana ihtiyaç duymaz ama tüm yazıları bu admin bölümünden görebilir/yönetebilirsin.
+        </Tip>
+        <Warning>
+          Yazar şifresini admin <strong className="text-white">göremez</strong>, yalnızca sıfırlayabilir. Yazar şifresini
+          unutursa “şifre sıfırlama” ile yeni bir şifre belirleyip ona iletmen gerekir.
+        </Warning>
+      </>
     ),
   },
   {

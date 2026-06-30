@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import MarkdownPreview from '@/components/MarkdownPreview';
 import { cn } from '@/lib/utils/cn';
+import { AuthSplitLayout } from '@/components/auth/AuthSplitLayout';
 
 interface Props {
   slug: string;
@@ -255,19 +256,37 @@ export default function CornerAuthorPanelClient({ slug, mode }: Props) {
 
   if (mode === 'login' || !authed) {
     return (
-      <div className="min-h-screen bg-black text-white">
-        <div className="container flex min-h-screen items-center justify-center py-12">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.04] p-8">
-            <h1 className="text-center text-3xl font-bold">Köşe Girişi</h1>
-            <p className="mt-3 text-center text-sm text-white/68">/{slug} paneline giriş yapın.</p>
-            <form onSubmit={login} className="mt-8 space-y-4">
-              <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Şifre" className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none focus:border-google-blue" />
-              {error ? <div className="rounded-xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-100">{error}</div> : null}
-              <button disabled={loading} className="w-full rounded-xl bg-google-blue px-4 py-3 text-sm font-semibold disabled:opacity-60">{loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}</button>
-            </form>
-          </div>
-        </div>
-      </div>
+      <AuthSplitLayout
+        title="Köşe Girişi"
+        subtitle={`/${slug} paneline giriş yapın ve yazılarınızı yönetin.`}
+        accent="green"
+        heroTitle="Arkadaşın Köşesi"
+        heroSubtitle="Kendi köşende yazılarını yaz, kapak görselini yükle ve okuyucularınla buluş."
+      >
+        <form onSubmit={login} className="space-y-4">
+          <label className="block">
+            <span className="mb-2 block text-sm text-white/70">Şifre</span>
+            <input
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="••••••••"
+              autoFocus
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition focus:border-google-green focus-visible:ring-2 focus-visible:ring-google-green"
+            />
+          </label>
+          {error ? (
+            <div className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-100">{error}</div>
+          ) : null}
+          <button
+            disabled={loading}
+            className="w-full rounded-2xl bg-google-green px-4 py-3 text-sm font-semibold text-white transition hover:bg-google-green/90 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
+          </button>
+        </form>
+      </AuthSplitLayout>
     );
   }
 

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils/cn';
+import { AuthSplitLayout } from '@/components/auth/AuthSplitLayout';
 
 type Mode = 'login' | 'register';
 
@@ -100,16 +101,12 @@ export default function GirisClient({ next }: GirisClientProps) {
   };
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.4)] sm:p-8">
-      <div className="mb-6 text-center">
-        <h1 className="font-display text-2xl font-bold text-white sm:text-3xl">
-          {mode === 'login' ? 'Üye Girişi' : 'Ücretsiz Üye Ol'}
-        </h1>
-        <p className="mt-2 text-sm text-white/60">
-          Almanya101 araçlarını kullanmak için {mode === 'login' ? 'giriş yapın' : 'ücretsiz hesap oluşturun'}.
-        </p>
-      </div>
-
+    <AuthSplitLayout
+      title={mode === 'login' ? 'Üye Girişi' : 'Ücretsiz Üye Ol'}
+      subtitle={`Almanya101 araçlarını kullanmak için ${mode === 'login' ? 'giriş yapın' : 'ücretsiz hesap oluşturun'}.`}
+      accent="blue"
+      heroSubtitle="Maaş hesaplama, vize seçimi, şehir uyumu ve daha fazlası — ücretsiz hesabınla hepsine eriş."
+    >
       {/* Mode toggle */}
       <div className="mb-6 grid grid-cols-2 gap-1 rounded-lg border border-white/10 bg-black/40 p-1">
         <button
@@ -211,7 +208,7 @@ export default function GirisClient({ next }: GirisClientProps) {
       <p className="mt-6 text-center text-xs text-white/40">
         Üyelik tamamen ücretsizdir. Devam ederek kullanım şartlarını kabul etmiş olursunuz.
       </p>
-    </div>
+    </AuthSplitLayout>
   );
 }
 
