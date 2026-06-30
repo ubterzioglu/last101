@@ -384,7 +384,7 @@ export default function CornerAdminClient() {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Link href={`/${author.slug}`} target="_blank" className="rounded-full border border-white/10 px-3 py-1.5 text-xs">Public</Link>
-                    <Link href={`/kose-giris/${author.slug}`} target="_blank" className="rounded-full border border-white/10 px-3 py-1.5 text-xs">Giriş</Link>
+                    <Link href={`/authors/${author.slug}`} target="_blank" className="rounded-full border border-white/10 px-3 py-1.5 text-xs">Giriş</Link>
                     <button onClick={() => editAuthor(author)} className="rounded-full border border-google-yellow/25 bg-google-yellow/10 px-3 py-1.5 text-xs text-google-yellow">Düzenle</button>
                     <button onClick={() => void setAuthorActive(author, !author.is_active)} className="rounded-full border border-white/10 px-3 py-1.5 text-xs">{author.is_active ? 'Pasifleştir' : 'Aktifleştir'}</button>
                   </div>

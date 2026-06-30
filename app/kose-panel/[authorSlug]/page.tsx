@@ -1,16 +1,16 @@
-import CornerAuthorPanelClient from '@/components/CornerAuthorPanelClient';
+import { redirect } from 'next/navigation';
 
-interface AuthorPanelPageProps {
+interface LegacyAuthorPanelPageProps {
   params: Promise<{ authorSlug: string }>;
 }
 
 export const metadata = {
-  title: 'Köşe Paneli',
   robots: { index: false, follow: false },
 };
 
-export default async function AuthorPanelPage({ params }: AuthorPanelPageProps) {
+// Köşe yazarı paneli /authors/<slug>/panel altına taşındı. Eski
+// /kose-panel/<slug> linkleri kalıcı olarak yeni route'a yönlendirilir.
+export default async function LegacyAuthorPanelPage({ params }: LegacyAuthorPanelPageProps) {
   const { authorSlug } = await params;
-  return <CornerAuthorPanelClient slug={authorSlug} mode="panel" />;
+  redirect(`/authors/${authorSlug}/panel`);
 }
-

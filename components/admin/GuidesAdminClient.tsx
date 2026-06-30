@@ -251,9 +251,9 @@ const GUIDES: GuideEntry[] = [
           Çok yazarlı köşe yazısı sistemini buradan yönetirsin. Her yazarın kendi public sayfası (
           <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/&lt;yazar&gt;</code>), kendi{' '}
           <strong className="text-white">ayrı giriş ekranı</strong> (
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/kose-giris/&lt;yazar&gt;</code>) ve kendi{' '}
+          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/authors/&lt;yazar&gt;</code>) ve kendi{' '}
           <strong className="text-white">yönetim paneli</strong> (
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/kose-panel/&lt;yazar&gt;</code>) vardır.
+          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/authors/&lt;yazar&gt;/panel</code>) vardır.
         </p>
         <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
           <Bullet><strong className="text-white">Yazarlar</strong> sekmesi: public link, giriş linki, düzenle, aktif/pasif toggle ve <strong className="text-white">şifre sıfırlama</strong>.</Bullet>
@@ -262,7 +262,7 @@ const GUIDES: GuideEntry[] = [
         </ul>
         <Tip>
           Yeni bir yazar eklediğinde ona <strong className="text-white">giriş linkini</strong> (
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/kose-giris/&lt;yazar&gt;</code>) ve belirlediğin{' '}
+          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/authors/&lt;yazar&gt;</code>) ve belirlediğin{' '}
           <strong className="text-white">şifreyi</strong> ilet. Yazar kendi panelinden yazı + kapak görseli yükleyip
           yayınlar; içerik onayı için sana ihtiyaç duymaz ama tüm yazıları bu admin bölümünden görebilir/yönetebilirsin.
         </Tip>

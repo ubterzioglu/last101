@@ -103,8 +103,8 @@ const GUIDES: GuideEntry[] = [
           bölümünden yaparsın.
         </p>
         <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
-          <Bullet><strong className="text-white">1. Giriş</strong>: Yazar <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/kose-giris/&lt;yazar&gt;</code> adresinden, admin’in verdiği şifreyle girer.</Bullet>
-          <Bullet><strong className="text-white">2. Panel</strong>: <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/kose-panel/&lt;yazar&gt;</code> — profilini (ad, bio, profil görseli) düzenler.</Bullet>
+          <Bullet><strong className="text-white">1. Giriş</strong>: Yazar <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/authors/&lt;yazar&gt;</code> adresinden, admin’in verdiği şifreyle girer.</Bullet>
+          <Bullet><strong className="text-white">2. Panel</strong>: <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/authors/&lt;yazar&gt;/panel</code> — profilini (ad, bio, profil görseli) düzenler.</Bullet>
           <Bullet><strong className="text-white">3. Yazı yaz</strong>: Başlık, özet, kapak görseli, okuma süresi ve Markdown içerik. <strong className="text-white">Canlı önizleme</strong> ile yazarken sonucu görür.</Bullet>
           <Bullet><strong className="text-white">4. Yayınla</strong>: Taslak olarak kaydeder veya doğrudan yayına alır. Yayındaki yazı <Link href="/yazi-dizisi" className="font-semibold text-google-green hover:underline">/yazi-dizisi</Link> ve yazarın kendi sayfasında (<code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/&lt;yazar&gt;</code>) görünür.</Bullet>
         </ul>

@@ -129,7 +129,7 @@ export default function CornerAuthorPanelClient({ slug, mode }: Props) {
       if (!response.ok) throw new Error(response.status === 401 ? 'Şifre hatalı.' : String(payload?.error || 'Giriş başarısız.'));
       savePassword(slug, password);
       setAuthed(true);
-      if (mode === 'login') window.location.href = `/kose-panel/${slug}`;
+      if (mode === 'login') window.location.href = `/authors/${slug}/panel`;
       else await loadPanel();
     } catch (loginError) {
       setError((loginError as Error).message || 'Giriş başarısız.');

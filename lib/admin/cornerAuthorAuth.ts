@@ -83,6 +83,7 @@ export function normalizeAuthorSlug(value: unknown): string {
 export const RESERVED_AUTHOR_SLUGS = new Set([
   'admin',
   'api',
+  'authors',
   'devuser',
   'haberler',
   'yazi-dizisi',
