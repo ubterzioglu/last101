@@ -398,12 +398,22 @@ export function GuidesAdminClient() {
         />
         <div className="container relative py-12">
           <div className="text-sm font-semibold uppercase tracking-[0.18em] text-google-blue">Rehber</div>
-          <h1 className="mt-3 text-4xl font-black md:text-5xl">Admin Paneli Kullanım Kılavuzu</h1>
+          <h1 className="mt-3 text-4xl font-black md:text-5xl">Kullanım Kılavuzu</h1>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-white/68">
             Bu sayfa, admin panelindeki <strong className="text-white">tüm bölümleri</strong> tek tek anlatır: her bölümün
             ne işe yaradığı, hangi butonların bulunduğu ve verinin nasıl aktığı. Aşağıdaki dizinden bir bölüme atlayabilir
             ya da arama kutusuyla filtreleyebilirsin.
           </p>
+
+          <div className="mt-6 inline-flex rounded-xl border border-white/10 bg-black/40 p-1">
+            <span className="rounded-lg bg-google-blue px-4 py-2 text-sm font-semibold text-white">Admin Paneli</span>
+            <Link
+              href="/admin/uygulama-rehberi"
+              className="rounded-lg px-4 py-2 text-sm font-semibold text-white/60 transition hover:text-white"
+            >
+              Uygulama
+            </Link>
+          </div>
 
           <div className="mt-6 max-w-md">
             <label className="block">

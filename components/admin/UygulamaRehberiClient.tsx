@@ -210,12 +210,22 @@ export function UygulamaRehberiClient() {
         />
         <div className="container relative py-12">
           <div className="text-sm font-semibold uppercase tracking-[0.18em] text-google-green">Rehber</div>
-          <h1 className="mt-3 text-4xl font-black md:text-5xl">Uygulama Kullanım Kılavuzu</h1>
+          <h1 className="mt-3 text-4xl font-black md:text-5xl">Kullanım Kılavuzu</h1>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-white/68">
-            Bu sayfa <strong className="text-white">kullanıcı tarafını</strong> anlatır: üyelerin araçlara nasıl
-            eriştiğini, köşe yazarlarının ve developer topluluğunun akışını. Admin bölümleri için{' '}
-            <Link href="/admin/rehber" className="font-semibold text-google-green hover:underline">Admin Paneli Kullanım Kılavuzu</Link>’na bak.
+            Bu sekme <strong className="text-white">kullanıcı tarafını</strong> anlatır: üyelerin araçlara nasıl
+            eriştiğini, köşe yazarlarının ve developer topluluğunun akışını. Admin bölümleri için yukarıdaki{' '}
+            <strong className="text-white">Admin Paneli</strong> sekmesine geç.
           </p>
+
+          <div className="mt-6 inline-flex rounded-xl border border-white/10 bg-black/40 p-1">
+            <Link
+              href="/admin/rehber"
+              className="rounded-lg px-4 py-2 text-sm font-semibold text-white/60 transition hover:text-white"
+            >
+              Admin Paneli
+            </Link>
+            <span className="rounded-lg bg-google-green px-4 py-2 text-sm font-semibold text-white">Uygulama</span>
+          </div>
 
           <div className="mt-6 max-w-md">
             <label className="block">
