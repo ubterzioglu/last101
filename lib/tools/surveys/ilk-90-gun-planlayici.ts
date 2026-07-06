@@ -1,42 +1,112 @@
 import {
   QUESTIONNAIRE_WEIGHTS,
   createBooleanQuestion,
-  createLikertQuestion,
   createSingleChoiceQuestion,
   createToolQuestionnaireConfig,
 } from '@/lib/tools/survey';
 
 const weights = QUESTIONNAIRE_WEIGHTS;
 
+// Bu dosya scripts/pull-corteqs-tools.mjs tarafından corteqs verisinden üretildi.
+// Elle düzenlemek yerine kaynağı güncelleyip scripti tekrar çalıştır.
 export const ilk90GunPlanlayiciQuestionnaire = createToolQuestionnaireConfig(
-  'ilk-90-gun-planlayici',
+  "ilk-90-gun-planlayici",
   [
-    createLikertQuestion('arrival_reason_clarity', 'Almanya’ya geliş nedenin ne kadar net?', weights[0], 'planning', 'İş akışını belirler.'),
-    createSingleChoiceQuestion('first_address_certainty', 'İlk konaklama adresin ne kadar kesinleşti?', weights[1], 'readiness', 'Anmeldung ve diğer adımları etkiler.', [
-      { key: 'unclear', label: 'Belirsiz', score: 0 },
-      { key: 'temporary', label: 'Geçici', score: 50 },
-      { key: 'final', label: 'Kesin', score: 100 },
+    createSingleChoiceQuestion("destination", "Hedef ülke/şehir?", weights[0], "plan", "ISO ülke kodu veya şehir", [
+      { key: 'c1', label: "Evet, net", score: 100 },
+      { key: 'c2', label: "Kısmen", score: 60 },
+      { key: 'c3', label: "Henüz belirsiz", score: 20 },
     ]),
-    createLikertQuestion('anmeldung_knowledge', 'Anmeldung sürecine dair bilgi düzeyin nedir?', weights[2], 'planning', 'İlk kritik operasyon adımı.'),
-    createBooleanQuestion('insurance_fixed', 'Sağlık sigortası durumunu netleştirdin mi?', weights[3], 'readiness', 'Birçok sonraki işlem için temel.'),
-    createLikertQuestion('bank_account_plan', 'Banka hesabı açma ihtiyacın ve planın ne kadar net?', weights[4], 'planning', 'Finans operasyonu.'),
-    createLikertQuestion('residence_timeline', 'Oturum veya randevu takvimini ne kadar biliyorsun?', weights[5], 'planning', 'Zaman baskısını azaltır.'),
-    createBooleanQuestion('first_week_folder', 'Belgelerini ilk hafta kullanımı için ayrı klasörledin mi?', weights[6], 'execution', 'Uygulama kolaylığı.'),
-    createLikertQuestion('utility_basics_plan', 'Telefon hattı, internet ve ulaşım gibi temel işler için planın var mı?', weights[7], 'execution', 'Günlük işleyiş hazırlığı.'),
-    createSingleChoiceQuestion('family_steps', 'Çocuk, kita veya okul gibi aile adımların ne kadar planlı?', weights[8], 'support', 'Aileli kullanıcılar için kritik.', [
-      { key: 'none', label: 'Bu ihtiyaç yok', score: 100 },
-      { key: 'partial', label: 'Kısmen planlı', score: 60 },
-      { key: 'no_plan', label: 'Plan yok', score: 0 },
+    createSingleChoiceQuestion("arrival_date", "Tahmini varış tarihin?", weights[1], "plan", "Tahmini varış tarihin?", [
+      { key: 'c1', label: "Evet, net", score: 100 },
+      { key: 'c2', label: "Kısmen", score: 60 },
+      { key: 'c3', label: "Henüz belirsiz", score: 20 },
     ]),
-    createBooleanQuestion('ninety_day_budget', 'İlk 90 gün bütçeni çıkardın mı?', weights[9], 'readiness', 'Operasyonel güvenlik.'),
-    createLikertQuestion('appointment_research', 'Yerel resmi dairelerin randevu zorluğunu araştırdın mı?', weights[10], 'planning', 'Gerçekçiliği artırır.'),
-    createLikertQuestion('dependency_awareness', 'Hangi işin hangisine bağlı olduğunu ne kadar biliyorsun?', weights[11], 'planning', 'Sıralama kalitesi.'),
-    createSingleChoiceQuestion('arrival_support', 'Varış sonrası destek alabileceğin biri var mı?', weights[12], 'support', 'İlk gün direncini artırır.', [
-      { key: 'none', label: 'Yok', score: 25 },
-      { key: 'partial', label: 'Kısmen', score: 60 },
-      { key: 'yes', label: 'Evet', score: 100 },
+    createSingleChoiceQuestion("visa_status", "Vize/oturum durumun?", weights[2], "legal", "Vize/oturum durumun?", [
+      { key: "approved", label: "Onaylı", score: 100 },
+      { key: "applied", label: "Başvurdum", score: 75 },
+      { key: "researching", label: "Araştırıyorum", score: 50 },
+      { key: "not_needed", label: "Gerekmiyor", score: 25 },
+      { key: "none", label: "Yok", score: 0 },
     ]),
-    createBooleanQuestion('first_week_roles', 'Şehre vardığında ilk hafta görev dağılımı yaptın mı?', weights[13], 'execution', 'Özellikle aileli gelişlerde önemli.'),
-    createBooleanQuestion('written_ninety_day_plan', 'İlk 90 gün için yazılı bir mini planın hazır mı?', weights[14], 'planning', 'Planın uygulanabilirliği.'),
+    createSingleChoiceQuestion("housing_status", "İlk konaklama durumun?", weights[3], "housing", "İlk konaklama durumun?", [
+      { key: "secured", label: "Hazır", score: 100 },
+      { key: "temporary", label: "Geçici", score: 67 },
+      { key: "searching", label: "Arıyorum", score: 33 },
+      { key: "none", label: "Yok", score: 0 },
+    ]),
+    createSingleChoiceQuestion("health_insurance", "Sağlık sigortası planın?", weights[4], "health", "Sağlık sigortası planın?", [
+      { key: "active", label: "Aktif", score: 100 },
+      { key: "employer", label: "İşveren sağlıyor", score: 67 },
+      { key: "will_buy", label: "Alacağım", score: 33 },
+      { key: "none", label: "Yok", score: 0 },
+    ]),
+    createSingleChoiceQuestion("banking", "Yerel banka/ödeme çözümü planın?", weights[5], "finance", "Yerel banka/ödeme çözümü planın?", [
+      { key: "ready", label: "Hazır", score: 100 },
+      { key: "researching", label: "Araştırıyorum", score: 50 },
+      { key: "none", label: "Yok", score: 0 },
+    ]),
+    createSingleChoiceQuestion("phone_internet", "Telefon/internet planın?", weights[6], "logistics", "Telefon/internet planın?", [
+      { key: "ready", label: "Hazır", score: 100 },
+      { key: "temporary", label: "Geçici", score: 50 },
+      { key: "none", label: "Yok", score: 0 },
+    ]),
+    createSingleChoiceQuestion("address_registration_known", "Adres/belediye kaydı gerekliliğini biliyor musun?", weights[7], "legal", "Adres/belediye kaydı gerekliliğini biliyor musun?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 50 },
+      { key: "not_applicable", label: "Geçerli değil", score: 0 },
+    ]),
+    createSingleChoiceQuestion("documents_ready", "Belgelerinin dijital/fiziksel kopyaları hazır mı?", weights[8], "legal", "Belgelerinin dijital/fiziksel kopyaları hazır mı?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "partial", label: "Kısmen", score: 50 },
+      { key: "no", label: "Hayır", score: 0 },
+    ]),
+    createSingleChoiceQuestion("emergency_contacts", "Acil iletişimleri kaydettin mi?", weights[9], "logistics", "Acil iletişimleri kaydettin mi?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 0 },
+    ]),
+    createSingleChoiceQuestion("transport", "İlk hafta ulaşım planın?", weights[10], "logistics", "İlk hafta ulaşım planın?", [
+      { key: "public_transport", label: "Toplu taşıma", score: 100 },
+      { key: "car", label: "Araç", score: 67 },
+      { key: "taxi", label: "Taksi", score: 33 },
+      { key: "none", label: "Yok", score: 0 },
+    ]),
+    createSingleChoiceQuestion("job_start", "İş/okul başlangıç tarihin belli mi?", weights[11], "work", "İş/okul başlangıç tarihin belli mi?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 50 },
+      { key: "not_applicable", label: "Geçerli değil", score: 0 },
+    ]),
+    createSingleChoiceQuestion("children_school", "Çocuk okul/kayıt ihtiyacı var mı?", weights[12], "family", "Çocuk okul/kayıt ihtiyacı var mı?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 0 },
+    ]),
+    createSingleChoiceQuestion("pets", "Evcil hayvan taşınması var mı?", weights[13], "family", "Evcil hayvan taşınması var mı?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 0 },
+    ]),
+    createSingleChoiceQuestion("language_course", "Dil kursu/entegrasyon programı ihtiyacın var mı?", weights[14], "integration", "Dil kursu/entegrasyon programı ihtiyacın var mı?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 50 },
+      { key: "not_sure", label: "Emin değilim", score: 0 },
+    ]),
+    createSingleChoiceQuestion("community_intro", "İlk ay topluluk/mentor desteği ister misin?", weights[15], "integration", "İlk ay topluluk/mentor desteği ister misin?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 0 },
+    ]),
+    createSingleChoiceQuestion("tax_social_security", "Vergi/sosyal güvenlik adımlarını biliyor musun?", weights[16], "legal", "Vergi/sosyal güvenlik adımlarını biliyor musun?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 50 },
+      { key: "not_applicable", label: "Geçerli değil", score: 0 },
+    ]),
+    createSingleChoiceQuestion("credential_recognition", "Mesleki denklik/lisans adımı gerekiyor mu?", weights[17], "work", "Mesleki denklik/lisans adımı gerekiyor mu?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 50 },
+      { key: "not_sure", label: "Emin değilim", score: 0 },
+    ]),
+    createSingleChoiceQuestion("driving_license", "Ehliyet dönüşümü/araç ihtiyacı var mı?", weights[18], "logistics", "Ehliyet dönüşümü/araç ihtiyacı var mı?", [
+      { key: "yes", label: "Evet", score: 100 },
+      { key: "no", label: "Hayır", score: 0 },
+    ]),
+    createBooleanQuestion("notification_consent", "Görev hatırlatmaları almak ister misin?", weights[19], "integration", "E-posta / uygulama içi"),
   ]
 );

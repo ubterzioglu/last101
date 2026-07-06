@@ -96,6 +96,10 @@ export const metadata: Metadata = {
   other: {
     'content-language': 'tr',
     'target-country': 'DE',
+    'geo.region': 'DE-BE',
+    'geo.placename': 'Berlin',
+    'geo.position': '52.520008;13.404954',
+    ICBM: '52.520008, 13.404954',
   },
 };
 

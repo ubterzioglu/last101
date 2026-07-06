@@ -6,25 +6,36 @@ import type {
   ToolQuestionnaireConfig,
 } from '@/lib/tools/types';
 
+/**
+ * 20 eşit ağırlık (0.05 × 20 = 1.0). Anketler corteqs kaynağından 20 soruya
+ * normalize edildi; her soru toplam skora eşit katkı verir.
+ */
 export const QUESTIONNAIRE_WEIGHTS = [
-  0.1,
-  0.09,
-  0.08,
-  0.08,
-  0.07,
-  0.07,
-  0.07,
-  0.07,
-  0.06,
-  0.06,
-  0.06,
   0.05,
   0.05,
   0.05,
-  0.04,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
+  0.05,
 ] as const;
 
-export const QUESTIONNAIRE_VERSION = '2026-06-26';
+export const QUESTIONNAIRE_QUESTION_COUNT = 20;
+
+export const QUESTIONNAIRE_VERSION = '2026-07-05';
 
 export const QUESTIONNAIRE_CATEGORY_LABELS = {
   strong: 'Güçlü uyum',
@@ -34,6 +45,7 @@ export const QUESTIONNAIRE_CATEGORY_LABELS = {
 } as const;
 
 const DIMENSION_LABELS: Record<string, string> = {
+  // Mevcut boyutlar
   competition: 'Rekabet gücü',
   execution: 'Uygulama gücü',
   feasibility: 'Uygulanabilirlik',
@@ -45,6 +57,34 @@ const DIMENSION_LABELS: Record<string, string> = {
   readiness: 'Hazırlık',
   stability: 'İstikrar',
   support: 'Destek uyumu',
+  // corteqs section_key -> boyut etiketleri (20 soruluk anketler)
+  budget: 'Bütçe',
+  career: 'Kariyer',
+  challenge: 'Zorluk',
+  community: 'Topluluk',
+  consent: 'Onay',
+  family: 'Aile',
+  field: 'Alan uyumu',
+  finance: 'Finans',
+  geo: 'Konum',
+  health: 'Sağlık',
+  housing: 'Konut',
+  integration: 'Entegrasyon',
+  interest: 'İlgi alanı',
+  job: 'İş',
+  language: 'Dil',
+  legal: 'Hukuki',
+  logistics: 'Lojistik',
+  match: 'Eşleşme',
+  mobility: 'Hareketlilik',
+  network: 'Ağ',
+  plan: 'Plan',
+  profile: 'Profil',
+  qol: 'Yaşam kalitesi',
+  safety: 'Güvenlik',
+  skills: 'Beceriler',
+  visa: 'Vize',
+  work: 'Çalışma izni',
 };
 
 export function getQuestionnaireDimensionLabel(key: string) {
@@ -188,8 +228,10 @@ export function validateQuestionnaireConfig(config: ToolQuestionnaireConfig) {
     throw new Error(`${config.toolSlug}: unsupported completion mode`);
   }
 
-  if (config.questions.length !== 15) {
-    throw new Error(`${config.toolSlug}: questionnaire must contain exactly 15 questions`);
+  if (config.questions.length !== QUESTIONNAIRE_QUESTION_COUNT) {
+    throw new Error(
+      `${config.toolSlug}: questionnaire must contain exactly ${QUESTIONNAIRE_QUESTION_COUNT} questions`
+    );
   }
 
   const ids = new Set<string>();

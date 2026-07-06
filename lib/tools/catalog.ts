@@ -37,7 +37,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'Çalışma, Ausbildung, üniversite veya aile birleşimi gibi ana yollar arasında sana en uygun rotayı bul.',
     ctaLabel: 'Yolunu belirle',
     category: 'Rota ve Strateji',
-    questionCount: 15,
+    questionCount: 20,
     spotlight: 'Hangi ana yoldan başlaman gerektiğini netleştirir.',
   },
   {
@@ -46,7 +46,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'Meslek, deneyim ve lokasyona göre brüt-net maaş beklentini çerçevele.',
     ctaLabel: 'Maaş aralığını gör',
     category: 'Kariyer ve Gelir',
-    questionCount: 15,
+    questionCount: 20,
     spotlight: 'Teklif veya görüşme öncesi hedef maaş bandını gösterir.',
   },
   {
@@ -55,7 +55,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'Belge, dil, bütçe ve zamanlama açısından ne kadar hazır olduğunu ölç.',
     ctaLabel: 'Hazırlığını ölç',
     category: 'Hazırlık ve Yerleşim',
-    questionCount: 5,
+    questionCount: 20,
     spotlight: 'Başvuru öncesi en zayıf hazırlık halkalarını görünür kılar.',
   },
   {
@@ -64,7 +64,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'Yaşam tarzın ve bütçene göre hangi şehir veya eyalet profilinin sana daha yakın olduğunu gör.',
     ctaLabel: 'Şehir eşleşmeni gör',
     category: 'Yaşam ve Destek',
-    questionCount: 5,
+    questionCount: 20,
     spotlight: 'Şehir kararını bütçe ve yaşam ritmi üzerinden daraltır.',
   },
   {
@@ -73,7 +73,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'İhtiyacına göre resmi danışmanlık, topluluk ve entegrasyon destek kanallarına yönel.',
     ctaLabel: 'Destek kanalını bul',
     category: 'Yaşam ve Destek',
-    questionCount: 4,
+    questionCount: 20,
     spotlight: 'Hangi destek kanalına önce gitmen gerektiğini gösterir.',
   },
   {
@@ -82,7 +82,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'İş, yüksek lisans, denklik veya Ausbildung arasında daha mantıklı rotayı seç.',
     ctaLabel: 'Rotanı seç',
     category: 'Rota ve Strateji',
-    questionCount: 5,
+    questionCount: 20,
     spotlight: 'Kısa vadeli giriş ile uzun vadeli kariyer sırasını kurar.',
   },
   {
@@ -91,7 +91,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'Büyük şehir, sakin yaşam, aile düzeni ve sosyal tempo beklentilerine göre yaşam profilini gör.',
     ctaLabel: 'Uyum profilini öğren',
     category: 'Yaşam ve Destek',
-    questionCount: 5,
+    questionCount: 20,
     spotlight: 'Günlük ritim beklentine uygun yaşam profilini çıkarır.',
   },
   {
@@ -100,7 +100,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'Almanya\'daki ilk haftadan üçüncü aya kadar hangi adımı ne zaman atacağını sırala.',
     ctaLabel: 'İlk 90 günü planla',
     category: 'Hazırlık ve Yerleşim',
-    questionCount: 4,
+    questionCount: 20,
     spotlight: 'İlk hafta, ilk ay ve 90 gün aksiyon sırasını kurar.',
   },
   {
@@ -109,7 +109,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'Vize, dil, konut, denklik veya finansman içinde önce hangisinin blokaj yarattığını belirle.',
     ctaLabel: 'Önceliğini belirle',
     category: 'Hazırlık ve Yerleşim',
-    questionCount: 4,
+    questionCount: 20,
     spotlight: 'Seni en çok durduran tek blokajı seçmene yardım eder.',
   },
   {
@@ -118,7 +118,7 @@ export const TOOL_CATALOG: ToolCatalogItem[] = [
     description: 'Meslek, dil, deneyim ve denklik durumuna göre iş bulma gücünü yorumla.',
     ctaLabel: 'İş şansını gör',
     category: 'Kariyer ve Gelir',
-    questionCount: 5,
+    questionCount: 20,
     spotlight: 'Profilinin iş piyasasındaki rekabet gücünü yorumlar.',
   },
 ];

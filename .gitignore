@@ -26,6 +26,13 @@ yarn-error.log*
 .env*.local
 .env
 .env.example
+# external project env files (e.g. corteqs Supabase — service-role key, asla commit'lenmemeli)
+.env.corteqs
+.env.*
+!.env.example
+
+# corteqs pull dumps (ham veri, commit'lenmez)
+/scripts/corteqs-dump/
 
 # secrets (Supabase PAT vb. — asla commit'lenmemeli)
 .secret

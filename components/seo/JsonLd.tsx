@@ -245,6 +245,11 @@ export function LocalBusinessJsonLd() {
       addressCountry: 'DE',
       addressRegion: 'Berlin',
     },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 52.520008,
+      longitude: 13.404954,
+    },
     areaServed: [
       {
         '@type': 'Country',

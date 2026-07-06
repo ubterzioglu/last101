@@ -110,7 +110,7 @@ describe('POST /api/tool-questionnaires', () => {
 
     expect(response.status).toBe(200);
     expect(body.ok).toBe(true);
-    expect(body.answerCount).toBe(15);
+    expect(body.answerCount).toBe(20);
     expect(insertMock).toHaveBeenCalledTimes(1);
     expect(insertMock.mock.calls[0]?.[0]).toMatchObject({
       tool_slug: 'almanyaya-hazir-misin',

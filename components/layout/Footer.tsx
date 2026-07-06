@@ -78,6 +78,18 @@ export function Footer() {
               </a>
               {' '}Spindora Tarafından Seosu Yapılmıştır.
             </span>
+            <span className="text-gray-700" aria-hidden="true">|</span>
+            <span>
+              <a
+                href="https://ufuksoynakliyat.com.tr"
+                rel="dofollow"
+                target="_blank"
+                className="hover:underline"
+              >
+                Evden Eve Nakliyat
+              </a>
+              {' '}Şirketi Ufuksoy Nakliyat A.Ş
+            </span>
           </p>
         </div>
       </Container>
