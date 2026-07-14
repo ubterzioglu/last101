@@ -33,7 +33,7 @@ export function Footer() {
               </span>
             ))}
           </p>
-          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-gray-700">
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.375rem] text-gray-700">
             <span>
               <a
                 href="https://www.spindorai.com"
@@ -89,6 +89,18 @@ export function Footer() {
                 Evden Eve Nakliyat
               </a>
               {' '}Şirketi Ufuksoy Nakliyat A.Ş
+            </span>
+            <span className="text-gray-700" aria-hidden="true">|</span>
+            <span>
+              <a
+                href="https://dragomanseakayak.com"
+                rel="dofollow"
+                target="_blank"
+                className="hover:underline"
+              >
+                Deniz Kayağı Turları
+              </a>
+              {' '}Şirketi Dragoman Sea Kayak & Outdoors
             </span>
           </p>
         </div>
