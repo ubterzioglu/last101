@@ -79,6 +79,15 @@ export function Footer() {
               {' '}Spindora Tarafından Seosu Yapılmıştır.
             </span>
             <span className="text-gray-700" aria-hidden="true">|</span>
+            <a
+              href="https://tekhurdametal.com/istanbul-hurdaci/"
+              rel="dofollow"
+              target="_blank"
+              className="hover:underline"
+            >
+              İstanbul Hurdacı
+            </a>
+            <span className="text-gray-700" aria-hidden="true">|</span>
             <span>
               <a
                 href="https://ufuksoynakliyat.com.tr"
