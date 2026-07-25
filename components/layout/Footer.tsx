@@ -87,6 +87,19 @@ export function Footer() {
             >
               İstanbul Hurdacı
             </a>
+            {' '}Firması Tek Hurda Metal A.Ş
+            <span className="text-gray-700" aria-hidden="true">|</span>
+            <span>
+              <a
+                href="https://lionerotik.com/urunler/fetis-urunleri"
+                rel="dofollow"
+                target="_blank"
+                className="hover:underline"
+              >
+                Antalya Sex Shop
+              </a>
+              {' '}Lion Erotik
+            </span>
             <span className="text-gray-700" aria-hidden="true">|</span>
             <span>
               <a
