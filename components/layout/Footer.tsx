@@ -33,7 +33,7 @@ export function Footer() {
               </span>
             ))}
           </p>
-          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.375rem] text-gray-700">
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.82rem] leading-[1.6] text-gray-700 sm:text-base sm:leading-[1.55]">
             <span>
               <a
                 href="https://www.spindorai.com"
