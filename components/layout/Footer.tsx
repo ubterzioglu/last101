@@ -14,13 +14,13 @@ const FOOTER_LEGAL_LINKS: { href: string; label: string }[] = [
 ];
 
 const PARTNER_LINKS = [
-  ['https://tekhurdametal.com/istanbul-hurdaci/', 'İstanbul Hurdacı'],
-  ['https://tekhurdametal.com/hurda-fiyatlari/', 'Hurda Fiyatları'],
-  ['https://tekhurdametal.com/hurda-demir-fiyatlari/', 'Demir Hurda Fiyatları'],
-  ['https://tekhurdametal.com/beylikduzu-hurdaci/', 'Beylikdüzü Hurdacı'],
-  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Sex Shop'],
-  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Erotik Shop'],
-  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Seks Shop'],
+  ['https://tekhurdametal.com/istanbul-hurdaci/', 'İstanbul Hurdacı', 'Firması Tek Hurda Metal A.Ş'],
+  ['https://tekhurdametal.com/hurda-fiyatlari/', 'Hurda Fiyatları', 'Tek Hurda Metal'],
+  ['https://tekhurdametal.com/hurda-demir-fiyatlari/', 'Demir Hurda Fiyatları', 'Tek Hurda Metal'],
+  ['https://tekhurdametal.com/beylikduzu-hurdaci/', 'Beylikdüzü Hurdacı', 'Firması Tek Hurda Metal A.Ş'],
+  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Sex Shop', 'Lion Erotik'],
+  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Erotik Shop', 'Lion Erotik'],
+  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Seks Shop', 'Lion Erotik'],
 ] as const;
 
 export function Footer() {
@@ -38,10 +38,13 @@ export function Footer() {
             ))}
           </p>
           <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.82rem] leading-[1.6] text-gray-700 sm:text-base sm:leading-[1.55]">
-            {PARTNER_LINKS.map(([href, label], index) => (
+            {PARTNER_LINKS.map(([href, label, suffix], index) => (
               <span key={`${label}-${index}`} className="flex items-center gap-x-2">
                 {index > 0 && <span className="text-gray-700" aria-hidden="true">|</span>}
-                <a href={href} rel="dofollow" target="_blank" className="hover:underline">{label}</a>
+                <span>
+                  <a href={href} rel="dofollow" className="hover:underline">{label}</a>{' '}
+                  {suffix}
+                </span>
               </span>
             ))}
           </p>
