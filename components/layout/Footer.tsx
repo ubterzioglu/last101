@@ -14,13 +14,8 @@ const FOOTER_LEGAL_LINKS: { href: string; label: string }[] = [
 ];
 
 const PARTNER_LINKS = [
+  ['https://ufuksoynakliyat.com.tr/pendik-evden-eve-nakliyat', 'Pendik Evden Eve Nakliyat', 'Firması Ufuksoy Nakliyat A.Ş'],
   ['https://tekhurdametal.com/istanbul-hurdaci/', 'İstanbul Hurdacı', 'Firması Tek Hurda Metal A.Ş'],
-  ['https://tekhurdametal.com/hurda-fiyatlari/', 'Hurda Fiyatları', 'Tek Hurda Metal'],
-  ['https://tekhurdametal.com/hurda-demir-fiyatlari/', 'Demir Hurda Fiyatları', 'Tek Hurda Metal'],
-  ['https://tekhurdametal.com/beylikduzu-hurdaci/', 'Beylikdüzü Hurdacı', 'Firması Tek Hurda Metal A.Ş'],
-  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Sex Shop', 'Lion Erotik'],
-  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Erotik Shop', 'Lion Erotik'],
-  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Seks Shop', 'Lion Erotik'],
 ] as const;
 
 export function Footer() {
