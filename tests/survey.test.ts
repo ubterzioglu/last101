@@ -18,6 +18,12 @@ describe('survey helpers', () => {
   });
 
   it('computes weighted tool and dimension scores', () => {
+    // Senaryo: ilk FIT_COUNT soru 'fit' boyutunda ve doğru (100), geri kalanı
+    // 'readiness' boyutunda ve yanlış (0).
+    // toolScore = (FIT_COUNT × 100 × 0.05) / (20 × 0.05) = 40
+    // 40 < 50 olduğu için kategori 'risky' eşiğine düşer.
+    const FIT_COUNT = 8;
+
     const config = createToolQuestionnaireConfig(
       'demo-tool',
       QUESTIONNAIRE_WEIGHTS.map((weight, index) =>
@@ -25,7 +31,7 @@ describe('survey helpers', () => {
           `q_${index + 1}`,
           `Soru ${index + 1}`,
           weight,
-          index < 8 ? 'fit' : 'readiness',
+          index < FIT_COUNT ? 'fit' : 'readiness',
           'Demo soru'
         )
       )
@@ -35,15 +41,15 @@ describe('survey helpers', () => {
       config,
       config.questions.map((question, index) => ({
         questionId: question.id,
-        value: index < 8,
+        value: index < FIT_COUNT,
       }))
     );
 
     const result = computeToolScore(config, answers);
 
-    expect(result.toolScore).toBe(63);
+    expect(result.toolScore).toBe(40);
     expect(result.dimensionScores.fit).toBe(100);
     expect(result.dimensionScores.readiness).toBe(0);
-    expect(result.category).toBe('Belirsiz / geliştirmeli');
+    expect(result.category).toBe('Yüksek risk / önce hazırlık');
   });
 });
