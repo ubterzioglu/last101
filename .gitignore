@@ -75,3 +75,7 @@ supabase/.temp/
 # private data exports (WhatsApp/chat dumps — PII içerir, asla commit'lenmemeli)
 summarya.txt
 *.chatexport.txt
+
+# local dev server logs
+.next-dev.*
+.start.*
