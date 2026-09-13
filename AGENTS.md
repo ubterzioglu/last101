@@ -1,56 +1,29 @@
 # AGENTS.md
 
-This file provides guidance to agents when working with code in this repository.
+Bu depoda çalışan ajanlar için giriş noktası.
 
-## Project Overview
+**Tek kaynak: [CLAUDE.md](CLAUDE.md).** Komutlar, route yapısı, Supabase
+istemcileri, stil konvansiyonları, admin auth ve bilinen tuzaklar orada
+anlatılır. Bu dosya yalnızca en sık ihlal edilen kuralları tekrarlar; geri
+kalanı için CLAUDE.md'yi oku.
 
-**almanya101** - Next.js 15 app for Turks living in/moving to Germany (https://almanya101.com)
+## İhlal edilince pahalıya patlayan dört kural
 
-**CRITICAL**: All user-facing content MUST be in Turkish (tr). Internal code can be in English.
+1. **Dil**: Kullanıcıya görünen tüm içerik Türkçe olmalı. Kod İngilizce olabilir.
+2. **Class birleştirme**: `cn()` (`@/lib/utils/cn`) kullan — template literal ile
+   sınıf birleştirme yapma.
+3. **Metadata**: Her sayfa `createMetadata()` (`@/lib/seo/metadata`) export
+   etmeli; makale sayfaları `createArticleMetadata()` kullanır.
+4. **Supabase istemcisi**: Üç ayrı istemci var ve birbirinin yerine geçmez —
+   tarayıcı `@/lib/supabase/client`, sunucu `@/lib/supabase/server` (async),
+   devuser `@/lib/supabase/devuser` (async).
 
-## Non-Obvious Patterns
+## En sık yapılan hata
 
-### Custom Utilities (USE INSTEAD of standard approaches)
-- **Class merging**: Always use `cn()` from `@/lib/utils/cn` - never use template literals directly
-- **SEO Metadata**: Every page MUST export metadata using `createMetadata()` from `@/lib/seo/metadata`
-- **Article pages**: Use `createArticleMetadata()` instead of `createMetadata()`
+`app/(devuser)/devuser/<sayfa>/` kod yolundaki `devuser` iki kez görünür ama
+URL **her zaman** `/devuser/<sayfa>` olur — `(devuser)` bir route group'tur ve
+URL'de yer almaz.
 
-### Route Groups & Auth
-| Route Group | Purpose | Auth |
-|-------------|---------|------|
-| `app/(marketing)/` | Public marketing pages | No |
-| `app/(site)/` | Interactive tools | No |
-| `app/(devuser)/` | User dashboard | Supabase Auth |
+## Dokümantasyon
 
-### DevUser Dashboard Pattern
-- Dashboard pages use `DevUserShell` wrapper with `frameVariant` prop
-- Pattern: `page.tsx` (Server) imports `*Client.tsx` (Client with 'use client')
-- Available frameVariants: `'default' | 'compact' | 'wide'`
-
-### Three Supabase Clients (different purposes!)
-- Browser: `import { createClient } from '@/lib/supabase/client'`
-- Server: `import { createClient } from '@/lib/supabase/server'` (async)
-- DevUser: `import { getDevUserClient } from '@/lib/supabase/devuser'` (async)
-
-### Pre-configured Google Colors
-`bg-google-blue`, `text-google-red`, `bg-google-yellow`, `text-google-green`, `bg-google-orange`
-
-### Layout Patterns
-- Container: `className="container"` (responsive padding built-in)
-- Hero sections: `min-h-[80vh]`, content sections: `py-32 md:py-48`
-
-## Build Commands
-
-```bash
-npm run dev      # Development server (localhost:3000)
-npm run build    # Production build
-npm run start    # Start production server (standalone)
-npm run lint     # Run ESLint
-```
-
-Use `npm` (not bun) for all package operations.
-
-## Deployment
-
-- Built with `output: 'standalone'` for Docker/Coolify
-- Images: `unoptimized: true` (container environment)
+Tüm dökümanlar `docs/` altında: [docs/README.md](docs/README.md).

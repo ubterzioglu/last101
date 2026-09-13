@@ -21,6 +21,16 @@ Almanya'da yaşayan veya taşınmayı planlayan Türkler için kapsamlı bilgi r
 - ✅ Clean code principles
 - ✅ Production-ready
 
+## Dokümantasyon
+
+Tüm dökümanlar `docs/` altında toplanmıştır — indeks için [docs/README.md](docs/README.md).
+
+- [`docs/runbooks/`](docs/runbooks/) — backfill, haber pipeline deploy, E2E kullanım gibi hâlâ uygulanan rehberler
+- [`docs/content/`](docs/content/) — Türkçe içerik ve araç taslakları
+- [`docs/archive/`](docs/archive/) — tamamlanmış tek seferlik raporlar (tarihsel kayıt)
+
+Kod yazarken uyulacak kurallar için [CLAUDE.md](CLAUDE.md).
+
 ## Getting Started
 
 ### Prerequisites
@@ -79,6 +89,7 @@ almanya101/
 ├── hooks/                    # Custom React hooks
 ├── types/                    # TypeScript types
 ├── constants/                # Constants
+├── docs/                     # Tüm dökümantasyon (bkz. docs/README.md)
 └── public/                   # Static assets
 ```
 

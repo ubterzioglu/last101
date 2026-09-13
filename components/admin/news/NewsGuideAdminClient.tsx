@@ -171,7 +171,7 @@ export function NewsGuideAdminClient() {
             <Bullet><strong className="text-white">Aynı haber tekrar ediyor</strong>: Duplicate kontrolü URL + SHA-256 hash ile çalışır; çok benzer başlıklar &ldquo;olası tekrar&rdquo; olarak kuyruğa düşebilir.</Bullet>
           </ul>
           <p className="mt-4 text-xs leading-6 text-white/45">
-            Tam teknik dökümantasyon için repo kökündeki <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">news.md</code> dosyasına bakabilirsin.
+            Tam teknik dökümantasyon için <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">docs/runbooks/news.md</code> dosyasına bakabilirsin.
           </p>
         </Card>
       </div>
