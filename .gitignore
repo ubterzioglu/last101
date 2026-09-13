@@ -79,3 +79,11 @@ summarya.txt
 # local dev server logs
 .next-dev.*
 .start.*
+
+# agent / editor tooling state (machine-local: plans, caches, lockfiles, pids)
+.kilo/
+.kilocode/
+.serena/
+.superpowers/
+.playwright-mcp/
+.claude/settings.local.json
