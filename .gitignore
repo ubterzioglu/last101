@@ -71,3 +71,7 @@ supabase/.temp/
 /blob-report/
 /playwright/.cache/
 /e2e/.auth/
+
+# private data exports (WhatsApp/chat dumps — PII içerir, asla commit'lenmemeli)
+summarya.txt
+*.chatexport.txt
