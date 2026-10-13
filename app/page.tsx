@@ -293,7 +293,7 @@ export default async function HomePage() {
       <EditorialSection
         eyebrow="Ana Sayfa Rehberi"
         title="Almanya'da Düzen Kurmak İçin Nereden Başlamalı?"
-        intro="Almanya101 nedir? Kısaca Almanya101, Almanya'ya taşınan veya burada yaşayan Türkler için Türkçe rehber, araç ve topluluk platformudur. ~3,5 milyon Türk kökenli insan Almanya'da yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa; Almanya yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
+        intro="Almanya101 nedir? Kısaca Almanya101, bu ülkeye taşınan veya burada yaşayan Türkler için Türkçe rehber, araç ve topluluk platformudur. ~3,5 milyon Türk kökenli insan burada yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa; yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
         listItems={[
           'Adres kaydı (Anmeldung)',
           'Vergi numarası (Steuernummer)',
@@ -308,7 +308,7 @@ export default async function HomePage() {
             Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, <strong>bilgi dağınıklığı</strong>tır. <strong>Adres kaydı</strong>,
             vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,
             insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Ortalama <strong>2-4 hafta</strong> içinde adres kaydı tamamlanır;
-            ardından kalan adımlar 6-8 hafta daha sürebilir. Bu nedenle Almanya101 ana sayfasında yalnızca içerik
+            ardından kalan adımlar 6-8 hafta daha sürebilir. Bu nedenle bu ana sayfada yalnızca içerik
             listelemek yerine, kullanıcıyı <strong>günlük hayatta en çok etkileyecek başlıklara</strong> doğrudan yönlendiren bir yapı kurduk.
           </p>
           <p>
@@ -341,7 +341,7 @@ export default async function HomePage() {
             <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline decoration-google-red underline-offset-2">
               Bundesagentur für Arbeit
             </a>{' '}
-            verilerine göre Almanya&apos;da işsizlik oranı %6 civarındadır ve Türk kökenli adaylar için dil seviyesi en kritik faktördür. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
+            verilerine göre ülkede işsizlik oranı %6 civarındadır ve Türk kökenli adaylar için dil seviyesi en kritik faktördür. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
           </p>
           <p>
             Özellikle{' '}
@@ -357,7 +357,7 @@ export default async function HomePage() {
               maaş hesaplama
             </Link>
             sayfaları birlikte kullanıldığında kullanıcı yalnızca bir ilana başvurmakla kalmaz; aynı zamanda <strong>teklifin gerçek hayatta
-            nasıl karşılık bulacağını</strong> da görür. Bu yaklaşım, Almanya iş bulma arayışını daha <strong>ölçülebilir ve kontrollü</strong> hale getirir.
+            nasıl karşılık bulacağını</strong> da görür. Bu yaklaşım, iş arayışını daha <strong>ölçülebilir ve kontrollü</strong> hale getirir.
           </p>
         </ContentCard>
 
@@ -366,7 +366,7 @@ export default async function HomePage() {
             Yeni bir ülkede doğru insanlara ulaşmak, bazen en doğru belgeyi bulmaktan bile daha değerlidir. Çünkü taşınma sürecinde
             sorular yalnızca resmi işlemlerle sınırlı kalmaz; hangi şehir daha uygundur, ilk ev nasıl bulunur, hangi banka daha hızlı
             hesap açar, hangi işverenler Türkçe iletişim konusunda daha rahattır gibi <strong>gündelik ama kritik kararlar</strong> ortaya çıkar.
-            Almanya'da <strong>~3,5 milyon Türk kökenli insan</strong> yaşıyor ve ilk yıl içinde <strong>%60'ı en az bir kez iş değiştirmektedir</strong>.
+            Burada <strong>~3,5 milyon Türk kökenli insan</strong> yaşıyor ve ilk yıl içinde <strong>%60'ı en az bir kez iş değiştirmektedir</strong>.
             Topluluk, bu noktada hazır cevap değil; <strong>deneyim filtresi</strong> sağlar.
           </p>
           <p>
@@ -375,8 +375,8 @@ export default async function HomePage() {
               topluluk sayfası
             </Link>
             ve WhatsApp erişimi, yalnızca bir sosyal kanal olarak değil, <strong>güvenilir bilgi dolaşımı için temel bir yapı</strong> olarak konumlandı.
-            İnsanların birbirine yön verdiği, güncel deneyimleri paylaştığı ve <strong>yanlış bilgi maliyetini azalttığı</strong> bir topluluk; Almanya
-            Türk topluluğu arayan kullanıcılar için arama sonucundan çok daha yüksek bir değere dönüşür.
+            İnsanların birbirine yön verdiği, güncel deneyimleri paylaştığı ve <strong>yanlış bilgi maliyetini azalttığı</strong> bir topluluk; Türk
+            topluluğu arayan kullanıcılar için arama sonucundan çok daha yüksek bir değere dönüşür.
           </p>
         </ContentCard>
 

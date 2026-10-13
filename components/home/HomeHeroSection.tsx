@@ -25,7 +25,7 @@ export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
       <div className="container relative z-10 mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-10 max-w-4xl text-center">
           <div className="reveal reveal-delay-1 neon-border inline-flex rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/85 backdrop-blur-md">
-            Almanya yaşam rehberi, iş fırsatları ve güçlü topluluk bağlantıları
+            Yaşam rehberi, iş fırsatları ve güçlü topluluk bağlantıları
           </div>
 
           <div className="reveal reveal-delay-2 relative mx-auto mt-7 w-fit">
@@ -40,7 +40,7 @@ export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
             />
           </div>
           <span className="reveal reveal-delay-2 mx-auto mt-2 block text-xs tracking-wide text-white/55">
-            Türkler için kapsamlı Almanya rehberi
+            Türkler için kapsamlı Türkçe rehber
           </span>
 
           <h1 className="reveal reveal-delay-3 mt-6 mb-4 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
@@ -50,7 +50,7 @@ export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
           </h1>
 
           <p className="reveal reveal-delay-4 mx-auto mt-5 max-w-3xl text-base leading-8 text-white/85 sm:text-lg">
-            Almanya101, Almanya&apos;ya taşınmayı planlayan veya burada yaşayan Türkler için hazırlanmış kapsamlı bir Türkçe rehber platformudur.
+            Almanya101, bu ülkeye taşınmayı planlayan veya burada yaşayan Türkler için hazırlanmış kapsamlı bir Türkçe rehber platformudur.
             Günlük yaşam, resmi işlemler, iş bulma süreci, belgeler ve topluluk bağlantıları gibi konularda adım adım yönlendirme sunar.
             Banka, sigorta, maaş hesaplama, vize ve para transferi gibi pratik kararlar için araçlar; belgeler, yazı dizileri ve topluluk kanallarıyla ise bir sonraki adımınızı netleştirmenizi sağlar.
           </p>

@@ -35,10 +35,10 @@ export const DEFAULT_META = {
 } as const;
 
 export const SOCIAL_LINKS = {
-  twitter: 'https://twitter.com/almanya101',
-  facebook: 'https://facebook.com/almanya101',
+  twitter: 'https://x.com/101Almanya46905',
+  facebook: 'https://www.facebook.com/almanya101/',
   instagram: 'https://instagram.com/almanya101de',
-  youtube: 'https://youtube.com/@almanya101',
+  youtube: 'https://www.youtube.com/@almanya101de',
 } as const;
 
 export const CONTACT_INFO = {

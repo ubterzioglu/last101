@@ -52,6 +52,7 @@ export function OrganizationJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
     name: SEO_SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/almanya101.png`,
@@ -76,10 +77,12 @@ export function WebSiteJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
     name: SEO_SITE_NAME,
     url: SITE_URL,
     description: DEFAULT_META_DESCRIPTION,
     inLanguage: 'tr',
+    publisher: { '@id': `${SITE_URL}/#organization` },
   };
 
   return <JsonLd data={data} />;
@@ -224,6 +227,8 @@ export function SpeakableJsonLd({ xpath, cssSelector }: { xpath?: string[]; cssS
   const data = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
+    name: SEO_SITE_NAME,
+    url: SITE_URL,
     speakable,
   };
 

@@ -1,0 +1,12 @@
+# AI crawler permissions for almanya101.de
+# Mirrors robots.txt: public content may be read and cited; private areas are excluded.
+
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /devuser/
+Disallow: /private/
+
+# Site summary for AI agents: /llms.txt
+# Contact: info@almanya101.de
