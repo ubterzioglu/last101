@@ -39,6 +39,7 @@ export const SOCIAL_LINKS = {
   facebook: 'https://www.facebook.com/almanya101/',
   instagram: 'https://instagram.com/almanya101de',
   youtube: 'https://www.youtube.com/@almanya101de',
+  linkedin: 'https://www.linkedin.com/company/almanya101',
 } as const;
 
 export const CONTACT_INFO = {
