@@ -1,0 +1,74 @@
+[   32568ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://sedo.com/api/domain-details/campaign:0
+[   32569ms] [ERROR] Not Found @ https://cdn.sedo.com/c7r/domain-details/assets/index-CPOtJxek.js:212
+[   50172ms] ReferenceError: jQuery is not defined
+    at https://vasistdas.de/:2165:1
+[   50800ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[   50848ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[   53267ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'user_engagement'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[   54156ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[   60977ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'click'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  100042ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'scroll'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  121433ms] ReferenceError: jQuery is not defined
+    at https://vasistdas.de/:2165:1
+[  121497ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  121582ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  122478ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  126321ms] ReferenceError: jQuery is not defined
+    at https://vasistdas.de/schleswig-holstein-2027-resmi-tatil-gunleri/:2156:1
+[  126400ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  126531ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  127111ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  128125ms] ReferenceError: jQuery is not defined
+    at https://vasistdas.de/:2165:1
+[  128131ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  128321ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  129072ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  131757ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  132101ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  132582ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  134403ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  134413ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'tracking'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  135400ms] ReferenceError: jQuery is not defined
+    at https://vasistdas.de/:2165:1
+[  135407ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  135481ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  136024ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  136860ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  137180ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  137892ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  139450ms] ReferenceError: jQuery is not defined
+    at https://vasistdas.de/:2165:1
+[  139451ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  139550ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  140475ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  140705ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  140816ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  141220ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  142109ms] ReferenceError: jQuery is not defined
+    at https://vasistdas.de/:2165:1
+[  142111ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  142190ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  142566ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  145384ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  145511ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  146116ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  146531ms] [ERROR] Access to XMLHttpRequest at 'https://fundingchoicesmessages.google.com/el/AGSKWxVjDtJaFxJ6igE0izfIBUZTwCOnbZSBDoU-_OA6gOTIw_2g7dy3t5PADF2GfnCXmBM2FNh5zb7MYJO1gAtV2QEinWwW-tI5PuJbMZ_MY7-5KZdXA8PrZ2BgusdMqtxrp7VVfrxANQ==' from origin 'https://vasistdas.de' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://vasistdas.de/at21-belgesi-nedir-ve-nasil-alinir/:0
+[  146531ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://fundingchoicesmessages.google.com/el/AGSKWxVjDtJaFxJ6igE0izfIBUZTwCOnbZSBDoU-_OA6gOTIw_2g7dy3t5PADF2GfnCXmBM2FNh5zb7MYJO1gAtV2QEinWwW-tI5PuJbMZ_MY7-5KZdXA8PrZ2BgusdMqtxrp7VVfrxANQ==:0
+[  147717ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  147728ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'tracking'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205
+[  158491ms] ReferenceError: fbq is not defined
+    at <anonymous>:1:1
+    at https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:929:429
+    at https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:930:132
+    at DT (https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:931:31)
+    at Md.CT (https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:928:92)
+    at Md.<anonymous> (https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:311:187)
+    at l.apply (https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:232:465)
+    at ib (https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:192:767)
+    at hb (https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:192:502)
+    at Md.<anonymous> (https://www.googletagmanager.com/gtm.js?id=GTM-KMVJ6LHZ:256:473)
+[  158494ms] [LOG] Banner disabled @ https://cdn-cookieyes.com/client_data/2225c14efea8fb5fc81de8e7/script.js:0
+[  158626ms] ReferenceError: jQuery is not defined
+    at https://vasistdas.de/:2165:1
+[  158648ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://vasistdas.de/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[  159067ms] [WARNING] [Meta Pixel] - You are sending a non-standard event 'ad_impression'. The preferred way to send these events is using trackCustom. See 'https://developers.facebook.com/docs/ads-for-websites/pixel-events/#events' for more information. @ https://connect.facebook.net/en_US/fbevents.js:205

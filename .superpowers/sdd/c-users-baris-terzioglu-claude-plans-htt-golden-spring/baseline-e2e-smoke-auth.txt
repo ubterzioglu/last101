@@ -1,0 +1,421 @@
+
+Running 83 tests using 14 workers
+
+
+
+(node:37328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:61940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:18376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon POST /api/news-admin-action is not authorized
+[2/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/recruitment-agencies-admin-list is not authorized
+
+(node:27588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:60376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[3/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/devuser-admin-list is not authorized
+[4/83] [smoke-auth] › e2e\smoke\almanya-maas-beklentisi.spec.ts:36:7 › Almanya Maas Beklentisi Araci › daha zayif ve dusuk maliyetli profil daha dusuk brut band ve kira baskisi verir
+[5/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/admin/security-notes is not authorized
+
+(node:6732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/83] [smoke-auth] › e2e\smoke\almanya-maas-beklentisi.spec.ts:62:7 › Almanya Maas Beklentisi Araci › geri donme ve sifirlama 15 soruluk akista calisir
+[7/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/news-admin-list is not authorized
+
+(node:40096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:19752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[8/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Yolunu Seç Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+
+(node:40972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[9/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon POST /api/recruitment-agencies-admin-action is not authorized
+[10/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Yolunu Seç Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[11/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/admin/news/posts is not authorized
+
+(node:59300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[12/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Yolunu Seç Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[13/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/members-admin-list is not authorized
+[14/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/admin/news/sources is not authorized
+
+(node:51872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:34380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:46068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[15/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/admin/news/settings is not authorized
+[16/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Maaş Beklentisi Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+
+(node:60632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[17/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/broken-link-reports-admin-list is not authorized
+[18/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Maaş Beklentisi Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[19/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Maaş Beklentisi Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[20/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/provider-submissions-admin-list is not authorized
+[21/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya'ya Hazır Mısın? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[22/83] [smoke-auth] › e2e\smoke\almanya-maas-beklentisi.spec.ts:7:7 › Almanya Maas Beklentisi Araci › yuksek uzmanlik profili daha yuksek brut aralik uretir
+[23/83] [smoke-auth] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/participant-admin-list is not authorized
+[24/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya'ya Hazır Mısın? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[25/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya'ya Hazır Mısın? Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[26/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:64:11 › Almanya'ya Hazır Mısın? Aracı › sonuç sonrası anket tamamlanır ve başarı durumu görünür
+[27/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Hangi Şehir Sana Uygun? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[28/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Hangi Şehir Sana Uygun? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[29/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Hangi Şehir Sana Uygun? Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[30/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Topluluk ve Danışmanlık Eşleştirici › anonim kullanıcı için açılır ve temel bloklar görünür
+[31/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Topluluk ve Danışmanlık Eşleştirici › son seçeneklerle ilerleyince de dead-end üretmez
+[32/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Topluluk ve Danışmanlık Eşleştirici › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[33/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Kariyer ve Eğitim Rotası Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[34/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Kariyer ve Eğitim Rotası Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[35/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Kariyer ve Eğitim Rotası Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[36/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Yaşam Tarzı Uyumu Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[37/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Yaşam Tarzı Uyumu Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[38/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Yaşam Tarzı Uyumu Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[39/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › İlk 90 Gün Planlayıcı › anonim kullanıcı için açılır ve temel bloklar görünür
+[40/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › İlk 90 Gün Planlayıcı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[41/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › İlk 90 Gün Planlayıcı › son seçeneklerle ilerleyince de dead-end üretmez
+[42/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Önce Hangi Sorunu Çözmelisin? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[43/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Önce Hangi Sorunu Çözmelisin? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[44/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Önce Hangi Sorunu Çözmelisin? Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[45/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya'da İş Bulma Olasılığı Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[46/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya'da İş Bulma Olasılığı Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[47/83] [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya'da İş Bulma Olasılığı Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[48/83] [smoke-auth] › e2e\smoke\almanya-yolunu-sec.spec.ts:7:7 › Almanya Yolunu Seç Aracı › güçlü teklif, diploma ve maaş profili EU Mavi Kart sonucuna gider
+[49/83] [smoke-auth] › e2e\smoke\almanya-yolunu-sec.spec.ts:34:7 › Almanya Yolunu Seç Aracı › teklif var ama maaş sınırdaysa Fachkräfte öne çıkar
+[50/83] [smoke-auth] › e2e\smoke\almanya-yolunu-sec.spec.ts:58:7 › Almanya Yolunu Seç Aracı › teklif yok ama yeterlilik, dil ve bütçe varsa Chancenkarte çıkar
+[51/83] [smoke-auth] › e2e\smoke\almanya-yolunu-sec.spec.ts:82:7 › Almanya Yolunu Seç Aracı › aile bağı baskınsa aile birleşimi sonucu döner
+[52/83] [smoke-auth] › e2e\smoke\almanya-yolunu-sec.spec.ts:106:7 › Almanya Yolunu Seç Aracı › pratik eğitim niyeti ve temel Almanca Ausbildung sonucuna gider
+[53/83] [smoke-auth] › e2e\smoke\almanya-yolunu-sec.spec.ts:130:7 › Almanya Yolunu Seç Aracı › uygunluk düşük ve blokaj yüksekse LIMITED sonucu döner
+[54/83] [smoke-auth] › e2e\smoke\almanya-yolunu-sec.spec.ts:154:7 › Almanya Yolunu Seç Aracı › geri dönme ve sıfırlama 15 soruluk akışta çalışır
+[55/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public / returns 200 without errors
+[56/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /haberler returns 200 without errors
+[57/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanya-araclari returns 200 without errors
+[58/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanya-yolunu-sec returns 200 without errors
+[59/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanya-maas-beklentisi returns 200 without errors
+[60/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanyaya-hazir-misin returns 200 without errors
+[61/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /hangi-sehir-sana-uygun returns 200 without errors
+[62/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /topluluk-ve-danismanlik returns 200 without errors
+[63/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /kariyer-ve-egitim-rotasi returns 200 without errors
+[64/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanya-yasam-tarzi-uyumu returns 200 without errors
+[65/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /ilk-90-gun-planlayici returns 200 without errors
+[66/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /once-hangi-sorunu-cozmelisin returns 200 without errors
+[67/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanyada-is-bulma-olasiligi returns 200 without errors
+[68/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:76:7 › public /belgeler does not 5xx or crash
+[69/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:76:7 › public /hizmet-rehberi does not 5xx or crash
+[70/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:76:7 › public /yazi-dizisi does not 5xx or crash
+[71/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:76:7 › public /blog does not 5xx or crash
+[72/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:76:7 › public /hakkimizda does not 5xx or crash
+[73/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:76:7 › public /iletisim does not 5xx or crash
+[74/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:76:7 › public /impressum does not 5xx or crash
+[75/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:76:7 › public /rehber does not 5xx or crash
+[76/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /banka-secim is not publicly accessible to anonymous users
+[77/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /sigorta-secim is not publicly accessible to anonymous users
+[78/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /maas-hesaplama is not publicly accessible to anonymous users
+[79/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /stepstone-karsilastirma is not publicly accessible to anonymous users
+[80/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /vatandaslik-testi is not publicly accessible to anonymous users
+[81/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /para-transferi is not publicly accessible to anonymous users
+[82/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /vize-secim is not publicly accessible to anonymous users
+[83/83] [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /software-hub is not publicly accessible to anonymous users
+  1) [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:64:11 › Almanya'ya Hazır Mısın? Aracı › sonuç sonrası anket tamamlanır ve başarı durumu görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('questionnaire-result')
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByTestId('questionnaire-result')
+
+
+      82 |         await expect(page.getByTestId('questionnaire-card')).toBeVisible();
+      83 |         await walkQuestionnaire(page);
+    > 84 |         await expect(page.getByTestId('questionnaire-result')).toBeVisible();
+         |                                                                ^
+      85 |         await expect(page.getByText('Anket yanıtların başarıyla kaydedildi.')).toBeVisible();
+      86 |       });
+      87 |     }
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:84:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-auth\almanya-tools-Almanya-ya-H-aef20-ır-ve-başarı-durumu-görünür-smoke-auth\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-auth\almanya-tools-Almanya-ya-H-aef20-ır-ve-başarı-durumu-görünür-smoke-auth\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-auth\almanya-tools-Almanya-ya-H-aef20-ır-ve-başarı-durumu-görünür-smoke-auth\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-auth\almanya-tools-Almanya-ya-H-aef20-ır-ve-başarı-durumu-görünür-smoke-auth\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2) [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /maas-hesaplama is not publicly accessible to anonymous users 
+
+    Error: anon user reached /maas-hesaplama directly (gate bypassed)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+       98 |
+       99 |     // If still on the exact tool path, the gate failed to redirect — that's a fail.
+    > 100 |     expect(exactToolUrl, `anon user reached ${tool} directly (gate bypassed)`).toBe(false);
+          |                                                                                ^
+      101 |   });
+      102 | }
+      103 |
+        at C:\temp_private\almanya101last\e2e\smoke\public-routes.spec.ts:100:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-m-086b6-cessible-to-anonymous-users-smoke-auth\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-auth\public-routes-gated-tool-m-086b6-cessible-to-anonymous-users-smoke-auth\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-m-086b6-cessible-to-anonymous-users-smoke-auth\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-auth\public-routes-gated-tool-m-086b6-cessible-to-anonymous-users-smoke-auth\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3) [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /banka-secim is not publicly accessible to anonymous users 
+
+    Error: anon user reached /banka-secim directly (gate bypassed)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+       98 |
+       99 |     // If still on the exact tool path, the gate failed to redirect — that's a fail.
+    > 100 |     expect(exactToolUrl, `anon user reached ${tool} directly (gate bypassed)`).toBe(false);
+          |                                                                                ^
+      101 |   });
+      102 | }
+      103 |
+        at C:\temp_private\almanya101last\e2e\smoke\public-routes.spec.ts:100:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-b-237cf-cessible-to-anonymous-users-smoke-auth\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-auth\public-routes-gated-tool-b-237cf-cessible-to-anonymous-users-smoke-auth\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-b-237cf-cessible-to-anonymous-users-smoke-auth\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-auth\public-routes-gated-tool-b-237cf-cessible-to-anonymous-users-smoke-auth\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  4) [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /sigorta-secim is not publicly accessible to anonymous users 
+
+    Error: anon user reached /sigorta-secim directly (gate bypassed)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+       98 |
+       99 |     // If still on the exact tool path, the gate failed to redirect — that's a fail.
+    > 100 |     expect(exactToolUrl, `anon user reached ${tool} directly (gate bypassed)`).toBe(false);
+          |                                                                                ^
+      101 |   });
+      102 | }
+      103 |
+        at C:\temp_private\almanya101last\e2e\smoke\public-routes.spec.ts:100:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-s-be79b-cessible-to-anonymous-users-smoke-auth\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-auth\public-routes-gated-tool-s-be79b-cessible-to-anonymous-users-smoke-auth\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-s-be79b-cessible-to-anonymous-users-smoke-auth\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-auth\public-routes-gated-tool-s-be79b-cessible-to-anonymous-users-smoke-auth\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  5) [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /stepstone-karsilastirma is not publicly accessible to anonymous users 
+
+    Error: anon user reached /stepstone-karsilastirma directly (gate bypassed)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+       98 |
+       99 |     // If still on the exact tool path, the gate failed to redirect — that's a fail.
+    > 100 |     expect(exactToolUrl, `anon user reached ${tool} directly (gate bypassed)`).toBe(false);
+          |                                                                                ^
+      101 |   });
+      102 | }
+      103 |
+        at C:\temp_private\almanya101last\e2e\smoke\public-routes.spec.ts:100:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-s-57657-cessible-to-anonymous-users-smoke-auth\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-auth\public-routes-gated-tool-s-57657-cessible-to-anonymous-users-smoke-auth\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-s-57657-cessible-to-anonymous-users-smoke-auth\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-auth\public-routes-gated-tool-s-57657-cessible-to-anonymous-users-smoke-auth\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  6) [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /vatandaslik-testi is not publicly accessible to anonymous users 
+
+    Error: anon user reached /vatandaslik-testi directly (gate bypassed)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+       98 |
+       99 |     // If still on the exact tool path, the gate failed to redirect — that's a fail.
+    > 100 |     expect(exactToolUrl, `anon user reached ${tool} directly (gate bypassed)`).toBe(false);
+          |                                                                                ^
+      101 |   });
+      102 | }
+      103 |
+        at C:\temp_private\almanya101last\e2e\smoke\public-routes.spec.ts:100:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-v-8c821-cessible-to-anonymous-users-smoke-auth\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-auth\public-routes-gated-tool-v-8c821-cessible-to-anonymous-users-smoke-auth\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-v-8c821-cessible-to-anonymous-users-smoke-auth\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-auth\public-routes-gated-tool-v-8c821-cessible-to-anonymous-users-smoke-auth\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  7) [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /para-transferi is not publicly accessible to anonymous users 
+
+    Error: anon user reached /para-transferi directly (gate bypassed)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+       98 |
+       99 |     // If still on the exact tool path, the gate failed to redirect — that's a fail.
+    > 100 |     expect(exactToolUrl, `anon user reached ${tool} directly (gate bypassed)`).toBe(false);
+          |                                                                                ^
+      101 |   });
+      102 | }
+      103 |
+        at C:\temp_private\almanya101last\e2e\smoke\public-routes.spec.ts:100:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-p-7b4cc-cessible-to-anonymous-users-smoke-auth\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-auth\public-routes-gated-tool-p-7b4cc-cessible-to-anonymous-users-smoke-auth\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-p-7b4cc-cessible-to-anonymous-users-smoke-auth\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-auth\public-routes-gated-tool-p-7b4cc-cessible-to-anonymous-users-smoke-auth\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  8) [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /vize-secim is not publicly accessible to anonymous users 
+
+    Error: anon user reached /vize-secim directly (gate bypassed)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+       98 |
+       99 |     // If still on the exact tool path, the gate failed to redirect — that's a fail.
+    > 100 |     expect(exactToolUrl, `anon user reached ${tool} directly (gate bypassed)`).toBe(false);
+          |                                                                                ^
+      101 |   });
+      102 | }
+      103 |
+        at C:\temp_private\almanya101last\e2e\smoke\public-routes.spec.ts:100:80
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-v-11e51-cessible-to-anonymous-users-smoke-auth\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-auth\public-routes-gated-tool-v-11e51-cessible-to-anonymous-users-smoke-auth\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-auth\public-routes-gated-tool-v-11e51-cessible-to-anonymous-users-smoke-auth\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-auth\public-routes-gated-tool-v-11e51-cessible-to-anonymous-users-smoke-auth\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  8 failed
+    [smoke-auth] › e2e\smoke\almanya-tools.spec.ts:64:11 › Almanya'ya Hazır Mısın? Aracı › sonuç sonrası anket tamamlanır ve başarı durumu görünür 
+    [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /banka-secim is not publicly accessible to anonymous users 
+    [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /sigorta-secim is not publicly accessible to anonymous users 
+    [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /maas-hesaplama is not publicly accessible to anonymous users 
+    [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /stepstone-karsilastirma is not publicly accessible to anonymous users 
+    [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /vatandaslik-testi is not publicly accessible to anonymous users 
+    [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /para-transferi is not publicly accessible to anonymous users 
+    [smoke-auth] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /vize-secim is not publicly accessible to anonymous users 
+  75 passed (24.5s)

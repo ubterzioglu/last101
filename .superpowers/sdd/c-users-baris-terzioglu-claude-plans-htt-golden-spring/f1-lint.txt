@@ -1,0 +1,4 @@
+
+> almanya101@0.1.0 lint
+> eslint .
+

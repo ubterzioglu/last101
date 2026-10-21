@@ -151,6 +151,9 @@ interface ArticleJsonLdProps {
   author?: string;
   url: string;
   image?: string;
+  /** Sayfadaki görünür "Kaynak" bloğuyla eşleşen kaynak adı/bağlantısı. */
+  sourceName?: string;
+  sourceUrl?: string;
 }
 
 export function ArticleJsonLd({
@@ -161,6 +164,8 @@ export function ArticleJsonLd({
   author = SEO_SITE_NAME,
   url,
   image = `${SITE_URL}${DEFAULT_OG_IMAGE}`,
+  sourceName,
+  sourceUrl,
 }: ArticleJsonLdProps) {
   const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${SITE_URL}${image}`;
 
@@ -172,6 +177,15 @@ export function ArticleJsonLd({
     image: imageUrl,
     datePublished,
     dateModified: dateModified || datePublished,
+    ...(sourceName || sourceUrl
+      ? {
+          citation: {
+            '@type': 'CreativeWork',
+            ...(sourceName ? { name: sourceName } : {}),
+            ...(sourceUrl ? { url: sourceUrl } : {}),
+          },
+        }
+      : {}),
     author: {
       '@type': 'Organization',
       name: author,
@@ -216,53 +230,4 @@ export function HowToJsonLd({ name, description, steps }: { name: string; descri
   return <JsonLd data={data} />;
 }
 
-export function SpeakableJsonLd({ xpath, cssSelector }: { xpath?: string[]; cssSelector?: string[] }) {
-  const speakable: Record<string, unknown> = {
-    '@context': 'https://schema.org',
-    '@type': 'SpeakableSpecification',
-  };
-  if (xpath) speakable.xpath = xpath;
-  if (cssSelector) speakable.cssSelector = cssSelector;
 
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: SEO_SITE_NAME,
-    url: SITE_URL,
-    speakable,
-  };
-
-  return <JsonLd data={data} />;
-}
-
-/**
- * LocalBusiness Schema (for Germany targeting)
- */
-export function LocalBusinessJsonLd() {
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: SEO_SITE_NAME,
-    description: DEFAULT_META_DESCRIPTION,
-    url: SITE_URL,
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'DE',
-      addressRegion: 'Berlin',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 52.520008,
-      longitude: 13.404954,
-    },
-    areaServed: [
-      {
-        '@type': 'Country',
-        name: 'Germany',
-      },
-    ],
-    availableLanguage: ['Turkish', 'German', 'English'],
-  };
-
-  return <JsonLd data={data} />;
-}

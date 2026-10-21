@@ -1,0 +1,4 @@
+[     109ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4517/client.js:15280
+[     111ms] ReferenceError: process is not defined
+    at http://127.0.0.1:4517/client.js:18895:2
+    at http://127.0.0.1:4517/client.js:19034:3

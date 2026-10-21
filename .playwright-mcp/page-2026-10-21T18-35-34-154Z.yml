@@ -1,0 +1,68 @@
+- generic [ref=f11e2]:
+  - banner [ref=f11e3]:
+    - generic [ref=f11e4]:
+      - link [ref=f11e5] [cursor=pointer]:
+        - /url: /
+        - img "almanya101" [ref=f11e6]
+      - button "Menü" [expanded] [ref=f11e8] [cursor=pointer]
+  - dialog [ref=f11e123]:
+    - generic [ref=f11e124]:
+      - paragraph [ref=f11e125]: Menü
+      - button "Menüyü kapat" [active] [ref=f11e126] [cursor=pointer]
+    - navigation "Site menüsü" [ref=f11e130]:
+      - link "Ana Sayfa" [ref=f11e131] [cursor=pointer]:
+        - /url: /
+      - button "Araçlar" [ref=f11e136] [cursor=pointer]
+      - button "Topluluk" [ref=f11e140] [cursor=pointer]
+      - button "İçerik" [ref=f11e144] [cursor=pointer]
+      - button "İletişim" [ref=f11e148] [cursor=pointer]
+    - generic [ref=f11e151]:
+      - link "WhatsApp" [ref=f11e152] [cursor=pointer]:
+        - /url: https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo
+      - generic [ref=f11e156]:
+        - link "Giriş yap" [ref=f11e157] [cursor=pointer]:
+          - /url: /giris
+        - link "Üye Ol" [ref=f11e158] [cursor=pointer]:
+          - /url: /giris
+  - main [ref=f11e10]:
+    - button "Sayfa butonu" [ref=f11e11] [cursor=pointer]
+    - paragraph [ref=f11e12]: Örnek içerik satırı 1. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e13]: Örnek içerik satırı 2. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e14]: Örnek içerik satırı 3. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e15]: Örnek içerik satırı 4. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e16]: Örnek içerik satırı 5. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e17]: Örnek içerik satırı 6. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e18]: Örnek içerik satırı 7. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e19]: Örnek içerik satırı 8. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e20]: Örnek içerik satırı 9. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e21]: Örnek içerik satırı 10. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e22]: Örnek içerik satırı 11. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e23]: Örnek içerik satırı 12. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e24]: Örnek içerik satırı 13. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e25]: Örnek içerik satırı 14. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e26]: Örnek içerik satırı 15. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e27]: Örnek içerik satırı 16. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e28]: Örnek içerik satırı 17. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e29]: Örnek içerik satırı 18. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e30]: Örnek içerik satırı 19. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e31]: Örnek içerik satırı 20. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e32]: Örnek içerik satırı 21. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e33]: Örnek içerik satırı 22. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e34]: Örnek içerik satırı 23. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e35]: Örnek içerik satırı 24. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e36]: Örnek içerik satırı 25. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e37]: Örnek içerik satırı 26. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e38]: Örnek içerik satırı 27. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e39]: Örnek içerik satırı 28. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e40]: Örnek içerik satırı 29. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e41]: Örnek içerik satırı 30. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e42]: Örnek içerik satırı 31. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e43]: Örnek içerik satırı 32. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e44]: Örnek içerik satırı 33. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e45]: Örnek içerik satırı 34. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e46]: Örnek içerik satırı 35. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e47]: Örnek içerik satırı 36. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e48]: Örnek içerik satırı 37. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e49]: Örnek içerik satırı 38. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e50]: Örnek içerik satırı 39. Sayfanın kaydırılabilir olması için uzun içerik.
+    - paragraph [ref=f11e51]: Örnek içerik satırı 40. Sayfanın kaydırılabilir olması için uzun içerik.

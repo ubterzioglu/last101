@@ -1,0 +1,222 @@
+[     432ms] [WARNING] goatcounter: not counting because of: localhost @ https://gc.zgo.at/count.js:79
+[ 2952485ms] [WARNING] goatcounter: not counting because of: localhost @ https://gc.zgo.at/count.js:79
+[ 3049161ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://accounts.google.com/v3/signin/identifier?opparams=%253Fredirect_to%253Dhttp%25253A%25252F%25252F127.0.0.1%25253A3000%25252Fauth%25252Fcallback%25253Fnext%25253D%2525252Falmanya-yolunu-sec&dsh=S1610944138%3A1792612061107325&client_id=953310768061-o8tep4pgm4t32jr41li31b9p44up23kh.apps.googleusercontent.com&o2v=2&redirect_uri=https%3A%2F%2Fldptefnpiudquipdsezr.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=email+profile&service=lso&state=aaae873a-cd32-4474-b840-05e6add945ec&flowName=GeneralOAuthFlow&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fv3%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hAM1ZuyrkSGHDnbIhwWaGDDaAOm0ChVMeXGaziMNSEuU_ish5aEVNGcAk_gYtw0loqrFVo1u-_NX2Nm2PAHhSkosNrho02ffcD5Xqy3M2l-iIj5KA30SCB9dK6SxTJNT5S2nCxHHc00F_YUHC599rhP78n2Qnv4j72MujUD798u8eI2ydxqARccPnQv5cEjIvC5yQSD3QF8a3XL_HXlPjVL2N0rw9D7zMY2umf9E7N3_6IsHOC73UfsNJTd7sGYa23m7hPIVkZ7-SsR2qlC0OOe0sJrt6UDfhj_bA3uKmJiGYBf-WwZGG39c0HzceiNSzLyT4UvVH2s23Jwbf6kdJsCD4MHafP9G4QI1XBAOfbLM35Qq82Qyh2ia8Ko-S6orZNiUT9DOfHZfnZ-WcugPxp1jq-hHQ7HUUNfWMWjknzfXrswWGszXpWvYQcIiUYWEyn9ZlKe3HF8Jdk94oSmvoDFP4A834NZQNLcqg-qs78sZS2jVPEo%26flowName%3DGeneralOAuthFlow%26as%3DS1610944138%253A1792612061107325%26client_id%3D953310768061-o8tep4pgm4t32jr41li31b9p44up23kh.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fv3%252Fconsent%23&app_domain=https%3A%2F%2Fldptefnpiudquipdsezr.supabase.co&rart=ANgoxcfMhFY9rw4dTraaT3-rFGdkdd-EG4iNLMrIrAocmU02D6wPjmYHjFUrbqPzAKIFdmPNOYOUpfs9gPzb_z4qflEwlmnfy39IZteaBIQ_oW0DkR_BVnY:0
+[ 3049168ms] [LOG] %c%s color: red; background: yellow; font-size: 24px; WARNING! @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.uZq9ZRqbnkA.es5.O/am=nw8IAQAAADjCSwAAkACgfwMACBCsA95rAZgAIQMAAAAAAAAAAFwAAFBFAAE/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlHMhNvpfCb6tikv2LedCaUDCwpZnw/dti=1/m=_b,_tp:585
+[ 3049168ms] [LOG] %c%s font-size: 18px; Using this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.
+Do not enter or paste code that you do not understand. @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.uZq9ZRqbnkA.es5.O/am=nw8IAQAAADjCSwAAkACgfwMACBCsA95rAZgAIQMAAAAAAAAAAFwAAFBFAAE/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlHMhNvpfCb6tikv2LedCaUDCwpZnw/dti=1/m=_b,_tp:585
+[ 3049550ms] [WARNING] The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 @ :0
+[ 3049552ms] [WARNING] The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127 @ :0
+[ 3052681ms] [WARNING] goatcounter: not counting because of: localhost @ https://gc.zgo.at/count.js:79
+[ 3806283ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/maas-hesaplama?_rsc=1p-R_iEY6bj0jY31:0
+[ 3806283ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/maas-hesaplama. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807282ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/vize-secim?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807282ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/vize-secim. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807283ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/tatil/almanya?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807283ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/tatil/almanya. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807283ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/tatil/turkiye?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807283ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/tatil/turkiye. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807316ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/hizmet-rehberi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807316ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/hizmet-rehberi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807317ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/yazi-dizisi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807317ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/yazi-dizisi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807317ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/haberler?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807317ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/haberler. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807317ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/is-ilanlari?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807317ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/is-ilanlari. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807332ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/belgeler?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807332ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/belgeler. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807333ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/software-hub?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807333ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/software-hub. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807352ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/ekibimize-katil?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807352ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/ekibimize-katil. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807352ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/hakkimizda?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807352ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/hakkimizda. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807352ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/hizmet-rehberi/oneri?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807352ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/hizmet-rehberi/oneri. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807353ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/iletisim?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807353ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/iletisim. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807366ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/topluluk?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807366ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/topluluk. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807450ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/haberler/lufthansa-da-iki-gun-surecek-pilot-grevi-basladi--5c52e180-6a70-434d-9de6-589c00818579?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807450ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/haberler/lufthansa-da-iki-gun-surecek-pilot-grevi-basladi--5c52e180-6a70-434d-9de6-589c00818579. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807450ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/haberler/hastalik-iznine-kesinti-gelebilir--e7aee0ae-c9ad-4828-90b8-842df610f8ff?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807450ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/haberler/hastalik-iznine-kesinti-gelebilir--e7aee0ae-c9ad-4828-90b8-842df610f8ff. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3807450ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/haberler/almanya-akaryakitta-gecici-vergi-indirimi-karari-aldi--2b9af277-5803-458b-a1f9-5a02abde8900?_rsc=1p-R_iEY6bj0jY31:0
+[ 3807450ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/haberler/almanya-akaryakitta-gecici-vergi-indirimi-karari-aldi--2b9af277-5803-458b-a1f9-5a02abde8900. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3808233ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/?_rsc=1p-R_iEY6bj0jY31:0
+[ 3808233ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3808235ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/blog?_rsc=1p-R_iEY6bj0jY31:0
+[ 3808235ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/blog. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3808235ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/kariyer?_rsc=1p-R_iEY6bj0jY31:0
+[ 3808235ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/kariyer. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3808235ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/gizlilik-politikasi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3808236ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/gizlilik-politikasi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3808236ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/kullanim-sartlari?_rsc=1p-R_iEY6bj0jY31:0
+[ 3808236ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/kullanim-sartlari. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3808236ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/kvkk-gdpr-ccpa?_rsc=1p-R_iEY6bj0jY31:0
+[ 3808236ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/kvkk-gdpr-ccpa. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3808237ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/cerez-politikasi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3808237ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/cerez-politikasi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3808237ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/impressum?_rsc=1p-R_iEY6bj0jY31:0
+[ 3808237ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/impressum. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812352ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/stepstone-karsilastirma?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812352ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/stepstone-karsilastirma. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812352ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/vatandaslik-testi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812352ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/vatandaslik-testi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812352ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/para-transferi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812352ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/para-transferi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812368ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/once-hangi-sorunu-cozmelisin?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812368ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/once-hangi-sorunu-cozmelisin. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812368ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/almanyada-is-bulma-olasiligi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812368ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/almanyada-is-bulma-olasiligi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812368ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/banka-secim?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812368ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/banka-secim. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812368ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/sigorta-secim?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812368ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/sigorta-secim. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812384ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/topluluk-ve-danismanlik?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812385ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/topluluk-ve-danismanlik. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812385ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/kariyer-ve-egitim-rotasi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812385ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/kariyer-ve-egitim-rotasi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812385ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/almanya-yasam-tarzi-uyumu?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812385ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/almanya-yasam-tarzi-uyumu. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812385ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/ilk-90-gun-planlayici?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812385ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/ilk-90-gun-planlayici. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812401ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/almanya-yolunu-sec?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812402ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/almanya-yolunu-sec. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812402ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/almanya-maas-beklentisi?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812402ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/almanya-maas-beklentisi. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812402ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/almanyaya-hazir-misin?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812402ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/almanyaya-hazir-misin. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812402ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/hangi-sehir-sana-uygun?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812402ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/hangi-sehir-sana-uygun. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 3812417ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/almanya-araclari?_rsc=1p-R_iEY6bj0jY31:0
+[ 3812418ms] [ERROR] Failed to fetch RSC payload for http://127.0.0.1:3000/almanya-araclari. Falling back to browser navigation. TypeError: Failed to fetch
+    at y (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:44440)
+    at async _ (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:43298)
+    at async Object.o [as task] (http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:1:123896) @ http://127.0.0.1:3000/_next/static/chunks/1255-60d8dc7c8c9309a1.js:0
+[ 4018276ms] [WARNING] goatcounter: not counting because of: localhost @ https://gc.zgo.at/count.js:79
+[ 4021607ms] [WARNING] goatcounter: not counting because of: localhost @ https://gc.zgo.at/count.js:79
+[ 4488234ms] [WARNING] goatcounter: not counting because of: localhost @ https://gc.zgo.at/count.js:79

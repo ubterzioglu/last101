@@ -1,0 +1,93 @@
+
+Running 29 tests using 14 workers
+
+
+
+(node:44840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/29] [setup] › e2e\auth.setup.ts:34:6 › authenticate
+
+
+(node:23992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:23148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:39040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+
+(node:61908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:38992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+
+(node:16992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/29] [chromium-auth] › e2e\tools\banka-secim.spec.ts:16:7 › Banka Seçim Aracı › giriş sonrası ilk soru ekranı görünür
+
+(node:1940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:66364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[3/29] [chromium-auth] › e2e\tools\banka-secim.spec.ts:27:7 › Banka Seçim Aracı › şık seçince otomatik bir sonraki soruya ilerler
+
+
+(node:62680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/29] [chromium-auth] › e2e\tools\maas-hesaplama.spec.ts:27:7 › Maaş Hesaplayıcı › giriş sonrası sayfa açılır, hesaplamadan önce sonuç yok
+
+(node:35228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[5/29] [chromium-auth] › e2e\tools\para-transferi.spec.ts:62:7 › Para Transferi Seçim Aracı › Sıfırla ilk soruya döndürür
+[6/29] [chromium-auth] › e2e\tools\para-transferi.spec.ts:31:7 › Para Transferi Seçim Aracı › yön seçince bir sonraki adıma ilerler
+[7/29] [chromium-auth] › e2e\tools\maas-hesaplama.spec.ts:70:7 › Maaş Hesaplayıcı › net hedeften brüt hesaplama (tersine mod) çalışır
+[8/29] [chromium-auth] › e2e\tools\maas-hesaplama.spec.ts:60:7 › Maaş Hesaplayıcı › aylık kesinti kırılımı açılır ve Lohnsteuer satırı görünür
+
+(node:65620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:12864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:65656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[9/29] [chromium-auth] › e2e\tools\banka-secim.spec.ts:39:7 › Banka Seçim Aracı › 20 soru tamamlanınca 3 öneri ile sonuç ekranı gelir
+
+(node:41416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[10/29] [chromium-auth] › e2e\tools\banka-secim.spec.ts:59:7 › Banka Seçim Aracı › sonuç ekranında Sıfırla ilk soruya döndürür
+[11/29] [chromium-auth] › e2e\tools\maas-hesaplama.spec.ts:38:7 › Maaş Hesaplayıcı › Hesapla 6 sonuç kartı üretir, brüt > net
+[12/29] [chromium-auth] › e2e\tools\para-transferi.spec.ts:41:7 › Para Transferi Seçim Aracı › 20 soruluk akışı tamamlayınca öneri/sonuç ekranına ulaşılır
+[13/29] [chromium-auth] › e2e\tools\para-transferi.spec.ts:20:7 › Para Transferi Seçim Aracı › giriş sonrası ilk soru (gönderim yönü) görünür
+[14/29] [chromium-auth] › e2e\tools\sigorta-secim.spec.ts:21:7 › Sigorta Seçim Aracı › giriş sonrası ilk soru ekranı görünür
+[15/29] [chromium-auth] › e2e\tools\sigorta-secim.spec.ts:31:7 › Sigorta Seçim Aracı › şık seçince otomatik ilerler
+[16/29] [chromium-auth] › e2e\tools\sigorta-secim.spec.ts:38:7 › Sigorta Seçim Aracı › 20 soru tamamlanınca skorlu sonuç ekranı gelir
+[17/29] [chromium-auth] › e2e\tools\sigorta-secim.spec.ts:52:7 › Sigorta Seçim Aracı › sonuç ekranında Sıfırla ilk soruya döndürür
+[18/29] [chromium-auth] › e2e\tools\software-hub.spec.ts:13:7 › Software Hub › giriş yapmış kullanıcı devuser paneline yönlendirilir
+[19/29] [chromium-auth] › e2e\tools\software-hub.spec.ts:23:7 › Software Hub › yönlendirilen panel içeriği yüklenir
+[20/29] [chromium-auth] › e2e\tools\stepstone-karsilastirma.spec.ts:29:7 › Stepstone Karşılaştırma › giriş sonrası profil formu görünür, sonuç gizli
+[21/29] [chromium-auth] › e2e\tools\stepstone-karsilastirma.spec.ts:42:7 › Stepstone Karşılaştırma › eksik alanlarla Karşılaştır "Eksik alanlar" uyarısı verir
+[22/29] [chromium-auth] › e2e\tools\stepstone-karsilastirma.spec.ts:53:7 › Stepstone Karşılaştırma › tüm alanlar dolu: Karşılaştır medyan karşılaştırması üretir
+[23/29] [chromium-auth] › e2e\tools\vatandaslik-testi.spec.ts:17:7 › Vatandaşlık Testi › giriş sonrası mod seçim ekranı görünür
+[24/29] [chromium-auth] › e2e\tools\vatandaslik-testi.spec.ts:29:7 › Vatandaşlık Testi › eyalet seçmeden eyalet-modu sınav butonu pasif
+[25/29] [chromium-auth] › e2e\tools\vatandaslik-testi.spec.ts:40:7 › Vatandaşlık Testi › eyalet modu: soru akışı, cevap, sonuç (veri varsa)
+[26/29] [chromium-auth] › e2e\tools\vize-secim.spec.ts:20:7 › Vize Seçim Aracı › giriş sonrası ilk soru görünür
+[27/29] [chromium-auth] › e2e\tools\vize-secim.spec.ts:28:7 › Vize Seçim Aracı › bir şık seçince soru numarası ilerler ve geri butonu çıkar
+[28/29] [chromium-auth] › e2e\tools\vize-secim.spec.ts:40:7 › Vize Seçim Aracı › ilk şıkları takip ederek bir vize sonucuna ulaşılır
+[29/29] [chromium-auth] › e2e\tools\vize-secim.spec.ts:58:7 › Vize Seçim Aracı › sonuç ekranında Yeniden Başla ilk soruya döndürür
+  29 passed (44.4s)

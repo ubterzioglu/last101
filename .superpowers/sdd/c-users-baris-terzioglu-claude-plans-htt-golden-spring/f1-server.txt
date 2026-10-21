@@ -1,0 +1,10 @@
+
+> almanya101@0.1.0 start
+> node scripts/start-standalone.mjs 3000
+
+   ▲ Next.js 15.5.28
+   - Local:        http://localhost:3000
+   - Network:      http://0.0.0.0:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.6s

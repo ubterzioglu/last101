@@ -1,0 +1,223 @@
+
+> almanya101@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.28
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · optimizePackageImports
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 15.7s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/154) ...
+feed.xml: haberler alınamadı Error: Dynamic server usage: Route /feed.xml couldn't be rendered statically because it used unstable_noStore(). See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at r (C:\temp_private\almanya101last\.next\server\chunks\4887.js:1:30577)
+    at g (C:\temp_private\almanya101last\.next\server\chunks\6780.js:1:1372)
+    at m (C:\temp_private\almanya101last\.next\server\app\feed.xml\route.js:20:7260)
+    at p (C:\temp_private\almanya101last\.next\server\app\feed.xml\route.js:20:9328)
+    at z (C:\temp_private\almanya101last\.next\server\app\feed.xml\route.js:2:2104) {
+  description: "Route /feed.xml couldn't be rendered statically because it used unstable_noStore(). See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (38/154) 
+   Generating static pages (76/154) 
+   Generating static pages (115/154) 
+ ✓ Generating static pages (154/154)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                       Size  First Load JS
+┌ ƒ /                                          1.46 kB         113 kB
+├ ○ /_not-found                                  369 B         103 kB
+├ ƒ /[authorSlug]                                218 B         111 kB
+├ ○ /admin                                     5.76 kB         120 kB
+├ ○ /admin/araclar                             18.2 kB         131 kB
+├ ○ /admin/broken-link-reports                 2.84 kB         109 kB
+├ ○ /admin/guvenlik-notlari                       4 kB         117 kB
+├ ƒ /admin/haberler                              12 kB         223 kB
+├ ○ /admin/haberler-rehberi                    4.77 kB         111 kB
+├ ƒ /admin/haberler/[id]                         369 B         103 kB
+├ ○ /admin/haberler/ayarlar                      369 B         103 kB
+├ ○ /admin/haberler/kaynaklar                    369 B         103 kB
+├ ○ /admin/haberler/pipeline                     369 B         103 kB
+├ ○ /admin/haberler/yeni                         369 B         103 kB
+├ ○ /admin/hizmet-rehberi                       4.7 kB         117 kB
+├ ○ /admin/home                                  166 B         106 kB
+├ ○ /admin/home/news                             369 B         103 kB
+├ ○ /admin/recruitment-agencies                3.84 kB         117 kB
+├ ○ /admin/rehber                              7.34 kB         120 kB
+├ ○ /admin/service-finder                      3.65 kB         113 kB
+├ ○ /admin/software-hub                        18.1 kB         136 kB
+├ ○ /admin/uyeler                              3.53 kB         113 kB
+├ ○ /admin/uygulama-rehberi                    5.57 kB         118 kB
+├ ○ /admin/yazi-dizisi                         4.82 kB         123 kB
+├ ○ /almanya-araclari                            218 B         111 kB
+├ ○ /almanya-maas-beklentisi                   10.7 kB         136 kB
+├ ○ /almanya-yasam-tarzi-uyumu                 3.54 kB         129 kB
+├ ○ /almanya-yolunu-sec                        10.5 kB         136 kB
+├ ○ /almanyada-is-bulma-olasiligi              4.42 kB         130 kB
+├ ○ /almanyada-yasam                             218 B         111 kB
+├ ○ /almanyaya-hazir-misin                     4.57 kB         130 kB
+├ ƒ /api/admin-auth-verify                       369 B         103 kB
+├ ƒ /api/admin/news/pipeline/run                 369 B         103 kB
+├ ƒ /api/admin/news/pipeline/runs                369 B         103 kB
+├ ƒ /api/admin/news/posts                        369 B         103 kB
+├ ƒ /api/admin/news/posts/[id]                   369 B         103 kB
+├ ƒ /api/admin/news/posts/[id]/archive           369 B         103 kB
+├ ƒ /api/admin/news/posts/[id]/feature           369 B         103 kB
+├ ƒ /api/admin/news/posts/[id]/publish           369 B         103 kB
+├ ƒ /api/admin/news/posts/[id]/reject            369 B         103 kB
+├ ƒ /api/admin/news/settings                     369 B         103 kB
+├ ƒ /api/admin/news/sources                      369 B         103 kB
+├ ƒ /api/admin/news/sources/[id]                 369 B         103 kB
+├ ƒ /api/admin/news/sources/[id]/run             369 B         103 kB
+├ ƒ /api/admin/news/sources/[id]/test            369 B         103 kB
+├ ƒ /api/admin/news/upload                       369 B         103 kB
+├ ƒ /api/admin/security-notes                    369 B         103 kB
+├ ƒ /api/admin/service-finder/candidates/[id]    369 B         103 kB
+├ ƒ /api/admin/service-finder/jobs               369 B         103 kB
+├ ƒ /api/admin/service-finder/jobs/[id]          369 B         103 kB
+├ ƒ /api/admin/service-finder/jobs/[id]/run      369 B         103 kB
+├ ƒ /api/admin/service-finder/templates          369 B         103 kB
+├ ƒ /api/broken-link-reports                     369 B         103 kB
+├ ƒ /api/broken-link-reports-admin-action        369 B         103 kB
+├ ƒ /api/broken-link-reports-admin-list          369 B         103 kB
+├ ƒ /api/corner-admin-action                     369 B         103 kB
+├ ƒ /api/corner-admin-list                       369 B         103 kB
+├ ƒ /api/corner-admin-upload                     369 B         103 kB
+├ ƒ /api/corner-admin-verify                     369 B         103 kB
+├ ƒ /api/corner-author-action                    369 B         103 kB
+├ ƒ /api/corner-author-panel                     369 B         103 kB
+├ ƒ /api/corner-author-upload                    369 B         103 kB
+├ ƒ /api/corner-author-verify                    369 B         103 kB
+├ ƒ /api/cvopt-register                          369 B         103 kB
+├ ƒ /api/devuser-admin-list                      369 B         103 kB
+├ ƒ /api/devuser-admin-update                    369 B         103 kB
+├ ƒ /api/devuser-count                           369 B         103 kB
+├ ƒ /api/devuser-dis-admin-action                369 B         103 kB
+├ ƒ /api/devuser-dis-admin-list                  369 B         103 kB
+├ ƒ /api/devuser-dis-list                        369 B         103 kB
+├ ƒ /api/devuser-dis-submit                      369 B         103 kB
+├ ƒ /api/devuser-list                            369 B         103 kB
+├ ƒ /api/devuser-me                              369 B         103 kB
+├ ƒ /api/devuser-register                        369 B         103 kB
+├ ƒ /api/devuser-update                          369 B         103 kB
+├ ƒ /api/devuser/list                            369 B         103 kB
+├ ƒ /api/founder-event-admin-action              369 B         103 kB
+├ ƒ /api/founder-event-admin-list                369 B         103 kB
+├ ƒ /api/founder-event-slots                     369 B         103 kB
+├ ƒ /api/founder-event-vote-submit               369 B         103 kB
+├ ƒ /api/founder-submissions                     369 B         103 kB
+├ ƒ /api/founder-submissions-admin-action        369 B         103 kB
+├ ƒ /api/founder-submissions-admin-list          369 B         103 kB
+├ ƒ /api/health                                  369 B         103 kB
+├ ƒ /api/meeting-attendance-admin-list           369 B         103 kB
+├ ƒ /api/meeting-attendance-reset                369 B         103 kB
+├ ƒ /api/meeting-attendance-submit               369 B         103 kB
+├ ƒ /api/members-admin-list                      369 B         103 kB
+├ ƒ /api/news                                    369 B         103 kB
+├ ƒ /api/news-admin-action                       369 B         103 kB
+├ ƒ /api/news-admin-list                         369 B         103 kB
+├ ƒ /api/news/[slug]                             369 B         103 kB
+├ ƒ /api/participant-admin-action                369 B         103 kB
+├ ƒ /api/participant-admin-bracket-action        369 B         103 kB
+├ ƒ /api/participant-admin-list                  369 B         103 kB
+├ ƒ /api/provider-submissions                    369 B         103 kB
+├ ƒ /api/provider-submissions-admin-action       369 B         103 kB
+├ ƒ /api/provider-submissions-admin-list         369 B         103 kB
+├ ƒ /api/recruitment-agencies-admin-action       369 B         103 kB
+├ ƒ /api/recruitment-agencies-admin-list         369 B         103 kB
+├ ƒ /api/supabase-config                         369 B         103 kB
+├ ƒ /api/tavla-register                          369 B         103 kB
+├ ƒ /api/tool-questionnaires                     369 B         103 kB
+├ ƒ /api/vct-register                            369 B         103 kB
+├ ƒ /auth/callback                               369 B         103 kB
+├ ƒ /authors/[authorSlug]                        139 B         223 kB
+├ ƒ /authors/[authorSlug]/panel                  139 B         223 kB
+├ ○ /banka-secim                               10.3 kB         123 kB
+├ ○ /belgeler                                    218 B         111 kB
+├ ○ /blog                                        218 B         111 kB
+├ ○ /cerez-politikasi                            197 B         106 kB
+├ ○ /devuser/cvopt                               197 B         106 kB
+├ ○ /devuser/dad                                 369 B         103 kB
+├ ○ /devuser/dev                               3.67 kB         115 kB
+├ ○ /devuser/devuser                             369 B         103 kB
+├ ○ /devuser/devuseradmin                        369 B         103 kB
+├ ○ /devuser/devuserlist                         369 B         103 kB
+├ ○ /devuser/devuserprofile                      197 B         106 kB
+├ ○ /devuser/disad                             3.63 kB         116 kB
+├ ○ /devuser/discussion                        3.23 kB         116 kB
+├ ○ /devuser/du                                10.4 kB         174 kB
+├ ○ /devuser/e1                                4.31 kB         117 kB
+├ ○ /devuser/e1a                               4.09 kB         117 kB
+├ ○ /devuser/e2                                4.56 kB         117 kB
+├ ○ /devuser/e2a                               4.39 kB         117 kB
+├ ○ /devuser/founder                            4.2 kB         117 kB
+├ ƒ /devuser/founder-survey                    3.67 kB         116 kB
+├ ○ /devuser/gelismeler                        3.04 kB         160 kB
+├ ○ /devuser/list                              10.1 kB         174 kB
+├ ○ /devuser/news                                197 B         106 kB
+├ ○ /devuser/profile-edit                      9.03 kB         173 kB
+├ ○ /devuser/promote                           4.62 kB         168 kB
+├ ○ /devuser/reset-password                    3.39 kB         167 kB
+├ ○ /devuser/summary                           6.09 kB         119 kB
+├ ○ /devuser/survey                            3.68 kB         116 kB
+├ ○ /devuser/tavla                             4.68 kB         168 kB
+├ ○ /devuser/typing                             4.6 kB         168 kB
+├ ○ /devuser/ubt                                 369 B         103 kB
+├ ○ /devuser/vct                               4.07 kB         168 kB
+├ ○ /ekibimize-katil                             218 B         111 kB
+├ ƒ /feed.xml                                    369 B         103 kB
+├ ƒ /giris                                     5.42 kB         180 kB
+├ ○ /gizlilik-politikasi                         197 B         106 kB
+├ ƒ /haberler                                     5 kB         123 kB
+├ ƒ /haberler/[slug]                           1.22 kB         217 kB
+├ ○ /hakkimizda                                  218 B         111 kB
+├ ○ /hangi-sehir-sana-uygun                    4.19 kB         130 kB
+├ ƒ /hizmet-rehberi                            12.9 kB         187 kB
+├ ○ /hizmet-rehberi/oneri                      3.64 kB         116 kB
+├ ○ /icon.svg                                      0 B            0 B
+├ ○ /iletisim                                    197 B         106 kB
+├ ○ /ilk-90-gun-planlayici                     3.77 kB         129 kB
+├ ○ /impressum                                   197 B         106 kB
+├ ○ /is-ilanlari                               4.41 kB         122 kB
+├ ○ /kariyer                                     218 B         111 kB
+├ ○ /kariyer-ve-egitim-rotasi                  4.84 kB         130 kB
+├ ƒ /kose-giris/[authorSlug]                     369 B         103 kB
+├ ƒ /kose-panel/[authorSlug]                     369 B         103 kB
+├ ○ /kullanim-sartlari                           197 B         106 kB
+├ ○ /kvkk-gdpr-ccpa                              197 B         106 kB
+├ ○ /maas-hesaplama                            7.92 kB         121 kB
+├ ○ /manifest.webmanifest                        369 B         103 kB
+├ ○ /once-hangi-sorunu-cozmelisin              4.51 kB         130 kB
+├ ○ /para-transferi                            9.58 kB         122 kB
+├ ƒ /rehber                                      218 B         111 kB
+├ ƒ /rehber/[slug]                             1.22 kB         217 kB
+├ ○ /robots.txt                                  369 B         103 kB
+├ ○ /sigorta-secim                             8.53 kB         121 kB
+├ ƒ /sitemap.xml                                 369 B         103 kB
+├ ○ /software-hub                                369 B         103 kB
+├ ○ /stepstone-karsilastirma                   6.59 kB         119 kB
+├ ○ /tatil                                       197 B         106 kB
+├ ○ /tatil/almanya                               971 B         121 kB
+├ ○ /tatil/turkiye                               829 B         121 kB
+├ ○ /topluluk                                    218 B         111 kB
+├ ○ /topluluk-ve-danismanlik                   4.76 kB         130 kB
+├ ○ /vatandaslik-testi                         7.39 kB         176 kB
+├ ○ /vize-secim                                13.5 kB         126 kB
+├ ƒ /yazi-dizisi                                 218 B         111 kB
+├ ƒ /yazi-dizisi/[slug]                        1.22 kB         217 kB
+└ ○ /yeniarachub                                 218 B         111 kB
++ First Load JS shared by all                   103 kB
+  ├ chunks/1255-60d8dc7c8c9309a1.js            46.3 kB
+  ├ chunks/4bd1b696-100b9d70ed4e49c1.js        54.2 kB
+  └ other shared chunks (total)                2.02 kB
+
+
+ƒ Middleware                                   82.7 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

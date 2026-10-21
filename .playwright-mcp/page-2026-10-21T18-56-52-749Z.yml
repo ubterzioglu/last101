@@ -1,0 +1,184 @@
+- generic [active] [ref=f12e1]:
+  - link "Ana içeriğe atla" [ref=f12e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f12e3]:
+    - generic [ref=f12e5]:
+      - link [ref=f12e6] [cursor=pointer]:
+        - /url: /
+        - img "almanya101" [ref=f12e7]
+      - generic [ref=f12e8]:
+        - button "Menüyü aç" [ref=f12e9] [cursor=pointer]: Menü
+        - link "Whatsapp Topluluğu" [ref=f12e11] [cursor=pointer]:
+          - /url: https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo
+          - text: Whatsapp
+        - link "Üye Ol" [ref=f12e13] [cursor=pointer]:
+          - /url: /giris
+        - link [ref=f12e15] [cursor=pointer]:
+          - /url: /
+          - button "Ana Sayfa" [ref=f12e16]
+  - generic [ref=f12e17]:
+    - generic [ref=f12e18]:
+      - generic [ref=f12e19]: almanya101
+      - button "Menüyü kapat" [ref=f12e20] [cursor=pointer]
+    - navigation [ref=f12e24]:
+      - link "🏠 Ana Sayfa" [ref=f12e25] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f12e27]:
+        - button "Araçlar" [ref=f12e28] [cursor=pointer]
+        - generic:
+          - generic:
+            - link "Brütten Nete Maaş Hesaplama" [ref=f12e32] [cursor=pointer]:
+              - /url: /maas-hesaplama
+            - link "Vatandaşlık Testi Denemesi" [ref=f12e34] [cursor=pointer]:
+              - /url: /vatandaslik-testi
+            - link "Banka Seçim Aracı" [ref=f12e36] [cursor=pointer]:
+              - /url: /banka-secim
+            - link "Sigorta Seçim Aracı" [ref=f12e38] [cursor=pointer]:
+              - /url: /sigorta-secim
+            - link "Para Transferi Seçim Aracı" [ref=f12e40] [cursor=pointer]:
+              - /url: /para-transferi
+            - link "Vize Seçim Aracı" [ref=f12e42] [cursor=pointer]:
+              - /url: /vize-secim
+            - link "Tatil Planlayıcı 2026 Türkiye" [ref=f12e44] [cursor=pointer]:
+              - /url: /tatil/turkiye
+            - link "Tatil Planlayıcı 2026 Almanya" [ref=f12e46] [cursor=pointer]:
+              - /url: /tatil/almanya
+            - link "Türk Hizmet Rehberi" [ref=f12e48] [cursor=pointer]:
+              - /url: /hizmet-rehberi
+            - link "İş İlanları" [ref=f12e50] [cursor=pointer]:
+              - /url: /is-ilanlari
+            - link "StepStone Maaş Karşılaştırma" [ref=f12e52] [cursor=pointer]:
+              - /url: /stepstone-karsilastirma
+      - generic [ref=f12e54]:
+        - button "Topluluk" [ref=f12e55] [cursor=pointer]
+        - link "Topluluğa Katıl" [ref=f12e59] [cursor=pointer]:
+          - /url: /topluluk
+      - generic [ref=f12e61]:
+        - button "İçerik" [ref=f12e62] [cursor=pointer]
+        - generic:
+          - generic:
+            - link "Arkadaşın Köşesi" [ref=f12e66] [cursor=pointer]:
+              - /url: /yazi-dizisi
+            - link "Haberler" [ref=f12e68] [cursor=pointer]:
+              - /url: /haberler
+            - link "Yararlı Belgeler" [ref=f12e70] [cursor=pointer]:
+              - /url: /belgeler
+            - link "Software Hub" [ref=f12e72] [cursor=pointer]:
+              - /url: /software-hub
+            - link "Hizmet Öner" [ref=f12e74] [cursor=pointer]:
+              - /url: /hizmet-rehberi/oneri
+      - generic [ref=f12e76]:
+        - button "İletişim" [ref=f12e77] [cursor=pointer]
+        - generic:
+          - generic:
+            - link "Biz kimiz?" [ref=f12e81] [cursor=pointer]:
+              - /url: /hakkimizda
+            - link "Bize Katıl!" [ref=f12e83] [cursor=pointer]:
+              - /url: /ekibimize-katil
+            - link "İletişim" [ref=f12e85] [cursor=pointer]:
+              - /url: /iletisim
+  - main [ref=f12e87]:
+    - generic [ref=f12e90]:
+      - heading "Türkiye 2026 Tatil Hesaplayıcı" [level=1] [ref=f12e92]
+      - generic [ref=f12e94] [cursor=pointer]:
+        - generic [ref=f12e95]: Nasıl Çalışır?
+        - generic [ref=f12e96]: ▾
+      - generic [ref=f12e98] [cursor=pointer]:
+        - generic [ref=f12e99]: Bu araç neden var?
+        - generic [ref=f12e100]: ▾
+      - generic [ref=f12e102] [cursor=pointer]:
+        - generic [ref=f12e103]: 2026 Resmî Tatiller
+        - generic [ref=f12e104]: ▾
+      - generic [ref=f12e106] [cursor=pointer]:
+        - generic [ref=f12e107]: Tatil Tüyoları
+        - generic [ref=f12e108]: ▾
+      - generic [ref=f12e109]:
+        - heading "Tatil Aralığı" [level=2] [ref=f12e110]
+        - generic [ref=f12e111]:
+          - generic [ref=f12e112]:
+            - generic [ref=f12e113]: Başlangıç
+            - textbox [ref=f12e114]
+          - generic [ref=f12e115]:
+            - generic [ref=f12e116]: Bitiş
+            - textbox [ref=f12e117]
+        - generic [ref=f12e118]:
+          - button "Hesapla" [disabled] [ref=f12e119]
+          - button "Sıfırla" [ref=f12e120] [cursor=pointer]
+      - link "Ana Sayfaya Dön" [ref=f12e121] [cursor=pointer]:
+        - /url: /
+  - contentinfo [ref=f12e122]:
+    - generic [ref=f12e124]:
+      - paragraph [ref=f12e125]: yalnız değilsin! almanya101 seninle!
+      - paragraph [ref=f12e126]:
+        - link "Hakkımızda" [ref=f12e128] [cursor=pointer]:
+          - /url: /hakkimizda
+        - generic [ref=f12e129]:
+          - generic [aria-hidden] [ref=f12e130]: "|"
+          - link "Blog" [ref=f12e131] [cursor=pointer]:
+            - /url: /blog
+        - generic [ref=f12e132]:
+          - generic [aria-hidden] [ref=f12e133]: "|"
+          - link "İletişim" [ref=f12e134] [cursor=pointer]:
+            - /url: /iletisim
+        - generic [ref=f12e135]:
+          - generic [aria-hidden] [ref=f12e136]: "|"
+          - link "Kariyer" [ref=f12e137] [cursor=pointer]:
+            - /url: /kariyer
+        - generic [ref=f12e138]:
+          - generic [aria-hidden] [ref=f12e139]: "|"
+          - link "Gizlilik Politikası" [ref=f12e140] [cursor=pointer]:
+            - /url: /gizlilik-politikasi
+        - generic [ref=f12e141]:
+          - generic [aria-hidden] [ref=f12e142]: "|"
+          - link "Kullanım Şartları" [ref=f12e143] [cursor=pointer]:
+            - /url: /kullanim-sartlari
+        - generic [ref=f12e144]:
+          - generic [aria-hidden] [ref=f12e145]: "|"
+          - link "KVKK / GDPR / CCPA" [ref=f12e146] [cursor=pointer]:
+            - /url: /kvkk-gdpr-ccpa
+        - generic [ref=f12e147]:
+          - generic [aria-hidden] [ref=f12e148]: "|"
+          - link "Çerez Politikası" [ref=f12e149] [cursor=pointer]:
+            - /url: /cerez-politikasi
+        - generic [ref=f12e150]:
+          - generic [aria-hidden] [ref=f12e151]: "|"
+          - link "Impressum" [ref=f12e152] [cursor=pointer]:
+            - /url: /impressum
+      - paragraph [ref=f12e153]:
+        - generic [ref=f12e154]:
+          - link "Seo Aracı" [ref=f12e155] [cursor=pointer]:
+            - /url: https://www.spindorai.com
+          - text: ve Seo Hizmetleri Spindora
+        - generic [aria-hidden] [ref=f12e156]: "|"
+        - generic [ref=f12e157]:
+          - link "Corteqs" [ref=f12e158] [cursor=pointer]:
+            - /url: https://www.corteqs.net
+          - text: — Diasporayı Birleştiren Platform
+        - generic [aria-hidden] [ref=f12e159]: "|"
+        - link "Canlı Destek Yazılımı" [ref=f12e160] [cursor=pointer]:
+          - /url: https://chatio.com.tr/
+        - generic [aria-hidden] [ref=f12e161]: "|"
+        - generic [ref=f12e162]:
+          - link "Seo Ajansı" [ref=f12e163] [cursor=pointer]:
+            - /url: https://www.spindorai.com/seo/en-iyi-seo-ajansi
+          - text: Spindora Tarafından Seosu Yapılmıştır.
+        - generic [aria-hidden] [ref=f12e164]: "|"
+        - link "İstanbul Hurdacı" [ref=f12e165] [cursor=pointer]:
+          - /url: https://tekhurdametal.com/istanbul-hurdaci/
+        - text: Firması Tek Hurda Metal A.Ş
+        - generic [aria-hidden] [ref=f12e166]: "|"
+        - generic [ref=f12e167]:
+          - link "Antalya Seks Shop" [ref=f12e168] [cursor=pointer]:
+            - /url: https://lionerotik.com/urunler/fetis-urunleri
+          - text: Lion Erotik
+        - generic [aria-hidden] [ref=f12e169]: "|"
+        - generic [ref=f12e170]:
+          - link "Evden Eve Nakliyat" [ref=f12e171] [cursor=pointer]:
+            - /url: https://ufuksoynakliyat.com.tr
+          - text: Şirketi Ufuksoy Nakliyat A.Ş
+        - generic [aria-hidden] [ref=f12e172]: "|"
+        - generic [ref=f12e173]:
+          - link "Deniz Kayağı Turları" [ref=f12e174] [cursor=pointer]:
+            - /url: https://dragomanseakayak.com
+          - text: Şirketi Dragoman Sea Kayak & Outdoors
+  - alert [ref=f12e175]

@@ -1,0 +1,6 @@
+
+C:\temp_private\almanya101last\tests\auth-split-layout.test.ts
+  43:31  error  Do not pass children as props. Instead, pass them as additional arguments to React.createElement  react/no-children-prop
+
+✖ 1 problem (1 error, 0 warnings)
+
