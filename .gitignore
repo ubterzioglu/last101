@@ -75,3 +75,7 @@ supabase/.temp/
 # local exports / saved pages (kök dizinde commit edilmez)
 /summarya.txt
 /almanya101.de-*.html
+
+# Playwright MCP captures (reference screenshots live in .omc/artifacts/reference)
+.playwright-mcp/
+.superpowers/
