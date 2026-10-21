@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 function validateString(value: unknown, maxLength = 500): string | null {
   if (value === undefined || value === null || value === '') return null;
@@ -36,9 +36,8 @@ export async function OPTIONS() {
 }
 
 export async function PATCH(request: NextRequest) {
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const service = tryCreateServiceClient();
+  if (!service) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -54,8 +53,6 @@ export async function PATCH(request: NextRequest) {
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
-
-  const service = createServiceClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
   // Verify profile exists and belongs to this user
   const { data: current } = await service

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const MARKER = '[DEVUSER_DIS_V1]';
 const APPROVED_STATUSES = ['read', 'reviewed', 'resolved', 'approved'];
@@ -44,17 +44,14 @@ export async function OPTIONS() {
 }
 
 export async function GET(request: NextRequest) {
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
   const { searchParams } = new URL(request.url);
   const limit = Math.min(Math.max(parseInt(searchParams.get('limit') ?? '40', 10) || 40, 1), 200);
   const fetchLimit = Math.min(limit * 5, 500);
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
   try {
     const { data, error } = await supabase

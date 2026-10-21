@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const MARKER = '[DEVUSER_DIS_V1]';
 const MAX_NAME_LENGTH = 80;
@@ -41,9 +41,8 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: NextRequest) {
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -77,8 +76,6 @@ export async function POST(request: NextRequest) {
   const forwarded = request.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? '';
   const ipHash = forwarded ? Buffer.from(forwarded).toString('base64').slice(0, 16) : null;
   const userAgent = (request.headers.get('user-agent') ?? '').slice(0, 255);
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
   try {
     const { data, error } = await supabase

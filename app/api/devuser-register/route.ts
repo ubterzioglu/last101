@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 function sanitizeString(value: unknown, maxLength = 500): string | null {
   if (typeof value !== 'string') return null;
@@ -74,9 +74,8 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: NextRequest) {
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const service = tryCreateServiceClient();
+  if (!service) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -141,8 +140,6 @@ export async function POST(request: NextRequest) {
     veri_paylasim_onay: toBoolean(body.veri_paylasim_onay, false),
     approval_status: 'pending',
   };
-
-  const service = createServiceClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
   try {
     const { data, error } = await service

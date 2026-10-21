@@ -1,23 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { computeToolScore, scoreAnswers, validateQuestionnaireAnswerValue } from '@/lib/tools/survey';
 import { TOOL_QUESTIONNAIRE_REGISTRY } from '@/lib/tools/surveys';
 import type { QuestionnaireAnswerPayload, QuestionnaireAnswerValue } from '@/lib/tools/types';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 class RequestValidationError extends Error {}
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) {
-    return '';
-  }
-
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-
-  return raw;
-}
 
 function truncate(value: unknown, maxLength: number) {
   return String(value || '').trim().slice(0, maxLength);
@@ -78,15 +65,8 @@ function parseAnswers(
 }
 
 export async function POST(request: NextRequest) {
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.SUPABASE_SERVICE_KEY ||
-      process.env.SUPABASE_SECRET_KEY ||
-      ''
-  );
-
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -130,10 +110,6 @@ export async function POST(request: NextRequest) {
     const answers = parseAnswers(body?.answers, toolSlug);
     const computed = computeToolScore(config, answers);
     const userAgent = request.headers.get('user-agent');
-
-    const supabase = createClient(supabaseUrl, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
 
     const { error } = await supabase.from('tool_questionnaire_submissions').insert({
       tool_slug: toolSlug,

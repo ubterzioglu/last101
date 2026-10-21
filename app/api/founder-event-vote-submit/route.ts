@@ -1,25 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isUuid, sanitizeText, sanitizeUuidArray } from '@/lib/founder';
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });
 }
 
 export async function POST(request: NextRequest) {
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(process.env.SUPABASE_SERVICE_ROLE_KEY);
-
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -40,10 +29,6 @@ export async function POST(request: NextRequest) {
   if (selectedSlotIds.length === 0) {
     return NextResponse.json({ error: 'En az bir tarih seçmelisiniz.' }, { status: 400 });
   }
-
-  const supabase: any = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   try {
     const { data: founder, error: founderError } = await supabase

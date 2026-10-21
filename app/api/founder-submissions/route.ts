@@ -1,20 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import {
   normalizeFounderStatus,
   sanitizeLinkedinUrl,
   sanitizePhone,
   sanitizeText,
 } from '@/lib/founder';
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 function assignNullableIfPresent(target: Record<string, unknown>, key: string, value: string) {
   if (value) {
@@ -27,16 +18,10 @@ export async function OPTIONS() {
 }
 
 export async function GET() {
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(process.env.SUPABASE_SERVICE_ROLE_KEY);
-
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
-
-  const supabase: any = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   try {
     const { data, error } = await supabase
@@ -66,10 +51,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(process.env.SUPABASE_SERVICE_ROLE_KEY);
-
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -86,10 +69,6 @@ export async function POST(request: NextRequest) {
   const phone = sanitizePhone(body.phone, 32);
   const projectName = sanitizeText(body.project_name, 160);
   const shortDescription = sanitizeText(body.short_description, 1200);
-
-  const supabase: any = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   try {
     let existing = null;

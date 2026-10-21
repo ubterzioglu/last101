@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 function sanitizeName(value: unknown): string {
   if (typeof value !== 'string') return '';
@@ -21,9 +21,8 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: NextRequest) {
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -38,10 +37,6 @@ export async function POST(request: NextRequest) {
   const whatsapp = normalizeWhatsapp(body.whatsapp);
   if (!name) return NextResponse.json({ error: 'name is required' }, { status: 400 });
   if (!whatsapp) return NextResponse.json({ error: 'whatsapp is required' }, { status: 400 });
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   try {
     const { data: existing } = await supabase.from('tavla_participants').select('id').ilike('name', name).limit(1);

@@ -1,15 +1,14 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });
 }
 
 export async function GET() {
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const service = tryCreateServiceClient();
+  if (!service) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -18,8 +17,6 @@ export async function GET() {
   if (authError || !user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-
-  const service = createServiceClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
   try {
     let { data: row } = await service
