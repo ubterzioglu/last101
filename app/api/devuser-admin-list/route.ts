@@ -29,7 +29,6 @@ function normalizeRowStatus(row: Record<string, unknown>): string {
 }
 
 type QueryOptions = { applyStatusFilter: boolean; orderByCreatedAt: boolean };
-type SupabaseClient = any;
 
 async function runQueryWithFallback({
   baseQueryFactory,
@@ -100,7 +99,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: auth.reason }, { status: auth.status });
   }
 
-  const supabase: SupabaseClient = tryCreateServiceClient();
+  const supabase = tryCreateServiceClient();
   if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }

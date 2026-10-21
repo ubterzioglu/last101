@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 export const dynamic = 'force-dynamic';
-
-// devuser-admin-list ile tutarlı: service client tipini gevşek tutuyoruz çünkü
-// supabase-js'in jenerik dönüş tipi auth.admin + from() zincirinde çakışıyor.
-type SupabaseClient = NonNullable<ReturnType<typeof tryCreateServiceClient>>;
 
 function normalizeLimit(value: unknown, fallback: number, max: number): number {
   const parsed = Number.parseInt(String(value || ''), 10);

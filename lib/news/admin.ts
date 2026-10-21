@@ -117,7 +117,6 @@ type JsonRecord = Record<string, unknown>;
 
 const NEWS_USAGE_MODES: readonly string[] = ['signal_only', 'short_excerpt_allowed', 'licensed', 'manual_only'];
 
-
 function normalizeText(value: unknown, maxLength: number, fallback = ''): string {
   return String(value ?? fallback).trim().slice(0, maxLength);
 }
