@@ -6,7 +6,7 @@ import { getAdminHeaders } from '@/lib/admin/clientAuth';
 import { useAdminGate } from '@/hooks/useAdminGate';
 
 type AgencyStatus = 'all' | 'active' | 'inactive';
-type AgencyCategory = 'İş Bulma Ajansları' | 'İngilizce İşe Alan Şirketler';
+type AgencyCategory = 'İş Bulma Ajansları' | 'İngilizce İşe Alan Şirketler' | 'İş ve Kariyer Platformları';
 
 interface AgencyRow {
   id: string;
@@ -29,7 +29,8 @@ const AGENCIES_API_URL = '/api/recruitment-agencies-admin-list';
 const AGENCIES_ACTION_API_URL = '/api/recruitment-agencies-admin-action';
 const CATEGORIES: AgencyCategory[] = [
   'İş Bulma Ajansları',
-  'İngilizce İşe Alan Şirketler'
+  'İngilizce İşe Alan Şirketler',
+  'İş ve Kariyer Platformları'
 ];
 
 const initialForm = {
