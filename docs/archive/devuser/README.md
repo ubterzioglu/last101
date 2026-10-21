@@ -1,3 +1,5 @@
+> **Tarihsel kayıt:** Bu belge eski statik HTML DevUser uygulamasını anlatır. Güncel uygulama `app/(devuser)/devuser/` altındadır; kurulum talimatı olarak kullanmayın.
+
 # DevUser - Developer Topluluğu
 
 Almanya'daki Türk developer, QA, DevOps ve tech profesyonelleri için topluluk platformu.

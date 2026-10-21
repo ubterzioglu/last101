@@ -1,3 +1,5 @@
+> **Tarihsel tasarım planı (20 Mart 2026):** Güncel uygulama davranışını koddan doğrulayın.
+
 # Banka Seçim Aracı Layout Güncelleme — Implementasyon Planı
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.

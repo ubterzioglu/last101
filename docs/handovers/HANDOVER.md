@@ -1,3 +1,5 @@
+> **Tarihsel kayıt (25 Haziran 2026):** Branch ve çalışma ağacı durumu bugün için geçerli değildir. Aşağıdaki komutları uygulamadan önce güncel durumu doğrulayın.
+
 # HANDOVER — Working Tree Devir Notu
 
 > **Tarih:** 2026-06-25

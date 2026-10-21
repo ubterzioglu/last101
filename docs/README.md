@@ -1,0 +1,28 @@
+# Doküman dizini
+
+Bu sayfa belgelerin amacını ve güncellik durumunu gösterir. Uygulamanın mevcut davranışı için kodu ve [kök README](../README.md) dosyasını esas alın. Tarihli planlar, uygulanmış değişikliklerin kanıtı değildir.
+
+## Güncel planlar
+
+Bu belgeler öneri ve yapılacak işlerdir; tamamlanmış özellik listesi olarak okunmamalıdır.
+
+- [Haber hattı ve kod düzenleme birleşik planı](./plans/clean-code-plan.md) — 21 Ekim 2026 tarihli çalışma planı.
+- [Haber yönetimi planı](./plans/news-admin-plan.md) — birleşik planın haber bölümüne ait ayrıntılar.
+
+## Teknik başvuru
+
+- [Yeni araçlar özeti](./almanya-araclari-ozet.md) — araç altyapısı oluşturulduğunda yazılmış teknik özet; değişen ayrıntıları koddan doğrulayın.
+- [Kök geliştirici kuralları](../AGENTS.md) ve [Claude Code kılavuzu](../CLAUDE.md).
+
+## Test belgeleri
+
+- [E2E test planı](./e2e-test-plan.md) — tarihli senaryo ve öneriler. Güncel test komutları için [package.json](../package.json) ve [Playwright yapılandırması](../playwright.config.ts) geçerlidir.
+- [Eski E2E kullanım kılavuzu](./archive/E2E_TEST_KULLANIM.md) — arşiv kaydı; yönetici notu tohumlama betiği bu sabit yola başvurur.
+
+## Tarihsel kayıtlar
+
+- [Arşiv](./archive/) — önceki araştırmalar, planlar ve raporlar. Aynı içerikli `a101newtools.md` çıkarıldı; [`newtools.md`](./archive/newtools.md) kopyası korundu.
+- [Eski DevUser belgeleri](./archive/devuser/) — artık kullanılmayan statik HTML mimarisini anlatır.
+- [Devir notları](./handovers/) — yazıldıkları oturumun ve tarihin çalışma durumunu yansıtır.
+- [Superpowers planları ve tasarımları](./superpowers/) — tarihli tasarım kayıtlarıdır.
+- [Yayımlanmış dosya güvenliği kaydı](./security/public-files-2026-10-21.md) — parola listesi ve örnek ortam dosyası için durum ve kalan erişim işlemleri.

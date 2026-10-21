@@ -1,3 +1,5 @@
+> **Tarihsel tasarım (15 Haziran 2026):** Güncel uygulama davranışını koddan doğrulayın.
+
 # Tek Sayfalık Dark-Mode Haber Admin Paneli (SPA)
 
 **Tarih:** 2026-06-15

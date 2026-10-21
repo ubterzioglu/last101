@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file is the single working guide for Claude Code in this repository.
+Claude Code guidance for this repository. The shared project rules are in [AGENTS.md](./AGENTS.md); read them first. See [docs/README.md](./docs/README.md) before using a dated plan or handover.
 
 ## Commands
 
@@ -9,9 +9,10 @@ npm run dev      # Start development server (localhost:3000)
 npm run build    # Production build
 npm run start    # Start production server
 npm run lint     # Run ESLint (must be clean before deploy/push)
+npm run test:unit # Run Vitest unit tests
 ```
 
-Use `npm` for all package operations. Do not use `bun`.
+Use Node.js 20 and `npm` for all package operations. Do not use `bun` or `yarn`.
 
 ## Project Snapshot
 

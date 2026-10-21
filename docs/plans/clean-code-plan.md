@@ -19,7 +19,7 @@ Not: Bulgular kod okumasına ve grep/`wc` taramasına dayanıyor. Canlı veri, e
 6. **Test.** H-4'teki unit testler (`language.ts`, `dedupe.ts`, `relevance.ts`, `lib/news/admin.ts`) yazılırken hedef %80 kapsama; C aşamalarında refactor edilen yerler için mevcut davranışı kilitleyen testler önce yazılır.
 
 ## Ön koşul (Aşama 0)
-- Çalışma ağacı: `RecruitmentAgenciesAdminClient.tsx` (değişiklik), `supabase/migrations/20261021120000_add_career_platforms_recruitment_agencies.sql` (yeni), `docs/news-admin-plan.md` (yeni), `docs/clean-code-plan.md` (bu dosya). Bunlar ayrı commit'lenir veya stash'lenir; haber PR'ına ve refactor'a karışmaz.
+- Bu bölüm planın yazıldığı tarihteki çalışma ağacını anlatır; uygulamadan önce güncel `git status` kontrol edilir. O tarihte `RecruitmentAgenciesAdminClient.tsx` (değişiklik), `supabase/migrations/20261021120000_add_career_platforms_recruitment_agencies.sql` (yeni), `docs/plans/news-admin-plan.md` ve bu dosya ayrı işlerdi.
 - `almanya101.de-20261013T181019.html` (1 MB) commit edilmez; sil veya `.gitignore`'a ekle.
 
 ### C-0 Güvenli temizlik

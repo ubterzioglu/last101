@@ -1,3 +1,5 @@
+> **Tarihsel kayıt:** Bu belge eski statik HTML mimarisi içindir ve güncel agent talimatı değildir. Güncel kurallar için kök `AGENTS.md` dosyasına bakın.
+
 # DevUser - Agent Dokümantasyonu
 
 ## Proje Özeti

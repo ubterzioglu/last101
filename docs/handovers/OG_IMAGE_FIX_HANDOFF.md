@@ -1,3 +1,5 @@
+> **Tarihsel kayıt (25 Haziran 2026):** Bu devir notundaki commit ve dağıtım adımları güncel görev listesi değildir.
+
 # OG Görseli Bulanık Görünüyor — Devir Dökümanı (Handoff)
 
 > Tarih: 2026-06-25

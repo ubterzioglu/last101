@@ -1,3 +1,5 @@
+> **Tarihsel tasarım (20 Mart 2026):** Güncel uygulama davranışını koddan doğrulayın.
+
 # Banka Seçim Aracı — Layout Güncelleme Tasarımı
 
 **Tarih:** 2026-03-20
