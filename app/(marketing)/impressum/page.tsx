@@ -17,7 +17,7 @@ export default function ImpressumPage() {
       lastUpdated="17 Haziran 2026"
     >
       <LegalSection heading="Sağlayıcı (Diensteanbieter)">
-        <address className="not-italic text-white/75">
+        <address>
           Umut Barış Terzioğlu
           <br />
           Gutenbergstraße 28
@@ -29,14 +29,14 @@ export default function ImpressumPage() {
       <LegalSection heading="İletişim (Kontakt)">
         <p>
           E-posta:{' '}
-          <a href="mailto:info@almanya101.de" className="text-google-yellow hover:underline">
+          <a href="mailto:info@almanya101.de">
             info@almanya101.de
           </a>
         </p>
       </LegalSection>
 
       <LegalSection heading="İçerikten Sorumlu (Verantwortlich i. S. d. § 18 Abs. 2 MStV)">
-        <address className="not-italic text-white/75">
+        <address>
           Umut Barış Terzioğlu
           <br />
           Gutenbergstraße 28
@@ -47,7 +47,7 @@ export default function ImpressumPage() {
 
       <LegalSection heading="Sorumluluk Reddi (Haftungsausschluss)">
         <p>
-          <strong className="text-white">İçerik sorumluluğu:</strong> Bu sitedeki
+          <strong>İçerik sorumluluğu:</strong> Bu sitedeki
           içerikler büyük bir özenle hazırlanmıştır. Ancak içeriğin doğruluğu,
           eksiksizliği ve güncelliği için sorumluluk üstlenilmez. § 7 Abs. 1 DDG
           uyarınca kendi içeriklerimizden genel yasalara göre sorumluyuz; ancak
@@ -55,7 +55,7 @@ export default function ImpressumPage() {
           izlemek ya da hukuka aykırılık belirtisi araştırmakla yükümlü değiliz.
         </p>
         <p>
-          <strong className="text-white">Bağlantı sorumluluğu:</strong> Sitemiz,
+          <strong>Bağlantı sorumluluğu:</strong> Sitemiz,
           içeriği üzerinde hiçbir etkimizin olmadığı üçüncü taraf web sitelerine
           bağlantılar içerir. Bu nedenle bu dış içerikler için sorumluluk
           üstlenemeyiz. Bağlantı verilen sayfaların içeriğinden her zaman ilgili
@@ -73,15 +73,15 @@ export default function ImpressumPage() {
 
       <LegalSection heading="İlgili Sayfalar">
         <p>
-          <Link href="/gizlilik-politikasi" className="text-google-yellow hover:underline">
+          <Link href="/gizlilik-politikasi">
             Gizlilik Politikası
           </Link>{' '}
           ·{' '}
-          <Link href="/kvkk-gdpr-ccpa" className="text-google-yellow hover:underline">
+          <Link href="/kvkk-gdpr-ccpa">
             KVKK / GDPR / CCPA
           </Link>{' '}
           ·{' '}
-          <Link href="/kullanim-sartlari" className="text-google-yellow hover:underline">
+          <Link href="/kullanim-sartlari">
             Kullanım Şartları
           </Link>
         </p>

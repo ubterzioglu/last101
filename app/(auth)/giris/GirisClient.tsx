@@ -5,8 +5,24 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils/cn';
 import { AuthSplitLayout } from '@/components/auth/AuthSplitLayout';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { GoogleIcon } from './GoogleIcon';
 
 type Mode = 'login' | 'register';
+
+const MODE_TABS: { mode: Mode; label: string }[] = [
+  { mode: 'login', label: 'Giriş Yap' },
+  { mode: 'register', label: 'Kayıt Ol' },
+];
+
+const TAB_CLASS = 'min-h-[40px] rounded-tile border px-3 py-2 text-sm font-semibold transition-colors';
+const TAB_ACTIVE = 'border-brand-700 bg-brand-50 text-brand-800';
+const TAB_IDLE = 'border-transparent text-muted hover:text-ink';
+const LABEL_CLASS = 'mb-1.5 block text-sm font-semibold text-ink';
+const INPUT_CLASS =
+  'h-11 w-full rounded-btn border border-line bg-white px-3.5 text-[15px] text-ink transition-colors placeholder:text-muted hover:border-ink/30 focus:border-brand-700';
+const MESSAGE_CLASS = 'rounded-btn border px-3 py-2 text-sm leading-relaxed';
 
 interface GirisClientProps {
   next: string;
@@ -102,55 +118,41 @@ export default function GirisClient({ next }: GirisClientProps) {
 
   return (
     <AuthSplitLayout
+      tone="light"
       title={mode === 'login' ? 'Üye Girişi' : 'Ücretsiz Üye Ol'}
       subtitle={`Almanya101 araçlarını kullanmak için ${mode === 'login' ? 'giriş yapın' : 'ücretsiz hesap oluşturun'}.`}
-      accent="blue"
-      heroSubtitle="Maaş hesaplama, vize seçimi, şehir uyumu ve daha fazlası — ücretsiz hesabınla hepsine eriş."
+      heroSubtitle="Maaş hesaplama, vize seçimi, şehir uyumu ve daha fazlası: ücretsiz hesabınla hepsine eriş."
     >
       {/* Mode toggle */}
-      <div className="mb-6 grid grid-cols-2 gap-1 rounded-lg border border-white/10 bg-black/40 p-1">
-        <button
-          type="button"
-          onClick={() => { setMode('login'); setError(null); setInfo(null); }}
-          className={cn(
-            'rounded-md px-3 py-2 text-sm font-medium transition-colors',
-            mode === 'login' ? 'bg-google-blue text-white' : 'text-white/60 hover:text-white'
-          )}
-        >
-          Giriş Yap
-        </button>
-        <button
-          type="button"
-          onClick={() => { setMode('register'); setError(null); setInfo(null); }}
-          className={cn(
-            'rounded-md px-3 py-2 text-sm font-medium transition-colors',
-            mode === 'register' ? 'bg-google-blue text-white' : 'text-white/60 hover:text-white'
-          )}
-        >
-          Kayıt Ol
-        </button>
+      <div className="mb-6 grid grid-cols-2 gap-1 rounded-btn border border-line bg-white p-1">
+        {MODE_TABS.map((tab) => (
+          <button
+            key={tab.mode}
+            type="button"
+            aria-pressed={mode === tab.mode}
+            onClick={() => { setMode(tab.mode); setError(null); setInfo(null); }}
+            className={cn(TAB_CLASS, mode === tab.mode ? TAB_ACTIVE : TAB_IDLE)}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Google */}
-      <button
-        type="button"
-        onClick={handleGoogle}
-        disabled={loading}
-        className="flex w-full items-center justify-center gap-3 rounded-md border border-white/15 bg-white px-4 py-2.5 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-100 disabled:opacity-50"
-      >
+      <Button type="button" variant="outline" onClick={handleGoogle} disabled={loading} className="w-full gap-3">
         <GoogleIcon />
         Google ile devam et
-      </button>
+      </Button>
 
       <div className="my-5 flex items-center gap-3">
-        <span className="h-px flex-1 bg-white/10" />
-        <span className="text-xs uppercase tracking-wider text-white/40">veya</span>
-        <span className="h-px flex-1 bg-white/10" />
+        <span className="h-px flex-1 bg-line" />
+        <span className="text-xs font-semibold uppercase tracking-[0.13em] text-muted">veya</span>
+        <span className="h-px flex-1 bg-line" />
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-white/80">
+          <label htmlFor="email" className={LABEL_CLASS}>
             E-posta
           </label>
           <input
@@ -160,13 +162,13 @@ export default function GirisClient({ next }: GirisClientProps) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-md border border-white/15 bg-black/40 px-3 py-2.5 text-white placeholder-white/30 outline-none transition-colors focus:border-google-blue"
+            className={INPUT_CLASS}
             placeholder="ornek@email.com"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-white/80">
+          <label htmlFor="password" className={LABEL_CLASS}>
             Şifre
           </label>
           <input
@@ -177,60 +179,33 @@ export default function GirisClient({ next }: GirisClientProps) {
             minLength={6}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-md border border-white/15 bg-black/40 px-3 py-2.5 text-white placeholder-white/30 outline-none transition-colors focus:border-google-blue"
+            className={INPUT_CLASS}
             placeholder="••••••••"
           />
           {mode === 'register' && (
-            <p className="mt-1.5 text-xs text-white/40">En az 6 karakter.</p>
+            <p className="mt-1.5 text-xs text-muted">En az 6 karakter.</p>
           )}
         </div>
 
         {error && (
-          <p className="rounded-md border border-google-red/40 bg-google-red/10 px-3 py-2 text-sm text-red-200">
+          <p role="alert" className={cn(MESSAGE_CLASS, TONE_STYLES.red.border, TONE_STYLES.red.wash, TONE_STYLES.red.text)}>
             {error}
           </p>
         )}
         {info && (
-          <p className="rounded-md border border-google-green/40 bg-google-green/10 px-3 py-2 text-sm text-green-200">
+          <p role="status" className={cn(MESSAGE_CLASS, TONE_STYLES.green.border, TONE_STYLES.green.wash, TONE_STYLES.green.text)}>
             {info}
           </p>
         )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-md bg-google-blue px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-600 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={loading} className="w-full">
           {loading ? 'Lütfen bekleyin…' : mode === 'login' ? 'Giriş Yap' : 'Üye Ol'}
-        </button>
+        </Button>
       </form>
 
-      <p className="mt-6 text-center text-xs text-white/40">
+      <p className="mt-6 text-center text-xs leading-relaxed text-muted">
         Üyelik tamamen ücretsizdir. Devam ederek kullanım şartlarını kabul etmiş olursunuz.
       </p>
     </AuthSplitLayout>
-  );
-}
-
-function GoogleIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-      <path
-        fill="#4285F4"
-        d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"
-      />
-      <path
-        fill="#34A853"
-        d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"
-      />
-      <path
-        fill="#FBBC05"
-        d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.997 8.997 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"
-      />
-      <path
-        fill="#EA4335"
-        d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"
-      />
-    </svg>
   );
 }

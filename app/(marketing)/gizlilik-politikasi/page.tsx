@@ -20,14 +20,14 @@ export default function GizlilikPolitikasiPage() {
         <p>
           Bu platform aşağıdaki veri sorumlusu tarafından işletilmektedir:
         </p>
-        <address className="not-italic text-white/75">
+        <address>
           Umut Barış Terzioğlu
           <br />
           Gutenbergstraße 28
           <br />
           44139 Dortmund, Almanya
           <br />
-          <a href="mailto:info@almanya101.de" className="text-google-yellow hover:underline">
+          <a href="mailto:info@almanya101.de">
             info@almanya101.de
           </a>
         </address>
@@ -40,19 +40,19 @@ export default function GizlilikPolitikasiPage() {
       <LegalSection heading="2. Hangi Verileri Topluyoruz?">
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong className="text-white">İletişim bilgileri:</strong> Bize
+            <strong>İletişim bilgileri:</strong> Bize
             yazdığınızda paylaştığınız e-posta adresi ve mesaj içeriği.
           </li>
           <li>
-            <strong className="text-white">Hesap bilgileri:</strong> Üyelik
+            <strong>Hesap bilgileri:</strong> Üyelik
             (devuser) hesabı oluşturduğunuzda sağladığınız profil bilgileri.
           </li>
           <li>
-            <strong className="text-white">Kullanım verileri:</strong> Sayfa
+            <strong>Kullanım verileri:</strong> Sayfa
             görüntülemeleri ve anonim analiz verileri (ziyaret istatistikleri).
           </li>
           <li>
-            <strong className="text-white">Çerezler:</strong> Tarayıcınızda
+            <strong>Çerezler:</strong> Tarayıcınızda
             saklanan teknik ve analitik çerezler.
           </li>
         </ul>
@@ -79,7 +79,7 @@ export default function GizlilikPolitikasiPage() {
           Kişisel verilerinize erişme, düzeltme, silme, işlemeyi kısıtlama ve
           taşınabilirlik haklarına sahipsiniz. Haklarınızı kullanmak için bizimle
           iletişime geçebilirsiniz. Ayrıntılar için{' '}
-          <Link href="/kvkk-gdpr-ccpa" className="text-google-yellow hover:underline">
+          <Link href="/kvkk-gdpr-ccpa">
             KVKK / GDPR / CCPA
           </Link>{' '}
           sayfamıza bakabilirsiniz.
@@ -89,7 +89,7 @@ export default function GizlilikPolitikasiPage() {
       <LegalSection heading="6. Çerezler">
         <p>
           Çerez kullanımımız hakkında ayrıntılı bilgi için{' '}
-          <Link href="/cerez-politikasi" className="text-google-yellow hover:underline">
+          <Link href="/cerez-politikasi">
             Çerez Politikası
           </Link>{' '}
           sayfamızı inceleyebilirsiniz.

@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
-import { HeroSection } from '@/components/sections/HeroSection';
-import { Section } from '@/components/ui/Section';
+import { PageHead } from '@/components/site/PageHead';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Container } from '@/components/ui/Container';
+import { cn } from '@/lib/utils/cn';
 
 interface LegalPageProps {
   title: string;
@@ -10,9 +12,26 @@ interface LegalPageProps {
   children: ReactNode;
 }
 
+/** Inline text link inside legal copy: brand-700, underlined. */
+const LEGAL_LINK_CLASS =
+  'font-semibold text-brand-700 underline decoration-brand-700/30 underline-offset-4 transition-colors hover:text-brand-800 hover:decoration-brand-800';
+
 /**
- * Shared layout for legal / informational pages (privacy, terms, cookies, KVKK).
- * Matches the almanya101 dark theme: black background, HeroSection + Section.
+ * Light reading styles for the section body. Pages pass plain <p>, <ul>, <strong>,
+ * <address>, <a> and <Link>; the colours and link look come from here.
+ */
+const LEGAL_PROSE_CLASS = cn(
+  'space-y-4 text-base leading-relaxed text-ink',
+  '[&_strong]:font-semibold [&_strong]:text-ink',
+  '[&_address]:not-italic',
+  '[&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6',
+  '[&_a]:font-semibold [&_a]:text-brand-700 [&_a]:underline [&_a]:decoration-brand-700/30 [&_a]:underline-offset-4 [&_a]:transition-colors',
+  '[&_a:hover]:text-brand-800 [&_a:hover]:decoration-brand-800'
+);
+
+/**
+ * Shared layout for legal / informational pages (privacy, terms, cookies, KVKK,
+ * Impressum): compact PageHead, then a single reading column of at most 68ch.
  */
 export function LegalPage({
   title,
@@ -22,54 +41,43 @@ export function LegalPage({
   children,
 }: LegalPageProps) {
   return (
-    <div className="bg-black min-h-screen text-white">
-      <HeroSection
+    <>
+      <PageHead
+        breadcrumb={[{ label: 'Ana Sayfa', href: '/' }, { label: title }]}
+        eyebrow="Yasal bilgiler"
         title={title}
         description={description}
-        centered={false}
-        density="compact"
-        className="border-b border-white/10 bg-black"
-        contentClassName="max-w-2xl"
-        titleClassName="mb-4 text-3xl md:text-4xl lg:text-5xl"
-        descriptionClassName="mb-0 text-base text-white/70 md:text-lg"
-      >
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="bg-aurora absolute inset-0 opacity-35" />
-          <div className="bg-grid bg-grid-animated absolute inset-0 opacity-20" />
-          <div className="bg-noise absolute inset-0 opacity-40" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black" />
-        </div>
-      </HeroSection>
+      />
 
-      <Section contained size="md" className="py-12 md:py-14">
-        {lastUpdated && (
-          <p className="mb-8 text-sm text-white/50">
-            Son güncelleme: {lastUpdated}
-          </p>
-        )}
-
-        <div className="space-y-8 text-white/80 leading-relaxed">
-          {children}
-        </div>
-
-        {showDisclaimer && (
-          <div className="mt-12 rounded-2xl border border-google-yellow/20 bg-google-yellow/5 p-6">
-            <p className="text-sm text-white/70">
-              Bu metin yalnızca bilgilendirme amaçlıdır ve hukuki danışmanlık
-              yerine geçmez. Kesin yükümlülükleriniz için bir hukuk uzmanına
-              danışmanızı öneririz. Sorularınız için{' '}
-              <a
-                href="mailto:info@almanya101.de"
-                className="text-google-yellow hover:underline"
-              >
-                info@almanya101.de
-              </a>{' '}
-              adresinden bize ulaşabilirsiniz.
+      <Container>
+        <article className="max-w-[68ch] py-12 md:py-16">
+          {lastUpdated && (
+            <p className="mb-10 text-sm text-muted">
+              Son güncelleme: {lastUpdated}
             </p>
-          </div>
-        )}
-      </Section>
-    </div>
+          )}
+
+          <div className="space-y-10">{children}</div>
+
+          {showDisclaimer && (
+            <div
+              role="note"
+              className={cn('mt-14 rounded-card border p-6', TONE_STYLES.yellow.border, TONE_STYLES.yellow.wash)}
+            >
+              <p className="text-sm leading-relaxed text-ink">
+                Bu metin yalnızca bilgilendirme amaçlıdır ve hukuki danışmanlık
+                yerine geçmez. Kesin yükümlülükleriniz için bir hukuk uzmanına
+                danışmanızı öneririz. Sorularınız için{' '}
+                <a href="mailto:info@almanya101.de" className={LEGAL_LINK_CLASS}>
+                  info@almanya101.de
+                </a>{' '}
+                adresinden bize ulaşabilirsiniz.
+              </p>
+            </div>
+          )}
+        </article>
+      </Container>
+    </>
   );
 }
 
@@ -80,9 +88,11 @@ interface LegalSectionProps {
 
 export function LegalSection({ heading, children }: LegalSectionProps) {
   return (
-    <section className="space-y-3">
-      <h2 className="text-2xl font-bold text-white">{heading}</h2>
-      <div className="space-y-3 text-white/75">{children}</div>
+    <section className="space-y-4">
+      <h2 className="text-[22px] font-extrabold leading-snug tracking-[-0.02em] text-ink md:text-2xl">
+        {heading}
+      </h2>
+      <div className={LEGAL_PROSE_CLASS}>{children}</div>
     </section>
   );
 }

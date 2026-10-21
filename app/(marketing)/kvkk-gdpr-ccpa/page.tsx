@@ -22,20 +22,20 @@ export default function KvkkGdprCcpaPage() {
           olan veri koruma düzenlemelerine uymayı taahhüt eder. Bu sayfa, KVKK,
           GDPR ve CCPA kapsamındaki haklarınızı özetler. Verilerin nasıl
           işlendiğine dair ayrıntılar için{' '}
-          <Link href="/gizlilik-politikasi" className="text-google-yellow hover:underline">
+          <Link href="/gizlilik-politikasi">
             Gizlilik Politikası
           </Link>{' '}
           sayfasına bakınız.
         </p>
         <p>Veri sorumlusu:</p>
-        <address className="not-italic text-white/75">
+        <address>
           Umut Barış Terzioğlu
           <br />
           Gutenbergstraße 28
           <br />
           44139 Dortmund, Almanya
           <br />
-          <a href="mailto:info@almanya101.de" className="text-google-yellow hover:underline">
+          <a href="mailto:info@almanya101.de">
             info@almanya101.de
           </a>
         </address>
@@ -71,7 +71,7 @@ export default function KvkkGdprCcpaPage() {
       <LegalSection heading="5. Haklarınızı Nasıl Kullanırsınız?">
         <p>
           Yukarıdaki haklardan herhangi birini kullanmak için{' '}
-          <a href="mailto:info@almanya101.de" className="text-google-yellow hover:underline">
+          <a href="mailto:info@almanya101.de">
             info@almanya101.de
           </a>{' '}
           adresine talebinizi iletebilirsiniz. Başvurularınızı, ilgili

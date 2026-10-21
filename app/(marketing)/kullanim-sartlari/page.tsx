@@ -18,14 +18,14 @@ export default function KullanimSartlariPage() {
     >
       <LegalSection heading="1. İşletmeci">
         <p>almanya101 aşağıdaki kişi tarafından işletilmektedir:</p>
-        <address className="not-italic text-white/75">
+        <address>
           Umut Barış Terzioğlu
           <br />
           Gutenbergstraße 28
           <br />
           44139 Dortmund, Almanya
           <br />
-          <a href="mailto:info@almanya101.de" className="text-google-yellow hover:underline">
+          <a href="mailto:info@almanya101.de">
             info@almanya101.de
           </a>
         </address>
@@ -82,7 +82,7 @@ export default function KullanimSartlariPage() {
         <p>
           Bu kullanım şartlarını dilediğimiz zaman güncelleyebiliriz. Güncel
           sürüm bu sayfada yayımlanır. Gizlilikle ilgili bilgi için{' '}
-          <Link href="/gizlilik-politikasi" className="text-google-yellow hover:underline">
+          <Link href="/gizlilik-politikasi">
             Gizlilik Politikası
           </Link>{' '}
           sayfamıza bakabilirsiniz.

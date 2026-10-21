@@ -1,5 +1,7 @@
 import Image from 'next/image';
+import { ArrowLink } from '@/components/site/ArrowLink';
 import { Button } from '@/components/ui/Button';
+import { Container } from '@/components/ui/Container';
 import { createMetadata } from '@/lib/seo/metadata';
 
 export const metadata = createMetadata({
@@ -11,50 +13,35 @@ export const metadata = createMetadata({
 
 export default function NotFound() {
   return (
-    <section
-      role="alert"
-      aria-live="polite"
-      className="relative min-h-[calc(100vh-10rem)] overflow-hidden bg-[#050505] px-4 py-16 text-white md:py-24"
-    >
-      <div className="absolute inset-0">
-        <div className="absolute left-1/2 top-24 h-56 w-56 -translate-x-1/2 rounded-full bg-google-yellow/18 blur-3xl" />
-        <div className="absolute left-1/2 top-40 h-72 w-72 -translate-x-1/2 rounded-full bg-google-blue/16 blur-3xl" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black via-black/80 to-transparent" />
-      </div>
+    <section role="alert" aria-live="polite" className="py-16 md:py-24">
+      <Container className="flex flex-col items-center text-center">
+        <Image
+          src="/almanya101header.png"
+          alt="almanya101 logosu"
+          width={1500}
+          height={350}
+          priority
+          className="h-9 w-auto md:h-11"
+        />
 
-      <div className="container relative flex items-center justify-center">
-        <div className="w-full max-w-2xl rounded-[2.5rem] border border-white/10 bg-white/[0.03] px-8 py-12 text-center shadow-[0_36px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl md:px-12 md:py-14">
-          <div className="relative mx-auto flex h-24 w-[20rem] items-center justify-center md:h-32 md:w-[30rem]">
-            <div className="absolute inset-0 -z-10 rounded-full bg-google-blue/25 blur-3xl" />
-            <div className="absolute left-1/2 top-1/2 h-16 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-google-yellow/30 blur-3xl md:h-20 md:w-64" />
-            <div className="absolute left-1/2 top-1/2 h-12 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/16 blur-2xl md:h-16 md:w-56" />
-            <div className="relative h-full w-full drop-shadow-[0_0_32px_rgba(66,133,244,0.28)]">
-              <Image
-                src="/yeniherologo.png"
-                alt="almanya101 logosu"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-          </div>
+        <p className="mt-10 text-[clamp(6rem,18vw,11rem)] font-extrabold leading-none tracking-[-0.06em] text-brand-600">
+          404
+        </p>
 
-          <div className="mt-10 space-y-4">
-            <h1 className="text-4xl font-black tracking-[-0.05em] text-white md:text-6xl">
-              sayfa bulunamadı
-            </h1>
-            <p className="mx-auto max-w-xl text-base leading-8 text-white/72 md:text-lg">
-              Aradığınız içerik şu anda burada değil, ama merak etme yalnız değilsin! almanya101 seninle!
-            </p>
-          </div>
+        <h1 className="mt-6 text-[clamp(2.25rem,4vw,3.5rem)] font-extrabold leading-[1.06] tracking-[-0.04em] text-ink">
+          sayfa bulunamadı
+        </h1>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted md:text-[17px]">
+          Aradığınız içerik şu anda burada değil, ama merak etme yalnız değilsin! almanya101 seninle!
+        </p>
 
-          <div className="mt-10 flex justify-center">
-            <Button href="/" asChild size="lg" className="rounded-full px-7">
-              Ana sayfaya dön
-            </Button>
-          </div>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+          <Button href="/" arrow>
+            Ana sayfaya dön
+          </Button>
+          <ArrowLink href="/almanya-araclari">Tüm araçlar</ArrowLink>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
