@@ -6,20 +6,29 @@
 
 Bu belge o bulguları **her biri tek PR, bağımsız review + canlıya alınabilir** batch'lere böler. Kod düzenleme işleri ayrı izleniyor: [clean-code-batches.md](./clean-code-batches.md).
 
-## Durum (21 Ekim 2026 akşamı)
+## Durum (21 Ekim 2026, gün sonu)
 
 | Batch | Durum | Kanıt / iz |
 |---|---|---|
 | S1 — atıl + açık tablolar | ✅ canlıda | `20261021180000_close_anonymous_write_paths.sql`; anon REST → 401/42501 |
 | S2 — fonksiyonlar | ✅ canlıda | `trigger_news_ingest` S1 içinde; `search_path` `20261021190000_function_search_path.sql` |
-| S3 — `devuser` | ◐ yazma ✅ (S1), okuma kodu hazır, revoke bekliyor | `2c76898` deploy edilince anon SELECT revoke |
-| S4 — filtre enjeksiyonu | ⏳ yapılıyor | workflow `fix/postgrest-filter-escaping` |
+| S3 — `devuser` | ✅ canlıda | yazma S1; okuma `2c76898` + `20261021203000_devuser_base_table_private.sql` (canlı kanarya: liste 81, sayım 81) |
+| S4 — filtre enjeksiyonu | ✅ main'de | 5 route + `get-users` (+ `ilgi` dizi filtresi); edge deploy aşağıda |
 | S5 — storage listeleme | ✅ canlıda | `20261021191000_storage_no_public_listing.sql`; liste 5 → 0, public URL 200 |
-| S6 — CI | ⏳ yapılıyor | workflow `ci/lint-typecheck-test` (lint + tsc + unit; E2E zorunlu değil) |
-| S7 — korumasız uçlar | ⛔ ürün kararı bekliyor | — |
+| S6 — CI | ✅ main'de | `ci.yml` (lint + tsc + unit + build), `e2e.yml` salt-okunur token, Dependabot, admin-guards +8 uç. Kalan: branch protection'da `ci / checks` zorunlu yapılması (repo ayarı) |
+| S7 — korumasız uçlar | ⛔ karar bekliyor | öneri aşağıda |
 | S8 — admin kapısı | ⛔ ayrı alt plan | — |
-| S9 — GRANT daraltma | ⏳ erişim haritası çıkarılıyor | workflow `access-map` |
-| S10 — temizlik | bekliyor | — |
+| S9 — GRANT daraltma | ◐ harita hazır, en acil parçalar yapıldı | `20261021200000`, `20261021201000`; kalan tablolar gruplar hâlinde |
+| S10 — temizlik | ◐ | 5 eski tablo silindi (`20261021202000`, kullanıcı kararı); kalan maddeler aşağıda |
+
+**Doğrulamada bulunan ek açıklar (hepsi kapatıldı, canlıda anon REST ile kanıtlandı):**
+- `corner_authors.password_hash / password_salt` (5 yazar) ve `devuser.login_email / user_id` (81), `ek_notlar` (16) anon'a açıktı → sütun düzeyinde yetki (`20261021200000`), ardından `devuser` tamamen kapandı (`20261021203000`).
+- "authenticated" güven sınırı değil (kayıt herkese açık): "Admin silebilir/güncelleyebilir" katılımcı policy'leri ve bracket'lerdeki `ALL/true` her kayıtlı kullanıcıya silme/değiştirme veriyordu → kaldırıldı; bracket'lerde authenticated için yalnızca `SELECT` (realtime).
+- Eski uygulama tabloları (`meeting_surveys` ad + telefon, `supporteachother`, `sprachcafe_submissions`, `cvopt_satisfaction_surveys`, `question_submissions`, `zgen_*`) tam yetkiyle açıktı → kilitlendi (`20261021201000`).
+
+**S9 için önemli düzeltme:** `lib/public-news.ts`, `lib/corner.ts`, `lib/rehber-articles.ts` canlıda **anon key** ile çalışır (anahtar adayları sırayla denenir, anon önce gelir). Bu tabloların (`news_posts`, `corner_*`, rehber) anon SELECT'i kaldırılırsa public site kırılır; ya bu modüller service role'e taşınır ya da yalnızca yazma yetkileri alınır. Erişim haritası: oturum çıktısı, 77 nesne; S9 alt batch'leri bu haritadan üretilir.
+
+**S7 önerisi (karar bekliyor):** Üye dizini, tartışma listesi ve kurucu listesi bilinçli herkese açık özellikler olarak kalsın; ancak (1) CORS `*` yerine yalnızca `https://almanya101.de`, (2) sahiplik açıkları kapatılsın (S7.1: UUID bilen herkesin oyu üzerine yazabilmesi, whatsapp/linkedin eşleşmesiyle başkasının başvurusunun güncellenebilmesi), (3) hız sınırı DB destekli ayrı iş. Veri tarafı zaten küçültüldü: liste artık izne bağlı maskeleyen view'dan geliyor.
 
 **Planda olmayan, S1'e eklenen bulgu (kritik):** `public` şemasındaki 13 view `postgres`'e ait ve `security_invoker` değil; anon/authenticated bu view'larda `INSERT/UPDATE/DELETE` yetkisine sahipti. Otomatik güncellenebilir `devuser_public` üzerinden yazma view sahibinin yetkisiyle çalışıp `devuser`'ın RLS'ini atlıyordu (`PATCH /rest/v1/devuser_public`). S1 view'larda yalnızca `SELECT` bıraktı.
 
@@ -124,7 +133,7 @@ Mevcut `buildIlikeOrFilter` dört çağrı yerine uygulanır; Edge Function içi
 
 ## Önerilen sıra (kalan)
 
-S3 adım 2 (deploy sonrası) → S4 (+ get-users edge deploy) → S6 ek parçaları → S9 (harita + doğrulama sonrası, gruplar hâlinde) → S10. S7 ve S8 kullanıcı kararı / ayrı alt plan bekliyor.
+S7 (karar sonrası; önce S7.1 sahiplik açıkları) → S9 kalan gruplar (önce yalnızca yazma yetkileri; okuma için public modüllerin service role'e taşınması) + `ALTER DEFAULT PRIVILEGES` → S10 kalanları → S8 (ayrı alt plan). Takip: `get-users` tech filtresi büyük/küçük harf hatası (mevcut, davranış korunarak bırakıldı); Node 20 EOL (Dockerfile + workflow'lar birlikte 22/24'e); `ci / checks` branch protection'da zorunlu.
 
 ## Doğrulama (her batch)
 
