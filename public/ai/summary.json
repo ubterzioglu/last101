@@ -1,0 +1,26 @@
+{
+  "name": "almanya101",
+  "url": "https://almanya101.de",
+  "language": "tr",
+  "description": "Almanya'da yaşayan veya Almanya'ya taşınmayı planlayan Türkler için yaşam rehberi, iş fırsatları, resmî belgeler, pratik araçlar ve topluluk. Tüm içerik Türkçedir.",
+  "audience": "Almanya'da yaşayan veya taşınmayı planlayan Türkçe konuşan kişiler",
+  "location": "Berlin, Almanya",
+  "contact": "info@almanya101.de",
+  "topics": ["Anmeldung ve bürokrasi", "vize ve oturum izni", "maaş ve vergi", "banka ve sigorta", "iş arama", "vatandaşlık"],
+  "sections": {
+    "rehber": "https://almanya101.de/rehber",
+    "haberler": "https://almanya101.de/haberler",
+    "araclar": "https://almanya101.de/maas-hesaplama",
+    "hakkimizda": "https://almanya101.de/hakkimizda",
+    "iletisim": "https://almanya101.de/iletisim"
+  },
+  "feeds": { "rss": "https://almanya101.de/feed.xml" },
+  "llms_txt": "https://almanya101.de/llms.txt",
+  "sameAs": [
+    "https://x.com/101Almanya46905",
+    "https://www.facebook.com/almanya101/",
+    "https://instagram.com/almanya101de",
+    "https://www.youtube.com/@almanya101de",
+    "https://www.linkedin.com/company/almanya101"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "almanya101",
+  "url": "https://almanya101.de",
+  "language": "tr",
+  "services": [
+    { "name": "Maaş Hesaplayıcı", "url": "https://almanya101.de/maas-hesaplama", "description": "Brüt-net maaş hesaplama; vergi sınıfı, eyalet, kilise vergisi ve sosyal sigorta kesintileri." },
+    { "name": "Banka Seçim Aracı", "url": "https://almanya101.de/banka-secim", "description": "20 soruda Almanya için uygun banka türünü bulma." },
+    { "name": "Sigorta Seçim Aracı", "url": "https://almanya101.de/sigorta-secim", "description": "Almanya'da sigortaları önceliklendirme." },
+    { "name": "Vize Seçim Aracı", "url": "https://almanya101.de/vize-secim", "description": "Mavi Kart, Fachkräftevisa, Chancenkarte gibi vize seçeneklerini karşılaştırma." },
+    { "name": "Para Transferi Seçim Aracı", "url": "https://almanya101.de/para-transferi", "description": "Almanya'dan Türkiye'ye en uygun para transfer yöntemini bulma." },
+    { "name": "Vatandaşlık Testi Denemesi", "url": "https://almanya101.de/vatandaslik-testi", "description": "Einbürgerungstest için 33 soruluk deneme sınavı." },
+    { "name": "Yararlı Belgeler", "url": "https://almanya101.de/belgeler", "description": "Anmeldung, Aufenthaltstitel, Steuer-ID, Führungszeugnis gibi sık gereken belgeler." }
+  ],
+  "pricing": "Ücretsiz"
+}
