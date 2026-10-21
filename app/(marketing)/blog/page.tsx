@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { createMetadata } from '@/lib/seo/metadata';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { Section } from '@/components/ui/Section';
+import { cn } from '@/lib/utils/cn';
 
 export const metadata = createMetadata({
   title: 'Blog',
@@ -76,12 +77,12 @@ export default function BlogPage() {
             <Link
               key={card.href}
               href={card.href}
-              className={`group flex flex-col rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1 ${card.cardClass}`}
+              className={cn('group flex flex-col rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1', card.cardClass)}
             >
               <div className="text-5xl mb-5">{card.icon}</div>
               <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
               <p className="text-white/70 leading-relaxed">{card.description}</p>
-              <span className={`mt-6 font-medium group-hover:underline ${card.linkClass}`}>
+              <span className={cn('mt-6 font-medium group-hover:underline', card.linkClass)}>
                 Keşfet →
               </span>
             </Link>

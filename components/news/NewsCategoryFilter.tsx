@@ -2,6 +2,7 @@
 
 import { NEWS_CATEGORIES, getNewsCategoryLabel } from '@/lib/news/shared';
 import type { NewsCategory } from '@/types/news';
+import { cn } from '@/lib/utils/cn';
 
 export function NewsCategoryFilter({
   activeCategory,
@@ -15,11 +16,12 @@ export function NewsCategoryFilter({
       <button
         type="button"
         onClick={() => onSelect('all')}
-        className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+        className={cn(
+          'rounded-full px-4 py-2 text-sm font-medium transition',
           activeCategory === 'all'
             ? 'bg-google-blue text-white'
             : 'border border-white/10 bg-white/[0.04] text-white/75 hover:bg-white/[0.08]'
-        }`}
+        )}
       >
         Tümü
       </button>
@@ -28,11 +30,12 @@ export function NewsCategoryFilter({
           key={category}
           type="button"
           onClick={() => onSelect(category)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+          className={cn(
+            'rounded-full px-4 py-2 text-sm font-medium transition',
             activeCategory === category
               ? 'bg-google-yellow text-black'
               : 'border border-white/10 bg-white/[0.04] text-white/75 hover:bg-white/[0.08]'
-          }`}
+          )}
         >
           {getNewsCategoryLabel(category)}
         </button>

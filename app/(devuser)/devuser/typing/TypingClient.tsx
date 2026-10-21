@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { getDevUserClient } from '@/lib/supabase/devuser';
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { cn } from '@/lib/utils/cn';
 
 interface Participant {
   id: string;
@@ -280,7 +281,7 @@ export default function TypingClient() {
 
         <div className="card form-card">
           <h3 className="section-title">🎮 Yarışmaya Kayıt Ol</h3>
-          {statusMsg && <div className={`status-message ${statusMsg.type}`}>{statusMsg.text}</div>}
+          {statusMsg && <div className={cn('status-message', statusMsg.type)}>{statusMsg.text}</div>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="typing-fullName">Ad Soyad *</label>
@@ -309,7 +310,7 @@ export default function TypingClient() {
               </div>
             ) : (
               participants.map((p, index) => (
-                <div key={p.id} className={`participant-card${p.approved ? ' approved' : ''}`}>
+                <div key={p.id} className={cn('participant-card', p.approved && 'approved')}>
                   <div className="participant-number">{index + 1}</div>
                   <div className="participant-info">
                     <div className="participant-name">{formatNameInitials(p.name)}</div>

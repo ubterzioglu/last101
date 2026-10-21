@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef, useCallback } from 'react';
+import { cn } from '@/lib/utils/cn';
 
 const SUBMIT_API_URL = '/api/devuser-dis-submit';
 const LIST_API_URL = '/api/devuser-dis-list';
@@ -434,7 +435,7 @@ export function DiscussionClient() {
 
             {statusMsg && (
               <div
-                className={`dis-status dis-status-${statusType}`}
+                className={cn('dis-status', `dis-status-${statusType}`)}
                 aria-live="polite"
               >
                 {statusMsg}

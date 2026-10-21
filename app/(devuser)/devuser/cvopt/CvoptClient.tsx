@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import { getDevUserClient } from '@/lib/supabase/devuser';
+import { cn } from '@/lib/utils/cn';
 
 const PAGE_CSS = `
   .cvopt-main {
@@ -532,7 +533,7 @@ export function CvoptClient() {
           <section className="cvopt-card">
             <h3 className="section-title">Başvuru formu</h3>
             {status.message && (
-              <div className={`status-message ${status.type}`}>{status.message}</div>
+              <div className={cn('status-message', status.type)}>{status.message}</div>
             )}
             <form className="form-grid" onSubmit={handleSubmit}>
               <div className="form-group">
@@ -635,7 +636,7 @@ export function CvoptClient() {
 
 function QueueItem({ item }: { item: Participant }) {
   return (
-    <div className={`queue-item${item.approved ? ' approved' : ''}`}>
+    <div className={cn('queue-item', item.approved && 'approved')}>
       <div className="queue-item-left">
         <div>
           <div className="queue-name">{formatNameInitials(item.name)}</div>
@@ -643,9 +644,9 @@ function QueueItem({ item }: { item: Participant }) {
         </div>
       </div>
       <div className="queue-status-group">
-        <span className={`queue-status ${item.approved ? 'approved' : 'pending'}`}>Onay</span>
-        <span className={`queue-status ${item.linkedin_ok ? 'approved' : 'pending'}`}>LinkedIn</span>
-        <span className={`queue-status ${item.cv_ok ? 'approved' : 'pending'}`}>CV</span>
+        <span className={cn('queue-status', item.approved ? 'approved' : 'pending')}>Onay</span>
+        <span className={cn('queue-status', item.linkedin_ok ? 'approved' : 'pending')}>LinkedIn</span>
+        <span className={cn('queue-status', item.cv_ok ? 'approved' : 'pending')}>CV</span>
       </div>
     </div>
   );

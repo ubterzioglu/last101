@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/Card';
 import type { InfoBlock as InfoBlockType } from '@/types';
+import { cn } from '@/lib/utils/cn';
 
 interface InfoBlockProps extends InfoBlockType {
   className?: string;
@@ -36,7 +37,7 @@ export function InfoGrid({ blocks, columns = 2 }: InfoGridProps) {
       : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 
   return (
-    <div className={`grid ${gridCols} gap-6`}>
+    <div className={cn('grid', gridCols, 'gap-6')}>
       {blocks.map((block) => (
         <InfoBlock key={block.id} {...block} />
       ))}

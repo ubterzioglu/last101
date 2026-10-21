@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import { getDevUserClient } from '@/lib/supabase/devuser';
+import { cn } from '@/lib/utils/cn';
 
 const USERS_API_URL = '/api/devuser-list';
 const USER_COUNT_API_URL = '/api/devuser-count';
@@ -886,7 +887,7 @@ export function ListClient() {
               </button>
             </div>
             <p className="auth-note">Sadece admin onaylı üyeler arama ekranına erişebilir.</p>
-            <p className={`auth-status${authStatus.type ? ` ${authStatus.type}` : ''}`}>
+            <p className={cn('auth-status', authStatus.type)}>
               {authStatus.message}
             </p>
             <button
@@ -922,7 +923,7 @@ export function ListClient() {
               </button>
             </div>
             {resetStatus.message && (
-              <p className={`auth-status${resetStatus.type ? ` ${resetStatus.type}` : ''}`} style={{ marginTop: '16px', textAlign: 'center' }}>
+              <p className={cn('auth-status', resetStatus.type)} style={{ marginTop: '16px', textAlign: 'center' }}>
                 {resetStatus.message}
               </p>
             )}
@@ -991,14 +992,14 @@ export function ListClient() {
               {/* Sidebar */}
               <aside className="sidebar">
                 <button
-                  className={`sidebar-mobile-toggle${sidebarOpen ? ' open' : ''}`}
+                  className={cn('sidebar-mobile-toggle', sidebarOpen && 'open')}
                   type="button"
                   onClick={() => setSidebarOpen((v) => !v)}
                 >
                   Filtreler ☰
                 </button>
 
-                <div className={`sidebar-content${sidebarOpen ? ' open' : ''}`}>
+                <div className={cn('sidebar-content', sidebarOpen && 'open')}>
                   <div className="list-card">
                     <h4 className="sidebar-title">Kategoriler</h4>
                     <div className="category-filter-group">
@@ -1011,7 +1012,7 @@ export function ListClient() {
                       ].map(({ key, icon, label, count }) => (
                         <button
                           key={key}
-                          className={`category-btn${currentCategory === key ? ' active' : ''}`}
+                          className={cn('category-btn', currentCategory === key && 'active')}
                           type="button"
                           onClick={() => {
                             setCurrentCategory(key);

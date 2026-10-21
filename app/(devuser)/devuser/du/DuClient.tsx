@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import { getDevUserClient } from '@/lib/supabase/devuser';
+import { cn } from '@/lib/utils/cn';
 
 const EDGE_FUNCTION_URL = '/api/devuser-register';
 const USER_COUNT_API_URL = '/api/devuser-count';
@@ -703,7 +704,7 @@ export function DuClient() {
                       <span>Diğer</span>
                     </label>
                   </div>
-                  <div id="yasamYeriDiger" className={`conditional-field${conditionals['yasamYeriDiger'] ? ' active' : ''}`}>
+                  <div id="yasamYeriDiger" className={cn('conditional-field', conditionals['yasamYeriDiger'] && 'active')}>
                     <input type="text" name="yasam_yeri_diger" className="form-input" placeholder="Hangi ülke?" />
                   </div>
                   <input type="text" name="sehir" className="form-input city-offset" placeholder="Şehir (Berlin, Münih, Hamburg...)" />
@@ -773,7 +774,7 @@ export function DuClient() {
                       <span>Hayır</span>
                     </label>
                   </div>
-                  <div id="projeLink" className={`conditional-field${conditionals['projeLink'] ? ' active' : ''}`}>
+                  <div id="projeLink" className={cn('conditional-field', conditionals['projeLink'] && 'active')}>
                     <div className="question-title">Proje linki veya ismi :</div>
                     <input type="text" name="proje_link" className="form-input" placeholder="Proje linki (GitHub, website, vb.)" />
                   </div>
@@ -1112,7 +1113,7 @@ export function DuClient() {
             )}
 
             {/* Success Message */}
-            <div className={`success-message${showSuccess ? ' active' : ''}`}>
+            <div className={cn('success-message', showSuccess && 'active')}>
               <div className="success-icon">✅</div>
               <div className="success-title">Kayıt Başarılı!</div>
               <div className="success-text">

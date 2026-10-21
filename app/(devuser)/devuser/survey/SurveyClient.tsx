@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
+import { cn } from '@/lib/utils/cn';
 
 const css = `
   .survey-main {
@@ -398,7 +399,7 @@ export function SurveyClient() {
             </div>
 
             {statusMsg && statusType && (
-              <div className={`status-message ${statusType}`}>{statusMsg}</div>
+              <div className={cn('status-message', statusType)}>{statusMsg}</div>
             )}
 
             <form onSubmit={handleSubmit} className="form-grid">

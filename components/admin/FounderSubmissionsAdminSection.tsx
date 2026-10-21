@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getAdminHeaders } from '@/lib/admin/clientAuth';
 import { normalizeFounderStatus } from '@/lib/founder';
+import { cn } from '@/lib/utils/cn';
 
 type FounderSubmissionStatusFilter = 'all' | 'pending' | 'approved' | 'rejected';
 type FounderSubmissionAction = 'approve' | 'reject' | 'pending' | 'delete';
@@ -185,7 +186,7 @@ export default function FounderSubmissionsAdminSection({
             {(['all', 'pending', 'approved', 'rejected'] as FounderSubmissionStatusFilter[]).map((tab) => (
               <button
                 key={tab}
-                className={`tab-btn ${statusFilter === tab ? 'active' : ''}`}
+                className={cn('tab-btn', statusFilter === tab && 'active')}
                 onClick={() => setStatusFilter(tab)}
               >
                 {tab === 'all' ? 'Tümü' : tab === 'pending' ? 'Bekleyen' : tab === 'approved' ? 'Onaylı' : 'Reddedilen'}
@@ -227,7 +228,7 @@ export default function FounderSubmissionsAdminSection({
                     <div className="section-header" style={{ marginBottom: 14 }}>
                       <div>
                         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-                          <span className={`status-badge ${status === 'approved' ? 'approved' : status === 'rejected' ? 'review' : 'pending'}`}>
+                          <span className={cn('status-badge', status === 'approved' ? 'approved' : status === 'rejected' ? 'review' : 'pending')}>
                             {status === 'approved' ? 'Onaylı' : status === 'rejected' ? 'Reddedildi' : 'Onay Bekliyor'}
                           </span>
                           <span className="status-badge muted">{formatDate(row.created_at)}</span>

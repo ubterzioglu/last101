@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { adminJsonFetch } from '@/components/admin/news/api';
 import type { ServiceFinderCandidateRecord, ServiceFinderJobRecord } from '@/lib/serviceFinder/admin';
+import { cn } from '@/lib/utils/cn';
 
 interface Template {
   id: string;
@@ -189,9 +190,10 @@ export function ServiceFinderAdminClient() {
               <button
                 key={job.id}
                 onClick={() => setSelectedId(job.id)}
-                className={`flex w-full flex-col gap-1 rounded-2xl border px-3 py-2.5 text-left text-sm transition ${
+                className={cn(
+                  'flex w-full flex-col gap-1 rounded-2xl border px-3 py-2.5 text-left text-sm transition',
                   selectedId === job.id ? 'border-google-blue bg-blue-500/10' : 'border-white/10 bg-white/[0.02] hover:bg-white/[0.05]'
-                }`}
+                )}
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-semibold text-white">{job.title}</span>
@@ -266,7 +268,7 @@ export function ServiceFinderAdminClient() {
               <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-white/60">Olaylar</h4>
               <div className="max-h-64 space-y-1 overflow-y-auto text-xs">
                 {detail.events.map((ev) => (
-                  <div key={ev.id} className={`rounded-lg px-2 py-1 ${ev.event_level === 'warn' || ev.event_level === 'error' ? 'bg-red-500/10 text-red-200' : 'bg-white/[0.02] text-white/60'}`}>
+                  <div key={ev.id} className={cn('rounded-lg px-2 py-1', ev.event_level === 'warn' || ev.event_level === 'error' ? 'bg-red-500/10 text-red-200' : 'bg-white/[0.02] text-white/60')}>
                     <span className="font-mono text-white/40">{ev.event_type}</span> — {ev.message}
                   </div>
                 ))}

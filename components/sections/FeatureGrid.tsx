@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/Card';
 import type { Feature } from '@/types';
+import { cn } from '@/lib/utils/cn';
 
 interface FeatureGridProps {
   features: Feature[];
@@ -14,7 +15,7 @@ const gridColumns = {
 
 export function FeatureGrid({ features, columns = 3 }: FeatureGridProps) {
   return (
-    <div className={`grid ${gridColumns[columns]} gap-6`}>
+    <div className={cn('grid', gridColumns[columns], 'gap-6')}>
       {features.map((feature) => (
         <Card key={feature.id} variant="hoverable" className="text-center h-full">
           <div className="text-4xl mb-4">{feature.icon}</div>

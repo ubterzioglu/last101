@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import { getDevUserClient } from '@/lib/supabase/devuser';
+import { cn } from '@/lib/utils/cn';
 
 const css = `
   .promote-main {
@@ -548,7 +549,7 @@ export function PromoteClient() {
           <div className="card form-card">
             <h3 className="section-title">🚀 Promote Your Product&apos;a Kayıt Ol</h3>
             {statusMsg && statusType && (
-              <div className={`status-message ${statusType}`}>{statusMsg}</div>
+              <div className={cn('status-message', statusType)}>{statusMsg}</div>
             )}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -612,7 +613,7 @@ export function PromoteClient() {
                 </div>
               ) : (
                 participants.map((p, index) => (
-                  <div key={p.id ?? index} className={`participant-card${p.approved ? ' approved' : ''}`}>
+                  <div key={p.id ?? index} className={cn('participant-card', p.approved && 'approved')}>
                     <div className="participant-number">{index + 1}</div>
                     <div className="participant-info">
                       <div className="participant-name">{formatNameInitials(p.name)}</div>

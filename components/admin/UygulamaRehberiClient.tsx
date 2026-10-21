@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useAdminGate } from '@/hooks/useAdminGate';
+import { cn } from '@/lib/utils/cn';
 
 /**
  * In-app operator guide for the PUBLIC-FACING application (not the admin panel).
@@ -301,7 +302,7 @@ function Card({ children, accent, id }: { children: React.ReactNode; accent: str
 }
 
 function Eyebrow({ children, color }: { children: React.ReactNode; color: string }) {
-  return <div className={`text-xs font-semibold uppercase tracking-[0.18em] ${color}`}>{children}</div>;
+  return <div className={cn('text-xs font-semibold uppercase tracking-[0.18em]', color)}>{children}</div>;
 }
 
 function Bullet({ children }: { children: React.ReactNode }) {

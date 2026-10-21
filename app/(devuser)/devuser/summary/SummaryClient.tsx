@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { cn } from '@/lib/utils/cn';
 
 interface SummaryItem {
   id: string;
@@ -415,7 +416,7 @@ export function SummaryClient() {
           return (
             <div
               key={summary.id}
-              className={`sum-accordion${isOpen ? ' open' : ''}`}
+              className={cn('sum-accordion', isOpen && 'open')}
             >
               <button
                 className="sum-header-btn"

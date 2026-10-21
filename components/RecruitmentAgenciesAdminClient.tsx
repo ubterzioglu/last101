@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { getAdminHeaders } from '@/lib/admin/clientAuth';
 import { useAdminGate } from '@/hooks/useAdminGate';
+import { cn } from '@/lib/utils/cn';
 
 type AgencyStatus = 'all' | 'active' | 'inactive';
 type AgencyCategory = 'İş Bulma Ajansları' | 'İngilizce İşe Alan Şirketler' | 'İş ve Kariyer Platformları';
@@ -423,11 +424,12 @@ export default function RecruitmentAgenciesAdminClient() {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        className={cn(
+                          'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
                           agency.status === 'active'
                             ? 'bg-google-green/20 text-google-green'
                             : 'bg-red-500/20 text-red-400'
-                        }`}
+                        )}
                       >
                         {agency.status === 'active' ? 'Aktif' : 'Pasif'}
                       </span>

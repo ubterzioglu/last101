@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
+import { cn } from '@/lib/utils/cn';
 
 interface MarkdownPreviewProps {
   content: string;
@@ -14,7 +15,7 @@ export default function MarkdownPreview({ content, className = '' }: MarkdownPre
   if (!content) return null;
 
   return (
-    <div className={`prose prose-invert max-w-none ${className}`}>
+    <div className={cn('prose prose-invert max-w-none', className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, rehypeSanitize]}

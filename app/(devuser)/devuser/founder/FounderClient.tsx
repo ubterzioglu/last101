@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import { normalizeFounderStatus } from '@/lib/founder';
+import { cn } from '@/lib/utils/cn';
 
 const css = `
   .founder-main {
@@ -412,7 +413,7 @@ export function FounderClient() {
             <div style={{ height: 16 }} />
 
             {statusMsg && statusType ? (
-              <div className={`status-message ${statusType}`} style={{ marginBottom: 18 }}>
+              <div className={cn('status-message', statusType)} style={{ marginBottom: 18 }}>
                 {statusMsg}
               </div>
             ) : null}
@@ -513,7 +514,7 @@ export function FounderClient() {
                           <div className="list-subtitle">{item.project_name || 'Proje adı paylaşılmadı'}</div>
                         </div>
                         <div className="badge-row">
-                          <span className={`status-badge ${status}`}>{getStatusLabel(status)}</span>
+                          <span className={cn('status-badge', status)}>{getStatusLabel(status)}</span>
                           <span className="status-badge muted">{formatDate(item.created_at)}</span>
                         </div>
                       </div>

@@ -61,7 +61,7 @@ export function ArticleGrid({ articles, columns = 3 }: ArticleGridProps) {
   const gridCols = columns === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 
   return (
-    <div className={`grid ${gridCols} gap-6`}>
+    <div className={cn('grid', gridCols, 'gap-6')}>
       {articles.map((article) => (
         <ArticleCard key={article.id} {...article} />
       ))}

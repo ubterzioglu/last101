@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import Link from 'next/link';
+import { cn } from '@/lib/utils/cn';
 
 const css = `
   .admin-container {
@@ -502,7 +503,7 @@ export function E2aClient() {
                 />
                 <button className="btn-primary" type="button" onClick={login}>Panele Gir</button>
               </div>
-              <div className={`status ${loginStatusType}`}>{loginStatus}</div>
+              <div className={cn('status', loginStatusType)}>{loginStatus}</div>
             </div>
           )}
 

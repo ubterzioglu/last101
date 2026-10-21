@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils/cn';
 
 const ADMIN_KEY_STORAGE = 'devuser_dis_admin_key_v1';
 const LIST_API_URL = '/api/devuser-dis-admin-list';
@@ -311,7 +312,7 @@ export default function DisadClient() {
                               {item.anonymous && <span className="meta-line">anonim</span>}
                             </td>
                             <td>
-                              <span className={`badge ${isApproved ? 'approved' : 'pending'}`}>
+                              <span className={cn('badge', isApproved ? 'approved' : 'pending')}>
                                 {isApproved ? 'approved' : 'pending'}
                               </span>
                             </td>

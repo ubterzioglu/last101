@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
+import { cn } from '@/lib/utils/cn';
 
 const css = `
   .container1 {
@@ -597,7 +598,7 @@ export function E1Client() {
                 {voteSubmitting ? 'Gönderiliyor...' : 'Tarih Seçimini Gönder'}
               </button>
               {voteStatusMsg && (
-                <div className={`form-status ${voteStatusType}`} style={{ display: 'block' }}>
+                <div className={cn('form-status', voteStatusType)} style={{ display: 'block' }}>
                   {voteStatusMsg}
                 </div>
               )}
@@ -632,7 +633,7 @@ export function E1Client() {
                 {questionSubmitting ? 'Gönderiliyor...' : 'Soruyu Gönder'}
               </button>
               {questionStatusMsg && (
-                <div className={`form-status ${questionStatusType}`} style={{ display: 'block' }}>
+                <div className={cn('form-status', questionStatusType)} style={{ display: 'block' }}>
                   {questionStatusMsg}
                 </div>
               )}

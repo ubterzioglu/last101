@@ -10,6 +10,7 @@ import {
   verifyAdminKey,
 } from '@/lib/admin/clientAuth';
 import { AuthSplitLayout } from '@/components/auth/AuthSplitLayout';
+import { cn } from '@/lib/utils/cn';
 
 function isSafeNext(next: string | null): next is string {
   return Boolean(next) && next!.startsWith('/admin');
@@ -271,7 +272,7 @@ function DashboardStatCard({ label, value, accent, href, router }: DashboardStat
       className="group flex flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-left transition hover:-translate-y-0.5 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
     >
       <span className="text-xs font-semibold uppercase tracking-wider text-white/45">{label}</span>
-      <span className={`mt-3 text-4xl font-black ${accent}`}>{value}</span>
+      <span className={cn('mt-3 text-4xl font-black', accent)}>{value}</span>
       <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition group-hover:gap-2">
         Görüntüle
         <span aria-hidden="true">→</span>

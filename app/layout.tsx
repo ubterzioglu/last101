@@ -13,6 +13,7 @@ import {
   SEO_SITE_NAME,
   SITE_URL,
 } from '@/lib/utils/constants';
+import { cn } from '@/lib/utils/cn';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -118,7 +119,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={`${jakarta.variable} ${sora.variable}`}>
+    <html lang="tr" className={cn(jakarta.variable, sora.variable)}>
       <head>
         {/* Structured Data */}
         <OrganizationJsonLd />

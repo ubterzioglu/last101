@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { cn } from '@/lib/utils/cn';
 
 const PAGE_CSS = `
   .profile-layout {
@@ -969,7 +970,7 @@ export function ProfileEditClient() {
 
         {/* Status Message */}
         {statusMsg && (
-          <div className={`status-message ${statusType}`}>{statusMsg}</div>
+          <div className={cn('status-message', statusType)}>{statusMsg}</div>
         )}
 
         <div className="profile-layout">
@@ -1020,7 +1021,7 @@ export function ProfileEditClient() {
             {/* Kişisel Bilgiler */}
             <div className="form-section" id="section-personal">
               <div
-                className={`form-section-header${collapsedSections.has('personal') ? ' collapsed' : ''}`}
+                className={cn('form-section-header', collapsedSections.has('personal') && 'collapsed')}
                 onClick={() => toggleSection('personal')}
               >
                 <span className="form-section-icon">👤</span>
@@ -1028,7 +1029,7 @@ export function ProfileEditClient() {
                 <span className={sectionStatuses.personal.className}>{sectionStatuses.personal.label}</span>
                 <span className="form-section-toggle">▼</span>
               </div>
-              <div className={`form-section-body${collapsedSections.has('personal') ? ' collapsed' : ''}`} id="body-personal">
+              <div className={cn('form-section-body', collapsedSections.has('personal') && 'collapsed')} id="body-personal">
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="ad_soyad">Ad Soyad *</label>
@@ -1107,7 +1108,7 @@ export function ProfileEditClient() {
             {/* Profil Bilgileri */}
             <div className="form-section" id="section-profile">
               <div
-                className={`form-section-header${collapsedSections.has('profile') ? ' collapsed' : ''}`}
+                className={cn('form-section-header', collapsedSections.has('profile') && 'collapsed')}
                 onClick={() => toggleSection('profile')}
               >
                 <span className="form-section-icon">💼</span>
@@ -1115,7 +1116,7 @@ export function ProfileEditClient() {
                 <span className={sectionStatuses.profile.className}>{sectionStatuses.profile.label}</span>
                 <span className="form-section-toggle">▼</span>
               </div>
-              <div className={`form-section-body${collapsedSections.has('profile') ? ' collapsed' : ''}`} id="body-profile">
+              <div className={cn('form-section-body', collapsedSections.has('profile') && 'collapsed')} id="body-profile">
                 <div className="form-group">
                   <label>Rol</label>
                   <div className="radio-group-container">
@@ -1185,7 +1186,7 @@ export function ProfileEditClient() {
             {/* Teknoloji Stack */}
             <div className="form-section" id="section-tech">
               <div
-                className={`form-section-header${collapsedSections.has('tech') ? ' collapsed' : ''}`}
+                className={cn('form-section-header', collapsedSections.has('tech') && 'collapsed')}
                 onClick={() => toggleSection('tech')}
               >
                 <span className="form-section-icon">⚙️</span>
@@ -1193,7 +1194,7 @@ export function ProfileEditClient() {
                 <span className={sectionStatuses.tech.className}>{sectionStatuses.tech.label}</span>
                 <span className="form-section-toggle">▼</span>
               </div>
-              <div className={`form-section-body${collapsedSections.has('tech') ? ' collapsed' : ''}`} id="body-tech">
+              <div className={cn('form-section-body', collapsedSections.has('tech') && 'collapsed')} id="body-tech">
                 <div className="form-group">
                   <label>Programlama Dilleri</label>
                   <div className="checkbox-group-container">
@@ -1235,7 +1236,7 @@ export function ProfileEditClient() {
             {/* İlgi Alanları */}
             <div className="form-section" id="section-interests">
               <div
-                className={`form-section-header${collapsedSections.has('interests') ? ' collapsed' : ''}`}
+                className={cn('form-section-header', collapsedSections.has('interests') && 'collapsed')}
                 onClick={() => toggleSection('interests')}
               >
                 <span className="form-section-icon">⭐</span>
@@ -1243,7 +1244,7 @@ export function ProfileEditClient() {
                 <span className={sectionStatuses.interests.className}>{sectionStatuses.interests.label}</span>
                 <span className="form-section-toggle">▼</span>
               </div>
-              <div className={`form-section-body${collapsedSections.has('interests') ? ' collapsed' : ''}`} id="body-interests">
+              <div className={cn('form-section-body', collapsedSections.has('interests') && 'collapsed')} id="body-interests">
                 <div className="form-group">
                   <label>İlgi Konuları</label>
                   <div className="checkbox-group-container">
@@ -1284,7 +1285,7 @@ export function ProfileEditClient() {
             {/* İş Durumu */}
             <div className="form-section" id="section-work">
               <div
-                className={`form-section-header${collapsedSections.has('work') ? ' collapsed' : ''}`}
+                className={cn('form-section-header', collapsedSections.has('work') && 'collapsed')}
                 onClick={() => toggleSection('work')}
               >
                 <span className="form-section-icon">🔍</span>
@@ -1292,7 +1293,7 @@ export function ProfileEditClient() {
                 <span className={sectionStatuses.work.className}>{sectionStatuses.work.label}</span>
                 <span className="form-section-toggle">▼</span>
               </div>
-              <div className={`form-section-body${collapsedSections.has('work') ? ' collapsed' : ''}`} id="body-work">
+              <div className={cn('form-section-body', collapsedSections.has('work') && 'collapsed')} id="body-work">
                 <div className="form-group">
                   <label>İş Arama Durumu</label>
                   <div className="radio-group-container">
@@ -1338,7 +1339,7 @@ export function ProfileEditClient() {
             {/* İş Birliği */}
             <div className="form-section" id="section-collab">
               <div
-                className={`form-section-header${collapsedSections.has('collab') ? ' collapsed' : ''}`}
+                className={cn('form-section-header', collapsedSections.has('collab') && 'collapsed')}
                 onClick={() => toggleSection('collab')}
               >
                 <span className="form-section-icon">🤝</span>
@@ -1346,7 +1347,7 @@ export function ProfileEditClient() {
                 <span className={sectionStatuses.collab.className}>{sectionStatuses.collab.label}</span>
                 <span className="form-section-toggle">▼</span>
               </div>
-              <div className={`form-section-body${collapsedSections.has('collab') ? ' collapsed' : ''}`} id="body-collab">
+              <div className={cn('form-section-body', collapsedSections.has('collab') && 'collapsed')} id="body-collab">
                 <div className="form-group">
                   <label>Katılma Amacı</label>
                   <div className="radio-group-container">
@@ -1405,7 +1406,7 @@ export function ProfileEditClient() {
             {/* Görünürlük */}
             <div className="form-section" id="section-privacy">
               <div
-                className={`form-section-header${collapsedSections.has('privacy') ? ' collapsed' : ''}`}
+                className={cn('form-section-header', collapsedSections.has('privacy') && 'collapsed')}
                 onClick={() => toggleSection('privacy')}
               >
                 <span className="form-section-icon">🔒</span>
@@ -1413,7 +1414,7 @@ export function ProfileEditClient() {
                 <span className={sectionStatuses.privacy.className}>{sectionStatuses.privacy.label}</span>
                 <span className="form-section-toggle">▼</span>
               </div>
-              <div className={`form-section-body${collapsedSections.has('privacy') ? ' collapsed' : ''}`} id="body-privacy">
+              <div className={cn('form-section-body', collapsedSections.has('privacy') && 'collapsed')} id="body-privacy">
                 <div className="form-row">
                   <label className="checkbox-label">
                     <input type="checkbox" id="aratilabilir" name="aratilabilir" ref={aratilabilirRef} defaultChecked onChange={computeProgress} />

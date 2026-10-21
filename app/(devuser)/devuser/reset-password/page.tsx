@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import { getDevUserClient } from '@/lib/supabase/devuser';
+import { cn } from '@/lib/utils/cn';
 
 const css = `
   .rp-container {
@@ -281,7 +282,7 @@ export default function ResetPasswordPage() {
           {/* No token */}
           {step === 'no-token' && (
             <div className="rp-card">
-              {status && <div className={`rp-status ${status.type}`}>{status.message}</div>}
+              {status && <div className={cn('rp-status', status.type)}>{status.message}</div>}
               <div className="rp-icon">⚠️</div>
               <h2 className="rp-title">Geçersiz Bağlantı</h2>
               <p className="rp-text">
@@ -301,7 +302,7 @@ export default function ResetPasswordPage() {
               <h2 className="rp-title">Yeni Şifre Belirle</h2>
               <p className="rp-text">Hesabınız için yeni bir şifre oluşturun.</p>
 
-              {status && <div className={`rp-status ${status.type}`}>{status.message}</div>}
+              {status && <div className={cn('rp-status', status.type)}>{status.message}</div>}
 
               <form onSubmit={handleSubmit}>
                 <div className="rp-form-group">
@@ -315,7 +316,7 @@ export default function ResetPasswordPage() {
                     onChange={(e) => handlePasswordChange(e.target.value)}
                   />
                   <div className="rp-strength-track">
-                    <div className={`rp-strength-bar ${strength}`} />
+                    <div className={cn('rp-strength-bar', strength)} />
                   </div>
                   <div className="rp-hint">En az 8 karakter, büyük/küçük harf ve rakam içermeli</div>
                 </div>
