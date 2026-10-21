@@ -1,6 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import {
+  INITIAL_SUBMISSION,
+  shouldSubmit,
+  submissionReducer,
+} from '@/components/tools/questionnaire-submission';
 import { QuestionnaireSummary } from '@/components/tools/QuestionnaireSummary';
 import { ToolOption } from '@/components/tools/ToolOption';
 import { ToolPanel } from '@/components/tools/ToolPanel';
@@ -89,10 +94,7 @@ export function QuestionnaireRenderer({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
   const [sessionId, setSessionId] = useState('');
-  const [submissionState, setSubmissionState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [submissionError, setSubmissionError] = useState('');
-  const [submittedKey, setSubmittedKey] = useState('');
-  const submittingKeyRef = useRef('');
+  const [submission, dispatchSubmission] = useReducer(submissionReducer, INITIAL_SUBMISSION);
 
   useEffect(() => {
     setSessionId(createSessionId());
@@ -119,22 +121,17 @@ export function QuestionnaireRenderer({
       : '';
 
   useEffect(() => {
-    if (!isComplete || !showSummary || !sessionId || !completionKey) {
+    // shouldSubmit keeps a failed attempt from being resent on every render.
+    if (!isComplete || !showSummary || !sessionId || !shouldSubmit(submission, completionKey)) {
       return;
     }
 
-    if (submittingKeyRef.current === completionKey || submittedKey === completionKey) {
-      return;
-    }
+    const key = completionKey;
+    const nextScoredAnswers = scoreAnswers(config, rawAnswerList);
+    const nextScoreSummary = computeToolScore(config, nextScoredAnswers);
+    dispatchSubmission({ type: 'start', key });
 
     async function submit() {
-      const nextScoredAnswers = scoreAnswers(config, rawAnswerList);
-      const nextScoreSummary = computeToolScore(config, nextScoredAnswers);
-
-      submittingKeyRef.current = completionKey;
-      setSubmissionState('submitting');
-      setSubmissionError('');
-
       try {
         const response = await fetch('/api/tool-questionnaires', {
           method: 'POST',
@@ -164,29 +161,26 @@ export function QuestionnaireRenderer({
           throw new Error(payload?.error || 'Anket kaydı sırasında beklenmeyen bir hata oluştu.');
         }
 
-        submittingKeyRef.current = '';
-        setSubmissionState('success');
-        setSubmittedKey(completionKey);
+        dispatchSubmission({ type: 'success', key });
       } catch (error) {
-        submittingKeyRef.current = '';
-        setSubmissionState('error');
-        setSubmissionError(
-          error instanceof Error ? error.message : 'Anket kaydı sırasında bir hata oluştu.'
-        );
+        dispatchSubmission({
+          type: 'failure',
+          key,
+          error: error instanceof Error ? error.message : 'Anket kaydı sırasında bir hata oluştu.',
+        });
       }
     }
 
     void submit();
   }, [
     completionKey,
-    config.version,
     config,
     isComplete,
     resultId,
     rawAnswerList,
     sessionId,
     showSummary,
-    submittedKey,
+    submission,
     toolSlug,
   ]);
 
@@ -199,8 +193,7 @@ export function QuestionnaireRenderer({
       ...previous,
       [currentQuestion.id]: value,
     }));
-    setSubmissionState('idle');
-    setSubmissionError('');
+    dispatchSubmission({ type: 'reset' });
 
     if (currentIndex >= config.questions.length - 1) {
       setShowSummary(true);
@@ -224,9 +217,7 @@ export function QuestionnaireRenderer({
     setAnswers({});
     setCurrentIndex(0);
     setShowSummary(false);
-    setSubmissionState('idle');
-    setSubmissionError('');
-    setSubmittedKey('');
+    dispatchSubmission({ type: 'reset' });
   };
 
   const progressPercent =
@@ -297,21 +288,18 @@ export function QuestionnaireRenderer({
             dimensionScores={scoreSummary.dimensionScores}
           />
 
-          {submissionState !== 'idle' && (
+          {submission.status !== 'idle' && (
             <div className="rounded-card border border-line bg-white p-4 text-sm text-ink" aria-live="polite">
-              {submissionState === 'submitting' && <p>Anket yanıtların kaydediliyor...</p>}
-              {submissionState === 'success' && <p>Anket yanıtların başarıyla kaydedildi.</p>}
-              {submissionState === 'error' && (
+              {submission.status === 'submitting' && <p>Anket yanıtların kaydediliyor...</p>}
+              {submission.status === 'success' && <p>Anket yanıtların başarıyla kaydedildi.</p>}
+              {submission.status === 'error' && (
                 <div className="space-y-3">
-                  <p className="text-alm-red-ink">{submissionError || 'Anket yanıtları kaydedilemedi.'}</p>
+                  <p className="text-alm-red-ink">{submission.error || 'Anket yanıtları kaydedilemedi.'}</p>
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
-                    onClick={() => {
-                      setSubmissionState('idle');
-                      setSubmissionError('');
-                    }}
+                    onClick={() => dispatchSubmission({ type: 'retry' })}
                   >
                     Tekrar dene
                   </Button>
