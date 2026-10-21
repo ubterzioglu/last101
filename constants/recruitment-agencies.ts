@@ -42,30 +42,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Üst Düzey Yönetici Arama'
   },
   {
-    name: 'Gi Group',
-    url: 'https://de.gigroup.com',
-    description: 'Gi Group personel & İK hizmetleri',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel İşe Alım'
-  },
-  {
-    name: 'Page Personnel',
-    url: 'https://pagepersonnel.de',
-    description: 'Junior & orta kademe yetenek yerleştirme',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'İK Danışmanlığı'
-  },
-  {
-    name: 'Progress Professionals',
-    url: 'https://progressprofessionals.de',
-    description: 'Finans & hukuk işe alımı',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel İşe Alım'
-  },
-  {
     name: 'Adecco',
     url: 'https://www.adecco.com/de-de',
     description: 'Geçici & kalıcı işe alım',
@@ -170,14 +146,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Üst Düzey Yönetici Arama'
   },
   {
-    name: 'SHREE',
-    url: 'https://shree.com/de-de',
-    description: 'SAP & BT danışmanlık personeli',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel İşe Alım'
-  },
-  {
     name: 'WeMatch',
     url: 'https://wematch.de',
     description: 'Teknoloji & dijital yetenek eşleştirme',
@@ -197,22 +165,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     name: 'Grafton',
     url: 'https://de.grafton.com',
     description: 'Çok sektörlü işe alım ajansı',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel İşe Alım'
-  },
-  {
-    name: 'HeadMatch',
-    url: 'https://headmatch.de',
-    description: 'Yönetici & liderlik araması',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Üst Düzey Yönetici Arama'
-  },
-  {
-    name: 'IHH Healthcare',
-    url: 'https://ihh.com/de',
-    description: 'Sağlık & tıbbi işe alım',
     status: 'active',
     category: 'İş Bulma Ajansları',
     subCategory: 'Genel İşe Alım'
@@ -290,22 +242,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Genel İşe Alım'
   },
   {
-    name: 'Green Recruitment Company',
-    url: 'https://greenrecruitmentcompany.com',
-    description: 'Enerji & sürdürülebilirlik pozisyonları',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Enerji & Mühendislik'
-  },
-  {
-    name: 'Mason Frank',
-    url: 'https://masonfrank.com',
-    description: 'Salesforce & bulut uzmanları',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel'
-  },
-  {
     name: 'Design Deck',
     url: 'https://designdeck.com',
     description: 'Yaratıcı & tasarım işe alımı',
@@ -333,22 +269,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     name: 'Mercuri Urval',
     url: 'https://mercuriurval.com/de-de',
     description: 'Liderlik değerlendirme & arama',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Üst Düzey Yönetici Arama'
-  },
-  {
-    name: 'Emplion',
-    url: 'https://emplion.de',
-    description: 'İK teknolojisi & yetenek platformu',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'BT & Dijital'
-  },
-  {
-    name: 'PMS',
-    url: 'https://pms.de',
-    description: 'Personel & yönetim çözümleri',
     status: 'active',
     category: 'İş Bulma Ajansları',
     subCategory: 'Üst Düzey Yönetici Arama'
@@ -442,22 +362,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Genel İşe Alım'
   },
   {
-    name: 'Xelentia',
-    url: 'https://xelentia.com',
-    description: 'Finans & fintech yeteneği',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Finans & Hukuk'
-  },
-  {
-    name: 'Precision ICT',
-    url: 'https://precisionict.com',
-    description: 'BİT & altyapı uzmanları',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel'
-  },
-  {
     name: 'Locke Staffing',
     url: 'https://locke-staffing.com',
     description: 'ABD-Alman iki dilli işe alım',
@@ -538,14 +442,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Üst Düzey Yönetici Arama'
   },
   {
-    name: 'Opus RS',
-    url: 'https://opusrs.com',
-    description: 'İşe alım süreci dış kaynak kullanımı',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel'
-  },
-  {
     name: 'Alpha Consult Gruppe',
     url: 'https://alphaconsultgruppe.org',
     description: 'İK danışmanlığı & yerleştirme',
@@ -584,30 +480,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     status: 'active',
     category: 'İş Bulma Ajansları',
     subCategory: 'BT & Dijital'
-  },
-  {
-    name: 'Division One',
-    url: 'https://division-one.ch',
-    description: 'İsviçre-Alman finans işe alımı',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel İşe Alım'
-  },
-  {
-    name: 'JAC Group',
-    url: 'https://jacgroup.com',
-    description: 'Küresel yetenek çözümleri',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Uluslararası'
-  },
-  {
-    name: 'Expert Scout',
-    url: 'https://expertscout.com',
-    description: 'Yönetici & uzman eşleştirme',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Üst Düzey Yönetici Arama'
   },
   {
     name: 'K Recruiting',
@@ -666,14 +538,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Genel İşe Alım'
   },
   {
-    name: 'Digital Waffle',
-    url: 'https://digitalwaffle.co.uk',
-    description: 'Dijital & yaratıcı yetenek',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Üst Düzey Yönetici Arama'
-  },
-  {
     name: 'WeMe',
     url: 'https://weme.de',
     description: 'Kişiselleştirilmiş iş eşleştirme',
@@ -690,30 +554,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Genel İşe Alım'
   },
   {
-    name: 'Quantum Consultancy',
-    url: 'https://quantum-consultancy.com',
-    description: 'BT & proje personeli',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel İşe Alım'
-  },
-  {
-    name: 'Pack TM',
-    url: 'https://packtm.com',
-    description: 'E-ticaret & lojistik personeli',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Genel İşe Alım'
-  },
-  {
-    name: 'Evolve Ltd',
-    url: 'https://evolve-ltd.co.uk',
-    description: 'Teknoloji & dönüşüm pozisyonları',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'BT & Dijital'
-  },
-  {
     name: 'Career Factory',
     url: 'https://career-factory.eu',
     description: 'Kariyer koçluğu & iş ilanları',
@@ -728,14 +568,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     status: 'active',
     category: 'İş Bulma Ajansları',
     subCategory: 'BT & Dijital'
-  },
-  {
-    name: 'Intelligent People',
-    url: 'https://intelligentpeople.com',
-    description: 'Yaratıcı & pazarlama personeli',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'Üst Düzey Yönetici Arama'
   },
   {
     name: 'Evolve Talent',
@@ -770,14 +602,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Genel İşe Alım'
   },
   {
-    name: 'Career People',
-    url: 'https://careerpeople.com',
-    description: 'Satış, pazarlama & teknoloji işleri',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'BT & Dijital'
-  },
-  {
     name: 'Tech Global',
     url: 'https://techglobal.com',
     description: 'Küresel teknoloji işe alımı',
@@ -792,14 +616,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     status: 'active',
     category: 'İş Bulma Ajansları',
     subCategory: 'Genel'
-  },
-  {
-    name: 'Zync Group',
-    url: 'https://zyncgroup.com',
-    description: 'Teknoloji & dijital yetenek',
-    status: 'active',
-    category: 'İş Bulma Ajansları',
-    subCategory: 'BT & Dijital'
   },
   // İngilizce iş ilanları veren şirketler
   {
@@ -939,14 +755,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Yapay Zeka & Teknoloji'
   },
   {
-    name: 'Elearnio',
-    url: 'https://careers.elearnio.com/jobs/Careers',
-    description: 'İngilizce iş fırsatları sunan e-öğrenim platformu',
-    status: 'active',
-    category: 'İngilizce İşe Alan Şirketler',
-    subCategory: 'Yapay Zeka & Teknoloji'
-  },
-  {
     name: 'Finmid',
     url: 'https://jobs.ashbyhq.com/finmid.com',
     description: 'İngilizce konuşulan finans pozisyonlarına sahip finans hizmetleri',
@@ -1041,14 +849,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     status: 'active',
     category: 'İngilizce İşe Alan Şirketler',
     subCategory: 'Genel'
-  },
-  {
-    name: 'KAIKO Systems',
-    url: 'https://job-boards.eu.greenhouse.io/kaikosystems',
-    description: 'İngilizce iş fırsatları sunan denizcilik teknolojisi şirketi',
-    status: 'active',
-    category: 'İngilizce İşe Alan Şirketler',
-    subCategory: 'Yapay Zeka & Teknoloji'
   },
   {
     name: 'KAYAK',
@@ -1158,14 +958,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     name: 'Metiundo',
     url: 'https://jobs.metiundo.io/eng',
     description: 'İngilizce pozisyonlar sunan gayrimenkul teknolojisi şirketi',
-    status: 'active',
-    category: 'İngilizce İşe Alan Şirketler',
-    subCategory: 'Yapay Zeka & Teknoloji'
-  },
-  {
-    name: 'Merantix',
-    url: 'https://careers.merantix.com/companies/deltia-2',
-    description: 'İngilizce iş fırsatları sunan yapay zeka girişim stüdyosu',
     status: 'active',
     category: 'İngilizce İşe Alan Şirketler',
     subCategory: 'Yapay Zeka & Teknoloji'
@@ -1467,25 +1259,9 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'IT & Yazılım'
   },
   {
-    name: 'Honeypot',
-    url: 'https://www.honeypot.io',
-    description: 'Tersine işe alım; profil oluşturursunuz, Alman şirketleri size teklif gönderir',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'IT & Yazılım'
-  },
-  {
     name: 'Instaffo',
     url: 'https://instaffo.com',
     description: 'Becerilerinize göre uygun firmalarla otomatik eşleştirme',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'IT & Yazılım'
-  },
-  {
-    name: 'Talent.io',
-    url: 'https://www.talent.io/de',
-    description: 'Profilinize göre şirketlerin doğrudan iletişime geçtiği platform',
     status: 'active',
     category: 'İş ve Kariyer Platformları',
     subCategory: 'IT & Yazılım'
@@ -1499,33 +1275,9 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'IT & Yazılım'
   },
   {
-    name: '4scotty',
-    url: 'https://4scotty.com',
-    description: 'Şirketler mülakat öncesi teklif ve maaş detaylarıyla size ulaşır',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'IT & Yazılım'
-  },
-  {
     name: 'IT-Treff',
     url: 'https://www.it-treff.de',
     description: 'Sistem yönetimi ve donanım destek rolleri',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'IT & Yazılım'
-  },
-  {
-    name: 'Otta',
-    url: 'https://otta.com',
-    description: 'Hızlı büyüyen modern firmalar ve uzaktan roller',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'IT & Yazılım'
-  },
-  {
-    name: 'Remote-jobs',
-    url: 'https://remote-jobs.de',
-    description: 'Yalnızca %100 uzaktan veya hibrit çalışmaya izin veren ilanlar',
     status: 'active',
     category: 'İş ve Kariyer Platformları',
     subCategory: 'IT & Yazılım'
@@ -1651,14 +1403,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Mühendislik & Enerji'
   },
   {
-    name: 'Auto-jobs',
-    url: 'https://www.auto-jobs.de',
-    description: 'Yan sanayi ve OEM firmalarına doğrudan ulaşım',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'Mühendislik & Enerji'
-  },
-  {
     name: 'Chemie.de Jobs',
     url: 'https://www.chemie.de/jobs',
     description: 'Laboratuvar ve proses mühendisliği işleri',
@@ -1683,25 +1427,9 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     subCategory: 'Sağlık & Bakım'
   },
   {
-    name: 'Ärzteblatt Jobs',
-    url: 'https://jobs.aerzteblatt.de',
-    description: 'Alman Tabipler Birliği dergisinin uzman ve başhekim ilan portalı',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'Sağlık & Bakım'
-  },
-  {
     name: 'Medi-Jobs',
     url: 'https://www.medi-jobs.de',
     description: 'Fizyoterapistten diyetisyene tüm sağlık kolları',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'Sağlık & Bakım'
-  },
-  {
-    name: 'Kliniken.de',
-    url: 'https://www.kliniken.de/jobs',
-    description: 'Hastane içi roller, harita üzerinde klinik ilanı arama',
     status: 'active',
     category: 'İş ve Kariyer Platformları',
     subCategory: 'Sağlık & Bakım'
@@ -1718,14 +1446,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     name: 'DocCheck Jobs',
     url: 'https://jobs.doccheck.com',
     description: 'İlaç ve medikal teknoloji sektörü kurumsal ilanları',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'Sağlık & Bakım'
-  },
-  {
-    name: 'Medizin-Job',
-    url: 'https://www.medizin-job.de',
-    description: 'Muayenehanelerden bakım merkezlerine çeşitli medikal pozisyonlar',
     status: 'active',
     category: 'İş ve Kariyer Platformları',
     subCategory: 'Sağlık & Bakım'
@@ -1782,14 +1502,6 @@ export const RECRUITMENT_AGENCIES: Omit<RecruitmentAgency, 'id' | 'createdAt' | 
     name: 'Hotelcareer',
     url: 'https://www.hotelcareer.de',
     description: 'Konaklama endüstrisinin bir numaralı iş arama motoru',
-    status: 'active',
-    category: 'İş ve Kariyer Platformları',
-    subCategory: 'Lojistik, Otel & Perakende'
-  },
-  {
-    name: 'Gastrojobs',
-    url: 'https://www.gastrojobs.de',
-    description: 'Aşçı ve servis, restoran ve catering şirketlerinin ilanları',
     status: 'active',
     category: 'İş ve Kariyer Platformları',
     subCategory: 'Lojistik, Otel & Perakende'
