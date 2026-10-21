@@ -9,9 +9,16 @@ import { cn } from '@/lib/utils/cn';
 interface MarkdownPreviewProps {
   content: string;
   className?: string;
+  /**
+   * Herkese açık makale sayfalarında sayfa başlığı zaten tek H1'dir; gövdedeki
+   * `#` başlıklar H2'ye düşürülerek çift H1 engellenir (bkz.
+   * docs/plans/seo-geo-heading-schema-plan.md P0). Yönetici önizlemelerinde
+   * davranış değişmez (varsayılan: false).
+   */
+  demoteH1?: boolean;
 }
 
-export default function MarkdownPreview({ content, className = '' }: MarkdownPreviewProps) {
+export default function MarkdownPreview({ content, className = '', demoteH1 = false }: MarkdownPreviewProps) {
   if (!content) return null;
 
   return (
@@ -20,7 +27,12 @@ export default function MarkdownPreview({ content, className = '' }: MarkdownPre
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, rehypeSanitize]}
         components={{
-          h1: ({ children }) => <h1 className="text-3xl font-bold mb-4">{children}</h1>,
+          h1: ({ children }) =>
+            demoteH1 ? (
+              <h2 className="text-3xl font-bold mb-4">{children}</h2>
+            ) : (
+              <h1 className="text-3xl font-bold mb-4">{children}</h1>
+            ),
           h2: ({ children }) => <h2 className="text-2xl font-bold mb-3">{children}</h2>,
           h3: ({ children }) => <h3 className="text-xl font-bold mb-2">{children}</h3>,
           p: ({ children }) => <p className="mb-4 leading-7">{children}</p>,

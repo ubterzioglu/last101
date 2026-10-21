@@ -111,7 +111,7 @@ export default async function RehberArticleDetailPage({ params }: RehberArticleD
         {article.content ? (
           <section className="container py-14 md:py-20">
             <article className="mx-auto max-w-4xl">
-              <MarkdownPreview content={article.content} />
+              <MarkdownPreview content={article.content} demoteH1 />
             </article>
           </section>
         ) : null}

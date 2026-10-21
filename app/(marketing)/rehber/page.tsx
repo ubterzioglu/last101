@@ -50,9 +50,62 @@ export default async function RehberPage() {
         </div>
 
         {articles.length === 0 ? (
-          <div className="rounded-2xl border border-gray-200 bg-gray-50 px-6 py-14 text-center">
-            <h3 className="text-2xl font-bold text-gray-900">Henüz yayınlanmış rehber yok.</h3>
-            <p className="mt-4 text-gray-600">İlk rehber yayına alındığında burada görünecek.</p>
+          <div className="rounded-2xl border border-gray-200 bg-gray-50 px-6 py-12">
+            <div className="mx-auto max-w-3xl text-center">
+              <h3 className="text-2xl font-bold text-gray-900">Rehber kütüphanesi hazırlanıyor</h3>
+              <p className="mt-4 text-gray-600">
+                Almanya&apos;da yeni bir hayat kurarken en çok ihtiyaç duyulan konuları adım adım
+                anlatan rehberler üzerinde çalışıyoruz. İlk yayın kümesinde şu başlıklar yer alacak:
+              </p>
+              <ul className="mt-6 grid grid-cols-1 gap-3 text-left sm:grid-cols-2">
+                {[
+                  'Anmeldung (adres kaydı) ve ilk resmi işlemler',
+                  'Oturum ve vize yolları',
+                  'Sağlık sigortası seçimi',
+                  'Brüt-net maaş ve vergi sistemi',
+                  'Banka hesabı açma',
+                  'İş arama ve başvuru süreci',
+                ].map((topic) => (
+                  <li
+                    key={topic}
+                    className="flex items-start gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700"
+                  >
+                    <span aria-hidden className="mt-0.5 text-google-blue">•</span>
+                    {topic}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-gray-600">
+                Bu sırada mevcut kaynaklardan yararlanabilirsiniz:
+              </p>
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href="/hizmet-rehberi"
+                  className="inline-flex items-center rounded-full bg-google-blue px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+                >
+                  Hizmet Rehberi
+                </Link>
+                <Link
+                  href="/almanya-araclari"
+                  className="inline-flex items-center rounded-full border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition hover:border-google-blue hover:text-google-blue"
+                >
+                  Almanya Araçları
+                </Link>
+                <Link
+                  href="/haberler"
+                  className="inline-flex items-center rounded-full border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition hover:border-google-blue hover:text-google-blue"
+                >
+                  Güncel Haberler
+                </Link>
+              </div>
+              <p className="mt-6 text-sm text-gray-500">
+                Belirli bir konuda rehber görmek istiyorsanız{' '}
+                <Link href="/iletisim" className="font-semibold text-google-blue underline underline-offset-2">
+                  bize konu önerin
+                </Link>
+                ; ilk rehber yayına alındığında bu sayfada listelenecek.
+              </p>
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -15,7 +15,7 @@ export default function IletisimPage() {
       <Section contained>
         <div className="flex flex-col items-center justify-center min-h-[40vh]">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Sosyal Medya Kanallarımız</h2>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">Sosyal Medya Kanallarımız</h1>
             <p className="text-lg text-white/80 max-w-2xl mx-auto">
               Aşağıdaki platformlar üzerinden bizi takip edebilir ve iletişime geçebilirsiniz.
             </p>

@@ -121,7 +121,7 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
         {post.content ? (
           <section className="container py-14 md:py-20">
             <article className="mx-auto max-w-4xl">
-              <MarkdownPreview content={post.content} />
+              <MarkdownPreview content={post.content} demoteH1 />
             </article>
           </section>
         ) : null}

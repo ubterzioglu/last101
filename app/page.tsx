@@ -5,9 +5,10 @@ import { NewsCarousel } from '@/components/sections/NewsCarousel';
 import { FAQ } from '@/components/sections/FAQ';
 import { KenBurnsSlideshow } from '@/components/sections/KenBurnsSlideshow';
 import { HomeHeroSection } from '@/components/home/HomeHeroSection';
+import { HomeFooterNav } from '@/components/home/HomeFooterNav';
 import { LinkGridSection } from '@/components/home/LinkGridSection';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
-import { BreadcrumbJsonLd, FaqJsonLd, HowToJsonLd, SpeakableJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { BreadcrumbJsonLd, FaqJsonLd, HowToJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
 import { ArrowUpIcon, WhatsAppIcon } from '@/components/icons/ContactIcons';
 import { cn } from '@/lib/utils/cn';
 import { getPublishedNewsItems } from '@/lib/public-news';
@@ -231,8 +232,8 @@ export default async function HomePage() {
         title="Almanya'da Yaşam ve İş İçin Türkçe Rehber"
         description={DEFAULT_META_DESCRIPTION}
         url={HOME_PAGE_URL}
-        datePublished="2024-06-01"
-        dateModified="2026-04-19"
+        datePublished="2026-01-01"
+        dateModified="2026-10-21"
       />
       <BreadcrumbJsonLd items={[{ name: 'Ana Sayfa', url: HOME_PAGE_URL }]} />
       <FaqJsonLd items={HOMEPAGE_FAQ_ITEMS} />
@@ -248,7 +249,6 @@ export default async function HomePage() {
           { name: 'Oturum izni (Aufenthaltstitel)', text: 'Vize sürenize göre yerel Ausländerbehörde&apos;de oturum izni başvurusu yapın.' },
         ]}
       />
-      <SpeakableJsonLd cssSelector={['section.min-h-\\[640px\\] p', '.faq-section p']} />
 
       <HomeHeroSection whatsappHref={WHATSAPP_COMMUNITY_CHANNEL?.href} />
 
@@ -346,7 +346,7 @@ export default async function HomePage() {
           <p>
             Özellikle{' '}
             <Link href="/is-ilanlari" className="font-semibold text-white underline decoration-google-yellow underline-offset-4">
-              iş ilanları
+              işe alım firmaları
             </Link>
             ,{' '}
             <Link href="/stepstone-karsilastirma" className="font-semibold text-white underline decoration-google-blue underline-offset-4">
@@ -538,9 +538,11 @@ export default async function HomePage() {
         </div>
       </BackgroundSection>
 
+      <HomeFooterNav />
+
       <div className="bg-black py-6 text-center">
-        <p className="text-xs text-white/40">
-          Yayın tarihi: <time dateTime="2024-06-01">Haziran 2024</time> &middot; Son güncelleme: <time dateTime="2026-06-15">Haziran 2026</time>
+        <p className="text-sm text-white/60">
+          Yayın tarihi: <time dateTime="2026-01-01">Ocak 2026</time> &middot; Son güncelleme: <time dateTime="2026-10-21">Ekim 2026</time>
         </p>
       </div>
 

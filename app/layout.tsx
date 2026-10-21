@@ -3,8 +3,7 @@ import Script from 'next/script';
 import { Sora, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/components/seo/JsonLd';
+import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/seo/JsonLd';
 import {
   DEFAULT_KEYWORDS,
   DEFAULT_META_DESCRIPTION,
@@ -96,14 +95,11 @@ export const metadata: Metadata = {
       : {}),
   },
 
-  // Geographic targeting
+  // Google yer meta etiketlerini hedefleme sinyali olarak kullanmıyor;
+  // doğrulanmamış Berlin konumu yanıltıcı olacağı için kaldırıldı
+  // (bkz. docs/plans/seo-geo-2026-10-21.md P2).
   other: {
     'content-language': 'tr',
-    'target-country': 'DE',
-    'geo.region': 'DE-BE',
-    'geo.placename': 'Berlin',
-    'geo.position': '52.520008;13.404954',
-    ICBM: '52.520008, 13.404954',
   },
 };
 
@@ -124,7 +120,6 @@ export default function RootLayout({
         {/* Structured Data */}
         <OrganizationJsonLd />
         <WebSiteJsonLd />
-        <LocalBusinessJsonLd />
 
         {/* Preconnect to Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -146,7 +141,6 @@ export default function RootLayout({
         <main id="main-content" className="flex-grow pt-[10px] bg-black">
           {children}
         </main>
-        <Footer />
         <Script
           id="goatcounter"
           src="https://gc.zgo.at/count.js"

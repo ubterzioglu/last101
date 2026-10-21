@@ -1,0 +1,138 @@
+- generic [active] [ref=f7e1]:
+  - banner [ref=f7e2]:
+    - generic [ref=f7e3]:
+      - link [ref=f7e4] [cursor=pointer]:
+        - /url: /
+        - img "almanya101" [ref=f7e5]
+      - button "Menü" [ref=f7e7] [cursor=pointer]
+  - main [ref=f7e9]:
+    - generic [ref=f7e10]:
+      - generic [ref=f7e12]:
+        - navigation "Breadcrumb" [ref=f7e13]:
+          - list [ref=f7e14]:
+            - listitem [ref=f7e15]:
+              - link "Ana Sayfa" [ref=f7e16] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=f7e17]:
+              - generic [aria-hidden] [ref=f7e18]: /
+              - link "Rehber" [ref=f7e19] [cursor=pointer]:
+                - /url: /rehber
+            - listitem [ref=f7e20]:
+              - generic [aria-hidden] [ref=f7e21]: /
+              - generic [ref=f7e22]: Anmeldung
+        - generic [ref=f7e23]:
+          - button "İşe Alım Firmaları" [ref=f7e24] [cursor=pointer]
+          - button "Secondary" [ref=f7e28] [cursor=pointer]
+          - button "Outline" [ref=f7e29] [cursor=pointer]
+          - button "Güncel Haberleri Oku" [ref=f7e30] [cursor=pointer]
+          - button "Danger" [ref=f7e34] [cursor=pointer]
+          - button "Success" [ref=f7e35] [cursor=pointer]
+          - link "Üye Ol" [ref=f7e36] [cursor=pointer]:
+            - /url: /giris
+          - button "XL" [ref=f7e40] [cursor=pointer]
+        - generic [ref=f7e41]:
+          - generic [ref=f7e42]: Rozet blue
+          - generic [ref=f7e43]: Rozet red
+          - generic [ref=f7e44]: Rozet yellow
+          - generic [ref=f7e45]: Rozet green
+          - generic [ref=f7e46]: Rozet gray
+      - generic [ref=f7e49]:
+        - generic [ref=f7e50]:
+          - heading "Default kart" [level=3] [ref=f7e51]
+          - paragraph [ref=f7e52]: Hairline, 12px köşe.
+        - generic [ref=f7e53]:
+          - heading "Hoverable" [level=3] [ref=f7e54]
+          - paragraph [ref=f7e55]: "Hover: border-ink/30."
+        - generic [ref=f7e56]:
+          - heading "Featured" [level=3] [ref=f7e57]
+          - paragraph [ref=f7e58]: shadow-float.
+      - paragraph [ref=f7e61]: Koyu bant (Section tone="ink")
+  - contentinfo [ref=f7e62]:
+    - generic [ref=f7e63]:
+      - generic [ref=f7e64]:
+        - generic [ref=f7e65]:
+          - link [ref=f7e66] [cursor=pointer]:
+            - /url: /
+            - img "almanya101" [ref=f7e67]
+          - paragraph [ref=f7e68]: yalnız değilsin! almanya101 seninle!
+        - navigation "Kurumsal bağlantılar" [ref=f7e69]:
+          - list [ref=f7e70]:
+            - listitem [ref=f7e71]:
+              - link "Hakkımızda" [ref=f7e72] [cursor=pointer]:
+                - /url: /hakkimizda
+            - listitem [ref=f7e73]:
+              - link "Blog" [ref=f7e74] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=f7e75]:
+              - link "İletişim" [ref=f7e76] [cursor=pointer]:
+                - /url: /iletisim
+            - listitem [ref=f7e77]:
+              - link "Kariyer" [ref=f7e78] [cursor=pointer]:
+                - /url: /kariyer
+            - listitem [ref=f7e79]:
+              - link "Gizlilik Politikası" [ref=f7e80] [cursor=pointer]:
+                - /url: /gizlilik-politikasi
+            - listitem [ref=f7e81]:
+              - link "Kullanım Şartları" [ref=f7e82] [cursor=pointer]:
+                - /url: /kullanim-sartlari
+            - listitem [ref=f7e83]:
+              - link "KVKK / GDPR / CCPA" [ref=f7e84] [cursor=pointer]:
+                - /url: /kvkk-gdpr-ccpa
+            - listitem [ref=f7e85]:
+              - link "Çerez Politikası" [ref=f7e86] [cursor=pointer]:
+                - /url: /cerez-politikasi
+            - listitem [ref=f7e87]:
+              - link "Impressum" [ref=f7e88] [cursor=pointer]:
+                - /url: /impressum
+      - paragraph [ref=f7e90]: © 2026 almanya101
+      - list [ref=f7e91]:
+        - listitem [ref=f7e92]:
+          - link "Seo Aracı" [ref=f7e93] [cursor=pointer]:
+            - /url: https://www.spindorai.com
+          - text: ve Seo Hizmetleri Spindora
+        - listitem [ref=f7e94]:
+          - link "Corteqs" [ref=f7e95] [cursor=pointer]:
+            - /url: https://www.corteqs.net
+          - text: "- Diasporayı Birleştiren Platform"
+        - listitem [ref=f7e96]:
+          - link "Canlı Destek Yazılımı" [ref=f7e97] [cursor=pointer]:
+            - /url: https://chatio.com.tr/
+        - listitem [ref=f7e98]:
+          - link "Seo Ajansı" [ref=f7e99] [cursor=pointer]:
+            - /url: https://www.spindorai.com/seo/en-iyi-seo-ajansi
+          - text: Spindora Tarafından Seosu Yapılmıştır.
+        - listitem [ref=f7e100]:
+          - link "İstanbul Hurdacı" [ref=f7e101] [cursor=pointer]:
+            - /url: https://tekhurdametal.com/istanbul-hurdaci/
+          - text: Firması Tek Hurda Metal A.Ş
+        - listitem [ref=f7e102]:
+          - link "Antalya Seks Shop" [ref=f7e103] [cursor=pointer]:
+            - /url: https://lionerotik.com/urunler/fetis-urunleri
+          - text: Lion Erotik
+        - listitem [ref=f7e104]:
+          - link "Evden Eve Nakliyat" [ref=f7e105] [cursor=pointer]:
+            - /url: https://ufuksoynakliyat.com.tr
+          - text: Şirketi Ufuksoy Nakliyat A.Ş
+        - listitem [ref=f7e106]:
+          - link "Deniz Kayağı Turları" [ref=f7e107] [cursor=pointer]:
+            - /url: https://dragomanseakayak.com
+          - text: Şirketi Dragoman Sea Kayak & Outdoors
+  - dialog [ref=f7e110]:
+    - generic [ref=f7e111]:
+      - paragraph [ref=f7e112]: Menü
+      - button "Menüyü kapat" [ref=f7e113] [cursor=pointer]
+    - navigation "Site menüsü" [ref=f7e117]:
+      - link "Ana Sayfa" [ref=f7e118] [cursor=pointer]:
+        - /url: /
+      - button "Araçlar" [ref=f7e123] [cursor=pointer]
+      - button "Topluluk" [ref=f7e127] [cursor=pointer]
+      - button "İçerik" [ref=f7e131] [cursor=pointer]
+      - button "İletişim" [ref=f7e135] [cursor=pointer]
+    - generic [ref=f7e138]:
+      - link "WhatsApp" [ref=f7e139] [cursor=pointer]:
+        - /url: https://chat.whatsapp.com/x
+      - generic [ref=f7e143]:
+        - link "Giriş yap" [ref=f7e144] [cursor=pointer]:
+          - /url: /giris
+        - link "Üye Ol" [ref=f7e145] [cursor=pointer]:
+          - /url: /giris

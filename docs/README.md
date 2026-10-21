@@ -6,6 +6,7 @@ Bu sayfa belgelerin amacını ve güncellik durumunu gösterir. Uygulamanın mev
 
 Bu belgeler öneri ve yapılacak işlerdir; tamamlanmış özellik listesi olarak okunmamalıdır.
 
+- [SEO ve GEO denetimi ve iyileştirme planı](./plans/seo-geo-2026-10-21.md) — 21 Ekim 2026 tarihli kod ve canlı site kontrolü.
 - [Haber hattı ve kod düzenleme birleşik planı](./plans/clean-code-plan.md) — 21 Ekim 2026 tarihli çalışma planı.
 - [Haber yönetimi planı](./plans/news-admin-plan.md) — birleşik planın haber bölümüne ait ayrıntılar.
 - [Kalan kod düzenleme işleri — küçük batch planı](./plans/clean-code-batches.md) — birleşik planın 0–3. aşamaları canlıya alındıktan sonra kalan işlerin tek PR'lık batch'lere bölünmüş hali.

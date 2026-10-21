@@ -1,0 +1,151 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.12 C:/temp_private/almanya101last
+
+ ❯ tests/auth-split-layout.test.ts (7 tests | 4 failed) 112ms
+     × uses the light palette and none of the dark or neon classes 28ms
+     × shows the Berlin photo with the brand slogan only from the lg breakpoint 9ms
+     × puts the h1 and the form inside a white featured card 7ms
+     × does not nest a second <main> inside the root layout 6ms
+ ❯ tests/markdown-preview.test.ts (7 tests | 2 failed) 62ms
+     × uses light prose with ink text and brand links for tone="light" 6ms
+     × does not leak dark-theme colours into the light tone 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/auth-split-layout.test.ts > AuthSplitLayout tone="light" for the public /giris page > uses the light palette and none of the dark or neon classes
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/auth-split-layout.test.ts:96:61
+     95|       </ul>
+     96|       </div>
+     97|       <div class="relative p-10 text-xs text-white/45">© almanya101 — …
+       |                                                ^
+     98|       </aside>
+     99|       <main class="flex min-h-screen items-center justify-center px-4 …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/auth-split-layout.test.ts > AuthSplitLayout tone="light" for the public /giris page > shows the Berlin photo with the brand slogan only from the lg breakpoint
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/auth-split-layout.test.ts:106:40
+    104|       <div class="mb-8 text-center lg:text-left">
+    105|       <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Admin …
+    106|       <p class="mt-3 text-sm leading-7 text-white/60">Tüm yönetim bölü…
+       |                                        ^
+    107|       </div>
+    108|       <form id="auth-form">
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/auth-split-layout.test.ts > AuthSplitLayout tone="light" for the public /giris page > puts the h1 and the form inside a white featured card
+AssertionError: rounded-card: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/auth-split-layout.test.ts:120:39
+    119|       const props = {
+    120|         title: 'Köşe Girişi',
+    121|         subtitle: '/ornek paneline giriş yapın.',
+       |         ^
+    122|         accent,
+    123|         heroTitle: 'Arkadaşın Köşesi',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/auth-split-layout.test.ts > AuthSplitLayout tone="light" for the public /giris page > does not nest a second <main> inside the root layout
+AssertionError: expected LoadedCheerio{ …(5) } to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/auth-split-layout.test.ts:127:47
+    125|       };
+    126|
+    127|       expect(render({ ...props, tone: 'dark' })).toBe(render(props));
+       |                                               ^
+    128|     }
+    129|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/markdown-preview.test.ts > MarkdownPreview > uses light prose with ink text and brand links for tone="light"
+AssertionError: expected [ 'prose', 'prose-invert', …(1) ] to not include 'prose-invert'
+ ❯ tests/markdown-preview.test.ts:62:25
+     60|
+     61|     expect(classes).toContain('prose');
+     62|     expect(classes).not.toContain('prose-invert');
+       |                         ^
+     63|     expect(classes).toContain('text-ink');
+     64|     expect(html).toMatch(/<h1 class="[^"]*font-extrabold[^"]*text-ink[…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/markdown-preview.test.ts > MarkdownPreview > does not leak dark-theme colours into the light tone
+AssertionError: expected '<link rel="preload" as="image" href="…' not to contain '#7fd5ff'
+
+- Expected
++ Received
+
+- #7fd5ff
++ <link rel="preload" as="image" href="/images/site/berlin-spree.webp"/><div class="prose prose-invert max-w-none"><h1 class="text-3xl font-bold mb-4">Başlık</h1>
++ <p class="mb-4 leading-7">Paragraf ve <a href="https://example.com" class="text-[#7fd5ff] hover:underline" target="_blank" rel="noopener noreferrer">bağlantı</a>.</p>
++ <blockquote class="border-l-4 border-white/20 pl-4 italic text-white/80 my-4">
++ <p class="mb-4 leading-7">Alıntı</p>
++ </blockquote>
++ <hr/>
++
++
++
++
++
++
++
++
++
++
++
++
++
++ <table><thead><tr><th>Konu</th><th>Not</th></tr></thead><tbody><tr><td>Anmeldung</td><td>14 gün</td></tr></tbody></table>
++ <p class="mb-4 leading-7"><img src="/images/site/berlin-spree.webp" alt="Berlin"/></p></div>
+
+ ❯ tests/markdown-preview.test.ts:74:22
+     72|     const html = render({ content: SAMPLE, tone: 'light' });
+     73|
+     74|     expect(html).not.toContain('#7fd5ff');
+       |                      ^
+     75|     expect(html).not.toContain('text-white');
+     76|     expect(html).not.toContain('border-white');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+  Snapshots  1 written
+ Test Files  2 failed | 16 passed (18)
+      Tests  6 failed | 245 passed (251)
+   Start at  20:43:47
+   Duration  15.30s (transform 5.29s, setup 0ms, import 35.58s, tests 1.42s, environment 5ms)
+

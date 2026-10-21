@@ -117,9 +117,9 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
             <span>İş ve Kariyer Platformu</span>
           </div>
         </div>
-        <h2 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
+        <h1 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
           Almanya&apos;daki İş Bulma Ajansları ve Şirketler
-        </h2>
+        </h1>
         <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
           Almanya&apos;da faaliyet gösteren işe alım ajansları, kafa avcıları ve personel şirketlerinin kapsamlı listesi.
           Kariyer veya işe alım ihtiyaçlarınız için doğru ajansı bulun.
@@ -182,9 +182,9 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
           >
             <div className="flex items-start justify-between gap-3">
                <div className="min-w-0 flex-1">
-                 <h3 className="font-semibold text-gray-900 group-hover:text-google-blue transition-colors">
-                   {agency.name}
-                 </h3>
+                 <h2 className="font-semibold text-gray-900 group-hover:text-google-blue transition-colors">
+                    {agency.name}
+                  </h2>
                  <p className="mt-1 text-sm text-gray-600 line-clamp-2">
                    {agency.description}
                  </p>

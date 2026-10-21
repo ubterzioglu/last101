@@ -59,6 +59,8 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         author="Almanya101"
         url={pageUrl}
         image={article.coverImageUrl}
+        sourceName={article.sourceName || undefined}
+        sourceUrl={article.sourceUrl || undefined}
       />
       <BreadcrumbJsonLd
         items={[
@@ -115,7 +117,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         {article.content ? (
           <section className="container py-14 md:py-20">
             <div className="mx-auto max-w-4xl">
-              <MarkdownPreview content={article.content} />
+              <MarkdownPreview content={article.content} demoteH1 />
             </div>
           </section>
         ) : null}

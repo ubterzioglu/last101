@@ -1,0 +1,59 @@
+
+> almanya101@0.1.0 start
+> node scripts/start-standalone.mjs 3000
+
+   ▲ Next.js 15.5.28
+   - Local:        http://localhost:3000
+   - Network:      http://0.0.0.0:3000
+
+ ✓ Starting...
+ ✓ Ready in 6.6s
+fetchPublishedNewsRows failed: {
+  message: 'TypeError: fetch failed',
+  details: 'TypeError: fetch failed\n' +
+    '\n' +
+    'Caused by: SocketError: other side closed (UND_ERR_SOCKET)\n' +
+    'SocketError: other side closed\n' +
+    '    at TLSSocket.onHttpSocketEnd (node:internal/deps/undici/undici:7611:26)\n' +
+    '    at TLSSocket.emit (node:events:520:35)\n' +
+    '    at endReadableNT (node:internal/streams/readable:1701:12)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)',
+  hint: '',
+  code: ''
+}
+getPublishedRehberArticles failed: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.promote_participants'",
+  message: "Could not find the table 'public.rehber_articles' in the schema cache"
+}
+getPublishedRehberArticles failed: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.promote_participants'",
+  message: "Could not find the table 'public.rehber_articles' in the schema cache"
+}
+getPublishedRehberArticles failed: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.promote_participants'",
+  message: "Could not find the table 'public.rehber_articles' in the schema cache"
+}
+getPublishedRehberArticles failed: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.promote_participants'",
+  message: "Could not find the table 'public.rehber_articles' in the schema cache"
+}
+getPublishedRehberArticles failed: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.promote_participants'",
+  message: "Could not find the table 'public.rehber_articles' in the schema cache"
+}
+getPublishedRehberArticles failed: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.promote_participants'",
+  message: "Could not find the table 'public.rehber_articles' in the schema cache"
+}

@@ -5,8 +5,9 @@ import { RECRUITMENT_AGENCIES } from '@/constants/recruitment-agencies';
 import type { RecruitmentAgency } from '@/types';
 
 export const metadata = createMetadata({
-  title: 'İş İlanları',
-  description: 'Türk iş verenler ve Türk dostu şirketlerin iş ilanları. Almanya\'da iş fırsatları.',
+  title: 'İş Bulma Ajansları ve Kariyer Platformları',
+  description:
+    'Almanya\'daki iş bulma ajansları, İngilizce işe alan şirketler ve kariyer platformlarının kapsamlı listesi. İş arama süreciniz için doğru ajansı bulun.',
   path: '/is-ilanlari',
 });
 

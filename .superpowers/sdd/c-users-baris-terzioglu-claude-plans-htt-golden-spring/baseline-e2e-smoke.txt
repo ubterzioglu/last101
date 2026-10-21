@@ -1,0 +1,1750 @@
+
+Running 83 tests using 14 workers
+
+
+
+(node:64648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:32932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:39584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:31012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/news-admin-list is not authorized
+[2/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon POST /api/news-admin-action is not authorized
+[3/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon POST /api/recruitment-agencies-admin-action is not authorized
+
+
+(node:3116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/devuser-admin-list is not authorized
+
+(node:32824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[5/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/admin/security-notes is not authorized
+
+(node:18624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/83] [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:36:7 › Almanya Maas Beklentisi Araci › daha zayif ve dusuk maliyetli profil daha dusuk brut band ve kira baskisi verir
+[7/83] [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:62:7 › Almanya Maas Beklentisi Araci › geri donme ve sifirlama 15 soruluk akista calisir
+
+(node:51932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[8/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Yolunu Seç Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[9/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Yolunu Seç Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[10/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/recruitment-agencies-admin-list is not authorized
+
+(node:59604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[11/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/admin/news/posts is not authorized
+
+(node:63960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:43096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[12/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/admin/news/sources is not authorized
+[13/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Yolunu Seç Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[14/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/admin/news/settings is not authorized
+
+(node:46084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[15/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Maaş Beklentisi Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+
+(node:6472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[16/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/members-admin-list is not authorized
+[17/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/broken-link-reports-admin-list is not authorized
+
+(node:39496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[18/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Maaş Beklentisi Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[19/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Maaş Beklentisi Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[20/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/provider-submissions-admin-list is not authorized
+[21/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya'ya Hazır Mısın? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[22/83] [chromium] › e2e\smoke\admin-guards.spec.ts:30:7 › anon GET /api/participant-admin-list is not authorized
+[23/83] [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:7:7 › Almanya Maas Beklentisi Araci › yuksek uzmanlik profili daha yuksek brut aralik uretir
+[24/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya'ya Hazır Mısın? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[25/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya'ya Hazır Mısın? Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+[26/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:64:11 › Almanya'ya Hazır Mısın? Aracı › sonuç sonrası anket tamamlanır ve başarı durumu görünür
+[27/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Hangi Şehir Sana Uygun? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+  1) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Maaş Beklentisi Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-b5a03-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-b5a03-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-b5a03-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-b5a03-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:10148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[28/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Hangi Şehir Sana Uygun? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+  2) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Maaş Beklentisi Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-5d67c-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-5d67c-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-5d67c-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-5d67c-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3) [chromium] › e2e\smoke\almanya-tools.spec.ts:64:11 › Almanya'ya Hazır Mısın? Aracı › sonuç sonrası anket tamamlanır ve başarı durumu görünür 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:81:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-0e37a-ır-ve-başarı-durumu-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-0e37a-ır-ve-başarı-durumu-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-0e37a-ır-ve-başarı-durumu-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-0e37a-ır-ve-başarı-durumu-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  4) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya'ya Hazır Mısın? Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-fdc25-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-fdc25-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-fdc25-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-fdc25-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  5) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Yolunu Seç Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-b36cd-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-b36cd-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-b36cd-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-b36cd-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:25776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[29/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Hangi Şehir Sana Uygun? Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+
+(node:11312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  6) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya'ya Hazır Mısın? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-b9c68-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-b9c68-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-b9c68-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-b9c68-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[30/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Topluluk ve Danışmanlık Eşleştirici › anonim kullanıcı için açılır ve temel bloklar görünür
+  7) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Yolunu Seç Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-654b3-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-654b3-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-654b3-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-654b3-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:50552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[31/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Topluluk ve Danışmanlık Eşleştirici › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+
+(node:39008) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[32/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Topluluk ve Danışmanlık Eşleştirici › son seçeneklerle ilerleyince de dead-end üretmez
+
+(node:19364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:60848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[33/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Kariyer ve Eğitim Rotası Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[34/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Kariyer ve Eğitim Rotası Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+  8) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Hangi Şehir Sana Uygun? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Hangi--320d4-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Hangi--320d4-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Hangi--320d4-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Hangi--320d4-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  9) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Hangi Şehir Sana Uygun? Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Hangi--2f5e4-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Hangi--2f5e4-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Hangi--2f5e4-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Hangi--2f5e4-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  10) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Topluluk ve Danışmanlık Eşleştirici › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Toplul-d44bb-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Toplul-d44bb-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Toplul-d44bb-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Toplul-d44bb-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  11) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Topluluk ve Danışmanlık Eşleştirici › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Toplul-8543f-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Toplul-8543f-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Toplul-8543f-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Toplul-8543f-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:43132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  12) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Kariyer ve Eğitim Rotası Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Kariye-8fe1a-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Kariye-8fe1a-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Kariye-8fe1a-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Kariye-8fe1a-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:34916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[35/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Kariyer ve Eğitim Rotası Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+
+
+(node:48116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[36/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Yaşam Tarzı Uyumu Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+[37/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Yaşam Tarzı Uyumu Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+
+(node:20068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[38/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Yaşam Tarzı Uyumu Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+(node:9112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[39/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › İlk 90 Gün Planlayıcı › anonim kullanıcı için açılır ve temel bloklar görünür
+  13) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya'ya Hazır Mısın? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Almanya\'ya Hazır Mısın? Aracı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Almanya\'ya Hazır Mısın? Aracı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-c93e4-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-c93e4-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-c93e4-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-c93e4-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  14) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Yolunu Seç Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Almanya Yolunu Seç Aracı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Almanya Yolunu Seç Aracı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-b49fd-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-b49fd-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-b49fd-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-b49fd-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:3332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[40/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › İlk 90 Gün Planlayıcı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+
+(node:38556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[41/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › İlk 90 Gün Planlayıcı › son seçeneklerle ilerleyince de dead-end üretmez
+  15) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Hangi Şehir Sana Uygun? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Hangi Şehir Sana Uygun? Aracı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Hangi Şehir Sana Uygun? Aracı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Hangi--a205b-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Hangi--a205b-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Hangi--a205b-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Hangi--a205b-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  16) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Maaş Beklentisi Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Almanya Maaş Beklentisi Aracı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Almanya Maaş Beklentisi Aracı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-d0f78-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-d0f78-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-d0f78-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-d0f78-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:1224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+[42/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Önce Hangi Sorunu Çözmelisin? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+
+(node:56892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[43/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Önce Hangi Sorunu Çözmelisin? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+  17) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Kariyer ve Eğitim Rotası Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Kariye-e7566-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Kariye-e7566-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Kariye-e7566-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Kariye-e7566-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  18) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Yaşam Tarzı Uyumu Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-55dbf-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-55dbf-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-55dbf-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-55dbf-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  19) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › İlk 90 Gün Planlayıcı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-İlk-90-b7116-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-İlk-90-b7116-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-İlk-90-b7116-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-İlk-90-b7116-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  20) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Yaşam Tarzı Uyumu Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-cc12c-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-cc12c-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-cc12c-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-cc12c-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:15220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+
+(node:17860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  21) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Topluluk ve Danışmanlık Eşleştirici › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Topluluk ve Danışmanlık Eşleştirici' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Topluluk ve Danışmanlık Eşleştirici' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Toplul-e40db-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Toplul-e40db-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Toplul-e40db-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Toplul-e40db-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:40340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[44/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya'da İş Bulma Olasılığı Aracı › anonim kullanıcı için açılır ve temel bloklar görünür
+[45/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya'da İş Bulma Olasılığı Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir
+  22) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › İlk 90 Gün Planlayıcı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-İlk-90-c120f-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-İlk-90-c120f-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-İlk-90-c120f-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-İlk-90-c120f-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[46/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Önce Hangi Sorunu Çözmelisin? Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+(node:51692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[47/83] [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya'da İş Bulma Olasılığı Aracı › son seçeneklerle ilerleyince de dead-end üretmez
+
+(node:21232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[48/83] [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:7:7 › Almanya Yolunu Seç Aracı › güçlü teklif, diploma ve maaş profili EU Mavi Kart sonucuna gider
+  23) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Kariyer ve Eğitim Rotası Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Kariyer ve Eğitim Rotası Aracı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Kariyer ve Eğitim Rotası Aracı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Kariye-2e3b9-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Kariye-2e3b9-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Kariye-2e3b9-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Kariye-2e3b9-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:11272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[49/83] [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:34:7 › Almanya Yolunu Seç Aracı › teklif var ama maaş sınırdaysa Fachkräfte öne çıkar
+
+(node:31056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[50/83] [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:58:7 › Almanya Yolunu Seç Aracı › teklif yok ama yeterlilik, dil ve bütçe varsa Chancenkarte çıkar
+  24) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Önce Hangi Sorunu Çözmelisin? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Önce-H-68dd6-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Önce-H-68dd6-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Önce-H-68dd6-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Önce-H-68dd6-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:34852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[51/83] [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:82:7 › Almanya Yolunu Seç Aracı › aile bağı baskınsa aile birleşimi sonucu döner
+  25) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya'da İş Bulma Olasılığı Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-7c48a-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-7c48a-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-7c48a-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-7c48a-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:2752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[52/83] [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:106:7 › Almanya Yolunu Seç Aracı › pratik eğitim niyeti ve temel Almanca Ausbildung sonucuna gider
+  26) [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Önce Hangi Sorunu Çözmelisin? Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:60:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Önce-H-b8a87-leyince-de-dead-end-üretmez-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Önce-H-b8a87-leyince-de-dead-end-üretmez-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Önce-H-b8a87-leyince-de-dead-end-üretmez-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Önce-H-b8a87-leyince-de-dead-end-üretmez-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  27) [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya'da İş Bulma Olasılığı Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+
+    Error: soru kartında en az bir seçenek olmalı
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      24 |     const options = page.getByTestId('tool-option');
+      25 |     const count = await options.count();
+    > 26 |     expect(count, 'soru kartında en az bir seçenek olmalı').toBeGreaterThan(0);
+         |                                                             ^
+      27 |     await options.nth(pick === 'first' ? 0 : count - 1).click();
+      28 |   }
+      29 |
+        at walkToResult (C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:26:61)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:53:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-a00d4-uç-üretir-ve-sıfırlanabilir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-a00d4-uç-üretir-ve-sıfırlanabilir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-a00d4-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-a00d4-uç-üretir-ve-sıfırlanabilir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:41404) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[53/83] [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:130:7 › Almanya Yolunu Seç Aracı › uygunluk düşük ve blokaj yüksekse LIMITED sonucu döner
+
+
+(node:60548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[54/83] [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:154:7 › Almanya Yolunu Seç Aracı › geri dönme ve sıfırlama 15 soruluk akışta çalışır
+  28) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Yaşam Tarzı Uyumu Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Almanya Yaşam Tarzı Uyumu Aracı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Almanya Yaşam Tarzı Uyumu Aracı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-7e36e-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-7e36e-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-7e36e-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-7e36e-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:50880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[55/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public / returns 200 without errors
+  29) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › İlk 90 Gün Planlayıcı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'İlk 90 Gün Planlayıcı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'İlk 90 Gün Planlayıcı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-İlk-90-817e5-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-İlk-90-817e5-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-İlk-90-817e5-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-İlk-90-817e5-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:63052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[56/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /haberler returns 200 without errors
+  30) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Önce Hangi Sorunu Çözmelisin? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Önce Hangi Sorunu Çözmelisin? Aracı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Önce Hangi Sorunu Çözmelisin? Aracı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Önce-H-4356c-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Önce-H-4356c-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Önce-H-4356c-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Önce-H-4356c-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:65348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[57/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanya-araclari returns 200 without errors
+[58/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanya-yolunu-sec returns 200 without errors
+[59/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanya-maas-beklentisi returns 200 without errors
+  31) [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya'da İş Bulma Olasılığı Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Almanya\'da İş Bulma Olasılığı Aracı' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 8000ms
+      - waiting for getByRole('heading', { name: 'Almanya\'da İş Bulma Olasılığı Aracı' })
+
+
+      42 |       await page.goto(tool.route);
+      43 |
+    > 44 |       await expect(page.getByRole('heading', { name: tool.heading })).toBeVisible();
+         |                                                                       ^
+      45 |       await expect(page.getByText('Nasıl çalışır?')).toBeVisible();
+      46 |       await expect(page.getByText('Yasal not')).toBeVisible();
+      47 |       await expect(page.getByRole('heading', { name: 'Sıkça Sorulan Sorular' })).toBeVisible();
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-tools.spec.ts:44:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-853f9-ır-ve-temel-bloklar-görünür-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-tools-Almany-853f9-ır-ve-temel-bloklar-görünür-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-tools-Almany-853f9-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-tools-Almany-853f9-ır-ve-temel-bloklar-görünür-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:62684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[60/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanyaya-hazir-misin returns 200 without errors
+[61/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /hangi-sehir-sana-uygun returns 200 without errors
+[62/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /topluluk-ve-danismanlik returns 200 without errors
+[63/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /kariyer-ve-egitim-rotasi returns 200 without errors
+[64/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanya-yasam-tarzi-uyumu returns 200 without errors
+[65/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /ilk-90-gun-planlayici returns 200 without errors
+[66/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /once-hangi-sorunu-cozmelisin returns 200 without errors
+[67/83] [chromium] › e2e\smoke\public-routes.spec.ts:64:7 › strict public /almanyada-is-bulma-olasiligi returns 200 without errors
+[68/83] [chromium] › e2e\smoke\public-routes.spec.ts:76:7 › public /belgeler does not 5xx or crash
+[69/83] [chromium] › e2e\smoke\public-routes.spec.ts:76:7 › public /hizmet-rehberi does not 5xx or crash
+[70/83] [chromium] › e2e\smoke\public-routes.spec.ts:76:7 › public /yazi-dizisi does not 5xx or crash
+[71/83] [chromium] › e2e\smoke\public-routes.spec.ts:76:7 › public /blog does not 5xx or crash
+[72/83] [chromium] › e2e\smoke\public-routes.spec.ts:76:7 › public /hakkimizda does not 5xx or crash
+[73/83] [chromium] › e2e\smoke\public-routes.spec.ts:76:7 › public /iletisim does not 5xx or crash
+[74/83] [chromium] › e2e\smoke\public-routes.spec.ts:76:7 › public /impressum does not 5xx or crash
+[75/83] [chromium] › e2e\smoke\public-routes.spec.ts:76:7 › public /rehber does not 5xx or crash
+[76/83] [chromium] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /banka-secim is not publicly accessible to anonymous users
+[77/83] [chromium] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /sigorta-secim is not publicly accessible to anonymous users
+[78/83] [chromium] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /maas-hesaplama is not publicly accessible to anonymous users
+[79/83] [chromium] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /stepstone-karsilastirma is not publicly accessible to anonymous users
+[80/83] [chromium] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /vatandaslik-testi is not publicly accessible to anonymous users
+[81/83] [chromium] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /para-transferi is not publicly accessible to anonymous users
+[82/83] [chromium] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /vize-secim is not publicly accessible to anonymous users
+  32) [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:7:7 › Almanya Maas Beklentisi Araci › yuksek uzmanlik profili daha yuksek brut aralik uretir 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Yazılım / veri / ürün / BT', exact: true })
+
+
+      104 |
+      105 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 106 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      107 | }
+      108 |
+      109 | async function readRangeFloor(page: import('@playwright/test').Page, label: string) {
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:106:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:101:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:10:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-maas-beklent-9672d-a-yuksek-brut-aralik-uretir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-maas-beklent-9672d-a-yuksek-brut-aralik-uretir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-maas-beklent-9672d-a-yuksek-brut-aralik-uretir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-maas-beklent-9672d-a-yuksek-brut-aralik-uretir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  33) [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:36:7 › Almanya Maas Beklentisi Araci › daha zayif ve dusuk maliyetli profil daha dusuk brut band ve kira baskisi verir 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Hizmet / perakende / başlangıç rolleri', exact: true })
+
+
+      104 |
+      105 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 106 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      107 | }
+      108 |
+      109 | async function readRangeFloor(page: import('@playwright/test').Page, label: string) {
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:106:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:101:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:39:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-maas-beklent-93f7d--band-ve-kira-baskisi-verir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-maas-beklent-93f7d--band-ve-kira-baskisi-verir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-maas-beklent-93f7d--band-ve-kira-baskisi-verir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-maas-beklent-93f7d--band-ve-kira-baskisi-verir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  34) [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:62:7 › Almanya Maas Beklentisi Araci › geri donme ve sifirlama 15 soruluk akista calisir 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Operasyon / satış / ofis / lojistik', exact: true })
+
+
+      104 |
+      105 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 106 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      107 | }
+      108 |
+      109 | async function readRangeFloor(page: import('@playwright/test').Page, label: string) {
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:106:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:101:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-maas-beklentisi.spec.ts:65:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-maas-beklent-61cac-a-15-soruluk-akista-calisir-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-maas-beklent-61cac-a-15-soruluk-akista-calisir-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-maas-beklent-61cac-a-15-soruluk-akista-calisir-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-maas-beklent-61cac-a-15-soruluk-akista-calisir-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:3116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[83/83] [chromium] › e2e\smoke\public-routes.spec.ts:88:7 › gated tool /software-hub is not publicly accessible to anonymous users
+  35) [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:7:7 › Almanya Yolunu Seç Aracı › güçlü teklif, diploma ve maaş profili EU Mavi Kart sonucuna gider 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Çalışmak ve kariyer kurmak', exact: true })
+
+
+      198 |
+      199 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 200 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      201 | }
+      202 |
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:200:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:195:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:10:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-109b3-EU-Mavi-Kart-sonucuna-gider-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-yolunu-sec-A-109b3-EU-Mavi-Kart-sonucuna-gider-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-109b3-EU-Mavi-Kart-sonucuna-gider-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-yolunu-sec-A-109b3-EU-Mavi-Kart-sonucuna-gider-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  36) [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:34:7 › Almanya Yolunu Seç Aracı › teklif var ama maaş sınırdaysa Fachkräfte öne çıkar 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Çalışmak ve kariyer kurmak', exact: true })
+
+
+      198 |
+      199 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 200 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      201 | }
+      202 |
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:200:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:195:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:37:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-bc024-rdaysa-Fachkräfte-öne-çıkar-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-yolunu-sec-A-bc024-rdaysa-Fachkräfte-öne-çıkar-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-bc024-rdaysa-Fachkräfte-öne-çıkar-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-yolunu-sec-A-bc024-rdaysa-Fachkräfte-öne-çıkar-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  37) [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:58:7 › Almanya Yolunu Seç Aracı › teklif yok ama yeterlilik, dil ve bütçe varsa Chancenkarte çıkar 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Çalışmak ve kariyer kurmak', exact: true })
+
+
+      198 |
+      199 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 200 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      201 | }
+      202 |
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:200:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:195:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:61:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-ed2c8-çe-varsa-Chancenkarte-çıkar-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-yolunu-sec-A-ed2c8-çe-varsa-Chancenkarte-çıkar-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-ed2c8-çe-varsa-Chancenkarte-çıkar-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-yolunu-sec-A-ed2c8-çe-varsa-Chancenkarte-çıkar-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  38) [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:82:7 › Almanya Yolunu Seç Aracı › aile bağı baskınsa aile birleşimi sonucu döner 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Aile birleşimi ile gitmek', exact: true })
+
+
+      198 |
+      199 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 200 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      201 | }
+      202 |
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:200:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:195:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:85:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-6d7aa-aile-birleşimi-sonucu-döner-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-yolunu-sec-A-6d7aa-aile-birleşimi-sonucu-döner-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-6d7aa-aile-birleşimi-sonucu-döner-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-yolunu-sec-A-6d7aa-aile-birleşimi-sonucu-döner-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  39) [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:106:7 › Almanya Yolunu Seç Aracı › pratik eğitim niyeti ve temel Almanca Ausbildung sonucuna gider 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Ausbildung ile başlamak', exact: true })
+
+
+      198 |
+      199 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 200 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      201 | }
+      202 |
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:200:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:195:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:109:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-4743c-a-Ausbildung-sonucuna-gider-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-yolunu-sec-A-4743c-a-Ausbildung-sonucuna-gider-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-4743c-a-Ausbildung-sonucuna-gider-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-yolunu-sec-A-4743c-a-Ausbildung-sonucuna-gider-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  40) [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:130:7 › Almanya Yolunu Seç Aracı › uygunluk düşük ve blokaj yüksekse LIMITED sonucu döner 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Çalışmak ve kariyer kurmak', exact: true })
+
+
+      198 |
+      199 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 200 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      201 | }
+      202 |
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:200:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:195:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:133:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-9bfff-ksekse-LIMITED-sonucu-döner-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-yolunu-sec-A-9bfff-ksekse-LIMITED-sonucu-döner-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-9bfff-ksekse-LIMITED-sonucu-döner-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-yolunu-sec-A-9bfff-ksekse-LIMITED-sonucu-döner-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  41) [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:154:7 › Almanya Yolunu Seç Aracı › geri dönme ve sıfırlama 15 soruluk akışta çalışır 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('tool-question-card').getByRole('button', { name: 'Çalışmak ve kariyer kurmak', exact: true })
+
+
+      198 |
+      199 | async function pickOption(page: import('@playwright/test').Page, label: string) {
+    > 200 |   await page.getByTestId(QUESTION_CARD).getByRole('button', { name: label, exact: true }).click();
+          |                                                                                           ^
+      201 | }
+      202 |
+        at pickOption (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:200:91)
+        at answerPath (C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:195:11)
+        at C:\temp_private\almanya101last\e2e\smoke\almanya-yolunu-sec.spec.ts:175:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-e0e01-a-15-soruluk-akışta-çalışır-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\smoke-almanya-yolunu-sec-A-e0e01-a-15-soruluk-akışta-çalışır-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\smoke-almanya-yolunu-sec-A-e0e01-a-15-soruluk-akışta-çalışır-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\smoke-almanya-yolunu-sec-A-e0e01-a-15-soruluk-akışta-çalışır-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  41 failed
+    [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:7:7 › Almanya Maas Beklentisi Araci › yuksek uzmanlik profili daha yuksek brut aralik uretir 
+    [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:36:7 › Almanya Maas Beklentisi Araci › daha zayif ve dusuk maliyetli profil daha dusuk brut band ve kira baskisi verir 
+    [chromium] › e2e\smoke\almanya-maas-beklentisi.spec.ts:62:7 › Almanya Maas Beklentisi Araci › geri donme ve sifirlama 15 soruluk akista calisir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Yolunu Seç Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Yolunu Seç Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Yolunu Seç Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Maaş Beklentisi Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Maaş Beklentisi Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Maaş Beklentisi Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya'ya Hazır Mısın? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya'ya Hazır Mısın? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya'ya Hazır Mısın? Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:64:11 › Almanya'ya Hazır Mısın? Aracı › sonuç sonrası anket tamamlanır ve başarı durumu görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Hangi Şehir Sana Uygun? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Hangi Şehir Sana Uygun? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Hangi Şehir Sana Uygun? Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Topluluk ve Danışmanlık Eşleştirici › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Topluluk ve Danışmanlık Eşleştirici › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Topluluk ve Danışmanlık Eşleştirici › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Kariyer ve Eğitim Rotası Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Kariyer ve Eğitim Rotası Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Kariyer ve Eğitim Rotası Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya Yaşam Tarzı Uyumu Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya Yaşam Tarzı Uyumu Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya Yaşam Tarzı Uyumu Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › İlk 90 Gün Planlayıcı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › İlk 90 Gün Planlayıcı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › İlk 90 Gün Planlayıcı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Önce Hangi Sorunu Çözmelisin? Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Önce Hangi Sorunu Çözmelisin? Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Önce Hangi Sorunu Çözmelisin? Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:41:9 › Almanya'da İş Bulma Olasılığı Aracı › anonim kullanıcı için açılır ve temel bloklar görünür 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:50:9 › Almanya'da İş Bulma Olasılığı Aracı › ilk seçeneklerle ilerleyince sonuç üretir ve sıfırlanabilir 
+    [chromium] › e2e\smoke\almanya-tools.spec.ts:58:9 › Almanya'da İş Bulma Olasılığı Aracı › son seçeneklerle ilerleyince de dead-end üretmez 
+    [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:7:7 › Almanya Yolunu Seç Aracı › güçlü teklif, diploma ve maaş profili EU Mavi Kart sonucuna gider 
+    [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:34:7 › Almanya Yolunu Seç Aracı › teklif var ama maaş sınırdaysa Fachkräfte öne çıkar 
+    [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:58:7 › Almanya Yolunu Seç Aracı › teklif yok ama yeterlilik, dil ve bütçe varsa Chancenkarte çıkar 
+    [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:82:7 › Almanya Yolunu Seç Aracı › aile bağı baskınsa aile birleşimi sonucu döner 
+    [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:106:7 › Almanya Yolunu Seç Aracı › pratik eğitim niyeti ve temel Almanca Ausbildung sonucuna gider 
+    [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:130:7 › Almanya Yolunu Seç Aracı › uygunluk düşük ve blokaj yüksekse LIMITED sonucu döner 
+    [chromium] › e2e\smoke\almanya-yolunu-sec.spec.ts:154:7 › Almanya Yolunu Seç Aracı › geri dönme ve sıfırlama 15 soruluk akışta çalışır 
+  42 passed (1.3m)

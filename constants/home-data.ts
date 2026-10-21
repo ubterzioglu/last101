@@ -190,8 +190,8 @@ export const OTHER_LINK_ITEMS: LinkItem[] = [
   {
     href: '/is-ilanlari',
     topLabel: 'İŞ',
-    label: 'İş İlanları',
-    description: 'Almanya iş fırsatlarını hızlıca takip edin.',
+    label: 'İşe Alım Firmaları',
+    description: 'Almanya\'daki işe alım ajanslarını ve kariyer platformlarını inceleyin.',
     image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=300&fit=crop',
     kind: 'link',
     categoryKey: 'career',
