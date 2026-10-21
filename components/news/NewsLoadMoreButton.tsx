@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/ui/Button';
+
 export function NewsLoadMoreButton({
   onClick,
   loading,
@@ -10,13 +12,14 @@ export function NewsLoadMoreButton({
   disabled?: boolean;
 }) {
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
       onClick={onClick}
       disabled={loading || disabled}
-      className="rounded-full border border-white/15 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-60"
+      aria-busy={loading}
     >
       {loading ? 'Yükleniyor...' : 'Daha fazla yükle'}
-    </button>
+    </Button>
   );
 }

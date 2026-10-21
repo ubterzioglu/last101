@@ -2,6 +2,8 @@
 
 import { startTransition, useState } from 'react';
 import type { NewsCategory, NewsListItem, PublicNewsListResponse } from '@/types/news';
+import { FilterPanel } from '@/components/site/FilterPanel';
+import { EmptyState } from '@/components/news/EmptyState';
 import { NewsCategoryFilter } from '@/components/news/NewsCategoryFilter';
 import { NewsListCard } from '@/components/news/NewsListCard';
 import { NewsLoadMoreButton } from '@/components/news/NewsLoadMoreButton';
@@ -61,24 +63,28 @@ export function NewsArchiveClient({
   }
 
   return (
-    <div className="space-y-6">
-      <NewsCategoryFilter activeCategory={activeCategory} onSelect={handleCategoryChange} />
+    <div className="space-y-8">
+      <FilterPanel>
+        <NewsCategoryFilter activeCategory={activeCategory} onSelect={handleCategoryChange} />
+      </FilterPanel>
 
       {error ? (
-        <div className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+        <div
+          role="alert"
+          className="rounded-card border border-alm-red/30 bg-white px-4 py-3 text-sm font-medium text-alm-red-ink"
+        >
           {error}
         </div>
       ) : null}
 
       {items.length === 0 && !loading ? (
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] px-6 py-14 text-center">
-          <h3 className="text-2xl font-bold">Bu filtre için haber bulunamadı.</h3>
-          <p className="mt-3 text-sm leading-7 text-white/62">
-            Başka bir kategori seçin veya daha sonra tekrar kontrol edin.
-          </p>
-        </div>
+        <EmptyState
+          as="h3"
+          title="Bu filtre için haber bulunamadı."
+          description="Başka bir kategori seçin veya daha sonra tekrar kontrol edin."
+        />
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-[22px] sm:grid-cols-2 lg:grid-cols-3" aria-busy={loading}>
           {items.map((item) => (
             <NewsListCard key={item.id} item={item} />
           ))}

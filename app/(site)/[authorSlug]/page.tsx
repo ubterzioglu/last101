@@ -1,8 +1,12 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { CornerPostCard } from '@/components/news/CornerPostCard';
+import { EmptyState } from '@/components/news/EmptyState';
+import { PageHead } from '@/components/site/PageHead';
+import { SectionHeader } from '@/components/site/SectionHeader';
+import { Section } from '@/components/ui/Section';
 import { getPublishedCornerAuthorBySlug } from '@/lib/corner';
 import { SITE_URL } from '@/lib/utils/constants';
 
@@ -56,60 +60,53 @@ export default async function AuthorPublicPage({ params }: AuthorPublicPageProps
         ]}
       />
 
-      <div className="min-h-screen bg-black text-white">
-        <section className="relative overflow-hidden border-b border-white/10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.22),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(255,187,0,0.16),_transparent_35%)]" />
-          <div className="container relative py-16 md:py-24">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center">
-              <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full border border-white/10 bg-white/5">
-                <Image src={author.avatarImageUrl} alt={author.displayName} fill unoptimized sizes="112px" className="object-cover" />
-              </div>
-              <div>
-                <div className="text-sm text-white/55">/{author.slug}</div>
-                <h1 className="mt-2 text-4xl font-black leading-tight md:text-6xl">{author.displayName}</h1>
-                {author.shortBio ? <p className="mt-5 max-w-3xl text-lg leading-8 text-white/76">{author.shortBio}</p> : null}
-              </div>
+      <PageHead
+        breadcrumb={[
+          { label: 'Ana Sayfa', href: '/' },
+          { label: 'Arkadaşın Köşesi', href: '/yazi-dizisi' },
+          { label: author.displayName },
+        ]}
+        title={author.displayName}
+        description={author.shortBio || undefined}
+        stats={[{ value: String(posts.length), label: 'yazı' }]}
+        media={
+          <div className="flex flex-col items-center justify-center gap-4 rounded-card bg-band px-6 py-10">
+            <div className="relative h-36 w-36 overflow-hidden rounded-full border-4 border-white bg-white">
+              <Image
+                src={author.avatarImageUrl}
+                alt={author.displayName}
+                fill
+                priority
+                sizes="144px"
+                className="object-cover"
+              />
             </div>
+            <div className="break-all text-sm font-semibold text-muted">/{author.slug}</div>
           </div>
-        </section>
+        }
+      />
 
-        <section className="container py-14 md:py-20">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <h2 className="text-3xl font-black">Yazılar</h2>
-              <p className="mt-2 text-sm text-white/60">Bu köşedeki yayınlanmış yazılar eskiden yeniye sıralanır.</p>
-            </div>
-            <div className="text-sm text-white/50">{posts.length} yazı</div>
-          </div>
-
+      <Section>
+        <SectionHeader
+          title="Yazılar"
+          description="Bu köşedeki yayınlanmış yazılar eskiden yeniye sıralanır."
+        />
+        <div className="mt-10">
           {posts.length === 0 ? (
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-14 text-center">
-              <h2 className="text-2xl font-bold">Henüz yayınlanmış yazı yok.</h2>
-              <p className="mt-4 text-sm leading-7 text-white/68">İlk yazı yayına alındığında burada görünecek.</p>
-            </div>
+            <EmptyState
+              as="h3"
+              title="Henüz yayınlanmış yazı yok."
+              description="İlk yazı yayına alındığında burada görünecek."
+            />
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {posts.map((post) => (
-                <Link
-                  key={post.id}
-                  href={post.href}
-                  className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.05]"
-                >
-                  <div className="relative aspect-[16/9] overflow-hidden bg-white/5">
-                    <Image src={post.coverImageUrl} alt={post.title} fill unoptimized sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
-                  </div>
-                  <div className="p-6">
-                    <div className="text-sm text-white/55">{post.dateLabel} · {post.readingMinutes} dk okuma</div>
-                    <h3 className="mt-3 text-2xl font-bold leading-snug line-clamp-2">{post.title}</h3>
-                    {post.summary ? <p className="mt-3 text-sm leading-6 text-white/72 line-clamp-3">{post.summary}</p> : null}
-                    <div className="mt-5 text-sm font-semibold text-[#7fd5ff]">Yazıyı oku</div>
-                  </div>
-                </Link>
+            <div className="grid gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post, index) => (
+                <CornerPostCard key={post.id} post={post} index={index} />
               ))}
             </div>
           )}
-        </section>
-      </div>
+        </div>
+      </Section>
     </>
   );
 }

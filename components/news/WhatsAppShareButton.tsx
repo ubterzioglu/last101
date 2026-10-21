@@ -1,4 +1,7 @@
-export function WhatsAppShareButton({ text }: { text: string }) {
+import { ArrowUpRight, MessageCircle } from 'lucide-react';
+import { cn } from '@/lib/utils/cn';
+
+export function WhatsAppShareButton({ text, className }: { text: string; className?: string }) {
   const href = `https://wa.me/?text=${encodeURIComponent(text)}`;
 
   return (
@@ -6,9 +9,14 @@ export function WhatsAppShareButton({ text }: { text: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-[#07150b] transition hover:bg-[#37df75]"
+      className={cn(
+        'inline-flex min-h-[44px] items-center justify-center gap-2 rounded-btn bg-brand-700 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-brand-800 motion-reduce:transition-none',
+        className
+      )}
     >
+      <MessageCircle aria-hidden="true" size={16} className="shrink-0" />
       WhatsApp'ta paylaş
+      <ArrowUpRight aria-hidden="true" size={16} className="shrink-0" />
     </a>
   );
 }
