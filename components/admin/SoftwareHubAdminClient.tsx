@@ -496,6 +496,9 @@ export default function AdminPage() {
     else if (section === 'meeting') loadMeetingData();
     else if (section === 'founders') updateBadges();
     else if (section === 'founderSurvey') updateBadges();
+    // Bilinçli: kimliği sabit kalmalı (bölüm effect'inin bağımlılığı); load* fonksiyonları her render'da
+    // yeniden oluştuğu için bağımlılığa eklemek sürekli yeniden yüklemeye yol açar. Çözüm: B2.4
+    // (react-hooks v7 + useEffectEvent) veya load* fonksiyonlarının memoize edilmesi (B5.7).
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const showSection = useCallback((section: string) => {
