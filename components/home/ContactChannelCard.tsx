@@ -31,6 +31,9 @@ interface ContactChannelCardProps {
   iconOnly?: boolean;
 }
 
+/** Light icon tile shared by every variant (44px+, hairline border, ink icon). */
+const ICON_TILE_CLASSES = 'flex shrink-0 items-center justify-center rounded-btn border border-line bg-white text-ink';
+
 export function ContactChannelCard({
   channel,
   className,
@@ -38,68 +41,51 @@ export function ContactChannelCard({
   iconOnly = false,
 }: ContactChannelCardProps) {
   const IconComponent = ICON_MAP[channel.icon];
+  const linkProps = {
+    href: channel.href,
+    target: channel.external ? '_blank' : undefined,
+    rel: channel.external ? 'noopener noreferrer' : undefined,
+  };
+
+  if (iconOnly) {
+    return (
+      <a
+        {...linkProps}
+        aria-label={channel.label}
+        title={channel.label}
+        className={cn(ICON_TILE_CLASSES, 'h-12 w-12 transition-colors hover:border-ink/40', className)}
+      >
+        <IconComponent className="h-5 w-5" />
+      </a>
+    );
+  }
 
   return (
     <a
-      href={channel.href}
-      target={channel.external ? '_blank' : undefined}
-      rel={channel.external ? 'noopener noreferrer' : undefined}
+      {...linkProps}
       aria-label={channel.label}
       className={cn(
-        'flex rounded-xl',
-          iconOnly
-            ? 'h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-xl border border-google-yellow/45 bg-black/55 p-0 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-google-yellow/70 shadow-[0_0_0_1px_rgba(251,188,5,0.24),0_8px_20px_rgba(251,188,5,0.22),0_0_16px_rgba(251,188,5,0.28)] hover:shadow-[0_0_0_1px_rgba(251,188,5,0.35),0_10px_24px_rgba(251,188,5,0.32),0_0_22px_rgba(251,188,5,0.42)]'
-            : compact
-            ? 'flex-col items-center justify-start gap-3 p-3 text-center'
-            : 'items-center gap-3 sm:gap-4 p-4 sm:p-5',
-        !iconOnly && 'bg-white/10 hover:bg-white/20 transition-all duration-300',
-        !iconOnly && 'backdrop-blur-sm border border-white/20',
-        'group',
+        'group flex rounded-card border border-line bg-white text-ink transition-colors hover:border-ink/40',
+        compact ? 'flex-col items-center justify-start gap-3 p-3 text-center' : 'items-center gap-4 p-4 sm:p-5',
         className
       )}
     >
-      <div
-        className={cn(
-          iconOnly
-            ? 'flex-shrink-0'
-            : compact
-              ? 'flex-shrink-0 w-11 h-11 rounded-lg'
-              : 'flex-shrink-0 w-12 sm:w-14 h-12 sm:h-14 rounded-xl',
-          !iconOnly && 'flex items-center justify-center',
-          !iconOnly && channel.bgColor
-        )}
-      >
-        <IconComponent
+      <span aria-hidden="true" className={cn(ICON_TILE_CLASSES, 'h-11 w-11')}>
+        <IconComponent className="h-5 w-5" />
+      </span>
+      <div className={compact ? 'w-full' : 'min-w-0'}>
+        <h3
           className={cn(
-            iconOnly ? 'text-google-yellow' : 'text-white',
-            iconOnly
-              ? 'h-8 w-8 sm:h-10 sm:w-10 drop-shadow-[0_0_8px_rgba(251,188,5,0.92)]'
-              : compact
-                ? 'w-5 h-5'
-                : 'w-6 sm:w-7 h-6 sm:h-7'
+            'font-semibold text-ink transition-colors group-hover:text-brand-700',
+            compact ? 'text-xs leading-tight' : 'text-sm sm:text-base'
           )}
-        />
+        >
+          {channel.label}
+        </h3>
+        <p className={cn('text-muted', compact ? 'mt-1 break-words text-[11px] leading-tight' : 'text-xs sm:text-sm')}>
+          {channel.description}
+        </p>
       </div>
-      {!iconOnly && (
-        <div className={compact ? 'w-full' : undefined}>
-          <h3
-            className={cn(
-              'font-semibold text-white group-hover:text-gray-300 transition-colors',
-              compact ? 'text-xs leading-tight' : 'text-sm sm:text-base'
-            )}
-          >
-            {channel.label}
-          </h3>
-          <p
-            className={cn(
-              'text-gray-400',
-              compact ? 'mt-1 text-[11px] leading-tight break-words' : 'text-xs sm:text-sm'
-            )}
-          >
-            {channel.description}
-          </p>
-        </div>
-      )}
     </a>
   );
 }

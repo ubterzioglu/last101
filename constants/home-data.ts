@@ -3,336 +3,176 @@
  * Extracted from app/page.tsx for maintainability
  */
 
+import {
+  ArrowLeftRight,
+  Banknote,
+  BookOpenCheck,
+  BookUser,
+  BriefcaseBusiness,
+  Building2,
+  Calculator,
+  CalendarCheck,
+  ChartColumn,
+  ClipboardCheck,
+  Code,
+  FileText,
+  GraduationCap,
+  HeartHandshake,
+  Landmark,
+  Lightbulb,
+  Mail,
+  MapPin,
+  MessagesSquare,
+  Newspaper,
+  NotebookPen,
+  Puzzle,
+  ShieldCheck,
+  Signpost,
+  Stamp,
+  Sun,
+  Target,
+  TreePalm,
+  UserPlus,
+  UsersRound,
+  Wrench,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import type { AlmTone } from '@/constants/design-tokens';
 import { TOOL_CATALOG } from '@/lib/tools/catalog';
 import type { ToolCatalogItem } from '@/lib/tools/types';
 
-export interface NewsItem {
-  id: string;
-  title: string;
-  excerpt: string;
-  image: string;
-  date: string;
-  category?: string;
-}
+export type HomeServiceGroupId = 'araclar' | 'icerik' | 'topluluk';
 
-export interface ToolItem {
+/** One tile of the home service grid (shape-compatible with the site ServiceItem). */
+export interface HomeLinkItem {
   href: string;
-  topLabel: string;
-  label: string;
+  title: string;
   description: string;
-  image: string;
-  kind?: 'tool' | 'link';
-  categoryKey?:
-    | 'tool'
-    | 'career'
-    | 'content'
-    | 'news'
-    | 'document'
-    | 'team'
-    | 'about'
-    | 'community'
-    | 'contact'
-    | 'software';
-  categoryLabel?: string;
+  icon: LucideIcon;
+  group: HomeServiceGroupId;
 }
 
-export interface LinkItem extends ToolItem {}
+export interface HomeServiceGroup {
+  id: HomeServiceGroupId;
+  title: string;
+  tone: AlmTone;
+}
 
-export const NEWS_ITEMS: NewsItem[] = [
-  {
-    id: '1',
-    title: 'Almanya\'da Yeni Çalışma Vizesi Düzenlemeleri 2025',
-    excerpt: 'Almanya, 2025 yılında nitelikli işçiler için vize süreçlerini kolaylaştıran yeni düzenlemeleri hayata geçiriyor.',
-    image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=600&fit=crop',
-    date: '15 Mart 2025',
-    category: 'Güncelleme',
-  },
-  {
-    id: '2',
-    title: 'Yeni Topluluk Etkinlikleri Duyurusu',
-    excerpt: 'Bu ay Berlin, Münih ve Frankfurt\'ta Türk topluluğu için özel etkinlikler düzenleniyor.',
-    image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=600&fit=crop',
-    date: '12 Mart 2025',
-    category: 'Etkinlik',
-  },
-  {
-    id: '3',
-    title: 'Almanca Öğrenme Platformu Yenilendi',
-    excerpt: 'almanya101 Almanca öğrenme bölümü yeni interaktif dersler ve pratik egzersizlerle güncellendi.',
-    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=600&fit=crop',
-    date: '10 Mart 2025',
-    category: 'Haber',
-  },
-  {
-    id: '4',
-    title: 'İş Fuarı 2025 - Kayıtlar Başladı',
-    excerpt: 'Almanya\'daki en büyük Türk işverenleriyle buluşma fırsatı. Online ve yüz yüze katılım seçenekleri.',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop',
-    date: '8 Mart 2025',
-    category: 'Duyuru',
-  },
+export interface HomeIntentItem {
+  label: string;
+  href: string;
+}
+
+export interface HomeFaqItem {
+  question: string;
+  answer: string;
+}
+
+export const HOME_SERVICE_GROUPS: HomeServiceGroup[] = [
+  { id: 'araclar', title: 'Araçlar', tone: 'blue' },
+  { id: 'icerik', title: 'İçerik ve rehber', tone: 'green' },
+  { id: 'topluluk', title: 'Topluluk ve biz', tone: 'orange' },
 ];
 
-export const TOOL_ITEMS: ToolItem[] = [
-  {
-    href: '/banka-secim',
-    topLabel: 'Banka',
-    label: 'Banka Seçim Aracı',
-    description: 'Banka profilinizi belirleyin.',
-    image: 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/sigorta-secim',
-    topLabel: 'Sigorta',
-    label: 'Sigorta Seçim Aracı',
-    description: 'Sigortaları önceliklendirin.',
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/maas-hesaplama',
-    topLabel: 'Maaş',
-    label: 'Brüt Net Maaş Hesaplama',
-    description: 'Net maaşınızı anında görün.',
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/stepstone-karsilastirma',
-    topLabel: 'StepStone',
-    label: 'StepStone 2026 Maaş Karşılaştırma',
-    description: 'Maaşlarınızı karşılaştırın.',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/vatandaslik-testi',
-    topLabel: 'Vatandaşlık',
-    label: 'Vatandaşlık Testi',
-    description: 'Deneme sınavı çözün.',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/para-transferi',
-    topLabel: 'PARA TRANSFER',
-    label: 'Para Transferi Seçim Aracı',
-    description: 'Uygun aracı bulun!',
-    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/vize-secim',
-    topLabel: 'Vize',
-    label: 'Almanya Vize Seçim Aracı',
-    description: 'Hangi vizeye başvurmanız gerektiğini öğrenin.',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/tatil/almanya',
-    topLabel: 'ALMANYA TATİL',
-    label: '2026 Almanya Tatil Planlayıcı',
-    description: '2026 tatilinizi planlayın.',
-    image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/tatil/turkiye',
-    topLabel: 'TÜRKİYE TATİL',
-    label: '2026 Türkiye Tatil Planlayıcı',
-    description: '2026 tatilinizi planlayın.',
-    image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/hizmet-rehberi',
-    topLabel: 'UZMAN',
-    label: 'Türk Hizmet Rehberi',
-    description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
-  {
-    href: '/is-ilanlari',
-    topLabel: 'İŞE ALIM',
-    label: 'İşe Alım Firmaları',
-    description: 'Almanya\'daki işe alım ajanslarını inceleyin.',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
-    kind: 'tool',
-    categoryKey: 'tool',
-    categoryLabel: 'ARAÇ',
-  },
+export const TOOL_ITEMS: HomeLinkItem[] = [
+  { href: '/banka-secim', title: 'Banka Seçim Aracı', description: 'Banka profilinizi belirleyin.', icon: Landmark, group: 'araclar' },
+  { href: '/sigorta-secim', title: 'Sigorta Seçim Aracı', description: 'Sigortaları önceliklendirin.', icon: ShieldCheck, group: 'araclar' },
+  { href: '/maas-hesaplama', title: 'Brüt Net Maaş Hesaplama', description: 'Net maaşınızı anında görün.', icon: Calculator, group: 'araclar' },
+  { href: '/stepstone-karsilastirma', title: 'StepStone 2026 Maaş Karşılaştırma', description: 'Maaşlarınızı karşılaştırın.', icon: ChartColumn, group: 'araclar' },
+  { href: '/vatandaslik-testi', title: 'Vatandaşlık Testi', description: 'Deneme sınavı çözün.', icon: BookOpenCheck, group: 'araclar' },
+  { href: '/para-transferi', title: 'Para Transferi Seçim Aracı', description: 'Uygun aracı bulun!', icon: ArrowLeftRight, group: 'araclar' },
+  { href: '/vize-secim', title: 'Almanya Vize Seçim Aracı', description: 'Hangi vizeye başvurmanız gerektiğini öğrenin.', icon: Stamp, group: 'araclar' },
+  { href: '/tatil/almanya', title: '2026 Almanya Tatil Planlayıcı', description: '2026 tatilinizi planlayın.', icon: Sun, group: 'araclar' },
+  { href: '/tatil/turkiye', title: '2026 Türkiye Tatil Planlayıcı', description: '2026 tatilinizi planlayın.', icon: TreePalm, group: 'araclar' },
+  { href: '/hizmet-rehberi', title: 'Türk Hizmet Rehberi', description: 'Doktor, avukat, restoran, market - Türkçe destek bulun!', icon: BookUser, group: 'icerik' },
+  { href: '/is-ilanlari', title: 'İşe Alım Firmaları', description: "Almanya'daki işe alım ajanslarını inceleyin.", icon: Building2, group: 'icerik' },
 ];
 
-export const OTHER_LINK_ITEMS: LinkItem[] = [
-  {
-    href: '/is-ilanlari',
-    topLabel: 'İŞ',
-    label: 'İş İlanları',
-    description: 'Almanya iş fırsatlarını hızlıca takip edin.',
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'career',
-    categoryLabel: 'KARİYER',
-  },
-  {
-    href: '/yazi-dizisi',
-    topLabel: 'YAZI DİZİSİ',
-    label: 'Yazı Dizisi',
-    description: 'Adım adım rehberler ve yazılar.',
-    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'content',
-    categoryLabel: 'İÇERİK',
-  },
-  {
-    href: '/haberler',
-    topLabel: 'Haber',
-    label: 'Haberler',
-    description: 'Güncel haberler ve gelişmeler.',
-    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'news',
-    categoryLabel: 'HABER',
-  },
-  {
-    href: '/belgeler',
-    topLabel: 'BELGELER',
-    label: 'Yararlı Belgeler',
-    description: 'İhtiyacınız olan belgeler ve formlar.',
-    image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'document',
-    categoryLabel: 'BELGE',
-  },
-  {
-    href: '/ekibimize-katil',
-    topLabel: 'BİZE KATIL',
-    label: 'Bize Katıl!',
-    description: 'Ekibimize katılmak için tıkla!',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'team',
-    categoryLabel: 'EKİP',
-  },
-  {
-    href: '/hakkimizda',
-    topLabel: 'HAKKIMIZDA',
-    label: 'Biz kimiz?',
-    description: 'almanya101 ekibini tanıyın!',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'about',
-    categoryLabel: 'KURUMSAL',
-  },
-  {
-    href: '/hizmet-rehberi/oneri',
-    topLabel: 'TÜRK ÖNER',
-    label: 'Hizmet Öner',
-    description: 'Uzman ekleyin!',
-    image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'community',
-    categoryLabel: 'ÖNERİ',
-  },
-  {
-    href: '/iletisim',
-    topLabel: 'İletişim',
-    label: 'İletişim',
-    description: 'Bize hızlıca ulaşın.',
-    image: 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'contact',
-    categoryLabel: 'İLETİŞİM',
-  },
-  {
-    href: '/software-hub',
-    topLabel: 'Hub',
-    label: 'Software Hub',
-    description: 'Yazılım projelerimizi keşfedin!',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'software',
-    categoryLabel: 'YAZILIM',
-  },
-  {
-    href: '/topluluk',
-    topLabel: 'WHATSAPP',
-    label: 'Topluluğa Katıl',
-    description: 'Türk topluluğuna dahil olun!',
-    image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=300&fit=crop',
-    kind: 'link',
-    categoryKey: 'community',
-    categoryLabel: 'TOPLULUK',
-  },
+/** The old "İş İlanları" card duplicated /is-ilanlari (kept above as "İşe Alım Firmaları"). */
+export const OTHER_LINK_ITEMS: HomeLinkItem[] = [
+  { href: '/yazi-dizisi', title: 'Yazı Dizisi', description: 'Adım adım rehberler ve yazılar.', icon: NotebookPen, group: 'icerik' },
+  { href: '/haberler', title: 'Haberler', description: 'Güncel haberler ve gelişmeler.', icon: Newspaper, group: 'icerik' },
+  { href: '/belgeler', title: 'Yararlı Belgeler', description: 'İhtiyacınız olan belgeler ve formlar.', icon: FileText, group: 'icerik' },
+  { href: '/ekibimize-katil', title: 'Bize Katıl!', description: 'Ekibimize katılmak için tıkla!', icon: UserPlus, group: 'topluluk' },
+  { href: '/hakkimizda', title: 'Biz kimiz?', description: 'almanya101 ekibini tanıyın!', icon: UsersRound, group: 'topluluk' },
+  { href: '/hizmet-rehberi/oneri', title: 'Hizmet Öner', description: 'Uzman ekleyin!', icon: Lightbulb, group: 'topluluk' },
+  { href: '/iletisim', title: 'İletişim', description: 'Bize hızlıca ulaşın.', icon: Mail, group: 'topluluk' },
+  { href: '/software-hub', title: 'Software Hub', description: 'Yazılım projelerimizi keşfedin!', icon: Code, group: 'icerik' },
+  { href: '/topluluk', title: 'Topluluğa Katıl', description: 'Türk topluluğuna dahil olun!', icon: MessagesSquare, group: 'topluluk' },
 ];
 
 /**
- * New interactive planning tools derived from the shared TOOL_CATALOG.
- * Keeping a single slug -> image map here (and deriving everything else from
- * the catalog) means the homepage grid stays in sync as the catalog grows.
+ * Interactive planning tools derived from the shared TOOL_CATALOG, so the home
+ * grid stays in sync as the catalog grows. Only the icon is chosen here.
  */
-const NEW_TOOL_IMAGES: Record<string, string> = {
-  'almanya-yolunu-sec': 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=300&fit=crop',
-  'almanya-maas-beklentisi': 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400&h=300&fit=crop',
-  'almanyaya-hazir-misin': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop',
-  'hangi-sehir-sana-uygun': 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop',
-  'topluluk-ve-danismanlik': 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=300&fit=crop',
-  'kariyer-ve-egitim-rotasi': 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop',
-  'almanya-yasam-tarzi-uyumu': 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&h=300&fit=crop',
-  'ilk-90-gun-planlayici': 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&h=300&fit=crop',
-  'once-hangi-sorunu-cozmelisin': 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop',
-  'almanyada-is-bulma-olasiligi': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop',
+const NEW_TOOL_ICONS: Record<string, LucideIcon> = {
+  'almanya-yolunu-sec': Signpost,
+  'almanya-maas-beklentisi': Banknote,
+  'almanyaya-hazir-misin': ClipboardCheck,
+  'hangi-sehir-sana-uygun': MapPin,
+  'topluluk-ve-danismanlik': HeartHandshake,
+  'kariyer-ve-egitim-rotasi': GraduationCap,
+  'almanya-yasam-tarzi-uyumu': Puzzle,
+  'ilk-90-gun-planlayici': CalendarCheck,
+  'once-hangi-sorunu-cozmelisin': Target,
+  'almanyada-is-bulma-olasiligi': BriefcaseBusiness,
 };
 
-const FALLBACK_NEW_TOOL_IMAGE =
-  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop';
-
-const CATALOG_CATEGORY_TO_CARD: Record<
-  ToolCatalogItem['category'],
-  { categoryKey: NonNullable<ToolItem['categoryKey']>; categoryLabel: string }
-> = {
-  'Rota ve Strateji': { categoryKey: 'career', categoryLabel: 'ROTA & STRATEJİ' },
-  'Kariyer ve Gelir': { categoryKey: 'tool', categoryLabel: 'KARİYER & GELİR' },
-  'Hazırlık ve Yerleşim': { categoryKey: 'document', categoryLabel: 'HAZIRLIK & YERLEŞİM' },
-  'Yaşam ve Destek': { categoryKey: 'community', categoryLabel: 'YAŞAM & DESTEK' },
-};
-
-function toToolItem(tool: ToolCatalogItem): ToolItem {
-  const card = CATALOG_CATEGORY_TO_CARD[tool.category];
-
+function toHomeLinkItem(tool: ToolCatalogItem): HomeLinkItem {
   return {
     href: `/${tool.slug}`,
-    topLabel: tool.title.toLocaleUpperCase('tr'),
-    label: tool.title,
+    title: tool.title,
     description: tool.description,
-    image: NEW_TOOL_IMAGES[tool.slug] ?? FALLBACK_NEW_TOOL_IMAGE,
-    kind: 'tool',
-    categoryKey: card.categoryKey,
-    categoryLabel: card.categoryLabel,
+    icon: NEW_TOOL_ICONS[tool.slug] ?? Wrench,
+    group: 'araclar',
   };
 }
 
-export const NEW_TOOL_ITEMS: ToolItem[] = TOOL_CATALOG.map(toToolItem);
+export const NEW_TOOL_ITEMS: HomeLinkItem[] = TOOL_CATALOG.map(toHomeLinkItem);
+
+export const HOMEPAGE_ITEMS: HomeLinkItem[] = [...NEW_TOOL_ITEMS, ...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
+
+export const HOME_INTENT_ITEMS: HomeIntentItem[] = [
+  { label: "Almanya'ya taşınıyorum", href: '/almanya-yolunu-sec' },
+  { label: 'İş arıyorum', href: '/is-ilanlari' },
+  { label: 'Maaşımı hesaplayacağım', href: '/maas-hesaplama' },
+  { label: 'Belgelerimi hazırlıyorum', href: '/belgeler' },
+];
+
+export const HOME_GUIDE_STEPS: string[] = [
+  'Adres kaydı (Anmeldung)',
+  'Vergi numarası (Steuernummer)',
+  'Sağlık sigortası (Krankenversicherung)',
+  'Banka hesabı açma',
+  'Telefon hattı ve internet',
+  'Oturum izni (Aufenthaltstitel)',
+];
+
+/** Rendered in the FAQ section and in the FAQ JSON-LD (values must stay in sync). */
+export const HOMEPAGE_FAQ_ITEMS: HomeFaqItem[] = [
+  {
+    question: "Almanya'ya yeni taşınan biri önce hangi adımları tamamlamalı?",
+    answer:
+      "İlk haftalarda adres kaydı, vergi numarası, sağlık sigortası, banka hesabı ve telefon hattı gibi temel adımları tamamlamak gerekir. Adres kaydı ortalama 2-4 hafta, oturum izni süreci ise 6-12 hafta sürebilir. Ardından oturum süreci, iş arama planı ve günlük yaşam maliyetleri için güvenilir kaynaklarla ilerlemek en sağlıklı yoldur.",
+  },
+  {
+    question: 'Almanya iş bulma sürecinde hangi kaynaklara odaklanmalıyım?',
+    answer:
+      "İş ilanı platformları, sektör bazlı topluluklar, LinkedIn bağlantıları ve Almanca özgeçmiş hazırlığı birlikte yürütülmelidir. Ortalama 50-80 başvuru sonrası ilk mülakat daveti gelmektedir. Sadece ilan bakmak yerine profilinizi, belgelerinizi ve başvuru stratejinizi aynı anda güçlendirmek daha hızlı sonuç verir.",
+  },
+  {
+    question: 'Almanya101 hangi konularda yardımcı olur?',
+    answer:
+      "Almanya101; yaşam rehberleri, iş ilanları, belgeler, uzman önerileri, araçlar ve topluluk bağlantılarıyla taşınma ve yerleşme sürecini daha net hale getirir. ~3,5 milyon Türk kökenli insanın yaşadığı Almanya'da, doğru bilgiye hızlı erişim kritik öneme sahiptir. Amaç tek bir içerik değil, karar vermeyi kolaylaştıran bütüncül bir yol haritası sunmaktır.",
+  },
+  {
+    question: 'Topluluk neden önemli?',
+    answer:
+      "Yeni bir ülkede doğru insanlara hızlı ulaşmak zaman ve hata maliyetini ciddi biçimde azaltır. İlk yıl içinde %60'ı en az bir kez iş değiştirmektedir. Deneyim paylaşımı, güncel tavsiyeler ve doğru yönlendirmeler; özellikle ilk aylarda resmi işlemlerden iş arayışına kadar birçok konuda fark yaratır.",
+  },
+  {
+    question: "Almanya'ya taşınırken en sık yapılan hatalar neler?",
+    answer:
+      "En yaygın hatalar: adres kaydı süresini kaçırmak (14 gün sınırı var), sağlık sigortası seçimini ertelemek, Almanca özgeçmiş hazırlamadan başvuru yapmak ve kira sözleşmesi okumadan imzalamaktır. Adres kaydını zamanında yaptırmayanlar, vergi numarası gecikmesi nedeniyle maaş ödemelerinde sorun yaşayabilir. Bu tür sorunların çözümü için topluluk kanallarımızda güncel deneyimler paylaşılmaktadır.",
+  },
+];

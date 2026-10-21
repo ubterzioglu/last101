@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import { Sora, Plus_Jakarta_Sans } from 'next/font/google';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -13,19 +13,12 @@ import {
   SEO_SITE_NAME,
   SITE_URL,
 } from '@/lib/utils/constants';
-import { cn } from '@/lib/utils/cn';
 import { SITE_COLORS } from '@/constants/design-tokens';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-sans',
-});
-
-const sora = Sora({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-display',
 });
 
 const GOATCOUNTER_ENDPOINT = 'https://almanya101de.goatcounter.com/count';
@@ -120,7 +113,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={cn(jakarta.variable, sora.variable)}>
+    <html lang="tr" className={jakarta.variable}>
       <head>
         {/* Structured Data */}
         <OrganizationJsonLd />
