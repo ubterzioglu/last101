@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 const ALLOWED_STATUSES = new Set(['all', 'pending', 'approved', 'rejected']);
 const ALLOWED_TYPES = new Set([
@@ -40,7 +41,7 @@ function normalizeSearch(value: unknown) {
   return String(value || '').trim().slice(0, 120);
 }
 
-async function countRows(supabase: any, status: string, type: string) {
+async function countRows(supabase: SupabaseClient, status: string, type: string) {
   let query = supabase.from('provider_submissions').select('id', { count: 'exact', head: true });
   if (status !== 'all') query = query.eq('status', status);
   if (type !== 'all') query = query.eq('type', type);

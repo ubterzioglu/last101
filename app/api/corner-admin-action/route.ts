@@ -197,7 +197,7 @@ export const POST = withCornerAdmin(async (request) => {
   } catch (error) {
     console.error('corner-admin-action failed:', error);
     const e = error as Error;
-    const duplicate = String((error as any)?.code || '') === '23505';
+    const duplicate = String((error as { code?: unknown } | null)?.code || '') === '23505';
     return NextResponse.json({ error: duplicate ? 'Bu slug zaten kullanılıyor.' : e.message || 'Internal server error' }, { status: duplicate ? 409 : 500 });
   }
 });

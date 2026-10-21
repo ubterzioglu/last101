@@ -25,6 +25,15 @@ import { CANONICAL_SITE_URL, DEFAULT_OG_IMAGE } from '@/lib/utils/constants';
 // Yayındaki haberlerde yalnızca yayınlanabilir diller veya dili bilinmeyen (elle girilmiş) kayıtlar gösterilir.
 const PUBLIC_NEWS_LANGUAGE_FILTER = `language_code.is.null,language_code.in.(${PUBLISHABLE_NEWS_LANGUAGES.join(',')})`;
 
+interface SitemapNewsRow {
+  id: string;
+  slug: string | null;
+  title: string | null;
+  updated_at: string | null;
+  published_at: string | null;
+  created_at: string | null;
+}
+
 interface NewsRow {
   id: string;
   slug: string | null;
@@ -329,7 +338,7 @@ export async function getAllPublishedNewsEntriesForSitemap(): Promise<Array<{ sl
     return [];
   }
 
-  return (Array.isArray(data) ? data : []).map((row: any) => ({
+  return (Array.isArray(data) ? (data as SitemapNewsRow[]) : []).map((row) => ({
     slug: String(row.slug || '').trim() || buildStableNewsSlug(String(row.title || 'haber'), row.id),
     updatedAt: row.updated_at || row.published_at || row.created_at || new Date().toISOString(),
   }));

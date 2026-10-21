@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import { withCornerAdmin } from '@/lib/admin/withAuth';
 import { getSupabaseServiceClient } from '@/lib/admin/cornerAuthorAuth';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
-async function countRows(supabase: any, table: string, filters: Record<string, unknown> = {}) {
+async function countRows(supabase: SupabaseClient, table: string, filters: Record<string, unknown> = {}) {
   let query = supabase.from(table).select('id', { count: 'exact', head: true });
   for (const [key, value] of Object.entries(filters)) query = query.eq(key, value);
   const { count, error } = await query;

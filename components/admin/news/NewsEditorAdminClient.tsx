@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import MarkdownPreview from '@/components/MarkdownPreview';
 import { adminJsonFetch, toDateTimeLocalValue } from '@/components/admin/news/api';
 import { getAdminHeaders } from '@/lib/admin/clientAuth';
-import { NEWS_CATEGORIES, getNewsCategoryLabel } from '@/lib/news/shared';
+import { NEWS_CATEGORIES, getNewsCategoryLabel, normalizeNewsCategory } from '@/lib/news/shared';
 import type { NewsPostAdminRecord } from '@/types/news';
 
 interface PostDetailResponse {
@@ -394,7 +394,7 @@ export function NewsEditorAdminClient({ postId, onCreated }: NewsEditorAdminClie
               <div className="text-xs uppercase tracking-[0.18em] text-white/45">Ön Bilgiler</div>
               <div className="mt-4 space-y-3 text-sm text-white/70">
                 <div><span className="text-white/45">Başlık:</span> {previewTitle}</div>
-                <div><span className="text-white/45">Kategori:</span> {getNewsCategoryLabel(form.category as any)}</div>
+                <div><span className="text-white/45">Kategori:</span> {getNewsCategoryLabel(normalizeNewsCategory(form.category))}</div>
                 <div><span className="text-white/45">Durum:</span> {form.status}</div>
                 <div><span className="text-white/45">Yayın:</span> {form.published_at || '-'}</div>
               </div>

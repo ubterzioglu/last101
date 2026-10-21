@@ -17,7 +17,22 @@ const PUBLIC_SELECT = [
   'linkedin_url', 'whatsapp_tel', 'iletisim_izni', 'created_at',
 ].join(',');
 
-function sanitizeUserRows(rows: any[] = []) {
+/** Listede kullanılan alanlar; diğer seçili kolonlar olduğu gibi geçer. */
+interface DevUserRow {
+  [column: string]: unknown;
+  ad_soyad?: string | null;
+  sehir?: string | null;
+  rol?: string | null;
+  deneyim_seviye?: string | null;
+  guclu_alanlar?: string[] | null;
+  programlama_dilleri?: string[] | null;
+  framework_platformlar?: string[] | null;
+  iletisim_izni?: boolean | null;
+  linkedin_url?: string | null;
+  whatsapp_tel?: string | null;
+}
+
+function sanitizeUserRows(rows: DevUserRow[] = []) {
   return rows.map((user) => ({
     ...user,
     linkedin_url: user?.iletisim_izni ? user?.linkedin_url : null,
@@ -25,7 +40,7 @@ function sanitizeUserRows(rows: any[] = []) {
   }));
 }
 
-function keywordMatch(user: any, keyword: string): boolean {
+function keywordMatch(user: DevUserRow, keyword: string): boolean {
   if (!keyword) return true;
   const haystack = [
     user.ad_soyad, user.sehir, user.rol, user.deneyim_seviye,
@@ -53,8 +68,10 @@ export async function GET(request: NextRequest) {
       .eq('aratilabilir', true)
       .eq('approval_status', 'approved')
       .order('created_at', { ascending: false })
-      .limit(limit);
-    
+      .limit(limit)
+      // PUBLIC_SELECT çalışma anında birleştirildiği için supabase-js satır tipini çıkaramıyor.
+      .overrideTypes<DevUserRow[], { merge: false }>();
+
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500, headers: corsHeaders });
     }

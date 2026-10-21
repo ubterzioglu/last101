@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 import { authFailureResponse } from '@/lib/admin/withAuth';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 const MARKER = '[DEVUSER_DIS_V1]';
 
@@ -11,7 +12,7 @@ function normalizeAction(value: unknown): string | null {
   return null;
 }
 
-async function updateStatusWithFallback(supabase: any, id: string, statuses: string[]) {
+async function updateStatusWithFallback(supabase: SupabaseClient, id: string, statuses: string[]) {
   let lastError: unknown = null;
 
   for (const status of statuses) {

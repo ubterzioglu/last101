@@ -23,6 +23,13 @@ interface FounderSubmissionRow {
   updated_at: string | null;
 }
 
+/** /api/founder-submissions-admin-list yanıtı (hata durumunda yalnızca error döner). */
+interface FounderListPayload {
+  items?: FounderSubmissionRow[];
+  stats?: Partial<Record<'total' | 'pending' | 'approved' | 'rejected', number>>;
+  error?: string;
+}
+
 const LIST_API_URL = '/api/founder-submissions-admin-list';
 const ACTION_API_URL = '/api/founder-submissions-admin-action';
 
@@ -75,20 +82,18 @@ export default function FounderSubmissionsAdminSection({
         const response = await fetch(`${LIST_API_URL}?${params.toString()}`, {
           headers: getAdminHeaders({ Accept: 'application/json' }),
         });
-        const payload = await response.json().catch(() => ({}));
+        const payload: FounderListPayload = await response.json().catch(() => ({}));
         if (!response.ok) {
-          throw new Error((payload as { error?: string }).error || 'Founder kayıtları yüklenemedi.');
+          throw new Error(payload.error || 'Founder kayıtları yüklenemedi.');
         }
 
-        const items = Array.isArray((payload as { items?: FounderSubmissionRow[] }).items)
-          ? ((payload as { items: FounderSubmissionRow[] }).items)
-          : [];
+        const items = Array.isArray(payload.items) ? payload.items : [];
         setRows(items);
         setStats({
-          total: Number((payload as any)?.stats?.total || 0),
-          pending: Number((payload as any)?.stats?.pending || 0),
-          approved: Number((payload as any)?.stats?.approved || 0),
-          rejected: Number((payload as any)?.stats?.rejected || 0),
+          total: Number(payload.stats?.total || 0),
+          pending: Number(payload.stats?.pending || 0),
+          approved: Number(payload.stats?.approved || 0),
+          rejected: Number(payload.stats?.rejected || 0),
         });
 
         setCommentDrafts((prev) => {

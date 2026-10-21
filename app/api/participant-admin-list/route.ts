@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 const CATEGORY_TABLE: Record<string, { participants: string; bracket: string }> = {
   tavla: { participants: 'tavla_participants', bracket: 'tavla_bracket' },
@@ -17,7 +18,7 @@ function normalizeCategory(value: unknown): string {
   return Object.prototype.hasOwnProperty.call(CATEGORY_TABLE, category) ? category : '';
 }
 
-async function loadParticipants(supabase: any, tableName: string): Promise<unknown[]> {
+async function loadParticipants(supabase: SupabaseClient, tableName: string): Promise<unknown[]> {
   const result = await supabase
     .from(tableName)
     .select('*')
@@ -26,7 +27,7 @@ async function loadParticipants(supabase: any, tableName: string): Promise<unkno
   return Array.isArray(result.data) ? result.data : [];
 }
 
-async function loadBracket(supabase: any, tableName: string): Promise<unknown[]> {
+async function loadBracket(supabase: SupabaseClient, tableName: string): Promise<unknown[]> {
   const result = await supabase
     .from(tableName)
     .select('*')
@@ -35,7 +36,7 @@ async function loadBracket(supabase: any, tableName: string): Promise<unknown[]>
   return Array.isArray(result.data) ? result.data : [];
 }
 
-async function loadCategoryPayload(supabase: any, category: string): Promise<Record<string, unknown>> {
+async function loadCategoryPayload(supabase: SupabaseClient, category: string): Promise<Record<string, unknown>> {
   const tableConfig = CATEGORY_TABLE[category];
   const participants = await loadParticipants(supabase, tableConfig.participants);
   if (!tableConfig.bracket) {

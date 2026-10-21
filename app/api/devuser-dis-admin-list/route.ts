@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 const MARKER = '[DEVUSER_DIS_V1]';
 const APPROVED_RAW_STATUSES = ['read', 'reviewed', 'resolved', 'approved'];
@@ -48,7 +49,7 @@ function isMissingColumnError(error: unknown, columnName: string): boolean {
   return msg.includes('column') && msg.includes(String(columnName || '').toLowerCase());
 }
 
-async function queryDiscussionRowsWithFallback({ supabase, limit, status }: { supabase: any; limit: number; status: string }) {
+async function queryDiscussionRowsWithFallback({ supabase, limit, status }: { supabase: SupabaseClient; limit: number; status: string }) {
   const attempts = [
     { includeStatus: true, orderByCreatedAt: true },
     { includeStatus: true, orderByCreatedAt: false },

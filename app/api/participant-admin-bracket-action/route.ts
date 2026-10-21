@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 const BRACKET_TABLE_BY_CATEGORY: Record<string, string> = {
   tavla: 'tavla_bracket',
@@ -38,7 +39,7 @@ function isValidSlotIndex(slotIndex: number | null): slotIndex is number {
   return Number.isInteger(slotIndex) && (slotIndex as number) >= 0 && (slotIndex as number) < SLOT_LIMIT;
 }
 
-async function findFirstEmptySlot(supabase: any, bracketTable: string): Promise<number> {
+async function findFirstEmptySlot(supabase: SupabaseClient, bracketTable: string): Promise<number> {
   const { data, error } = await supabase
     .from(bracketTable)
     .select('slot_index')
@@ -59,7 +60,7 @@ async function findFirstEmptySlot(supabase: any, bracketTable: string): Promise<
 }
 
 async function ensureParticipantExistsAndApproved(
-  supabase: any,
+  supabase: SupabaseClient,
   participantTable: string,
   participantId: string
 ): Promise<{ ok: boolean; status: number; error: string }> {
@@ -76,7 +77,7 @@ async function ensureParticipantExistsAndApproved(
 }
 
 async function addToBracket(
-  supabase: any,
+  supabase: SupabaseClient,
   category: string,
   participantId: string,
   requestedSlotIndex: number | null
@@ -132,7 +133,7 @@ async function addToBracket(
 }
 
 async function removeParticipantFromBracket(
-  supabase: any,
+  supabase: SupabaseClient,
   category: string,
   participantId: string
 ): Promise<{ ok: boolean; status: number }> {
@@ -146,7 +147,7 @@ async function removeParticipantFromBracket(
 }
 
 async function toggleBracketWinner(
-  supabase: any,
+  supabase: SupabaseClient,
   category: string,
   slotIndex: number
 ): Promise<{ ok: boolean; status: number; error?: string; data?: unknown }> {
@@ -172,7 +173,7 @@ async function toggleBracketWinner(
 }
 
 async function clearBracketSlot(
-  supabase: any,
+  supabase: SupabaseClient,
   category: string,
   slotIndex: number
 ): Promise<{ ok: boolean; status: number }> {
