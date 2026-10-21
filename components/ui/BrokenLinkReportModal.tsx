@@ -63,7 +63,7 @@ export function BrokenLinkReportModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 p-4">
       <div className="w-full max-w-lg rounded-lg bg-white p-6 shadow-xl">
         <div className="mb-4">
           <h2 className="text-xl font-bold text-gray-900">
@@ -107,7 +107,7 @@ export function BrokenLinkReportModal({
                 onChange={(e) => setReportText(e.target.value)}
                 placeholder="Kırık link detaylarını açıklayın..."
                 rows={6}
-                className="w-full rounded-lg border border-gray-300 p-3 text-sm focus:border-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue/20"
+                className="w-full rounded-btn border border-line bg-white p-3 text-sm text-ink focus:border-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-700/20"
               />
             </div>
 
@@ -122,7 +122,7 @@ export function BrokenLinkReportModal({
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !reportText.trim()}
-                className="rounded-lg bg-google-blue px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-btn bg-brand-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-800 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Gönderiliyor...' : 'Bildir'}
               </button>
