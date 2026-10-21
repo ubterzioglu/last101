@@ -57,10 +57,12 @@ Existing tool directories:
 - `para-transferi/`
 - `stepstone-karsilastirma/`
 
-Common tool-page card structure:
-1. Title card (`border-google-blue`, non-clickable, `<h1>` only)
-2. "How it works?" card (`border-google-blue`, collapsible with `showInfo`)
-3. "Why this tool exists?" card (`border-google-green`, collapsible with `showWhy`)
+Tool page structure (shared shell in `components/tools/`):
+1. `ToolHero`: eyebrow, `<h1>` (tool title), intro, stats; on the right a card with the always-visible "Nasıl çalışır?" numbered steps
+2. `ToolPanel` (band panel) holding `ToolProgress` ("Soru X / Y") and `ToolQuestionCard` (`data-pw="tool-question-card"`) with `ToolOption` buttons, or the calculator form (`components/calc/*` fields)
+3. Results in featured cards (`Card variant="featured"`) with hairline metric grids
+4. `ToolInfoBand` (dark band: "Bu araç neden var?" / "Bu araç kim için?"), then sources/related tools, `ToolFaq` (accordion), legal note
+Config-driven tools render all of this through `ToolPageScaffold` + `ToolExperience`. Keep `data-pw` hooks and the texts e2e specs select on.
 
 ## DevUser Dashboard (`app/(devuser)/devuser/`)
 
@@ -108,28 +110,44 @@ Use the correct client for each runtime:
 
 ```text
 components/
-|- ui/          # Button, Card, Container, Section, Badge
-|- sections/    # HeroSection, FeatureGrid, FAQ
-|- layout/      # Header, Footer, Breadcrumb
+|- site/        # Public page blocks (Corteqs layout): SplitHero, PageHead, SectionHeader,
+|               # IntentStrip, ServiceGrid/Tile, MediaCard, PhotoCard/Tile, ColorTile,
+|               # Accordion, StepList, StatRow, DarkBand, CtaRow, FilterPanel, Chip, ArrowLink, tones
+|- ui/          # Button (href/external/arrow), Card, Container (1280px), Section (tone), Badge
+|- tools/       # Tool shell: ToolHero, ToolPanel, ToolProgress, ToolQuestionCard, ToolOption, ToolInfoBand, ToolFaq
+|- calc/        # Form controls for calculator tools
+|- home/        # Home page sections
+|- news/        # News/article components (ArticleShell, cards, filters)
+|- layout/      # Header, HeaderDrawer, Footer, Breadcrumb, LegalPage
 |- devuser/     # DevUserShell, DevUserCanvas
 |- holiday/     # Holiday calculator
 `- seo/         # JsonLd structured data
 ```
 
+Build public pages from `components/site/*` blocks; do not add one-off hero/section components.
+
 Header behavior (`components/layout/Header.tsx`):
-- Uses `public/almanya101.png` as logo
-- Drawer menu comes from `constants/navigation.ts`
+- Uses `public/almanya101header.png` as logo (transparent, works on the light page)
+- Desktop: primary links from `HEADER_PRIMARY_LINKS` in `constants/navigation.ts`, WhatsApp, Giriş yap / Çıkış, "Üye Ol" button
+- Mobile: "Menü" opens `HeaderDrawer` (categories from `constants/navigation.ts`; Escape, focus trap, scroll lock)
 - Categories: Tools / Community / Content / Contact
 - Header/Footer hide when `body[data-devuser]` is set
 - Admin and devuser pages set `document.body.setAttribute('data-devuser', 'true')`
 
 ## Styling and Layout Conventions
 
-- Container: `className="container"` (responsive padding built in)
-- Hero sections: `min-h-[80vh]`
-- Content sections: `py-32 md:py-48`
+Public site: light theme, firmascope colours, Corteqs layout. Tokens live in `constants/design-tokens.ts` (Tailwind reads them; `tests/design-tokens.test.ts` guards WCAG AA contrast).
 
-Google palette tokens:
+- Surfaces: `bg-page` (default), `bg-white` cards, `bg-band` full-bleed bands, `bg-ink` (one dark band per page max)
+- Text: `text-ink`, `text-muted`; hairlines `border-line`
+- `brand-*` (cyan) is the only interactive colour: CTAs `bg-brand-700`, links `text-brand-700`, headline accent `text-brand-600`
+- `alm-*` category colours are for icons, tints and markers only; use `TONE_STYLES` from `components/site/tones.ts` (text uses the `*-ink` tones)
+- Radius: `rounded-tile` 6px, `rounded-card` 12px, `rounded-btn` 10px; `shadow-float` only on featured cards
+- Layout: `Container` (max 1280px, 36px side padding), sections `py-16`
+- One font: Plus Jakarta Sans (`font-sans`), headings `font-extrabold` with tight tracking
+- No `bg-black`, glass, glow, gradients or `google-*` colours in public pages; emoji and em-dash not in page text
+
+Legacy Google palette tokens (admin and devuser only; do not use in public pages):
 - `google-blue` / `bg-google-blue` / `text-google-blue` = `#4285F4`
 - `google-red` / `bg-google-red` / `text-google-red` = `#EA4335`
 - `google-yellow` / `bg-google-yellow` / `text-google-yellow` = `#FBBC05`
