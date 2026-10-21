@@ -127,6 +127,18 @@ export interface AdminAuthResult {
   reason: string;
   status: number;
   retryAfterSeconds?: number;
+  /**
+   * Sunucuda doğrulanan kimlik (audit kayıtları için). İstemcinin gönderdiği x-admin-email
+   * doğrulanamadığından kullanılmaz: simple modda ortak şifre olduğu için 'admin', DB modunda anahtar etiketi.
+   */
+  actor?: string;
+}
+
+const SHARED_PASSWORD_ACTOR = 'admin';
+
+/** Başarılı bir auth sonucundan audit için kullanılacak kimliği döndürür. */
+export function getAdminActor(auth: AdminAuthResult): string {
+  return auth.actor || SHARED_PASSWORD_ACTOR;
 }
 
 export async function isAdminAuthorized(req: NextRequest): Promise<AdminAuthResult> {
@@ -151,7 +163,7 @@ export async function isAdminAuthorized(req: NextRequest): Promise<AdminAuthResu
   if (envAdminPassword) {
     if (timingSafeEqualText(providedKey, envAdminPassword)) {
       resetAttempts(req);
-      return { ok: true, reason: '', status: 200 };
+      return { ok: true, reason: '', status: 200, actor: SHARED_PASSWORD_ACTOR };
     }
     registerFailedAttempt(req);
     return { ok: false, reason: 'Unauthorized', status: 401 };
@@ -202,7 +214,8 @@ export async function isAdminAuthorized(req: NextRequest): Promise<AdminAuthResu
       if (row?.id) {
         await supabase.from(ADMIN_KEYS_TABLE).update({ last_used_at: new Date().toISOString() }).eq('id', row.id);
       }
-      return { ok: true, reason: '', status: 200 };
+      const keyLabel = String(row?.key_label || row?.id || '').trim();
+      return { ok: true, reason: '', status: 200, actor: keyLabel ? `admin:${keyLabel}`.slice(0, 120) : SHARED_PASSWORD_ACTOR };
     }
   }
 

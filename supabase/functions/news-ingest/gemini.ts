@@ -28,6 +28,8 @@ export async function generateGeminiDraft(params: {
 
   const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
     method: 'POST',
+    // Yanıt vermeyen bir çağrı edge function'ın süre sınırını tüketmesin.
+    signal: AbortSignal.timeout(20_000),
     headers: {
       'content-type': 'application/json',
       'x-goog-api-key': params.apiKey,

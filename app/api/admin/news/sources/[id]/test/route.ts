@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { getNewsServiceClient } from '@/lib/news/admin';
+import { newsErrorResponse } from '@/lib/news/errors';
+import { fetchFeedSafely } from '@/lib/news/source-security';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -38,20 +40,16 @@ export async function POST(request: NextRequest, context: RouteContext) {
     if (!data) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     if (!data.feed_url) return NextResponse.json({ error: 'Source has no feed_url' }, { status: 400 });
 
-    const response = await fetch(data.feed_url, {
-      headers: { 'user-agent': 'almanya101-news-ingest/1.0' },
-      cache: 'no-store',
-    });
-    const text = await response.text();
-    const preview = collectFeedPreview(text);
+    const response = await fetchFeedSafely(data.feed_url);
+    const preview = collectFeedPreview(response.text);
 
     return NextResponse.json({
       ok: response.ok,
       status: response.status,
       preview,
-      contentLength: text.length,
+      contentLength: response.text.length,
     });
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'source test');
   }
 }

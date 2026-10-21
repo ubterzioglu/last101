@@ -1,5 +1,5 @@
 import type { FeedItemInput } from './rss.ts'
-import { validateSourceUrl } from '../source-security.ts'
+import { fetchWithValidatedRedirects, validateSourceUrl } from '../source-security.ts'
 
 // GDELT Doc API v2 adaptörü: API key gerektirmeden global haber taraması yapar.
 // Türk diasporası / Almanya odaklı sorgular için idealdir.
@@ -69,7 +69,7 @@ export async function fetchGdeltItems(
       const controller = new AbortController()
       const timer = setTimeout(() => controller.abort(), options.timeoutMs)
       try {
-        const res = await fetch(url, {
+        const res = await fetchWithValidatedRedirects(url, {
           signal: controller.signal,
           headers: { 'user-agent': 'almanya101-news-ingest/1.0' },
         })

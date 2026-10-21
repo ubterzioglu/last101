@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { updateNewsSource } from '@/lib/news/admin';
+import { newsErrorResponse } from '@/lib/news/errors';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -17,6 +18,6 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     return NextResponse.json({ item });
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'admin/news/sources/[id]');
   }
 }

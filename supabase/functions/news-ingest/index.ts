@@ -11,22 +11,40 @@ import { generateGeminiDraft } from './gemini.ts'
 import { decideLanguage, normalizeAllowedLanguages } from './language.ts'
 import { normalizeFeedItem, type NewsSourceLike } from './normalize.ts'
 import { computeRelevance } from './relevance.ts'
-import { validateSourceUrl } from './source-security.ts'
+import { fetchWithValidatedRedirects } from './source-security.ts'
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-pipeline-secret',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-}
-
+// CORS başlığı bilerek yok: fonksiyonu yalnızca sunucu tarafı çağırır (pg_cron + Next admin route'ları).
 function jsonResponse(body: Record<string, unknown>, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: {
-      ...CORS_HEADERS,
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
   })
+}
+
+/** Sabit zamanlı karşılaştırma: secret'ın uzunluğu/içeriği yanıt süresinden çıkarılamasın. */
+function secretsMatch(expected: string, provided: string): boolean {
+  const encoder = new TextEncoder()
+  const a = encoder.encode(expected)
+  const b = encoder.encode(provided)
+  let diff = a.length ^ b.length
+  for (let i = 0; i < a.length; i++) diff |= a[i] ^ (b[i] ?? 0)
+  return diff === 0
+}
+
+function startOfUtcDayIso(): string {
+  const now = new Date()
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())).toISOString()
+}
+
+const GEMINI_MODEL = 'gemini-2.0-flash'
+
+// news_posts_category_check ile aynı küme; Next tarafındaki karşılığı lib/news/shared.ts NEWS_CATEGORIES.
+const NEWS_CATEGORIES = ['almanya', 'turkiye', 'avrupa', 'dunya', 'duyuru'] as const
+
+/** AI'nın serbest metin kategorisini ("Türkiye", "politics") geçerli kümeye indirger; değilse null. */
+function normalizeAiCategory(value: unknown): string | null {
+  const ascii = String(value ?? '').trim().toLocaleLowerCase('tr-TR').replace(/ü/g, 'u').replace(/ı/g, 'i')
+  return (NEWS_CATEGORIES as readonly string[]).includes(ascii) ? ascii : null
 }
 
 function normalizeSecret(value: string | null): string {
@@ -60,19 +78,13 @@ async function fetchSourceItems(
     return fetchTheNewsApiItems(feedUrl, normalizeSecret(Deno.env.get('THENEWSAPI_TOKEN')))
   }
 
-  // RSS/MRSS/Atom: fetch öncesi SSRF doğrulaması.
-  const security = validateSourceUrl(feedUrl)
-  if (!security.ok) {
-    throw new Error(`SSRF engeli: ${security.reason}`)
-  }
-
+  // RSS/MRSS/Atom: SSRF doğrulaması her yönlendirme adımında tekrarlanır.
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), 20000)
   let response: Response
   try {
-    response = await fetch(feedUrl, {
+    response = await fetchWithValidatedRedirects(feedUrl, {
       signal: controller.signal,
-      redirect: 'follow',
       headers: { 'user-agent': 'almanya101-news-ingest/1.0' },
     })
   } finally {
@@ -90,10 +102,6 @@ async function fetchSourceItems(
 }
 
 serve(async (req: Request) => {
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: CORS_HEADERS })
-  }
-
   if (req.method !== 'POST') {
     return jsonResponse({ error: 'Method not allowed' }, 405)
   }
@@ -104,9 +112,13 @@ serve(async (req: Request) => {
     return jsonResponse({ error: 'Service not configured' }, 503)
   }
 
+  // Secret tanımlı değilse fonksiyon herkese açık kalmasın diye istek reddedilir (fail closed).
   const requiredSecret = normalizeSecret(Deno.env.get('NEWS_PIPELINE_SECRET'))
+  if (!requiredSecret) {
+    return jsonResponse({ error: 'Pipeline secret not configured' }, 503)
+  }
   const providedSecret = normalizeSecret(req.headers.get('x-pipeline-secret'))
-  if (requiredSecret && requiredSecret !== providedSecret) {
+  if (!secretsMatch(requiredSecret, providedSecret)) {
     return jsonResponse({ error: 'Invalid pipeline secret' }, 401)
   }
 
@@ -207,6 +219,20 @@ serve(async (req: Request) => {
   let errorCount = 0
   const runLog: Record<string, unknown>[] = []
   let aiUsed = 0
+
+  // ai_daily_limit gerçek günlük bütçedir: bugün (UTC) önceki çalışmalarda kullanılan çağrılar düşülür.
+  // Sayılamazsa AI bu çalışmada atlanır (limit aşımını önlemek için temkinli taraf).
+  const { data: todayRuns, error: todayRunsError } = await supabase
+    .from('news_ingest_runs')
+    .select('log_json')
+    .gte('started_at', startOfUtcDayIso())
+    .neq('id', run.id)
+  const aiUsedEarlierToday = (todayRuns ?? []).reduce(
+    (sum: number, row: { log_json?: Record<string, unknown> | null }) => sum + (Number(row.log_json?.aiUsed) || 0),
+    0
+  )
+  const aiBudget = todayRunsError ? 0 : Math.max((settings.ai_daily_limit || 0) - aiUsedEarlierToday, 0)
+  const geminiApiKey = normalizeSecret(Deno.env.get('GEMINI_API_KEY'))
 
   let sourceIndex = 0
   for (const source of sources) {
@@ -349,19 +375,23 @@ serve(async (req: Request) => {
         let aiModel: string | null = null
         let aiGeneratedFields: Record<string, unknown> = {}
 
-        if (settings.ai_enabled && aiUsed < (settings.ai_daily_limit || 0)) {
-          const geminiDraft = await generateGeminiDraft({
-            apiKey: normalizeSecret(Deno.env.get('GEMINI_API_KEY')),
-            item: normalized,
-          })
-          if (geminiDraft) {
-            title = geminiDraft.title_tr || title
-            summary = geminiDraft.summary_tr || summary
-            category = geminiDraft.category || category
-            whatsappShareText = geminiDraft.whatsapp_share_text || whatsappShareText
-            aiGeneratedFields = geminiDraft as unknown as Record<string, unknown>
-            aiModel = 'gemini-2.0-flash'
-            aiUsed += 1
+        if (settings.ai_enabled && geminiApiKey && aiUsed < aiBudget) {
+          // Deneme başarısız olsa da kotadan sayılır ve hemen kaydedilir: yarıda kesilen veya eşzamanlı
+          // çalışmalar da bütçeyi görsün. Gemini hatası kaynağı düşürmez, öğe AI'sız kaydedilir.
+          aiUsed += 1
+          await supabase.from('news_ingest_runs').update({ log_json: { aiUsed } }).eq('id', run.id)
+          try {
+            const geminiDraft = await generateGeminiDraft({ apiKey: geminiApiKey, item: normalized })
+            if (geminiDraft) {
+              title = geminiDraft.title_tr || title
+              summary = geminiDraft.summary_tr || summary
+              category = normalizeAiCategory(geminiDraft.category) ?? category
+              whatsappShareText = geminiDraft.whatsapp_share_text || whatsappShareText
+              aiGeneratedFields = geminiDraft as unknown as Record<string, unknown>
+              aiModel = GEMINI_MODEL
+            }
+          } catch (geminiError) {
+            ;(logEntry.errors as string[]).push(`Gemini: ${(geminiError as Error).message || 'unknown error'}`)
           }
         }
 
@@ -406,7 +436,13 @@ serve(async (req: Request) => {
           .maybeSingle()
 
         if (postInsert.error || !postInsert.data) {
-          throw new Error(postInsert.error?.message || 'Failed to insert post')
+          // Ham kayıt işaretlenir (silinmez): kalıcı bir hatada her çalışmada yeniden denenip AI bütçesi
+          // harcanmasın. Hata loglanır ve kaynağın kalan öğeleriyle devam edilir.
+          const message = postInsert.error?.message || 'Failed to insert post'
+          await supabase.from('news_raw_items').update({ filtered_reason: 'post_insert_failed' }).eq('id', rawInsert.data.id)
+          ;(logEntry.errors as string[]).push(`Haber kaydedilemedi (${normalized.canonicalUrl}): ${message}`)
+          errorCount += 1
+          continue
         }
 
         await supabase.from('news_editor_actions').insert([
@@ -471,6 +507,7 @@ serve(async (req: Request) => {
       log_json: {
         sources: runLog,
         aiUsed,
+        aiUsedEarlierToday,
         skippedLanguage: skippedLanguageCount,
         allowedLanguages,
       },

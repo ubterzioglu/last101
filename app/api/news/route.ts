@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPublishedNewsFeed } from '@/lib/public-news';
+import { newsErrorResponse } from '@/lib/news/errors';
 import { normalizeNewsCategory } from '@/lib/news/shared';
 
 export async function GET(request: NextRequest) {
@@ -24,7 +25,6 @@ export async function GET(request: NextRequest) {
       headers: { 'Cache-Control': 'no-store' },
     });
   } catch (error) {
-    const message = (error as Error).message || 'Internal server error';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return newsErrorResponse(error, 'public news feed');
   }
 }

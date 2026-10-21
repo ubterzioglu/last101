@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { slugifyNewsTitle } from '@/lib/news/shared';
 import { uploadNewsCoverFile } from '@/lib/news/admin';
+import { newsErrorResponse } from '@/lib/news/errors';
 
 export async function POST(request: NextRequest) {
   const auth = await isAdminAuthorized(request);
@@ -25,6 +26,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(uploaded, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'admin/news/upload');
   }
 }

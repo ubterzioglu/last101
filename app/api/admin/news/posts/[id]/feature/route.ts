@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { getAdminActor, isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { setAdminPostFeatured } from '@/lib/news/admin';
+import { newsErrorResponse } from '@/lib/news/errors';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -13,13 +14,13 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
   try {
     const body = await request.json().catch(() => ({}));
-    const post = await setAdminPostFeatured(request, id, {
+    const post = await setAdminPostFeatured(getAdminActor(auth), id, {
       isFeatured: Boolean(body?.is_featured ?? body?.isFeatured ?? true),
       featuredRank: body?.featured_rank ?? body?.featuredRank ?? 1,
     });
     if (!post) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     return NextResponse.json({ item: post });
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'admin/news/posts/[id]/feature');
   }
 }

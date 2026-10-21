@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { createNewsSource, listNewsSources } from '@/lib/news/admin';
+import { newsErrorResponse } from '@/lib/news/errors';
 
 export async function GET(request: NextRequest) {
   const auth = await isAdminAuthorized(request);
@@ -10,7 +11,7 @@ export async function GET(request: NextRequest) {
     const items = await listNewsSources();
     return NextResponse.json({ items });
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'admin/news/sources');
   }
 }
 
@@ -23,6 +24,6 @@ export async function POST(request: NextRequest) {
     const item = await createNewsSource(body);
     return NextResponse.json({ item }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'admin/news/sources');
   }
 }

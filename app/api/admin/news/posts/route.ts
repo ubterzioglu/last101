@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { getAdminActor, isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { createAdminPost, listAdminPosts } from '@/lib/news/admin';
+import { newsErrorResponse } from '@/lib/news/errors';
 
 export async function GET(request: NextRequest) {
   const auth = await isAdminAuthorized(request);
@@ -10,7 +11,7 @@ export async function GET(request: NextRequest) {
     const payload = await listAdminPosts({ request });
     return NextResponse.json(payload);
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'admin/news/posts');
   }
 }
 
@@ -20,9 +21,9 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const post = await createAdminPost(request, body);
+    const post = await createAdminPost(getAdminActor(auth), body);
     return NextResponse.json({ item: post }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'admin/news/posts');
   }
 }

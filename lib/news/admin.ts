@@ -23,6 +23,8 @@ import type {
   NewsStatus,
 } from '@/types/news';
 import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
+import { NewsInputError } from '@/lib/news/errors';
+import { buildIlikeOrFilter } from '@/lib/news/search';
 
 export const NEWS_POST_SELECT = `
   id,
@@ -203,7 +205,7 @@ function normalizeLanguageFilter(value: unknown): LanguageFilter {
 function parseSourceLanguage(value: unknown): NewsLanguage | null {
   if (!String(value ?? '').trim()) return null;
   const language = normalizeNewsLanguage(value);
-  if (!language) throw new Error('language_code must be one of tr, de, en');
+  if (!language) throw new NewsInputError('language_code must be one of tr, de, en');
   return language;
 }
 
@@ -211,7 +213,7 @@ function parseSourceType(value: unknown): NewsSourceType {
   const safe = String(value || '').trim();
   if (!safe) return 'rss';
   if (!(NEWS_SOURCE_TYPES as string[]).includes(safe)) {
-    throw new Error(`source_type must be one of ${NEWS_SOURCE_TYPES.join(', ')}`);
+    throw new NewsInputError(`source_type must be one of ${NEWS_SOURCE_TYPES.join(', ')}`);
   }
   return safe as NewsSourceType;
 }
@@ -222,7 +224,7 @@ function parseAllowedLanguages(value: unknown): NewsLanguage[] {
     .map(normalizeNewsLanguage)
     .filter((language): language is NewsLanguage => language !== null && PUBLISHABLE_NEWS_LANGUAGES.includes(language));
   if (languages.length === 0) {
-    throw new Error(`allowed_languages must contain at least one of ${PUBLISHABLE_NEWS_LANGUAGES.join(', ')}`);
+    throw new NewsInputError(`allowed_languages must contain at least one of ${PUBLISHABLE_NEWS_LANGUAGES.join(', ')}`);
   }
   return [...new Set(languages)];
 }
@@ -257,12 +259,20 @@ function buildSourcePayload(body: JsonRecord, options: { partial: boolean }): Js
     .map(([column, keys, parse]) => [column, parse(keys.map((key) => body[key]).find((value) => value !== undefined))]);
 
   const payload: JsonRecord = { ...Object.fromEntries(entries), updated_at: new Date().toISOString() };
-  if ('name' in payload && !payload.name) throw new Error('name is required');
+  if ('name' in payload && !payload.name) throw new NewsInputError('name is required');
   return payload;
 }
 
-function getActorIdentity(request: NextRequest): string {
-  return normalizeText(request.headers.get('x-admin-email') || 'admin@almanya101.de', 120, 'admin@almanya101.de');
+function isReviewedStatus(status: NewsStatus): boolean {
+  return status === 'published' || status === 'rejected' || status === 'archived';
+}
+
+/** Durum değişikliğinin audit kaydındaki eylem türü (news_editor_actions.action_type). */
+function statusToActionType(status: NewsStatus): string {
+  if (status === 'published') return 'publish';
+  if (status === 'rejected') return 'reject';
+  if (status === 'archived') return 'archive';
+  return 'update';
 }
 
 export function getNewsServiceClient(): SupabaseClient {
@@ -311,9 +321,9 @@ function createDefaultWhatsappText(title: string, summary: string | null, slug: 
   });
 }
 
-function buildPostPayload(body: JsonRecord, existing?: Partial<NewsPostAdminRecord>) {
+function buildPostPayload(body: JsonRecord, actor: string, existing?: Partial<NewsPostAdminRecord>) {
   const nextTitle = normalizeText(body.title, 200);
-  if (!nextTitle) throw new Error('title is required');
+  if (!nextTitle) throw new NewsInputError('title is required');
 
   const slugInput = normalizeText(body.slug, 200);
   const slug = slugInput
@@ -358,11 +368,13 @@ function buildPostPayload(body: JsonRecord, existing?: Partial<NewsPostAdminReco
     ai_model: normalizeNullableText(body.ai_model ?? body.aiModel ?? existing?.ai_model, 120),
     ai_generated_fields: normalizeJsonRecord(body.ai_generated_fields ?? body.aiGeneratedFields ?? existing?.ai_generated_fields),
     editor_notes: normalizeNullableText(body.editor_notes ?? body.editorNotes ?? existing?.editor_notes, 4000),
-    reviewed_at: status === 'published' || status === 'rejected' || status === 'archived'
-      ? (existing?.reviewed_at || new Date().toISOString())
+    reviewed_at: isReviewedStatus(status)
+      ? (existing?.status === status && existing?.reviewed_at ? existing.reviewed_at : new Date().toISOString())
       : existing?.reviewed_at || null,
-    reviewed_by: status === 'published' || status === 'rejected' || status === 'archived'
-      ? normalizeNullableText(body.reviewed_by ?? body.reviewedBy ?? existing?.reviewed_by ?? 'admin@almanya101.de', 120)
+    // Gövdedeki reviewed_by yok sayılır: inceleyen kimliği yalnızca sunucuda doğrulanan actor'dan gelir.
+    // Durum incelenmiş bir duruma geçtiğinde inceleyen bu actor olur (setAdminPostStatus ile tutarlı).
+    reviewed_by: isReviewedStatus(status)
+      ? (existing?.status === status && existing?.reviewed_by ? existing.reviewed_by : actor)
       : existing?.reviewed_by || null,
     published_at: publishedAt,
     show_in_carousel: normalizeBoolean(body.show_in_carousel ?? body.showInCarousel ?? existing?.show_in_carousel, Boolean(existing?.show_in_carousel)),
@@ -397,7 +409,7 @@ export async function listAdminPosts(params: {
 
   if (status !== 'all') query = query.eq('status', status);
   if (category !== 'all') query = query.eq('category', category);
-  if (q) query = query.or(`title.ilike.%${q}%,summary.ilike.%${q}%`);
+  if (q) query = query.or(buildIlikeOrFilter(['title', 'summary'], q));
   if (source) query = query.ilike('source_name', `%${source}%`);
   if (featured === 'true') query = query.eq('is_featured', true);
   if (featured === 'false') query = query.eq('is_featured', false);
@@ -474,15 +486,13 @@ export async function getAdminPostDetail(id: string, client?: SupabaseClient) {
   };
 }
 
-export async function createAdminPost(request: NextRequest, body: JsonRecord, client?: SupabaseClient) {
+export async function createAdminPost(actor: string, body: JsonRecord, client?: SupabaseClient) {
   const serviceClient = client || getNewsServiceClient();
-  const actor = getActorIdentity(request);
   const newId = crypto.randomUUID();
-  const payload = buildPostPayload(body, { id: newId, slug: '' } as Partial<NewsPostAdminRecord>);
+  const payload = buildPostPayload(body, actor, { id: newId, slug: '' } as Partial<NewsPostAdminRecord>);
   const insertPayload = {
     id: newId,
     ...payload,
-    reviewed_by: payload.reviewed_by || actor,
   };
 
   const { data, error } = await serviceClient
@@ -508,13 +518,12 @@ export async function createAdminPost(request: NextRequest, body: JsonRecord, cl
   return data as NewsPostAdminRecord;
 }
 
-export async function updateAdminPost(request: NextRequest, id: string, body: JsonRecord, client?: SupabaseClient) {
+export async function updateAdminPost(actor: string, id: string, body: JsonRecord, client?: SupabaseClient) {
   const serviceClient = client || getNewsServiceClient();
-  const actor = getActorIdentity(request);
   const existing = await getAdminPostDetail(id, serviceClient);
   if (!existing) return null;
 
-  const payload = buildPostPayload(body, existing.post);
+  const payload = buildPostPayload(body, actor, existing.post);
   const { data, error } = await serviceClient
     .from('news_posts')
     .update(payload)
@@ -541,14 +550,13 @@ export async function updateAdminPost(request: NextRequest, id: string, body: Js
 }
 
 export async function setAdminPostStatus(
-  request: NextRequest,
+  actor: string,
   id: string,
   status: NewsStatus,
   note?: string | null,
   client?: SupabaseClient
 ) {
   const serviceClient = client || getNewsServiceClient();
-  const actor = getActorIdentity(request);
   const current = await getAdminPostDetail(id, serviceClient);
   if (!current) return null;
 
@@ -575,12 +583,11 @@ export async function setAdminPostStatus(
   if (error) throw error;
   if (!data) return null;
 
-  const actionType = status === 'published' ? 'publish' : status === 'rejected' ? 'reject' : 'archive';
   await recordEditorAction({
     client: serviceClient,
     postId: id,
     actor,
-    actionType,
+    actionType: statusToActionType(status),
     note,
     metadata: { status },
   });
@@ -589,13 +596,12 @@ export async function setAdminPostStatus(
 }
 
 export async function setAdminPostFeatured(
-  request: NextRequest,
+  actor: string,
   id: string,
   params: { isFeatured: boolean; featuredRank?: number | null },
   client?: SupabaseClient
 ) {
   const serviceClient = client || getNewsServiceClient();
-  const actor = getActorIdentity(request);
   const payload = {
     is_featured: params.isFeatured,
     featured_rank: params.isFeatured ? normalizeInteger(params.featuredRank, 1, 999, 1) : null,
@@ -623,19 +629,43 @@ export async function setAdminPostFeatured(
   return data as NewsPostAdminRecord;
 }
 
-export async function deleteAdminPost(request: NextRequest, id: string, client?: SupabaseClient) {
+/**
+ * Haberi kalıcı olarak siler. Audit kaydı silinmeden önce yazılır ve post_id FK'si `on delete set null`
+ * olduğu için kayıt silme sonrasında da kalır; kim neyi sildi bilgisi metadata'daki anlık görüntüdedir.
+ * Kayıt yoksa false döner.
+ */
+export async function deleteAdminPost(actor: string, id: string, client?: SupabaseClient): Promise<boolean> {
   const serviceClient = client || getNewsServiceClient();
-  const actor = getActorIdentity(request);
-  await recordEditorAction({
-    client: serviceClient,
-    postId: id,
-    actor,
-    actionType: 'archive',
-    note: 'Deleted from admin API',
-  });
+  const { data: existing, error: readError } = await serviceClient
+    .from('news_posts')
+    .select('id, slug, title, status, source_url')
+    .eq('id', id)
+    .maybeSingle();
+  if (readError) throw readError;
+  if (!existing) return false;
+
+  const { data: audit, error: auditError } = await serviceClient
+    .from('news_editor_actions')
+    .insert([
+      {
+        post_id: id,
+        actor_user_id: actor,
+        action_type: 'delete',
+        note: 'Deleted from admin API',
+        metadata: { deletedPost: existing },
+      },
+    ])
+    .select('id')
+    .maybeSingle();
+  if (auditError) throw auditError;
 
   const { error } = await serviceClient.from('news_posts').delete().eq('id', id);
-  if (error) throw error;
+  if (error) {
+    // Silme başarısızsa "silindi" diyen audit kaydı yanıltıcı olur; geri alınır.
+    if (audit?.id) await serviceClient.from('news_editor_actions').delete().eq('id', audit.id);
+    throw error;
+  }
+  return true;
 }
 
 export async function listNewsSources(client?: SupabaseClient) {

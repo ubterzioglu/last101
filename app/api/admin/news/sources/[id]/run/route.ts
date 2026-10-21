@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { getNewsServiceClient } from '@/lib/news/admin';
+import { newsErrorResponse } from '@/lib/news/errors';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -38,6 +39,6 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
     return NextResponse.json(payload, { status: response.status });
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
+    return newsErrorResponse(error, 'admin/news/sources/[id]/run');
   }
 }
