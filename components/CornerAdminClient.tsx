@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { CORNER_ADMIN_KEY_HEADER } from '@/lib/admin/headers';
 import { cn } from '@/lib/utils/cn';
 
 type Tab = 'authors' | 'new' | 'posts';
@@ -58,7 +59,7 @@ function clearAuth() {
 }
 
 function headers(extra: Record<string, string> = {}) {
-  return { ...extra, 'x-corner-admin-key': loadAuth() };
+  return { ...extra, [CORNER_ADMIN_KEY_HEADER]: loadAuth() };
 }
 
 function slugify(value: string) {
@@ -128,7 +129,7 @@ export default function CornerAdminClient() {
   useEffect(() => {
     const saved = loadAuth();
     if (!saved) return;
-    fetch(VERIFY_URL, { headers: { 'x-corner-admin-key': saved } })
+    fetch(VERIFY_URL, { headers: { [CORNER_ADMIN_KEY_HEADER]: saved } })
       .then((response) => {
         if (!response.ok) throw new Error();
         setAuthed(true);
@@ -145,7 +146,7 @@ export default function CornerAdminClient() {
     setAuthLoading(true);
     setAuthError('');
     try {
-      const response = await fetch(VERIFY_URL, { headers: { 'x-corner-admin-key': password } });
+      const response = await fetch(VERIFY_URL, { headers: { [CORNER_ADMIN_KEY_HEADER]: password } });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) {
         if (response.status === 503) throw new Error('Köşe admin şifresi tanımlı değil. CORNER_ADMIN_PASSWORD env değerini ekleyin.');

@@ -272,7 +272,6 @@ function getAdminHeaders(extra: Record<string, string> = {}): Record<string, str
   return {
     ...extra,
     'x-admin-key': current.password,
-    'x-admin-email': current.email,
     'x-admin-password': current.password,
   };
 }

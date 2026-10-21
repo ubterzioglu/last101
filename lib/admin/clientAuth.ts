@@ -1,5 +1,7 @@
 'use client';
 
+import { ADMIN_KEY_HEADER, ADMIN_PASSWORD_HEADER } from '@/lib/admin/headers';
+
 const ADMIN_AUTH_STORAGE_KEY = 'dad_admin_auth_v1';
 
 /** Emitted on login/logout so same-tab listeners (e.g. the admin shell) can react. */
@@ -46,16 +48,15 @@ export function getAdminHeaders(extra: Record<string, string> = {}): Record<stri
   const current = loadAdminAuth();
   return {
     ...extra,
-    'x-admin-key': current.password,
-    'x-admin-email': current.email,
-    'x-admin-password': current.password,
+    [ADMIN_KEY_HEADER]: current.password,
+    [ADMIN_PASSWORD_HEADER]: current.password,
   };
 }
 
 export async function verifyAdminKey(password: string): Promise<true> {
   const response = await fetch('/api/admin-auth-verify', {
     method: 'GET',
-    headers: { Accept: 'application/json', 'x-admin-key': String(password || '').trim() },
+    headers: { Accept: 'application/json', [ADMIN_KEY_HEADER]: String(password || '').trim() },
   });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import MarkdownPreview from '@/components/MarkdownPreview';
+import { CORNER_AUTHOR_KEY_HEADER } from '@/lib/admin/headers';
 import { cn } from '@/lib/utils/cn';
 import { AuthSplitLayout } from '@/components/auth/AuthSplitLayout';
 
@@ -59,7 +60,7 @@ function clearPassword(slug: string) {
 }
 
 function headers(slug: string, extra: Record<string, string> = {}) {
-  return { ...extra, 'x-corner-author-key': loadPassword(slug) };
+  return { ...extra, [CORNER_AUTHOR_KEY_HEADER]: loadPassword(slug) };
 }
 
 function formatDate(value: string | null) {
@@ -123,7 +124,7 @@ export default function CornerAuthorPanelClient({ slug, mode }: Props) {
     setError('');
     try {
       const response = await fetch(`/api/corner-author-verify?slug=${encodeURIComponent(slug)}`, {
-        headers: { 'x-corner-author-key': password },
+        headers: { [CORNER_AUTHOR_KEY_HEADER]: password },
       });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(response.status === 401 ? 'Şifre hatalı.' : String(payload?.error || 'Giriş başarısız.'));
