@@ -27,6 +27,8 @@
 - **B2.1** Küçük `any`'ler: `participant-admin-*` route'ları, `FounderSubmissionsAdminSection`, `lib/public-news.ts`, `founder-submissions`, `devuser/list` (≈20 adet). Tipler `types/` altına.
 - **B2.2** `SoftwareHubAdminClient.tsx` (1574 satır, 48 `any`) — önce yalnızca veri tipleri (`types/software-hub.ts`) ve `any` → gerçek tip; yapı bölünmez.
 - **B2.3** 5 `react-hooks/exhaustive-deps` disable'ı: `DisadClient`, `DuClient` ×2, `ProfileEditClient`, `SoftwareHubAdminClient`. Her biri `useCallback`/bağımlılıkla; davranış (gereksiz yeniden fetch) elle kontrol.
+  - Durum: `DuClient`'in ikisi kaldırıldı (Enter ile çift gönderim hatası da düzeltildi). `DisadClient` ve `ProfileEditClient` bilinçli "yalnızca mount" efektleri; açıklamalı disable olarak kaldı (B2.4). `SoftwareHubAdminClient` B2.2'den sonra.
+- **B2.4** `eslint-plugin-react-hooks` v7'ye yükseltme (`eslint-config-next` 5.2.0 getiriyor; v7 React 19.2 `useEffectEvent`'i tanır). Ayrı batch çünkü v7 yeni kurallar (compiler kuralları) getirir; önce yeni uyarıların sayımı, sonra kalan mount-only disable'ların `useEffectEvent`'e çevrilmesi.
 
 ### B3 — Admin istemci tekrarı (Aşama 5), pilot-önce
 - **B3.1** `hooks/useAdminResource.ts` (liste yükle, filtre, mesaj/hata, action fetch, yükleniyor durumu; `lib/admin/clientAuth.ts getAdminHeaders` kullanır) + test. Henüz hiçbir bileşen geçmez.

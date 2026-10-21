@@ -800,6 +800,8 @@ export function ProfileEditClient() {
     }
 
     loadProfile();
+    // Bilinçli: profil yalnızca ilk açılışta yüklenir. eslint-plugin-react-hooks v7'ye geçildiğinde
+    // useEffectEvent ile disable'sız yazılabilir (bkz. docs/plans/clean-code-batches.md B2.4).
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

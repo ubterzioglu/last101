@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { DevUserShell } from '@/components/devuser/DevUserShell';
 import { getDevUserClient } from '@/lib/supabase/devuser';
 import { cn } from '@/lib/utils/cn';
@@ -343,6 +343,8 @@ export function DuClient() {
   const [infoOpen, setInfoOpen] = useState(false);
   const [conditionals, setConditionals] = useState<Record<string, boolean>>({});
   const formRef = useRef<HTMLFormElement>(null);
+  // isSubmitting state'i bir sonraki render'a kadar güncellenmez; art arda iki gönderimi bu ref engeller.
+  const submittingRef = useRef(false);
   const stepRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
   // Load registered user count
@@ -386,6 +388,9 @@ export function DuClient() {
   }, [currentStep, infoOpen]);
 
   // Enter key navigation
+  // Bağımlılık dizisi bilerek yok: dinleyici her render'da güncel handleChangeStep/handleSubmit ile
+  // yeniden bağlanır. (Eskiden yalnızca adım değişince yenileniyordu; Enter ile gönderimde bayat
+  // isSubmitting okunuyor ve gönderim sürerken tekrar Enter çift gönderime yol açabiliyordu.)
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Enter' && (e.target as HTMLElement).tagName !== 'TEXTAREA') {
@@ -399,8 +404,7 @@ export function DuClient() {
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStep]);
+  });
 
   function fitActiveStepToViewport() {
     const active = document.querySelector('.step-container.active') as HTMLElement | null;
@@ -529,14 +533,13 @@ export function DuClient() {
     return true;
   }
 
-  const handleChangeStep = useCallback((direction: number) => {
+  function handleChangeStep(direction: number) {
     if (direction === 1 && !validateCurrentStep()) return;
     setCurrentStep((prev) => {
       const next = Math.min(Math.max(prev + direction, 1), TOTAL_STEPS);
       return next;
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStep]);
+  }
 
   function toggleConditional(fieldId: string, show: boolean) {
     setConditionals((prev) => ({ ...prev, [fieldId]: show }));
@@ -554,7 +557,7 @@ export function DuClient() {
   }
 
   async function handleSubmit() {
-    if (isSubmitting) return;
+    if (isSubmitting || submittingRef.current) return;
     if (!validateCurrentStep()) return;
     if (!formRef.current) return;
 
@@ -568,6 +571,7 @@ export function DuClient() {
     if (!password) { alert('Lütfen şifrenizi girin.'); return; }
     if (password.length < 6) { alert('Şifre en az 6 karakter olmalıdır.'); return; }
 
+    submittingRef.current = true;
     setIsSubmitting(true);
 
     try {
@@ -638,6 +642,7 @@ export function DuClient() {
     } catch (error) {
       alert('Bir hata oluştu: ' + getReadableSubmitError(error));
     } finally {
+      submittingRef.current = false;
       setIsSubmitting(false);
     }
   }

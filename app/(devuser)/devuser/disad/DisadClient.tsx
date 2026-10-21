@@ -150,6 +150,8 @@ export default function DisadClient() {
     setAdminKey(saved);
     setLoggedIn(true);
     loadRows(saved, '').catch(() => { logout(); });
+    // Bilinçli: kayıtlı oturum yalnızca ilk açılışta geri yüklenir. eslint-plugin-react-hooks v7'ye
+    // geçildiğinde useEffectEvent ile disable'sız yazılabilir (bkz. docs/plans/clean-code-batches.md B2.4).
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
