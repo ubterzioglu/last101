@@ -42,8 +42,8 @@ export default async function HomePage() {
         title="Almanya'da Yaşam ve İş İçin Türkçe Rehber"
         description={DEFAULT_META_DESCRIPTION}
         url={HOME_PAGE_URL}
-        datePublished="2024-06-01"
-        dateModified="2026-04-19"
+        datePublished="2026-01-01"
+        dateModified="2026-10-21"
       />
       <BreadcrumbJsonLd items={[{ name: 'Ana Sayfa', url: HOME_PAGE_URL }]} />
       <FaqJsonLd items={HOMEPAGE_FAQ_ITEMS} />

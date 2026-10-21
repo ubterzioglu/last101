@@ -7,8 +7,8 @@ export function HomeFooterNote() {
     <>
       <Container className="py-6">
         <p className="text-sm text-muted">
-          Yayın tarihi: <time dateTime="2024-06-01">Haziran 2024</time> &middot; Son güncelleme:{' '}
-          <time dateTime="2026-06-15">Haziran 2026</time>
+          Yayın tarihi: <time dateTime="2026-01-01">Ocak 2026</time> &middot; Son güncelleme:{' '}
+          <time dateTime="2026-10-21">Ekim 2026</time>
         </p>
       </Container>
       <a

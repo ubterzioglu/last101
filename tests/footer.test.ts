@@ -17,15 +17,15 @@ const legalLinks = [
   ['/impressum', 'Impressum'],
 ] as const;
 
-const partnerLinks = [
-  ['https://www.spindorai.com', 'Seo Aracı', 've Seo Hizmetleri Spindora'],
-  ['https://www.corteqs.net', 'Corteqs', 'Diasporayı Birleştiren Platform'],
-  ['https://chatio.com.tr/', 'Canlı Destek Yazılımı', ''],
-  ['https://www.spindorai.com/seo/en-iyi-seo-ajansi', 'Seo Ajansı', 'Spindora Tarafından Seosu Yapılmıştır.'],
-  ['https://tekhurdametal.com/istanbul-hurdaci/', 'İstanbul Hurdacı', 'Firması Tek Hurda Metal A.Ş'],
-  ['https://lionerotik.com/urunler/fetis-urunleri', 'Antalya Seks Shop', 'Lion Erotik'],
-  ['https://ufuksoynakliyat.com.tr', 'Evden Eve Nakliyat', 'Şirketi Ufuksoy Nakliyat A.Ş'],
-  ['https://dragomanseakayak.com', 'Deniz Kayağı Turları', 'Şirketi Dragoman Sea Kayak & Outdoors'],
+// Removed SEO partner links: none of these may come back.
+const removedPartnerLinks = [
+  ['spindorai.com', 'Spindora'],
+  ['corteqs.net', 'Diasporayı Birleştiren Platform'],
+  ['chatio.com.tr', 'Canlı Destek Yazılımı'],
+  ['tekhurdametal.com', 'Hurda'],
+  ['lionerotik.com', 'Erotik'],
+  ['ufuksoynakliyat.com.tr', 'Nakliyat'],
+  ['dragomanseakayak.com', 'Sea Kayak'],
 ] as const;
 
 function renderFooter() {
@@ -52,31 +52,21 @@ describe('Footer', () => {
     }
   });
 
-  it('renders every partner link with the same href, anchor text and description', () => {
-    const { $ } = renderFooter();
+  it('renders none of the removed SEO partner links', () => {
+    const { html, $ } = renderFooter();
     const footerText = $('footer').text();
 
-    for (const [href, label, description] of partnerLinks) {
-      const link = $(`footer a[href="${href}"]`);
-      expect(link, href).toHaveLength(1);
-      expect(link.text()).toBe(label);
-      expect(footerText).toContain(description);
+    for (const [domain, text] of removedPartnerLinks) {
+      expect(html, domain).not.toContain(domain);
+      expect(footerText, text).not.toContain(text);
     }
   });
 
-  it('opens partner links in a new tab with a valid, followed rel', () => {
-    const { html, $ } = renderFooter();
+  it('links only to internal pages', () => {
+    const { $ } = renderFooter();
+    const external = $('footer a[href^="http"], footer a[target="_blank"]');
 
-    expect(html).not.toContain('dofollow');
-
-    for (const [href] of partnerLinks) {
-      const link = $(`footer a[href="${href}"]`);
-      const rel = (link.attr('rel') ?? '').split(/\s+/);
-
-      expect(link.attr('target'), href).toBe('_blank');
-      expect(rel, href).toContain('noopener');
-      expect(rel, href).not.toContain('nofollow');
-    }
+    expect(external).toHaveLength(0);
   });
 
   it('shows the copyright line for the current year', () => {
@@ -93,7 +83,6 @@ describe('Footer', () => {
 
     expect(html).not.toContain('text-[8px]');
     expect(arbitraryPixelSizes.every((size) => size >= 12)).toBe(true);
-    expect(html).toMatch(/\btext-xs\b/);
     expect(html).toMatch(/\btext-sm\b/);
   });
 

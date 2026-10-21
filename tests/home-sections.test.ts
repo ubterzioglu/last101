@@ -279,8 +279,8 @@ describe('HomePage', () => {
 
     expect(webPage).toMatchObject({
       name: "Almanya'da Yaşam ve İş İçin Türkçe Rehber",
-      datePublished: '2024-06-01',
-      dateModified: '2026-04-19',
+      datePublished: '2026-01-01',
+      dateModified: '2026-10-21',
     });
     expect(breadcrumb.itemListElement).toEqual([
       expect.objectContaining({ position: 1, name: 'Ana Sayfa' }),
@@ -355,9 +355,9 @@ describe('HomePage', () => {
     const $ = await renderHomePage();
     const backToTop = $('a[aria-label="Yukarı git"]');
 
-    expect($.root().text()).toContain('Yayın tarihi: Haziran 2024 · Son güncelleme: Haziran 2026');
-    expect($('time[datetime="2024-06-01"]')).toHaveLength(1);
-    expect($('time[datetime="2026-06-15"]')).toHaveLength(1);
+    expect($.root().text()).toContain('Yayın tarihi: Ocak 2026 · Son güncelleme: Ekim 2026');
+    expect($('time[datetime="2026-01-01"]')).toHaveLength(1);
+    expect($('time[datetime="2026-10-21"]')).toHaveLength(1);
     expect(backToTop.attr('href')).toBe('#');
     expect((backToTop.attr('class') ?? '').split(/\s+/)).toEqual(
       expect.arrayContaining(['fixed', 'rounded-full', 'border-line', 'bg-white', 'shadow-float'])
