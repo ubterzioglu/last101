@@ -1,6 +1,10 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolHero } from '@/components/tools/ToolHero';
+import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
+import { ToolFaq } from '@/components/tools/ToolFaq';
 import SigortaClient from './SigortaClient';
+import { INSURANCE_TYPES, QUESTIONS } from './data';
 import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
@@ -32,6 +36,23 @@ const FAQ_ITEMS = [
   },
 ];
 
+const INTRO = '20 soruda Almanya için sigortalarınızı önceliklendirin.';
+
+const STATS = [
+  { value: String(QUESTIONS.length), label: 'soru' },
+  { value: String(Object.keys(INSURANCE_TYPES).length), label: 'sigorta türü' },
+  { value: '3', label: 'öncelik grubu' },
+];
+
+const HOW_IT_WORKS = [
+  'Bu araç 20 soruyla sigortalarınızı önceliklendirir.',
+  'Sonuçlar bilgilendirme amaçlıdır.',
+  'Sözleşme öncesi kapsam ve şartları kontrol edin.',
+];
+
+const WHY =
+  "Almanya'da yaşamak, doğru sigortaları seçmeyi neredeyse zorunlu kılar. Sağlık sigortası yasal olarak zorunlu, ancak bunun yanı sıra kira sigortası, kişisel sorumluluk sigortası (Haftpflicht), araç sigortası, iş göremezlik sigortası ve daha pek çok seçenek var. Hangilerini almanın şart, hangilerinin tavsiye edilebilir, hangilerinin opsiyonel olduğu ise yaşam durumuna ve önceliklerine göre değişir. Bu araç, birkaç soruyla senin için önemli olan sigortaları öncelik sırasıyla listeler.";
+
 export default function SigortaSecimPage() {
   const pageUrl = new URL('/sigorta-secim', SITE_URL).toString();
 
@@ -49,28 +70,16 @@ export default function SigortaSecimPage() {
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
-      <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <SigortaClient />
-
-        <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
-          <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">
-            Sıkça Sorulan Sorular
-          </h2>
-          <div className="mt-6 space-y-4">
-            {FAQ_ITEMS.map((item) => (
-              <details
-                key={item.question}
-                className="group rounded-xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <summary className="cursor-pointer list-none text-lg font-semibold text-white">
-                  {item.question}
-                </summary>
-                <p className="mt-3 leading-7 text-white/75">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      </div>
+      <ToolHero
+        title="Sigorta Seçim Aracı"
+        intro={INTRO}
+        stats={STATS}
+        howItWorksTitle="Nasıl Çalışır?"
+        howItWorks={HOW_IT_WORKS}
+      />
+      <SigortaClient />
+      <ToolInfoBand why={WHY} />
+      <ToolFaq name="sigorta-secim-sss" items={FAQ_ITEMS} />
     </>
   );
 }

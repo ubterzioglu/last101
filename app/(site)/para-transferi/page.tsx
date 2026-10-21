@@ -1,6 +1,11 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
 import { TransferSelector } from '@/components/para-transferi/transfer-selector';
+import { ToolHero } from '@/components/tools/ToolHero';
+import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
+import { ToolFaq } from '@/components/tools/ToolFaq';
+import { QUESTIONS } from '@/constants/para-transferi/questions';
+import { TRANSFER_SYSTEMS } from '@/constants/para-transferi/systems';
 import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
@@ -32,6 +37,24 @@ const FAQ_ITEMS = [
   },
 ];
 
+const INTRO =
+  "Almanya'dan Türkiye'ye para transferi için en uygun aracı bulun. Düşük komisyon, hızlı transfer ve güvenilir seçenekler.";
+
+const STATS = [
+  { value: String(QUESTIONS.length), label: 'soru' },
+  { value: String(TRANSFER_SYSTEMS.length), label: 'sistem' },
+  { value: '3', label: 'öneri' },
+];
+
+const HOW_IT_WORKS = [
+  'Bu araç 20 soruyla size en uygun para transferi yöntemini önerir.',
+  'Sonuçlar yönlendirme amaçlıdır; son kararınızı vermeden önce sağlayıcının güncel şartlarını kontrol edin.',
+  'Ücretler (kur farkı + sabit ücret), teslim süresi, kimlik doğrulama ve limitler sağlayıcıya göre değişir.',
+];
+
+const WHY =
+  "Almanya'dan Türkiye'ye ya da başka ülkelere para gönderirken banka havalesi çoğu zaman yetersiz kalır: komisyon oranları yüksek, döviz kurları banka lehine. Wise, Remitly, Western Union ve benzeri platformlar çok daha uygun koşullar sunabiliyor; ancak hangisinin senin için avantajlı olduğu transfer miktarına, sıklığına ve hedef ülkeye göre değişiyor. Bu araç, birkaç basit soruyla ihtiyacına en uygun para transfer servisini belirler ve gereksiz komisyon kaybını önlemene yardım eder.";
+
 export default function ParaTransferiPage() {
   const pageUrl = new URL('/para-transferi', SITE_URL).toString();
 
@@ -49,28 +72,16 @@ export default function ParaTransferiPage() {
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
-      <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <TransferSelector />
-
-        <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
-          <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">
-            Sıkça Sorulan Sorular
-          </h2>
-          <div className="mt-6 space-y-4">
-            {FAQ_ITEMS.map((item) => (
-              <details
-                key={item.question}
-                className="group rounded-xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <summary className="cursor-pointer list-none text-lg font-semibold text-white">
-                  {item.question}
-                </summary>
-                <p className="mt-3 leading-7 text-white/75">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      </div>
+      <ToolHero
+        title="Para Transferi Seçim Aracı"
+        intro={INTRO}
+        stats={STATS}
+        howItWorksTitle="Nasıl Çalışır?"
+        howItWorks={HOW_IT_WORKS}
+      />
+      <TransferSelector />
+      <ToolInfoBand why={WHY} />
+      <ToolFaq name="para-transferi-sss" items={FAQ_ITEMS} />
     </>
   );
 }

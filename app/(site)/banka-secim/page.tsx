@@ -1,6 +1,10 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolHero } from '@/components/tools/ToolHero';
+import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
+import { ToolFaq } from '@/components/tools/ToolFaq';
 import BankaClient from './BankaClient';
+import { BANKS, QUESTIONS } from './data';
 import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
@@ -32,6 +36,25 @@ const FAQ_ITEMS = [
   },
 ];
 
+const INTRO =
+  '20 soruda Almanya için en uygun bankayı bulun. Dijital banka, direkt banka, yerel banka veya yatırım odaklı seçenekler.';
+
+const STATS = [
+  { value: String(QUESTIONS.length), label: 'soru' },
+  { value: String(BANKS.length), label: 'banka' },
+  { value: '3', label: 'öneri' },
+];
+
+const HOW_IT_WORKS = [
+  'Bu araç 20 soruyla size en uygun bankacılık profilini önerir.',
+  'Sonuçlar yönlendirme amaçlıdır.',
+  'Son kararınızı vermeden önce bankanın güncel şartlarını kontrol edin.',
+  'Ücretler, kart koşulları, şube erişimi ve müşteri hizmetleri bankaya göre değişebilir.',
+];
+
+const WHY =
+  "Almanya'da banka seçmek göründüğü kadar basit değil. N26, Revolut gibi tam dijital bankalar; DKB, ING gibi direkt bankalar; Sparkasse, Volksbank gibi şubeli yerel bankalar; Trade Republic gibi yatırım odaklı platformlar… Hangisinin sana uygun olduğu, günlük alışkanlıklarına, yatırım ihtiyacına, şube gereksinimlerine ve expat statüne göre değişir. Bu araç, 20 kısa soruyla profilini çıkarır ve sana en uygun banka kategorisini somut gerekçelerle önerir.";
+
 export default function BankaSecimPage() {
   const pageUrl = new URL('/banka-secim', SITE_URL).toString();
 
@@ -49,28 +72,16 @@ export default function BankaSecimPage() {
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
-      <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <BankaClient />
-
-        <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
-          <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">
-            Sıkça Sorulan Sorular
-          </h2>
-          <div className="mt-6 space-y-4">
-            {FAQ_ITEMS.map((item) => (
-              <details
-                key={item.question}
-                className="group rounded-xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <summary className="cursor-pointer list-none text-lg font-semibold text-white">
-                  {item.question}
-                </summary>
-                <p className="mt-3 leading-7 text-white/75">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      </div>
+      <ToolHero
+        title="Banka Seçim Aracı"
+        intro={INTRO}
+        stats={STATS}
+        howItWorksTitle="Nasıl Çalışır?"
+        howItWorks={HOW_IT_WORKS}
+      />
+      <BankaClient />
+      <ToolInfoBand why={WHY} />
+      <ToolFaq name="banka-secim-sss" items={FAQ_ITEMS} />
     </>
   );
 }

@@ -17,7 +17,8 @@ test.describe('Banka Seçim Aracı', () => {
     await page.goto('/banka-secim');
     await expect(page).not.toHaveURL(/\/giris/);
 
-    await expect(page.getByRole('heading', { name: 'Banka Seçim Aracı' })).toBeVisible();
+    // level 1: the FAQ question "Almanya banka seçim aracı nasıl çalışır?" is an h3.
+    await expect(page.getByRole('heading', { level: 1, name: 'Banka Seçim Aracı' })).toBeVisible();
     await expect(page.getByText(`Soru 1 / ${TOTAL_QUESTIONS}`)).toBeVisible();
     // İlk soruda "Geri" pasif.
     await expect(page.getByRole('button', { name: /Geri/ })).toBeDisabled();
@@ -62,7 +63,7 @@ test.describe('Banka Seçim Aracı', () => {
     }
     await expect(page.getByRole('heading', { name: 'Sonuç', exact: true })).toBeVisible();
 
-    // Sonuç ekranındaki Sıfırla butonu (turuncu).
+    // Sonuç ekranındaki Sıfırla butonu.
     await page.getByRole('button', { name: 'Sıfırla' }).click();
     await expect(page.getByText('Soru 1 / 20')).toBeVisible();
   });
@@ -70,12 +71,12 @@ test.describe('Banka Seçim Aracı', () => {
 
 /**
  * The first answer option inside the question card. Options are buttons whose
- * first child is the bold label; we scope to the yellow question card to avoid
+ * first child is the bold label; we scope to the question card to avoid
  * matching nav/info buttons.
  */
 function firstOption(page: import('@playwright/test').Page) {
   return page
-    .locator('div.border-google-yellow')
+    .getByTestId('tool-question-card')
     .getByRole('button')
     .first();
 }

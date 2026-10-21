@@ -12,8 +12,8 @@ import { test, expect } from '@playwright/test';
  */
 
 function questionOption(page: import('@playwright/test').Page) {
-  // Question option buttons live in the yellow question card.
-  return page.locator('div.border-google-yellow').getByRole('button').first();
+  // Question option buttons live in the question card.
+  return page.getByTestId('tool-question-card').getByRole('button').first();
 }
 
 test.describe('Para Transferi Seçim Aracı', () => {
@@ -21,7 +21,8 @@ test.describe('Para Transferi Seçim Aracı', () => {
     await page.goto('/para-transferi');
     await expect(page).not.toHaveURL(/\/giris/);
 
-    await expect(page.getByRole('heading', { name: 'Para Transferi Seçim Aracı' })).toBeVisible();
+    // level 1: the FAQ question "Para transferi seçim aracı nasıl çalışır?" is an h3.
+    await expect(page.getByRole('heading', { level: 1, name: 'Para Transferi Seçim Aracı' })).toBeVisible();
     await expect(page.getByRole('heading', { name: /Gönderim yönü hangisi/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /Almanya → Türkiye/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /^Geri$/ })).toBeDisabled();

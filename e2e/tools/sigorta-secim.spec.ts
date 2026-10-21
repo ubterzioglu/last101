@@ -14,7 +14,7 @@ import { test, expect } from '@playwright/test';
 const TOTAL_QUESTIONS = 20;
 
 function firstOption(page: import('@playwright/test').Page) {
-  return page.locator('div.border-google-yellow').getByRole('button').first();
+  return page.getByTestId('tool-question-card').getByRole('button').first();
 }
 
 test.describe('Sigorta Seçim Aracı', () => {
@@ -22,7 +22,8 @@ test.describe('Sigorta Seçim Aracı', () => {
     await page.goto('/sigorta-secim');
     await expect(page).not.toHaveURL(/\/giris/);
 
-    await expect(page.getByRole('heading', { name: 'Sigorta Seçim Aracı' })).toBeVisible();
+    // level 1: the FAQ question "Almanya sigorta seçim aracı nasıl çalışır?" is an h3.
+    await expect(page.getByRole('heading', { level: 1, name: 'Sigorta Seçim Aracı' })).toBeVisible();
     await expect(page.getByText(`Soru 1 / ${TOTAL_QUESTIONS}`)).toBeVisible();
     await expect(page.getByRole('button', { name: /Geri/ })).toBeDisabled();
   });

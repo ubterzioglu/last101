@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
  */
 
 function questionOption(page: import('@playwright/test').Page) {
-  return page.locator('div.border-google-yellow').getByRole('button').first();
+  return page.getByTestId('tool-question-card').getByRole('button').first();
 }
 
 test.describe('Vize Seçim Aracı', () => {

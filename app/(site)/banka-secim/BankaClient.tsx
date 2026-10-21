@@ -1,22 +1,24 @@
 'use client';
 
 import { useState, useCallback, useMemo } from 'react';
-import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import { PROFILES, BANKS, QUESTIONS } from './data';
 import { BankRecommendation } from './types';
-import { cn } from '@/lib/utils/cn';
+import { BankaResults } from './BankaResults';
+import { Button } from '@/components/ui/Button';
+import { ToolPanel } from '@/components/tools/ToolPanel';
+import { ToolProgress } from '@/components/tools/ToolProgress';
+import { ToolQuestionCard } from '@/components/tools/ToolQuestionCard';
+import { ToolOption } from '@/components/tools/ToolOption';
 
 export default function BankaClient() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResult, setShowResult] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [showInfo, setShowInfo] = useState(false);
-  const [showWhy, setShowWhy] = useState(false);
 
   const question = QUESTIONS[currentQuestion];
   const totalQuestions = QUESTIONS.length;
-  const progress = ((currentQuestion + 1) / totalQuestions) * 100;
 
   // Skorları hesapla
   const scores = useMemo(() => {
@@ -179,166 +181,54 @@ export default function BankaClient() {
     return out;
   };
 
+  if (showResult) {
+    return (
+      <BankaResults
+        recommendations={recommendations}
+        copied={copied}
+        onReset={handleReset}
+        onCopy={handleCopy}
+      />
+    );
+  }
+
   return (
-    <div className="space-y-2">
-      {/* Başlık */}
-      <div className="bg-white rounded-xl border-2 border-google-blue px-4 py-3">
-        <h1 className="text-2xl font-bold leading-tight">Banka Seçim Aracı</h1>
-      </div>
+    <ToolPanel>
+      <ToolProgress current={currentQuestion + 1} total={totalQuestions} onReset={handleReset} />
 
-      {/* Nasıl Çalışır? */}
-      <div
-        className="bg-white rounded-xl border-2 border-google-blue overflow-hidden cursor-pointer select-none"
-        onClick={() => setShowInfo(!showInfo)}
-      >
-        <div className="flex items-center justify-between px-4 py-3">
-          <span className="font-semibold text-gray-900">Nasıl Çalışır?</span>
-          <span className={cn("text-google-blue text-xl transition-transform duration-200", showInfo && "rotate-180")}>▾</span>
-        </div>
-        {showInfo && (
-          <div className="px-4 pb-4 bg-blue-50 border-t border-blue-200">
-            <ul className="space-y-2 text-sm text-blue-800 pt-3">
-              <li>• Bu araç 20 soruyla size en uygun bankacılık profilini önerir.</li>
-              <li>• Sonuçlar yönlendirme amaçlıdır.</li>
-              <li>• Son kararınızı vermeden önce bankanın güncel şartlarını kontrol edin.</li>
-              <li>• Ücretler, kart koşulları, şube erişimi ve müşteri hizmetleri bankaya göre değişebilir.</li>
-            </ul>
-          </div>
-        )}
-      </div>
-
-      {/* Bu araç neden var? */}
-      <div
-        className="bg-white rounded-xl border-2 border-google-green overflow-hidden cursor-pointer select-none"
-        onClick={() => setShowWhy(!showWhy)}
-      >
-        <div className="flex items-center justify-between px-4 py-3">
-          <span className="font-semibold text-gray-900">Bu araç neden var?</span>
-          <span className={cn("text-google-green text-xl transition-transform duration-200", showWhy && "rotate-180")}>▾</span>
-        </div>
-        {showWhy && (
-          <div className="px-4 pb-4 bg-green-50 border-t border-green-200">
-            <p className="text-sm text-green-900 pt-3 leading-relaxed">
-              Almanya'da banka seçmek göründüğü kadar basit değil. N26, Revolut gibi tam dijital bankalar; DKB, ING gibi direkt bankalar; Sparkasse, Volksbank gibi şubeli yerel bankalar; Trade Republic gibi yatırım odaklı platformlar… Hangisinin sana uygun olduğu, günlük alışkanlıklarına, yatırım ihtiyacına, şube gereksinimlerine ve expat statüne göre değişir. Bu araç, 20 kısa soruyla profilini çıkarır ve sana en uygun banka kategorisini somut gerekçelerle önerir.
-            </p>
-          </div>
-        )}
-      </div>
-
-      {!showResult && (
-        <div className="bg-white rounded-xl border-2 border-google-red px-4 py-3">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-google-red">Soru {currentQuestion + 1} / {totalQuestions}</span>
-            <button onClick={handleReset} className="text-sm text-google-red hover:opacity-75 flex items-center gap-1">
-              Sıfırla
-            </button>
-          </div>
-          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-google-red transition-all duration-300" style={{ width: `${progress}%` }} />
-          </div>
-        </div>
-      )}
-
-      {/* Question Card */}
-      {!showResult && (
-        <div className="bg-white rounded-xl border-2 border-google-yellow p-5">
-          <div className="text-google-blue text-xs font-semibold uppercase tracking-widest mb-1">
-            {question.category}
-          </div>
-          <h2 className="text-gray-900 font-bold text-lg leading-tight mb-1">{question.title}</h2>
-          <p className="text-gray-500 text-sm mb-4">{question.desc}</p>
-
-          <div className="space-y-2">
-            {question.options.map((option) => (
-              <button
-                key={option.key}
-                onClick={() => handleAnswer(option.key)}
-                className={cn(
-                  'w-full p-4 rounded-lg border-2 text-left transition-all',
-                  answers[question.id] === option.key
-                    ? 'border-google-blue bg-blue-100'
-                    : 'border-google-blue/30 bg-blue-50/60 hover:bg-blue-100/80 hover:border-google-blue'
-                )}
-              >
-                <div className="font-semibold text-sm text-gray-900">{option.label}</div>
-                <div className="text-xs text-gray-500 mt-0.5">{option.desc}</div>
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-            <button
-              onClick={handleBack}
-              disabled={currentQuestion === 0}
-              className="text-sm text-gray-400 hover:text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors font-medium"
+      <ToolQuestionCard category={question.category} title={question.title} description={question.desc}>
+        <div className="space-y-2">
+          {question.options.map((option) => (
+            <ToolOption
+              key={option.key}
+              selected={answers[question.id] === option.key}
+              onClick={() => handleAnswer(option.key)}
+              description={option.desc}
             >
-              ← Geri
-            </button>
-            <span className="text-xs text-gray-400">Seçince otomatik ilerler</span>
-          </div>
-        </div>
-      )}
-
-      {/* Result */}
-      {showResult && (
-        <>
-          <div className="bg-white rounded-xl border-2 border-google-red px-4 py-3">
-            <h2 className="text-gray-900 font-bold text-2xl mb-0.5">Sonuç</h2>
-            <p className="text-gray-500 text-sm">Cevaplarına göre en uygun bankacılık profilleri</p>
-          </div>
-
-          {recommendations.map((rec, idx) => (
-            <div
-              key={rec.bank.id}
-              className={cn(
-                'bg-white rounded-xl border-2 p-5',
-                idx === 0 ? 'border-google-yellow' :
-                idx === 1 ? 'border-google-blue' : 'border-google-green'
-              )}
-            >
-              <h3 className="text-lg font-bold mb-2">
-                {rec.rank} - {rec.bank.name} - {idx === 0 ? 'Ana Öneri' : idx === 1 ? 'Alternatif' : 'Üçüncü Seçenek'}
-              </h3>
-
-              {rec.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-2">
-                  {rec.tags.map((tag, i) => (
-                    <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">{tag}</span>
-                  ))}
-                </div>
-              )}
-
-              <p className="text-sm font-semibold text-gray-700 mb-2">
-                Uygunluk Skoru: <span className="text-google-green">{Math.round(rec.bank.score)}</span>
-              </p>
-
-              <div className="bg-gray-50 rounded-lg p-3">
-                <p className="text-xs font-semibold text-gray-500 mb-1.5">Neden bu banka?</p>
-                <ul className="space-y-1">
-                  {rec.bullets.slice(0, idx === 0 ? 5 : 2).map((b, i) => (
-                    <li key={i} className="text-sm text-gray-700 flex gap-2">
-                      <span className="text-gray-400 shrink-0">•</span>{b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+              {option.label}
+            </ToolOption>
           ))}
+        </div>
 
-          <button onClick={handleReset} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-orange bg-google-orange text-white font-semibold py-3 hover:opacity-90 transition-opacity">
-            Sıfırla
+        <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
+          <button
+            type="button"
+            onClick={handleBack}
+            disabled={currentQuestion === 0}
+            className="-ml-2 inline-flex min-h-[44px] items-center gap-1.5 rounded-btn px-2 text-sm font-semibold text-ink transition-colors hover:text-brand-700 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-ink"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            Geri
           </button>
-          <button onClick={handleCopy} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-blue bg-google-blue text-white font-semibold py-3 hover:opacity-90 transition-opacity">
-            {copied ? 'Kopyalandı!' : 'Sonucu Kopyala'}
-          </button>
-          <Link href="/" className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
-            Ana Sayfaya Dön
-          </Link>
-        </>
-      )}
-      <Link href="/" className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-google-yellow bg-google-yellow text-white font-semibold py-3 hover:opacity-90 transition-opacity">
-        Ana Sayfaya Dön
-      </Link>
-    </div>
+          <span className="text-xs text-muted">Seçince otomatik ilerler</span>
+        </div>
+      </ToolQuestionCard>
+
+      <div className="flex justify-end">
+        <Button href="/" variant="outline">
+          Ana Sayfaya Dön
+        </Button>
+      </div>
+    </ToolPanel>
   );
 }
