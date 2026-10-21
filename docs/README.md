@@ -27,3 +27,5 @@ Bu belgeler öneri ve yapılacak işlerdir; tamamlanmış özellik listesi olara
 - [Devir notları](./handovers/) — yazıldıkları oturumun ve tarihin çalışma durumunu yansıtır.
 - [Superpowers planları ve tasarımları](./superpowers/) — tarihli tasarım kayıtlarıdır.
 - [Yayımlanmış dosya güvenliği kaydı](./security/public-files-2026-10-21.md) — parola listesi ve örnek ortam dosyası için durum ve kalan erişim işlemleri.
+- [Veritabanı güvenlik denetimi](./security/db-audit-2026-10-21.md) — RLS, rol yetkileri ve PostgREST yüzeyi için kanıta dayalı bulgular; düzeltmeler henüz uygulanmadı.
+- [Kabul edilen npm audit riskleri](./security/npm-audit-accepted-risks.md) — kapatılamayan bağımlılık bulguları ve gerekçeleri (yaşayan kayıt, tarihsiz).
