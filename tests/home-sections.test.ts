@@ -129,7 +129,7 @@ describe('HomeServicesSection', () => {
   it('shows the section head with the link to all tools', () => {
     const $ = render(createElement(HomeServicesSection));
 
-    expect($('h2').text()).toBe('Yalnız değilsin!Araçlarımız ve bir sürü içerik seninle!');
+    expect($('h2').text()).toBe('Yalnız değilsin! Araçlarımız ve bir sürü içerik seninle!');
     expect($('h2 .text-brand-600').text()).toBe('Araçlarımız ve bir sürü içerik seninle!');
     expect($.root().text()).toContain('Araçlar ve içerikler');
     expect($('a[href="/almanya-araclari"]').text()).toBe('Tüm araçlar');
@@ -317,7 +317,7 @@ describe('HomePage', () => {
     const headings = $('h2').map((_, el) => $(el).text()).get();
 
     expect(headings).toEqual([
-      'Yalnız değilsin!Araçlarımız ve bir sürü içerik seninle!',
+      'Yalnız değilsin! Araçlarımız ve bir sürü içerik seninle!',
       'Almanya Haberleri Neleri Takip Etmeli?',
       "Almanya'da Düzen Kurmak İçin Nereden Başlamalı?",
       "Almanya'da Yaşam Maliyeti Ne Kadar?",

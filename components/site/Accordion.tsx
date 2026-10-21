@@ -17,6 +17,8 @@ export interface AccordionProps {
   /** Colour each title (and a small dot) with the firmascope tone rotation. */
   toneCycle?: boolean;
   defaultOpenIndex?: number;
+  /** Render titles as headings (e.g. guide cards that were h3 before). */
+  headingAs?: 'h2' | 'h3';
   className?: string;
   itemClassName?: string;
 }
@@ -30,9 +32,12 @@ export function Accordion({
   items,
   toneCycle = false,
   defaultOpenIndex,
+  headingAs,
   className,
   itemClassName,
 }: AccordionProps) {
+  const TitleTag = headingAs ?? 'span';
+
   return (
     <div className={cn('divide-y divide-line border-y border-line', className)}>
       {items.map((item, index) => {
@@ -47,7 +52,7 @@ export function Accordion({
             className={cn('group', itemClassName)}
           >
             <summary className="group/summary flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-left [&::-webkit-details-marker]:hidden">
-              <span
+              <TitleTag
                 className={cn(
                   'flex min-w-0 items-start gap-3 text-[17px] font-bold leading-snug transition-colors',
                   tone ? tone.text : 'text-ink group-hover/summary:text-brand-700'
@@ -60,7 +65,7 @@ export function Accordion({
                   />
                 ) : null}
                 <span className="min-w-0 break-words">{item.title}</span>
-              </span>
+              </TitleTag>
               <ChevronDown
                 aria-hidden="true"
                 className="h-5 w-5 shrink-0 text-muted transition-colors group-open:rotate-180 group-hover/summary:text-ink"

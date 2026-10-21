@@ -70,7 +70,10 @@ export function SectionHeader({
         >
           <span className="block">{title}</span>
           {accent ? (
-            <HeadingAccent className={cn('block', light && 'text-brand-500')}>{accent}</HeadingAccent>
+            <>
+              {' '}
+              <HeadingAccent className={cn('block', light && 'text-brand-500')}>{accent}</HeadingAccent>
+            </>
           ) : null}
         </Heading>
         {description ? (

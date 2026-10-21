@@ -16,6 +16,14 @@ function luminance(hex: string): number {
   return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
 }
 
+function mix(foreground: string, background: string, alpha: number): string {
+  const parse = (hex: string) => [0, 2, 4].map((i) => parseInt(hex.replace('#', '').slice(i, i + 2), 16));
+  const [f, b] = [parse(foreground), parse(background)];
+  return `#${f
+    .map((v, i) => Math.round(v * alpha + b[i] * (1 - alpha)).toString(16).padStart(2, '0'))
+    .join('')}`;
+}
+
 function contrast(a: string, b: string): number {
   const [light, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return (light + 0.05) / (dark + 0.05);
@@ -53,6 +61,13 @@ describe('site design tokens', () => {
     for (const [name, tone] of Object.entries(alm)) {
       expect(contrast(tone.ink, page), `${name} ink on page`).toBeGreaterThanOrEqual(AA_TEXT);
       expect(contrast(tone.ink, WHITE), `${name} ink on white`).toBeGreaterThanOrEqual(AA_TEXT);
+    }
+  });
+
+  it('keeps category text readable on its own 10% tint (chips, tags, icon tiles)', () => {
+    for (const [name, tone] of Object.entries(alm)) {
+      const tintOnPage = mix(tone.DEFAULT, page, 0.1);
+      expect(contrast(tone.ink, tintOnPage), `${name} ink on its tint`).toBeGreaterThanOrEqual(AA_TEXT);
     }
   });
 

@@ -25,12 +25,13 @@ export const SITE_COLORS = {
   },
   // Category colours: fills, tints, icons and markers only. Use `.ink` for text.
   alm: {
-    blue: { DEFAULT: '#01A3EF', ink: '#0178AF' },
-    green: { DEFAULT: '#81BD00', ink: '#557D00' },
-    orange: { DEFAULT: '#F54114', ink: '#D73209' },
-    yellow: { DEFAULT: '#FFBB00', ink: '#916B00' },
-    teal: { DEFAULT: '#13AE8F', ink: '#0E7E68' },
-    red: { DEFAULT: '#EA1F48', ink: '#E0153D' },
+    // `ink` passes AA on page, white and on the colour's own 10% tint.
+    blue: { DEFAULT: '#01A3EF', ink: '#0170A3' },
+    green: { DEFAULT: '#81BD00', ink: '#507600' },
+    orange: { DEFAULT: '#F54114', ink: '#C42D08' },
+    yellow: { DEFAULT: '#FFBB00', ink: '#8B6700' },
+    teal: { DEFAULT: '#13AE8F', ink: '#0D7662' },
+    red: { DEFAULT: '#EA1F48', ink: '#C71336' },
   },
 } as const;
 

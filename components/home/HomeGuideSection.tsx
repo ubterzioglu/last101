@@ -32,7 +32,7 @@ export function HomeGuideSection() {
           <StepList steps={GUIDE_STEPS} className="mt-8" />
         </div>
       </div>
-      <Accordion name="home-guide" toneCycle items={HOME_GUIDE_CARDS} className="mt-14" />
+      <Accordion name="home-guide" toneCycle headingAs="h3" items={HOME_GUIDE_CARDS} className="mt-14" />
     </Section>
   );
 }

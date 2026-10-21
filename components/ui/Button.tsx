@@ -13,6 +13,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   /** Appends a lucide ArrowUpRight after the label (navigational CTAs). */
   arrow?: boolean;
+  /** Open in a new tab; automatic for absolute http(s) URLs. */
+  external?: boolean;
 }
 
 const BASE_CLASSES =
@@ -52,6 +54,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       asChild: _asChild,
       href,
       arrow = false,
+      external,
       children,
       ...props
     },
@@ -66,6 +69,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </>
     );
+
+    if (href && (external ?? /^https?:\/\//.test(href))) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={classes}
+          {...pickLinkProps(props)}
+        >
+          {content}
+        </a>
+      );
+    }
 
     if (href) {
       return (

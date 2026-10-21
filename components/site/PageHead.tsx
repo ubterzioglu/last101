@@ -90,7 +90,7 @@ export function PageHead({
             <h1 className="break-words text-[clamp(2.25rem,4vw,3.5rem)] font-extrabold leading-[1.06] tracking-[-0.04em] text-ink">
               {accent ? (
                 <>
-                  <span className="block">{title}</span>
+                  <span className="block">{title}</span>{' '}
                   <HeadingAccent className="block">{accent}</HeadingAccent>
                 </>
               ) : (
