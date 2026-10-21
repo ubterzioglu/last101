@@ -19,7 +19,11 @@ describe('readProvidedKey', () => {
   });
 
   it('returns an empty string when nothing is provided', () => {
-    expect(readProvidedKey(headersOf({ 'x-admin-key': '   ' }), ADMIN_KEY_HEADERS)).toBe('');
+    expect(readProvidedKey(headersOf({}), ADMIN_KEY_HEADERS)).toBe('');
+  });
+
+  it('ignores whitespace-only headers because Headers strips surrounding whitespace (same as the old a || b || c)', () => {
+    expect(readProvidedKey(headersOf({ 'x-admin-key': '   ', authorization: 'Bearer valid' }), ADMIN_KEY_HEADERS)).toBe('valid');
   });
 });
 

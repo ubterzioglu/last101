@@ -29,13 +29,14 @@ export function readBearerToken(headers: HeaderSource): string {
 }
 
 /**
- * Verilen header'lardan ilk dolu olanı, yoksa Bearer token'ı döndürür (kırpılmış).
- * Admin ve corner auth'ta aynı öncelik kuralı kullanılır.
+ * Verilen header'lardan ilk gönderilmiş olanı, yoksa Bearer token'ı döndürür (kırpılmış).
+ * Admin ve corner auth'ta aynı öncelik kuralı kullanılır; eski `a || b || c` zinciriyle aynı davranır
+ * (Headers değerin başındaki/sonundaki boşluğu zaten kırptığı için boş değer sonraki header'a geçer).
  */
 export function readProvidedKey(headers: HeaderSource, headerNames: readonly string[]): string {
   for (const name of headerNames) {
-    const value = headers.get(name)?.trim();
-    if (value) return value;
+    const value = headers.get(name);
+    if (value) return value.trim();
   }
   return readBearerToken(headers);
 }

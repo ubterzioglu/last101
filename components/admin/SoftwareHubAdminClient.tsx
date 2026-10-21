@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import FounderSubmissionsAdminSection from '@/components/admin/FounderSubmissionsAdminSection';
 import FounderEventSurveyAdminSection from '@/components/admin/FounderEventSurveyAdminSection';
 import { useAdminGate } from '@/hooks/useAdminGate';
+import { ADMIN_KEY_HEADER, ADMIN_PASSWORD_HEADER } from '@/lib/admin/headers';
 import { SOFTWARE_HUB_SECTION_KEYS } from '@/constants/adminSoftwareHubSections';
 
 const css = `
@@ -271,8 +272,8 @@ function getAdminHeaders(extra: Record<string, string> = {}): Record<string, str
   const current = loadAdminAuth();
   return {
     ...extra,
-    'x-admin-key': current.password,
-    'x-admin-password': current.password,
+    [ADMIN_KEY_HEADER]: current.password,
+    [ADMIN_PASSWORD_HEADER]: current.password,
   };
 }
 
