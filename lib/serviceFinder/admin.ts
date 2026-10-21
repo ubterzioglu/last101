@@ -1,29 +1,10 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/lib/supabase/admin';
 
 // Service Finder admin yardımcıları. lib/news/admin.ts:getNewsServiceClient deseniyle aynı.
 
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
-
 export function getServiceFinderClient(): SupabaseClient {
-  const supabaseUrl = normalizeEnvValue(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_SERVICE_KEY ||
-    process.env.SUPABASE_SECRET_KEY
-  );
-  if (!supabaseUrl || !serviceRoleKey) {
-    throw new Error('Service not configured');
-  }
-  return createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  return createServiceClient();
 }
 
 export interface ServiceFinderJobRecord {

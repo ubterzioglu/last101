@@ -1,5 +1,6 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { type NextRequest } from 'next/server';
+import { createServiceClient } from '@/lib/supabase/admin';
 import {
   DEFAULT_ALLOWED_NEWS_LANGUAGES,
   NEWS_SOURCE_TYPES,
@@ -116,14 +117,6 @@ type JsonRecord = Record<string, unknown>;
 
 const NEWS_USAGE_MODES: readonly string[] = ['signal_only', 'short_excerpt_allowed', 'licensed', 'manual_only'];
 
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
 
 function normalizeText(value: unknown, maxLength: number, fallback = ''): string {
   return String(value ?? fallback).trim().slice(0, maxLength);
@@ -276,20 +269,7 @@ function statusToActionType(status: NewsStatus): string {
 }
 
 export function getNewsServiceClient(): SupabaseClient {
-  const supabaseUrl = normalizeEnvValue(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_SERVICE_KEY ||
-    process.env.SUPABASE_SECRET_KEY
-  );
-
-  if (!supabaseUrl || !serviceRoleKey) {
-    throw new Error('Service not configured');
-  }
-
-  return createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  return createServiceClient();
 }
 
 async function recordEditorAction(params: {
