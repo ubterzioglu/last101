@@ -1,0 +1,18 @@
+version: 2
+updates:
+  # npm bağımlılıkları: haftalık, minor/patch güncellemeleri tek PR'da gruplanır.
+  # Kabul edilen audit riskleri için bkz. docs/security/npm-audit-accepted-risks.md.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3

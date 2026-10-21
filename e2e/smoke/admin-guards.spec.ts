@@ -16,6 +16,14 @@ const PROTECTED_ADMIN_APIS: { path: string; method: 'GET' | 'POST' }[] = [
   { path: '/api/devuser-admin-list', method: 'GET' },
   { path: '/api/recruitment-agencies-admin-list', method: 'GET' },
   { path: '/api/recruitment-agencies-admin-action', method: 'POST' },
+  { path: '/api/admin/security-notes', method: 'GET' },
+  { path: '/api/admin/news/posts', method: 'GET' },
+  { path: '/api/admin/news/sources', method: 'GET' },
+  { path: '/api/admin/news/settings', method: 'GET' },
+  { path: '/api/members-admin-list', method: 'GET' },
+  { path: '/api/provider-submissions-admin-list', method: 'GET' },
+  { path: '/api/broken-link-reports-admin-list', method: 'GET' },
+  { path: '/api/participant-admin-list', method: 'GET' },
 ];
 
 for (const api of PROTECTED_ADMIN_APIS) {
