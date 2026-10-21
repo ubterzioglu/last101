@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
 import type { ToolItem } from '@/constants/home-data';
 
@@ -83,7 +84,7 @@ export function LinkCard({
   const categoryStyle = CATEGORY_STYLES[categoryKey];
 
   return (
-    <a
+    <Link
       href={item.href}
       className={cn(
         'group relative flex h-full w-full flex-col overflow-hidden rounded-[1.35rem] border text-white shadow-[0_18px_48px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-300',
@@ -152,6 +153,6 @@ export function LinkCard({
           {item.description}
         </p>
       </div>
-    </a>
+    </Link>
   );
 }
