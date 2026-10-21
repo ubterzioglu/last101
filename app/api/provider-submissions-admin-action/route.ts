@@ -1,17 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const ALLOWED_ACTIONS = new Set(['approve', 'reject', 'pending', 'delete']);
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
 
 function truncate(value: unknown, maxLength: number) {
   return String(value || '').trim().slice(0, maxLength);
@@ -53,21 +44,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: auth.reason }, { status: auth.status });
   }
 
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.SUPABASE_SERVICE_KEY ||
-      process.env.SUPABASE_SECRET_KEY ||
-      ''
-  );
-
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
-
-  const supabase = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   try {
     const body = await request.json();

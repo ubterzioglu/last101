@@ -1,11 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
-
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createServiceClient } from '@/lib/supabase/admin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,6 +10,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: authResult.reason }, { status: authResult.status });
     }
 
+    const supabase = createServiceClient();
     const body = await request.json();
     const { action, id } = body;
 

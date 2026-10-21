@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const CATEGORY_TABLE: Record<string, { participants: string; bracket: string }> = {
   tavla: { participants: 'tavla_participants', bracket: 'tavla_bracket' },
@@ -15,15 +15,6 @@ function normalizeCategory(value: unknown): string {
   const category = String(rawValue || '').trim().toLowerCase();
   if (!category || category === 'all') return 'all';
   return Object.prototype.hasOwnProperty.call(CATEGORY_TABLE, category) ? category : '';
-}
-
-function getSupabaseAdminClient() {
-  const supabaseUrl = String(process.env.NEXT_PUBLIC_SUPABASE_URL || '').trim();
-  const serviceRoleKey = String(process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
-  if (!supabaseUrl || !serviceRoleKey) return null;
-  return createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 }
 
 async function loadParticipants(supabase: any, tableName: string): Promise<unknown[]> {
@@ -61,7 +52,7 @@ export async function GET(request: NextRequest) {
   const category = normalizeCategory(request.nextUrl.searchParams.get('category'));
   if (!category) return NextResponse.json({ error: 'category is invalid' }, { status: 400 });
 
-  const supabase = getSupabaseAdminClient();
+  const supabase = tryCreateServiceClient();
   if (!supabase) return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
 
   try {

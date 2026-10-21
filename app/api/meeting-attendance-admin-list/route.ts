@@ -1,15 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 function parseLimit(value: unknown, fallback = 500): number {
   const parsed = Number.parseInt(String(value || ''), 10);
@@ -61,21 +52,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: auth.reason }, { status: auth.status });
   }
 
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_SERVICE_KEY ||
-    process.env.SUPABASE_SECRET_KEY ||
-    ''
-  );
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
   const limit = parseLimit(request.nextUrl.searchParams.get('limit'), 500);
-  const supabase: any = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   try {
     const { data, error, count } = await supabase

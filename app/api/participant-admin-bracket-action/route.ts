@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const BRACKET_TABLE_BY_CATEGORY: Record<string, string> = {
   tavla: 'tavla_bracket',
@@ -14,15 +14,6 @@ const PARTICIPANT_TABLE_BY_CATEGORY: Record<string, string> = {
 
 const ACTIONS = new Set(['add', 'remove_participant', 'toggle_winner', 'clear_slot']);
 const SLOT_LIMIT = 30;
-
-function getSupabaseAdminClient() {
-  const supabaseUrl = String(process.env.NEXT_PUBLIC_SUPABASE_URL || '').trim();
-  const serviceRoleKey = String(process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
-  if (!supabaseUrl || !serviceRoleKey) return null;
-  return createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-}
 
 function normalizeCategory(value: unknown): string {
   const category = String(value || '').trim().toLowerCase();
@@ -228,7 +219,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'slotIndex is invalid' }, { status: 400 });
   }
 
-  const supabase = getSupabaseAdminClient();
+  const supabase = tryCreateServiceClient();
   if (!supabase) return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
 
   try {

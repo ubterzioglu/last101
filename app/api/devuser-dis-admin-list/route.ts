@@ -1,18 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const MARKER = '[DEVUSER_DIS_V1]';
 const APPROVED_RAW_STATUSES = ['read', 'reviewed', 'resolved', 'approved'];
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
 
 function repairText(input: unknown): string {
   const value = String(input || '').normalize('NFC');
@@ -142,21 +133,14 @@ export async function GET(request: NextRequest) {
   const auth = await isAdminAuthorized(request);
   if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
 
-  const SUPABASE_URL = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const SUPABASE_SERVICE_ROLE_KEY = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_SERVICE_KEY ||
-    process.env.SUPABASE_SECRET_KEY ||
-    ''
-  );
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
   const searchParams = request.nextUrl.searchParams;
   const limit = parseLimit(searchParams.get('limit'));
   const status = normalizeStatusFilter(searchParams.get('status'));
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
   try {
     const { data, error, includeStatus } = await queryDiscussionRowsWithFallback({

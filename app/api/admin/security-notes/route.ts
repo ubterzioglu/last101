@@ -1,11 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
-
-const supabase = createClient(
-  process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || '',
-);
+import { createServiceClient } from '@/lib/supabase/admin';
 
 const SEVERITIES = ['low', 'medium', 'high', 'critical'] as const;
 const CATEGORIES = ['secret', 'auth', 'rls', 'validation', 'dependency', 'config', 'general'] as const;
@@ -28,6 +23,7 @@ export async function GET(request: NextRequest) {
     const auth = await isAdminAuthorized(request);
     if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
 
+    const supabase = createServiceClient();
     const params = request.nextUrl.searchParams;
     const status = params.get('status');
     const severity = params.get('severity');
@@ -70,6 +66,7 @@ export async function POST(request: NextRequest) {
     const auth = await isAdminAuthorized(request);
     if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
 
+    const supabase = createServiceClient();
     const body = await request.json().catch(() => ({} as Record<string, unknown>));
     const title = String(body.title || '').trim();
     const description = String(body.description || '').trim();
@@ -106,6 +103,7 @@ export async function PATCH(request: NextRequest) {
     const auth = await isAdminAuthorized(request);
     if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
 
+    const supabase = createServiceClient();
     const body = await request.json().catch(() => ({} as Record<string, unknown>));
     const id = String(body.id || '').trim();
     if (!id) return NextResponse.json({ error: 'id zorunludur' }, { status: 400 });
@@ -151,6 +149,7 @@ export async function DELETE(request: NextRequest) {
     const auth = await isAdminAuthorized(request);
     if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
 
+    const supabase = createServiceClient();
     const id = String(request.nextUrl.searchParams.get('id') || '').trim();
     if (!id) return NextResponse.json({ error: 'id zorunludur' }, { status: 400 });
 

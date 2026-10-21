@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const ALLOWED_STATUSES = new Set(['all', 'pending', 'approved', 'rejected']);
 const ALLOWED_TYPES = new Set([
@@ -19,15 +19,6 @@ const ALLOWED_TYPES = new Set([
   'tamirci_tesisat',
   'tamirci_boyaci',
 ]);
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
 
 function normalizeStatus(value: unknown) {
   const safe = String(value || 'all').trim().toLowerCase();
@@ -64,15 +55,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: auth.reason }, { status: auth.status });
   }
 
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.SUPABASE_SERVICE_KEY ||
-      process.env.SUPABASE_SECRET_KEY ||
-      ''
-  );
-
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -81,10 +65,6 @@ export async function GET(request: NextRequest) {
   const type = normalizeType(searchParams.get('type'));
   const limit = normalizeLimit(searchParams.get('limit'));
   const search = normalizeSearch(searchParams.get('q'));
-
-  const supabase = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   try {
     let query = supabase

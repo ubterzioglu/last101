@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const CATEGORY_TABLE: Record<string, string> = {
   tavla: 'tavla_participants',
@@ -57,15 +57,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'action is invalid for category' }, { status: 400 });
   }
 
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
-
-  const supabase: any = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   const participantTable = CATEGORY_TABLE[category];
 

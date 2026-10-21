@@ -1,10 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
-
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createServiceClient } from '@/lib/supabase/admin';
 
 export async function POST() {
   const sql = `
@@ -35,6 +30,7 @@ create index if not exists broken_link_reports_created_at_idx on public.broken_l
   `;
 
   try {
+    const supabase = createServiceClient();
     const { data, error } = await supabase.rpc('exec_sql', { sql });
 
     if (error) {

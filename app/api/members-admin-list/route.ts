@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 export const dynamic = 'force-dynamic';
 
 // devuser-admin-list ile tutarlı: service client tipini gevşek tutuyoruz çünkü
 // supabase-js'in jenerik dönüş tipi auth.admin + from() zincirinde çakışıyor.
-type SupabaseClient = ReturnType<typeof createClient<any>>;
+type SupabaseClient = NonNullable<ReturnType<typeof tryCreateServiceClient>>;
 
 function normalizeLimit(value: unknown, fallback: number, max: number): number {
   const parsed = Number.parseInt(String(value || ''), 10);
@@ -72,15 +72,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: auth.reason }, { status: auth.status });
   }
 
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   const limit = normalizeLimit(request.nextUrl.searchParams.get('limit'), 500, 5000);
 

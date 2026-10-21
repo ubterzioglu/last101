@@ -1,16 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { isUuid, sanitizeText } from '@/lib/founder';
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 function parseDateInput(value: unknown): string | null {
   const raw = String(value || '').trim();
@@ -36,9 +27,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: auth.reason }, { status: auth.status });
   }
 
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(process.env.SUPABASE_SERVICE_ROLE_KEY);
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -56,10 +46,6 @@ export async function POST(request: NextRequest) {
   const endsAt = parseDateInput(body.ends_at);
   const sortOrder = parseSortOrder(body.sort_order);
   const isActive = typeof body.is_active === 'boolean' ? body.is_active : null;
-
-  const supabase: any = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   try {
     if (action === 'create' || action === 'update') {

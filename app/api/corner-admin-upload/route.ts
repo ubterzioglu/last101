@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
 import { isCornerAdminAuthorized } from '@/lib/admin/cornerAuth';
 import { normalizeAuthorSlug } from '@/lib/admin/cornerAuthorAuth';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 const ALLOWED_TYPES = new Map([
@@ -11,15 +11,6 @@ const ALLOWED_TYPES = new Map([
   ['image/webp', 'webp'],
   ['image/gif', 'gif'],
 ]);
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
 
 function getFileExtension(file: File): string {
   const byType = ALLOWED_TYPES.get(file.type);
@@ -37,14 +28,8 @@ export async function POST(request: NextRequest) {
   const auth = await isCornerAdminAuthorized(request);
   if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
 
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.SUPABASE_SERVICE_KEY ||
-      process.env.SUPABASE_SECRET_KEY ||
-      ''
-  );
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
   }
 
@@ -67,9 +52,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Görsel boyutu 5 MB altında olmalı.' }, { status: 400 });
     }
 
-    const supabase = createClient(supabaseUrl, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
     const objectPath = `authors/${authorSlug}/${folder}/${new Date().toISOString().slice(0, 10)}/${randomUUID()}.${extension}`;
     const bytes = await file.arrayBuffer();
 
