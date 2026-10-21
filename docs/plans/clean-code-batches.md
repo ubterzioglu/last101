@@ -11,6 +11,8 @@
 - DB değişikliği olan batch'lerde: önce ROLLBACK'li kuru çalıştırma, onay, sonra uygulama (scratchpad `dbtool`, `pg`).
 - Bulunan güvenlik konuları `security_notes` tablosuna `source='agent'` ile kaydedilir.
 
+Güvenlik işleri ayrı izleniyor: [security-batches.md](./security-batches.md) (S1–S10). Güvenlik batch'leri öncelikli; B3 ve sonrası onlarla aynı dosyalara dokunmadığı sürece paralel yürütülebilir.
+
 ## Sıra ve batch'ler
 
 ### B0 — Ön koşul / hijyen (çok küçük)
