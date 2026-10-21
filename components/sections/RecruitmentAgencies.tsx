@@ -11,7 +11,9 @@ interface RecruitmentAgenciesProps {
   agencies: RecruitmentAgency[];
 }
 
-const MAIN_CATEGORIES = ['Tüm Kategoriler', 'İş Bulma Ajansları', 'İngilizce İşe Alan Şirketler'];
+const CAREER_PLATFORMS = 'İş ve Kariyer Platformları';
+
+const MAIN_CATEGORIES = ['Tüm Kategoriler', 'İş Bulma Ajansları', 'İngilizce İşe Alan Şirketler', CAREER_PLATFORMS];
 
 const SUB_CATEGORIES = {
   'İş Bulma Ajansları': [
@@ -43,6 +45,20 @@ const SUB_CATEGORIES = {
     'E-öğrenim',
     'Siber Güvenlik',
     'Sigorta'
+  ],
+  [CAREER_PLATFORMS]: [
+    'Tümü',
+    'Genel İlan Platformları',
+    'Kamu & Resmî',
+    'IT & Yazılım',
+    'İngilizce & Relocation',
+    'Mühendislik & Enerji',
+    'Sağlık & Bakım',
+    'Zanaat (Handwerk)',
+    'Lojistik, Otel & Perakende',
+    'Öğrenci & Yeni Mezun',
+    'Akademi & Araştırma',
+    'İşveren Kariyer Sayfaları'
   ]
 };
 
@@ -59,8 +75,11 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
                           agency.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesMainCategory = selectedMainCategory === 'Tüm Kategoriler' ||
                               agency.category === selectedMainCategory;
+      // Yeni kategori alt kategoriyi alanından okur; eski kayıtlar açıklama metniyle eşleşir
       const matchesSubCategory = selectedSubCategory === 'Tümü' ||
-                              agency.description.includes(selectedSubCategory.split(' ')[0]);
+                              (agency.category === CAREER_PLATFORMS
+                                ? agency.subCategory === selectedSubCategory
+                                : agency.description.includes(selectedSubCategory.split(' ')[0]));
       
       return matchesSearch && matchesMainCategory && matchesSubCategory;
     });
@@ -92,6 +111,10 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
           <div className="inline-flex items-center gap-2 rounded-full border border-google-green/20 bg-google-green/10 px-4 py-2 text-sm text-google-green">
             <span className="font-semibold">{agencies.filter(a => a.category === 'İngilizce İşe Alan Şirketler').length}</span>
             <span>İngilizce İşe Alan Şirket</span>
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-google-orange/20 bg-google-orange/10 px-4 py-2 text-sm text-google-orange">
+            <span className="font-semibold">{agencies.filter(a => a.category === CAREER_PLATFORMS).length}</span>
+            <span>İş ve Kariyer Platformu</span>
           </div>
         </div>
         <h2 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
