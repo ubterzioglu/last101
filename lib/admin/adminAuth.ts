@@ -1,6 +1,6 @@
 import crypto from 'crypto';
-import { createClient } from '@supabase/supabase-js';
 import { NextRequest } from 'next/server';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const ADMIN_KEYS_TABLE = 'admin_api_keys';
 const ADMIN_RATE_LIMIT_MAX_ATTEMPTS = 12;
@@ -170,15 +170,10 @@ export async function isAdminAuthorized(req: NextRequest): Promise<AdminAuthResu
   }
 
   // DB mode: admin_api_keys table
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(process.env.SUPABASE_SERVICE_ROLE_KEY || '');
-  if (!supabaseUrl || !serviceRoleKey) {
+  const supabase = tryCreateServiceClient();
+  if (!supabase) {
     return { ok: false, reason: 'Service not configured', status: 503 };
   }
-
-  const supabase = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
 
   const { data, error } = await supabase.from(ADMIN_KEYS_TABLE).select('*').limit(500);
   if (error) {

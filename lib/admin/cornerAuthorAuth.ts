@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { verifyPasswordHash } from '@/lib/admin/cornerPasswords';
+import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 export interface CornerAuthorAuthResult {
   ok: boolean;
@@ -24,15 +24,6 @@ const AUTHOR_ATTEMPT_WINDOW_MS = 10 * 60 * 1000;
 const AUTHOR_BLOCK_MS = 10 * 60 * 1000;
 const AUTHOR_MAX_FAILED_ATTEMPTS = 8;
 const authorAttemptStore = new Map<string, RateLimitBucket>();
-
-function normalizeEnvValue(value: unknown): string {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  if ((raw.startsWith('"') && raw.endsWith('"')) || (raw.startsWith("'") && raw.endsWith("'"))) {
-    return raw.slice(1, -1).trim();
-  }
-  return raw;
-}
 
 function getRateLimitBucketKey(req: NextRequest, slug: string): string {
   const forwardedFor = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
@@ -127,18 +118,7 @@ function getProvidedPassword(req: NextRequest): string {
 }
 
 export async function getSupabaseServiceClient() {
-  const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const serviceRoleKey = normalizeEnvValue(
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.SUPABASE_SERVICE_KEY ||
-      process.env.SUPABASE_SECRET_KEY ||
-      ''
-  );
-  if (!supabaseUrl || !serviceRoleKey) return null;
-
-  return createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  return tryCreateServiceClient();
 }
 
 export async function isCornerAuthorAuthorized(req: NextRequest, slugValue: unknown): Promise<CornerAuthorAuthResult> {
