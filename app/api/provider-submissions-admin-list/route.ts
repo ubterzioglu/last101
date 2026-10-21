@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
+import { buildIlikeOrFilter } from '@/lib/news/search';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 const ALLOWED_STATUSES = new Set(['all', 'pending', 'approved', 'rejected']);
@@ -72,9 +73,7 @@ export const GET = withAdmin(async (request) => {
     if (status !== 'all') query = query.eq('status', status);
     if (type !== 'all') query = query.eq('type', type);
     if (search) {
-      query = query.or(
-        `display_name.ilike.%${search}%,city.ilike.%${search}%,note.ilike.%${search}%`
-      );
+      query = query.or(buildIlikeOrFilter(['display_name', 'city', 'note'], search));
     }
 
     const [{ data, error }, total, pending, approved, rejected] = await Promise.all([

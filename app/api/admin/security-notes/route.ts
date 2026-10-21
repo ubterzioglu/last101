@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { createServiceClient } from '@/lib/supabase/admin';
 import { authFailureResponse } from '@/lib/admin/withAuth';
+import { buildIlikeOrFilter } from '@/lib/news/search';
 
 const SEVERITIES = ['low', 'medium', 'high', 'critical'] as const;
 const CATEGORIES = ['secret', 'auth', 'rls', 'validation', 'dependency', 'config', 'general'] as const;
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
     if (status && (STATUSES as readonly string[]).includes(status)) query = query.eq('status', status);
     if (severity && (SEVERITIES as readonly string[]).includes(severity)) query = query.eq('severity', severity);
     if (category && (CATEGORIES as readonly string[]).includes(category)) query = query.eq('category', category);
-    if (search) query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    if (search) query = query.or(buildIlikeOrFilter(['title', 'description'], search));
 
     const { data, error } = await query;
     if (error) {

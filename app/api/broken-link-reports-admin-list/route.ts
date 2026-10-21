@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { createServiceClient } from '@/lib/supabase/admin';
+import { buildIlikeOrFilter } from '@/lib/news/search';
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
       .order('created_at', { ascending: false });
 
     if (search) {
-      query = query.or(`agency_name.ilike.%${search}%,report_text.ilike.%${search}%`);
+      query = query.or(buildIlikeOrFilter(['agency_name', 'report_text'], search));
     }
 
     const { data, error } = await query;

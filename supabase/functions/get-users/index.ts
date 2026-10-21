@@ -4,6 +4,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
+import { buildArrayContainsOrFilter, buildIlikeOrFilter } from './search.ts'
 
 const ALLOWED_ORIGINS = [
   'https://almanya101.de',
@@ -177,12 +178,12 @@ serve(async (req) => {
       .order('created_at', { ascending: false })
       .range((page - 1) * limit, page * limit - 1)
 
-    if (sehir) query = query.ilike('sehir', `%${sehir}%`)
+    if (sehir) query = query.or(buildIlikeOrFilter(['sehir'], sehir))
     if (rol) query = query.eq('rol', rol)
     if (deneyim) query = query.eq('deneyim_seviye', deneyim)
     if (isArama) query = query.eq('is_arama_durumu', isArama)
     if (tech) {
-      query = query.or(`programlama_dilleri.cs.{${tech}},framework_platformlar.cs.{${tech}},devops_cloud.cs.{${tech}}`)
+      query = query.or(buildArrayContainsOrFilter(['programlama_dilleri', 'framework_platformlar', 'devops_cloud'], tech))
     }
     if (ilgi) query = query.contains('ilgi_konular', [ilgi])
 

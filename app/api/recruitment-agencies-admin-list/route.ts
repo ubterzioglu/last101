@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { buildIlikeOrFilter } from '@/lib/news/search';
 
 export async function GET(request: NextRequest) {
   try {
@@ -26,8 +27,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (search && search.trim()) {
-      const searchTerm = `%${search.trim()}%`;
-      query = query.or(`name.ilike.${searchTerm},description.ilike.${searchTerm},url.ilike.${searchTerm}`);
+      query = query.or(buildIlikeOrFilter(['name', 'description', 'url'], search.trim()));
     }
 
     const { data: agencies, error } = await query;
