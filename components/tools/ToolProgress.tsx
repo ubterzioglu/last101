@@ -46,7 +46,7 @@ export function ToolProgress({
           <button
             type="button"
             onClick={onReset}
-            className="text-sm font-semibold text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700"
+            className="-my-2 inline-flex min-h-[44px] items-center text-sm font-semibold text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:text-brand-700 hover:decoration-brand-700"
             data-pw={resetTestId}
           >
             {resetLabel}
