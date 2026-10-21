@@ -47,7 +47,7 @@ const NOTES = [
     severity: 'low',
     category: 'config',
     source: 'agent',
-    related_path: 'E2E_TEST_KULLANIM.md',
+    related_path: 'docs/archive/E2E_TEST_KULLANIM.md',
     description: [
       'Playwright E2E test altyapısı kuruldu. Çalıştırmak için:',
       '',
@@ -62,7 +62,7 @@ const NOTES = [
       '3) HTML rapor:',
       '   npm run e2e:report   (playwright-report/index.html açılır)',
       '',
-      'Detaylı kılavuz: E2E_TEST_KULLANIM.md (kökte) + docs/e2e-test-plan.md.',
+      'Detaylı kılavuz: docs/archive/E2E_TEST_KULLANIM.md + docs/e2e-test-plan.md.',
     ].join('\n'),
   },
   {
