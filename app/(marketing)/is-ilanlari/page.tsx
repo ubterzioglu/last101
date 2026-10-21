@@ -1,6 +1,9 @@
+import { MapPin } from 'lucide-react';
 import { createMetadata } from '@/lib/seo/metadata';
 import { RecruitmentAgencies } from '@/components/sections/RecruitmentAgencies';
-import { Section } from '@/components/ui/Section';
+import { PageHead } from '@/components/site/PageHead';
+import { PhotoCard } from '@/components/site/PhotoCard';
+import { Container } from '@/components/ui/Container';
 import { RECRUITMENT_AGENCIES } from '@/constants/recruitment-agencies';
 import type { RecruitmentAgency } from '@/types';
 
@@ -9,6 +12,10 @@ export const metadata = createMetadata({
   description: 'Türk iş verenler ve Türk dostu şirketlerin iş ilanları. Almanya\'da iş fırsatları.',
   path: '/is-ilanlari',
 });
+
+function countCategory(agencies: RecruitmentAgency[], category: string): string {
+  return String(agencies.filter((agency) => agency.category === category).length);
+}
 
 export default function IsIlanlariPage() {
   // Convert agencies data to proper format
@@ -21,9 +28,27 @@ export default function IsIlanlariPage() {
 
   return (
     <>
-      <Section contained className="bg-gray-50">
+      <PageHead
+        eyebrow="İş İlanları"
+        title="Almanya'daki İş Bulma Ajansları ve Şirketler"
+        description="Almanya'da faaliyet gösteren işe alım ajansları, kafa avcıları ve personel şirketlerinin kapsamlı listesi. Kariyer veya işe alım ihtiyaçlarınız için doğru ajansı bulun."
+        stats={[
+          { value: countCategory(agencies, 'İş Bulma Ajansları'), label: 'İş Bulma Ajansı' },
+          { value: countCategory(agencies, 'İngilizce İşe Alan Şirketler'), label: 'İngilizce İşe Alan Şirket' },
+          { value: countCategory(agencies, 'İş ve Kariyer Platformları'), label: 'İş ve Kariyer Platformu' },
+        ]}
+        media={
+          <PhotoCard
+            src="/images/site/berlin-brandenburger-tor-aksam.webp"
+            alt="Akşam ışığında Brandenburg Kapısı"
+            chip={{ label: 'Berlin', icon: MapPin }}
+            priority
+          />
+        }
+      />
+      <Container className="py-12">
         <RecruitmentAgencies agencies={agencies} />
-      </Section>
+      </Container>
     </>
   );
 }

@@ -1,7 +1,15 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { Accordion } from '@/components/site/Accordion';
+import { PageHead } from '@/components/site/PageHead';
+import { PhotoCard } from '@/components/site/PhotoCard';
+import { SectionHeader } from '@/components/site/SectionHeader';
+import { Section } from '@/components/ui/Section';
 import { SITE_URL } from '@/lib/utils/constants';
-import { BelgelerClient } from './BelgelerClient';
+import { MapPin } from 'lucide-react';
+import { countDocuments } from './belgeler-helpers';
+import { belgelerData } from './data';
+import { DocumentCategories } from './DocumentCategories';
 
 export const metadata = createMetadata({
   title: 'Yararlı Belgeler',
@@ -50,30 +58,39 @@ export default function BelgelerPage() {
       />
       <FaqJsonLd items={FAQ_ITEMS} />
 
-      <div className="min-h-screen bg-black">
-        <BelgelerClient />
-        <section
-          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 mt-12 border-t border-white/10"
-          aria-labelledby="sss-baslik"
-        >
-          <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">
-            Sıkça Sorulan Sorular
-          </h2>
-          <div className="mt-6 space-y-4">
-            {FAQ_ITEMS.map((item) => (
-              <details
-                key={item.question}
-                className="group rounded-xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <summary className="cursor-pointer list-none text-lg font-semibold text-white">
-                  {item.question}
-                </summary>
-                <p className="mt-3 leading-7 text-white/75">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      </div>
+      <PageHead
+        breadcrumb={[{ label: 'Ana Sayfa', href: '/' }, { label: 'Yararlı Belgeler' }]}
+        title="Yararlı Belgeler Kataloğu"
+        description="Almanya'da yaşayan veya Almanya'ya taşınmayı planlayan Türkiye kökenli kişiler için en sık gereken resmî belgelerin listesi."
+        stats={[
+          { value: String(countDocuments(belgelerData)), label: 'Belge' },
+          { value: String(belgelerData.length), label: 'Kategori' },
+        ]}
+        media={
+          <PhotoCard
+            src="/images/site/berlin-spree.webp"
+            alt="Berlin'de Spree nehri kıyısı"
+            chip={{ label: 'Berlin', icon: MapPin }}
+            priority
+          />
+        }
+      />
+
+      <Section aria-labelledby="belge-kategorileri-baslik">
+        <SectionHeader id="belge-kategorileri-baslik" title="Belge kategorileri" className="mb-8" />
+        <DocumentCategories categories={belgelerData} />
+      </Section>
+
+      <Section tone="band" aria-labelledby="sss-baslik">
+        <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+          <SectionHeader id="sss-baslik" eyebrow="SSS" title="Sıkça Sorulan Sorular" />
+          <Accordion
+            name="belgeler-sss"
+            toneCycle
+            items={FAQ_ITEMS.map((item) => ({ title: item.question, content: <p>{item.answer}</p> }))}
+          />
+        </div>
+      </Section>
     </>
   );
 }
