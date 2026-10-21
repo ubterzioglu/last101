@@ -557,7 +557,8 @@ export function DuClient() {
   }
 
   async function handleSubmit() {
-    if (isSubmitting || submittingRef.current) return;
+    // Başarı ekranında form hâlâ DOM'da; Enter yeniden kayıt göndermesin.
+    if (showSuccess || isSubmitting || submittingRef.current) return;
     if (!validateCurrentStep()) return;
     if (!formRef.current) return;
 
