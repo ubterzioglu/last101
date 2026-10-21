@@ -33,8 +33,9 @@ Güvenlik işleri ayrı izleniyor: [security-batches.md](./security-batches.md) 
 - **B2.4** `eslint-plugin-react-hooks` v7'ye yükseltme (`eslint-config-next` 5.2.0 getiriyor; v7 React 19.2 `useEffectEvent`'i tanır). Ayrı batch çünkü v7 yeni kurallar (compiler kuralları) getirir; önce yeni uyarıların sayımı, sonra kalan mount-only disable'ların `useEffectEvent`'e çevrilmesi.
 
 ### B3 — Admin istemci tekrarı (Aşama 5), pilot-önce
-- **B3.1** `hooks/useAdminResource.ts` (liste yükle, filtre, mesaj/hata, action fetch, yükleniyor durumu; `lib/admin/clientAuth.ts getAdminHeaders` kullanır) + test. Henüz hiçbir bileşen geçmez.
-- **B3.2** Pilot: `BrokenLinkReportsAdminClient` (208 satır) hook'a geçer.
+- **B3.1** ✅ `hooks/useAdminResource.ts` (liste yükle, filtre, mesaj/hata, action fetch, yükleniyor durumu; `lib/admin/clientAuth.ts getAdminHeaders` kullanır) + test. Henüz hiçbir bileşen geçmez.
+  - Durum: fetch/parse mantığı saf fonksiyonlarda: `lib/admin/adminResource.ts` (`buildAdminListUrl`, `fetchAdminList`, `postAdminAction`, `readJsonSafely`, `getErrorMessage`), testleri `tests/admin-resource.test.ts` (mock `fetch`). Hook yalnızca liste durumunu tutar (`data`/`setData`/`loading`/`error`/`reload`); action'lar `postAdminAction` ile çağrılır, ardından `setData` veya `reload`. Mesaj durumu bileşende kalır. Members/Provider'a özgü kısımlar (sunucu `error` mesajı, 401'de `/admin`'e yönlendirme, satır bazlı meşgul durumu) B3.3/B3.4'te gerekince eklenir.
+- **B3.2** ✅ Pilot: `BrokenLinkReportsAdminClient` (208 satır) hook'a geçer. URL'ler, gövdeler, header'lar, mesajlar ve arayüz aynı.
 - **B3.3** `RecruitmentAgenciesAdminClient` + `MembersAdminClient`.
 - **B3.4** `ProviderSubmissionsAdminClient` + gerekiyorsa `components/admin/AdminTable.tsx`.
 - **B3.5** Haber kuyruğu UX (`NewsQueueAdminClient`): sayfalama (offset), varsayılan filtre `pending_review`, reddetmede onay, buton yükleniyor durumu, arama debounce. `listAdminPosts`'a `offset`.

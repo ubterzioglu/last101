@@ -1,9 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { getAdminHeaders } from '@/lib/admin/clientAuth';
+import { getErrorMessage, postAdminAction } from '@/lib/admin/adminResource';
 import { useAdminGate } from '@/hooks/useAdminGate';
+import { useAdminResource } from '@/hooks/useAdminResource';
 
 interface BrokenLinkReport {
   id: number;
@@ -14,8 +15,16 @@ interface BrokenLinkReport {
   updated_at: string;
 }
 
+interface ReportsResponse {
+  reports?: BrokenLinkReport[];
+}
+
 const REPORTS_API_URL = '/api/broken-link-reports-admin-list';
 const REPORTS_ACTION_API_URL = '/api/broken-link-reports-admin-action';
+
+function selectReports(payload: unknown): BrokenLinkReport[] {
+  return (payload as ReportsResponse).reports || [];
+}
 
 function formatDate(dateValue: string) {
   const date = new Date(dateValue);
@@ -33,64 +42,31 @@ export default function BrokenLinkReportsAdminClient() {
   const gateStatus = useAdminGate();
   const authed = gateStatus === 'authed';
 
-  const [reports, setReports] = useState<BrokenLinkReport[]>([]);
-  const [listLoading, setListLoading] = useState(false);
-  const [listError, setListError] = useState('');
   const [search, setSearch] = useState('');
-
-  const loadReports = useCallback(async () => {
-    setListLoading(true);
-    setListError('');
-
-    try {
-      const params = new URLSearchParams();
-      if (search.trim()) params.append('search', search.trim());
-
-      const response = await fetch(`${REPORTS_API_URL}?${params}`, {
-        headers: getAdminHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-      setReports(data.reports || []);
-    } catch (error) {
-      console.error('Load reports error:', error);
-      setListError(error instanceof Error ? error.message : 'Bilinmeyen hata');
-    } finally {
-      setListLoading(false);
-    }
-  }, [search]);
-
-  useEffect(() => {
-    if (authed) {
-      loadReports();
-    }
-  }, [authed, loadReports]);
+  const {
+    data: reports,
+    setData: setReports,
+    loading: listLoading,
+    error: listError,
+    reload: loadReports,
+  } = useAdminResource({
+    url: REPORTS_API_URL,
+    query: { search },
+    enabled: authed,
+    initialData: [],
+    select: selectReports,
+    errorLogLabel: 'Load reports error:',
+  });
 
   const handleDelete = async (id: number) => {
     if (!confirm('Bu rapor silinecek. Emin misiniz?')) return;
 
     try {
-      const response = await fetch(REPORTS_ACTION_API_URL, {
-        method: 'POST',
-        headers: {
-          ...getAdminHeaders(),
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ action: 'delete', id }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
+      await postAdminAction(REPORTS_ACTION_API_URL, { action: 'delete', id });
       setReports(prev => prev.filter(report => report.id !== id));
     } catch (error) {
       console.error('Delete error:', error);
-      alert('Silme hatası: ' + (error instanceof Error ? error.message : 'Bilinmeyen hata'));
+      alert('Silme hatası: ' + getErrorMessage(error));
     }
   };
 
