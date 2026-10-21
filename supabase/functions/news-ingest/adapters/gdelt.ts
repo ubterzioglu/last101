@@ -130,6 +130,7 @@ export async function fetchGdeltItems(
     if (!article.url || !article.title) continue
 
     // GDELT language alanı "Turkish"/"German"/"English" gibi tam ad döner.
+    // Dili boş gelen öğeler burada geçer; index.ts'teki decideLanguage içerikten tespit edip eler.
     if (allowedLanguages) {
       const lang = (article.language ?? '').toLowerCase()
       if (lang && !allowedLanguages.has(lang)) continue

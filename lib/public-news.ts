@@ -3,6 +3,7 @@ import 'server-only';
 import { unstable_noStore as noStore } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
 import {
+  PUBLISHABLE_NEWS_LANGUAGES,
   buildStableNewsSlug,
   buildWhatsAppShareText,
   clampNewsLimit,
@@ -20,6 +21,9 @@ import type {
   PublicNewsListResponse,
 } from '@/types/news';
 import { CANONICAL_SITE_URL, DEFAULT_OG_IMAGE } from '@/lib/utils/constants';
+
+// Yayındaki haberlerde yalnızca yayınlanabilir diller veya dili bilinmeyen (elle girilmiş) kayıtlar gösterilir.
+const PUBLIC_NEWS_LANGUAGE_FILTER = `language_code.is.null,language_code.in.(${PUBLISHABLE_NEWS_LANGUAGES.join(',')})`;
 
 interface NewsRow {
   id: string;
@@ -134,6 +138,7 @@ async function fetchPublishedNewsRows(options?: {
     .from('news_posts')
     .select('id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel')
     .eq('status', 'published')
+    .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .lte('published_at', new Date().toISOString())
     .order('published_at', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false })
@@ -171,6 +176,7 @@ export async function getFeaturedNewsArticle(): Promise<PublicNewsArticle | unde
     .from('news_posts')
     .select(baseSelect)
     .eq('status', 'published')
+    .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .eq('is_featured', true)
     .lte('published_at', new Date().toISOString())
     .order('featured_rank', { ascending: true, nullsFirst: false })
@@ -184,6 +190,7 @@ export async function getFeaturedNewsArticle(): Promise<PublicNewsArticle | unde
     .from('news_posts')
     .select(baseSelect)
     .eq('status', 'published')
+    .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .lte('published_at', new Date().toISOString())
     .order('published_at', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false })
@@ -251,6 +258,7 @@ export async function getPublishedNewsArticleBySlug(slug: string): Promise<Publi
     .select(select)
     .eq('slug', slug)
     .eq('status', 'published')
+    .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .lte('published_at', new Date().toISOString())
     .maybeSingle();
 
@@ -265,6 +273,7 @@ export async function getPublishedNewsArticleBySlug(slug: string): Promise<Publi
     .select(select)
     .eq('id', legacyId)
     .eq('status', 'published')
+    .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .lte('published_at', new Date().toISOString())
     .maybeSingle();
 
@@ -286,6 +295,7 @@ export async function getRelatedPublishedNewsArticles(currentId: string, limit =
     .from('news_posts')
     .select('id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel')
     .eq('status', 'published')
+    .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .neq('id', currentId)
     .lte('published_at', new Date().toISOString())
     .order('published_at', { ascending: false, nullsFirst: false })
@@ -310,6 +320,7 @@ export async function getAllPublishedNewsEntriesForSitemap(): Promise<Array<{ sl
     .from('news_posts')
     .select('id, slug, title, updated_at, published_at, created_at')
     .eq('status', 'published')
+    .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .lte('published_at', new Date().toISOString())
     .order('published_at', { ascending: false, nullsFirst: false });
 

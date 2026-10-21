@@ -8,6 +8,7 @@ import { fetchTheNewsApiItems } from './adapters/thenewsapi.ts'
 import { fetchGdeltItems, type GdeltConfig } from './adapters/gdelt.ts'
 import { createUniqueHash } from './dedupe.ts'
 import { generateGeminiDraft } from './gemini.ts'
+import { decideLanguage, normalizeAllowedLanguages } from './language.ts'
 import { normalizeFeedItem, type NewsSourceLike } from './normalize.ts'
 import { computeRelevance } from './relevance.ts'
 import { validateSourceUrl } from './source-security.ts'
@@ -126,7 +127,7 @@ serve(async (req: Request) => {
 
   const { data: settingsRow, error: settingsError } = await supabase
     .from('news_pipeline_settings')
-    .select('pipeline_enabled, ai_enabled, ai_daily_limit, max_items_per_source, auto_create_pending_review, excluded_keywords, high_priority_keywords')
+    .select('pipeline_enabled, ai_enabled, ai_daily_limit, max_items_per_source, auto_create_pending_review, excluded_keywords, high_priority_keywords, allowed_languages')
     .eq('id', true)
     .maybeSingle()
 
@@ -142,7 +143,9 @@ serve(async (req: Request) => {
     auto_create_pending_review: true,
     excluded_keywords: [] as string[],
     high_priority_keywords: [] as string[],
+    allowed_languages: null as string[] | null,
   }
+  const allowedLanguages = normalizeAllowedLanguages(settings.allowed_languages)
 
   const { data: run, error: runError } = await supabase
     .from('news_ingest_runs')
@@ -174,7 +177,7 @@ serve(async (req: Request) => {
 
   const sourcesQuery = supabase
     .from('news_sources')
-    .select('id, name, source_type, feed_url, homepage_url, default_category, fetch_limit, is_active, config')
+    .select('id, name, source_type, feed_url, homepage_url, default_category, language_code, fetch_limit, is_active, config')
     .eq('is_active', true)
     .order('priority', { ascending: false })
 
@@ -200,6 +203,7 @@ serve(async (req: Request) => {
   let fetchedCount = 0
   let insertedCount = 0
   let duplicateCount = 0
+  let skippedLanguageCount = 0
   let errorCount = 0
   const runLog: Record<string, unknown>[] = []
   let aiUsed = 0
@@ -219,6 +223,7 @@ serve(async (req: Request) => {
       fetched: 0,
       inserted: 0,
       duplicates: 0,
+      skippedLanguage: 0,
       errors: [],
     }
 
@@ -240,15 +245,66 @@ serve(async (req: Request) => {
           publishedAt: normalized.publishedAt,
         })
 
+        const payloadLanguage = (normalized.rawPayload as Record<string, unknown> | null)?.language
+        const languageDecision = decideLanguage({
+          title: normalized.title,
+          description: normalized.description,
+          sourceLanguage: source.language_code,
+          itemLanguage: typeof payloadLanguage === 'string' ? payloadLanguage : null,
+          allowedLanguages,
+        })
+
         const duplicateChecks = await Promise.all([
-          supabase.from('news_raw_items').select('id').eq('canonical_url', normalized.canonicalUrl).limit(1).maybeSingle(),
-          supabase.from('news_raw_items').select('id').eq('unique_hash', uniqueHash).limit(1).maybeSingle(),
+          supabase.from('news_raw_items').select('id, filtered_reason').eq('canonical_url', normalized.canonicalUrl).limit(1).maybeSingle(),
+          supabase.from('news_raw_items').select('id, filtered_reason').eq('unique_hash', uniqueHash).limit(1).maybeSingle(),
         ])
 
-        const hasDuplicate = Boolean(duplicateChecks[0].data || duplicateChecks[1].data)
-        if (hasDuplicate) {
+        const existingRows = [duplicateChecks[0].data, duplicateChecks[1].data].filter(
+          (row): row is { id: string; filtered_reason: string | null } => Boolean(row)
+        )
+        // Daha önce yalnızca dil nedeniyle elenmiş öğe, kural/ayar değiştiyse yeniden işlenir.
+        const canRetryFiltered = existingRows.length > 0
+          && languageDecision.allowed
+          && existingRows.every((row) => row.filtered_reason === 'language')
+
+        if (existingRows.length > 0 && !canRetryFiltered) {
           duplicateCount += 1
           logEntry.duplicates = Number(logEntry.duplicates || 0) + 1
+          continue
+        }
+
+        if (canRetryFiltered) {
+          const { error: deleteError } = await supabase
+            .from('news_raw_items')
+            .delete()
+            .in('id', [...new Set(existingRows.map((row) => row.id))])
+          if (deleteError) throw new Error(`Elenmiş öğe yeniden işlenemedi: ${deleteError.message}`)
+        }
+
+        if (!languageDecision.allowed) {
+          // Ham kayıt olarak saklanır ki sonraki çalışmalarda dedupe ile tekrar işlenmesin.
+          // Kayıt başarısız olursa öğe bir sonraki çalışmada yeniden elenir; kaynak hataya düşmez.
+          const { error: filteredInsertError } = await supabase.from('news_raw_items').insert([
+            {
+              source_id: source.id,
+              ingest_run_id: run.id,
+              external_id: normalized.externalId,
+              canonical_url: normalized.canonicalUrl,
+              original_title: normalized.title,
+              original_description: normalized.description,
+              original_image_url: normalized.imageUrl || null,
+              original_published_at: normalized.publishedAt,
+              unique_hash: uniqueHash,
+              raw_payload: normalized.rawPayload,
+              language_code: languageDecision.language,
+              filtered_reason: 'language',
+            },
+          ])
+          if (filteredInsertError) {
+            ;(logEntry.errors as string[]).push(`Elenen öğe kaydedilemedi: ${filteredInsertError.message}`)
+          }
+          skippedLanguageCount += 1
+          logEntry.skippedLanguage = Number(logEntry.skippedLanguage || 0) + 1
           continue
         }
 
@@ -266,6 +322,7 @@ serve(async (req: Request) => {
               original_published_at: normalized.publishedAt,
               unique_hash: uniqueHash,
               raw_payload: normalized.rawPayload,
+              language_code: languageDecision.language,
             },
           ])
           .select('id')
@@ -330,6 +387,7 @@ serve(async (req: Request) => {
               source_name: normalized.sourceName,
               source_url: normalized.canonicalUrl,
               source_published_at: normalized.publishedAt,
+              language_code: languageDecision.language,
               status: settings.auto_create_pending_review ? 'pending_review' : 'draft',
               is_featured: false,
               featured_rank: null,
@@ -413,6 +471,8 @@ serve(async (req: Request) => {
       log_json: {
         sources: runLog,
         aiUsed,
+        skippedLanguage: skippedLanguageCount,
+        allowedLanguages,
       },
     })
     .eq('id', run.id)
@@ -425,6 +485,7 @@ serve(async (req: Request) => {
     fetchedCount,
     insertedCount,
     duplicateCount,
+    skippedLanguageCount,
     errorCount,
   })
 })

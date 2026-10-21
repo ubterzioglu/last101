@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { adminJsonFetch } from '@/components/admin/news/api';
-import type { NewsPipelineSettingsRecord } from '@/types/news';
+import { DEFAULT_ALLOWED_NEWS_LANGUAGES, PUBLISHABLE_NEWS_LANGUAGES, getNewsLanguageLabel } from '@/lib/news/shared';
+import type { NewsLanguage, NewsPipelineSettingsRecord } from '@/types/news';
+
+function toggleLanguage(current: readonly NewsLanguage[], language: NewsLanguage, enabled: boolean): NewsLanguage[] {
+  const next = enabled ? [...current, language] : current.filter((item) => item !== language);
+  return PUBLISHABLE_NEWS_LANGUAGES.filter((item) => next.includes(item));
+}
 
 export function NewsSettingsAdminClient() {
   const [settings, setSettings] = useState<NewsPipelineSettingsRecord | null>(null);
@@ -28,8 +34,14 @@ export function NewsSettingsAdminClient() {
     }
   }
 
+  const allowedLanguages = settings?.allowed_languages ?? DEFAULT_ALLOWED_NEWS_LANGUAGES;
+
   async function saveSettings() {
     if (!settings) return;
+    if (allowedLanguages.length === 0) {
+      setError('En az bir dil seçilmelidir.');
+      return;
+    }
     setSaving(true);
     setError('');
     setMessage('');
@@ -37,7 +49,7 @@ export function NewsSettingsAdminClient() {
       const payload = await adminJsonFetch<{ item: NewsPipelineSettingsRecord }>('/api/admin/news/settings', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(settings),
+        body: JSON.stringify({ ...settings, allowed_languages: allowedLanguages }),
       });
       setSettings(payload.item);
       setMessage('Ayarlar kaydedildi.');
@@ -69,6 +81,25 @@ export function NewsSettingsAdminClient() {
             <NumberField label="Rejected retention (gün)" value={settings.rejected_posts_retention_days} onChange={(value) => setSettings((s) => s ? ({ ...s, rejected_posts_retention_days: value }) : s)} />
             <Switch label="Otomatik pending_review üret" checked={settings.auto_create_pending_review} onChange={(checked) => setSettings((s) => s ? ({ ...s, auto_create_pending_review: checked }) : s)} />
           </div>
+
+          <fieldset className="mt-4 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3">
+            <legend className="px-1 text-sm text-white/70">İzin Verilen Diller</legend>
+            <p className="text-xs text-white/50">
+              Bu diller dışındaki haberler çekilirken elenir ve kuyruğa düşmez. Site Türkçe olduğu için İngilizce seçilemez.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-4">
+              {PUBLISHABLE_NEWS_LANGUAGES.map((language) => (
+                <label key={language} className="flex items-center gap-2 text-sm text-white/75">
+                  <input
+                    type="checkbox"
+                    checked={allowedLanguages.includes(language)}
+                    onChange={(e) => setSettings((s) => s ? ({ ...s, allowed_languages: toggleLanguage(allowedLanguages, language, e.target.checked) }) : s)}
+                  />
+                  {getNewsLanguageLabel(language)}
+                </label>
+              ))}
+            </div>
+          </fieldset>
 
           <label className="mt-4 block">
             <span className="mb-2 block text-sm text-white/70">Hariç Kelimeler</span>

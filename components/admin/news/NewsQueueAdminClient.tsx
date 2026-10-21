@@ -3,8 +3,18 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { adminJsonFetch } from '@/components/admin/news/api';
-import { NEWS_CATEGORIES, NEWS_STATUSES, getNewsCategoryLabel, getNewsStatusLabel } from '@/lib/news/shared';
-import type { NewsPostAdminRecord, NewsStatus } from '@/types/news';
+import { cn } from '@/lib/utils/cn';
+import {
+  NEWS_CATEGORIES,
+  NEWS_LANGUAGES,
+  NEWS_STATUSES,
+  getNewsCategoryLabel,
+  getNewsLanguageLabel,
+  getNewsStatusLabel,
+} from '@/lib/news/shared';
+import type { NewsLanguage, NewsPostAdminRecord, NewsStatus } from '@/types/news';
+
+type LanguageFilter = NewsLanguage | 'unknown' | 'all';
 
 interface PostsResponse {
   items: NewsPostAdminRecord[];
@@ -34,6 +44,7 @@ export function NewsQueueAdminClient({ onEdit, onCreateNew }: NewsQueueAdminClie
   const [stats, setStats] = useState<Record<string, number>>({});
   const [status, setStatus] = useState<NewsStatus | 'all'>('all');
   const [category, setCategory] = useState<'all' | (typeof NEWS_CATEGORIES)[number]>('all');
+  const [language, setLanguage] = useState<LanguageFilter>('all');
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -46,6 +57,7 @@ export function NewsQueueAdminClient({ onEdit, onCreateNew }: NewsQueueAdminClie
       params.set('limit', '120');
       if (status !== 'all') params.set('status', status);
       if (category !== 'all') params.set('category', category);
+      if (language !== 'all') params.set('language', language);
       if (search.trim()) params.set('q', search.trim());
       const payload = await adminJsonFetch<PostsResponse>(`/api/admin/news/posts?${params.toString()}`);
       setItems(payload.items);
@@ -55,7 +67,7 @@ export function NewsQueueAdminClient({ onEdit, onCreateNew }: NewsQueueAdminClie
     } finally {
       setLoading(false);
     }
-  }, [category, search, status]);
+  }, [category, language, search, status]);
 
   async function runAction(id: string, action: 'publish' | 'reject' | 'archive' | 'feature', body?: Record<string, unknown>) {
     try {
@@ -131,7 +143,7 @@ export function NewsQueueAdminClient({ onEdit, onCreateNew }: NewsQueueAdminClie
             </div>
           </div>
 
-          <div className="mt-5 grid gap-3 md:grid-cols-4">
+          <div className="mt-5 grid gap-3 md:grid-cols-5">
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
@@ -161,6 +173,19 @@ export function NewsQueueAdminClient({ onEdit, onCreateNew }: NewsQueueAdminClie
                   {getNewsCategoryLabel(item)}
                 </option>
               ))}
+            </select>
+            <select
+              value={language}
+              onChange={(event) => setLanguage(event.target.value as LanguageFilter)}
+              className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue"
+            >
+              <option value="all" className="bg-black">Tüm Diller</option>
+              {NEWS_LANGUAGES.map((item) => (
+                <option key={item} value={item} className="bg-black">
+                  {getNewsLanguageLabel(item)}
+                </option>
+              ))}
+              <option value="unknown" className="bg-black">Dili Bilinmeyen</option>
             </select>
             <button
               type="button"
@@ -203,7 +228,20 @@ export function NewsQueueAdminClient({ onEdit, onCreateNew }: NewsQueueAdminClie
                   items.map((item) => (
                     <tr key={item.id} className="rounded-[1.4rem] border border-white/10 bg-white/[0.03]">
                       <td className="rounded-l-[1.4rem] px-4 py-4 align-top">
-                        <div className="font-semibold text-white">{item.title}</div>
+                        <div className="flex items-start gap-2">
+                          <span
+                            className={cn(
+                              'mt-0.5 shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider',
+                              item.language_code === 'en'
+                                ? 'border-red-400/30 bg-red-500/10 text-red-200'
+                                : 'border-white/10 bg-white/[0.05] text-white/60'
+                            )}
+                            title={getNewsLanguageLabel(item.language_code)}
+                          >
+                            {item.language_code || '?'}
+                          </span>
+                          <div className="font-semibold text-white">{item.title}</div>
+                        </div>
                         {item.summary ? <div className="mt-2 max-w-md text-xs leading-6 text-white/58">{item.summary}</div> : null}
                       </td>
                       <td className="px-4 py-4 align-top text-white/78">{getNewsCategoryLabel(item.category)}</td>

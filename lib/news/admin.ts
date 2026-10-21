@@ -1,19 +1,25 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { type NextRequest } from 'next/server';
 import {
+  DEFAULT_ALLOWED_NEWS_LANGUAGES,
+  NEWS_SOURCE_TYPES,
+  PUBLISHABLE_NEWS_LANGUAGES,
   buildStableNewsSlug,
   buildWhatsAppShareText,
   getNewsCategoryLabel,
   normalizeNewsCategory,
+  normalizeNewsLanguage,
   normalizeNewsStatus,
   slugifyNewsTitle,
 } from '@/lib/news/shared';
 import type {
   NewsCategory,
   NewsIngestRunRecord,
+  NewsLanguage,
   NewsPipelineSettingsRecord,
   NewsPostAdminRecord,
   NewsSourceRecord,
+  NewsSourceType,
   NewsStatus,
 } from '@/types/news';
 import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
@@ -32,6 +38,7 @@ export const NEWS_POST_SELECT = `
   source_name,
   source_url,
   source_published_at,
+  language_code,
   status,
   is_featured,
   featured_rank,
@@ -98,13 +105,14 @@ export const NEWS_SETTINGS_SELECT = `
   auto_create_pending_review,
   excluded_keywords,
   high_priority_keywords,
+  allowed_languages,
   created_at,
   updated_at
 `;
 
 type JsonRecord = Record<string, unknown>;
 
-const NEWS_SOURCE_TYPES: readonly string[] = ['rss', 'mrss', 'atom', 'api', 'gdelt', 'manual'];
+const NEWS_USAGE_MODES: readonly string[] = ['signal_only', 'short_excerpt_allowed', 'licensed', 'manual_only'];
 
 function normalizeEnvValue(value: unknown): string {
   const raw = String(value || '').trim();
@@ -181,6 +189,76 @@ function normalizeCategoryFilter(value: unknown): NewsCategory | 'all' {
 function normalizeStatusFilter(value: unknown): NewsStatus | 'all' {
   const safe = String(value || '').trim();
   return !safe || safe === 'all' ? 'all' : normalizeNewsStatus(safe);
+}
+
+type LanguageFilter = NewsLanguage | 'unknown' | 'all';
+
+function normalizeLanguageFilter(value: unknown): LanguageFilter {
+  const safe = String(value || '').trim().toLowerCase();
+  if (safe === 'unknown') return 'unknown';
+  return normalizeNewsLanguage(safe) ?? 'all';
+}
+
+/** Boş değer null'a döner; dolu ama desteklenmeyen bir dil kodu hatadır. */
+function parseSourceLanguage(value: unknown): NewsLanguage | null {
+  if (!String(value ?? '').trim()) return null;
+  const language = normalizeNewsLanguage(value);
+  if (!language) throw new Error('language_code must be one of tr, de, en');
+  return language;
+}
+
+function parseSourceType(value: unknown): NewsSourceType {
+  const safe = String(value || '').trim();
+  if (!safe) return 'rss';
+  if (!(NEWS_SOURCE_TYPES as string[]).includes(safe)) {
+    throw new Error(`source_type must be one of ${NEWS_SOURCE_TYPES.join(', ')}`);
+  }
+  return safe as NewsSourceType;
+}
+
+function parseAllowedLanguages(value: unknown): NewsLanguage[] {
+  if (!Array.isArray(value)) return [...DEFAULT_ALLOWED_NEWS_LANGUAGES];
+  const languages = value
+    .map(normalizeNewsLanguage)
+    .filter((language): language is NewsLanguage => language !== null && PUBLISHABLE_NEWS_LANGUAGES.includes(language));
+  if (languages.length === 0) {
+    throw new Error(`allowed_languages must contain at least one of ${PUBLISHABLE_NEWS_LANGUAGES.join(', ')}`);
+  }
+  return [...new Set(languages)];
+}
+
+function hasAnyField(body: JsonRecord, keys: readonly string[]): boolean {
+  return keys.some((key) => Object.prototype.hasOwnProperty.call(body, key));
+}
+
+/**
+ * Kaynak alanlarını doğrular. `partial` modda yalnızca gövdede bulunan alanlar döner,
+ * böylece PATCH gönderilmeyen alanları varsayılana sıfırlamaz.
+ * last_error pipeline'a aittir; istemciden kabul edilmez.
+ */
+function buildSourcePayload(body: JsonRecord, options: { partial: boolean }): JsonRecord {
+  const fields: Array<[column: string, keys: readonly string[], parse: (value: unknown) => unknown]> = [
+    ['name', ['name'], (value) => normalizeText(value, 120)],
+    ['source_type', ['source_type', 'sourceType'], parseSourceType],
+    ['feed_url', ['feed_url', 'feedUrl'], normalizeOptionalUrl],
+    ['homepage_url', ['homepage_url', 'homepageUrl'], normalizeOptionalUrl],
+    ['default_category', ['default_category', 'defaultCategory'], normalizeNewsCategory],
+    ['language_code', ['language_code', 'languageCode'], parseSourceLanguage],
+    ['country_code', ['country_code', 'countryCode'], (value) => normalizeNullableText(value, 12)],
+    ['usage_mode', ['usage_mode', 'usageMode'], (value) => (NEWS_USAGE_MODES.includes(String(value)) ? String(value) : 'signal_only')],
+    ['priority', ['priority'], (value) => normalizeInteger(value, 0, 100, 50)],
+    ['is_active', ['is_active', 'isActive'], (value) => normalizeBoolean(value, true)],
+    ['fetch_limit', ['fetch_limit', 'fetchLimit'], (value) => normalizeInteger(value, 1, 50, 10)],
+    ['config', ['config'], normalizeJsonRecord],
+  ];
+
+  const entries = fields
+    .filter(([, keys]) => !options.partial || hasAnyField(body, keys))
+    .map(([column, keys, parse]) => [column, parse(keys.map((key) => body[key]).find((value) => value !== undefined))]);
+
+  const payload: JsonRecord = { ...Object.fromEntries(entries), updated_at: new Date().toISOString() };
+  if ('name' in payload && !payload.name) throw new Error('name is required');
+  return payload;
 }
 
 function getActorIdentity(request: NextRequest): string {
@@ -306,6 +384,7 @@ export async function listAdminPosts(params: {
   const limit = normalizeInteger(searchParams.get('limit'), 1, 200, 50);
   const source = normalizeText(searchParams.get('source'), 120);
   const featured = searchParams.get('featured');
+  const language = normalizeLanguageFilter(searchParams.get('language'));
 
   let query = client
     .from('news_posts')
@@ -322,10 +401,14 @@ export async function listAdminPosts(params: {
   if (source) query = query.ilike('source_name', `%${source}%`);
   if (featured === 'true') query = query.eq('is_featured', true);
   if (featured === 'false') query = query.eq('is_featured', false);
+  if (language === 'unknown') query = query.is('language_code', null);
+  else if (language !== 'all') query = query.eq('language_code', language);
 
   const countByStatus = (target: NewsStatus | 'all') => {
     let countQuery = client.from('news_posts').select('id', { count: 'exact', head: true });
     if (category !== 'all') countQuery = countQuery.eq('category', category);
+    if (language === 'unknown') countQuery = countQuery.is('language_code', null);
+    else if (language !== 'all') countQuery = countQuery.eq('language_code', language);
     if (target !== 'all') countQuery = countQuery.eq('status', target);
     return countQuery;
   };
@@ -569,27 +652,7 @@ export async function listNewsSources(client?: SupabaseClient) {
 
 export async function createNewsSource(body: JsonRecord, client?: SupabaseClient) {
   const serviceClient = client || getNewsServiceClient();
-  const payload = {
-    name: normalizeText(body.name, 120),
-    source_type: NEWS_SOURCE_TYPES.includes(String(body.source_type || body.sourceType))
-      ? String(body.source_type || body.sourceType)
-      : 'rss',
-    feed_url: normalizeOptionalUrl(body.feed_url ?? body.feedUrl),
-    homepage_url: normalizeOptionalUrl(body.homepage_url ?? body.homepageUrl),
-    default_category: normalizeNewsCategory(body.default_category ?? body.defaultCategory),
-    language_code: normalizeNullableText(body.language_code ?? body.languageCode, 12),
-    country_code: normalizeNullableText(body.country_code ?? body.countryCode, 12),
-    usage_mode: ['signal_only', 'short_excerpt_allowed', 'licensed', 'manual_only'].includes(String(body.usage_mode || body.usageMode))
-      ? String(body.usage_mode || body.usageMode)
-      : 'signal_only',
-    priority: normalizeInteger(body.priority, 0, 100, 50),
-    is_active: normalizeBoolean(body.is_active ?? body.isActive, true),
-    fetch_limit: normalizeInteger(body.fetch_limit ?? body.fetchLimit, 1, 50, 10),
-    config: normalizeJsonRecord(body.config),
-    updated_at: new Date().toISOString(),
-  };
-
-  if (!payload.name) throw new Error('name is required');
+  const payload = buildSourcePayload(body, { partial: false });
 
   const { data, error } = await serviceClient
     .from('news_sources')
@@ -604,28 +667,7 @@ export async function createNewsSource(body: JsonRecord, client?: SupabaseClient
 
 export async function updateNewsSource(id: string, body: JsonRecord, client?: SupabaseClient) {
   const serviceClient = client || getNewsServiceClient();
-  const payload = {
-    name: normalizeText(body.name, 120),
-    source_type: NEWS_SOURCE_TYPES.includes(String(body.source_type || body.sourceType))
-      ? String(body.source_type || body.sourceType)
-      : 'rss',
-    feed_url: normalizeOptionalUrl(body.feed_url ?? body.feedUrl),
-    homepage_url: normalizeOptionalUrl(body.homepage_url ?? body.homepageUrl),
-    default_category: normalizeNewsCategory(body.default_category ?? body.defaultCategory),
-    language_code: normalizeNullableText(body.language_code ?? body.languageCode, 12),
-    country_code: normalizeNullableText(body.country_code ?? body.countryCode, 12),
-    usage_mode: ['signal_only', 'short_excerpt_allowed', 'licensed', 'manual_only'].includes(String(body.usage_mode || body.usageMode))
-      ? String(body.usage_mode || body.usageMode)
-      : 'signal_only',
-    priority: normalizeInteger(body.priority, 0, 100, 50),
-    is_active: normalizeBoolean(body.is_active ?? body.isActive, true),
-    fetch_limit: normalizeInteger(body.fetch_limit ?? body.fetchLimit, 1, 50, 10),
-    config: normalizeJsonRecord(body.config),
-    last_error: normalizeNullableText(body.last_error ?? body.lastError, 2000),
-    updated_at: new Date().toISOString(),
-  };
-
-  if (!payload.name) throw new Error('name is required');
+  const payload = buildSourcePayload(body, { partial: true });
 
   const { data, error } = await serviceClient
     .from('news_sources')
@@ -674,6 +716,10 @@ export async function updateNewsPipelineSettings(body: JsonRecord, client?: Supa
     auto_create_pending_review: normalizeBoolean(body.auto_create_pending_review ?? body.autoCreatePendingReview, true),
     excluded_keywords: normalizeStringArray(body.excluded_keywords ?? body.excludedKeywords),
     high_priority_keywords: normalizeStringArray(body.high_priority_keywords ?? body.highPriorityKeywords),
+    // Gövdede yoksa mevcut değer korunur (eski istemciler alanı göndermez).
+    ...(hasAnyField(body, ['allowed_languages', 'allowedLanguages'])
+      ? { allowed_languages: parseAllowedLanguages(body.allowed_languages ?? body.allowedLanguages) }
+      : {}),
     updated_at: new Date().toISOString(),
   };
 

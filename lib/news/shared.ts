@@ -1,7 +1,31 @@
-import type { NewsCategory, NewsStatus } from '@/types/news';
+import type { NewsCategory, NewsLanguage, NewsSourceType, NewsStatus } from '@/types/news';
 
 export const NEWS_CATEGORIES: NewsCategory[] = ['almanya', 'turkiye', 'avrupa', 'dunya', 'duyuru'];
 export const NEWS_STATUSES: NewsStatus[] = ['pending_review', 'draft', 'published', 'rejected', 'archived'];
+export const NEWS_SOURCE_TYPES: NewsSourceType[] = ['rss', 'mrss', 'atom', 'trthaber', 'api', 'gdelt', 'manual'];
+
+// Edge function tarafındaki karşılığı: supabase/functions/news-ingest/language.ts (ayrı runtime).
+export const NEWS_LANGUAGES: NewsLanguage[] = ['tr', 'de', 'en'];
+// Site Türkçe; yayınlanabilecek ve ingest'te izin verilebilecek diller bunlarla sınırlı.
+export const PUBLISHABLE_NEWS_LANGUAGES: NewsLanguage[] = ['tr', 'de'];
+export const DEFAULT_ALLOWED_NEWS_LANGUAGES: NewsLanguage[] = [...PUBLISHABLE_NEWS_LANGUAGES];
+
+export const NEWS_LANGUAGE_LABELS: Record<NewsLanguage, string> = {
+  tr: 'Türkçe',
+  de: 'Almanca',
+  en: 'İngilizce',
+};
+
+/** Yalnızca "tr" veya "de-DE" biçimini kabul eder; "english", "energy" gibi girdiler null döner. */
+export function normalizeNewsLanguage(value: unknown): NewsLanguage | null {
+  const match = /^([a-z]{2})(?:[-_][a-z]{2})?$/.exec(String(value ?? '').trim().toLowerCase());
+  if (!match) return null;
+  return (NEWS_LANGUAGES as string[]).includes(match[1]) ? (match[1] as NewsLanguage) : null;
+}
+
+export function getNewsLanguageLabel(language: NewsLanguage | null | undefined): string {
+  return language ? NEWS_LANGUAGE_LABELS[language] : 'Bilinmiyor';
+}
 
 export const NEWS_CATEGORY_LABELS: Record<NewsCategory, string> = {
   almanya: 'Almanya',

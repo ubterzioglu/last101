@@ -7,6 +7,10 @@ export type NewsStatus =
   | 'rejected'
   | 'archived';
 
+export type NewsLanguage = 'tr' | 'de' | 'en';
+
+export type NewsSourceType = 'rss' | 'mrss' | 'atom' | 'trthaber' | 'api' | 'gdelt' | 'manual';
+
 export interface NewsListItem {
   id: string;
   slug: string;
@@ -52,6 +56,7 @@ export interface NewsPostAdminRecord {
   source_name: string | null;
   source_url: string | null;
   source_published_at: string | null;
+  language_code: NewsLanguage | null;
   status: NewsStatus;
   is_featured: boolean;
   featured_rank: number | null;
@@ -73,11 +78,11 @@ export interface NewsPostAdminRecord {
 export interface NewsSourceRecord {
   id: string;
   name: string;
-  source_type: 'rss' | 'mrss' | 'atom' | 'api' | 'gdelt' | 'manual';
+  source_type: NewsSourceType;
   feed_url: string | null;
   homepage_url: string | null;
   default_category: NewsCategory;
-  language_code: string | null;
+  language_code: NewsLanguage | null;
   country_code: string | null;
   usage_mode: 'signal_only' | 'short_excerpt_allowed' | 'licensed' | 'manual_only';
   priority: number;
@@ -118,6 +123,7 @@ export interface NewsPipelineSettingsRecord {
   auto_create_pending_review: boolean;
   excluded_keywords: string[];
   high_priority_keywords: string[];
+  allowed_languages: NewsLanguage[];
   created_at: string;
   updated_at: string;
 }

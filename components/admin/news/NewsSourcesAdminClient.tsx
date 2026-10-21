@@ -2,36 +2,79 @@
 
 import { useEffect, useState } from 'react';
 import { adminJsonFetch } from '@/components/admin/news/api';
-import { NEWS_CATEGORIES, getNewsCategoryLabel } from '@/lib/news/shared';
-import type { NewsSourceRecord } from '@/types/news';
+import {
+  NEWS_CATEGORIES,
+  NEWS_LANGUAGES,
+  NEWS_LANGUAGE_LABELS,
+  NEWS_SOURCE_TYPES,
+  getNewsCategoryLabel,
+  getNewsLanguageLabel,
+} from '@/lib/news/shared';
+import type { NewsCategory, NewsLanguage, NewsSourceRecord, NewsSourceType } from '@/types/news';
 
 interface SourcesResponse {
   items: NewsSourceRecord[];
 }
 
-const emptyForm = {
+interface SourceForm {
+  name: string;
+  source_type: NewsSourceType;
+  feed_url: string;
+  homepage_url: string;
+  default_category: NewsCategory;
+  /** '' = karışık/bilinmiyor: dil yalnızca içerikten tespit edilir. */
+  language_code: NewsLanguage | '';
+  usage_mode: NewsSourceRecord['usage_mode'];
+  priority: number;
+  fetch_limit: number;
+  is_active: boolean;
+  config: Record<string, unknown>;
+}
+
+const USAGE_MODES: NewsSourceRecord['usage_mode'][] = ['signal_only', 'short_excerpt_allowed', 'licensed', 'manual_only'];
+const SOURCE_LANGUAGE_OPTIONS: SourceForm['language_code'][] = [...NEWS_LANGUAGES, ''];
+const SOURCE_LANGUAGE_LABELS: Record<string, string> = { ...NEWS_LANGUAGE_LABELS, '': 'Karışık / Bilinmiyor' };
+
+const emptyForm: SourceForm = {
   name: '',
   source_type: 'rss',
   feed_url: '',
   homepage_url: '',
   default_category: 'almanya',
+  language_code: 'tr',
   usage_mode: 'signal_only',
   priority: 50,
   fetch_limit: 10,
   is_active: true,
-  config: {} as Record<string, unknown>,
+  config: {},
 };
+
+function toSourceForm(item: NewsSourceRecord): SourceForm {
+  return {
+    name: item.name,
+    source_type: item.source_type,
+    feed_url: item.feed_url || '',
+    homepage_url: item.homepage_url || '',
+    default_category: item.default_category,
+    language_code: item.language_code ?? '',
+    usage_mode: item.usage_mode,
+    priority: item.priority,
+    fetch_limit: item.fetch_limit,
+    is_active: item.is_active,
+    config: item.config || {},
+  };
+}
 
 const GDELT_CONFIG_PLACEHOLDER = `{
   "query": "Turkish diaspora Germany",
   "timespan": "1d",
   "maxrecords": 100,
-  "allowedLanguages": "Turkish,German,English"
+  "allowedLanguages": "Turkish,German"
 }`;
 
 export function NewsSourcesAdminClient() {
   const [items, setItems] = useState<NewsSourceRecord[]>([]);
-  const [form, setForm] = useState(emptyForm);
+  const [form, setForm] = useState<SourceForm>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -130,17 +173,24 @@ export function NewsSourcesAdminClient() {
             <Input label="Kaynak Adı" value={form.name} onChange={(value) => setForm((s) => ({ ...s, name: value }))} />
             <Input label="Feed URL" value={form.feed_url} onChange={(value) => setForm((s) => ({ ...s, feed_url: value }))} />
             <Input label="Homepage URL" value={form.homepage_url} onChange={(value) => setForm((s) => ({ ...s, homepage_url: value }))} />
-            <Select label="Tür" value={form.source_type} onChange={(value) => setForm((s) => ({ ...s, source_type: value }))} options={['rss', 'mrss', 'atom', 'api', 'gdelt', 'manual']} />
+            <Select label="Tür" value={form.source_type} onChange={(value) => setForm((s) => ({ ...s, source_type: value as NewsSourceType }))} options={NEWS_SOURCE_TYPES} />
+            <Select label="Dil" value={form.language_code} onChange={(value) => setForm((s) => ({ ...s, language_code: value as SourceForm['language_code'] }))} options={SOURCE_LANGUAGE_OPTIONS} labels={SOURCE_LANGUAGE_LABELS} />
+            {form.language_code === 'en' ? (
+              <div className="rounded-2xl border border-yellow-300/25 bg-yellow-500/10 px-4 py-3 text-xs text-yellow-100">
+                İngilizce kaynaklardan haber alınmaz; içerikten açıkça Türkçe veya Almanca olduğu anlaşılan öğeler hariç.
+              </div>
+            ) : null}
             {form.source_type === 'gdelt' ? (
               <ConfigTextarea
+                key={editingId ?? 'new'}
                 label="GDELT Config (JSON)"
                 value={form.config}
                 placeholder={GDELT_CONFIG_PLACEHOLDER}
                 onChange={(value) => setForm((s) => ({ ...s, config: value }))}
               />
             ) : null}
-            <Select label="Kategori" value={form.default_category} onChange={(value) => setForm((s) => ({ ...s, default_category: value }))} options={NEWS_CATEGORIES} labels={Object.fromEntries(NEWS_CATEGORIES.map((item) => [item, getNewsCategoryLabel(item)]))} />
-            <Select label="Usage Mode" value={form.usage_mode} onChange={(value) => setForm((s) => ({ ...s, usage_mode: value }))} options={['signal_only', 'short_excerpt_allowed', 'licensed', 'manual_only']} />
+            <Select label="Kategori" value={form.default_category} onChange={(value) => setForm((s) => ({ ...s, default_category: value as NewsCategory }))} options={NEWS_CATEGORIES} labels={Object.fromEntries(NEWS_CATEGORIES.map((item) => [item, getNewsCategoryLabel(item)]))} />
+            <Select label="Usage Mode" value={form.usage_mode} onChange={(value) => setForm((s) => ({ ...s, usage_mode: value as SourceForm['usage_mode'] }))} options={USAGE_MODES} />
             <Input label="Öncelik" type="number" value={String(form.priority)} onChange={(value) => setForm((s) => ({ ...s, priority: Number(value) || 50 }))} />
             <Input label="Fetch Limit" type="number" value={String(form.fetch_limit)} onChange={(value) => setForm((s) => ({ ...s, fetch_limit: Number(value) || 10 }))} />
             <label className="flex items-center gap-3 text-sm text-white/70">
@@ -169,6 +219,7 @@ export function NewsSourcesAdminClient() {
                 <tr>
                   <th className="px-4">Kaynak</th>
                   <th className="px-4">Tür</th>
+                  <th className="px-4">Dil</th>
                   <th className="px-4">Kategori</th>
                   <th className="px-4">Son Başarı</th>
                   <th className="px-4">Hata</th>
@@ -177,9 +228,9 @@ export function NewsSourcesAdminClient() {
               </thead>
               <tbody>
                 {loading ? (
-                  <tr><td colSpan={6} className="px-4 py-10 text-center text-white/60">Kaynaklar yükleniyor...</td></tr>
+                  <tr><td colSpan={7} className="px-4 py-10 text-center text-white/60">Kaynaklar yükleniyor...</td></tr>
                 ) : items.length === 0 ? (
-                  <tr><td colSpan={6} className="px-4 py-10 text-center text-white/60">Henüz kaynak yok.</td></tr>
+                  <tr><td colSpan={7} className="px-4 py-10 text-center text-white/60">Henüz kaynak yok.</td></tr>
                 ) : items.map((item) => (
                   <tr key={item.id}>
                     <td className="rounded-l-[1.4rem] bg-white/[0.02] px-4 py-4">
@@ -187,12 +238,13 @@ export function NewsSourcesAdminClient() {
                       <div className="mt-1 max-w-sm break-all text-xs text-white/58">{item.feed_url || '-'}</div>
                     </td>
                     <td className="bg-white/[0.02] px-4 py-4 text-white/70">{item.source_type}</td>
+                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{getNewsLanguageLabel(item.language_code)}</td>
                     <td className="bg-white/[0.02] px-4 py-4 text-white/70">{getNewsCategoryLabel(item.default_category)}</td>
                     <td className="bg-white/[0.02] px-4 py-4 text-white/70">{item.last_success_at || '-'}</td>
                     <td className="bg-white/[0.02] px-4 py-4 text-white/60">{item.last_error || '-'}</td>
                     <td className="rounded-r-[1.4rem] bg-white/[0.02] px-4 py-4">
                       <div className="flex flex-wrap gap-2">
-                        <button type="button" onClick={() => { setEditingId(item.id); setForm({ ...item, feed_url: item.feed_url || '', homepage_url: item.homepage_url || '' } as any); }} className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/[0.1]">
+                        <button type="button" onClick={() => { setEditingId(item.id); setForm(toSourceForm(item)); }} className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/[0.1]">
                           Düzenle
                         </button>
                         <button type="button" onClick={() => void testSource(item.id)} className="rounded-full border border-yellow-300/20 bg-yellow-500/10 px-3 py-1.5 text-xs font-semibold text-yellow-100 transition hover:bg-yellow-500/20" disabled={testing === item.id}>
@@ -285,7 +337,7 @@ function Select({
   label: string;
   value: string;
   onChange: (value: string) => void;
-  options: string[];
+  options: readonly string[];
   labels?: Record<string, string>;
 }) {
   return (
