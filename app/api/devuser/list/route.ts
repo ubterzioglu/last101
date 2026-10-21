@@ -62,11 +62,11 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get('limit') || '200'), 1000);
     const keyword = searchParams.get('q')?.trim().toLowerCase() || '';
     
+    // devuser_public view'ı aratilabilir + approved filtresini ve WhatsApp'ın iletişim iznine bağlı
+    // maskelenmesini veritabanında uygular; anon'un devuser tablosunu doğrudan okuması gerekmez.
     const { data: rows, error } = await supabase
-      .from('devuser')
+      .from('devuser_public')
       .select(PUBLIC_SELECT)
-      .eq('aratilabilir', true)
-      .eq('approval_status', 'approved')
       .order('created_at', { ascending: false })
       .limit(limit)
       // PUBLIC_SELECT çalışma anında birleştirildiği için supabase-js satır tipini çıkaramıyor.
