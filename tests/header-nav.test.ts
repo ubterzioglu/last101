@@ -115,8 +115,16 @@ describe('Header', () => {
 
     expect(header).toHaveLength(1);
     expect(header.attr('class')).toContain('sticky');
-    expect(logo.attr('src')).toContain('almanya101header.png');
+    expect(logo.attr('src')).toContain('yeniherologo.png');
     expect(logo.closest('a').attr('href')).toBe('/');
+  });
+
+  it('sits on the dark ink background that the mascot logo is made for', () => {
+    const { $ } = renderHeader();
+    const headerClass = $('header').attr('class') ?? '';
+
+    expect(headerClass).toMatch(/\bbg-ink\b/);
+    expect(headerClass).not.toMatch(/\bbg-page\b/);
   });
 
   it('renders the six primary links inside the main navigation', () => {

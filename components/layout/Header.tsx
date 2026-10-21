@@ -17,11 +17,12 @@ import { SITE_NAME } from '@/lib/utils/constants';
 const WHATSAPP_HREF =
   CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp')?.href ?? '/iletisim';
 
+// Dark ink header: light text, bright brand-500 for the active marker (AA on ink).
 const NAV_LINK =
-  'whitespace-nowrap text-sm font-medium text-ink underline-offset-[10px] transition-colors hover:text-brand-700 xl:text-[15px] aria-[current=page]:underline aria-[current=page]:decoration-brand-700 aria-[current=page]:decoration-2';
+  'whitespace-nowrap text-sm font-medium text-white/85 underline-offset-[10px] transition-colors hover:text-white xl:text-[15px] aria-[current=page]:text-white aria-[current=page]:underline aria-[current=page]:decoration-brand-500 aria-[current=page]:decoration-2';
 // Desktop-only text actions on the right; below lg they live in the drawer.
 const TEXT_ACTION =
-  'hidden min-h-[44px] items-center gap-1.5 whitespace-nowrap text-sm font-medium text-ink transition-colors hover:text-brand-700 lg:inline-flex';
+  'hidden min-h-[44px] items-center gap-1.5 whitespace-nowrap text-sm font-medium text-white/85 transition-colors hover:text-white lg:inline-flex';
 
 function isActivePath(pathname: string | null, href: string): boolean {
   return pathname === href || Boolean(pathname?.startsWith(`${href}/`));
@@ -52,16 +53,17 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 h-20 border-b border-line bg-page/95 backdrop-blur-sm">
+      {/* brand-700 focus outline is under 3:1 on ink, so the header uses brand-500 */}
+      <header className="sticky top-0 z-50 h-20 border-b border-ink-soft bg-ink text-white [&_*:focus-visible]:!outline-brand-500">
         <Container className="flex h-full items-center justify-between gap-6">
           <Link href="/" className="shrink-0">
             <Image
-              src="/almanya101header.png"
+              src="/yeniherologo.png"
               alt={SITE_NAME}
-              width={1500}
-              height={350}
+              width={1160}
+              height={400}
               priority
-              className="h-8 w-auto"
+              className="h-14 w-auto"
             />
           </Link>
 
@@ -117,7 +119,7 @@ export function Header() {
               aria-haspopup="dialog"
               aria-expanded={isDrawerOpen}
               aria-controls={isDrawerOpen ? HEADER_DRAWER_ID : undefined}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-btn border border-line bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-ink lg:hidden"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-btn bg-ink-soft px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-700 lg:hidden"
             >
               <Menu aria-hidden="true" size={18} />
               Menü
