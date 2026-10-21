@@ -9,6 +9,23 @@ import FounderEventSurveyAdminSection from '@/components/admin/FounderEventSurve
 import { useAdminGate } from '@/hooks/useAdminGate';
 import { ADMIN_KEY_HEADER, ADMIN_PASSWORD_HEADER } from '@/lib/admin/headers';
 import { SOFTWARE_HUB_SECTION_KEYS } from '@/constants/adminSoftwareHubSections';
+import type {
+  SoftwareHubApiErrorPayload,
+  SoftwareHubBracketSlot,
+  SoftwareHubDevUser,
+  SoftwareHubDiscussionListPayload,
+  SoftwareHubDiscussionRow,
+  SoftwareHubMeetingDateStat,
+  SoftwareHubMeetingListPayload,
+  SoftwareHubMeetingParticipant,
+  SoftwareHubNewsListPayload,
+  SoftwareHubNewsRow,
+  SoftwareHubNewsStats,
+  SoftwareHubParticipant,
+  SoftwareHubParticipantCategoryData,
+  SoftwareHubParticipantListAllPayload,
+  SoftwareHubParticipantListPayload,
+} from '@/types/software-hub';
 
 const css = `
   :root {
@@ -251,6 +268,12 @@ function normalizeDiscussionStatus(status: string | undefined): string {
   return String(status || '').toLowerCase() === 'approved' ? 'approved' : 'pending';
 }
 
+const GENERIC_ERROR_MESSAGE = 'İşlem sırasında hata oluştu.';
+
+function errorMessage(err: unknown, fallback: string): string {
+  return (err instanceof Error && err.message) || fallback;
+}
+
 // ==================== AUTH HELPERS ====================
 // Session is established once at /admin (single-door gate). Here we only read
 // the shared session to build authorized API headers; the password form lives
@@ -297,47 +320,47 @@ export default function AdminPage() {
   const [badges, setBadges] = useState<Record<string, number | string>>({});
 
   // DevUsers
-  const [devUsers, setDevUsers] = useState<any[]>([]);
+  const [devUsers, setDevUsers] = useState<SoftwareHubDevUser[]>([]);
   const [devuserTab, setDevuserTab] = useState('all');
   const [devuserLoading, setDevuserLoading] = useState(false);
 
   // Tournament
-  const [tournamentParticipants, setTournamentParticipants] = useState<any[]>([]);
-  const [tournamentBracket, setTournamentBracket] = useState<any[]>([]);
+  const [tournamentParticipants, setTournamentParticipants] = useState<SoftwareHubParticipant[]>([]);
+  const [tournamentBracket, setTournamentBracket] = useState<SoftwareHubBracketSlot[]>([]);
   const [tournamentTab, setTournamentTab] = useState('all');
 
   // Hackathon
-  const [hackathonParticipants, setHackathonParticipants] = useState<any[]>([]);
+  const [hackathonParticipants, setHackathonParticipants] = useState<SoftwareHubParticipant[]>([]);
   const [hackathonTab, setHackathonTab] = useState('all');
 
   // Typing
-  const [typingParticipants, setTypingParticipants] = useState<any[]>([]);
-  const [typingBracket, setTypingBracket] = useState<any[]>([]);
+  const [typingParticipants, setTypingParticipants] = useState<SoftwareHubParticipant[]>([]);
+  const [typingBracket, setTypingBracket] = useState<SoftwareHubBracketSlot[]>([]);
   const [typingTab, setTypingTab] = useState('all');
 
   // Promote
-  const [promoteParticipants, setPromoteParticipants] = useState<any[]>([]);
+  const [promoteParticipants, setPromoteParticipants] = useState<SoftwareHubParticipant[]>([]);
   const [promoteTab, setPromoteTab] = useState('all');
 
   // CvOpt
-  const [cvoptParticipants, setCvoptParticipants] = useState<any[]>([]);
+  const [cvoptParticipants, setCvoptParticipants] = useState<SoftwareHubParticipant[]>([]);
   const [cvoptTab, setCvoptTab] = useState('all');
 
   // Discussion
-  const [discussionRows, setDiscussionRows] = useState<any[]>([]);
+  const [discussionRows, setDiscussionRows] = useState<SoftwareHubDiscussionRow[]>([]);
   const [discussionTab, setDiscussionTab] = useState('all');
   const [discussionLoading, setDiscussionLoading] = useState(false);
 
   // News
-  const [newsRows, setNewsRows] = useState<any[]>([]);
-  const [newsStats, setNewsStats] = useState({ total: 0, draft: 0, published: 0 });
+  const [newsRows, setNewsRows] = useState<SoftwareHubNewsRow[]>([]);
+  const [newsStats, setNewsStats] = useState<SoftwareHubNewsStats>({ total: 0, draft: 0, published: 0 });
   const [newsTab, setNewsTab] = useState('all');
   const [newsSearch, setNewsSearch] = useState('');
   const [newsLoading, setNewsLoading] = useState(false);
 
   // Meeting
-  const [meetingParticipants, setMeetingParticipants] = useState<any[]>([]);
-  const [meetingDateStats, setMeetingDateStats] = useState<any[]>([]);
+  const [meetingParticipants, setMeetingParticipants] = useState<SoftwareHubMeetingParticipant[]>([]);
+  const [meetingDateStats, setMeetingDateStats] = useState<SoftwareHubMeetingDateStat[]>([]);
   const [meetingTotal, setMeetingTotal] = useState(0);
   const [meetingLoading, setMeetingLoading] = useState(false);
 
@@ -407,19 +430,19 @@ export default function AdminPage() {
       const participantRes = await fetch(`${PARTICIPANT_LIST_API_URL}?category=all`, {
         headers: getAdminHeaders({ Accept: 'application/json' }),
       });
-      const participantPayload = await participantRes.json().catch(() => ({}));
+      const participantPayload: SoftwareHubParticipantListAllPayload = await participantRes.json().catch(() => ({}));
       const pdata = participantPayload.data || {};
 
-      newBadges.tavla = (pdata.tavla?.participants || []).filter((p: any) => !p.approved).length;
-      newBadges.vct = (pdata.vct?.participants || []).filter((p: any) => !p.approved).length;
-      newBadges.promote = (pdata.promote?.participants || []).filter((p: any) => !p.approved).length;
-      newBadges.cvopt = (pdata.cvopt?.participants || []).filter((p: any) => !p.approved).length;
-      newBadges.typing = (pdata.typing?.participants || []).filter((p: any) => !p.approved).length;
+      newBadges.tavla = (pdata.tavla?.participants || []).filter((p) => !p.approved).length;
+      newBadges.vct = (pdata.vct?.participants || []).filter((p) => !p.approved).length;
+      newBadges.promote = (pdata.promote?.participants || []).filter((p) => !p.approved).length;
+      newBadges.cvopt = (pdata.cvopt?.participants || []).filter((p) => !p.approved).length;
+      newBadges.typing = (pdata.typing?.participants || []).filter((p) => !p.approved).length;
 
       const discRes = await fetch(`${DISCUSSION_LIST_API_URL}?status=pending&limit=1000`, {
         headers: getAdminHeaders({ Accept: 'application/json' }),
       });
-      const discPayload = await discRes.json().catch(() => ({}));
+      const discPayload: SoftwareHubDiscussionListPayload = await discRes.json().catch(() => ({}));
       newBadges.discussion = Array.isArray(discPayload.items) ? discPayload.items.length : 0;
 
       const newsRes = await fetch(`${NEWS_ADMIN_LIST_API_URL}?status=all&limit=1`, {
@@ -509,10 +532,10 @@ export default function AdminPage() {
       const res = await fetch(USERS_API_URL, { headers: getAdminHeaders({ Accept: 'application/json' }) });
       if (res.status === 401) throw new Error('Admin yetkisi doğrulanamadı.');
       if (!res.ok) throw new Error('API Hatası');
-      const result = await res.json();
+      const result: { data?: SoftwareHubDevUser[] } = await res.json();
       setDevUsers(result.data || []);
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(errorMessage(err, GENERIC_ERROR_MESSAGE));
     } finally {
       setDevuserLoading(false);
     }
@@ -525,22 +548,22 @@ export default function AdminPage() {
         headers: getAdminHeaders({ 'Content-Type': 'application/json', Accept: 'application/json' }),
         body: JSON.stringify({ id: userId, action }),
       });
-      const payload = await res.json().catch(() => ({}));
+      const payload: SoftwareHubApiErrorPayload = await res.json().catch(() => ({}));
       if (res.status === 401) throw new Error('Admin yetkisi doğrulanamadı.');
       if (!res.ok) throw new Error(payload.error || 'İşlem başarısız.');
       await loadDevUsers();
       updateBadges();
-    } catch (err: any) {
-      alert(err.message || 'İşlem sırasında hata oluştu.');
+    } catch (err) {
+      alert(errorMessage(err, GENERIC_ERROR_MESSAGE));
     }
   };
 
   // ==================== PARTICIPANT HELPERS ====================
-  const fetchParticipantAdminData = async (category: string) => {
+  const fetchParticipantAdminData = async (category: string): Promise<SoftwareHubParticipantCategoryData> => {
     const res = await fetch(`${PARTICIPANT_LIST_API_URL}?category=${encodeURIComponent(category)}`, {
       headers: getAdminHeaders({ Accept: 'application/json' }),
     });
-    const payload = await res.json().catch(() => ({}));
+    const payload: SoftwareHubParticipantListPayload = await res.json().catch(() => ({}));
     if (res.status === 401) throw new Error('Yetki doğrulanamadı.');
     if (!res.ok) throw new Error(payload.error || 'Veriler alınamadı.');
     return payload.data || {};
@@ -553,13 +576,13 @@ export default function AdminPage() {
         headers: getAdminHeaders({ 'Content-Type': 'application/json', Accept: 'application/json' }),
         body: JSON.stringify({ category, action, id }),
       });
-      const payload = await res.json().catch(() => ({}));
+      const payload: SoftwareHubApiErrorPayload = await res.json().catch(() => ({}));
       if (res.status === 401) throw new Error('Yetki doğrulanamadı.');
       if (!res.ok) throw new Error(payload.error || 'İşlem başarısız.');
       await reload();
       updateBadges();
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(errorMessage(err, GENERIC_ERROR_MESSAGE));
     }
   };
 
@@ -569,7 +592,7 @@ export default function AdminPage() {
       headers: getAdminHeaders({ 'Content-Type': 'application/json', Accept: 'application/json' }),
       body: JSON.stringify({ category, action, ...data }),
     });
-    const payload = await res.json().catch(() => ({}));
+    const payload: SoftwareHubApiErrorPayload & { data?: unknown } = await res.json().catch(() => ({}));
     if (res.status === 401) throw new Error('Yetki doğrulanamadı.');
     if (!res.ok) throw new Error(payload.error || 'İşlem başarısız.');
     return payload.data || null;
@@ -581,8 +604,8 @@ export default function AdminPage() {
       const data = await fetchParticipantAdminData('tavla');
       setTournamentParticipants(Array.isArray(data.participants) ? data.participants : []);
       setTournamentBracket(Array.isArray(data.bracket) ? data.bracket : []);
-    } catch (err: any) {
-      alert('Veriler yüklenirken hata: ' + err.message);
+    } catch (err) {
+      alert('Veriler yüklenirken hata: ' + errorMessage(err, GENERIC_ERROR_MESSAGE));
     }
   };
 
@@ -591,8 +614,8 @@ export default function AdminPage() {
     try {
       const data = await fetchParticipantAdminData('vct');
       setHackathonParticipants(Array.isArray(data.participants) ? data.participants : []);
-    } catch (err: any) {
-      alert('Veriler yüklenirken hata: ' + err.message);
+    } catch (err) {
+      alert('Veriler yüklenirken hata: ' + errorMessage(err, GENERIC_ERROR_MESSAGE));
     }
   };
 
@@ -602,8 +625,8 @@ export default function AdminPage() {
       const data = await fetchParticipantAdminData('typing');
       setTypingParticipants(Array.isArray(data.participants) ? data.participants : []);
       setTypingBracket(Array.isArray(data.bracket) ? data.bracket : []);
-    } catch (err: any) {
-      alert('Veriler yüklenirken hata: ' + err.message);
+    } catch (err) {
+      alert('Veriler yüklenirken hata: ' + errorMessage(err, GENERIC_ERROR_MESSAGE));
     }
   };
 
@@ -612,8 +635,8 @@ export default function AdminPage() {
     try {
       const data = await fetchParticipantAdminData('promote');
       setPromoteParticipants(Array.isArray(data.participants) ? data.participants : []);
-    } catch (err: any) {
-      alert('Veriler yüklenirken hata: ' + err.message);
+    } catch (err) {
+      alert('Veriler yüklenirken hata: ' + errorMessage(err, GENERIC_ERROR_MESSAGE));
     }
   };
 
@@ -622,8 +645,8 @@ export default function AdminPage() {
     try {
       const data = await fetchParticipantAdminData('cvopt');
       setCvoptParticipants(Array.isArray(data.participants) ? data.participants : []);
-    } catch (err: any) {
-      alert('Veriler yüklenirken hata: ' + err.message);
+    } catch (err) {
+      alert('Veriler yüklenirken hata: ' + errorMessage(err, GENERIC_ERROR_MESSAGE));
     }
   };
 
@@ -634,12 +657,12 @@ export default function AdminPage() {
       const res = await fetch(`${DISCUSSION_LIST_API_URL}?status=all&limit=1000`, {
         headers: getAdminHeaders({ Accept: 'application/json' }),
       });
-      const payload = await res.json().catch(() => ({}));
+      const payload: SoftwareHubDiscussionListPayload = await res.json().catch(() => ({}));
       if (res.status === 401) throw new Error('Admin yetkisi doğrulanamadı.');
       if (!res.ok) throw new Error(payload.error || 'Veriler yüklenemedi.');
       setDiscussionRows(Array.isArray(payload.items) ? payload.items : []);
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(errorMessage(err, GENERIC_ERROR_MESSAGE));
     } finally {
       setDiscussionLoading(false);
     }
@@ -654,13 +677,13 @@ export default function AdminPage() {
         headers: getAdminHeaders({ 'Content-Type': 'application/json', Accept: 'application/json' }),
         body: JSON.stringify({ action, id }),
       });
-      const payload = await res.json().catch(() => ({}));
+      const payload: SoftwareHubApiErrorPayload = await res.json().catch(() => ({}));
       if (res.status === 401) throw new Error('Admin yetkisi doğrulanamadı.');
       if (!res.ok) throw new Error(payload.error || 'İşlem başarısız.');
       await loadDiscussionData();
       updateBadges();
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(errorMessage(err, GENERIC_ERROR_MESSAGE));
     }
   };
 
@@ -677,13 +700,13 @@ export default function AdminPage() {
       const res = await fetch(`${NEWS_ADMIN_LIST_API_URL}?${params.toString()}`, {
         headers: getAdminHeaders({ Accept: 'application/json' }),
       });
-      const payload = await res.json().catch(() => ({}));
+      const payload: SoftwareHubNewsListPayload = await res.json().catch(() => ({}));
       if (res.status === 401) throw new Error('Admin yetkisi doğrulanamadı.');
       if (!res.ok) throw new Error(payload.error || 'Haberler yüklenemedi.');
       setNewsRows(Array.isArray(payload.items) ? payload.items : []);
       setNewsStats(payload.stats && typeof payload.stats === 'object' ? payload.stats : { total: 0, draft: 0, published: 0 });
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(errorMessage(err, GENERIC_ERROR_MESSAGE));
     } finally {
       setNewsLoading(false);
     }
@@ -695,7 +718,7 @@ export default function AdminPage() {
       headers: getAdminHeaders({ 'Content-Type': 'application/json', Accept: 'application/json' }),
       body: JSON.stringify(payload),
     });
-    const result = await res.json().catch(() => ({}));
+    const result: SoftwareHubApiErrorPayload = await res.json().catch(() => ({}));
     if (res.status === 401) throw new Error('Admin yetkisi doğrulanamadı.');
     if (!res.ok) throw new Error(result.error || 'İşlem başarısız.');
     await loadNewsAdminData();
@@ -710,14 +733,14 @@ export default function AdminPage() {
       const res = await fetch(`${MEETING_ADMIN_LIST_API_URL}?limit=1000`, {
         headers: getAdminHeaders({ Accept: 'application/json' }),
       });
-      const payload = await res.json().catch(() => ({}));
+      const payload: SoftwareHubMeetingListPayload = await res.json().catch(() => ({}));
       if (res.status === 401) throw new Error('Admin yetkisi doğrulanamadı.');
       if (!res.ok) throw new Error(payload.error || 'Toplantı kayıtları alınamadı.');
       setMeetingTotal(Number(payload?.stats?.total || 0));
       setMeetingDateStats(Array.isArray(payload.date_stats) ? payload.date_stats : []);
       setMeetingParticipants(Array.isArray(payload.items) ? payload.items : []);
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(errorMessage(err, GENERIC_ERROR_MESSAGE));
     } finally {
       setMeetingLoading(false);
     }
@@ -731,11 +754,11 @@ export default function AdminPage() {
         headers: getAdminHeaders({ Accept: 'application/json' }),
       });
       if (res.status === 401) { alert('Oturum süreniz doldu.'); return; }
-      if (!res.ok) { const p = await res.json().catch(() => ({})); throw new Error(p.error || 'Sıfırlama başarısız'); }
+      if (!res.ok) { const p: SoftwareHubApiErrorPayload = await res.json().catch(() => ({})); throw new Error(p.error || 'Sıfırlama başarısız'); }
       alert('✅ Tüm kayıtlar başarıyla silindi!');
       await loadMeetingData();
-    } catch (err: any) {
-      alert(`❌ Hata: ${err.message}`);
+    } catch (err) {
+      alert(`❌ Hata: ${errorMessage(err, GENERIC_ERROR_MESSAGE)}`);
     }
   };
 
@@ -785,13 +808,13 @@ export default function AdminPage() {
   });
 
   // ==================== BRACKET HELPERS ====================
-  const buildFullBracket = (bracket: any[]) => {
+  const buildFullBracket = (bracket: SoftwareHubBracketSlot[]) => {
     const full = [...bracket];
     while (full.length < 30) full.push({ id: null, participant_id: null, winner: false });
     return full;
   };
 
-  const getParticipantNameById = (participants: any[], participantId: string | null) => {
+  const getParticipantNameById = (participants: SoftwareHubParticipant[], participantId: string | null) => {
     if (!participantId) return '';
     return participants.find((p) => p.id === participantId)?.name || '';
   };
@@ -1028,10 +1051,10 @@ export default function AdminPage() {
                                 ? <button className="action-btn approve" onClick={() => runParticipantAdminAction('tavla', 'approve', p.id, loadTournamentData)}>✓ Onayla</button>
                                 : <button className="action-btn reject" onClick={() => { if (confirm('Onayı iptal etmek istediğinize emin misiniz?')) runParticipantAdminAction('tavla', 'unapprove', p.id, loadTournamentData); }}>✗ İptal</button>}
                               {p.approved && !inBracket && (
-                                <button className="action-btn view" onClick={async () => { try { await runBracketAdminAction('tavla', 'add', { participantId: p.id }); await loadTournamentData(); } catch (err: any) { alert('Ekleme hatası: ' + err.message); } }}>➕ Playoff&apos;a Ekle</button>
+                                <button className="action-btn view" onClick={async () => { try { await runBracketAdminAction('tavla', 'add', { participantId: p.id }); await loadTournamentData(); } catch (err) { alert('Ekleme hatası: ' + errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>➕ Playoff&apos;a Ekle</button>
                               )}
                               {inBracket && (
-                                <button className="action-btn approve" onClick={async () => { try { await runBracketAdminAction('tavla', 'remove_participant', { participantId: p.id }); await loadTournamentData(); } catch (err: any) { alert(err.message); } }}>✓ Playoff&apos;ta (#{slotIndex + 1})</button>
+                                <button className="action-btn approve" onClick={async () => { try { await runBracketAdminAction('tavla', 'remove_participant', { participantId: p.id }); await loadTournamentData(); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>✓ Playoff&apos;ta (#{slotIndex + 1})</button>
                               )}
                               <button className="action-btn reject" onClick={() => { if (confirm('Bu katılımcıyı silmek istediğinize emin misiniz?')) runParticipantAdminAction('tavla', 'delete', p.id, loadTournamentData); }}>🗑 Sil</button>
                             </div>
@@ -1058,8 +1081,8 @@ export default function AdminPage() {
                       </div>
                       {slot.participant_id && (
                         <div className="slot-actions">
-                          <button className={`slot-btn winner ${slot.winner ? 'active' : ''}`} title="Galip" onClick={async () => { try { await runBracketAdminAction('tavla', 'toggle_winner', { slotIndex: index }); await loadTournamentData(); } catch (err: any) { alert(err.message); } }}>🏆</button>
-                          <button className="slot-btn clear" title="Temizle" onClick={async () => { if (!confirm('Bu slotu temizlemek istediğinize emin misiniz?')) return; try { await runBracketAdminAction('tavla', 'clear_slot', { slotIndex: index }); await loadTournamentData(); } catch (err: any) { alert(err.message); } }}>✕</button>
+                          <button className={`slot-btn winner ${slot.winner ? 'active' : ''}`} title="Galip" onClick={async () => { try { await runBracketAdminAction('tavla', 'toggle_winner', { slotIndex: index }); await loadTournamentData(); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>🏆</button>
+                          <button className="slot-btn clear" title="Temizle" onClick={async () => { if (!confirm('Bu slotu temizlemek istediğinize emin misiniz?')) return; try { await runBracketAdminAction('tavla', 'clear_slot', { slotIndex: index }); await loadTournamentData(); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>✕</button>
                         </div>
                       )}
                     </div>
@@ -1159,10 +1182,10 @@ export default function AdminPage() {
                                 ? <button className="action-btn approve" onClick={() => runParticipantAdminAction('typing', 'approve', p.id, loadTypingData)}>✓ Onayla</button>
                                 : <button className="action-btn reject" onClick={() => { if (confirm('Onayı iptal etmek istediğinize emin misiniz?')) runParticipantAdminAction('typing', 'unapprove', p.id, loadTypingData); }}>✗ İptal</button>}
                               {p.approved && !inBracket && (
-                                <button className="action-btn view" onClick={async () => { try { await runBracketAdminAction('typing', 'add', { participantId: p.id }); await loadTypingData(); } catch (err: any) { alert('Ekleme hatası: ' + err.message); } }}>➕ Turnuvaya Ekle</button>
+                                <button className="action-btn view" onClick={async () => { try { await runBracketAdminAction('typing', 'add', { participantId: p.id }); await loadTypingData(); } catch (err) { alert('Ekleme hatası: ' + errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>➕ Turnuvaya Ekle</button>
                               )}
                               {inBracket && (
-                                <button className="action-btn approve" onClick={async () => { try { await runBracketAdminAction('typing', 'remove_participant', { participantId: p.id }); await loadTypingData(); } catch (err: any) { alert(err.message); } }}>✓ Turnuvada (#{slotIndex + 1})</button>
+                                <button className="action-btn approve" onClick={async () => { try { await runBracketAdminAction('typing', 'remove_participant', { participantId: p.id }); await loadTypingData(); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>✓ Turnuvada (#{slotIndex + 1})</button>
                               )}
                               <button className="action-btn reject" onClick={() => { if (confirm('Bu katılımcıyı silmek istediğinize emin misiniz?')) runParticipantAdminAction('typing', 'delete', p.id, loadTypingData); }}>🗑 Sil</button>
                             </div>
@@ -1189,8 +1212,8 @@ export default function AdminPage() {
                       </div>
                       {slot.participant_id && (
                         <div className="slot-actions">
-                          <button className={`slot-btn winner ${slot.winner ? 'active' : ''}`} title="Galip" onClick={async () => { try { await runBracketAdminAction('typing', 'toggle_winner', { slotIndex: index }); await loadTypingData(); } catch (err: any) { alert(err.message); } }}>🏆</button>
-                          <button className="slot-btn clear" title="Temizle" onClick={async () => { if (!confirm('Bu slotu temizlemek istediğinize emin misiniz?')) return; try { await runBracketAdminAction('typing', 'clear_slot', { slotIndex: index }); await loadTypingData(); } catch (err: any) { alert(err.message); } }}>✕</button>
+                          <button className={`slot-btn winner ${slot.winner ? 'active' : ''}`} title="Galip" onClick={async () => { try { await runBracketAdminAction('typing', 'toggle_winner', { slotIndex: index }); await loadTypingData(); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>🏆</button>
+                          <button className="slot-btn clear" title="Temizle" onClick={async () => { if (!confirm('Bu slotu temizlemek istediğinize emin misiniz?')) return; try { await runBracketAdminAction('typing', 'clear_slot', { slotIndex: index }); await loadTypingData(); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>✕</button>
                         </div>
                       )}
                     </div>
@@ -1434,7 +1457,7 @@ export default function AdminPage() {
                             </td>
                             <td>
                               <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-                                <NewsCategorySelect item={item} index={index} selectedCat={selectedCat} categories={categories} onSave={async (id, category) => { try { await runNewsAdminAction({ action: 'set_category', id, category }); } catch (err: any) { alert(err.message); } }} />
+                                <NewsCategorySelect item={item} index={index} selectedCat={selectedCat} categories={categories} onSave={async (id, category) => { try { await runNewsAdminAction({ action: 'set_category', id, category }); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }} />
                               </div>
                             </td>
                             <td>{status === 'published' ? <span className="status-badge approved">✓ Yayında</span> : <span className="status-badge pending">⏳ Taslak</span>}</td>
@@ -1442,9 +1465,9 @@ export default function AdminPage() {
                             <td>
                               <div className="action-btns">
                                 {status === 'published'
-                                  ? <button className="action-btn view" onClick={async () => { try { await runNewsAdminAction({ action: 'set_status', id: item.id, status: 'draft' }); } catch (err: any) { alert(err.message); } }}>Taslağa Al</button>
-                                  : <button className="action-btn approve" onClick={async () => { try { await runNewsAdminAction({ action: 'set_status', id: item.id, status: 'published' }); } catch (err: any) { alert(err.message); } }}>Yayınla</button>}
-                                <button className="action-btn reject" onClick={async () => { if (!confirm('Bu haberi tamamen silmek istediğinize emin misiniz?')) return; try { await runNewsAdminAction({ action: 'delete', id: item.id }); } catch (err: any) { alert(err.message); } }}>Sil</button>
+                                  ? <button className="action-btn view" onClick={async () => { try { await runNewsAdminAction({ action: 'set_status', id: item.id, status: 'draft' }); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>Taslağa Al</button>
+                                  : <button className="action-btn approve" onClick={async () => { try { await runNewsAdminAction({ action: 'set_status', id: item.id, status: 'published' }); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>Yayınla</button>}
+                                <button className="action-btn reject" onClick={async () => { if (!confirm('Bu haberi tamamen silmek istediğinize emin misiniz?')) return; try { await runNewsAdminAction({ action: 'delete', id: item.id }); } catch (err) { alert(errorMessage(err, GENERIC_ERROR_MESSAGE)); } }}>Sil</button>
                               </div>
                             </td>
                           </tr>
@@ -1483,8 +1506,8 @@ export default function AdminPage() {
                     {meetingDateStats.length === 0 ? (
                       <p style={{ color: 'var(--text-secondary)' }}>Henüz veri yok.</p>
                     ) : (() => {
-                      const maxVotes = Math.max(...meetingDateStats.map((d: any) => d.vote_count));
-                      return meetingDateStats.map((item: any) => {
+                      const maxVotes = Math.max(...meetingDateStats.map((d) => d.vote_count));
+                      return meetingDateStats.map((item) => {
                         const percentage = maxVotes > 0 ? (item.vote_count / maxVotes * 100) : 0;
                         return (
                           <div key={item.date_option} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'var(--card-bg)', border: '1px solid var(--glass-border)', borderRadius: 12, marginBottom: 8 }}>
@@ -1511,7 +1534,7 @@ export default function AdminPage() {
                       <tbody>
                         {meetingParticipants.length === 0 ? (
                           <tr><td colSpan={4} style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>Henüz katılımcı yok.</td></tr>
-                        ) : meetingParticipants.map((p: any) => {
+                        ) : meetingParticipants.map((p) => {
                           const dates = p.available_dates?.map((d: string) => formatDateLabel(d)).join(', ') || '-';
                           const createdAt = new Date(p.created_at);
                           const cleanNumber = p.whatsapp ? p.whatsapp.replace(/[\s\+\-\(\)]/g, '') : '';
@@ -1551,7 +1574,7 @@ export default function AdminPage() {
 
 // ==================== NEWS CATEGORY SELECT (sub-component to hold local state) ====================
 function NewsategorySelect({ item, index, selectedCat, categories, onSave }: {
-  item: any; index: number; selectedCat: string; categories: string[];
+  item: SoftwareHubNewsRow; index: number; selectedCat: string; categories: string[];
   onSave: (id: string, category: string) => Promise<void>;
 }) {
   const [cat, setCat] = useState(selectedCat);
