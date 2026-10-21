@@ -11,13 +11,21 @@
   }
 
   body {
-    @apply bg-white text-gray-900 antialiased;
+    @apply bg-page text-ink antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  /* Devuser shell: hide main site chrome */
+  /* Visible keyboard focus on the public site (admin/devuser keep their own) */
+  body:not([data-devuser]) :focus-visible {
+    outline: 2px solid theme('colors.brand.700');
+    outline-offset: 2px;
+  }
+
+  /* Devuser shell: hide main site chrome. Admin/devuser keep the pre-redesign
+     black page and gray-900 inherited text. */
   body[data-devuser] {
     background: #000 !important;
+    color: theme('colors.gray.900');
     overflow-x: hidden;
   }
 
@@ -44,7 +52,7 @@
 
   /* Skip to main content link for accessibility */
   .skip-to-main {
-    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-google-blue focus:text-white focus:px-4 focus:py-2 focus:rounded-md;
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand-700 focus:text-white focus:px-4 focus:py-2 focus:rounded-btn;
   }
 }
 

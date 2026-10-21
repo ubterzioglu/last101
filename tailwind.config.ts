@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { SITE_COLORS, SITE_RADIUS, SITE_SHADOWS } from './constants/design-tokens';
 
 const config: Config = {
   content: [
@@ -17,6 +18,11 @@ const config: Config = {
           green: '#34A853',
           orange: '#FF9500',
         },
+        // Public site palette (firmascope colours, AA-checked text tones)
+        ...SITE_COLORS,
+      },
+      borderRadius: {
+        ...SITE_RADIUS,
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
@@ -27,6 +33,7 @@ const config: Config = {
         'glow-red': '0 0 0 1px rgba(234,67,53,0.35), 0 18px 50px -12px rgba(234,67,53,0.55)',
         'glow-yellow': '0 0 0 1px rgba(251,188,5,0.35), 0 18px 50px -12px rgba(251,188,5,0.5)',
         'glow-green': '0 0 0 1px rgba(52,168,83,0.35), 0 18px 50px -12px rgba(52,168,83,0.55)',
+        ...SITE_SHADOWS,
       },
       container: {
         center: true,

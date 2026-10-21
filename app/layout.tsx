@@ -14,6 +14,7 @@ import {
   SITE_URL,
 } from '@/lib/utils/constants';
 import { cn } from '@/lib/utils/cn';
+import { SITE_COLORS } from '@/constants/design-tokens';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -108,7 +109,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: SITE_COLORS.page,
   width: 'device-width',
   initialScale: 1,
 };
@@ -126,10 +127,6 @@ export default function RootLayout({
         <WebSiteJsonLd />
         <LocalBusinessJsonLd />
 
-        {/* Preconnect to Google Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-GNYJ39RG89"
@@ -143,7 +140,7 @@ export default function RootLayout({
         </a>
 
         <Header />
-        <main id="main-content" className="flex-grow pt-[10px] bg-black">
+        <main id="main-content" className="flex-grow">
           {children}
         </main>
         <Footer />
