@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { PIPELINE_SECRET_HEADER } from '@/lib/admin/headers';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
       headers: {
         'content-type': 'application/json',
         authorization: `Bearer ${serviceRoleKey}`,
-        'x-pipeline-secret': pipelineSecret,
+        [PIPELINE_SECRET_HEADER]: pipelineSecret,
       },
       body: JSON.stringify({ jobId: id }),
     });

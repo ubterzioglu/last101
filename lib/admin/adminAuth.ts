@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { NextRequest } from 'next/server';
+import { ADMIN_KEY_HEADERS, readProvidedKey } from '@/lib/admin/headers';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const ADMIN_KEYS_TABLE = 'admin_api_keys';
@@ -110,16 +111,7 @@ function timingSafeEqualText(a: string, b: string): boolean {
 }
 
 function normalizeProvidedAdminKey(req: NextRequest): string {
-  return (
-    req.headers.get('x-admin-key') ||
-    req.headers.get('x-admin-password') ||
-    req.headers.get('x-admin-token') ||
-    (() => {
-      const auth = req.headers.get('authorization') || '';
-      return auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
-    })() ||
-    ''
-  ).trim();
+  return readProvidedKey(req.headers, ADMIN_KEY_HEADERS);
 }
 
 export interface AdminAuthResult {

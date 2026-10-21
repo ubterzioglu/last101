@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { CORNER_AUTHOR_KEY_HEADERS, readProvidedKey } from '@/lib/admin/headers';
 import { verifyPasswordHash } from '@/lib/admin/cornerPasswords';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
@@ -106,15 +107,7 @@ export function isReservedAuthorSlug(slug: string) {
 }
 
 function getProvidedPassword(req: NextRequest): string {
-  return (
-    req.headers.get('x-corner-author-key') ||
-    req.headers.get('x-corner-author-password') ||
-    (() => {
-      const auth = req.headers.get('authorization') || '';
-      return auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
-    })() ||
-    ''
-  ).trim();
+  return readProvidedKey(req.headers, CORNER_AUTHOR_KEY_HEADERS);
 }
 
 export async function getSupabaseServiceClient() {

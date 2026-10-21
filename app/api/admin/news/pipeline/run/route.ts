@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { PIPELINE_SECRET_HEADER } from '@/lib/admin/headers';
 import { newsErrorResponse } from '@/lib/news/errors';
 
 export async function POST(request: NextRequest) {
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'content-type': 'application/json',
         authorization: `Bearer ${serviceRoleKey}`,
-        'x-pipeline-secret': pipelineSecret,
+        [PIPELINE_SECRET_HEADER]: pipelineSecret,
       },
       body: JSON.stringify({
         trigger: 'manual',

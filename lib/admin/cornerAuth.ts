@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { NextRequest } from 'next/server';
+import { CORNER_ADMIN_KEY_HEADERS, readProvidedKey } from '@/lib/admin/headers';
 
 const CORNER_RATE_LIMIT_MAX_ATTEMPTS = 12;
 const CORNER_RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
@@ -101,15 +102,7 @@ function timingSafeEqualText(a: string, b: string): boolean {
 }
 
 function normalizeProvidedCornerKey(req: NextRequest): string {
-  return (
-    req.headers.get('x-corner-admin-key') ||
-    req.headers.get('x-corner-admin-password') ||
-    (() => {
-      const auth = req.headers.get('authorization') || '';
-      return auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
-    })() ||
-    ''
-  ).trim();
+  return readProvidedKey(req.headers, CORNER_ADMIN_KEY_HEADERS);
 }
 
 export async function isCornerAdminAuthorized(req: NextRequest): Promise<CornerAuthResult> {
