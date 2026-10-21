@@ -14,8 +14,14 @@ import { test, expect } from '@playwright/test';
 const PARSE_EUR = (text: string): number =>
   Number(text.replace(/[^\d,.-]/g, '').replace(/\./g, '').replace(',', '.'));
 
-const cardValue = (page: import('@playwright/test').Page, heading: string) =>
-  page.getByRole('heading', { name: heading }).locator('xpath=following-sibling::div[1]');
+// Result value containers carry stable data-pw hooks (testIdAttribute = data-pw).
+const RESULT_VALUE_HOOKS = {
+  'Net Maaş (Aylık)': 'maas-net-monthly',
+  'Brüt Maaş (Aylık)': 'maas-gross-monthly',
+} as const;
+
+const cardValue = (page: import('@playwright/test').Page, heading: keyof typeof RESULT_VALUE_HOOKS) =>
+  page.getByTestId(RESULT_VALUE_HOOKS[heading]);
 
 test.describe('Maaş Hesaplayıcı', () => {
   test('giriş sonrası sayfa açılır, hesaplamadan önce sonuç yok', async ({ page }) => {

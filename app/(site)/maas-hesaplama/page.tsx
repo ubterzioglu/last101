@@ -1,5 +1,9 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolFaq } from '@/components/tools/ToolFaq';
+import { ToolHero } from '@/components/tools/ToolHero';
+import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
+import { STATES, TAX_CLASSES } from '@/lib/salary/types';
 import MaasClient from './MaasClient';
 import { SITE_URL } from '@/lib/utils/constants';
 
@@ -32,6 +36,26 @@ const FAQ_ITEMS = [
   },
 ];
 
+const HOW_IT_WORKS = [
+  'Kullanıcı verileri saklanmaz.',
+  <span key="kv">
+    <strong>KV (Krankenkasse)</strong>: Yasal sağlık sigortası kesintisi. Standart oran %14.6&apos;dır.
+  </span>,
+  <span key="zusatz">
+    <strong>Zusatzbeitrag</strong>: Ek prim, genelde %1.6 – %2.5 arasındadır.
+  </span>,
+  'Her iki prim de çalışan ve işveren arasında yarı yarıya paylaşılır.',
+];
+
+const WHY_TEXT =
+  "Almanya'da çalışıyorsan ya da çalışmayı planlıyorsan, eline ne geçeceğini önceden bilmek hayati önem taşır. Brüt maaş rakamları iş ilanlarında cazip görünür, ancak Almanya'nın vergi ve sigorta sistemi ciddi kesintiler getirir. Bu araç, girdiğin brüt maaştan Lohnsteuer, Krankenversicherung, Pflegeversicherung, Rentenversicherung ve Arbeitslosenversicherung kesintilerini eyalete, vergi sınıfına ve aile durumuna göre hesaplar. Tersine de çalışır: hedef net rakamını girer, gerekli brütü öğrenirsin. Dienstwagen (şirket aracı) kullananlar için ek vergi etkisini de dahil edebilirsin.";
+
+const HERO_STATS = [
+  { value: String(TAX_CLASSES.length), label: 'vergi sınıfı' },
+  { value: String(STATES.length), label: 'eyalet' },
+  { value: 'Ücretsiz', label: 'üyelere açık' },
+];
+
 export default function MaasHesaplamaPage() {
   const pageUrl = new URL('/maas-hesaplama', SITE_URL).toString();
 
@@ -49,28 +73,17 @@ export default function MaasHesaplamaPage() {
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
-      <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <MaasClient />
-
-        <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
-          <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">
-            Sıkça Sorulan Sorular
-          </h2>
-          <div className="mt-6 space-y-4">
-            {FAQ_ITEMS.map((item) => (
-              <details
-                key={item.question}
-                className="group rounded-xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <summary className="cursor-pointer list-none text-lg font-semibold text-white">
-                  {item.question}
-                </summary>
-                <p className="mt-3 leading-7 text-white/75">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      </div>
+      <ToolHero
+        eyebrow="Kariyer ve Gelir"
+        title="Almanya Maaş Hesaplayıcı — Brüt → Net → Brüt"
+        intro="Almanya'da brüt maaşınızı net maaşa, net maaşınızı brüt maaşa dönüştürün. Vergi sınıfı, eyalet, çocuk durumu ve daha fazlasını hesaplayın."
+        stats={HERO_STATS}
+        howItWorksTitle="Nasıl Çalışır?"
+        howItWorks={HOW_IT_WORKS}
+      />
+      <MaasClient />
+      <ToolInfoBand why={WHY_TEXT} />
+      <ToolFaq name="maas-hesaplama-sss" items={FAQ_ITEMS} />
     </>
   );
 }
