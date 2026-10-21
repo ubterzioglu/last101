@@ -1,12 +1,21 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_ANON_KEY!
-);
+// Herkese açık rapor formu anon key ile yazar (RLS: "Anyone can insert"). Client istek anında
+// oluşturulur; env eksikse modül yüklenirken çökmek (ve build'i kırmak) yerine 503 döner.
+function createAnonClient() {
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !anonKey) return null;
+  return createClient(url, anonKey, { auth: { persistSession: false, autoRefreshToken: false } });
+}
 
 export async function POST(request: NextRequest) {
+  const supabase = createAnonClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Servis şu anda kullanılamıyor' }, { status: 503 });
+  }
+
   try {
     const body = await request.json();
     const { agencyId, agencyName, reportText } = body;
