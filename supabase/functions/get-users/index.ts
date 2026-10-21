@@ -185,7 +185,8 @@ serve(async (req) => {
     if (tech) {
       query = query.or(buildArrayContainsOrFilter(['programlama_dilleri', 'framework_platformlar', 'devops_cloud'], tech))
     }
-    if (ilgi) query = query.contains('ilgi_konular', [ilgi])
+    // .contains() dizi literalini kaçışsız üretir (`cs.{a,b}`); virgül yeni öğe, `"`/`\` 22P02 hatası açardı.
+    if (ilgi) query = query.or(buildArrayContainsOrFilter(['ilgi_konular'], ilgi))
 
     const { data, error, count } = await query
 
