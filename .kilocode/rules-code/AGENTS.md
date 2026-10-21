@@ -13,9 +13,9 @@
 
 ## Styling Conventions
 
-- Google colors are pre-configured: `bg-google-blue`, `text-google-red`, etc.
-- Container has responsive padding built-in - just use `className="container"`
-- Hero sections: `min-h-[80vh]`, content sections: `py-32 md:py-48`
+- Public site uses the light design tokens in `constants/design-tokens.ts` (`bg-page`, `text-ink`, `border-line`, `brand-*`, `alm-*`); `google-*` colours are legacy, admin/devuser only
+- Build pages from `components/site/*` blocks; use `Container` (max 1280px) and `Section` (`py-16`) from `components/ui`
+- See CLAUDE.md "Styling and Layout Conventions" for the full rules
 
 ## DevUser Dashboard Pattern
 

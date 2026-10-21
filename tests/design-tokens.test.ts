@@ -48,6 +48,10 @@ describe('site design tokens', () => {
     expect(contrast(brand[700], WHITE)).toBeGreaterThanOrEqual(AA_TEXT);
   });
 
+  it('keeps links readable on the band surface with brand-800', () => {
+    expect(contrast(brand[800], SITE_COLORS.band)).toBeGreaterThanOrEqual(AA_TEXT);
+  });
+
   it('allows the headline accent tone only at large-text contrast', () => {
     expect(contrast(brand[600], page)).toBeGreaterThanOrEqual(AA_LARGE_TEXT);
   });

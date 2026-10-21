@@ -93,6 +93,9 @@ function toServiceItem(tool: ToolCatalogItem): ServiceItem {
     title: tool.title,
     description: tool.description,
     tone: meta.tone,
+    meta: `${tool.questionCount} soru`,
+    detail: { label: 'Bu araç sana ne verir?', text: tool.spotlight },
+    cta: tool.ctaLabel,
   };
 }
 

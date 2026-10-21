@@ -38,12 +38,15 @@ Start with [README.md](./README.md) for setup and [docs/README.md](./docs/README
 - Server: `import { createClient } from '@/lib/supabase/server'` (async)
 - DevUser: `import { getDevUserClient } from '@/lib/supabase/devuser'` (async)
 
-### Pre-configured Google Colors
-`bg-google-blue`, `text-google-red`, `bg-google-yellow`, `text-google-green`, `bg-google-orange`
+### Design Tokens (public site)
+- Light theme with firmascope colours; tokens in `constants/design-tokens.ts` (AA contrast guarded by `tests/design-tokens.test.ts`)
+- Surfaces `bg-page` / `bg-white` / `bg-band` / `bg-ink`; text `text-ink` / `text-muted`; hairlines `border-line`
+- `brand-*` is the only interactive colour; `alm-*` category colours via `TONE_STYLES` (`components/site/tones.ts`)
+- `google-*` colours are legacy, for admin/devuser only; never in public pages
 
 ### Layout Patterns
-- Container: `className="container"` (responsive padding built-in)
-- Hero sections: `min-h-[80vh]`, content sections: `py-32 md:py-48`
+- Build pages from `components/site/*` blocks (PageHead, SectionHeader, ServiceGrid, MediaCard, DarkBand, CtaRow, ...)
+- Container: `Container` from `@/components/ui/Container` (max 1280px); sections: `Section` (`py-16`, optional `tone`)
 
 ## Build Commands
 

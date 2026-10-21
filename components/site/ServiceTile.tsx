@@ -14,6 +14,12 @@ export interface ServiceItem {
   tone?: SiteTone;
   /** New tab; detected automatically for `http(s)` links. */
   external?: boolean;
+  /** Small line above the title, e.g. "20 soru". */
+  meta?: string;
+  /** Highlighted note under the description, e.g. "Bu araç sana ne verir?". */
+  detail?: { label: string; text: string };
+  /** Call-to-action label shown at the bottom of the tile. */
+  cta?: string;
 }
 
 export type ServiceTileProps = ServiceItem & {
@@ -36,6 +42,9 @@ export function ServiceTile({
   description,
   tone = 'blue',
   external,
+  meta,
+  detail,
+  cta,
   className,
   headingLevel = 3,
 }: ServiceTileProps) {
@@ -60,11 +69,24 @@ export function ServiceTile({
         <Icon className="h-5 w-5" strokeWidth={1.75} />
       </span>
       <div className="min-w-0 lg:pr-5">
+        {meta ? <p className="mb-1 text-xs font-semibold text-muted">{meta}</p> : null}
         <Heading className="break-words text-[17px] font-extrabold leading-snug tracking-[-0.02em] text-ink">
           {title}
         </Heading>
         {description ? (
           <p className="mt-1.5 text-sm leading-relaxed text-muted">{description}</p>
+        ) : null}
+        {detail ? (
+          <div className="mt-3 rounded-tile bg-band px-3 py-2.5">
+            <p className="text-xs font-semibold text-ink">{detail.label}</p>
+            <p className="mt-1 text-sm leading-relaxed text-ink">{detail.text}</p>
+          </div>
+        ) : null}
+        {cta ? (
+          <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-700">
+            {cta}
+            <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+          </span>
         ) : null}
       </div>
       <ArrowUpRight

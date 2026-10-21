@@ -16,7 +16,8 @@ const COST_ROWS: CostRow[] = [
 
 const COST_TOTAL: CostRow = { label: 'Toplam (tahmini)', value: '€879 – €1.590' };
 
-const SOURCE_LINK_CLASS = 'text-brand-700 underline underline-offset-4 transition-colors hover:text-brand-800';
+// brand-800 (not 700): these links sit on the band surface, where brand-700 is 4.26:1.
+const SOURCE_LINK_CLASS = 'text-brand-800 underline underline-offset-4 transition-colors hover:text-ink';
 
 /** Monthly cost estimate: text left, table in a featured card right. */
 export function HomeCostSection() {
