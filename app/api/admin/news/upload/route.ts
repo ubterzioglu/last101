@@ -1,13 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { slugifyNewsTitle } from '@/lib/news/shared';
 import { uploadNewsCoverFile } from '@/lib/news/admin';
 import { newsErrorResponse } from '@/lib/news/errors';
 
-export async function POST(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const POST = withAdmin(async (request) => {
   try {
     const formData = await request.formData();
     const file = formData.get('file');
@@ -28,4 +25,4 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return newsErrorResponse(error, 'admin/news/upload');
   }
-}
+});

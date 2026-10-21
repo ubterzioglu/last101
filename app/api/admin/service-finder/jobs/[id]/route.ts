@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import {
   getServiceFinderClient,
   SERVICE_FINDER_CANDIDATE_SELECT,
@@ -10,9 +10,7 @@ interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-export async function GET(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+export const GET = withAdmin<RouteContext>(async (request, context) => {
   const { id } = await context.params;
 
   try {
@@ -49,11 +47,9 @@ export async function GET(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
   }
-}
+});
 
-export async function DELETE(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+export const DELETE = withAdmin<RouteContext>(async (request, context) => {
   const { id } = await context.params;
 
   try {
@@ -64,4 +60,4 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
   }
-}
+});

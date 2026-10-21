@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const CATEGORY_TABLE: Record<string, { participants: string; bracket: string }> = {
@@ -45,10 +45,7 @@ async function loadCategoryPayload(supabase: any, category: string): Promise<Rec
   return { participants, bracket };
 }
 
-export async function GET(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const GET = withAdmin(async (request) => {
   const category = normalizeCategory(request.nextUrl.searchParams.get('category'));
   if (!category) return NextResponse.json({ error: 'category is invalid' }, { status: 400 });
 
@@ -74,7 +71,7 @@ export async function GET(request: NextRequest) {
     const e = error as Error;
     return NextResponse.json({ error: e.message || 'Internal server error' }, { status: 500 });
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

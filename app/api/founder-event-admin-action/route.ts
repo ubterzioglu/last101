@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { isUuid, sanitizeText } from '@/lib/founder';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
@@ -21,12 +21,7 @@ export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });
 }
 
-export async function POST(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) {
-    return NextResponse.json({ error: auth.reason }, { status: auth.status });
-  }
-
+export const POST = withAdmin(async (request) => {
   const supabase = tryCreateServiceClient();
   if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
@@ -128,4 +123,4 @@ export async function POST(request: NextRequest) {
     console.error('founder-event-admin-action POST failed:', error);
     return NextResponse.json({ error: (error as Error)?.message || 'İşlem başarısız.' }, { status: 500 });
   }
-}
+});

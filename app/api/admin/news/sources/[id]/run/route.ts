@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { PIPELINE_SECRET_HEADER } from '@/lib/admin/headers';
 import { getNewsServiceClient } from '@/lib/news/admin';
 import { newsErrorResponse } from '@/lib/news/errors';
@@ -8,9 +8,7 @@ interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-export async function POST(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+export const POST = withAdmin<RouteContext>(async (request, context) => {
   const { id } = await context.params;
 
   try {
@@ -42,4 +40,4 @@ export async function POST(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return newsErrorResponse(error, 'admin/news/sources/[id]/run');
   }
-}
+});

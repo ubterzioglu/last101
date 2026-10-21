@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 function parseLimit(value: unknown, fallback = 500): number {
@@ -46,12 +46,7 @@ function mapQueryError(error: unknown): string {
   return 'Failed to fetch meeting attendance records';
 }
 
-export async function GET(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) {
-    return NextResponse.json({ error: auth.reason }, { status: auth.status });
-  }
-
+export const GET = withAdmin(async (request) => {
   const supabase = tryCreateServiceClient();
   if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
@@ -96,7 +91,7 @@ export async function GET(request: NextRequest) {
     const e = error as Error;
     return NextResponse.json({ error: e.message || 'List failed' }, { status: 500 });
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'crypto';
 import { isCornerAuthorAuthorized } from '@/lib/admin/cornerAuthorAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
+import { authFailureResponse } from '@/lib/admin/withAuth';
 
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 const ALLOWED_TYPES = new Map([
@@ -22,7 +23,7 @@ function getFileExtension(file: File): string {
 export async function POST(request: NextRequest) {
   const slug = request.nextUrl.searchParams.get('slug');
   const auth = await isCornerAuthorAuthorized(request, slug);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+  if (!auth.ok) return authFailureResponse(auth);
 
   const supabase = tryCreateServiceClient();
   if (!supabase) return NextResponse.json({ error: 'Service not configured' }, { status: 503 });

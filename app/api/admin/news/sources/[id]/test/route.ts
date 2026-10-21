@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { getNewsServiceClient } from '@/lib/news/admin';
 import { newsErrorResponse } from '@/lib/news/errors';
 import { fetchFeedSafely } from '@/lib/news/source-security';
@@ -24,9 +24,7 @@ function collectFeedPreview(xml: string) {
   });
 }
 
-export async function POST(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+export const POST = withAdmin<RouteContext>(async (request, context) => {
   const { id } = await context.params;
 
   try {
@@ -52,4 +50,4 @@ export async function POST(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return newsErrorResponse(error, 'source test');
   }
-}
+});

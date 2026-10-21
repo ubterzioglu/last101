@@ -1,12 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { listAdminPosts, mapAdminPostToLegacy } from '@/lib/news/admin';
 import { newsErrorResponse } from '@/lib/news/errors';
 
-export async function GET(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const GET = withAdmin(async (request) => {
   try {
     const payload = await listAdminPosts({ request });
     return NextResponse.json({
@@ -21,7 +18,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return newsErrorResponse(error, 'news-admin-list');
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

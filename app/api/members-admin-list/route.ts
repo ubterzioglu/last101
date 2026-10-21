@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
@@ -63,12 +63,7 @@ async function fetchAllAuthUsers(supabase: SupabaseClient, maxUsers: number): Pr
   return collected.slice(0, maxUsers);
 }
 
-export async function GET(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) {
-    return NextResponse.json({ error: auth.reason }, { status: auth.status });
-  }
-
+export const GET = withAdmin(async (request, _context, auth) => {
   const supabase = tryCreateServiceClient();
   if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
@@ -133,7 +128,7 @@ export async function GET(request: NextRequest) {
     const e = error as Error;
     return NextResponse.json({ error: e.message || 'Internal server error' }, { status: 500 });
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

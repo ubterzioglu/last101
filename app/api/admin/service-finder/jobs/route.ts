@@ -1,15 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import {
   buildJobPayload,
   getServiceFinderClient,
   SERVICE_FINDER_JOB_SELECT,
 } from '@/lib/serviceFinder/admin';
 
-export async function GET(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const GET = withAdmin(async (request) => {
   try {
     const client = getServiceFinderClient();
     const { data, error } = await client
@@ -22,12 +19,9 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
   }
-}
+});
 
-export async function POST(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const POST = withAdmin(async (request) => {
   try {
     const body = await request.json().catch(() => ({}));
     const client = getServiceFinderClient();
@@ -58,4 +52,4 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
   }
-}
+});

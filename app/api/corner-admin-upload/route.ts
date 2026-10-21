@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { randomUUID } from 'crypto';
-import { isCornerAdminAuthorized } from '@/lib/admin/cornerAuth';
+import { withCornerAdmin } from '@/lib/admin/withAuth';
 import { normalizeAuthorSlug } from '@/lib/admin/cornerAuthorAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
@@ -24,10 +24,7 @@ function isAllowedExtension(extension: string): boolean {
   return ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension);
 }
 
-export async function POST(request: NextRequest) {
-  const auth = await isCornerAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const POST = withCornerAdmin(async (request) => {
   const supabase = tryCreateServiceClient();
   if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
@@ -72,7 +69,7 @@ export async function POST(request: NextRequest) {
     const e = error as Error;
     return NextResponse.json({ error: e.message || 'Upload failed' }, { status: 500 });
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

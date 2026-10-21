@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import {
   buildProviderPayloadFromCandidate,
   getServiceFinderClient,
@@ -14,9 +14,7 @@ interface RouteContext {
 const ALLOWED_ACTIONS = new Set(['approve', 'reject', 'pending']);
 
 // Aday onay/red. Onay -> providers'a (source=scraper, status=active) yaz, candidate'e provider_id bağla.
-export async function PATCH(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+export const PATCH = withAdmin<RouteContext>(async (request, context) => {
   const { id } = await context.params;
 
   try {
@@ -109,4 +107,4 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
   }
-}
+});

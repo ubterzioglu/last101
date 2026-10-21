@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isCornerAuthorAuthorized } from '@/lib/admin/cornerAuthorAuth';
+import { authFailureResponse } from '@/lib/admin/withAuth';
 
 export async function GET(request: NextRequest) {
   const slug = request.nextUrl.searchParams.get('slug');
   const auth = await isCornerAuthorAuthorized(request, slug);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+  if (!auth.ok) return authFailureResponse(auth);
   return NextResponse.json({ ok: true, author: auth.author });
 }
 

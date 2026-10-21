@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { createServiceClient } from '@/lib/supabase/admin';
+import { authFailureResponse } from '@/lib/admin/withAuth';
 
 const SEVERITIES = ['low', 'medium', 'high', 'critical'] as const;
 const CATEGORIES = ['secret', 'auth', 'rls', 'validation', 'dependency', 'config', 'general'] as const;
@@ -21,7 +22,7 @@ function pick<T extends readonly string[]>(value: unknown, allowed: T, fallback:
 export async function GET(request: NextRequest) {
   try {
     const auth = await isAdminAuthorized(request);
-    if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+    if (!auth.ok) return authFailureResponse(auth);
 
     const supabase = createServiceClient();
     const params = request.nextUrl.searchParams;
@@ -64,7 +65,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const auth = await isAdminAuthorized(request);
-    if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+    if (!auth.ok) return authFailureResponse(auth);
 
     const supabase = createServiceClient();
     const body = await request.json().catch(() => ({} as Record<string, unknown>));
@@ -101,7 +102,7 @@ export async function POST(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   try {
     const auth = await isAdminAuthorized(request);
-    if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+    if (!auth.ok) return authFailureResponse(auth);
 
     const supabase = createServiceClient();
     const body = await request.json().catch(() => ({} as Record<string, unknown>));
@@ -147,7 +148,7 @@ export async function PATCH(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const auth = await isAdminAuthorized(request);
-    if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+    if (!auth.ok) return authFailureResponse(auth);
 
     const supabase = createServiceClient();
     const id = String(request.nextUrl.searchParams.get('id') || '').trim();

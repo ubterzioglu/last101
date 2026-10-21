@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServiceClient, isCornerAuthorAuthorized } from '@/lib/admin/cornerAuthorAuth';
+import { authFailureResponse } from '@/lib/admin/withAuth';
 
 const ALLOWED_ACTIONS = new Set(['update_profile', 'create_post', 'update_post', 'delete_post']);
 const ALLOWED_STATUSES = new Set(['draft', 'published']);
@@ -45,7 +46,7 @@ function resolvePublishedAt(existing: { status?: string | null; published_at?: s
 export async function POST(request: NextRequest) {
   const slug = request.nextUrl.searchParams.get('slug');
   const auth = await isCornerAuthorAuthorized(request, slug);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+  if (!auth.ok) return authFailureResponse(auth);
 
   let body: Record<string, unknown>;
   try {

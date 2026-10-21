@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 const CATEGORY_TABLE: Record<string, string> = {
@@ -30,10 +30,7 @@ function normalizeAction(value: unknown): string {
   return ACTIONS.has(action) ? action : '';
 }
 
-export async function POST(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const POST = withAdmin(async (request) => {
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -105,7 +102,7 @@ export async function POST(request: NextRequest) {
     const e = error as Error;
     return NextResponse.json({ error: e.message || 'Internal server error' }, { status: 500 });
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

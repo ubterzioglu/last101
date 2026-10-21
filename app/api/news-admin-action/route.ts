@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getAdminActor, isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { getAdminActor } from '@/lib/admin/adminAuth';
 import {
   createAdminPost,
   deleteAdminPost,
@@ -11,15 +11,13 @@ import {
 } from '@/lib/news/admin';
 import { NEWS_STATUSES, normalizeNewsCategory, normalizeNewsStatus } from '@/lib/news/shared';
 import { newsErrorResponse } from '@/lib/news/errors';
+import { withAdmin } from '@/lib/admin/withAuth';
 
 function legacyCategoryToCanonical(value: unknown) {
   return normalizeNewsCategory(value);
 }
 
-export async function POST(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const POST = withAdmin(async (request, _context, auth) => {
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -109,7 +107,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return newsErrorResponse(error, 'news-admin-action');
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

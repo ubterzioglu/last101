@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isCornerAdminAuthorized } from '@/lib/admin/cornerAuth';
+import { NextResponse } from 'next/server';
+import { withCornerAdmin } from '@/lib/admin/withAuth';
 import { getSupabaseServiceClient } from '@/lib/admin/cornerAuthorAuth';
 
 async function countRows(supabase: any, table: string, filters: Record<string, unknown> = {}) {
@@ -10,10 +10,7 @@ async function countRows(supabase: any, table: string, filters: Record<string, u
   return Number(count || 0);
 }
 
-export async function GET(request: NextRequest) {
-  const auth = await isCornerAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const GET = withCornerAdmin(async (request) => {
   const supabase = await getSupabaseServiceClient();
   if (!supabase) return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
 
@@ -54,7 +51,7 @@ export async function GET(request: NextRequest) {
     const e = error as Error;
     return NextResponse.json({ error: e.message || 'Internal server error' }, { status: 500 });
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

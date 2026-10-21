@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
 
 interface FounderRow {
@@ -34,12 +34,7 @@ export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });
 }
 
-export async function GET(request: NextRequest) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) {
-    return NextResponse.json({ error: auth.reason }, { status: auth.status });
-  }
-
+export const GET = withAdmin(async (request) => {
   const supabase = tryCreateServiceClient();
   if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
@@ -115,4 +110,4 @@ export async function GET(request: NextRequest) {
     console.error('founder-event-admin-list GET failed:', error);
     return NextResponse.json({ error: (error as Error)?.message || 'Founder survey verileri yüklenemedi.' }, { status: 500 });
   }
-}
+});

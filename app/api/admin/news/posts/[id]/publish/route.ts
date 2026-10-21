@@ -1,15 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getAdminActor, isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { getAdminActor } from '@/lib/admin/adminAuth';
 import { setAdminPostStatus } from '@/lib/news/admin';
 import { newsErrorResponse } from '@/lib/news/errors';
+import { withAdmin } from '@/lib/admin/withAuth';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-export async function POST(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+export const POST = withAdmin<RouteContext>(async (request, context, auth) => {
   const { id } = await context.params;
 
   try {
@@ -20,4 +19,4 @@ export async function POST(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return newsErrorResponse(error, 'admin/news/posts/[id]/publish');
   }
-}
+});

@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { withAdmin } from '@/lib/admin/withAuth';
 import { PIPELINE_SECRET_HEADER } from '@/lib/admin/headers';
 
 interface RouteContext {
@@ -7,9 +7,7 @@ interface RouteContext {
 }
 
 // Edge Function service-finder-scan'i tek iş için tetikler (news pipeline/run deseni).
-export async function POST(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+export const POST = withAdmin<RouteContext>(async (request, context) => {
   const { id } = await context.params;
 
   try {
@@ -32,4 +30,4 @@ export async function POST(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message || 'Internal server error' }, { status: 500 });
   }
-}
+});

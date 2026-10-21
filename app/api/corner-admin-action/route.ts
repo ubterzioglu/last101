@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { isCornerAdminAuthorized } from '@/lib/admin/cornerAuth';
+import { NextResponse } from 'next/server';
+import { withCornerAdmin } from '@/lib/admin/withAuth';
 import {
   getSupabaseServiceClient,
   isReservedAuthorSlug,
@@ -46,10 +46,7 @@ function normalizeStatus(value: unknown): 'draft' | 'published' | '' {
   return ALLOWED_STATUSES.has(safe) ? (safe as 'draft' | 'published') : '';
 }
 
-export async function POST(request: NextRequest) {
-  const auth = await isCornerAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const POST = withCornerAdmin(async (request) => {
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -203,7 +200,7 @@ export async function POST(request: NextRequest) {
     const duplicate = String((error as any)?.code || '') === '23505';
     return NextResponse.json({ error: duplicate ? 'Bu slug zaten kullanılıyor.' : e.message || 'Internal server error' }, { status: duplicate ? 409 : 500 });
   }
-}
+});
 
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204 });

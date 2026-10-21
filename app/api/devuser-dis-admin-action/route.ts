@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminAuthorized } from '@/lib/admin/adminAuth';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
+import { authFailureResponse } from '@/lib/admin/withAuth';
 
 const MARKER = '[DEVUSER_DIS_V1]';
 
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
   if (body === null) return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
 
   const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
+  if (!auth.ok) return authFailureResponse(auth);
 
   const id = String(body.id || '').trim();
   const action = normalizeAction(body.action);

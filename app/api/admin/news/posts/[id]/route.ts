@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getAdminActor, isAdminAuthorized } from '@/lib/admin/adminAuth';
+import { NextResponse } from 'next/server';
+import { getAdminActor } from '@/lib/admin/adminAuth';
 import { getAdminPostDetail, updateAdminPost } from '@/lib/news/admin';
 import { newsErrorResponse } from '@/lib/news/errors';
+import { withAdmin } from '@/lib/admin/withAuth';
 
 interface RouteContext {
   params: Promise<{
@@ -9,10 +10,7 @@ interface RouteContext {
   }>;
 }
 
-export async function GET(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const GET = withAdmin<RouteContext>(async (request, context) => {
   const { id } = await context.params;
 
   try {
@@ -22,12 +20,9 @@ export async function GET(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return newsErrorResponse(error, 'admin/news/posts/[id]');
   }
-}
+});
 
-export async function PATCH(request: NextRequest, context: RouteContext) {
-  const auth = await isAdminAuthorized(request);
-  if (!auth.ok) return NextResponse.json({ error: auth.reason }, { status: auth.status });
-
+export const PATCH = withAdmin<RouteContext>(async (request, context, auth) => {
   const { id } = await context.params;
 
   try {
@@ -38,4 +33,4 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
   } catch (error) {
     return newsErrorResponse(error, 'admin/news/posts/[id]');
   }
-}
+});
