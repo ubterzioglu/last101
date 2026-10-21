@@ -1,8 +1,20 @@
-import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import { Container } from '@/components/ui/Container';
+import { SITE_NAME } from '@/lib/utils/constants';
 
-const FOOTER_LEGAL_LINKS: { href: string; label: string }[] = [
+interface FooterLink {
+  href: string;
+  label: string;
+}
+
+interface PartnerLink extends FooterLink {
+  /** Plain text after the anchor. */
+  description?: string;
+}
+
+const FOOTER_LEGAL_LINKS: readonly FooterLink[] = [
   { href: '/hakkimizda', label: 'Hakkımızda' },
   { href: '/blog', label: 'Blog' },
   { href: '/iletisim', label: 'İletişim' },
@@ -14,117 +26,99 @@ const FOOTER_LEGAL_LINKS: { href: string; label: string }[] = [
   { href: '/impressum', label: 'Impressum' },
 ];
 
-export function Footer() {
+// SEO partner links: hrefs and anchor texts are a content decision and stay as they are.
+// rel="noopener" (the old "dofollow" is not a valid value) keeps them followed.
+const FOOTER_PARTNER_LINKS: readonly PartnerLink[] = [
+  { href: 'https://www.spindorai.com', label: 'Seo Aracı', description: 've Seo Hizmetleri Spindora' },
+  { href: 'https://www.corteqs.net', label: 'Corteqs', description: '- Diasporayı Birleştiren Platform' },
+  { href: 'https://chatio.com.tr/', label: 'Canlı Destek Yazılımı' },
+  {
+    href: 'https://www.spindorai.com/seo/en-iyi-seo-ajansi',
+    label: 'Seo Ajansı',
+    description: 'Spindora Tarafından Seosu Yapılmıştır.',
+  },
+  {
+    href: 'https://tekhurdametal.com/istanbul-hurdaci/',
+    label: 'İstanbul Hurdacı',
+    description: 'Firması Tek Hurda Metal A.Ş',
+  },
+  {
+    href: 'https://lionerotik.com/urunler/fetis-urunleri',
+    label: 'Antalya Seks Shop',
+    description: 'Lion Erotik',
+  },
+  {
+    href: 'https://ufuksoynakliyat.com.tr',
+    label: 'Evden Eve Nakliyat',
+    description: 'Şirketi Ufuksoy Nakliyat A.Ş',
+  },
+  {
+    href: 'https://dragomanseakayak.com',
+    label: 'Deniz Kayağı Turları',
+    description: 'Şirketi Dragoman Sea Kayak & Outdoors',
+  },
+];
+
+interface FooterProps {
+  /** Optional right-hand note on the copyright row, e.g. a last-updated line. */
+  note?: ReactNode;
+}
+
+export function Footer({ note }: FooterProps) {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-black py-8 text-[8px] text-white">
-      <Container size="xl">
-        <div className="text-center space-y-2">
-          <p>yalnız değilsin! almanya101 seninle!</p>
-          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-gray-400">
-            {FOOTER_LEGAL_LINKS.map((item, i) => (
-              <span key={item.href} className="flex items-center gap-x-2">
-                {i > 0 && (
-                  <span className="text-gray-600" aria-hidden="true">|</span>
-                )}
-                <Link href={item.href} className="hover:underline hover:text-white transition-colors">
-                  {item.label}
-                </Link>
-              </span>
-            ))}
-          </p>
-          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 leading-[1.6] text-gray-400">
-            <span>
-              <a
-                href="https://www.spindorai.com"
-                rel="dofollow"
-                target="_blank"
-                className="hover:underline"
-              >
-                Seo Aracı
-              </a>
-              {' '}ve Seo Hizmetleri Spindora
-            </span>
-            <span className="text-gray-600" aria-hidden="true">|</span>
-            <span>
-              <a
-                href="https://www.corteqs.net"
-                rel="dofollow"
-                target="_blank"
-                className="hover:underline"
-              >
-                Corteqs
-              </a>
-              {' '}— Diasporayı Birleştiren Platform
-            </span>
-            <span className="text-gray-600" aria-hidden="true">|</span>
-            <a
-              href="https://chatio.com.tr/"
-              rel="dofollow"
-              target="_blank"
-              className="hover:underline"
-            >
-              Canlı Destek Yazılımı
-            </a>
-            <span className="text-gray-600" aria-hidden="true">|</span>
-            <span>
-              <a
-                href="https://www.spindorai.com/seo/en-iyi-seo-ajansi"
-                rel="dofollow"
-                target="_blank"
-                className="hover:underline"
-              >
-                Seo Ajansı
-              </a>
-              {' '}Spindora Tarafından Seosu Yapılmıştır.
-            </span>
-            <span className="text-gray-600" aria-hidden="true">|</span>
-            <a
-              href="https://tekhurdametal.com/istanbul-hurdaci/"
-              rel="dofollow"
-              target="_blank"
-              className="hover:underline"
-            >
-              İstanbul Hurdacı
-            </a>
-            {' '}Firması Tek Hurda Metal A.Ş
-            <span className="text-gray-600" aria-hidden="true">|</span>
-            <span>
-              <a
-                href="https://lionerotik.com/urunler/fetis-urunleri"
-                rel="dofollow"
-                target="_blank"
-                className="hover:underline"
-              >
-                Antalya Seks Shop
-              </a>
-              {' '}Lion Erotik
-            </span>
-            <span className="text-gray-600" aria-hidden="true">|</span>
-            <span>
-              <a
-                href="https://ufuksoynakliyat.com.tr"
-                rel="dofollow"
-                target="_blank"
-                className="hover:underline"
-              >
-                Evden Eve Nakliyat
-              </a>
-              {' '}Şirketi Ufuksoy Nakliyat A.Ş
-            </span>
-            <span className="text-gray-600" aria-hidden="true">|</span>
-            <span>
-              <a
-                href="https://dragomanseakayak.com"
-                rel="dofollow"
-                target="_blank"
-                className="hover:underline"
-              >
-                Deniz Kayağı Turları
-              </a>
-              {' '}Şirketi Dragoman Sea Kayak & Outdoors
-            </span>
-          </p>
+    <footer className="border-t border-line bg-page">
+      <Container>
+        <div className="flex flex-col gap-6 py-10 xl:flex-row xl:items-center xl:justify-between">
+          <div className="flex items-center gap-4 xl:flex-col xl:items-start xl:gap-2">
+            <Link href="/" className="shrink-0">
+              <Image
+                src="/almanya101header.png"
+                alt={SITE_NAME}
+                width={1500}
+                height={350}
+                className="h-7 w-auto"
+              />
+            </Link>
+            <p className="text-sm text-muted">yalnız değilsin! almanya101 seninle!</p>
+          </div>
+
+          <nav aria-label="Kurumsal bağlantılar">
+            <ul className="flex flex-wrap gap-x-4 gap-y-2 xl:justify-end">
+              {FOOTER_LEGAL_LINKS.map(({ href, label }) => (
+                <li key={href}>
+                  <Link href={href} className="text-sm text-muted transition-colors hover:text-ink">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
+
+        <div className="flex flex-col gap-2 border-t border-line py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {year} {SITE_NAME}
+          </p>
+          {note ? <div>{note}</div> : null}
+        </div>
+
+        <ul className="flex flex-wrap gap-x-5 gap-y-2 border-t border-line py-6 text-xs leading-relaxed text-muted">
+          {FOOTER_PARTNER_LINKS.map(({ href, label, description }) => (
+            <li key={href}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener"
+                className="underline decoration-muted/40 underline-offset-2 transition-colors hover:text-ink hover:decoration-ink"
+              >
+                {label}
+              </a>
+              {description ? ` ${description}` : null}
+            </li>
+          ))}
+        </ul>
       </Container>
     </footer>
   );

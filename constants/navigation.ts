@@ -146,3 +146,21 @@ export const DRAWER_CATEGORIES = {
   content: { label: 'İçerik', order: 3 },
   contact: { label: 'İletişim', order: 4 },
 } as const;
+
+export interface HeaderLink {
+  href: string;
+  label: string;
+}
+
+/**
+ * Desktop header row (≥ lg). Reuses existing routes and the drawer's item and
+ * category labels; the mobile drawer keeps the full DRAWER_ITEMS list.
+ */
+export const HEADER_PRIMARY_LINKS: readonly HeaderLink[] = [
+  { href: '/almanya-araclari', label: 'Araçlar' },
+  { href: '/haberler', label: 'Haberler' },
+  { href: '/yazi-dizisi', label: 'Arkadaşın Köşesi' },
+  { href: '/belgeler', label: 'Yararlı Belgeler' },
+  { href: '/topluluk', label: 'Topluluk' },
+  { href: '/iletisim', label: 'İletişim' },
+];

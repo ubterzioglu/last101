@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
-interface BreadcrumbItem {
+export interface BreadcrumbItem {
   label: string;
   href?: string;
 }
@@ -12,27 +11,47 @@ interface BreadcrumbProps {
   className?: string;
 }
 
+const CURRENT_CLASSES = 'font-medium text-ink';
+
 export function Breadcrumb({ items, className }: BreadcrumbProps) {
+  const lastIndex = items.length - 1;
+
   return (
-    <nav aria-label="Breadcrumb" className={cn('flex items-center space-x-2 text-sm text-gray-600', className)}>
-      {items.map((item, index) => (
-        <div key={index} className="flex items-center">
-          {index > 0 && <ChevronRight size={16} className="text-gray-400" />}
-          {item.href ? (
-            <Link
-              href={item.href}
-              className="hover:text-google-blue transition-colors"
-              aria-current={index === items.length - 1 ? 'page' : undefined}
-            >
-              {item.label}
-            </Link>
-          ) : (
-            <span className={index === items.length - 1 ? 'text-gray-900 font-medium' : ''}>
-              {item.label}
-            </span>
-          )}
-        </div>
-      ))}
+    <nav aria-label="Breadcrumb" className={cn('text-sm text-muted', className)}>
+      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+        {items.map((item, index) => {
+          const isCurrent = index === lastIndex;
+
+          return (
+            <li key={`${index}-${item.label}`} className="flex items-center gap-2">
+              {index > 0 && (
+                <span aria-hidden="true" className="text-muted/60">
+                  /
+                </span>
+              )}
+              {item.href ? (
+                <Link
+                  href={item.href}
+                  aria-current={isCurrent ? 'page' : undefined}
+                  className={cn(
+                    'transition-colors hover:text-brand-700',
+                    isCurrent ? CURRENT_CLASSES : 'text-muted'
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <span
+                  aria-current={isCurrent ? 'page' : undefined}
+                  className={cn(isCurrent && CURRENT_CLASSES)}
+                >
+                  {item.label}
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ol>
     </nav>
   );
 }

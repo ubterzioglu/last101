@@ -21,9 +21,7 @@ export function ToolPageScaffold({
         ]}
       />
       <FaqJsonLd items={config.faqs} />
-      <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        {children}
-      </div>
+      <div className="bg-page text-ink">{children}</div>
     </>
   );
 }

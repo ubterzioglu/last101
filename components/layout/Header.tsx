@@ -2,24 +2,47 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { X, ChevronDown } from 'lucide-react';
-import { SITE_NAME } from '@/lib/utils/constants';
+import { useCallback, useRef, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Menu } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/icons/ContactIcons';
+import { HEADER_DRAWER_ID, HeaderDrawer } from '@/components/layout/HeaderDrawer';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
-import { cn } from '@/lib/utils/cn';
-import { DRAWER_ITEMS, DRAWER_CATEGORIES } from '@/constants/navigation';
+import { CONTACT_CHANNELS } from '@/constants/contact-channels';
+import { HEADER_PRIMARY_LINKS } from '@/constants/navigation';
 import { useAuthUser } from '@/hooks/useAuthUser';
+import { SITE_NAME } from '@/lib/utils/constants';
+
+const WHATSAPP_HREF =
+  CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp')?.href ?? '/iletisim';
+
+const NAV_LINK =
+  'whitespace-nowrap text-sm font-medium text-ink underline-offset-[10px] transition-colors hover:text-brand-700 xl:text-[15px] aria-[current=page]:underline aria-[current=page]:decoration-brand-700 aria-[current=page]:decoration-2';
+// Desktop-only text actions on the right; below lg they live in the drawer.
+const TEXT_ACTION =
+  'hidden min-h-[44px] items-center gap-1.5 whitespace-nowrap text-sm font-medium text-ink transition-colors hover:text-brand-700 lg:inline-flex';
+
+function isActivePath(pathname: string | null, href: string): boolean {
+  return pathname === href || Boolean(pathname?.startsWith(`${href}/`));
+}
 
 export function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const { status, signOut } = useAuthUser();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
+  const [drawerPathname, setDrawerPathname] = useState(pathname);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const isAuthed = status === 'authed';
 
-  const openDrawer = () => setIsDrawerOpen(true);
-  const closeDrawer = () => setIsDrawerOpen(false);
+  // Any route change (link, back/forward, redirect) closes the drawer.
+  if (drawerPathname !== pathname) {
+    setDrawerPathname(pathname);
+    setIsDrawerOpen(false);
+  }
+
+  const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -29,158 +52,90 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-black border-b border-white/10 shadow-sm">
-        <Container size="xl">
-          <div className="flex h-12 items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <Image
-                src="/almanya101header.png"
-                alt={SITE_NAME}
-                width={420}
-                height={140}
-                className="h-6 w-auto"
-                priority
-              />
-            </Link>
+      <header className="sticky top-0 z-50 h-20 border-b border-line bg-page/95 backdrop-blur-sm">
+        <Container className="flex h-full items-center justify-between gap-6">
+          <Link href="/" className="shrink-0">
+            <Image
+              src="/almanya101header.png"
+              alt={SITE_NAME}
+              width={1500}
+              height={350}
+              priority
+              className="h-8 w-auto"
+            />
+          </Link>
 
-            {/* Menu Button + Home Button */}
-            <div className="flex items-center justify-end">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={openDrawer} 
-                aria-label="Menüyü aç"
-                className="text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
-              >
-                Menü
-              </Button>
-              <span className="h-3 w-px bg-white/20 mx-1" aria-hidden="true" />
-              <a
-                href="https://chat.whatsapp.com/JXzMvjJoc57EKDDABSB0jo"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Whatsapp Topluluğu"
-                className="inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-medium text-white transition-colors hover:bg-white/20 h-auto"
-              >
-                Whatsapp
-              </a>
-              <span className="h-3 w-px bg-white/20 mx-1" aria-hidden="true" />
-              {status === 'authed' ? (
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  aria-label="Çıkış yap"
-                  className="inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-medium text-white transition-colors hover:bg-white/20 h-auto"
-                >
-                  Çıkış
-                </button>
-              ) : (
-                <Link
-                  href="/giris"
-                  aria-label="Üye Ol"
-                  className="inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-medium text-google-yellow transition-colors hover:bg-white/20 h-auto"
-                >
-                  Üye Ol
+          <nav aria-label="Ana menü" className="hidden lg:block">
+            <ul className="flex items-center gap-4 xl:gap-7">
+              {HEADER_PRIMARY_LINKS.map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    aria-current={isActivePath(pathname, href) ? 'page' : undefined}
+                    className={NAV_LINK}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="flex items-center gap-4 xl:gap-5">
+            <a
+              href={WHATSAPP_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp Topluluğu"
+              className={TEXT_ACTION}
+            >
+              <span aria-hidden="true" className="inline-flex">
+                <WhatsAppIcon className="h-[18px] w-[18px]" />
+              </span>
+              <span className="sr-only xl:not-sr-only">WhatsApp</span>
+            </a>
+
+            {isAuthed ? (
+              <button type="button" onClick={handleSignOut} aria-label="Çıkış yap" className={TEXT_ACTION}>
+                Çıkış
+              </button>
+            ) : (
+              <>
+                <Link href="/giris" className={TEXT_ACTION}>
+                  Giriş yap
                 </Link>
-              )}
-              <span className="h-3 w-px bg-white/20 mx-1" aria-hidden="true" />
-              <Link href="/">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  aria-label="Ana Sayfa"
-                  className="text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
-                >
-                  Ana Sayfa
+                <Button href="/giris" size="sm" arrow className="hidden lg:inline-flex">
+                  Üye Ol
                 </Button>
-              </Link>
-            </div>
+              </>
+            )}
+
+            <button
+              ref={menuButtonRef}
+              type="button"
+              onClick={() => setIsDrawerOpen(true)}
+              aria-haspopup="dialog"
+              aria-expanded={isDrawerOpen}
+              aria-controls={isDrawerOpen ? HEADER_DRAWER_ID : undefined}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-btn border border-line bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-ink lg:hidden"
+            >
+              <Menu aria-hidden="true" size={18} />
+              Menü
+            </button>
           </div>
         </Container>
       </header>
 
-      {/* Overlay */}
       {isDrawerOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity"
-          onClick={closeDrawer}
+        <HeaderDrawer
+          pathname={pathname}
+          authStatus={status}
+          whatsappHref={WHATSAPP_HREF}
+          onClose={closeDrawer}
+          onSignOut={handleSignOut}
+          returnFocusRef={menuButtonRef}
         />
       )}
-
-      {/* Drawer */}
-      <div
-        className={cn(
-          'fixed top-0 right-0 h-dvh w-80 max-w-[85vw] bg-black z-50 shadow-2xl transform transition-transform duration-300 ease-in-out',
-          isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
-        )}
-      >
-        {/* Drawer Header */}
-        <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
-          <span className="text-base font-light text-white tracking-wide">{SITE_NAME}</span>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={closeDrawer}
-            aria-label="Menüyü kapat"
-            className="p-1 text-white/70 hover:text-white hover:bg-white/10"
-          >
-            <X size={18} />
-          </Button>
-        </div>
-
-        {/* Drawer Content */}
-        <nav className="px-3 py-1">
-          {/* Ana Sayfa - En üstte */}
-          <Link
-            href="/"
-            className="flex items-center px-2 py-1.5 text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group border-b border-white/10 mb-2"
-            onClick={closeDrawer}
-          >
-            <span className="font-medium text-sm tracking-wide group-hover:translate-x-1 transition-transform duration-200">
-              🏠 Ana Sayfa
-            </span>
-          </Link>
-
-          {/* Kategorilere göre gruplandırılmış menü */}
-          {(Object.entries(DRAWER_CATEGORIES) as [keyof typeof DRAWER_CATEGORIES, { label: string; order: number }][])
-            .sort((a, b) => a[1].order - b[1].order)
-            .map(([catKey, cat]) => {
-              const items = DRAWER_ITEMS.filter(i => i.category === catKey);
-              if (items.length === 0) return null;
-              const isOpen = openCategories[catKey] || false;
-              return (
-                <div key={catKey} className="mb-0.5">
-                  <button 
-                    onClick={() => setOpenCategories(prev => ({ ...prev, [catKey]: !prev[catKey] }))}
-                    className="w-full flex items-center justify-between px-2 py-1.5 text-left group hover:bg-white/5 rounded-md transition-colors"
-                  >
-                    <span className="text-[11px] font-semibold text-white/40 uppercase tracking-widest group-hover:text-white/60">
-                      {cat.label}
-                    </span>
-                    <ChevronDown size={14} className={cn("text-white/40 transition-transform duration-200", isOpen && "rotate-180")} />
-                  </button>
-                  <div className={cn("grid transition-all duration-200 ease-in-out", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
-                    <div className="overflow-hidden flex flex-col">
-                      {items.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          className="flex items-center pl-4 pr-2 py-1 text-white/80 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200 group"
-                          onClick={closeDrawer}
-                        >
-                          <span className="font-light text-[13px] leading-tight tracking-wide group-hover:translate-x-1 transition-transform duration-200">
-                            {item.label}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-        </nav>
-      </div>
     </>
   );
 }

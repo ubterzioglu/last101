@@ -1,31 +1,47 @@
 import Link from 'next/link';
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { ArrowUpRight } from 'lucide-react';
+import { forwardRef } from 'react';
+import type { ButtonHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils/cn';
-import type { ButtonVariant, ButtonSize } from '@/types';
-import { COLORS } from '@/constants/colors';
+import type { ButtonSize, ButtonVariant } from '@/types';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  /** Kept for compatibility: any `href` renders a Next.js `Link`. */
   asChild?: boolean;
   href?: string;
+  /** Appends a lucide ArrowUpRight after the label (navigational CTAs). */
+  arrow?: boolean;
 }
 
-const buttonVariants: Record<ButtonVariant, string> = {
-  primary: `bg-google-blue text-white hover:bg-blue-600 focus:ring-google-blue`,
-  secondary: `bg-white text-google-blue border-2 border-google-blue hover:bg-gray-50 focus:ring-google-blue`,
-  danger: `bg-google-red text-white hover:bg-red-600 focus:ring-google-red`,
-  success: `bg-google-green text-white hover:bg-green-600 focus:ring-google-green`,
-  outline: `bg-transparent border-2 border-gray-300 text-gray-700 hover:border-gray-400 focus:ring-gray-400`,
-  ghost: `bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-400`,
-};
+const BASE_CLASSES =
+  'inline-flex items-center justify-center gap-2 rounded-btn font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50';
 
 const buttonSizes: Record<ButtonSize, string> = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-base',
-  lg: 'px-6 py-3 text-lg',
-  xl: 'px-8 py-4 text-xl',
+  sm: 'min-h-[40px] px-4 py-2 text-sm',
+  md: 'min-h-[44px] px-6 py-3.5 text-sm',
+  lg: 'min-h-[44px] px-6 py-3.5 text-sm',
+  xl: 'min-h-[52px] px-8 py-4 text-base',
 };
+
+// Applied after the size so the ghost text link can drop the horizontal padding.
+const buttonVariants: Record<ButtonVariant, string> = {
+  primary: 'bg-brand-700 text-white hover:bg-brand-800',
+  secondary: 'bg-ink text-white hover:bg-ink-soft',
+  outline: 'border border-line bg-white text-ink hover:border-ink',
+  ghost:
+    'gap-1.5 bg-transparent px-0 text-ink underline decoration-ink/30 underline-offset-4 hover:text-brand-700 hover:decoration-brand-700',
+  danger: 'bg-alm-red-ink text-white hover:brightness-90',
+  success: 'bg-alm-green-ink text-white hover:brightness-90',
+};
+
+// Attributes that are safe to move from <button> onto the rendered <a>.
+const LINK_SAFE_PROP = /^(aria-|data-)|^(id|title|role|tabIndex|onClick|style|lang|dir)$/;
+
+function pickLinkProps(props: Record<string, unknown>): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(props).filter(([key]) => LINK_SAFE_PROP.test(key)));
+}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -33,34 +49,35 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       variant = 'primary',
       size = 'md',
-      asChild = false,
+      asChild: _asChild,
       href,
+      arrow = false,
       children,
       ...props
     },
     ref
   ) => {
-    const baseClasses =
-      'inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
-
-    const classes = cn(
-      baseClasses,
-      buttonVariants[variant],
-      buttonSizes[size],
-      className
+    const classes = cn(BASE_CLASSES, buttonSizes[size], buttonVariants[variant], className);
+    const content = (
+      <>
+        {children}
+        {arrow && (
+          <ArrowUpRight aria-hidden="true" size={variant === 'ghost' ? 14 : 16} className="shrink-0" />
+        )}
+      </>
     );
 
-    if (asChild && href) {
+    if (href) {
       return (
-        <Link href={href} className={classes}>
-          {children}
+        <Link href={href} className={classes} {...pickLinkProps(props)}>
+          {content}
         </Link>
       );
     }
 
     return (
       <button ref={ref} className={classes} {...props}>
-        {children}
+        {content}
       </button>
     );
   }

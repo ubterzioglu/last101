@@ -9,6 +9,9 @@ export type CardVariant = 'default' | 'hoverable' | 'featured' | 'bordered';
 
 export type BadgeColor = 'blue' | 'red' | 'yellow' | 'green' | 'gray';
 
+/** Section surfaces: page background, Corteqs band, white, or the dark ink band. */
+export type SectionTone = 'page' | 'band' | 'white' | 'ink';
+
 export type NavigationItem = {
   href: string;
   label: string;

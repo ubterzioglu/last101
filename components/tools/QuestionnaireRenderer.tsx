@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { cn } from '@/lib/utils/cn';
-import {
-  computeToolScore,
-  getQuestionnaireDimensionLabel,
-  scoreAnswers,
-} from '@/lib/tools/survey';
+import { QuestionnaireSummary } from '@/components/tools/QuestionnaireSummary';
+import { ToolOption } from '@/components/tools/ToolOption';
+import { ToolPanel } from '@/components/tools/ToolPanel';
+import { ToolProgress } from '@/components/tools/ToolProgress';
+import { ToolQuestionCard } from '@/components/tools/ToolQuestionCard';
+import { Button } from '@/components/ui/Button';
+import { computeToolScore, scoreAnswers } from '@/lib/tools/survey';
 import type {
   QuestionnaireAnswerValue,
   QuestionnaireOption,
@@ -54,20 +55,6 @@ function getQuestionOptions(question: QuestionnaireQuestion) {
     label: option.label,
     value: option.key,
   }));
-}
-
-function getCategoryTone(category: string) {
-  if (category === 'Güçlü uyum') {
-    return 'border-google-green bg-green-50 text-green-900';
-  }
-  if (category === 'Kullanılabilir') {
-    return 'border-google-blue bg-blue-50 text-blue-900';
-  }
-  if (category === 'Belirsiz / geliştirmeli') {
-    return 'border-google-yellow bg-yellow-50 text-yellow-900';
-  }
-
-  return 'border-google-red bg-red-50 text-red-900';
 }
 
 function createSessionId() {
@@ -242,158 +229,107 @@ export function QuestionnaireRenderer({
     setSubmittedKey('');
   };
 
+  const progressPercent =
+    showSummary && isComplete ? 100 : Math.max((answeredCount / config.questions.length) * 100, 6);
+
   return (
-    <section className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-white">
+    <ToolPanel>
       <div className="space-y-2">
-        <div className="inline-flex rounded-full border border-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white/75">
+        <div className="inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
           Derin değerlendirme
         </div>
-        <h2 className="text-2xl font-bold">15 soruluk ikinci katman</h2>
-        <p className="max-w-3xl text-sm leading-6 text-white/75">
+        <h2 className="text-[clamp(1.5rem,2.6vw,2rem)] font-extrabold leading-tight tracking-[-0.03em] text-ink">
+          15 soruluk ikinci katman
+        </h2>
+        <p className="max-w-3xl text-sm leading-relaxed text-muted">
           Kısa araç sonucunu daha ölçülebilir hale getirmek için bu anket,
           hazırlık ve uygulanabilirlik sinyallerini tek skor altında toplar.
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3">
-        <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm font-medium text-white/80">
-            {showSummary && isComplete
-              ? 'Anket tamamlandı'
-              : `Soru ${Math.min(answeredCount + 1, config.questions.length)} / ${config.questions.length}`}
-          </span>
-          <button
-            type="button"
-            onClick={handleReset}
-            className="text-sm text-white/60 transition-colors hover:text-white"
-          >
-            Anketi sıfırla
-          </button>
-        </div>
-        <div className="h-2 overflow-hidden rounded-full bg-white/10">
-          <div
-            className="h-full bg-google-blue transition-all duration-300"
-            style={{ width: `${showSummary && isComplete ? 100 : Math.max((answeredCount / config.questions.length) * 100, 6)}%` }}
-            data-pw="questionnaire-progress"
-          />
-        </div>
-      </div>
+      <ToolProgress
+        current={Math.min(answeredCount + 1, config.questions.length)}
+        total={config.questions.length}
+        label={showSummary && isComplete ? 'Anket tamamlandı' : undefined}
+        percent={progressPercent}
+        onReset={handleReset}
+        resetLabel="Anketi sıfırla"
+        barTestId="questionnaire-progress"
+      />
 
       {!showSummary && currentQuestion && (
-        <div className="rounded-2xl border-2 border-google-blue bg-white p-5 text-gray-900" data-pw="questionnaire-card">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-google-blue">
-            Ölçüm sorusu
-          </p>
-          <h3 className="text-xl font-bold leading-tight">{currentQuestion.text}</h3>
-          <p className="mt-2 text-sm leading-6 text-gray-600">{currentQuestion.rationale}</p>
-
-          <div className="mt-5 space-y-2">
-            {getQuestionOptions(currentQuestion).map((option) => {
-              const selected = answers[currentQuestion.id] === option.value;
-
-              return (
-                <button
-                  key={option.key}
-                  type="button"
-                  onClick={() => handleSelect(option.value)}
-                  className={cn(
-                    'w-full rounded-xl border-2 px-4 py-3 text-left transition-colors',
-                    selected
-                      ? 'border-google-blue bg-blue-50 text-blue-900'
-                      : 'border-gray-200 bg-white text-gray-800 hover:border-google-blue hover:bg-blue-50'
-                  )}
-                  data-pw="questionnaire-option"
-                >
-                  {option.label}
-                </button>
-              );
-            })}
+        <ToolQuestionCard
+          testId="questionnaire-card"
+          category="Ölçüm sorusu"
+          title={currentQuestion.text}
+          description={currentQuestion.rationale}
+        >
+          <div className="space-y-2">
+            {getQuestionOptions(currentQuestion).map((option) => (
+              <ToolOption
+                key={option.key}
+                selected={answers[currentQuestion.id] === option.value}
+                onClick={() => handleSelect(option.value)}
+                testId="questionnaire-option"
+              >
+                {option.label}
+              </ToolOption>
+            ))}
           </div>
 
           {currentIndex > 0 && (
             <button
               type="button"
               onClick={handleBack}
-              className="mt-4 text-sm text-gray-500 transition-colors hover:text-gray-700"
+              className="mt-5 text-sm font-semibold text-muted transition-colors hover:text-brand-700"
             >
               ← Önceki soruya dön
             </button>
           )}
-        </div>
+        </ToolQuestionCard>
       )}
 
       {showSummary && scoreSummary && (
         <div className="space-y-4" data-pw="questionnaire-result">
-          <div className="rounded-2xl border border-white/10 bg-white p-5 text-gray-900">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Anket skoru</p>
-                <h3 className="mt-1 text-3xl font-bold">%{scoreSummary.toolScore}</h3>
-              </div>
-              <div className={cn('rounded-full border px-3 py-1 text-sm font-semibold', getCategoryTone(scoreSummary.category))}>
-                {scoreSummary.category}
-              </div>
+          <QuestionnaireSummary
+            toolScore={scoreSummary.toolScore}
+            category={scoreSummary.category}
+            dimensionScores={scoreSummary.dimensionScores}
+          />
+
+          {submissionState !== 'idle' && (
+            <div className="rounded-card border border-line bg-white p-4 text-sm text-ink" aria-live="polite">
+              {submissionState === 'submitting' && <p>Anket yanıtların kaydediliyor...</p>}
+              {submissionState === 'success' && <p>Anket yanıtların başarıyla kaydedildi.</p>}
+              {submissionState === 'error' && (
+                <div className="space-y-3">
+                  <p className="text-alm-red-ink">{submissionError || 'Anket yanıtları kaydedilemedi.'}</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setSubmissionState('idle');
+                      setSubmissionError('');
+                    }}
+                  >
+                    Tekrar dene
+                  </Button>
+                </div>
+              )}
             </div>
-
-            {Object.keys(scoreSummary.dimensionScores).length > 0 && (
-              <div className="mt-5 grid gap-3 md:grid-cols-3">
-                {Object.entries(scoreSummary.dimensionScores).map(([key, value]) => (
-                  <div key={key} className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                    <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
-                      {getQuestionnaireDimensionLabel(key)}
-                    </p>
-                    <p className="mt-2 text-2xl font-bold text-gray-900">%{value}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-5 rounded-xl border border-gray-200 bg-gray-50 p-4">
-              <p className="text-sm leading-6 text-gray-700">
-                Bu skor, mevcut araç sonucunu değiştirmez. Ama hangi alanlarda daha güçlü,
-                hangi alanlarda daha kırılgan olduğunu daha ölçülebilir biçimde gösterir.
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-black/10 p-4 text-sm text-white/80">
-            {submissionState === 'submitting' && <p>Anket yanıtların kaydediliyor...</p>}
-            {submissionState === 'success' && <p>Anket yanıtların başarıyla kaydedildi.</p>}
-            {submissionState === 'error' && (
-              <div className="space-y-3">
-                <p>{submissionError || 'Anket yanıtları kaydedilemedi.'}</p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSubmissionState('idle');
-                    setSubmissionError('');
-                  }}
-                  className="rounded-xl border border-white/20 px-3 py-2 font-semibold text-white transition-colors hover:border-white/40"
-                >
-                  Tekrar dene
-                </button>
-              </div>
-            )}
-          </div>
+          )}
 
           <div className="flex flex-col gap-2 sm:flex-row">
-            <button
-              type="button"
-              onClick={handleEditLast}
-              className="w-full rounded-xl border border-white/20 py-3 font-semibold text-white transition-colors hover:bg-white/5"
-            >
+            <Button type="button" variant="outline" onClick={handleEditLast} className="w-full">
               Son soruyu düzenle
-            </button>
-            <button
-              type="button"
-              onClick={handleReset}
-              className="w-full rounded-xl border border-white/20 py-3 font-semibold text-white transition-colors hover:bg-white/5"
-            >
+            </Button>
+            <Button type="button" variant="outline" onClick={handleReset} className="w-full">
               Anketi yeniden başlat
-            </button>
+            </Button>
           </div>
         </div>
       )}
-    </section>
+    </ToolPanel>
   );
 }
