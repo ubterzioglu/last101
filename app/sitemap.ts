@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getAllPublishedNewsEntriesForSitemap } from '@/lib/public-news';
 import { getAllRehberArticlesForSitemap } from '@/lib/rehber-articles';
 import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
-import { isGatedPath } from '@/lib/utils/gated-routes';
+import { TOOL_PREFIXES } from '@/lib/utils/gated-routes';
 
 type StaticRoute = {
   path: string;
@@ -13,8 +13,10 @@ type StaticRoute = {
 // Statik rotalarda gerçek bir içerik güncelleme tarihi bilinmediği için
 // lastModified bilinçli olarak kullanılmıyor; sahte "şimdi" damgası
 // güncellik sinyalini bozuyor (bkz. docs/plans/seo-geo-2026-10-21.md P1).
-// Üyelik kapısına takılan araç URL'leri anonim istekte 307 ile noindex
-// giriş sayfasına yönlenir; bu yüzden GATED_PREFIXES burada da filtrelenir.
+// Araç URL'leri indekslenebilir: anonim istek 200 ile sunucudan render edilen
+// tanıtım içeriği döndürür, bu yüzden TOOL_PREFIXES sitemap'e dahildir.
+// Üye alanı girişleri (MEMBER_AREA_PREFIXES, ör. /software-hub) yönlenir ve
+// açık içerik sunmaz; sitemap'e alınmaz.
 const STATIC_ROUTES: StaticRoute[] = [
   { path: '/', changeFrequency: 'daily', priority: 1 },
   { path: '/almanyada-yasam', changeFrequency: 'weekly', priority: 0.9 },
@@ -41,6 +43,13 @@ const STATIC_ROUTES: StaticRoute[] = [
   { path: '/kvkk-gdpr-ccpa', changeFrequency: 'yearly', priority: 0.4 },
   { path: '/cerez-politikasi', changeFrequency: 'yearly', priority: 0.4 },
   { path: '/impressum', changeFrequency: 'yearly', priority: 0.4 },
+  // İndekslenebilir interaktif araçlar: anonim ziyaretçiye 200 ile tanıtım
+  // içeriği, oturum açmış kullanıcıya aynı adreste etkileşimli araç.
+  ...TOOL_PREFIXES.map((path) => ({
+    path,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  })),
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -50,13 +59,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getAllRehberArticlesForSitemap(),
   ]);
 
-  const routes = STATIC_ROUTES.filter((route) => !isGatedPath(route.path)).map(
-    (route) => ({
-      url: route.path === '/' ? baseUrl : `${baseUrl}${route.path}`,
-      changeFrequency: route.changeFrequency,
-      priority: route.priority,
-    })
-  );
+  const routes = STATIC_ROUTES.map((route) => ({
+    url: route.path === '/' ? baseUrl : `${baseUrl}${route.path}`,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+  }));
 
   return [
     ...routes,

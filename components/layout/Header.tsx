@@ -30,17 +30,19 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 bg-black border-b border-white/10 shadow-sm">
+        <link rel="preload" as="image" href="/almanya101header.webp" fetchPriority="high" />
         <Container size="xl">
           <div className="flex h-12 items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/almanya101header.png"
+                src="/almanya101header.webp"
                 alt={SITE_NAME}
-                width={420}
-                height={140}
+                width={240}
+                height={56}
                 className="h-6 w-auto"
-                priority
+                loading="eager"
+                fetchPriority="high"
               />
             </Link>
 

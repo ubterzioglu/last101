@@ -1,5 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import VizeClient from './VizeClient';
 import { SITE_URL } from '@/lib/utils/constants';
 
@@ -45,12 +46,26 @@ export default function VizeSecimPage() {
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Vize Seçim Aracı', url: pageUrl },
+          { name: 'Almanya Vize Seçim Aracı', url: pageUrl },
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
       <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <VizeClient />
+        <ToolAccessGate
+          intro={{
+            title: 'Almanya Vize Seçim Aracı',
+            description:
+              '10-13 kısa soruyla mesleğini, eğitim durumunu, iş teklifin olup olmadığını ve maaş beklentini değerlendirir; sana en uygun Almanya çalışma izni veya vize türünü önerir.',
+            highlights: [
+              'EU Mavi Kart, Fachkräftevisa, Chancenkarte ve IT Uzmanı Vizesi gibi güncel izin türlerini karşılaştırır.',
+              'Profiline göre hangi vize yolunun gerçekçi olduğunu gerekçesiyle gösterir.',
+              'Sonuç anında görünür; kişisel veri saklanmaz, hukuki danışmanlık yerine geçmez.',
+            ],
+            toolPath: '/vize-secim',
+          }}
+        >
+          <VizeClient />
+        </ToolAccessGate>
 
         <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
           <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">

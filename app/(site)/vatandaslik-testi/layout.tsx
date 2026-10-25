@@ -48,7 +48,7 @@ export default function VatandaslikTestiLayout({
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Vatandaşlık Testi', url: pageUrl },
+          { name: 'Almanya Vatandaşlık Testi', url: pageUrl },
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />

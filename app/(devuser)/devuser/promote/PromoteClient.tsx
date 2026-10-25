@@ -525,7 +525,7 @@ export function PromoteClient() {
     <>
       <style>{css}</style>
       <DevUserShell backHref="/devuser/dev" backLabel="← dashboard'a dön">
-        <main className="promote-main">
+        <div className="promote-main">
           <div className="card hero-card">
             <div className="hero-domain">almanya101.de</div>
             <div className="trophy-icon">📢</div>
@@ -657,7 +657,7 @@ export function PromoteClient() {
               )}
             </div>
           </div>
-        </main>
+        </div>
       </DevUserShell>
     </>
   );

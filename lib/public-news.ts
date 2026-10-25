@@ -53,6 +53,7 @@ interface NewsRow {
   relevance_reason: string | null;
   published_at: string | null;
   created_at: string | null;
+  updated_at: string | null;
   is_featured: boolean | null;
   featured_rank: number | null;
   show_in_carousel: boolean | null;
@@ -90,6 +91,7 @@ function mapRowToListItem(row: NewsRow): NewsListItem {
   const category = normalizeNewsCategory(row.category);
   const summary = String(row.summary || '').trim();
   const publishedAt = row.published_at || row.created_at || new Date().toISOString();
+  const updatedAt = row.updated_at || publishedAt;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || CANONICAL_SITE_URL;
 
   return {
@@ -103,6 +105,7 @@ function mapRowToListItem(row: NewsRow): NewsListItem {
     categoryLabel: getNewsCategoryLabel(category),
     publishedAt,
     publishedLabel: formatNewsDate(publishedAt),
+    updatedAt,
     sourceName: String(row.source_name || 'Almanya101').trim(),
     sourceUrl: String(row.source_url || '').trim() || undefined,
     sourcePublishedAt: row.source_published_at,
@@ -145,7 +148,7 @@ async function fetchPublishedNewsRows(options?: {
 
   let query = supabase
     .from('news_posts')
-    .select('id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel')
+    .select('id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, updated_at, is_featured, featured_rank, show_in_carousel')
     .eq('status', 'published')
     .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .lte('published_at', new Date().toISOString())
@@ -179,7 +182,7 @@ export async function getFeaturedNewsArticle(): Promise<PublicNewsArticle | unde
   const supabase = createNewsReadClient();
   if (!supabase) return undefined;
 
-  const baseSelect = 'id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel';
+  const baseSelect = 'id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, updated_at, is_featured, featured_rank, show_in_carousel';
 
   const featuredResult = await supabase
     .from('news_posts')
@@ -260,7 +263,7 @@ export async function getPublishedNewsArticleBySlug(slug: string): Promise<Publi
   const supabase = createNewsReadClient();
   if (!supabase) return undefined;
 
-  const select = 'id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel';
+  const select = 'id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, updated_at, is_featured, featured_rank, show_in_carousel';
 
   const { data, error } = await supabase
     .from('news_posts')
@@ -302,7 +305,7 @@ export async function getRelatedPublishedNewsArticles(currentId: string, limit =
 
   const { data, error } = await supabase
     .from('news_posts')
-    .select('id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, is_featured, featured_rank, show_in_carousel')
+    .select('id, slug, title, category, summary, content, cover_image_url, cover_image_alt, cover_image_credit, source_name, source_url, source_published_at, reading_minutes, whatsapp_share_text, relevance_score, relevance_reason, published_at, created_at, updated_at, is_featured, featured_rank, show_in_carousel')
     .eq('status', 'published')
     .or(PUBLIC_NEWS_LANGUAGE_FILTER)
     .neq('id', currentId)

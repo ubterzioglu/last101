@@ -43,11 +43,13 @@ export function NewsHeroCard({ article }: { article: PublicNewsArticle }) {
         <div className="relative min-h-[260px] lg:min-h-full">
           <Image
             src={article.coverImageUrl}
-            alt={article.coverImageAlt}
-            fill
+            alt=""
+            width={800}
+            height={600}
             unoptimized
+            priority
             sizes="(min-width: 1024px) 40vw, 100vw"
-            className="object-cover"
+            className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent lg:bg-gradient-to-l" />
         </div>

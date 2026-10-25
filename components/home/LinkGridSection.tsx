@@ -15,6 +15,8 @@ interface LinkGridSectionProps {
   backgroundImage?: string | false;
   titleMarginSmall?: boolean;
   noCenter?: boolean;
+  /** İlk N kartın görselini öncelikli yükle (ilk ekranda görünen ızgaralar için). */
+  priorityFirst?: number;
 }
 
 export function LinkGridSection({
@@ -27,9 +29,10 @@ export function LinkGridSection({
   cardTitleClassName,
   cardDescriptionClassName,
   overlayOpacity = 'bg-black/60',
-  backgroundImage = '/images/backgrounds/hero.jpg',
+  backgroundImage = '/images/backgrounds/hero.webp',
   titleMarginSmall = false,
   noCenter = false,
+  priorityFirst = 0,
 }: LinkGridSectionProps) {
   return (
     <section
@@ -58,13 +61,14 @@ export function LinkGridSection({
             gridClassName
           )}
         >
-          {items.map((item) => (
+          {items.map((item, index) => (
             <LinkCard
               key={item.href}
               item={item}
               className={cardClassName}
               titleClassName={cardTitleClassName}
               descriptionClassName={cardDescriptionClassName}
+              priority={index < priorityFirst}
             />
           ))}
         </div>

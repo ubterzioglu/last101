@@ -7,7 +7,8 @@ import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
   title: 'Haberler',
-  description: "Almanya, Avrupa ve Dünya'dan güncel haberler ve gelişmeler.",
+  description:
+    "Almanya, Türkiye, Avrupa ve dünyadan güncel haberler; Almanya'daki Türk topluluğunu ilgilendiren gelişmeler, siyaset, ekonomi ve yaşam başlıkları tek akışta.",
   path: '/haberler',
 });
 
@@ -25,7 +26,7 @@ export default async function HaberlerPage() {
     <>
       <WebPageJsonLd
         title="Haberler"
-        description="Almanya, Avrupa ve Dünya'dan güncel haberler ve gelişmeler."
+        description="Almanya, Türkiye, Avrupa ve dünyadan güncel haberler; Almanya'daki Türk topluluğunu ilgilendiren gelişmeler tek akışta."
         url={pageUrl}
       />
       <BreadcrumbJsonLd
@@ -53,9 +54,10 @@ export default async function HaberlerPage() {
         <section className="container py-12 md:py-16">
           {!heroArticle && initialFeed.items.length === 0 ? (
             <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] px-6 py-14 text-center">
-              <h2 className="text-2xl font-bold">Henüz yayınlanmış haber bulunmuyor.</h2>
+              <h2 className="text-2xl font-bold">Henüz yayınlanmış haber bulunmuyor</h2>
               <p className="mt-4 text-sm leading-7 text-white/68">
-                `/admin/haberler` üzerinden bir haberi yayına aldığınızda burada görünür.
+                Haber akışımız hazırlanıyor. Kısa süre sonra Almanya, Türkiye ve Avrupa
+                gündeminden güncel başlıklar burada yayımlanacak.
               </p>
             </div>
           ) : (

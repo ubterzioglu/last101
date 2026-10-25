@@ -317,7 +317,7 @@ export function FounderSurveyClient({ founderId }: { founderId: string }) {
     <>
       <style>{css}</style>
       <DevUserShell backHref="/devuser/dev" backLabel="← dashboard'a dön">
-        <main className="survey-main">
+        <div className="survey-main">
           <section className="survey-card hero-card">
             <div className="hero-kicker">almanya101.de</div>
             <h2>Founder Etkinlik Tarih Anketi</h2>
@@ -390,7 +390,7 @@ export function FounderSurveyClient({ founderId }: { founderId: string }) {
               </>
             )}
           </section>
-        </main>
+        </div>
       </DevUserShell>
     </>
   );

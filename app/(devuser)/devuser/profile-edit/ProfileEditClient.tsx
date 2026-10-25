@@ -1019,7 +1019,7 @@ export function ProfileEditClient() {
           </aside>
 
           {/* Form Content */}
-          <main className="profile-content" ref={formRef}>
+          <div className="profile-content" ref={formRef}>
             {/* Kişisel Bilgiler */}
             <div className="form-section" id="section-personal">
               <div
@@ -1444,7 +1444,7 @@ export function ProfileEditClient() {
                 </button>
               </div>
             </div>
-          </main>
+          </div>
         </div>
       </DevUserShell>
     </>

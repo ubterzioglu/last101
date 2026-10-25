@@ -29,6 +29,7 @@ export function KenBurnsSlideshow({
   className,
 }: KenBurnsSlideshowProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [visitedIndexes, setVisitedIndexes] = useState<number[]>([0]);
 
   useEffect(() => {
     if (slides.length <= 1) {
@@ -42,6 +43,12 @@ export function KenBurnsSlideshow({
     return () => clearInterval(timer);
   }, [slides.length, intervalMs]);
 
+  useEffect(() => {
+    setVisitedIndexes((visited) =>
+      visited.includes(activeIndex) ? visited : [...visited, activeIndex]
+    );
+  }, [activeIndex]);
+
   return (
     <div
       aria-hidden="true"
@@ -49,6 +56,9 @@ export function KenBurnsSlideshow({
     >
       {slides.map((slide, index) => {
         const isActive = index === activeIndex;
+        const nextIndex = (activeIndex + 1) % slides.length;
+        const shouldRenderImage =
+          visitedIndexes.includes(index) || index === nextIndex;
 
         return (
           <div
@@ -58,17 +68,19 @@ export function KenBurnsSlideshow({
               isActive ? 'opacity-100' : 'opacity-0',
             )}
           >
-            <Image
-              src={slide.src}
-              alt={slide.alt}
-              fill
-              priority={index === 0}
-              sizes="100vw"
-              className={cn(
-                'object-cover',
-                isActive ? 'kb-zoom-active' : 'kb-zoom-idle',
-              )}
-            />
+            {shouldRenderImage && (
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                loading="lazy"
+                sizes="100vw"
+                className={cn(
+                  'object-cover',
+                  isActive ? 'kb-zoom-active' : 'kb-zoom-idle',
+                )}
+              />
+            )}
           </div>
         );
       })}

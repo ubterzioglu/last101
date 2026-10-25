@@ -3,6 +3,7 @@ import { computeToolScore, scoreAnswers, validateQuestionnaireAnswerValue } from
 import { TOOL_QUESTIONNAIRE_REGISTRY } from '@/lib/tools/surveys';
 import type { QuestionnaireAnswerPayload, QuestionnaireAnswerValue } from '@/lib/tools/types';
 import { tryCreateServiceClient } from '@/lib/supabase/admin';
+import { createClient } from '@/lib/supabase/server';
 
 class RequestValidationError extends Error {}
 
@@ -68,6 +69,18 @@ export async function POST(request: NextRequest) {
   const supabase = tryCreateServiceClient();
   if (!supabase) {
     return NextResponse.json({ error: 'Service not configured' }, { status: 503 });
+  }
+
+  // Anket gönderimi kişisel veri işler; araç sayfaları anonim ziyaretçiye açık
+  // olsa da bu API kendi yetki kontrolünü yapar (giriş zorunlu).
+  try {
+    const authClient = await createClient();
+    const { data } = await authClient.auth.getUser();
+    if (!data.user) {
+      return NextResponse.json({ error: 'Bu işlem için giriş yapılmalıdır.' }, { status: 401 });
+    }
+  } catch {
+    return NextResponse.json({ error: 'Auth not configured' }, { status: 503 });
   }
 
   try {

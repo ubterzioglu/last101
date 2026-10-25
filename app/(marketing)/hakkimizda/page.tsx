@@ -70,21 +70,13 @@ export default function HakkimizdaPage() {
                   className="w-full h-full object-cover"
                   width={160}
                   height={160}
+                  priority
                 />
               </div>
               
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Umut Barış Terzioğlu</h3>
               <p className="text-google-yellow font-medium text-lg mb-8 tracking-wide uppercase">Kurucu</p>
-              
-              <a
-                href="https://ubterzioglu.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-3 bg-google-yellow text-black font-bold rounded-full hover:bg-yellow-400 hover:shadow-[0_0_20px_rgba(251,188,4,0.4)] transition-all duration-300 mb-10"
-              >
-                Kişisel Web Sayfam
-              </a>
-              
+
               <div className="text-white/80 text-base md:text-lg leading-relaxed space-y-5 text-left font-light">
                 <p>
                   Ben Umut Barış Terzioğlu. Türkiye'de Barış, Almanya'da Umut :) 1985 doğumluyum. 
@@ -131,6 +123,7 @@ export default function HakkimizdaPage() {
                   className="w-full h-full object-cover"
                   width={160}
                   height={160}
+                  priority
                 />
               </div>
               

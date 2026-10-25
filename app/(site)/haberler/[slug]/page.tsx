@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: NewsDetailPageProps) {
     title: article.title,
     description: article.summary || article.title,
     publishedTime: article.publishedAt,
+    modifiedTime: article.updatedAt,
     path: `/haberler/${article.slug}`,
     image: article.coverImageUrl,
     tags: [article.categoryLabel, 'Haberler', 'Almanya'],
@@ -55,7 +56,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         title={article.title}
         description={article.summary || article.title}
         datePublished={article.publishedAt}
-        dateModified={article.publishedAt}
+        dateModified={article.updatedAt}
         author="Almanya101"
         url={pageUrl}
         image={article.coverImageUrl}
@@ -83,11 +84,11 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
             <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_420px] lg:items-start">
               <div>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
+                <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
                   <span className="rounded-full bg-google-yellow px-3 py-1 font-semibold text-black">
                     {article.categoryLabel}
                   </span>
-                  <span>{article.publishedLabel}</span>
+                  <time dateTime={article.publishedAt}>{article.publishedLabel}</time>
                   <span>{article.readingMinutes} dk okuma</span>
                 </div>
 
@@ -103,11 +104,13 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
               <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/40">
                 <Image
                   src={article.coverImageUrl}
-                  alt={article.coverImageAlt}
-                  fill
+                  alt=""
+                  width={840}
+                  height={630}
                   unoptimized
+                  priority
                   sizes="(min-width: 1024px) 420px, 100vw"
-                  className="object-cover"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>
             </div>

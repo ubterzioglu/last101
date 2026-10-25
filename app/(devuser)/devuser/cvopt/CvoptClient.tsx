@@ -492,7 +492,7 @@ export function CvoptClient() {
     <>
       <style>{PAGE_CSS}</style>
       <DevUserShell backHref="/devuser/dev" backLabel="← dashboard'a dön">
-        <main className="cvopt-main">
+        <div className="cvopt-main">
           <section className="cvopt-card hero-card" style={{ marginBottom: 6 }}>
             <div className="hero-kicker">almanya101.de</div>
             <h2>Ücretsiz CV ve Linkedin Profil İyileştirme Önerileri</h2>
@@ -619,7 +619,7 @@ export function CvoptClient() {
               </div>
             </div>
           </section>
-        </main>
+        </div>
 
         <button
           type="button"

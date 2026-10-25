@@ -398,7 +398,7 @@ export function FounderClient() {
     <>
       <style>{css}</style>
       <DevUserShell backHref="/devuser/dev" backLabel="← dashboard'a dön">
-        <main className="founder-main">
+        <div className="founder-main">
           <section className="founder-card hero-card">
             <div className="hero-kicker">almanya101.de</div>
             <h2>Founder Kayıt</h2>
@@ -527,7 +527,7 @@ export function FounderClient() {
               </div>
             )}
           </section>
-        </main>
+        </div>
       </DevUserShell>
     </>
   );

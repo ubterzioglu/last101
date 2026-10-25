@@ -856,7 +856,7 @@ export default function AdminPage() {
           />
         </div>
 
-        <main className="main-content">
+        <div className="main-content">
           {/* Hero */}
           <div className="card hero-card">
             <div className="hero-domain">almanya101.de</div>
@@ -1557,7 +1557,7 @@ export default function AdminPage() {
               )}
             </div>
           </div>
-        </main>
+        </div>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', padding: '24px 0 32px' }}>
           <Link href="/" style={{ padding: '10px 24px', borderRadius: 10, background: 'rgba(255,255,255,0.08)', border: '1px solid var(--glass-border)', color: 'var(--text-primary)', textDecoration: 'none', fontWeight: 500, fontSize: 14, transition: 'background 0.2s' }}
             onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}

@@ -8,6 +8,7 @@ interface LinkCardProps {
   className?: string;
   titleClassName?: string;
   descriptionClassName?: string;
+  priority?: boolean;
 }
 
 const CATEGORY_STYLES = {
@@ -78,6 +79,7 @@ export function LinkCard({
   className,
   titleClassName,
   descriptionClassName,
+  priority = false,
 }: LinkCardProps) {
   const categoryKey = item.categoryKey ?? (item.kind === 'tool' ? 'tool' : 'content');
   const categoryLabel = item.categoryLabel ?? (item.kind === 'tool' ? 'ARAÇ' : 'İÇERİK');
@@ -117,11 +119,13 @@ export function LinkCard({
       <div className="relative min-h-[88px] overflow-hidden border-b border-white/10 md:min-h-[96px]">
         <Image
           src={item.image}
-          alt={item.label}
-          fill
+          alt=""
+          width={400}
+          height={300}
           unoptimized
+          priority={priority}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/65" />
         {/* Neon accent line under image */}

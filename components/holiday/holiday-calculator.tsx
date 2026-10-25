@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useId } from 'react';
 import Link from 'next/link';
 import { Holiday, TR_HOLIDAY_TIPS } from '@/constants/holidays/tr-2026';
 import {
@@ -29,6 +29,8 @@ export function HolidayCalculator({
   holidays,
   tips,
 }: HolidayCalculatorProps) {
+  const startInputId = useId();
+  const endInputId = useId();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [result, setResult] = useState<ReturnType<typeof calculateTRRange> | null>(null);
@@ -174,8 +176,11 @@ export function HolidayCalculator({
 
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Başlangıç</label>
+            <label htmlFor={startInputId} className="text-xs text-gray-500 block mb-1">
+              Başlangıç tarihi
+            </label>
             <input
+              id={startInputId}
               type="date"
               value={startDate}
               onChange={handleStartChange}
@@ -183,8 +188,11 @@ export function HolidayCalculator({
             />
           </div>
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Bitiş</label>
+            <label htmlFor={endInputId} className="text-xs text-gray-500 block mb-1">
+              Bitiş tarihi
+            </label>
             <input
+              id={endInputId}
               type="date"
               value={endDate}
               min={startDate}

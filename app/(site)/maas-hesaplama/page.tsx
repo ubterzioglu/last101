@@ -1,10 +1,11 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import MaasClient from './MaasClient';
 import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
-  title: 'Maaş Hesaplayıcı',
+  title: 'Almanya Maaş Hesaplayıcı',
   description: 'Almanya\'da brüt maaşınızı net maaşa, net maaşınızı brüt maaşa dönüştürün. Vergi sınıfı, eyalet, çocuk durumu ve daha fazlasını hesaplayın.',
   path: '/maas-hesaplama',
 });
@@ -38,19 +39,33 @@ export default function MaasHesaplamaPage() {
   return (
     <>
       <WebPageJsonLd
-        title="Maaş Hesaplayıcı"
+        title="Almanya Maaş Hesaplayıcı"
         description="Almanya'da brüt maaşınızı net maaşa, net maaşınızı brüt maaşa dönüştürün. Vergi sınıfı, eyalet, çocuk durumu ve daha fazlasını hesaplayın."
         url={pageUrl}
       />
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Maaş Hesaplayıcı', url: pageUrl },
+          { name: 'Almanya Maaş Hesaplayıcı', url: pageUrl },
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
       <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <MaasClient />
+        <ToolAccessGate
+          intro={{
+            title: 'Almanya Maaş Hesaplayıcı',
+            description:
+              'Almanya\'da brüt maaşını net maaşa, net maaşını brüt maaşa dönüştür. Vergi sınıfı, eyalet, çocuk durumu, kilise vergisi ve sosyal sigorta kesintilerini yürürlükteki oranlarla hesapla.',
+            highlights: [
+              'Brütten nete ve netten brüte çift yönlü hesaplama yapar.',
+              'Steuerklasse, Bundesland, çocuk sayısı, kilise vergisi ve bakım sigortası gibi değişkenleri dikkate alır.',
+              'Gelir vergisi ile sağlık, emeklilik, işsizlik ve bakım sigortası kesintilerini kalem kalem gösterir.',
+            ],
+            toolPath: '/maas-hesaplama',
+          }}
+        >
+          <MaasClient />
+        </ToolAccessGate>
 
         <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
           <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">

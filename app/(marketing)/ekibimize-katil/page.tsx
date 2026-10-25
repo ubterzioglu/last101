@@ -9,7 +9,7 @@ export const metadata = createMetadata({
 export default function EkibimizeKatilPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative bg-cover bg-center py-12 px-4"
-      style={{ backgroundImage: 'url(/images/backgrounds/frankfurt1.jpg)' }}
+      style={{ backgroundImage: 'url(/images/backgrounds/frankfurt1.webp)' }}
     >
       <div className="absolute inset-0 bg-black/70" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -65,6 +65,7 @@ export default function EkibimizeKatilPage() {
 
               <a
                 href="mailto:info@almanya101.de"
+                aria-label="E-posta: info@almanya101.de"
                 className="flex items-center gap-4 p-4 rounded-xl bg-white/10 hover:bg-white/20 transition-all duration-300 group"
               >
                 <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-red-500">

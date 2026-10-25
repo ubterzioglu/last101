@@ -1,5 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import { TransferSelector } from '@/components/para-transferi/transfer-selector';
 import { SITE_URL } from '@/lib/utils/constants';
 
@@ -45,12 +46,26 @@ export default function ParaTransferiPage() {
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Para Transferi', url: pageUrl },
+          { name: 'Para Transferi Seçim Aracı', url: pageUrl },
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
       <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <TransferSelector />
+        <ToolAccessGate
+          intro={{
+            title: 'Para Transferi Seçim Aracı',
+            description:
+              'Almanya\'dan Türkiye\'ye para gönderirken tutar, öncelik ve ödeme yöntemine göre en uygun transfer seçeneğini karşılaştır: fintech uygulamaları, banka havalesi ve döviz büroları.',
+            highlights: [
+              'Komisyon, döviz kuru farkı, hız ve güvenilirlik kriterlerini birlikte değerlendirir.',
+              'Gönderim tutarına göre toplam maliyeti karşılaştırmalı gösterir.',
+              'BaFin denetimli ve lisanslı platformlar üzerinden güvenli seçim yapmana yardımcı olur.',
+            ],
+            toolPath: '/para-transferi',
+          }}
+        >
+          <TransferSelector />
+        </ToolAccessGate>
 
         <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
           <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">

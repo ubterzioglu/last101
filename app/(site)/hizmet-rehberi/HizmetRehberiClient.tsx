@@ -345,10 +345,11 @@ export default function HizmetRehberiClient() {
               </div>
 
               <div className="rounded-[1.8rem] border border-gray-200 bg-white p-4">
-                <label className="mb-2 block text-sm font-medium text-gray-700">Ara</label>
+                <label htmlFor="rehber-arama-input" className="mb-2 block text-sm font-medium text-gray-700">Ara</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                   <input
+                    id="rehber-arama-input"
                     type="text"
                     value={searchQuery}
                     onChange={(event) => setSearchQuery(event.target.value)}
@@ -359,11 +360,12 @@ export default function HizmetRehberiClient() {
               </div>
 
               <div className="rounded-[1.8rem] border border-gray-200 bg-white p-4">
-                <label className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-700">
+                <label htmlFor="rehber-sehir-select" className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-700">
                   <MapPin className="h-4 w-4" />
                   Şehir
                 </label>
                 <select
+                  id="rehber-sehir-select"
                   value={selectedCity}
                   onChange={(event) => setSelectedCity(event.target.value)}
                   className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm text-gray-900 outline-none transition focus:border-google-blue focus:ring-1 focus:ring-google-blue"
@@ -379,11 +381,15 @@ export default function HizmetRehberiClient() {
                 </select>
               </div>
 
-              <div className="rounded-[1.8rem] border border-gray-200 bg-white p-4">
-                <label className="mb-3 flex items-center gap-2 text-sm font-medium text-gray-700">
+              <div
+                className="rounded-[1.8rem] border border-gray-200 bg-white p-4"
+                role="group"
+                aria-labelledby="rehber-kategori-label"
+              >
+                <span id="rehber-kategori-label" className="mb-3 flex items-center gap-2 text-sm font-medium text-gray-700">
                   <Filter className="h-4 w-4" />
                   Kategori
-                </label>
+                </span>
                 <div className="space-y-2">
                   <button
                     onClick={() => setSelectedCategory('all')}

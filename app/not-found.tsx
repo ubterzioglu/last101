@@ -30,7 +30,7 @@ export default function NotFound() {
             <div className="absolute left-1/2 top-1/2 h-12 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/16 blur-2xl md:h-16 md:w-56" />
             <div className="relative h-full w-full drop-shadow-[0_0_32px_rgba(66,133,244,0.28)]">
               <Image
-                src="/yeniherologo.png"
+                src="/yeniherologo.avif"
                 alt="almanya101 logosu"
                 fill
                 className="object-contain"

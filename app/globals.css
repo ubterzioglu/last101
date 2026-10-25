@@ -23,7 +23,8 @@
 
   body[data-devuser] header,
   body[data-devuser] footer,
-  body[data-devuser] .skip-to-main {
+  body[data-devuser] .skip-to-main,
+  body[data-devuser] .cookie-consent {
     display: none !important;
   }
 
@@ -35,9 +36,11 @@
 
   /* Admin shell keeps a left offset for its fixed sidebar on desktop. This
      selector is more specific than `body[data-devuser] main`, so the sidebar
-     gutter survives the devuser margin reset above (≥ lg breakpoint only). */
+     gutter survives the devuser margin reset above (≥ lg breakpoint only).
+     The admin content region is a <div data-admin-main> because the root
+     layout already provides the single <main> landmark. */
   @media (min-width: 1024px) {
-    body[data-devuser] main[data-admin-main] {
+    body[data-devuser] [data-admin-main] {
       margin-left: 264px;
     }
   }

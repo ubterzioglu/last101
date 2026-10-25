@@ -47,7 +47,7 @@ const toolsByCategory = CATEGORY_ORDER.map((category) => ({
 
 export default function YeniAracHubPage() {
   return (
-    <main className="min-h-screen bg-black px-4 py-10 text-white sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-black px-4 py-10 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <section className="overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(66,133,244,0.22),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(251,188,5,0.18),_transparent_28%),rgba(255,255,255,0.03)] p-8 md:p-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -167,6 +167,7 @@ export default function YeniAracHubPage() {
                         </Link>
                         <Link
                           href={getToolHref(tool.slug)}
+                          aria-label={`Aracı aç: ${tool.title}`}
                           className="inline-flex items-center justify-center rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white/88 transition-colors hover:border-white/35 hover:bg-white/[0.06] hover:text-white"
                         >
                           Aracı aç
@@ -180,7 +181,7 @@ export default function YeniAracHubPage() {
           })}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

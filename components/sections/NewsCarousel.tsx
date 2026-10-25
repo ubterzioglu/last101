@@ -103,7 +103,7 @@ export function NewsCarousel({ items }: NewsCarouselProps) {
             <div className="h-48 relative overflow-hidden">
               <Image
                 src={item.image}
-                alt={item.title}
+                alt=""
                 fill
                 unoptimized
                 sizes="320px"
@@ -130,6 +130,7 @@ export function NewsCarousel({ items }: NewsCarouselProps) {
               </div>
               <Link
                 href={item.href || '/haberler'}
+                aria-label={`Devamını oku: ${item.title}`}
                 className="inline-flex items-center text-sm text-google-blue hover:text-blue-700 font-medium transition-colors mt-2"
               >
                 Devamını Oku →

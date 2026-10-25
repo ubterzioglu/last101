@@ -6,6 +6,7 @@ Bu sayfa belgelerin amacını ve güncellik durumunu gösterir. Uygulamanın mev
 
 Bu belgeler öneri ve yapılacak işlerdir; tamamlanmış özellik listesi olarak okunmamalıdır.
 
+- [24 Ekim GEO denetimi düzeltme planı](./plans/geo-audit-2026-10-24.md) — canlı 85/100 denetimindeki doğrulanmış eksikleri ve yalancı pozitifleri ayırır.
 - [SEO ve GEO denetimi ve iyileştirme planı](./plans/seo-geo-2026-10-21.md) — 21 Ekim 2026 tarihli kod ve canlı site kontrolü.
 - [Haber hattı ve kod düzenleme birleşik planı](./plans/clean-code-plan.md) — 21 Ekim 2026 tarihli çalışma planı.
 - [Haber yönetimi planı](./plans/news-admin-plan.md) — birleşik planın haber bölümüne ait ayrıntılar.

@@ -7,6 +7,15 @@ const KURUMSAL_LINKS = [
   { href: '/kariyer', label: 'Kariyer' },
 ] as const;
 
+const ICERIK_LINKS = [
+  { href: '/almanyada-yasam', label: "Almanya'da Yaşam" },
+  { href: '/haberler', label: 'Haberler' },
+  { href: '/belgeler', label: 'Yararlı Belgeler' },
+  { href: '/almanya-araclari', label: 'Almanya Araçları' },
+  { href: '/hizmet-rehberi', label: 'Hizmet Rehberi' },
+  { href: '/is-ilanlari', label: 'İş İlanları' },
+] as const;
+
 const YASAL_LINKS = [
   { href: '/gizlilik-politikasi', label: 'Gizlilik Politikası' },
   { href: '/kullanim-sartlari', label: 'Kullanım Şartları' },
@@ -24,13 +33,27 @@ export function HomeFooterNav() {
       aria-label="Site alt bağlantıları"
       className="border-t border-white/10 bg-black px-4 pt-12 pb-4 sm:px-6 lg:px-8"
     >
-      <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-2">
+      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/60">
             Kurumsal
           </h2>
           <ul className="mt-4 space-y-3">
             {KURUMSAL_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className={LINK_CLASSES}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/60">
+            İçerik ve Araçlar
+          </h2>
+          <ul className="mt-4 space-y-3">
+            {ICERIK_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className={LINK_CLASSES}>
                   {link.label}

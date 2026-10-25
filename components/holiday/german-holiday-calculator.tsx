@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useId } from 'react';
 import Link from 'next/link';
 import { GERMAN_STATES, GermanStateCode, DE_HOLIDAY_TIPS } from '@/constants/holidays/de-2026';
 import {
@@ -21,6 +21,9 @@ import {
 } from 'lucide-react';
 
 export function GermanHolidayCalculator() {
+  const stateSelectId = useId();
+  const startInputId = useId();
+  const endInputId = useId();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [state, setState] = useState<GermanStateCode>('BE');
@@ -137,8 +140,11 @@ export function GermanHolidayCalculator() {
 
         {/* Eyalet */}
         <div className="mb-4">
-          <label className="text-xs text-gray-500 block mb-1">Eyalet (Bundesland)</label>
+          <label htmlFor={stateSelectId} className="text-xs text-gray-500 block mb-1">
+            Eyalet (Bundesland)
+          </label>
           <select
+            id={stateSelectId}
             value={state}
             onChange={(e) => setState(e.target.value as GermanStateCode)}
             className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-google-yellow/40"
@@ -154,8 +160,11 @@ export function GermanHolidayCalculator() {
         {/* Tarihler */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Başlangıç</label>
+            <label htmlFor={startInputId} className="text-xs text-gray-500 block mb-1">
+              Başlangıç tarihi
+            </label>
             <input
+              id={startInputId}
               type="date"
               value={startDate}
               onChange={handleStartChange}
@@ -163,8 +172,11 @@ export function GermanHolidayCalculator() {
             />
           </div>
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Bitiş</label>
+            <label htmlFor={endInputId} className="text-xs text-gray-500 block mb-1">
+              Bitiş tarihi
+            </label>
             <input
+              id={endInputId}
               type="date"
               value={endDate}
               min={startDate}

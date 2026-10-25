@@ -79,8 +79,8 @@ export function NewsArchiveClient({
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((item) => (
-            <NewsListCard key={item.id} item={item} />
+          {items.map((item, index) => (
+            <NewsListCard key={item.id} item={item} priority={index < 3} />
           ))}
         </div>
       )}

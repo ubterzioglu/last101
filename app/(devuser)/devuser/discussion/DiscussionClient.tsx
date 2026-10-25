@@ -362,7 +362,7 @@ export function DiscussionClient() {
         }
       `}</style>
 
-      <main className="dis-main">
+      <div className="dis-main">
         <div className="dis-card">
           <h2>Tartışma Konusu Öner</h2>
           <p>Kısa konu önerini bırak. Admin onayından sonra aynı sayfada görünür.</p>
@@ -484,7 +484,7 @@ export function DiscussionClient() {
             </div>
           )}
         </div>
-      </main>
+      </div>
     </>
   );
 }

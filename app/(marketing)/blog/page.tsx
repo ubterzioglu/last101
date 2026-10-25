@@ -5,7 +5,7 @@ import { Section } from '@/components/ui/Section';
 import { cn } from '@/lib/utils/cn';
 
 export const metadata = createMetadata({
-  title: 'Blog',
+  title: 'Blog — Yazı, Haber ve Rehber Merkezi',
   description:
     'almanya101 blog: Almanya’da yaşam, vize, iş, maaş, bankacılık ve daha fazlası üzerine yazılar, haberler ve rehberler tek bir yerde.',
   path: '/blog',
@@ -82,7 +82,10 @@ export default function BlogPage() {
               <div className="text-5xl mb-5">{card.icon}</div>
               <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
               <p className="text-white/70 leading-relaxed">{card.description}</p>
-              <span className={cn('mt-6 font-medium group-hover:underline', card.linkClass)}>
+              <span
+                className={cn('mt-6 font-medium group-hover:underline', card.linkClass)}
+                aria-label={`${card.title} bölümünü keşfet`}
+              >
                 Keşfet →
               </span>
             </Link>

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import { createMetadata } from '@/lib/seo/metadata';
@@ -5,7 +6,6 @@ import { NewsCarousel } from '@/components/sections/NewsCarousel';
 import { FAQ } from '@/components/sections/FAQ';
 import { KenBurnsSlideshow } from '@/components/sections/KenBurnsSlideshow';
 import { HomeHeroSection } from '@/components/home/HomeHeroSection';
-import { HomeFooterNav } from '@/components/home/HomeFooterNav';
 import { LinkGridSection } from '@/components/home/LinkGridSection';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
 import { BreadcrumbJsonLd, FaqJsonLd, HowToJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
@@ -20,19 +20,25 @@ import {
 } from '@/constants/home-data';
 import { CONTACT_CHANNELS } from '@/constants/contact-channels';
 
-export const metadata = createMetadata({
-  title: DEFAULT_SEO_TITLE,
-  description: DEFAULT_META_DESCRIPTION,
-  path: '/',
-  absoluteTitle: true,
-  keywords: [
-    'Almanya yaşam rehberi',
-    'Almanya iş bulma',
-    'Almanya Türk topluluğu',
-    'Almanya iş ilanları',
-    'Almanya belgeler',
-  ],
-});
+export const metadata: Metadata = {
+  ...createMetadata({
+    title: DEFAULT_SEO_TITLE,
+    description: DEFAULT_META_DESCRIPTION,
+    path: '/',
+    absoluteTitle: true,
+    keywords: [
+      'Almanya yaşam rehberi',
+      'Almanya iş bulma',
+      'Almanya Türk topluluğu',
+      'Almanya iş ilanları',
+      'Almanya belgeler',
+    ],
+  }),
+  alternates: {
+    canonical: `${CANONICAL_SITE_URL}/`,
+    types: { 'application/rss+xml': `${CANONICAL_SITE_URL}/feed.xml` },
+  },
+};
 
 export const dynamic = 'force-dynamic';
 
@@ -40,32 +46,32 @@ const HOMEPAGE_ITEMS = [...NEW_TOOL_ITEMS, ...TOOL_ITEMS, ...OTHER_LINK_ITEMS];
 const HOME_PAGE_URL = CANONICAL_SITE_URL;
 const WHATSAPP_COMMUNITY_CHANNEL = CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp');
 const HOMEPAGE_FOOTER_SLIDES = [
-  { src: '/images/backgrounds/berlin1.jpg', alt: 'Berlin şehir manzarası' },
-  { src: '/images/backgrounds/frankfurt1.jpg', alt: 'Frankfurt finans merkezi' },
-  { src: '/images/backgrounds/munih.jpg', alt: 'Münih şehir manzarası' },
-  { src: '/images/backgrounds/koln.jpg', alt: 'Köln şehir manzarası' },
-  { src: '/images/backgrounds/berlin3.jpg', alt: 'Berlin sokak manzarası' },
+  { src: '/images/backgrounds/berlin1.webp', alt: 'Berlin şehir manzarası' },
+  { src: '/images/backgrounds/frankfurt1.webp', alt: 'Frankfurt finans merkezi' },
+  { src: '/images/backgrounds/munih.webp', alt: 'Münih şehir manzarası' },
+  { src: '/images/backgrounds/koln.webp', alt: 'Köln şehir manzarası' },
+  { src: '/images/backgrounds/berlin3.webp', alt: 'Berlin sokak manzarası' },
 ];
 const HOMEPAGE_FAQ_ITEMS = [
   {
     question: "Almanya'ya yeni taşınan biri önce hangi adımları tamamlamalı?",
     answer:
-      "İlk haftalarda adres kaydı, vergi numarası, sağlık sigortası, banka hesabı ve telefon hattı gibi temel adımları tamamlamak gerekir. Adres kaydı ortalama 2-4 hafta, oturum izni süreci ise 6-12 hafta sürebilir. Ardından oturum süreci, iş arama planı ve günlük yaşam maliyetleri için güvenilir kaynaklarla ilerlemek en sağlıklı yoldur.",
+      "İlk haftalarda adres kaydı, vergi numarası, sağlık sigortası, banka hesabı ve telefon hattı gibi temel adımları tamamlamak gerekir. Adres kaydı yasal olarak 14 gün içinde yapılmalıdır ve randevu bulunabildiğinde genellikle birkaç hafta içinde tamamlanır; oturum izni süreci ise yabancılar dairesinin yoğunluğuna göre birkaç haftadan birkaç aya kadar uzayabilir. Ardından oturum süreci, iş arama planı ve günlük yaşam maliyetleri için güvenilir kaynaklarla ilerlemek en sağlıklı yoldur.",
   },
   {
     question: 'Almanya iş bulma sürecinde hangi kaynaklara odaklanmalıyım?',
     answer:
-      "İş ilanı platformları, sektör bazlı topluluklar, LinkedIn bağlantıları ve Almanca özgeçmiş hazırlığı birlikte yürütülmelidir. Ortalama 50-80 başvuru sonrası ilk mülakat daveti gelmektedir. Sadece ilan bakmak yerine profilinizi, belgelerinizi ve başvuru stratejinizi aynı anda güçlendirmek daha hızlı sonuç verir.",
+      "İş ilanı platformları, sektör bazlı topluluklar, LinkedIn bağlantıları ve Almanca özgeçmiş hazırlığı birlikte yürütülmelidir. İlk mülakat davetine kadar gereken başvuru sayısı sektöre ve profile göre değişir; bu yüzden sadece ilan bakmak yerine profilinizi, belgelerinizi ve başvuru stratejinizi aynı anda güçlendirmek daha hızlı sonuç verir.",
   },
   {
     question: 'Almanya101 hangi konularda yardımcı olur?',
     answer:
-      "Almanya101; yaşam rehberleri, iş ilanları, belgeler, uzman önerileri, araçlar ve topluluk bağlantılarıyla taşınma ve yerleşme sürecini daha net hale getirir. ~3,5 milyon Türk kökenli insanın yaşadığı Almanya'da, doğru bilgiye hızlı erişim kritik öneme sahiptir. Amaç tek bir içerik değil, karar vermeyi kolaylaştıran bütüncül bir yol haritası sunmaktır.",
+      "Almanya101; yaşam rehberleri, iş ilanları, belgeler, uzman önerileri, araçlar ve topluluk bağlantılarıyla taşınma ve yerleşme sürecini daha net hale getirir. Destatis Mikrozensus 2025 ilk sonuçlarına göre yaklaşık 3 milyon Türk kökenli insanın yaşadığı Almanya'da, doğru bilgiye hızlı erişim kritik öneme sahiptir. Amaç tek bir içerik değil, karar vermeyi kolaylaştıran bütüncül bir yol haritası sunmaktır.",
   },
   {
     question: 'Topluluk neden önemli?',
     answer:
-      "Yeni bir ülkede doğru insanlara hızlı ulaşmak zaman ve hata maliyetini ciddi biçimde azaltır. İlk yıl içinde %60'ı en az bir kez iş değiştirmektedir. Deneyim paylaşımı, güncel tavsiyeler ve doğru yönlendirmeler; özellikle ilk aylarda resmi işlemlerden iş arayışına kadar birçok konuda fark yaratır.",
+      "Yeni bir ülkede doğru insanlara hızlı ulaşmak zaman ve hata maliyetini ciddi biçimde azaltır. Deneyim paylaşımı, güncel tavsiyeler ve doğru yönlendirmeler; özellikle ilk aylarda resmi işlemlerden iş arayışına kadar birçok konuda fark yaratır.",
   },
   {
     question: 'Almanya\'ya taşınırken en sık yapılan hatalar neler?',
@@ -233,7 +239,7 @@ export default async function HomePage() {
         description={DEFAULT_META_DESCRIPTION}
         url={HOME_PAGE_URL}
         datePublished="2026-01-01"
-        dateModified="2026-10-21"
+        dateModified="2026-10-24"
       />
       <BreadcrumbJsonLd items={[{ name: 'Ana Sayfa', url: HOME_PAGE_URL }]} />
       <FaqJsonLd items={HOMEPAGE_FAQ_ITEMS} />
@@ -241,7 +247,7 @@ export default async function HomePage() {
         name="Almanya'da Düzen Kurmak İçin İlk 6 Adım"
         description="Almanya'ya taşınan birinin tamamlaması gereken temel adımlar: adres kaydı, vergi numarası, sağlık sigortası, banka hesabı, telefon hattı ve oturum izni."
         steps={[
-          { name: 'Adres kaydı (Anmeldung)', text: 'İlk 14 gün içinde belediyeye adres kaydı yaptırın. Ortalama 2-4 hafta içinde tamamlanır.' },
+          { name: 'Adres kaydı (Anmeldung)', text: 'İlk 14 gün içinde belediyeye adres kaydı yaptırın; randevu bulunabildiğinde genellikle birkaç hafta içinde tamamlanır.' },
           { name: 'Vergi numarası (Steuernummer)', text: 'Adres kaydından sonra Federal Vergi Dairesi (Bundeszentralamt für Steuern) otomatik olarak vergi numaranızı gönderir.' },
           { name: 'Sağlık sigortası (Krankenversicherung)', text: 'Aylık €200-€400 arası değişen kamu veya özel sigorta seçeneklerinden birini belirleyin.' },
           { name: 'Banka hesabı açma', text: 'Girokonto (vadesiz hesap) açarak maaş ve kira ödemelerinizi yönetin.' },
@@ -277,7 +283,7 @@ export default async function HomePage() {
       <SectionDivider />
 
       <BackgroundSection
-        backgroundImage="/images/backgrounds/berlin1.jpg"
+        backgroundImage="/images/backgrounds/berlin1.webp"
         heightClassName="h-[500px] sm:h-[540px] lg:h-[580px]"
       >
         <div className="text-center mb-4 sm:mb-6">
@@ -293,7 +299,7 @@ export default async function HomePage() {
       <EditorialSection
         eyebrow="Ana Sayfa Rehberi"
         title="Almanya'da Düzen Kurmak İçin Nereden Başlamalı?"
-        intro="Almanya101 nedir? Kısaca Almanya101, bu ülkeye taşınan veya burada yaşayan Türkler için Türkçe rehber, araç ve topluluk platformudur. ~3,5 milyon Türk kökenli insan burada yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa; yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
+        intro="Almanya101 nedir? Kısaca Almanya101, bu ülkeye taşınan veya burada yaşayan Türkler için Türkçe rehber, araç ve topluluk platformudur. Destatis Mikrozensus 2025 ilk sonuçlarına göre Türkiye kökenli yaklaşık 3 milyon insan burada yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa; yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek."
         listItems={[
           'Adres kaydı (Anmeldung)',
           'Vergi numarası (Steuernummer)',
@@ -307,8 +313,9 @@ export default async function HomePage() {
           <p>
             Almanya'ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, <strong>bilgi dağınıklığı</strong>tır. <strong>Adres kaydı</strong>,
             vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,
-            insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Ortalama <strong>2-4 hafta</strong> içinde adres kaydı tamamlanır;
-            ardından kalan adımlar 6-8 hafta daha sürebilir. Bu nedenle bu ana sayfada yalnızca içerik
+            insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Adres kaydı yasal olarak <strong>14 gün</strong> içinde
+            yapılmalıdır ve randevu bulunabildiğinde genellikle birkaç hafta içinde tamamlanır;
+            kalan adımlar ise kuruma ve şehre göre birkaç hafta ile birkaç ay daha sürebilir. Bu nedenle bu ana sayfada yalnızca içerik
             listelemek yerine, kullanıcıyı <strong>günlük hayatta en çok etkileyecek başlıklara</strong> doğrudan yönlendiren bir yapı kurduk.
           </p>
           <p>
@@ -337,11 +344,11 @@ export default async function HomePage() {
             Almanya'da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. <strong>Özgeçmişin Alman işveren beklentilerine
             göre düzenlenmesi</strong>, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
             dilinin anlaşılması gerekir. Birçok aday iyi profillere sahip olmasına rağmen <strong>başvuru stratejisi eksik</strong> olduğu için geri
-            dönüş alamaz. Araştırmalara göre <strong>ortalama 50-80 başvuru</strong> sonrası ilk mülakat daveti gelmektedir.{' '}
+            dönüş alamaz. İlk mülakat davetine kadar gereken başvuru sayısı sektöre ve profile göre değişir.{' '}
             <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline decoration-google-red underline-offset-2">
               Bundesagentur für Arbeit
             </a>{' '}
-            verilerine göre ülkede işsizlik oranı %6 civarındadır ve Türk kökenli adaylar için dil seviyesi en kritik faktördür. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
+            verilerine göre ülkede işsizlik oranı Eylül 2026 itibarıyla %6,4&apos;tür ve Türk kökenli adaylar için dil seviyesi en kritik faktördür. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
           </p>
           <p>
             Özellikle{' '}
@@ -366,7 +373,7 @@ export default async function HomePage() {
             Yeni bir ülkede doğru insanlara ulaşmak, bazen en doğru belgeyi bulmaktan bile daha değerlidir. Çünkü taşınma sürecinde
             sorular yalnızca resmi işlemlerle sınırlı kalmaz; hangi şehir daha uygundur, ilk ev nasıl bulunur, hangi banka daha hızlı
             hesap açar, hangi işverenler Türkçe iletişim konusunda daha rahattır gibi <strong>gündelik ama kritik kararlar</strong> ortaya çıkar.
-            Burada <strong>~3,5 milyon Türk kökenli insan</strong> yaşıyor ve ilk yıl içinde <strong>%60'ı en az bir kez iş değiştirmektedir</strong>.
+            Burada Destatis Mikrozensus 2025 ilk sonuçlarına göre <strong>Türkiye kökenli yaklaşık 3 milyon insan</strong> yaşıyor.
             Topluluk, bu noktada hazır cevap değil; <strong>deneyim filtresi</strong> sağlar.
           </p>
           <p>
@@ -419,7 +426,7 @@ export default async function HomePage() {
             <p className="mt-4 text-base leading-8 text-white/74 md:text-lg">
               2026 yılı itibarıyla Almanya&apos;da tek kişi için tahmini aylık temel gider kalemleri aşağıdadır.
               Şehir ve yaşam tarzına göre değişiklik gösterir; örneğin Berlin&apos;de kira €450–€750, Münih&apos;te €600–€900, Hamburg&apos;da ise €500–€800 arasındadır.
-              Kaynak: <a href="https://www.destatis.de" target="_blank" rel="noopener noreferrer" className="text-google-blue underline underline-offset-2">Destatis</a>, <a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Germany" target="_blank" rel="noopener noreferrer" className="text-google-blue underline underline-offset-2">Numbeo</a>.
+              Kaynak: <a href="https://www.destatis.de" target="_blank" rel="noopener noreferrer" className="text-google-blue underline underline-offset-2">Destatis</a>, <a href="https://www.numbeo.com/cost-of-living/country_result.jsp?country=Germany" target="_blank" rel="noopener noreferrer" className="text-google-blue underline underline-offset-2">Numbeo</a> (Ekim 2026&apos;da erişildi).
             </p>
           </div>
           <div className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
@@ -490,7 +497,7 @@ export default async function HomePage() {
       </section>
 
       <BackgroundSection
-        backgroundImage="/images/backgrounds/berlin4.jpg"
+        backgroundImage="/images/backgrounds/berlin4.webp"
         overlayOpacity="bg-black/70"
         heightClassName="h-auto py-14 md:py-16"
       >
@@ -538,11 +545,9 @@ export default async function HomePage() {
         </div>
       </BackgroundSection>
 
-      <HomeFooterNav />
-
       <div className="bg-black py-6 text-center">
         <p className="text-sm text-white/60">
-          Yayın tarihi: <time dateTime="2026-01-01">Ocak 2026</time> &middot; Son güncelleme: <time dateTime="2026-10-21">Ekim 2026</time>
+          Yayın tarihi: <time dateTime="2026-01-01">Ocak 2026</time> &middot; Son güncelleme: <time dateTime="2026-10-24">24 Ekim 2026</time>
         </p>
       </div>
 

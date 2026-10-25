@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { ExternalLink, Search, Filter, AlertCircle, ChevronDown } from 'lucide-react';
 import type { RecruitmentAgency } from '@/types';
@@ -10,6 +10,8 @@ import { BrokenLinkReportModal } from '@/components/ui/BrokenLinkReportModal';
 interface RecruitmentAgenciesProps {
   agencies: RecruitmentAgency[];
 }
+
+const PAGE_SIZE = 24;
 
 const CAREER_PLATFORMS = 'İş ve Kariyer Platformları';
 
@@ -68,6 +70,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
   const [selectedSubCategory, setSelectedSubCategory] = useState('Tümü');
   const [selectedAgency, setSelectedAgency] = useState<RecruitmentAgency | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const filteredAgencies = useMemo(() => {
     return agencies.filter(agency => {
@@ -84,6 +87,14 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
       return matchesSearch && matchesMainCategory && matchesSubCategory;
     });
   }, [agencies, searchTerm, selectedMainCategory, selectedSubCategory]);
+
+  // Uzun liste DOM boyutunu kontrol altında tutmak için görünür aralık
+  // render edilir; kalan kayıtlar "Daha fazla göster" ile erişilebilir kalır.
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [searchTerm, selectedMainCategory, selectedSubCategory]);
+
+  const visibleAgencies = filteredAgencies.slice(0, visibleCount);
 
   const availableSubCategories = selectedMainCategory === 'Tüm Kategoriler' 
     ? ['Tümü']
@@ -132,6 +143,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
+            aria-label="Ajans ara"
             placeholder="Ajans ara..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -142,6 +154,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
         <div className="flex gap-2">
           <div className="relative">
             <select
+              aria-label="Ana kategori filtresi"
               value={selectedMainCategory}
               onChange={(e) => handleMainCategoryChange(e.target.value)}
               className="appearance-none rounded-lg border border-gray-200 bg-white py-2 px-3 pr-8 text-sm focus:border-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue/20"
@@ -155,6 +168,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
           {selectedMainCategory !== 'Tüm Kategoriler' && (
             <div className="relative">
               <select
+                aria-label="Alt kategori filtresi"
                 value={selectedSubCategory}
                 onChange={(e) => setSelectedSubCategory(e.target.value)}
                 className="appearance-none rounded-lg border border-gray-200 bg-white py-2 px-3 pr-8 text-sm focus:border-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue/20"
@@ -175,7 +189,7 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
 
       {/* Agencies Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredAgencies.map((agency, index) => (
+        {visibleAgencies.map((agency, index) => (
           <div
             key={agency.id || index}
             className="group rounded-xl border border-gray-200 bg-white p-5 transition-all hover:border-google-blue/40 hover:shadow-md"
@@ -216,6 +230,18 @@ export function RecruitmentAgencies({ agencies }: RecruitmentAgenciesProps) {
           </div>
         ))}
       </div>
+
+      {filteredAgencies.length > visibleCount && (
+        <div className="text-center">
+          <button
+            onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+            className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition-colors hover:border-google-blue hover:text-google-blue"
+          >
+            Daha fazla göster ({filteredAgencies.length - visibleCount} kayıt kaldı)
+            <ChevronDown className="h-4 w-4" />
+          </button>
+        </div>
+      )}
 
       {/* No Results */}
       {filteredAgencies.length === 0 && (

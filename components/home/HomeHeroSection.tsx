@@ -9,6 +9,7 @@ interface HomeHeroSectionProps {
 export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
   return (
     <section className="relative flex min-h-[640px] flex-col items-center justify-center overflow-hidden bg-black pt-[25px] pb-10">
+      <link rel="preload" as="image" href="/yeniherologo.avif" fetchPriority="high" />
       {/* Atmosphere layers */}
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         <div className="absolute inset-0 bg-aurora opacity-70" />
@@ -31,11 +32,12 @@ export function HomeHeroSection({ whatsappHref }: HomeHeroSectionProps) {
           <div className="reveal reveal-delay-2 relative mx-auto mt-7 w-fit">
             <div className="pointer-events-none absolute inset-0 -z-10 bg-google-blue/30 blur-3xl" aria-hidden="true" />
             <Image
-              src="/yeniherologo.png"
-              alt="almanya101"
-              width={1160}
-              height={400}
-              priority
+              src="/yeniherologo.avif"
+              alt="Almanya101 logosu"
+              width={560}
+              height={193}
+              loading="eager"
+              fetchPriority="high"
               className="mx-auto h-24 w-auto sm:h-32 md:h-40"
             />
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FileText, ChevronDown, Clock, Wallet, Building2, Users, FileCheck } from 'lucide-react';
+import { FileText, ChevronDown, Clock, Wallet, Building2, Users, FileCheck, ExternalLink } from 'lucide-react';
 import { belgelerData } from './data';
 import { cn } from '@/lib/utils/cn';
 import { Card } from '@/components/ui/Card';
@@ -92,6 +92,18 @@ export function BelgelerClient() {
                         <div className="mt-3 rounded-md bg-google-yellow/10 p-3 text-sm text-google-yellow">
                           <strong>Not:</strong> {doc.note}
                         </div>
+                      )}
+                      
+                      {doc.source && (
+                        <a
+                          href={doc.source}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-1.5 text-sm text-[#01A1F1] hover:text-[#01A1F1]/80 transition-colors"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                          <span>{doc.sourceLabel || 'Resmi Bilgi'}</span>
+                        </a>
                       )}
                     </div>
                   </Card>

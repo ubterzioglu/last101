@@ -33,7 +33,7 @@ interface RehberArticleRow {
   updated_at: string | null;
 }
 
-const DEFAULT_COVER = '/images/hero-background.jpg';
+const DEFAULT_COVER = '/images/hero-background.webp';
 const REHBER_TABLE = 'rehber_articles';
 const ARTICLE_SELECT =
   'id, slug, title, summary, content, cover_image_url, category, reading_minutes, published_at, created_at, updated_at';

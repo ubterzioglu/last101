@@ -1,5 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import SigortaClient from './SigortaClient';
 import { SITE_URL } from '@/lib/utils/constants';
 
@@ -50,7 +51,21 @@ export default function SigortaSecimPage() {
       />
       <FaqJsonLd items={FAQ_ITEMS} />
       <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <SigortaClient />
+        <ToolAccessGate
+          intro={{
+            title: 'Sigorta Seçim Aracı',
+            description:
+              '20 kısa soruyla yaşam durumunu ve risk önceliklerini ölçer; her sigorta türü için "Önce Al", "Güçlü Öneri" veya "Opsiyonel" etiketiyle kişiselleştirilmiş bir öncelik listesi oluşturur.',
+            highlights: [
+              'Medeni hal, çocuk, araba, kira ve benzeri yaşam bilgilerine göre sigortaları önceliklendirir.',
+              'Zorunlu sağlık sigortası (Krankenversicherung) ve trafik sorumluluk sigortası (Kfz-Haftpflicht) gibi yasal gereklilikleri ayrıca işaretler.',
+              'Sonuç anında görünür; tamamen ücretsiz ve bağımsızdır, belirli bir sigorta şirketini önermez.',
+            ],
+            toolPath: '/sigorta-secim',
+          }}
+        >
+          <SigortaClient />
+        </ToolAccessGate>
 
         <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
           <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">

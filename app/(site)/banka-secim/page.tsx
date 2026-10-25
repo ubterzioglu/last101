@@ -1,5 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import BankaClient from './BankaClient';
 import { SITE_URL } from '@/lib/utils/constants';
 
@@ -50,7 +51,21 @@ export default function BankaSecimPage() {
       />
       <FaqJsonLd items={FAQ_ITEMS} />
       <div className="min-h-screen bg-black pt-0 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <BankaClient />
+        <ToolAccessGate
+          intro={{
+            title: 'Banka Seçim Aracı',
+            description:
+              '20 kısa soruyla bankacılık alışkanlıklarını ve ihtiyaçlarını ölçer; dijital banka, direkt banka, yerel banka veya yatırım odaklı banka türlerinden hangisinin sana daha uygun olduğunu gösterir.',
+            highlights: [
+              'Dijital kullanım, şube ihtiyacı, yatırım alışkanlığı ve ücret hassasiyetini birlikte değerlendirir.',
+              'Sana uygun banka türünü gerekçesiyle açıklar; belirli bir bankayı satmaz, komisyon almaz.',
+              'Sonuç anında görünür; kişisel veya finansal veri saklanmaz.',
+            ],
+            toolPath: '/banka-secim',
+          }}
+        >
+          <BankaClient />
+        </ToolAccessGate>
 
         <section className="mt-12 border-t border-white/10 pt-10" aria-labelledby="sss-baslik">
           <h2 id="sss-baslik" className="text-2xl font-bold text-white md:text-3xl">
