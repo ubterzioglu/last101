@@ -444,44 +444,45 @@
     }
 
     /**
-     * JSON-LD içinde datePublished / dateModified toplar (ilk bulunan).
+     * Sayfa URL'sine ait WebPage/Article JSON-LD tarihlerini toplar.
      */
-    function collectJsonLdDateFields(node, bucket) {
+    function validDateValue(value) {
+        var raw = typeof value === 'string' ? value.trim() :
+            value && typeof value === 'object' && value['@value'] ? String(value['@value']).trim() : '';
+        return raw && !isNaN(new Date(raw).getTime()) ? raw : '';
+    }
+
+    function collectJsonLdDateFields(node, bucket, pageUrl) {
         if (node === null || node === undefined) return;
         if (Array.isArray(node)) {
-            for (var i = 0; i < node.length; i++) collectJsonLdDateFields(node[i], bucket);
+            for (var i = 0; i < node.length; i++) collectJsonLdDateFields(node[i], bucket, pageUrl);
             return;
         }
         if (typeof node !== 'object') return;
         if (node['@graph'] && Array.isArray(node['@graph'])) {
-            collectJsonLdDateFields(node['@graph'], bucket);
+            collectJsonLdDateFields(node['@graph'], bucket, pageUrl);
         }
-        var dp = node.datePublished;
-        var dm = node.dateModified;
-        if (dp && !bucket.publishedRaw) {
-            if (typeof dp === 'string') bucket.publishedRaw = dp.trim();
-            else if (typeof dp === 'object' && dp['@value']) bucket.publishedRaw = String(dp['@value']).trim();
-        }
-        if (dm && !bucket.modifiedRaw) {
-            if (typeof dm === 'string') bucket.modifiedRaw = dm.trim();
-            else if (typeof dm === 'object' && dm['@value']) bucket.modifiedRaw = String(dm['@value']).trim();
-        }
-        for (var key in node) {
-            if (key === '@context' || key === '@type') continue;
-            var val = node[key];
-            if (val && typeof val === 'object') collectJsonLdDateFields(val, bucket);
-        }
+        var types = Array.isArray(node['@type']) ? node['@type'] : [node['@type']];
+        var isPage = types.some(function (type) {
+            return type === 'WebPage' || type === 'Article' || type === 'NewsArticle' || type === 'BlogPosting';
+        });
+        if (!isPage) return;
+        var nodeUrl = node.url || node.mainEntityOfPage || node['@id'];
+        if (nodeUrl && typeof nodeUrl === 'object') nodeUrl = nodeUrl['@id'] || nodeUrl.url;
+        if (nodeUrl && pageUrl && normalizeComparableUrl(new URL(String(nodeUrl), pageUrl).href) !== normalizeComparableUrl(pageUrl)) return;
+        if (pageUrl && !nodeUrl && types.indexOf('WebPage') === -1) return;
+        if (!bucket.publishedRaw) bucket.publishedRaw = validDateValue(node.datePublished);
+        if (!bucket.modifiedRaw) bucket.modifiedRaw = validDateValue(node.dateModified);
     }
 
-    function datesFromJsonLdScripts(doc) {
+    function datesFromJsonLdScripts(doc, pageUrl) {
         var bucket = { publishedRaw: '', modifiedRaw: '' };
         var scripts = doc.querySelectorAll('script[type="application/ld+json"]');
         for (var s = 0; s < scripts.length; s++) {
             var raw = (scripts[s].textContent || '').trim();
             if (!raw) continue;
             try {
-                var data = JSON.parse(raw);
-                collectJsonLdDateFields(data, bucket);
+                collectJsonLdDateFields(JSON.parse(raw), bucket, pageUrl);
             } catch (e) {
                 /* yoksay */
             }
@@ -522,8 +523,8 @@
     /**
      * Yayın / güncelleme tarihi: meta, Open Graph ve JSON-LD.
      */
-    function analyzePageDates(doc) {
-        var jd = datesFromJsonLdScripts(doc);
+    function analyzePageDates(doc, pageUrl) {
+        var jd = datesFromJsonLdScripts(doc, pageUrl);
         var pub = getFirstMetaContent(doc, [
             'meta[property="article:published_time"]',
             'meta[property="og:published_time"]',
@@ -531,10 +532,11 @@
             'meta[name="pubdate"]',
             'meta[itemprop="datePublished"]',
         ]);
+        pub = validDateValue(pub);
         if (!pub) {
             var tPub = doc.querySelector('time[itemprop="datePublished"], [itemprop="datePublished"]');
             if (tPub) {
-                pub = (tPub.getAttribute('datetime') || '').trim() || (tPub.textContent || '').trim();
+                pub = validDateValue((tPub.getAttribute('datetime') || '').trim() || (tPub.textContent || '').trim());
             }
         }
         if (!pub) pub = jd.publishedRaw;
@@ -545,15 +547,17 @@
             'meta[name="revised"]',
             'meta[itemprop="dateModified"]',
         ]);
+        mod = validDateValue(mod);
         if (!mod) {
             var tMod = doc.querySelector('time[itemprop="dateModified"], [itemprop="dateModified"]');
             if (tMod) {
-                mod = (tMod.getAttribute('datetime') || '').trim() || (tMod.textContent || '').trim();
+                mod = validDateValue((tMod.getAttribute('datetime') || '').trim() || (tMod.textContent || '').trim());
             }
         }
         if (!mod) mod = jd.modifiedRaw;
 
         function pack(raw) {
+            raw = validDateValue(raw);
             if (!raw) {
                 return { present: false, raw: '', display: '' };
             }
@@ -616,6 +620,9 @@
                 metric: 'Görsel Alt',
                 total: 0,
                 missing: 0,
+                empty: 0,
+                described: 0,
+                missingSources: [],
                 status: 'OK',
                 label: 'OK',
                 ok: true,
@@ -623,21 +630,34 @@
             };
         }
         var missing = 0;
+        var empty = 0;
+        var described = 0;
+        var missingSources = [];
         for (var i = 0; i < imgs.length; i++) {
             var alt = imgs[i].getAttribute('alt');
-            if (alt === null || String(alt).trim() === '') missing++;
+            if (alt === null) {
+                missing++;
+                missingSources.push(imgs[i].getAttribute('src') || '');
+            } else if (String(alt).trim() === '') {
+                empty++;
+            } else {
+                described++;
+            }
         }
         var ok = missing === 0;
         return {
             metric: 'Görsel Alt',
             total: total,
             missing: missing,
+            empty: empty,
+            described: described,
+            missingSources: missingSources,
             status: ok ? 'OK' : 'Uyarı',
-            label: ok ? 'OK' : 'Eksik alt',
+            label: ok ? 'OK' : 'Alt niteliği eksik',
             ok: ok,
             hint: ok
-                ? 'Görsellerde açıklayıcı alt metinler kullanılmış.'
-                : '',
+                ? 'Tüm görsellerde alt niteliği var; boş değerlerin dekoratif kullanımı ayrıca gözden geçirilmelidir.'
+                : 'Alt niteliği olmayan görsellere bağlama uygun alt metni veya dekoratifse alt="" ekleyin.',
         };
     }
 
@@ -931,7 +951,7 @@
             },
             {
                 key: 'alt_missing',
-                label: 'Alt text eksiği yok',
+                label: 'Alt niteliği eksiği yok',
                 ok: parts.imagesAlt.missing === 0,
             },
             {
@@ -1032,7 +1052,7 @@
             schema: schema,
             keyword: keyword,
         });
-        var pageDates = analyzePageDates(doc);
+        var pageDates = analyzePageDates(doc, pageUrl);
 
         var parts = {
             title: title,
@@ -1941,13 +1961,9 @@
         }
         var uniqueExtDomains = Object.keys(extDomains).length;
 
+        var imageAlts = analyzeImagesAlt(doc);
         var imgs = doc.querySelectorAll('img');
-        var imgAltOk = 0;
-        for (li = 0; li < imgs.length; li++) {
-            var alt = imgs[li].getAttribute('alt');
-            if (alt !== null && String(alt).trim() !== '') imgAltOk++;
-        }
-        var imgRatio = imgs.length ? imgAltOk / imgs.length : 1;
+        var imgRatio = imgs.length ? (imgs.length - imageAlts.missing) / imgs.length : 1;
 
         var videos = doc.querySelectorAll('video').length;
         var iframes = doc.querySelectorAll('iframe[src]').length;
@@ -2215,9 +2231,9 @@
 
         var okImgAlt = imgs.length === 0 || imgRatio >= 0.75;
         var failImgAlt =
-            'Anlamlı görsellere açıklayıcı alt metin yazın (içeriği özetleyen kısa cümle). Süs amaçlı görsellerde alt="" kullanılabilir; bilgi taşıyan görsellerde boş bırakmayın. Şu an yaklaşık %' +
+            'Alt niteliği olmayan görsellere bağlama uygun açıklama veya dekoratifse alt="" ekleyin. Şu an yaklaşık %' +
             Math.round(imgRatio * 100) +
-            ' alt dolu; hedef %75 üzeri.';
+            ' görselde alt niteliği var.';
 
         var okMedia = videos + iframes >= 1 || pictureN >= 1;
         var failMedia =
@@ -2337,10 +2353,10 @@
                 ),
                 item(
                     okImgAlt,
-                    'Görsellerde alt metin',
+                    'Görsellerde alt niteliği',
                     imgs.length === 0
-                        ? 'İyi optimize: Sayfada bilgi taşıyan görsel yok veya görseller uygun şekilde işaretlenmiş.'
-                        : 'İyi optimize: Görsellerde açıklayıcı alt metin oranı iyi; erişilebilirlik ve bağlam için uygun.',
+                        ? 'Sayfada görsel yok.'
+                        : 'Görsellerde alt niteliği var; boş alt değerlerinin dekoratif kullanımı ayrıca incelenmelidir.',
                     failImgAlt
                 ),
                 item(
@@ -2385,6 +2401,9 @@
                 externalFollowLinks: extFollow,
                 imageCount: imgs.length,
                 imageAltRatio: Math.round(imgRatio * 100),
+                imageAltEmptyCount: imageAlts.empty,
+                imageAltDescribedCount: imageAlts.described,
+                imageAltMissingCount: imageAlts.missing,
                 hasMain: hasMain,
                 hasArticle: hasArticleLandmark,
                 hasSpeakable: hasSpeakable,
@@ -2570,10 +2589,9 @@
         );
         var hasAuthor = !!(metaAuthor || bylineHit);
 
-        var pubDate = metaByProperty(doc, 'article:published_time') || metaByName(doc, 'article:published_time');
-        var modDate = metaByProperty(doc, 'article:modified_time') || metaByName(doc, 'article:modified_time');
-        var hasPublished = !!pubDate;
-        var hasModified = !!modDate;
+        var pageDates = analyzePageDates(doc, pageUrl);
+        var hasPublished = pageDates.published.present;
+        var hasModified = pageDates.modified.present;
 
         /* ===== 8. SPEAKABLE & YAPAY ZEKA İPUÇLARI ===== */
         var hasSpeakable = false;
@@ -2978,8 +2996,8 @@
         c5_checks.push(chk(c5b, 3,
             'Yayın tarihi belirtilmiş mi?',
             'Evet, yayın tarihi var.',
-            'Yayın tarihi eksik. Yapay zeka tarihi olmayan içeriklerin güncel mi eski mi olduğunu bilemez ve genelde es geçer.',
-            'İçeriğinize yayın tarihi ekleyin. Tarih mutlaka görünmeli. Tarih olmadan yapay zeka içeriğinize güvenmez.'
+            'Geçerli bir sayfa yayın tarihi bulunamadı.',
+            'Sayfaya uygun yayın tarihini görünür içerikte ve WebPage/Article JSON-LD veya meta etiketinde belirtin.'
         ));
 
         var c5c = hasModified;
@@ -2987,8 +3005,8 @@
         c5_checks.push(chk(c5c, 3,
             'Son güncelleme tarihi var mı?',
             'Evet, güncelleme tarihi mevcut.',
-            'Güncelleme tarihi eksik. Yapay zeka güncellenmiş içerikleri eski içeriklere tercih eder.',
-            '"Son güncelleme: ' + currentYear + '" bilgisini sayfaya ekleyin. Düzenli güncellenen içerikler yapay zeka tarafından daha taze ve güvenilir kabul edilir.'
+            'Geçerli bir sayfa güncelleme tarihi bulunamadı.',
+            'Gerçek içerik güncellemesinin tarihini görünür içerikte ve WebPage/Article JSON-LD veya meta etiketinde belirtin.'
         ));
 
         var c5d = hasSpeakable;

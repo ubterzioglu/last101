@@ -242,6 +242,7 @@ export async function getPublishedNewsItems(limit = 12): Promise<Array<{
   excerpt: string;
   image: string;
   date: string;
+  publishedAt: string;
   category?: string;
 }>> {
   const response = await fetchPublishedNewsRows({ limit, onlyCarousel: true });
@@ -253,6 +254,7 @@ export async function getPublishedNewsItems(limit = 12): Promise<Array<{
     excerpt: item.summary,
     image: item.coverImageUrl,
     date: item.publishedLabel,
+    publishedAt: item.publishedAt,
     category: item.categoryLabel,
   }));
 }
