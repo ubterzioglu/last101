@@ -12,6 +12,7 @@ import { BreadcrumbJsonLd, FaqJsonLd, HowToJsonLd, WebPageJsonLd } from '@/compo
 import { ArrowUpIcon, WhatsAppIcon } from '@/components/icons/ContactIcons';
 import { cn } from '@/lib/utils/cn';
 import { getPublishedNewsItems } from '@/lib/public-news';
+import { areHomeNewsArchived } from '@/lib/news/home-news-status';
 import { CANONICAL_SITE_URL, DEFAULT_META_DESCRIPTION, DEFAULT_SEO_TITLE } from '@/lib/utils/constants';
 import {
   NEW_TOOL_ITEMS,
@@ -231,6 +232,7 @@ function ContentCard({ title, tone, children, defaultOpen = false }: ContentCard
 
 export default async function HomePage() {
   const newsItems = await getPublishedNewsItems(12);
+  const newsAreArchived = areHomeNewsArchived(newsItems);
 
   return (
     <>
@@ -288,8 +290,13 @@ export default async function HomePage() {
       >
         <div className="text-center mb-4 sm:mb-6">
           <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-4">
-            Almanya Haberleri Neleri Takip Etmeli?
+            {newsAreArchived ? 'Haber Arşivi' : 'Almanya Haberleri Neleri Takip Etmeli?'}
           </h2>
+          {newsAreArchived && (
+            <p className="mx-auto max-w-2xl text-sm leading-7 text-white/75 md:text-base">
+              Bu bölümdeki haberler geçmiş dönemlere aittir. Yayın tarihlerini kartlarda görebilirsiniz.
+            </p>
+          )}
         </div>
         <NewsCarousel items={newsItems} />
       </BackgroundSection>
@@ -328,8 +335,8 @@ export default async function HomePage() {
               hizmet rehberi
             </Link>
             gibi kaynaklardan <strong>temel çerçeveyi kurmak</strong> gerekir. Adres kaydı için{' '}
-            <a href="https://www.berlin.de/buergeramt/" target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline decoration-google-blue underline-offset-2">
-              Bürgeramt
+            <a href="https://service.berlin.de/dienstleistung/120686/" target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline decoration-google-blue underline-offset-2">
+              Berlin adres kaydı (Bürgeramt)
             </a>, oturum izni için{' '}
             <a href="https://www.bamf.de" target="_blank" rel="noopener noreferrer" className="font-semibold text-white underline decoration-google-blue underline-offset-2">
               BAMF

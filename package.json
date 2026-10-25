@@ -46,6 +46,7 @@
   "devDependencies": {
     "@playwright/test": "^1.61.1",
     "cheerio": "^1.2.0",
+    "linkedom": "^0.18.14",
     "vitest": "^4.1.12"
   },
   "overrides": {
