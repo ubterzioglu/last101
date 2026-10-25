@@ -1,14 +1,20 @@
 /**
- * Interactive tools that require a (free) membership. Visiting any of these
- * without a session redirects to /giris?next=<path>. Content/SEO pages, the
- * home page, and the existing admin/devuser/kose auth systems are NOT gated.
+ * Interactive tool and member-area route inventory.
  *
- * Shared between `middleware.ts` (redirect) and `app/sitemap.ts` (gated URLs
- * must never appear in the sitemap because anonymous requests get a 307 to a
- * noindex login page).
+ * Tool URLs are indexable: an anonymous `GET /<tool>` returns 200 with
+ * server-rendered intro content (description, scope, limitations, visible
+ * FAQ); a logged-in user gets the interactive tool at the same address.
+ * Personal calculation/result APIs enforce their own authorization — this
+ * list only drives routing, the sitemap and the public/protected content
+ * split, never authorization itself.
+ *
+ * Shared between the tool pages (public intro vs. interactive tool),
+ * `app/sitemap.ts` (tool URLs belong in the sitemap, member-area URLs
+ * do not), `scripts/verify-seo.mjs` and the e2e smoke tests. The
+ * middleware no longer redirects tool URLs (see middleware.ts).
  */
-export const GATED_PREFIXES = [
-  // Existing gated tools
+export const TOOL_PREFIXES = [
+  // Existing interactive tools
   '/banka-secim',
   '/sigorta-secim',
   '/maas-hesaplama',
@@ -16,7 +22,6 @@ export const GATED_PREFIXES = [
   '/vatandaslik-testi',
   '/para-transferi',
   '/vize-secim',
-  '/software-hub',
   // Additional interactive tools (ToolPageScaffold-based)
   '/almanya-maas-beklentisi',
   '/almanya-yasam-tarzi-uyumu',
@@ -28,13 +33,27 @@ export const GATED_PREFIXES = [
   '/kariyer-ve-egitim-rotasi',
   '/once-hangi-sorunu-cozmelisin',
   '/topluluk-ve-danismanlik',
-  // NOTE: /belgeler, /almanya-araclari and /yeniarachub stay public on purpose
-  // (SEO content + tool hub/catalog pages). The tool links inside the hubs are
-  // gated by their own prefixes above.
 ] as const;
 
-export function isGatedPath(pathname: string): boolean {
-  return GATED_PREFIXES.some(
+/**
+ * Member-area entries that redirect to the dashboard. They serve no public
+ * content, must stay out of the sitemap, and are not SEO surfaces.
+ */
+export const MEMBER_AREA_PREFIXES = ['/software-hub'] as const;
+
+export function matchesRoutePrefix(
+  pathname: string,
+  prefixes: readonly string[]
+): boolean {
+  return prefixes.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
+}
+
+export function isToolPath(pathname: string): boolean {
+  return matchesRoutePrefix(pathname, TOOL_PREFIXES);
+}
+
+export function isMemberAreaPath(pathname: string): boolean {
+  return matchesRoutePrefix(pathname, MEMBER_AREA_PREFIXES);
 }

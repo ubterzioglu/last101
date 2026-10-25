@@ -1,9 +1,11 @@
 /**
- * SEO/GEO doğrulama betiği — docs/plans/seo-geo-heading-schema-plan.md
+ * SEO/GEO doğrulama betiği — docs/plans/seo-geo-heading-schema-plan.md ve
+ * docs/plans/site-audit-2026-10-24.md
  *
- * Envanter: `sitemap.xml` (statik rotalar + yayımlı haber/rehber makaleleri).
- * Ayrıca üyelik kapısındaki araç rotalarının anonim istekte /giris'e
- * yönlenmeye devam ettiğini ve sitemap'e sızmadığını doğrular.
+ * Envanter: `sitemap.xml` (statik rotalar + interaktif araçlar + yayımlı
+ * haber/rehber makaleleri). Araç URL'leri indekslenebilir: anonim istekte
+ * 200 ile sunucudan render edilen tanıtım içeriği döner; üye alanı girişi
+ * (/software-hub) yönlenmeye devam eder ve sitemap'te yer almaz.
  *
  * Her indekslenebilir URL için: durum kodu, robots, canonical, title,
  * meta açıklama, html lang, H1–H3 dizisi, iç bağlantı sayısı ve JSON-LD
@@ -16,8 +18,8 @@ import * as cheerio from 'cheerio';
 const baseUrl = (process.env.SEO_VERIFY_BASE_URL || 'http://127.0.0.1:3000').replace(/\/$/, '');
 const FETCH_TIMEOUT_MS = 30_000;
 
-// lib/utils/gated-routes.ts GATED_PREFIXES ile senkron tutulmalı.
-const GATED_PREFIXES = [
+// lib/utils/gated-routes.ts TOOL_PREFIXES ile senkron tutulmalı.
+const TOOL_PREFIXES = [
   '/banka-secim',
   '/sigorta-secim',
   '/maas-hesaplama',
@@ -25,7 +27,6 @@ const GATED_PREFIXES = [
   '/vatandaslik-testi',
   '/para-transferi',
   '/vize-secim',
-  '/software-hub',
   '/almanya-maas-beklentisi',
   '/almanya-yasam-tarzi-uyumu',
   '/almanya-yolunu-sec',
@@ -37,6 +38,9 @@ const GATED_PREFIXES = [
   '/once-hangi-sorunu-cozmelisin',
   '/topluluk-ve-danismanlik',
 ];
+
+// lib/utils/gated-routes.ts MEMBER_AREA_PREFIXES ile senkron tutulmalı.
+const MEMBER_AREA_PREFIXES = ['/software-hub'];
 
 const violations = [];
 const warnings = [];
@@ -292,19 +296,33 @@ async function verifyIndexable(path) {
   });
 }
 
-async function verifyGated(path) {
+async function verifyMemberArea(path) {
   const response = await fetchRaw(`${baseUrl}${path}`);
   const location = response.headers.get('location') || '';
   if (![301, 302, 303, 307, 308].includes(response.status)) {
-    addViolation(path, `Kapalı araç ${response.status} döndü; beklenen /giris'e yönlendirme.`);
-  } else if (!location.startsWith('/giris')) {
-    addViolation(path, `Kapalı araç yanlış hedefe yönleniyor: ${location} (beklenen /giris?next=...).`);
+    addViolation(path, `Üye alanı girişi ${response.status} döndü; beklenen panoya yönlendirme.`);
   }
   report.push({
     path,
     status: response.status,
-    note: `gated → ${location || '?'}`,
+    note: `member-area → ${location || '?'}`,
   });
+}
+
+async function verifyToolIntro(path) {
+  const response = await fetchRaw(`${baseUrl}${path}`);
+  if (response.status !== 200) {
+    addViolation(path, `Araç URL'si anonim istekte ${response.status} döndü; beklenen 200 (tanıtım içeriği).`);
+    return;
+  }
+  const html = await response.text();
+  const $ = cheerio.load(html);
+  if ($('main').find('h1').length === 0) {
+    addViolation(path, 'Araç tanıtım sayfasında H1 yok.');
+  }
+  if (!html.includes('/giris?next=')) {
+    addWarning(path, 'Araç tanıtım sayfasında giriş yönlendirmesi (/giris?next=...) bulunamadı.');
+  }
 }
 
 async function verifyAuxFile(path, expectContains) {
@@ -325,10 +343,17 @@ async function verifyAuxFile(path, expectContains) {
 try {
   const sitemapPaths = await getSitemapPaths();
 
-  // Sitemap'te kapalı (girişe yönlenen) URL bulunmamalı.
+  // Üye alanı girişleri (yönlendiren, açık içerik sunmayan URL'ler) sitemap'te olmamalı.
   for (const path of sitemapPaths) {
-    if (GATED_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) {
-      addViolation(path, 'Giriş kapısı arkasındaki araç sitemap içinde bulundu.');
+    if (MEMBER_AREA_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) {
+      addViolation(path, 'Üye alanı girişi sitemap içinde bulundu.');
+    }
+  }
+
+  // İndekslenebilir araçlar sitemap kapsamında olmalı.
+  for (const prefix of TOOL_PREFIXES) {
+    if (!sitemapPaths.includes(prefix)) {
+      addViolation(prefix, 'Araç URL\'si sitemap içinde bulunamadı (anonim istekte 200 dönmeli).');
     }
   }
 
@@ -336,8 +361,12 @@ try {
     await verifyIndexable(path);
   }
 
-  for (const prefix of GATED_PREFIXES) {
-    await verifyGated(prefix);
+  for (const prefix of TOOL_PREFIXES) {
+    await verifyToolIntro(prefix);
+  }
+
+  for (const prefix of MEMBER_AREA_PREFIXES) {
+    await verifyMemberArea(prefix);
   }
 
   await verifyAuxFile('/robots.txt', 'sitemap');
@@ -357,7 +386,7 @@ try {
 
   // Rapor
   console.log(`\nSEO doğrulaması: ${baseUrl}`);
-  console.log(`Sitemap URL sayısı: ${sitemapPaths.length}, kapalı araç kontrolü: ${GATED_PREFIXES.length}\n`);
+  console.log(`Sitemap URL sayısı: ${sitemapPaths.length}, araç kontrolü: ${TOOL_PREFIXES.length}, üye alanı kontrolü: ${MEMBER_AREA_PREFIXES.length}\n`);
   for (const row of report) {
     if (row.jsonld !== undefined) {
       console.log(

@@ -1,21 +1,15 @@
-import { NextResponse, type NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { updateSession } from '@/lib/supabase/middleware';
-import { isGatedPath } from '@/lib/utils/gated-routes';
 
 export async function middleware(request: NextRequest) {
   // Refresh the Supabase session cookies on every matched request.
-  const { response, user } = await updateSession(request);
-
-  const { pathname } = request.nextUrl;
-
-  // Gate only the interactive tools; everything else just gets a refreshed session.
-  if (isGatedPath(pathname) && !user) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = '/giris';
-    redirectUrl.search = '';
-    redirectUrl.searchParams.set('next', pathname);
-    return NextResponse.redirect(redirectUrl);
-  }
+  //
+  // Interactive tool URLs are indexable: anonymous visitors get a
+  // server-rendered intro (200) from the tool page itself and logged-in users
+  // get the interactive tool at the same address (see lib/tools/access.ts and
+  // components/tools/ToolIntroPanel.tsx). The middleware therefore no longer
+  // redirects; personal APIs keep their own authorization checks.
+  const { response } = await updateSession(request);
 
   return response;
 }
@@ -23,9 +17,8 @@ export async function middleware(request: NextRequest) {
 export const config = {
   /**
    * Run on all paths except Next.js internals, static assets and API routes.
-   * This keeps session cookies fresh site-wide while the gating logic above
-   * applies only to GATED_PREFIXES. admin/devuser/kose pass through untouched
-   * (cookie refresh only, no redirect).
+   * This keeps session cookies fresh site-wide. admin/devuser/kose pass
+   * through untouched (cookie refresh only).
    */
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|api|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2|ttf|map)$).*)',

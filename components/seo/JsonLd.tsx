@@ -8,6 +8,7 @@ import {
   DEFAULT_META_DESCRIPTION,
   DEFAULT_OG_IMAGE,
   SEO_SITE_NAME,
+  SITE_NAME,
   SITE_URL,
   SOCIAL_LINKS,
 } from '@/lib/utils/constants';
@@ -92,17 +93,14 @@ export function WebPageJsonLd({ title, description, url, datePublished, dateModi
   const data = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
+    '@id': url,
     name: title,
     description,
     url,
     inLanguage: 'tr',
     ...(datePublished && { datePublished }),
     ...(dateModified && { dateModified }),
-    isPartOf: {
-      '@type': 'WebSite',
-      name: SEO_SITE_NAME,
-      url: SITE_URL,
-    },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
   };
 
   return <JsonLd data={data} />;
@@ -168,6 +166,8 @@ export function ArticleJsonLd({
   sourceUrl,
 }: ArticleJsonLdProps) {
   const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${SITE_URL}${image}`;
+  const isSiteOrganization =
+    author.toLowerCase() === SEO_SITE_NAME.toLowerCase() || author.toLowerCase() === SITE_NAME.toLowerCase();
 
   const data = {
     '@context': 'https://schema.org',
@@ -186,19 +186,15 @@ export function ArticleJsonLd({
           },
         }
       : {}),
-    author: {
-      '@type': 'Organization',
-      name: author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: SEO_SITE_NAME,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${SITE_URL}/almanya101.png`,
-      },
-    },
+    author: isSiteOrganization
+      ? { '@id': `${SITE_URL}/#organization` }
+      : {
+          '@type': 'Organization',
+          name: author,
+        },
+    publisher: { '@id': `${SITE_URL}/#organization` },
     url,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,

@@ -12,8 +12,8 @@ import { belgelerData } from './data';
 import { DocumentCategories } from './DocumentCategories';
 
 export const metadata = createMetadata({
-  title: 'Yararlı Belgeler',
-  description: 'Almanya’da yaşayan Türkiye kökenli kişiler için en sık gereken resmî belgelerin kapsamlı rehberi.',
+  title: 'Yararlı Belgeler Kataloğu',
+  description: 'Almanya’da yaşayan Türkiye kökenli kişiler için en sık gereken resmî belgelerin kapsamlı rehberi: Anmeldung, Steuer-ID, sağlık kartı, oturum ve vatandaşlık belgeleri.',
   path: '/belgeler',
 });
 
@@ -46,14 +46,14 @@ export default function BelgelerPage() {
   return (
     <>
       <WebPageJsonLd
-        title="Yararlı Belgeler"
+        title="Yararlı Belgeler Kataloğu"
         description="Almanya’da yaşayan Türkiye kökenli kişiler için en sık gereken resmî belgelerin kapsamlı rehberi."
         url={pageUrl}
       />
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Yararlı Belgeler', url: pageUrl },
+          { name: 'Yararlı Belgeler Kataloğu', url: pageUrl },
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />

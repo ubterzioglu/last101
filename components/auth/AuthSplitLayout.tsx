@@ -96,7 +96,7 @@ function DarkAuthLayout({ title, subtitle, heroTitle, heroSubtitle, accent, chil
         <div className="relative p-10">
           <Image
             src="/almanya101.png"
-            alt="almanya101"
+            alt="Almanya101 logosu"
             width={180}
             height={48}
             priority
@@ -125,13 +125,13 @@ function DarkAuthLayout({ title, subtitle, heroTitle, heroSubtitle, accent, chil
       </aside>
 
       {/* Sağ form paneli */}
-      <main className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-8">
+      <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-8">
         <div className="w-full max-w-md">
           {/* Mobilde logo (sol panel gizli olduğu için) */}
           <div className="mb-8 flex justify-center lg:hidden">
             <Image
               src="/almanya101.png"
-              alt="almanya101"
+              alt="Almanya101 logosu"
               width={160}
               height={42}
               priority
@@ -146,7 +146,7 @@ function DarkAuthLayout({ title, subtitle, heroTitle, heroSubtitle, accent, chil
 
           {children}
         </div>
-      </main>
+      </div>
     </div>
   );
 }

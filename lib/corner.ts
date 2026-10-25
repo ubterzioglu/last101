@@ -61,7 +61,7 @@ interface CornerPostRow {
 }
 
 const DEFAULT_AVATAR = '/images/profil.jpg';
-const DEFAULT_COVER = '/images/hero-background.jpg';
+const DEFAULT_COVER = '/images/hero-background.webp';
 
 function normalizeEnvValue(value: unknown): string {
   const raw = String(value || '').trim();

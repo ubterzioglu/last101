@@ -384,7 +384,7 @@ export function SurveyClient() {
     <>
       <style>{css}</style>
       <DevUserShell backHref="/devuser/dev" backLabel="← dashboard'a dön">
-        <main className="survey-main">
+        <div className="survey-main">
           <section className="survey-card hero-card" style={{ marginBottom: 6 }}>
             <div className="hero-kicker">almanya101.de</div>
             <h2>Tanışma Kaynaşma Toplantısı</h2>
@@ -464,7 +464,7 @@ export function SurveyClient() {
               </button>
             </form>
           </section>
-        </main>
+        </div>
 
         <button
           type="button"

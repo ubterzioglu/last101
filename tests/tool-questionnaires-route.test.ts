@@ -13,6 +13,16 @@ vi.mock('@supabase/supabase-js', () => ({
   })),
 }));
 
+const authState: { user: { id: string } | null } = { user: { id: 'test-user' } };
+
+vi.mock('@/lib/supabase/server', () => ({
+  createClient: vi.fn(async () => ({
+    auth: {
+      getUser: async () => ({ data: { user: authState.user } }),
+    },
+  })),
+}));
+
 import { POST } from '@/app/api/tool-questionnaires/route';
 
 function buildValidPayload() {
@@ -56,8 +66,24 @@ describe('POST /api/tool-questionnaires', () => {
   beforeEach(() => {
     insertMock.mockReset();
     insertMock.mockResolvedValue({ error: null });
+    authState.user = { id: 'test-user' };
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co';
     process.env.SUPABASE_SERVICE_ROLE_KEY = 'service-role-key';
+  });
+
+  it('rejects anonymous submissions', async () => {
+    authState.user = null;
+    const request = new NextRequest('http://localhost/api/tool-questionnaires', {
+      method: 'POST',
+      body: JSON.stringify(buildValidPayload()),
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(401);
+    expect(body.error).toContain('giriş');
+    expect(insertMock).not.toHaveBeenCalled();
   });
 
   it('rejects invalid tool slugs', async () => {

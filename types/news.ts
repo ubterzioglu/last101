@@ -22,6 +22,8 @@ export interface NewsListItem {
   categoryLabel: string;
   publishedAt: string;
   publishedLabel: string;
+  /** Satırın gerçek son güncelleme zamanı (yoksa publishedAt). */
+  updatedAt: string;
   sourceName: string;
   sourceUrl?: string;
   sourcePublishedAt?: string | null;

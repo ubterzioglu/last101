@@ -11,5 +11,6 @@
     { "name": "Vatandaşlık Testi Denemesi", "url": "https://almanya101.de/vatandaslik-testi", "description": "Einbürgerungstest için 33 soruluk deneme sınavı." },
     { "name": "Yararlı Belgeler", "url": "https://almanya101.de/belgeler", "description": "Anmeldung, Aufenthaltstitel, Steuer-ID, Führungszeugnis gibi sık gereken belgeler." }
   ],
-  "pricing": "Ücretsiz"
+  "pricing": "Ücretsiz",
+  "access": "Araç sayfaları anonim ziyaretçiye tanıtım içeriği gösterir; etkileşimli kullanım ücretsiz üyelik gerektirir."
 }

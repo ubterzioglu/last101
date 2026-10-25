@@ -1094,7 +1094,7 @@ export function ListClient() {
               </aside>
 
               {/* Content Area */}
-              <main className="content-area">
+              <div className="content-area">
                 <div className="results-header">
                   <h2 className="results-title">{resultsTitle}</h2>
                   <span className="results-count">
@@ -1128,7 +1128,7 @@ export function ListClient() {
                     dangerouslySetInnerHTML={{ __html: finalUsers.map(createUserCardHtml).join('') }}
                   />
                 )}
-              </main>
+              </div>
             </div>
 
           </div>
