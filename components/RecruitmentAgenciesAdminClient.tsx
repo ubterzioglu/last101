@@ -1,7 +1,16 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
+import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
+import { ADMIN_CONTROL_CLASS, AdminField } from '@/components/admin/ui/AdminField';
+import { AdminFilterBar } from '@/components/admin/ui/AdminFilterBar';
+import { AdminPageHeader } from '@/components/admin/ui/AdminPageHeader';
+import { AdminStatusBadge } from '@/components/admin/ui/AdminStatusBadge';
+import { AdminTable, AdminTd, AdminTh, AdminThead, AdminTr } from '@/components/admin/ui/AdminTable';
+import { Chip } from '@/components/site/Chip';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { getAdminHeaders } from '@/lib/admin/clientAuth';
 import { useAdminGate } from '@/hooks/useAdminGate';
 import { cn } from '@/lib/utils/cn';
@@ -218,251 +227,204 @@ export default function RecruitmentAgenciesAdminClient() {
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-        <div className="text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
+      <div className="flex items-center justify-center bg-page p-4 py-20 text-ink">
+        <div className="text-sm text-muted">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold">Recruitment Agencies Admin</h1>
-            <div className="flex gap-4 mt-2 text-sm">
-              <span>Toplam: {stats.total}</span>
-              <span>Aktif: {stats.active}</span>
-              <span>Pasif: {stats.inactive}</span>
-            </div>
-          </div>
-          <Link
-            href="/admin"
-            className="px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-          >
+    <div className="bg-page text-ink">
+      <AdminPageHeader
+        title="Recruitment Agencies Admin"
+        description={`Toplam: ${stats.total} · Aktif: ${stats.active} · Pasif: ${stats.inactive}`}
+        actions={
+          <Button href="/admin" variant="outline">
             Admin Ana Sayfa
-          </Link>
-        </div>
+          </Button>
+        }
+      />
 
+      <div className="space-y-8 px-4 py-8 sm:px-6 lg:px-9">
         {/* Form */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 mb-8">
-          <h2 className="text-xl font-bold mb-4">
+        <Card>
+          <h2 className="mb-4 text-xl font-extrabold tracking-tight text-ink">
             {editingId ? 'Agency Düzenle' : 'Yeni Agency Ekle'}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">
-                  Agency Adı
-                </label>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <AdminField label="Agency Adı">
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-google-yellow"
+                  className={ADMIN_CONTROL_CLASS}
                   disabled={submitLoading}
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">
-                  Website URL
-                </label>
+              </AdminField>
+              <AdminField label="Website URL">
                 <input
                   type="url"
                   value={form.url}
                   onChange={(e) => setForm(prev => ({ ...prev, url: e.target.value }))}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-google-yellow"
+                  className={ADMIN_CONTROL_CLASS}
                   disabled={submitLoading}
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">
-                  Kategori
-                </label>
+              </AdminField>
+              <AdminField label="Kategori">
                 <select
                   value={form.category}
                   onChange={(e) => setForm(prev => ({ ...prev, category: e.target.value as AgencyCategory }))}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:border-google-yellow"
+                  className={ADMIN_CONTROL_CLASS}
                   disabled={submitLoading}
                 >
                   {CATEGORIES.map(category => (
-                    <option key={category} value={category} className="bg-black">
+                    <option key={category} value={category}>
                       {category}
                     </option>
                   ))}
                 </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">
-                  Durum
-                </label>
+              </AdminField>
+              <AdminField label="Durum">
                 <select
                   value={form.status}
                   onChange={(e) => setForm(prev => ({ ...prev, status: normalizeStatus(e.target.value) }))}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:border-google-yellow"
+                  className={ADMIN_CONTROL_CLASS}
                   disabled={submitLoading}
                 >
-                  <option value="active" className="bg-black">Aktif</option>
-                  <option value="inactive" className="bg-black">Pasif</option>
+                  <option value="active">Aktif</option>
+                  <option value="inactive">Pasif</option>
                 </select>
-              </div>
+              </AdminField>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Açıklama
-              </label>
+            <AdminField label="Açıklama">
               <textarea
                 value={form.description}
                 onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))}
                 rows={3}
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-google-yellow resize-none"
+                className={cn(ADMIN_CONTROL_CLASS, 'resize-none py-2')}
                 disabled={submitLoading}
               />
-            </div>
+            </AdminField>
             <div className="flex gap-4">
-              <button
-                type="submit"
-                disabled={submitLoading}
-                className="px-6 py-2 bg-google-yellow text-black font-semibold rounded-lg hover:bg-google-yellow/90 disabled:opacity-50"
-              >
+              <Button type="submit" disabled={submitLoading}>
                 {submitLoading ? 'Kaydediliyor...' : editingId ? 'Güncelle' : 'Ekle'}
-              </button>
+              </Button>
               {editingId && (
-                <button
+                <Button
                   type="button"
+                  variant="outline"
                   onClick={() => {
                     setForm(initialForm);
                     setEditingId(null);
                     setSubmitMessage('');
                     setSubmitError('');
                   }}
-                  className="px-6 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
                 >
                   İptal
-                </button>
+                </Button>
               )}
             </div>
             {submitMessage && (
-              <div className="text-google-yellow text-sm">{submitMessage}</div>
+              <div className={cn('rounded-btn border px-4 py-3 text-sm', TONE_STYLES.green.tint, TONE_STYLES.green.border, TONE_STYLES.green.text)}>
+                {submitMessage}
+              </div>
             )}
             {submitError && (
-              <div className="text-red-400 text-sm">{submitError}</div>
+              <div role="alert" className={cn('rounded-btn border px-4 py-3 text-sm', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}>
+                {submitError}
+              </div>
             )}
           </form>
-        </div>
+        </Card>
 
         {/* Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <AdminFilterBar>
           <input
             type="text"
             placeholder="Agency ara..."
+            aria-label="Agency ara"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-google-yellow"
+            className={cn(ADMIN_CONTROL_CLASS, 'min-w-[200px] flex-1')}
           />
           <select
             value={statusFilter}
+            aria-label="Durum filtresi"
             onChange={(e) => setStatusFilter(e.target.value as AgencyStatus)}
-            className="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:border-google-yellow"
+            className={cn(ADMIN_CONTROL_CLASS, 'w-auto')}
           >
-            <option value="all" className="bg-black">Tüm Durumlar</option>
-            <option value="active" className="bg-black">Aktif</option>
-            <option value="inactive" className="bg-black">Pasif</option>
+            <option value="all">Tüm Durumlar</option>
+            <option value="active">Aktif</option>
+            <option value="inactive">Pasif</option>
           </select>
-          <button
-            onClick={() => loadAgencies()}
-            disabled={listLoading}
-            className="px-6 py-3 bg-google-blue text-white rounded-lg hover:bg-google-blue/90 disabled:opacity-50 whitespace-nowrap"
-          >
+          <Button onClick={() => loadAgencies()} disabled={listLoading} className="whitespace-nowrap">
             {listLoading ? 'Yükleniyor...' : 'Yenile'}
-          </button>
-        </div>
+          </Button>
+        </AdminFilterBar>
 
         {listError && (
-          <div className="text-red-400 mb-4">Hata: {listError}</div>
+          <div role="alert" className={cn('rounded-btn border px-4 py-3 text-sm', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}>
+            Hata: {listError}
+          </div>
         )}
 
         {/* Agency List */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-white/10">
-                <tr>
-                  <th className="text-left px-6 py-4 font-medium">Agency Adı</th>
-                  <th className="text-left px-6 py-4 font-medium">URL</th>
-                  <th className="text-left px-6 py-4 font-medium">Kategori</th>
-                  <th className="text-left px-6 py-4 font-medium">Durum</th>
-                  <th className="text-left px-6 py-4 font-medium">Tarih</th>
-                  <th className="text-left px-6 py-4 font-medium">İşlemler</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredRows.map((agency) => (
-                  <tr key={agency.id} className="border-t border-white/10 hover:bg-white/5">
-                    <td className="px-6 py-4">
-                      <div>
-                        <div className="font-medium">{agency.name}</div>
-                        <div className="text-sm text-white/60 line-clamp-2">
-                          {agency.description}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <a
-                        href={agency.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-google-blue hover:underline text-sm"
-                      >
-                        {agency.url.replace('https://', '').replace('http://', '')}
-                      </a>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-google-blue/20 text-google-blue">
-                        {agency.category || '-'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={cn(
-                          'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-                          agency.status === 'active'
-                            ? 'bg-google-green/20 text-google-green'
-                            : 'bg-red-500/20 text-red-400'
-                        )}
-                      >
-                        {agency.status === 'active' ? 'Aktif' : 'Pasif'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-white/60">
-                      {formatDate(agency.created_at)}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => handleEdit(agency)}
-                          className="px-3 py-1 text-sm bg-google-yellow/20 text-google-yellow rounded hover:bg-google-yellow/30"
-                        >
-                          Düzenle
-                        </button>
-                        <button
-                          onClick={() => handleDelete(agency.id)}
-                          className="px-3 py-1 text-sm bg-red-500/20 text-red-400 rounded hover:bg-red-500/30"
-                        >
-                          Sil
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {filteredRows.length === 0 && (
-            <div className="text-center py-12 text-white/60">
-              Henüz agency bulunmuyor.
-            </div>
-          )}
+        <div className="space-y-4">
+          <AdminTable caption="Agency listesi">
+            <AdminThead>
+              <AdminTr className="hover:bg-transparent">
+                <AdminTh>Agency Adı</AdminTh>
+                <AdminTh>URL</AdminTh>
+                <AdminTh>Kategori</AdminTh>
+                <AdminTh>Durum</AdminTh>
+                <AdminTh>Tarih</AdminTh>
+                <AdminTh>İşlemler</AdminTh>
+              </AdminTr>
+            </AdminThead>
+            <tbody>
+              {filteredRows.map((agency) => (
+                <AdminTr key={agency.id}>
+                  <AdminTd>
+                    <div className="font-medium">{agency.name}</div>
+                    <div className="line-clamp-2 text-sm text-muted">{agency.description}</div>
+                  </AdminTd>
+                  <AdminTd>
+                    <a
+                      href={agency.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-brand-700 hover:underline"
+                    >
+                      {agency.url.replace('https://', '').replace('http://', '')}
+                    </a>
+                  </AdminTd>
+                  <AdminTd>
+                    <Chip tone="brand">{agency.category || '-'}</Chip>
+                  </AdminTd>
+                  <AdminTd>
+                    <AdminStatusBadge
+                      status={agency.status}
+                      tone={agency.status === 'active' ? 'green' : 'red'}
+                      label={agency.status === 'active' ? 'Aktif' : 'Pasif'}
+                    />
+                  </AdminTd>
+                  <AdminTd className="text-muted">{formatDate(agency.created_at)}</AdminTd>
+                  <AdminTd>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline" onClick={() => handleEdit(agency)}>
+                        Düzenle
+                      </Button>
+                      <Button size="sm" variant="danger" onClick={() => handleDelete(agency.id)}>
+                        Sil
+                      </Button>
+                    </div>
+                  </AdminTd>
+                </AdminTr>
+              ))}
+            </tbody>
+          </AdminTable>
+          {filteredRows.length === 0 && <AdminEmptyState title="Henüz agency bulunmuyor." />}
         </div>
       </div>
     </div>

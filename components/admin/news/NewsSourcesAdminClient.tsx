@@ -2,6 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { adminJsonFetch } from '@/components/admin/news/api';
+import { NewsNotice } from '@/components/admin/news/NewsNotice';
+import { ADMIN_CONTROL_CLASS, AdminField } from '@/components/admin/ui/AdminField';
+import { AdminTable, AdminTd, AdminTh, AdminThead, AdminTr } from '@/components/admin/ui/AdminTable';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { cn } from '@/lib/utils/cn';
 import {
   NEWS_CATEGORIES,
   NEWS_LANGUAGES,
@@ -162,115 +168,118 @@ export function NewsSourcesAdminClient() {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[420px_minmax(0,1fr)]">
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-2xl font-bold">{editingId ? 'Kaynağı Düzenle' : 'Yeni Kaynak'}</h2>
-          <p className="mt-2 text-sm text-white/60">Feed URL, kategori ve öncelik alanlarını doldurun.</p>
+      <Card>
+        <h2 className="text-2xl font-extrabold tracking-tight text-ink">{editingId ? 'Kaynağı Düzenle' : 'Yeni Kaynak'}</h2>
+        <p className="mt-2 text-sm text-muted">Feed URL, kategori ve öncelik alanlarını doldurun.</p>
 
-          {message ? <div className="mt-4 rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">{message}</div> : null}
-          {error ? <div className="mt-4 rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">{error}</div> : null}
+        {message ? <NewsNotice tone="green" className="mt-4">{message}</NewsNotice> : null}
+        {error ? <NewsNotice tone="red" className="mt-4">{error}</NewsNotice> : null}
 
-          <div className="mt-5 space-y-4">
-            <Input label="Kaynak Adı" value={form.name} onChange={(value) => setForm((s) => ({ ...s, name: value }))} />
-            <Input label="Feed URL" value={form.feed_url} onChange={(value) => setForm((s) => ({ ...s, feed_url: value }))} />
-            <Input label="Homepage URL" value={form.homepage_url} onChange={(value) => setForm((s) => ({ ...s, homepage_url: value }))} />
-            <Select label="Tür" value={form.source_type} onChange={(value) => setForm((s) => ({ ...s, source_type: value as NewsSourceType }))} options={NEWS_SOURCE_TYPES} />
-            <Select label="Dil" value={form.language_code} onChange={(value) => setForm((s) => ({ ...s, language_code: value as SourceForm['language_code'] }))} options={SOURCE_LANGUAGE_OPTIONS} labels={SOURCE_LANGUAGE_LABELS} />
-            {form.language_code === 'en' ? (
-              <div className="rounded-2xl border border-yellow-300/25 bg-yellow-500/10 px-4 py-3 text-xs text-yellow-100">
-                İngilizce kaynaklardan haber alınmaz; içerikten açıkça Türkçe veya Almanca olduğu anlaşılan öğeler hariç.
-              </div>
-            ) : null}
-            {form.source_type === 'gdelt' ? (
-              <ConfigTextarea
-                key={editingId ?? 'new'}
-                label="GDELT Config (JSON)"
-                value={form.config}
-                placeholder={GDELT_CONFIG_PLACEHOLDER}
-                onChange={(value) => setForm((s) => ({ ...s, config: value }))}
-              />
-            ) : null}
-            <Select label="Kategori" value={form.default_category} onChange={(value) => setForm((s) => ({ ...s, default_category: value as NewsCategory }))} options={NEWS_CATEGORIES} labels={Object.fromEntries(NEWS_CATEGORIES.map((item) => [item, getNewsCategoryLabel(item)]))} />
-            <Select label="Usage Mode" value={form.usage_mode} onChange={(value) => setForm((s) => ({ ...s, usage_mode: value as SourceForm['usage_mode'] }))} options={USAGE_MODES} />
-            <Input label="Öncelik" type="number" value={String(form.priority)} onChange={(value) => setForm((s) => ({ ...s, priority: Number(value) || 50 }))} />
-            <Input label="Fetch Limit" type="number" value={String(form.fetch_limit)} onChange={(value) => setForm((s) => ({ ...s, fetch_limit: Number(value) || 10 }))} />
-            <label className="flex items-center gap-3 text-sm text-white/70">
-              <input type="checkbox" checked={form.is_active} onChange={(e) => setForm((s) => ({ ...s, is_active: e.target.checked }))} />
-              Aktif
-            </label>
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            <button type="button" onClick={() => void handleSubmit()} className="rounded-full bg-google-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500">
-              {editingId ? 'Kaynağı Güncelle' : 'Kaynağı Oluştur'}
-            </button>
-            {editingId ? (
-              <button type="button" onClick={() => { setEditingId(null); setForm(emptyForm); }} className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.1]">
-                İptal
-              </button>
-            ) : null}
-          </div>
+        <div className="mt-5 space-y-4">
+          <Input label="Kaynak Adı" value={form.name} onChange={(value) => setForm((s) => ({ ...s, name: value }))} />
+          <Input label="Feed URL" value={form.feed_url} onChange={(value) => setForm((s) => ({ ...s, feed_url: value }))} />
+          <Input label="Homepage URL" value={form.homepage_url} onChange={(value) => setForm((s) => ({ ...s, homepage_url: value }))} />
+          <Select label="Tür" value={form.source_type} onChange={(value) => setForm((s) => ({ ...s, source_type: value as NewsSourceType }))} options={NEWS_SOURCE_TYPES} />
+          <Select label="Dil" value={form.language_code} onChange={(value) => setForm((s) => ({ ...s, language_code: value as SourceForm['language_code'] }))} options={SOURCE_LANGUAGE_OPTIONS} labels={SOURCE_LANGUAGE_LABELS} />
+          {form.language_code === 'en' ? (
+            <NewsNotice tone="yellow" className="text-xs">
+              İngilizce kaynaklardan haber alınmaz; içerikten açıkça Türkçe veya Almanca olduğu anlaşılan öğeler hariç.
+            </NewsNotice>
+          ) : null}
+          {form.source_type === 'gdelt' ? (
+            <ConfigTextarea
+              key={editingId ?? 'new'}
+              label="GDELT Config (JSON)"
+              value={form.config}
+              placeholder={GDELT_CONFIG_PLACEHOLDER}
+              onChange={(value) => setForm((s) => ({ ...s, config: value }))}
+            />
+          ) : null}
+          <Select label="Kategori" value={form.default_category} onChange={(value) => setForm((s) => ({ ...s, default_category: value as NewsCategory }))} options={NEWS_CATEGORIES} labels={Object.fromEntries(NEWS_CATEGORIES.map((item) => [item, getNewsCategoryLabel(item)]))} />
+          <Select label="Usage Mode" value={form.usage_mode} onChange={(value) => setForm((s) => ({ ...s, usage_mode: value as SourceForm['usage_mode'] }))} options={USAGE_MODES} />
+          <Input label="Öncelik" type="number" value={String(form.priority)} onChange={(value) => setForm((s) => ({ ...s, priority: Number(value) || 50 }))} />
+          <Input label="Fetch Limit" type="number" value={String(form.fetch_limit)} onChange={(value) => setForm((s) => ({ ...s, fetch_limit: Number(value) || 10 }))} />
+          <label className="flex min-h-[44px] items-center gap-3 text-sm font-semibold text-ink">
+            <input type="checkbox" className="h-4 w-4 accent-brand-700" checked={form.is_active} onChange={(e) => setForm((s) => ({ ...s, is_active: e.target.checked }))} />
+            Aktif
+          </label>
         </div>
 
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-2xl font-bold">Aktif Kaynaklar</h2>
-          <div className="mt-5 overflow-x-auto">
-            <table className="min-w-full border-separate border-spacing-y-3 text-sm">
-              <thead className="text-left text-white/48">
-                <tr>
-                  <th className="px-4">Kaynak</th>
-                  <th className="px-4">Tür</th>
-                  <th className="px-4">Dil</th>
-                  <th className="px-4">Kategori</th>
-                  <th className="px-4">Son Başarı</th>
-                  <th className="px-4">Hata</th>
-                  <th className="px-4">İşlemler</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr><td colSpan={7} className="px-4 py-10 text-center text-white/60">Kaynaklar yükleniyor...</td></tr>
-                ) : items.length === 0 ? (
-                  <tr><td colSpan={7} className="px-4 py-10 text-center text-white/60">Henüz kaynak yok.</td></tr>
-                ) : items.map((item) => (
-                  <tr key={item.id}>
-                    <td className="rounded-l-[1.4rem] bg-white/[0.02] px-4 py-4">
-                      <div className="font-semibold text-white">{item.name}</div>
-                      <div className="mt-1 max-w-sm break-all text-xs text-white/58">{item.feed_url || '-'}</div>
-                    </td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{item.source_type}</td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{getNewsLanguageLabel(item.language_code)}</td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{getNewsCategoryLabel(item.default_category)}</td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{item.last_success_at || '-'}</td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/60">{item.last_error || '-'}</td>
-                    <td className="rounded-r-[1.4rem] bg-white/[0.02] px-4 py-4">
-                      <div className="flex flex-wrap gap-2">
-                        <button type="button" onClick={() => { setEditingId(item.id); setForm(toSourceForm(item)); }} className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/[0.1]">
-                          Düzenle
-                        </button>
-                        <button type="button" onClick={() => void testSource(item.id)} className="rounded-full border border-yellow-300/20 bg-yellow-500/10 px-3 py-1.5 text-xs font-semibold text-yellow-100 transition hover:bg-yellow-500/20" disabled={testing === item.id}>
-                          Test Et
-                        </button>
-                        <button type="button" onClick={() => void runSource(item.id)} className="rounded-full bg-google-blue px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-500" disabled={testing === item.id}>
-                          Şimdi Çek
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <div className="mt-6 flex flex-wrap gap-2">
+          <Button type="button" onClick={() => void handleSubmit()}>
+            {editingId ? 'Kaynağı Güncelle' : 'Kaynağı Oluştur'}
+          </Button>
+          {editingId ? (
+            <Button type="button" variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); }}>
+              İptal
+            </Button>
+          ) : null}
         </div>
-      </div>
+      </Card>
+
+      <Card>
+        <h2 className="text-2xl font-extrabold tracking-tight text-ink">Aktif Kaynaklar</h2>
+        <div className="mt-5">
+          <AdminTable caption="Haber kaynakları">
+            <AdminThead>
+              <AdminTr className="hover:bg-transparent">
+                <AdminTh>Kaynak</AdminTh>
+                <AdminTh>Tür</AdminTh>
+                <AdminTh>Dil</AdminTh>
+                <AdminTh>Kategori</AdminTh>
+                <AdminTh>Son Başarı</AdminTh>
+                <AdminTh>Hata</AdminTh>
+                <AdminTh>İşlemler</AdminTh>
+              </AdminTr>
+            </AdminThead>
+            <tbody>
+              {loading ? (
+                <AdminTr className="hover:bg-transparent">
+                  <AdminTd colSpan={7} className="py-10 text-center text-muted">Kaynaklar yükleniyor...</AdminTd>
+                </AdminTr>
+              ) : items.length === 0 ? (
+                <AdminTr className="hover:bg-transparent">
+                  <AdminTd colSpan={7} className="py-10 text-center text-muted">Henüz kaynak yok.</AdminTd>
+                </AdminTr>
+              ) : items.map((item) => (
+                <AdminTr key={item.id}>
+                  <AdminTd>
+                    <div className="font-semibold text-ink">{item.name}</div>
+                    <div className="mt-1 max-w-sm break-all text-xs text-muted">{item.feed_url || '-'}</div>
+                  </AdminTd>
+                  <AdminTd className="text-muted">{item.source_type}</AdminTd>
+                  <AdminTd className="text-muted">{getNewsLanguageLabel(item.language_code)}</AdminTd>
+                  <AdminTd className="text-muted">{getNewsCategoryLabel(item.default_category)}</AdminTd>
+                  <AdminTd className="text-muted">{item.last_success_at || '-'}</AdminTd>
+                  <AdminTd className="text-muted">{item.last_error || '-'}</AdminTd>
+                  <AdminTd>
+                    <div className="flex flex-wrap gap-2">
+                      <Button type="button" variant="outline" size="sm" onClick={() => { setEditingId(item.id); setForm(toSourceForm(item)); }}>
+                        Düzenle
+                      </Button>
+                      <Button type="button" variant="outline" size="sm" onClick={() => void testSource(item.id)} disabled={testing === item.id}>
+                        Test Et
+                      </Button>
+                      <Button type="button" size="sm" onClick={() => void runSource(item.id)} disabled={testing === item.id}>
+                        Şimdi Çek
+                      </Button>
+                    </div>
+                  </AdminTd>
+                </AdminTr>
+              ))}
+            </tbody>
+          </AdminTable>
+        </div>
+      </Card>
+    </div>
   );
 }
 
 function Input({ label, value, onChange, type = 'text' }: { label: string; value: string; onChange: (value: string) => void; type?: string }) {
   return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-white/70">{label}</span>
-      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue" />
-    </label>
+    <AdminField label={label}>
+      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} className={ADMIN_CONTROL_CLASS} />
+    </AdminField>
   );
 }
 
@@ -313,17 +322,15 @@ function ConfigTextarea({
   }
 
   return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-white/70">{label}</span>
+    <AdminField label={label} error={parseError || undefined}>
       <textarea
         value={text}
         placeholder={placeholder}
         onChange={(e) => handleChange(e.target.value)}
         rows={6}
-        className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 font-mono text-xs text-white outline-none transition focus:border-google-blue"
+        className={cn(ADMIN_CONTROL_CLASS, 'py-3 font-mono text-xs')}
       />
-      {parseError ? <span className="mt-1 block text-xs text-red-300">{parseError}</span> : null}
-    </label>
+    </AdminField>
   );
 }
 
@@ -341,15 +348,14 @@ function Select({
   labels?: Record<string, string>;
 }) {
   return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-white/70">{label}</span>
-      <select value={value} onChange={(e) => onChange(e.target.value)} className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue">
+    <AdminField label={label}>
+      <select value={value} onChange={(e) => onChange(e.target.value)} className={ADMIN_CONTROL_CLASS}>
         {options.map((option) => (
-          <option key={option} value={option} className="bg-black">
+          <option key={option} value={option}>
             {labels?.[option] || option}
           </option>
         ))}
       </select>
-    </label>
+    </AdminField>
   );
 }

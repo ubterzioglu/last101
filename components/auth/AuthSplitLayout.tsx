@@ -21,6 +21,8 @@ interface AuthSplitLayoutProps {
    * `light`: public site (/giris); fotoğraflı marka paneli ve beyaz form kartı.
    */
   tone?: 'dark' | 'light';
+  /** Sol paneldeki madde listesi. Yalnızca `light` düzende kullanılır; varsayılan ortak liste. */
+  highlights?: readonly string[];
   /** Sağ panel form/içerik alanı. */
   children: React.ReactNode;
 }
@@ -66,11 +68,16 @@ export function AuthSplitLayout({
   heroSubtitle = 'Almanya yolculuğun için ihtiyacın olan tüm araçlar tek yerde.',
   accent = 'blue',
   tone = 'dark',
+  highlights = HIGHLIGHTS,
   children,
 }: AuthSplitLayoutProps) {
   const panel: PanelProps = { title, subtitle, heroTitle, heroSubtitle, children };
 
-  return tone === 'light' ? <LightAuthLayout {...panel} /> : <DarkAuthLayout {...panel} accent={accent} />;
+  return tone === 'light' ? (
+    <LightAuthLayout {...panel} highlights={highlights} />
+  ) : (
+    <DarkAuthLayout {...panel} accent={accent} />
+  );
 }
 
 /** Admin ve köşe yazarı paneli: önceki koyu görünüm, birebir korunur. */
@@ -156,7 +163,14 @@ function DarkAuthLayout({ title, subtitle, heroTitle, heroSubtitle, accent, chil
  * sayfa zemininde beyaz öne çıkan form kartı. Kök layout zaten `<main>` verdiği
  * için burada ikinci bir `<main>` kullanılmaz.
  */
-function LightAuthLayout({ title, subtitle, heroTitle, heroSubtitle, children }: PanelProps) {
+function LightAuthLayout({
+  title,
+  subtitle,
+  heroTitle,
+  heroSubtitle,
+  highlights,
+  children,
+}: PanelProps & { highlights: readonly string[] }) {
   return (
     <div className="bg-page text-ink">
       <Container className="grid gap-[38px] py-10 md:py-16 lg:grid-cols-[1.05fr_1fr]">
@@ -176,7 +190,7 @@ function LightAuthLayout({ title, subtitle, heroTitle, heroSubtitle, children }:
             <h2 className="text-[28px] font-extrabold leading-tight tracking-[-0.03em]">{heroTitle}</h2>
             <p className="mt-2 leading-relaxed text-muted">{heroSubtitle}</p>
             <ul className="mt-5 space-y-2.5 text-sm font-medium">
-              {HIGHLIGHTS.map((item) => (
+              {highlights.map((item) => (
                 <li key={item} className="flex items-center gap-3">
                   <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700">
                     <Check aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={2.5} />

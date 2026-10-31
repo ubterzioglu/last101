@@ -1,156 +1,26 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
 import { clearAdminAuth, getAdminHeaders } from '@/lib/admin/clientAuth';
 import { SOFTWARE_HUB_SECTIONS } from '@/constants/adminSoftwareHubSections';
+import { ADMIN_NAV_ITEMS } from '@/constants/adminNav';
+import type { AdminBadgeKey } from '@/constants/adminNav';
+import { TONE_STYLES } from '@/components/site/tones';
+import { getTrapTarget } from '@/components/layout/useDrawerA11y';
+
+/** Id of the sidebar element; the mobile menu button points aria-controls at it. */
+export const ADMIN_SIDEBAR_ID = 'admin-sidebar';
 
 const SOFTWARE_HUB_HREF = '/admin/software-hub';
 
-type BadgeKey = 'hizmet' | 'broken' | 'security';
+type BadgeCounts = Record<AdminBadgeKey, number>;
 
-interface AdminNavItem {
-  href: string;
-  label: string;
-  description: string;
-  accent: string;
-  badgeKey?: BadgeKey;
-  icon: React.ReactNode;
-}
-
-const NAV_ITEMS: AdminNavItem[] = [
-  {
-    href: '/admin/uyeler',
-    label: 'Üyeler',
-    description: 'Yeni kayıtlar & profiller',
-    accent: 'text-google-blue',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/software-hub',
-    label: 'Software Hub',
-    description: 'Topluluk & turnuva',
-    accent: 'text-google-blue',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <rect x="3" y="4" width="18" height="12" rx="2" />
-        <path d="M8 20h8M12 16v4" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/haberler',
-    label: 'Haber Yönetimi',
-    description: 'Pipeline & kuyruk',
-    accent: 'text-google-yellow',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M4 5h16v14a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2z" />
-        <path d="M8 9h8M8 13h8M8 17h5" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/yazi-dizisi',
-    label: 'Arkadaşın Köşesi',
-    description: 'Köşe yazıları',
-    accent: 'text-google-blue',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M12 20h9" />
-        <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/hizmet-rehberi',
-    label: 'Hizmet Rehberi',
-    description: 'Öneri onayları',
-    accent: 'text-google-red',
-    badgeKey: 'hizmet',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/recruitment-agencies',
-    label: 'Recruitment Agencies',
-    description: 'Ajans listesi',
-    accent: 'text-google-green',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/broken-link-reports',
-    label: 'Kırık Link Bildirimleri',
-    description: 'Kullanıcı raporları',
-    accent: 'text-google-orange',
-    badgeKey: 'broken',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-        <path d="M15 3h6v6M10 14L21 3" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/araclar',
-    label: 'Araçlar',
-    description: 'İnteraktif araçlar & soru sayıları',
-    accent: 'text-google-blue',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M14.7 6.3a4 4 0 0 0-5.4 5.3L3 18l3 3 6.4-6.3a4 4 0 0 0 5.3-5.4l-2.8 2.8-2.1-.6-.6-2.1z" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/rehber',
-    label: 'Rehberler',
-    description: 'Tüm panel kılavuzu',
-    accent: 'text-google-green',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-        <circle cx="12" cy="9.5" r="2.2" />
-        <path d="M12 11.7v2.3" />
-      </svg>
-    ),
-  },
-  {
-    href: '/admin/guvenlik-notlari',
-    label: 'Güvenlik Notları',
-    description: 'Uyarılar & aksiyonlar',
-    accent: 'text-google-red',
-    badgeKey: 'security',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <path d="M9 12l2 2 4-4" />
-      </svg>
-    ),
-  },
-];
-
-async function fetchBadgeCounts(): Promise<Record<BadgeKey, number>> {
-  const counts: Record<BadgeKey, number> = { hizmet: 0, broken: 0, security: 0 };
+async function fetchBadgeCounts(): Promise<BadgeCounts> {
+  const counts: BadgeCounts = { hizmet: 0, broken: 0, security: 0 };
 
   try {
     const response = await fetch('/api/provider-submissions-admin-list?status=pending&limit=1', {
@@ -200,7 +70,9 @@ interface AdminSidebarProps {
 export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [badges, setBadges] = useState<Record<BadgeKey, number>>({ hizmet: 0, broken: 0, security: 0 });
+  const asideRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [badges, setBadges] = useState<BadgeCounts>({ hizmet: 0, broken: 0, security: 0 });
 
   const onSoftwareHub = pathname === SOFTWARE_HUB_HREF || pathname.startsWith(`${SOFTWARE_HUB_HREF}/`);
 
@@ -229,6 +101,44 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
     };
   }, [pathname]);
 
+  // Mobile drawer a11y: while open, focus moves into it, Escape closes it, Tab
+  // stays inside, and focus returns to the trigger on close. Scoped to the open
+  // state (the sidebar is always mounted, so useDrawerA11y's mount-time scroll
+  // lock does not fit); the desktop sidebar is unaffected (lg:hidden controls).
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const panel = asideRef.current;
+    const returnTarget = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+      if (event.key !== 'Tab' || !panel) return;
+      const focusables = Array.from(
+        panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'),
+      ).filter((element) => element.getClientRects().length > 0);
+      const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      const target = getTrapTarget(focusables, active, event.shiftKey);
+      if (target || focusables.length === 0) event.preventDefault();
+      target?.focus();
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      returnTarget?.focus();
+    };
+  }, [mobileOpen]);
+
   function handleLogout() {
     clearAdminAuth();
     onClose();
@@ -239,34 +149,33 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
     <>
       {/* Mobil arka plan örtüsü */}
       {mobileOpen ? (
-        <div
-          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden"
-          onClick={onClose}
-          aria-hidden="true"
-        />
+        <div className="fixed inset-0 z-30 bg-ink/40 lg:hidden" onClick={onClose} aria-hidden="true" />
       ) : null}
 
       <aside
+        ref={asideRef}
+        id={ADMIN_SIDEBAR_ID}
         className={cn(
-          'fixed inset-y-0 left-0 z-40 flex w-[264px] flex-col border-r border-white/10 bg-white/[0.03] backdrop-blur-xl transition-transform duration-300 lg:translate-x-0',
-          mobileOpen ? 'translate-x-0' : '-translate-x-full',
+          'fixed inset-y-0 left-0 z-40 flex w-[264px] flex-col border-r border-line bg-white transition-[transform,visibility] duration-300 lg:visible lg:translate-x-0',
+          mobileOpen ? 'translate-x-0' : 'invisible -translate-x-full',
         )}
       >
-        <div className="flex items-center justify-between gap-2 border-b border-white/10 px-5 py-5">
+        <div className="flex items-center justify-between gap-2 border-b border-line px-5 py-5">
           <Link href="/admin" className="flex items-center" onClick={onClose}>
             <Image
-              src="/almanya101.png"
+              src="/almanya101header.png"
               alt="almanya101"
               width={150}
-              height={40}
+              height={35}
               priority
               className="h-8 w-auto object-contain"
             />
           </Link>
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-white/60 transition hover:bg-white/10 hover:text-white lg:hidden"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-btn text-muted transition-colors hover:bg-band hover:text-ink lg:hidden"
             aria-label="Menüyü kapat"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
@@ -276,7 +185,7 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4" aria-label="Admin bölümleri">
-          {NAV_ITEMS.map((item) => {
+          {ADMIN_NAV_ITEMS.map((item) => {
             const isSoftwareHub = item.href === SOFTWARE_HUB_HREF;
             const onRoute = pathname === item.href || pathname.startsWith(`${item.href}/`);
             // Software Hub's main link only counts as "active" on its menu page
@@ -293,22 +202,29 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
                   }}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black',
-                    active ? 'bg-white/[0.08] text-white' : 'text-white/65 hover:bg-white/[0.05] hover:text-white',
+                    'group relative flex min-h-[44px] items-center gap-3 rounded-btn px-3 py-2.5 transition-colors',
+                    active ? 'bg-brand-50 text-brand-800' : 'text-muted hover:bg-band hover:text-ink',
                   )}
                 >
                   {active ? (
-                    <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-google-blue" aria-hidden="true" />
+                    <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-brand-600" aria-hidden="true" />
                   ) : null}
-                  <span className={cn('shrink-0 transition', active ? item.accent : 'text-white/50 group-hover:text-white/80')}>
+                  <span className={cn('shrink-0 transition-colors', active ? TONE_STYLES[item.tone].text : 'text-muted')}>
                     {item.icon}
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-semibold leading-tight">{item.label}</span>
-                    <span className="block truncate text-[11px] text-white/40">{item.description}</span>
+                    <span className="block truncate text-[11px] text-muted">{item.description}</span>
                   </span>
                   {badgeCount > 0 ? (
-                    <span className="ml-1 inline-flex min-w-5 items-center justify-center rounded-full bg-google-red/20 px-1.5 py-0.5 text-[11px] font-bold text-red-200">
+                    <span
+                      className={cn(
+                        'ml-1 inline-flex min-w-5 items-center justify-center rounded-full border px-1.5 py-0.5 text-[11px] font-bold',
+                        TONE_STYLES.red.tint,
+                        TONE_STYLES.red.border,
+                        TONE_STYLES.red.text,
+                      )}
+                    >
                       {badgeCount > 99 ? '99+' : badgeCount}
                     </span>
                   ) : null}
@@ -317,7 +233,7 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
                 {/* Software Hub alt bölümleri — sadece bu sayfadayken göster.
                     Ara menü sayfası /admin/software-hub olarak erişilebilir kalır. */}
                 {isSoftwareHub && onSoftwareHub ? (
-                  <ul className="mt-1 space-y-0.5 border-l border-white/10 pl-3 ml-4">
+                  <ul className="mt-1 ml-4 space-y-0.5 border-l border-line pl-3">
                     {SOFTWARE_HUB_SECTIONS.map((section) => {
                       const sectionActive = activeSection === section.key;
                       return (
@@ -330,10 +246,10 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
                             }}
                             aria-current={sectionActive ? 'page' : undefined}
                             className={cn(
-                              'block truncate rounded-lg px-3 py-1.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black',
+                              'block min-h-[36px] truncate rounded-tile px-3 py-1.5 text-[13px] transition-colors',
                               sectionActive
-                                ? 'bg-white/[0.08] font-semibold text-white'
-                                : 'text-white/55 hover:bg-white/[0.05] hover:text-white',
+                                ? 'bg-brand-50 font-semibold text-brand-800'
+                                : 'text-muted hover:bg-band hover:text-ink',
                             )}
                           >
                             {section.label}
@@ -348,11 +264,14 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
           })}
         </nav>
 
-        <div className="border-t border-white/10 p-3">
+        <div className="border-t border-line p-3">
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-200/90 transition hover:bg-red-500/10 hover:text-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className={cn(
+              'flex min-h-[44px] w-full items-center gap-3 rounded-btn px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-band',
+              TONE_STYLES.red.text,
+            )}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />

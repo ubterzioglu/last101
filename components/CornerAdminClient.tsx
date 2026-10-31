@@ -3,10 +3,20 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
+import { ADMIN_CONTROL_CLASS, AdminField } from '@/components/admin/ui/AdminField';
+import { AdminTabs } from '@/components/admin/ui/AdminTabs';
+import { Chip } from '@/components/site/Chip';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { CORNER_ADMIN_KEY_HEADER } from '@/lib/admin/headers';
 import { cn } from '@/lib/utils/cn';
 
 type Tab = 'authors' | 'new' | 'posts';
+
+const LINK_PILL_CLASS =
+  'inline-flex min-h-[40px] items-center justify-center rounded-btn border border-line bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-ink';
 
 interface AuthorRow {
   id: string;
@@ -256,138 +266,141 @@ export default function CornerAdminClient() {
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-black text-white">
+      <div className="min-h-screen bg-page text-ink">
         <div className="container flex min-h-screen items-center justify-center py-12">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.04] p-8">
+          <Card className="w-full max-w-md p-8">
             <div className="mb-6 flex justify-center">
               <Image src="/almanya101lragetransparent.png" alt="almanya101" width={280} height={90} priority className="h-auto w-[220px]" />
             </div>
             <div className="text-center">
-              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-google-yellow">Arkadaşın Köşesi</div>
-              <h1 className="mt-3 text-3xl font-bold">Yönetici Girişi</h1>
-              <p className="mt-3 text-sm leading-7 text-white/68">Yazarları ve köşe panellerini yönetmek için şifrenizi girin.</p>
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">Arkadaşın Köşesi</div>
+              <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-ink">Yönetici Girişi</h1>
+              <p className="mt-3 text-sm leading-7 text-muted">Yazarları ve köşe panellerini yönetmek için şifrenizi girin.</p>
             </div>
             <form className="mt-8 space-y-4" onSubmit={verify}>
-              <label className="block">
-                <span className="mb-2 block text-sm text-white/70">Şifre</span>
-                <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none focus:border-google-blue" />
-              </label>
-              {authError ? <div className="rounded-xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">{authError}</div> : null}
-              <button disabled={authLoading} className="w-full rounded-xl bg-google-blue px-4 py-3 text-sm font-semibold text-white disabled:opacity-60">
+              <AdminField label="Şifre">
+                <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} className={ADMIN_CONTROL_CLASS} />
+              </AdminField>
+              {authError ? <div role="alert" className={cn('rounded-btn border px-4 py-3 text-sm', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}>{authError}</div> : null}
+              <Button disabled={authLoading} className="w-full">
                 {authLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-              </button>
+              </Button>
             </form>
-          </div>
+          </Card>
         </div>
       </div>
     );
   }
 
+  const stat = (label: string, value: number) => (
+    <Card key={label} className="p-4">
+      <div className="text-xs text-muted">{label}</div>
+      <div className="mt-1 text-2xl font-extrabold text-ink">{value}</div>
+    </Card>
+  );
+
+  const tabItems = [
+    { key: 'authors', label: 'Yazarlar' },
+    { key: 'new', label: editingId ? 'Yazarı Düzenle' : 'Yeni Yazar' },
+    { key: 'posts', label: 'Yazılar' },
+  ];
+
   return (
-    <div className="min-h-screen bg-black text-white">
-      <section className="border-b border-white/10">
+    <div className="min-h-screen bg-page text-ink">
+      <section className="border-b border-line">
         <div className="container py-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold">Arkadaşın Köşesi Yönetimi</h1>
-              <p className="mt-2 text-sm text-white/72">Yazar aç, linklerini yönet ve yayın durumlarını takip et.</p>
+              <h1 className="text-3xl font-extrabold tracking-tight text-ink">Arkadaşın Köşesi Yönetimi</h1>
+              <p className="mt-2 text-sm text-muted">Yazar aç, linklerini yönet ve yayın durumlarını takip et.</p>
             </div>
-            <button onClick={() => { clearAuth(); setAuthed(false); }} className="rounded-full border border-red-400/20 bg-red-500/10 px-4 py-2 text-xs text-red-100">
+            <Button variant="outline" size="sm" onClick={() => { clearAuth(); setAuthed(false); }}>
               Çıkış Yap
-            </button>
+            </Button>
           </div>
         </div>
       </section>
 
       <section className="container space-y-6 py-8">
         {(message || error) ? (
-          <div className={cn('rounded-xl border px-4 py-3 text-sm', error ? 'border-red-400/25 bg-red-500/10 text-red-100' : 'border-emerald-400/25 bg-emerald-500/10 text-emerald-100')}>
+          <div
+            role={error ? 'alert' : 'status'}
+            className={cn(
+              'rounded-btn border px-4 py-3 text-sm',
+              error
+                ? cn(TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)
+                : cn(TONE_STYLES.green.tint, TONE_STYLES.green.border, TONE_STYLES.green.text),
+            )}
+          >
             {error || message}
           </div>
         ) : null}
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4"><div className="text-xs text-white/55">Yazar</div><div className="mt-1 text-2xl font-black">{stats.totalAuthors}</div></div>
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4"><div className="text-xs text-white/55">Aktif</div><div className="mt-1 text-2xl font-black">{stats.activeAuthors}</div></div>
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4"><div className="text-xs text-white/55">Yazı</div><div className="mt-1 text-2xl font-black">{stats.totalPosts}</div></div>
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4"><div className="text-xs text-white/55">Yayında</div><div className="mt-1 text-2xl font-black">{stats.publishedPosts}</div></div>
+          {stat('Yazar', stats.totalAuthors)}
+          {stat('Aktif', stats.activeAuthors)}
+          {stat('Yazı', stats.totalPosts)}
+          {stat('Yayında', stats.publishedPosts)}
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {[
-            ['authors', 'Yazarlar'],
-            ['new', editingId ? 'Yazarı Düzenle' : 'Yeni Yazar'],
-            ['posts', 'Yazılar'],
-          ].map(([key, label]) => (
-            <button key={key} onClick={() => setTab(key as Tab)} className={cn('rounded-full px-4 py-2 text-sm', tab === key ? 'bg-google-blue text-white' : 'border border-white/10 bg-white/[0.04] text-white/72')}>
-              {label}
-            </button>
-          ))}
-        </div>
+        <AdminTabs tabs={tabItems} active={tab} onChange={(key) => setTab(key as Tab)} ariaLabel="Köşe yönetimi sekmeleri" />
 
         {tab === 'new' ? (
-          <form onSubmit={submitAuthor} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div className="grid gap-4 md:grid-cols-2">
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Yazar adı</span>
-                <input value={form.displayName} onChange={(event) => setForm((prev) => ({ ...prev, displayName: event.target.value, slug: prev.slug || slugify(event.target.value) }))} className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Link slug</span>
-                <input value={form.slug} onChange={(event) => setForm((prev) => ({ ...prev, slug: slugify(event.target.value) }))} placeholder="user1" className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
-                <span className="mt-1 block text-[10px] text-white/45">Public link: /{form.slug || 'user1'}</span>
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">5'li görünüm sırası</span>
-                <input type="number" min="1" max="9999" value={form.displayOrder} onChange={(event) => setForm((prev) => ({ ...prev, displayOrder: event.target.value }))} className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
-              </label>
-              {!editingId ? (
-                <label className="block">
-                  <span className="mb-1.5 block text-xs text-white/70">Yazar şifresi</span>
-                  <input type="password" value={form.password} onChange={(event) => setForm((prev) => ({ ...prev, password: event.target.value }))} className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
-                </label>
-              ) : null}
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Profil görseli</span>
-                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => void handleUpload(event)} className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm" />
-                <span className="mt-1 block text-[10px] text-white/45">{uploading ? 'Yükleniyor...' : 'En fazla 5 MB.'}</span>
-              </label>
-            </div>
-            {form.avatarImageUrl ? <div className="relative mt-4 h-20 w-20 overflow-hidden rounded-full border border-white/10"><Image src={form.avatarImageUrl} alt="Profil" fill unoptimized className="object-cover" /></div> : null}
-            <label className="mt-4 block">
-              <span className="mb-1.5 block text-xs text-white/70">Kısa bio</span>
-              <textarea value={form.shortBio} onChange={(event) => setForm((prev) => ({ ...prev, shortBio: event.target.value }))} className="min-h-24 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
-            </label>
-            <label className="mt-4 block">
-              <span className="mb-1.5 block text-xs text-white/70">Profil metni</span>
-              <textarea value={form.bioContent} onChange={(event) => setForm((prev) => ({ ...prev, bioContent: event.target.value }))} className="min-h-36 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
-            </label>
-            <div className="mt-4 flex gap-2">
-              <button disabled={loading || uploading} className="rounded-lg bg-google-yellow px-4 py-2.5 text-sm font-semibold text-black disabled:opacity-60">{loading ? 'Kaydediliyor...' : editingId ? 'Yazarı Güncelle' : 'Yazar Oluştur'}</button>
-              {editingId ? <button type="button" onClick={() => { setEditingId(null); setForm(initialAuthorForm); }} className="rounded-lg border border-white/10 px-4 py-2.5 text-sm">İptal</button> : null}
-            </div>
+          <form onSubmit={submitAuthor}>
+            <Card>
+              <div className="grid gap-4 md:grid-cols-2">
+                <AdminField label="Yazar adı">
+                  <input value={form.displayName} onChange={(event) => setForm((prev) => ({ ...prev, displayName: event.target.value, slug: prev.slug || slugify(event.target.value) }))} className={ADMIN_CONTROL_CLASS} />
+                </AdminField>
+                <AdminField label="Link slug" hint={`Public link: /${form.slug || 'user1'}`}>
+                  <input value={form.slug} onChange={(event) => setForm((prev) => ({ ...prev, slug: slugify(event.target.value) }))} placeholder="user1" className={ADMIN_CONTROL_CLASS} />
+                </AdminField>
+                <AdminField label="5'li görünüm sırası">
+                  <input type="number" min="1" max="9999" value={form.displayOrder} onChange={(event) => setForm((prev) => ({ ...prev, displayOrder: event.target.value }))} className={ADMIN_CONTROL_CLASS} />
+                </AdminField>
+                {!editingId ? (
+                  <AdminField label="Yazar şifresi">
+                    <input type="password" value={form.password} onChange={(event) => setForm((prev) => ({ ...prev, password: event.target.value }))} className={ADMIN_CONTROL_CLASS} />
+                  </AdminField>
+                ) : null}
+                <AdminField label="Profil görseli" hint={uploading ? 'Yükleniyor...' : 'En fazla 5 MB.'}>
+                  <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => void handleUpload(event)} className={cn(ADMIN_CONTROL_CLASS, 'py-2.5 text-sm')} />
+                </AdminField>
+              </div>
+              {form.avatarImageUrl ? <div className="relative mt-4 h-20 w-20 overflow-hidden rounded-full border border-line"><Image src={form.avatarImageUrl} alt="Profil" fill unoptimized className="object-cover" /></div> : null}
+              <AdminField label="Kısa bio" className="mt-4">
+                <textarea value={form.shortBio} onChange={(event) => setForm((prev) => ({ ...prev, shortBio: event.target.value }))} className={cn(ADMIN_CONTROL_CLASS, 'min-h-24 py-2')} />
+              </AdminField>
+              <AdminField label="Profil metni" className="mt-4">
+                <textarea value={form.bioContent} onChange={(event) => setForm((prev) => ({ ...prev, bioContent: event.target.value }))} className={cn(ADMIN_CONTROL_CLASS, 'min-h-36 py-2')} />
+              </AdminField>
+              <div className="mt-4 flex gap-2">
+                <Button disabled={loading || uploading}>{loading ? 'Kaydediliyor...' : editingId ? 'Yazarı Güncelle' : 'Yazar Oluştur'}</Button>
+                {editingId ? <Button type="button" variant="outline" onClick={() => { setEditingId(null); setForm(initialAuthorForm); }}>İptal</Button> : null}
+              </div>
+            </Card>
           </form>
         ) : null}
 
         {tab === 'authors' ? (
           <div className="space-y-3">
             {authors.map((author) => (
-              <div key={author.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+              <Card key={author.id} className="p-4">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="relative h-12 w-12 overflow-hidden rounded-full border border-white/10 bg-white/5">
+                    <div className="relative h-12 w-12 overflow-hidden rounded-full border border-line bg-band">
                       {author.avatar_image_url ? <Image src={author.avatar_image_url} alt={author.display_name} fill unoptimized className="object-cover" /> : null}
                     </div>
                     <div>
-                      <h2 className="font-bold">{author.display_name}</h2>
-                      <div className="text-xs text-white/55">/{author.slug} · sıra {author.display_order ?? 1000} · {author.is_active ? 'Aktif' : 'Pasif'}</div>
+                      <h2 className="font-bold text-ink">{author.display_name}</h2>
+                      <div className="text-xs text-muted">/{author.slug} · sıra {author.display_order ?? 1000} · {author.is_active ? 'Aktif' : 'Pasif'}</div>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <Link href={`/${author.slug}`} target="_blank" className="rounded-full border border-white/10 px-3 py-1.5 text-xs">Public</Link>
-                    <Link href={`/authors/${author.slug}`} target="_blank" className="rounded-full border border-white/10 px-3 py-1.5 text-xs">Giriş</Link>
-                    <button onClick={() => editAuthor(author)} className="rounded-full border border-google-yellow/25 bg-google-yellow/10 px-3 py-1.5 text-xs text-google-yellow">Düzenle</button>
-                    <button onClick={() => void setAuthorActive(author, !author.is_active)} className="rounded-full border border-white/10 px-3 py-1.5 text-xs">{author.is_active ? 'Pasifleştir' : 'Aktifleştir'}</button>
+                    <Link href={`/${author.slug}`} target="_blank" className={LINK_PILL_CLASS}>Public</Link>
+                    <Link href={`/authors/${author.slug}`} target="_blank" className={LINK_PILL_CLASS}>Giriş</Link>
+                    <Button size="sm" variant="outline" onClick={() => editAuthor(author)}>Düzenle</Button>
+                    <Button size="sm" variant="outline" onClick={() => void setAuthorActive(author, !author.is_active)}>{author.is_active ? 'Pasifleştir' : 'Aktifleştir'}</Button>
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -396,13 +409,13 @@ export default function CornerAdminClient() {
                     onFocus={() => setPasswordAuthorId(author.id)}
                     onChange={(event) => { setPasswordAuthorId(author.id); setNewPassword(event.target.value); }}
                     placeholder="Yeni şifre"
-                    className="rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-xs outline-none"
+                    className={cn(ADMIN_CONTROL_CLASS, 'w-auto text-sm')}
                   />
-                  <button onClick={() => void resetPassword(author)} className="rounded-lg border border-white/10 px-3 py-2 text-xs">Şifre Değiştir</button>
+                  <Button size="sm" variant="outline" onClick={() => void resetPassword(author)}>Şifre Değiştir</Button>
                 </div>
-              </div>
+              </Card>
             ))}
-            {!loading && authors.length === 0 ? <div className="rounded-xl border border-white/10 p-6 text-center text-sm text-white/60">Henüz yazar yok.</div> : null}
+            {!loading && authors.length === 0 ? <AdminEmptyState title="Henüz yazar yok." /> : null}
           </div>
         ) : null}
 
@@ -411,20 +424,20 @@ export default function CornerAdminClient() {
             {posts.map((post) => {
               const author = authorById.get(post.author_id);
               return (
-                <div key={post.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                <Card key={post.id} className="p-4">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <div className="text-xs text-white/45">{author?.display_name || post.corner_authors?.display_name || 'Yazar'} · {formatDate(post.updated_at)}</div>
-                      <h3 className="mt-1 font-bold">{post.title}</h3>
+                      <div className="text-xs text-muted">{author?.display_name || post.corner_authors?.display_name || 'Yazar'} · {formatDate(post.updated_at)}</div>
+                      <h3 className="mt-1 font-bold text-ink">{post.title}</h3>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="rounded-full border border-white/10 px-3 py-1.5 text-xs">{post.status === 'published' ? 'Yayında' : 'Taslak'}</span>
-                      <button onClick={() => void runAction({ action: 'set_post_status', id: post.id, status: post.status === 'published' ? 'draft' : 'published' }).then(loadData)} className="rounded-full bg-google-blue px-3 py-1.5 text-xs font-semibold">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Chip tone={post.status === 'published' ? 'green' : 'neutral'}>{post.status === 'published' ? 'Yayında' : 'Taslak'}</Chip>
+                      <Button size="sm" onClick={() => void runAction({ action: 'set_post_status', id: post.id, status: post.status === 'published' ? 'draft' : 'published' }).then(loadData)}>
                         {post.status === 'published' ? 'Taslağa Al' : 'Yayınla'}
-                      </button>
+                      </Button>
                     </div>
                   </div>
-                </div>
+                </Card>
               );
             })}
           </div>

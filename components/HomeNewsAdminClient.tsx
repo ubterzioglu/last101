@@ -4,6 +4,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import MarkdownPreview from '@/components/MarkdownPreview';
+import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
+import { ADMIN_CONTROL_CLASS, AdminField } from '@/components/admin/ui/AdminField';
+import { AdminPageHeader } from '@/components/admin/ui/AdminPageHeader';
+import { Chip } from '@/components/site/Chip';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { cn } from '@/lib/utils/cn';
 import {
   clearAdminAuth,
   getAdminHeaders,
@@ -272,9 +280,9 @@ export default function HomeNewsAdminClient() {
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-black text-white">
-        <div className="container flex min-h-screen items-center justify-center py-12">
-          <div className="w-full max-w-md rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 shadow-2xl shadow-black/40">
+      <div className="bg-page text-ink">
+        <div className="container flex min-h-[70vh] items-center justify-center py-12">
+          <Card className="w-full max-w-md p-8">
             <div className="mb-6 flex justify-center">
               <Image
                 src="/almanya101lragetransparent.png"
@@ -286,142 +294,121 @@ export default function HomeNewsAdminClient() {
               />
             </div>
             <div className="text-center">
-              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#ffd24a]">
+              <div className="text-sm font-bold uppercase tracking-[0.13em] text-brand-700">
                 Ana Sayfa Admin
               </div>
-              <h1 className="mt-3 text-3xl font-bold">Haber Yönetimi Girişi</h1>
-              <p className="mt-3 text-sm leading-7 text-white/68">
+              <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-ink">Haber Yönetimi Girişi</h1>
+              <p className="mt-3 text-sm leading-7 text-muted">
                 Haberler ve duyurular modülüne erişmek için admin şifresini girin.
               </p>
             </div>
 
             <form className="mt-8 space-y-4" onSubmit={handleAuthSubmit}>
-              <label className="block">
-                <span className="mb-2 block text-sm text-white/70">Şifre</span>
+              <AdminField label="Şifre">
                 <input
                   type="password"
                   autoComplete="current-password"
                   value={authPassword}
                   onChange={(event) => setAuthPassword(event.target.value)}
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition focus:border-[#01A1F1]"
+                  className={ADMIN_CONTROL_CLASS}
                   placeholder="••••••••"
                 />
-              </label>
+              </AdminField>
 
               {authError ? (
-                <div className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                <div role="alert" className={cn('rounded-btn border px-4 py-3 text-sm', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}>
                   {authError}
                 </div>
               ) : null}
 
-              <button
-                type="submit"
-                disabled={authLoading}
-                className="w-full rounded-2xl bg-[#01A1F1] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#139ce6] disabled:cursor-not-allowed disabled:opacity-60"
-              >
+              <Button type="submit" disabled={authLoading} className="w-full">
                 {authLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-              </button>
+              </Button>
 
               <Link
                 href="/admin/home"
-                className="block text-center text-sm text-white/55 transition hover:text-white"
+                className="block text-center text-sm text-muted transition-colors hover:text-brand-700"
               >
                 Ana Sayfa Admin modüllerine geri dön
               </Link>
             </form>
-          </div>
+          </Card>
         </div>
       </div>
     );
   }
 
   return (
-<div className="min-h-screen bg-black text-white">
-      <section className="relative border-b border-white/10">
-        <div className="container relative py-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold">Haber Yönetimi</h1>
-              <p className="mt-2 text-sm text-white/72">
-                Yeni kayıt oluştur, taslakları yayına al ve mevcut akışı yönet.
-              </p>
-            </div>
+    <div className="bg-page text-ink">
+      <AdminPageHeader
+        title="Haber Yönetimi"
+        description="Yeni kayıt oluştur, taslakları yayına al ve mevcut akışı yönet."
+        actions={
+          <>
+            <Button href="/admin/home" variant="outline" size="sm">
+              ← Geri
+            </Button>
+            <Button
+              type="button"
+              variant="danger"
+              size="sm"
+              onClick={() => {
+                clearAdminAuth();
+                setAuthed(false);
+              }}
+            >
+              Çıkış Yap
+            </Button>
+          </>
+        }
+      />
 
-            <div className="flex flex-wrap items-center gap-3">
-              <Link
-                href="/admin/home"
-                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs transition hover:bg-white/10"
-              >
-                ← Geri
-              </Link>
-              <button
-                type="button"
-                onClick={() => {
-                  clearAdminAuth();
-                  setAuthed(false);
-                }}
-                className="rounded-full border border-red-400/20 bg-red-500/10 px-4 py-2 text-xs text-red-100 transition hover:bg-red-500/20"
-              >
-                Çıkış Yap
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="container py-8 space-y-6">
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <section className="space-y-6 px-4 py-8 sm:px-6 lg:px-9">
+        <Card>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-xl font-bold">{editingId ? 'Düzenle' : 'Yeni haber / duyuru ekle'}</h2>
-              <p className="mt-2 text-xs text-white/60">
+              <h2 className="text-xl font-extrabold tracking-tight text-ink">{editingId ? 'Düzenle' : 'Yeni haber / duyuru ekle'}</h2>
+              <p className="mt-2 text-xs text-muted">
                 {editingId
                   ? 'Düzenlemeyi bitirince güncelleyin, vazgeçerseniz düzenlemeyi iptal edin.'
                   : 'Başlangıç sürümünde temel alanları kaydediyoruz.'}
               </p>
             </div>
             {editingId ? (
-              <button
-                type="button"
-                onClick={handleCancelEdit}
-                className="rounded-lg border border-white/15 bg-white/[0.05] px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
-              >
+              <Button type="button" variant="outline" size="sm" onClick={handleCancelEdit}>
                 İptal
-              </button>
+              </Button>
             ) : null}
           </div>
 
           <form className="space-y-3" onSubmit={handleCreateSubmit}>
             <div className="grid gap-3 md:grid-cols-[1fr_200px_200px]">
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Başlık</span>
+              <AdminField label="Başlık">
                 <input
                   value={form.title}
                   onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
-                  className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                  className={ADMIN_CONTROL_CLASS}
                   placeholder="Haber başlığı"
                 />
-              </label>
+              </AdminField>
 
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Kategori</span>
+              <AdminField label="Kategori">
                 <select
                   value={form.category}
                   onChange={(event) =>
                     setForm((prev) => ({ ...prev, category: event.target.value as NewsCategory }))
                   }
-                  className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                  className={ADMIN_CONTROL_CLASS}
                 >
                   {CATEGORIES.map((category) => (
-                    <option key={category} value={category} className="bg-black">
+                    <option key={category} value={category}>
                       {category}
                     </option>
                   ))}
                 </select>
-              </label>
+              </AdminField>
 
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Durum</span>
+              <AdminField label="Durum">
                 <select
                   value={form.status}
                   onChange={(event) =>
@@ -430,38 +417,34 @@ export default function HomeNewsAdminClient() {
                       status: normalizeStatus(event.target.value),
                     }))
                   }
-                  className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                  className={ADMIN_CONTROL_CLASS}
                 >
-                  <option value="draft" className="bg-black">
-                    Taslak
-                  </option>
-                  <option value="published" className="bg-black">
-                    Yayında
-                  </option>
+                  <option value="draft">Taslak</option>
+                  <option value="published">Yayında</option>
                 </select>
-              </label>
+              </AdminField>
             </div>
 
             <label className="block">
-              <span className="mb-1.5 block text-xs text-white/70">Özet (kısa açıklama)</span>
+              <span className="mb-2 block text-sm font-semibold text-ink">Özet (kısa açıklama)</span>
               <textarea
                 value={form.summary}
                 onChange={(event) => setForm((prev) => ({ ...prev, summary: event.target.value }))}
-                className="min-h-20 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                className={cn(ADMIN_CONTROL_CLASS, 'min-h-20 py-2')}
                 placeholder="Listelerde görünecek kısa özet (150-200 karakter)"
                 maxLength={500}
               />
-              <div className="mt-1 text-[10px] text-white/40">{form.summary.length}/500 karakter</div>
+              <div className="mt-1 text-[11px] text-muted">{form.summary.length}/500 karakter</div>
             </label>
 
             <label className="block !mt-4">
-              <span className="mb-1.5 block text-xs text-white/70">İçerik (tam metin - Markdown destekli)</span>
+              <span className="mb-2 block text-sm font-semibold text-ink">İçerik (tam metin - Markdown destekli)</span>
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
                   <textarea
                     value={form.content}
                     onChange={(event) => setForm((prev) => ({ ...prev, content: event.target.value }))}
-                    className="min-h-80 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue font-mono"
+                    className={cn(ADMIN_CONTROL_CLASS, 'min-h-80 py-2 font-mono')}
                     placeholder="Haber içeriğini buraya yazın. Markdown desteklenir.
 
 Örnek:
@@ -474,11 +457,11 @@ Alt metin...
 
 **Kalın** ve *italik* metin kullanabilirsiniz."
                   />
-                  <div className="mt-1 text-[10px] text-white/40">Markdown formatında yazın</div>
+                  <div className="mt-1 text-[11px] text-muted">Markdown formatında yazın</div>
                 </div>
                 <div>
-                  <span className="mb-2 block text-xs text-white/60">Önizleme</span>
-                  <div className="min-h-80 rounded-lg border border-white/10 bg-white/[0.02] p-4">
+                  <span className="mb-2 block text-xs text-muted">Önizleme</span>
+                  <div className="min-h-80 rounded-btn border border-line bg-band p-4">
                     <MarkdownPreview content={form.content} />
                   </div>
                 </div>
@@ -486,98 +469,91 @@ Alt metin...
             </label>
 
             <div className="grid gap-3 md:grid-cols-3">
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Kapak görseli URL</span>
+              <AdminField label="Kapak görseli URL">
                 <input
                   value={form.coverImageUrl}
                   onChange={(event) => setForm((prev) => ({ ...prev, coverImageUrl: event.target.value }))}
-                  className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                  className={ADMIN_CONTROL_CLASS}
                   placeholder="https://..."
                 />
-              </label>
+              </AdminField>
 
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Kaynak adı</span>
+              <AdminField label="Kaynak adı">
                 <input
                   value={form.sourceName}
                   onChange={(event) => setForm((prev) => ({ ...prev, sourceName: event.target.value }))}
-                  className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                  className={ADMIN_CONTROL_CLASS}
                   placeholder="almanya101"
                 />
-              </label>
+              </AdminField>
 
-              <label className="block">
-                <span className="mb-1.5 block text-xs text-white/70">Okuma süresi (dk)</span>
+              <AdminField label="Okuma süresi (dk)">
                 <input
                   value={form.readingMinutes}
                   onChange={(event) => setForm((prev) => ({ ...prev, readingMinutes: event.target.value }))}
-                  className="w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
+                  className={ADMIN_CONTROL_CLASS}
                   placeholder="3"
                   inputMode="numeric"
                 />
-              </label>
+              </AdminField>
             </div>
 
-            <label className="!mt-4 flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+            <label className="!mt-4 flex items-start gap-3 rounded-btn border border-line bg-band p-3">
               <input
                 type="checkbox"
                 checked={form.showInCarousel}
                 onChange={(event) =>
                   setForm((prev) => ({ ...prev, showInCarousel: event.target.checked }))
                 }
-                className="mt-0.5 h-4 w-4 rounded border-white/20 bg-black"
+                className="mt-0.5 h-4 w-4 rounded-tile border-line accent-brand-700"
               />
               <span>
-                <span className="block text-xs font-semibold text-white">
+                <span className="block text-sm font-semibold text-ink">
                   Ana sayfa carousel'de göster
                 </span>
-                <span className="mt-1 block text-[11px] leading-relaxed text-white/60">
+                <span className="mt-1 block text-xs leading-relaxed text-muted">
                   Haber yayında olsa bile yalnızca bu seçenek açıksa carousel'de görünür.
                 </span>
               </span>
             </label>
 
             {submitMessage ? (
-              <div className="!mt-4 rounded-lg border border-emerald-400/25 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-100">
+              <div className={cn('!mt-4 rounded-btn border px-3 py-2 text-xs', TONE_STYLES.green.tint, TONE_STYLES.green.border, TONE_STYLES.green.text)}>
                 {submitMessage}
               </div>
             ) : null}
 
             {submitError ? (
-              <div className="!mt-4 rounded-lg border border-red-400/25 bg-red-500/10 px-3 py-2 text-xs text-red-100">
+              <div role="alert" className={cn('!mt-4 rounded-btn border px-3 py-2 text-xs', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}>
                 {submitError}
               </div>
             ) : null}
 
             <div className="!mt-4 flex items-center gap-2">
-              <button
-                type="submit"
-                disabled={submitLoading}
-                className="flex-1 rounded-lg bg-google-yellow px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-60"
-              >
+              <Button type="submit" disabled={submitLoading} className="flex-1">
                 {submitLoading
                   ? 'Kaydediliyor...'
                   : editingId
                     ? 'Düzenlemeyi Kaydet'
                     : 'Kaydı Oluştur'}
-              </button>
+              </Button>
             </div>
           </form>
-        </div>
+        </Card>
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-            <div className="text-xs text-white/55">Toplam</div>
-            <div className="mt-1 text-2xl font-black">{stats.total}</div>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-            <div className="text-xs text-white/55">Taslak</div>
-            <div className="mt-1 text-2xl font-black">{stats.draft}</div>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-            <div className="text-xs text-white/55">Yayında</div>
-            <div className="mt-1 text-2xl font-black">{stats.published}</div>
-          </div>
+          <Card className="p-4">
+            <div className="text-xs text-muted">Toplam</div>
+            <div className="mt-1 text-2xl font-extrabold">{stats.total}</div>
+          </Card>
+          <Card className="p-4">
+            <div className="text-xs text-muted">Taslak</div>
+            <div className="mt-1 text-2xl font-extrabold">{stats.draft}</div>
+          </Card>
+          <Card className="p-4">
+            <div className="text-xs text-muted">Yayında</div>
+            <div className="mt-1 text-2xl font-extrabold">{stats.published}</div>
+          </Card>
         </div>
 
         {editingId ? (() => {
@@ -586,30 +562,28 @@ Alt metin...
           const effectiveDate = editingItem.published_at || editingItem.created_at;
 
           return (
-            <div className="rounded-xl border border-google-yellow/30 bg-google-yellow/5 p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="rounded-full bg-google-yellow/20 border border-google-yellow/30 px-3 py-1 text-xs font-semibold text-google-yellow">
-                  Düzenleniyor
-                </div>
-                <span className="text-xs text-white/60">{formatDate(effectiveDate)}</span>
+            <div className={cn('rounded-card border p-5', TONE_STYLES.yellow.wash, TONE_STYLES.yellow.border)}>
+              <div className="mb-4 flex items-center gap-2">
+                <Chip tone="yellow">Düzenleniyor</Chip>
+                <span className="text-xs text-muted">{formatDate(effectiveDate)}</span>
               </div>
 
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="max-w-xl">
-                  <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-wider text-white/45">
-                    <span className={editingItem.category === 'Duyuru' ? 'text-google-yellow' : ''}>{editingItem.category}</span>
+                  <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-wider text-muted">
+                    <span className={editingItem.category === 'Duyuru' ? TONE_STYLES.yellow.text : ''}>{editingItem.category}</span>
                     <span>{editingItem.status === 'published' ? 'Yayında' : 'Taslak'}</span>
                   </div>
-                  <h3 className="mt-2 text-lg font-bold">{editingItem.title}</h3>
+                  <h3 className="mt-2 text-lg font-extrabold text-ink">{editingItem.title}</h3>
                   {editingItem.summary ? (
-                    <p className="mt-2 text-xs leading-relaxed text-white/60">
+                    <p className="mt-2 text-xs leading-relaxed text-muted">
                       {editingItem.summary}
                     </p>
                   ) : null}
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-white/50">
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-muted">
                 <span>Okuma: {editingItem.reading_minutes || 0} dk</span>
                 {editingItem.source_name ? <span>Kaynak: {editingItem.source_name}</span> : null}
                 <span>Carousel: {editingItem.show_in_carousel ? 'Açık' : 'Kapalı'}</span>
@@ -618,171 +592,141 @@ Alt metin...
           );
         })() : null}
 
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <h2 className="text-xl font-bold">Haber akışı</h2>
-              <div className="text-xs text-white/55">{filteredCountLabel}</div>
-            </div>
+        <Card>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <h2 className="text-xl font-extrabold tracking-tight text-ink">Haber akışı</h2>
+            <div className="text-xs text-muted">{filteredCountLabel}</div>
+          </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              {(['all', 'draft', 'published'] as NewsStatus[]).map((status) => (
-                <button
-                  key={status}
-                  type="button"
-                  onClick={() => {
-                    setStatusFilter(status);
-                    void loadNews(status, search);
-                  }}
-                  className={`rounded-full px-3 py-1.5 text-xs transition ${
-                    statusFilter === status
-                      ? 'bg-google-blue text-white'
-                      : 'border border-white/10 bg-white/[0.04] text-white/72 hover:bg-white/[0.08]'
-                  }`}
-                >
-                  {status === 'all' ? 'Tümü' : status === 'draft' ? 'Taslak' : 'Yayında'}
-                </button>
-              ))}
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-3">
-              <input
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                placeholder="Başlıkta ara..."
-                className="min-w-[200px] flex-1 rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition focus:border-google-blue"
-              />
+          <div className="mt-4 flex flex-wrap gap-2">
+            {(['all', 'draft', 'published'] as NewsStatus[]).map((status) => (
               <button
+                key={status}
                 type="button"
-                onClick={() => void loadNews(statusFilter, search)}
-                className="rounded-lg border border-white/10 bg-white/[0.05] px-4 py-2 text-xs font-semibold transition hover:bg-white/[0.1]"
+                onClick={() => {
+                  setStatusFilter(status);
+                  void loadNews(status, search);
+                }}
+                className={cn(
+                  'min-h-[44px] rounded-full px-4 text-sm font-semibold transition-colors',
+                  statusFilter === status
+                    ? 'bg-brand-50 text-brand-800'
+                    : 'border border-line bg-white text-ink hover:border-ink'
+                )}
               >
-                Filtrele
+                {status === 'all' ? 'Tümü' : status === 'draft' ? 'Taslak' : 'Yayında'}
               </button>
+            ))}
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-3">
+            <input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Başlıkta ara..."
+              aria-label="Başlıkta ara"
+              className={cn(ADMIN_CONTROL_CLASS, 'min-w-[200px] flex-1')}
+            />
+            <Button type="button" variant="outline" onClick={() => void loadNews(statusFilter, search)}>
+              Filtrele
+            </Button>
+          </div>
+
+          {listError ? (
+            <div role="alert" className={cn('mt-4 rounded-btn border px-3 py-2 text-xs', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}>
+              {listError}
             </div>
+          ) : null}
 
-            {listError ? (
-              <div className="mt-4 rounded-lg border border-red-400/25 bg-red-500/10 px-3 py-2 text-xs text-red-100">
-                {listError}
+          <div className="mt-5 space-y-3">
+            {listLoading ? (
+              <div className="rounded-card border border-line bg-band px-5 py-6 text-center text-xs text-muted">
+                Haberler yükleniyor...
               </div>
-            ) : null}
+            ) : rows.length === 0 ? (
+              <AdminEmptyState title="Bu filtre için kayıt bulunamadı." />
+            ) : (
+              rows.map((item) => {
+                const effectiveDate = item.published_at || item.created_at;
 
-            <div className="mt-5 space-y-3">
-              {listLoading ? (
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-6 text-center text-xs text-white/60">
-                  Haberler yükleniyor...
-                </div>
-              ) : rows.length === 0 ? (
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-6 text-center text-xs text-white/60">
-                  Bu filtre için kayıt bulunamadı.
-                </div>
-              ) : (
-                rows.map((item) => {
-                  const effectiveDate = item.published_at || item.created_at;
-
-                  return (
-                    <div
-                      key={item.id}
-                      className="rounded-xl border border-white/10 bg-white/[0.03] p-4"
-                    >
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div className="max-w-xl">
-                          <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-wider text-white/45">
-                            <span className={item.category === 'Duyuru' ? 'text-google-yellow' : ''}>{item.category}</span>
-                            <span>{item.status === 'published' ? 'Yayında' : 'Taslak'}</span>
-                            <span>{formatDate(effectiveDate)}</span>
-                          </div>
-                          <h3 className="mt-2 text-base font-bold">{item.title}</h3>
-                          {item.summary ? (
-                            <p className="mt-2 text-xs leading-relaxed text-white/60">
-                              {item.summary}
-                            </p>
-                          ) : null}
+                return (
+                  <div key={item.id} className="rounded-card border border-line bg-white p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="max-w-xl">
+                        <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-wider text-muted">
+                          <span className={item.category === 'Duyuru' ? TONE_STYLES.yellow.text : ''}>{item.category}</span>
+                          <span>{item.status === 'published' ? 'Yayında' : 'Taslak'}</span>
+                          <span>{formatDate(effectiveDate)}</span>
                         </div>
-
-                        <div className="flex flex-wrap items-center gap-2">
-                          <select
-                            defaultValue={item.category}
-                            onChange={(event) =>
-                              void handleCategorySave(item, event.target.value as NewsCategory)
-                            }
-                            className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs text-white outline-none"
-                          >
-                            {CATEGORIES.map((category) => (
-                              <option key={category} value={category} className="bg-black">
-                                {category}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                        <h3 className="mt-2 text-base font-extrabold text-ink">{item.title}</h3>
+                        {item.summary ? (
+                          <p className="mt-2 text-xs leading-relaxed text-muted">
+                            {item.summary}
+                          </p>
+                        ) : null}
                       </div>
 
-                      <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-white/50">
-                        <span>Okuma: {item.reading_minutes || 0} dk</span>
-                        {item.source_name ? <span>Kaynak: {item.source_name}</span> : null}
-                        <span>
-                          Carousel: {item.show_in_carousel ? 'Açık' : 'Kapalı'}
-                        </span>
-                      </div>
-
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        <button
-                          type="button"
-                          onClick={() => handleStartEdit(item)}
-                          className="rounded-full border border-google-yellow/25 bg-google-yellow/10 px-3 py-1.5 text-xs font-semibold text-google-yellow transition hover:bg-google-yellow/20"
+                      <div className="flex flex-wrap items-center gap-2">
+                        <select
+                          defaultValue={item.category}
+                          aria-label="Kategori"
+                          onChange={(event) =>
+                            void handleCategorySave(item, event.target.value as NewsCategory)
+                          }
+                          className={cn(ADMIN_CONTROL_CLASS, 'w-auto')}
                         >
-                          Düzenle
-                        </button>
-
-                        {item.show_in_carousel ? (
-                          <button
-                            type="button"
-                            onClick={() => void handleCarouselToggle(item, false)}
-                            className="rounded-full border border-yellow-300/20 bg-yellow-500/10 px-3 py-1.5 text-xs font-semibold text-yellow-100 transition hover:bg-yellow-500/20"
-                          >
-                            Carousel'den Kaldır
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={() => void handleCarouselToggle(item, true)}
-                            className="rounded-full border border-emerald-300/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-100 transition hover:bg-emerald-500/20"
-                          >
-                            Carousel'e Ekle
-                          </button>
-                        )}
-
-                        {item.status === 'published' ? (
-                          <button
-                            type="button"
-                            onClick={() => void handleStatusChange(item, 'draft')}
-                            className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
-                          >
-                            Taslağa Al
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={() => void handleStatusChange(item, 'published')}
-                            className="rounded-full bg-google-blue px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-500"
-                          >
-                            Yayınla
-                          </button>
-                        )}
-
-                        <button
-                          type="button"
-                          onClick={() => void handleDelete(item)}
-                          className="rounded-full border border-red-400/20 bg-red-500/10 px-3 py-1.5 text-xs font-semibold text-red-100 transition hover:bg-red-500/20"
-                        >
-                          Sil
-                        </button>
+                          {CATEGORIES.map((category) => (
+                            <option key={category} value={category}>
+                              {category}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
-                  );
-                })
-              )}
-            </div>
+
+                    <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-muted">
+                      <span>Okuma: {item.reading_minutes || 0} dk</span>
+                      {item.source_name ? <span>Kaynak: {item.source_name}</span> : null}
+                      <span>
+                        Carousel: {item.show_in_carousel ? 'Açık' : 'Kapalı'}
+                      </span>
+                    </div>
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <Button type="button" variant="outline" size="sm" onClick={() => handleStartEdit(item)}>
+                        Düzenle
+                      </Button>
+
+                      {item.show_in_carousel ? (
+                        <Button type="button" variant="outline" size="sm" onClick={() => void handleCarouselToggle(item, false)}>
+                          Carousel'den Kaldır
+                        </Button>
+                      ) : (
+                        <Button type="button" variant="success" size="sm" onClick={() => void handleCarouselToggle(item, true)}>
+                          Carousel'e Ekle
+                        </Button>
+                      )}
+
+                      {item.status === 'published' ? (
+                        <Button type="button" variant="outline" size="sm" onClick={() => void handleStatusChange(item, 'draft')}>
+                          Taslağa Al
+                        </Button>
+                      ) : (
+                        <Button type="button" size="sm" onClick={() => void handleStatusChange(item, 'published')}>
+                          Yayınla
+                        </Button>
+                      )}
+
+                      <Button type="button" variant="danger" size="sm" onClick={() => void handleDelete(item)}>
+                        Sil
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
+        </Card>
       </section>
     </div>
   );

@@ -15,13 +15,14 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  /* Visible keyboard focus on the public site (admin/devuser keep their own) */
+  /* Visible keyboard focus on the public site and the admin panel
+     (the dark devuser shell keeps its own) */
   body:not([data-devuser]) :focus-visible {
     outline: 2px solid theme('colors.brand.700');
     outline-offset: 2px;
   }
 
-  /* Devuser shell: hide main site chrome. Admin/devuser keep the pre-redesign
+  /* Devuser shell: hide main site chrome. Devuser keeps the pre-redesign
      black page and gray-900 inherited text. */
   body[data-devuser] {
     background: #000 !important;
@@ -42,13 +43,31 @@
     margin: 0;
   }
 
-  /* Admin shell keeps a left offset for its fixed sidebar on desktop. This
-     selector is more specific than `body[data-devuser] main`, so the sidebar
-     gutter survives the devuser margin reset above (≥ lg breakpoint only).
-     The admin content region is a <div data-admin-main> because the root
-     layout already provides the single <main> landmark. */
+  /* Admin shell: light theme (bg-page / text-ink inherited from body), site
+     chrome hidden. Flag is `data-admin`, set by app/admin/layout.tsx before
+     first paint and kept by AdminLayoutShell. */
+  body[data-admin] {
+    overflow-x: hidden;
+  }
+
+  body[data-admin] header,
+  body[data-admin] footer,
+  body[data-admin] .skip-to-main,
+  body[data-admin] .cookie-consent {
+    display: none !important;
+  }
+
+  body[data-admin] main {
+    flex-grow: 1;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Fixed sidebar gutter on desktop (≥ lg). The admin content region is a
+     <div data-admin-main> because the root layout already provides the single
+     <main> landmark. */
   @media (min-width: 1024px) {
-    body[data-devuser] [data-admin-main] {
+    body[data-admin] [data-admin-main] {
       margin-left: 264px;
     }
   }

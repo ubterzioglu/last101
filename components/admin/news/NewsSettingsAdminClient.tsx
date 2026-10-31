@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { adminJsonFetch } from '@/components/admin/news/api';
+import { NewsNotice } from '@/components/admin/news/NewsNotice';
+import { ADMIN_CONTROL_CLASS, AdminField } from '@/components/admin/ui/AdminField';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { cn } from '@/lib/utils/cn';
 import { DEFAULT_ALLOWED_NEWS_LANGUAGES, PUBLISHABLE_NEWS_LANGUAGES, getNewsLanguageLabel } from '@/lib/news/shared';
 import type { NewsLanguage, NewsPipelineSettingsRecord } from '@/types/news';
 
@@ -63,13 +68,13 @@ export function NewsSettingsAdminClient() {
   return (
     <>
       {loading ? (
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] px-6 py-16 text-center text-sm text-white/60">
+        <Card className="px-6 py-16 text-center text-sm text-muted">
           Ayarlar yükleniyor...
-        </div>
+        </Card>
       ) : settings ? (
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-          {message ? <div className="rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">{message}</div> : null}
-          {error ? <div className="mt-4 rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">{error}</div> : null}
+        <Card>
+          {message ? <NewsNotice tone="green">{message}</NewsNotice> : null}
+          {error ? <NewsNotice tone="red" className="mt-4">{error}</NewsNotice> : null}
 
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             <Switch label="Pipeline aktif" checked={settings.pipeline_enabled} onChange={(checked) => setSettings((s) => s ? ({ ...s, pipeline_enabled: checked }) : s)} />
@@ -82,16 +87,17 @@ export function NewsSettingsAdminClient() {
             <Switch label="Otomatik pending_review üret" checked={settings.auto_create_pending_review} onChange={(checked) => setSettings((s) => s ? ({ ...s, auto_create_pending_review: checked }) : s)} />
           </div>
 
-          <fieldset className="mt-4 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3">
-            <legend className="px-1 text-sm text-white/70">İzin Verilen Diller</legend>
-            <p className="text-xs text-white/50">
+          <fieldset className="mt-4 rounded-card border border-line bg-band px-4 py-3">
+            <legend className="px-1 text-sm font-semibold text-ink">İzin Verilen Diller</legend>
+            <p className="text-xs text-muted">
               Bu diller dışındaki haberler çekilirken elenir ve kuyruğa düşmez. Site Türkçe olduğu için İngilizce seçilemez.
             </p>
             <div className="mt-3 flex flex-wrap gap-4">
               {PUBLISHABLE_NEWS_LANGUAGES.map((language) => (
-                <label key={language} className="flex items-center gap-2 text-sm text-white/75">
+                <label key={language} className="flex min-h-[44px] items-center gap-2 text-sm text-ink">
                   <input
                     type="checkbox"
+                    className="h-4 w-4 accent-brand-700"
                     checked={allowedLanguages.includes(language)}
                     onChange={(e) => setSettings((s) => s ? ({ ...s, allowed_languages: toggleLanguage(allowedLanguages, language, e.target.checked) }) : s)}
                   />
@@ -101,26 +107,24 @@ export function NewsSettingsAdminClient() {
             </div>
           </fieldset>
 
-          <label className="mt-4 block">
-            <span className="mb-2 block text-sm text-white/70">Hariç Kelimeler</span>
-            <textarea value={settings.excluded_keywords.join('\n')} onChange={(e) => setSettings((s) => s ? ({ ...s, excluded_keywords: e.target.value.split('\n').map((item) => item.trim()).filter(Boolean) }) : s)} className="min-h-32 w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue" />
-          </label>
+          <AdminField label="Hariç Kelimeler" className="mt-4">
+            <textarea value={settings.excluded_keywords.join('\n')} onChange={(e) => setSettings((s) => s ? ({ ...s, excluded_keywords: e.target.value.split('\n').map((item) => item.trim()).filter(Boolean) }) : s)} className={cn(ADMIN_CONTROL_CLASS, 'min-h-32 py-3')} />
+          </AdminField>
 
-          <label className="mt-4 block">
-            <span className="mb-2 block text-sm text-white/70">Yüksek Öncelikli Kelimeler</span>
-            <textarea value={settings.high_priority_keywords.join('\n')} onChange={(e) => setSettings((s) => s ? ({ ...s, high_priority_keywords: e.target.value.split('\n').map((item) => item.trim()).filter(Boolean) }) : s)} className="min-h-32 w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue" />
-          </label>
+          <AdminField label="Yüksek Öncelikli Kelimeler" className="mt-4">
+            <textarea value={settings.high_priority_keywords.join('\n')} onChange={(e) => setSettings((s) => s ? ({ ...s, high_priority_keywords: e.target.value.split('\n').map((item) => item.trim()).filter(Boolean) }) : s)} className={cn(ADMIN_CONTROL_CLASS, 'min-h-32 py-3')} />
+          </AdminField>
 
           <div className="mt-6">
-            <button type="button" onClick={() => void saveSettings()} disabled={saving} className="rounded-full bg-google-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500 disabled:opacity-60">
+            <Button type="button" onClick={() => void saveSettings()} disabled={saving}>
               {saving ? 'Kaydediliyor...' : 'Ayarları Kaydet'}
-            </button>
+            </Button>
           </div>
-        </div>
+        </Card>
       ) : (
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] px-6 py-16 text-center text-sm text-white/60">
+        <Card className="px-6 py-16 text-center text-sm text-muted">
           Ayar kaydı bulunamadı.
-        </div>
+        </Card>
       )}
     </>
   );
@@ -128,18 +132,17 @@ export function NewsSettingsAdminClient() {
 
 function Switch({ label, checked, onChange }: { label: string; checked: boolean; onChange: (checked: boolean) => void }) {
   return (
-    <label className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/75">
+    <label className="flex min-h-[44px] items-center justify-between gap-4 rounded-card border border-line bg-band px-4 py-3 text-sm font-semibold text-ink">
       <span>{label}</span>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      <input type="checkbox" className="h-4 w-4 accent-brand-700" checked={checked} onChange={(e) => onChange(e.target.checked)} />
     </label>
   );
 }
 
 function NumberField({ label, value, onChange }: { label: string; value: number; onChange: (value: number) => void }) {
   return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-white/70">{label}</span>
-      <input type="number" value={value} onChange={(e) => onChange(Number(e.target.value) || 0)} className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue" />
-    </label>
+    <AdminField label={label}>
+      <input type="number" value={value} onChange={(e) => onChange(Number(e.target.value) || 0)} className={ADMIN_CONTROL_CLASS} />
+    </AdminField>
   );
 }

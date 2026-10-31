@@ -9,8 +9,8 @@ export default function AdminAraclarPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-black text-white">
-          <div className="container py-20 text-center text-sm text-white/60">Yükleniyor...</div>
+        <div className="bg-page text-ink">
+          <div className="container py-20 text-center text-sm text-muted">Yükleniyor...</div>
         </div>
       }
     >

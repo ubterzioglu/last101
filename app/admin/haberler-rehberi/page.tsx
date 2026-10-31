@@ -5,8 +5,8 @@ export default function AdminNewsGuidePage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-black text-white">
-          <div className="container py-20 text-center text-sm text-white/60">Yükleniyor...</div>
+        <div className="min-h-screen bg-page text-ink">
+          <div className="px-4 py-20 text-center text-sm text-muted sm:px-6 lg:px-9">Yükleniyor...</div>
         </div>
       }
     >

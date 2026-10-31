@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   clearAdminAuth,
@@ -10,7 +11,20 @@ import {
   verifyAdminKey,
 } from '@/lib/admin/clientAuth';
 import { AuthSplitLayout } from '@/components/auth/AuthSplitLayout';
+import { AdminField, ADMIN_CONTROL_CLASS } from '@/components/admin/ui/AdminField';
+import { AdminPageHeader } from '@/components/admin/ui/AdminPageHeader';
+import { AdminStatCard } from '@/components/admin/ui/AdminStatCard';
+import { TONE_STYLES } from '@/components/site/tones';
+import type { SiteTone } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { cn } from '@/lib/utils/cn';
+
+const LOGIN_HIGHLIGHTS = [
+  'Üyeler, haberler ve köşe yazıları',
+  'Hizmet rehberi öneri onayları',
+  'Kırık link ve güvenlik bildirimleri',
+] as const;
 
 function isSafeNext(next: string | null): next is string {
   return Boolean(next) && next!.startsWith('/admin');
@@ -116,8 +130,8 @@ export function AdminHomeClient() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-black text-white">
-        <div className="container py-20 text-center text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
+      <div className="min-h-screen bg-page text-muted">
+        <div className="py-20 text-center text-sm text-muted">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }
@@ -125,158 +139,123 @@ export function AdminHomeClient() {
   if (!authed) {
     return (
       <AuthSplitLayout
+        tone="light"
         title="Admin Paneli"
         subtitle="Tüm yönetim bölümlerine tek şifreyle giriş yapın. Oturum açıkken alt sayfalar tekrar şifre sormaz."
-        accent="yellow"
         heroTitle="Yönetim Paneli"
         heroSubtitle="Üyeler, haberler, köşe yazarları, hizmet rehberi ve daha fazlasını tek yerden yönetin."
+        highlights={LOGIN_HIGHLIGHTS}
       >
         <form className="space-y-4" onSubmit={handleLogin}>
-          <label className="block">
-            <span className="mb-2 block text-sm text-white/70">Şifre</span>
+          <AdminField label="Şifre">
             <input
               type="password"
               autoComplete="current-password"
               value={authPassword}
               onChange={(event) => setAuthPassword(event.target.value)}
-              className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-white outline-none transition focus:border-google-yellow focus-visible:ring-2 focus-visible:ring-google-yellow"
+              className={ADMIN_CONTROL_CLASS}
               placeholder="••••••••"
               autoFocus
             />
-          </label>
+          </AdminField>
 
           {authError ? (
-            <div className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+            <div
+              className={cn(
+                'rounded-card border px-4 py-3 text-sm',
+                TONE_STYLES.red.tint,
+                TONE_STYLES.red.border,
+                TONE_STYLES.red.text,
+              )}
+            >
               {authError}
             </div>
           ) : null}
 
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full rounded-2xl bg-google-blue px-4 py-3 text-sm font-semibold text-white transition hover:bg-google-blue/90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-          >
+          <Button type="submit" disabled={submitting} className="w-full">
             {submitting ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-          </button>
+          </Button>
         </form>
       </AuthSplitLayout>
     );
   }
 
   return (
-    <div className="min-h-screen">
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-google-yellow/10 via-transparent to-google-blue/10" />
-        <div
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-google-blue/20 blur-3xl"
-          aria-hidden="true"
-        />
-        <div className="container relative py-12">
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-google-yellow">Yönetim</div>
-          <h1 className="mt-3 text-4xl font-black md:text-5xl">Hoş geldin 👋</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/68">
-            Soldaki menüden bir bölüm seçerek yönetime başlayabilirsin. Bekleyen işler aşağıda özetleniyor.
-          </p>
-        </div>
-      </section>
+    <div className="min-h-screen bg-page text-ink">
+      <AdminPageHeader
+        eyebrow="Yönetim"
+        title="Hoş geldin"
+        description="Soldaki menüden bir bölüm seçerek yönetime başlayabilirsin. Bekleyen işler aşağıda özetleniyor."
+      />
 
-      <section className="container py-10">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <DashboardStatCard
-            label="Toplam Üye"
-            value={stats.totalMembers}
-            accent="text-google-blue"
-            href="/admin/uyeler"
-            router={router}
-          />
-          <DashboardStatCard
+      <section className="px-4 py-8 sm:px-6 lg:px-9">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <AdminStatCard label="Toplam Üye" value={stats.totalMembers} tone="blue" href="/admin/uyeler" />
+          <AdminStatCard
             label="Bekleyen Hizmet Önerisi"
             value={stats.pendingProviders}
-            accent="text-google-red"
+            tone="red"
             href="/admin/hizmet-rehberi"
-            router={router}
           />
-          <DashboardStatCard
+          <AdminStatCard
             label="Kırık Link Bildirimi"
             value={stats.brokenLinks}
-            accent="text-google-orange"
+            tone="orange"
             href="/admin/broken-link-reports"
-            router={router}
           />
-          <DashboardStatCard
+          <AdminStatCard
             label="Service Finder (Uzman Tarama)"
             value={0}
-            accent="text-google-blue"
+            tone="blue"
             href="/admin/service-finder"
-            router={router}
           />
         </div>
 
-        <div className="mt-5">
-          <button
-            type="button"
-            onClick={() => router.push('/admin/araclar')}
-            className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-google-blue/30 bg-white/[0.03] p-6 text-left transition hover:-translate-y-0.5 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-          >
-            <span>
-              <span className="block text-xs font-semibold uppercase tracking-wider text-google-blue">Araçlar</span>
-              <span className="mt-1 block text-lg font-bold text-white">İnteraktif Araçlar</span>
-              <span className="mt-1 block text-sm text-white/55">
-                Tüm planlama araçları — kategori, açıklama ve gerçek soru sayıları tek listede.
-              </span>
-            </span>
-            <span className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition group-hover:gap-2">
-              Aç
-              <span aria-hidden="true">→</span>
-            </span>
-          </button>
-        </div>
-
-        <div className="mt-5">
-          <button
-            type="button"
-            onClick={() => router.push('/admin/rehber')}
-            className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-google-green/30 bg-white/[0.03] p-6 text-left transition hover:-translate-y-0.5 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-green focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-          >
-            <span>
-              <span className="block text-xs font-semibold uppercase tracking-wider text-google-green">Rehberler</span>
-              <span className="mt-1 block text-lg font-bold text-white">Kullanım Kılavuzu</span>
-              <span className="mt-1 block text-sm text-white/55">
-                Admin paneli ve uygulama (kullanıcı tarafı) kılavuzları — iki sekme tek sayfada.
-              </span>
-            </span>
-            <span className="inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition group-hover:gap-2">
-              Aç
-              <span aria-hidden="true">→</span>
-            </span>
-          </button>
+        <div className="mt-4 space-y-4">
+          <DashboardLinkCard
+            href="/admin/araclar"
+            tone="blue"
+            eyebrow="Araçlar"
+            title="İnteraktif Araçlar"
+            description="Tüm planlama araçları — kategori, açıklama ve gerçek soru sayıları tek listede."
+          />
+          <DashboardLinkCard
+            href="/admin/rehber"
+            tone="green"
+            eyebrow="Rehberler"
+            title="Kullanım Kılavuzu"
+            description="Admin paneli ve uygulama (kullanıcı tarafı) kılavuzları — iki sekme tek sayfada."
+          />
         </div>
       </section>
     </div>
   );
 }
 
-interface DashboardStatCardProps {
-  label: string;
-  value: number;
-  accent: string;
+interface DashboardLinkCardProps {
   href: string;
-  router: ReturnType<typeof useRouter>;
+  tone: SiteTone;
+  eyebrow: string;
+  title: string;
+  description: string;
 }
 
-function DashboardStatCard({ label, value, accent, href, router }: DashboardStatCardProps) {
+function DashboardLinkCard({ href, tone, eyebrow, title, description }: DashboardLinkCardProps) {
   return (
-    <button
-      type="button"
-      onClick={() => router.push(href)}
-      className="group flex flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-left transition hover:-translate-y-0.5 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-    >
-      <span className="text-xs font-semibold uppercase tracking-wider text-white/45">{label}</span>
-      <span className={cn('mt-3 text-4xl font-black', accent)}>{value}</span>
-      <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-white/70 transition group-hover:gap-2">
-        Görüntüle
-        <span aria-hidden="true">→</span>
-      </span>
-    </button>
+    <Card variant="hoverable" noPadding>
+      <Link href={href} className="group flex w-full items-center justify-between gap-4 rounded-card p-6 text-left">
+        <span>
+          <span className={cn('block text-xs font-semibold uppercase tracking-wider', TONE_STYLES[tone].text)}>
+            {eyebrow}
+          </span>
+          <span className="mt-1 block text-lg font-bold text-ink">{title}</span>
+          <span className="mt-1 block text-sm text-muted">{description}</span>
+        </span>
+        <span className="inline-flex items-center gap-1 text-sm font-semibold text-brand-700 transition-all group-hover:gap-2">
+          Aç
+          <span aria-hidden="true">→</span>
+        </span>
+      </Link>
+    </Card>
   );
 }
