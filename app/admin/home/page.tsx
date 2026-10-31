@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { AdminPageHeader } from '@/components/admin/ui/AdminPageHeader';
+import { Card } from '@/components/ui/Card';
+import { Chip } from '@/components/site/Chip';
 
 const HOME_ADMIN_MODULES = [
   {
@@ -11,41 +14,36 @@ const HOME_ADMIN_MODULES = [
 
 export default function HomeAdminPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-transparent to-blue-500/10" />
-        <div className="container relative py-12">
+    <div className="bg-page text-ink">
+      <AdminPageHeader
+        title="Ana Sayfa Yönetimi"
+        description="Ana sayfadaki haberler, duyurular ve diğer içerik modüllerini buradan yönet."
+        actions={
           <Link
             href="/admin"
-            className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/75 transition hover:bg-white/10"
+            className="inline-flex min-h-[44px] items-center rounded-btn border border-line bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-ink"
           >
             ← Admin Paneli'ne dön
           </Link>
-          <div className="mt-6">
-            <h1 className="text-4xl font-bold">Ana Sayfa Yönetimi</h1>
-            <p className="mt-2 max-w-2xl text-white/72">
-              Ana sayfadaki haberler, duyurular ve diğer içerik modüllerini buradan yönet.
-            </p>
-          </div>
-        </div>
-      </section>
+        }
+      />
 
-      <section className="container py-10">
+      <section className="px-4 py-8 sm:px-6 lg:px-9">
         <div className="grid gap-6 md:grid-cols-3">
           {HOME_ADMIN_MODULES.map((module) => (
             <Link
               key={`${module.title}-${module.status}`}
               href={module.href}
-              className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:bg-white/[0.05]"
+              className="group block rounded-card"
             >
-              <div className="text-xs font-semibold uppercase tracking-widest text-white/45">
-                {module.status}
-              </div>
-              <h2 className="mt-3 text-2xl font-bold">{module.title}</h2>
-              <p className="mt-2 text-sm text-white/72">{module.description}</p>
-              <div className="mt-6 inline-flex items-center text-sm font-semibold text-google-yellow">
-                Yönet →
-              </div>
+              <Card variant="hoverable" className="h-full">
+                <Chip tone="green">{module.status}</Chip>
+                <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-ink">{module.title}</h2>
+                <p className="mt-2 text-sm text-muted">{module.description}</p>
+                <div className="mt-6 inline-flex items-center text-sm font-semibold text-brand-700">
+                  Yönet →
+                </div>
+              </Card>
             </Link>
           ))}
         </div>

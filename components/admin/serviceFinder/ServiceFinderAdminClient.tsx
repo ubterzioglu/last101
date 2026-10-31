@@ -3,6 +3,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { adminJsonFetch } from '@/components/admin/news/api';
 import type { ServiceFinderCandidateRecord, ServiceFinderJobRecord } from '@/lib/serviceFinder/admin';
+import { ADMIN_CONTROL_CLASS, AdminField } from '@/components/admin/ui/AdminField';
+import { Chip } from '@/components/site/Chip';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { cn } from '@/lib/utils/cn';
 
 interface Template {
@@ -146,24 +151,28 @@ export function ServiceFinderAdminClient() {
   return (
     <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
       <div className="space-y-5">
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-2xl font-bold">Yeni Tarama İşi</h2>
-          {message ? <div className="mt-3 rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">{message}</div> : null}
-          {error ? <div className="mt-3 rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">{error}</div> : null}
+        <Card>
+          <h2 className="text-2xl font-extrabold tracking-tight text-ink">Yeni Tarama İşi</h2>
+          {message ? (
+            <div className={cn('mt-3 rounded-btn border px-4 py-3 text-sm', TONE_STYLES.green.tint, TONE_STYLES.green.border, TONE_STYLES.green.text)}>{message}</div>
+          ) : null}
+          {error ? (
+            <div role="alert" className={cn('mt-3 rounded-btn border px-4 py-3 text-sm', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}>{error}</div>
+          ) : null}
 
           <div className="mt-4 space-y-4">
-            <Field label="Meslek Şablonu">
+            <AdminField label="Meslek Şablonu">
               <select
                 value={form.template_id}
                 onChange={(e) => applyTemplate(e.target.value)}
-                className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none focus:border-google-blue"
+                className={ADMIN_CONTROL_CLASS}
               >
-                <option value="" className="bg-black">— Şablon seç —</option>
+                <option value="">— Şablon seç —</option>
                 {templates.map((t) => (
-                  <option key={t.id} value={t.id} className="bg-black">{t.label} ({t.provider_type})</option>
+                  <option key={t.id} value={t.id}>{t.label} ({t.provider_type})</option>
                 ))}
               </select>
-            </Field>
+            </AdminField>
             <Input label="Provider Type" value={form.provider_type} onChange={(v) => setForm((s) => ({ ...s, provider_type: v }))} placeholder="doctor, lawyer..." />
             <Input label="Şehir" value={form.city} onChange={(v) => setForm((s) => ({ ...s, city: v, location_label: v }))} placeholder="Dortmund" />
             <div className="grid grid-cols-3 gap-3">
@@ -171,136 +180,124 @@ export function ServiceFinderAdminClient() {
               <Input label="Soft $" type="number" value={String(form.soft_cap_usd)} onChange={(v) => setForm((s) => ({ ...s, soft_cap_usd: Number(v) || 1 }))} />
               <Input label="Hard $" type="number" value={String(form.hard_cap_usd)} onChange={(v) => setForm((s) => ({ ...s, hard_cap_usd: Number(v) || 2 }))} />
             </div>
-            <button
-              type="button"
-              disabled={busy}
-              onClick={createJob}
-              className="w-full rounded-full bg-google-blue px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-600 disabled:opacity-50"
-            >
+            <Button type="button" disabled={busy} onClick={createJob} className="w-full">
               İş Oluştur
-            </button>
+            </Button>
           </div>
-        </div>
+        </Card>
 
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-          <h3 className="text-lg font-bold">İşler</h3>
+        <Card>
+          <h3 className="text-lg font-extrabold text-ink">İşler</h3>
           <div className="mt-3 space-y-2">
-            {jobs.length === 0 ? <p className="text-sm text-white/50">Henüz iş yok.</p> : null}
+            {jobs.length === 0 ? <p className="text-sm text-muted">Henüz iş yok.</p> : null}
             {jobs.map((job) => (
               <button
                 key={job.id}
                 onClick={() => setSelectedId(job.id)}
                 className={cn(
-                  'flex w-full flex-col gap-1 rounded-2xl border px-3 py-2.5 text-left text-sm transition',
-                  selectedId === job.id ? 'border-google-blue bg-blue-500/10' : 'border-white/10 bg-white/[0.02] hover:bg-white/[0.05]'
+                  'flex min-h-[44px] w-full flex-col gap-1 rounded-btn border px-3 py-2.5 text-left text-sm transition-colors',
+                  selectedId === job.id ? 'border-brand-700 bg-brand-50 text-brand-800' : 'border-line bg-white hover:bg-band'
                 )}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-semibold text-white">{job.title}</span>
-                  <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white/70">{job.status}</span>
+                  <span className="font-semibold text-ink">{job.title}</span>
+                  <Chip className="px-2 py-0.5 text-[10px] uppercase tracking-wide">{job.status}</Chip>
                 </div>
-                <span className="text-xs text-white/50">${Number(job.cost_total_usd).toFixed(3)} / ${Number(job.hard_cap_usd).toFixed(2)}</span>
+                <span className="text-xs text-muted">${Number(job.cost_total_usd).toFixed(3)} / ${Number(job.hard_cap_usd).toFixed(2)}</span>
               </button>
             ))}
           </div>
-        </div>
+        </Card>
       </div>
 
-      <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
+      <Card>
         {!detail ? (
-          <p className="text-sm text-white/50">Detay için soldan bir iş seçin.</p>
+          <p className="text-sm text-muted">Detay için soldan bir iş seçin.</p>
         ) : (
           <div className="space-y-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h3 className="text-xl font-bold">{detail.job.title}</h3>
-                <p className="text-sm text-white/60">
+                <h3 className="text-xl font-extrabold text-ink">{detail.job.title}</h3>
+                <p className="text-sm text-muted">
                   {detail.job.status} • {detail.job.search_requests} arama / {detail.job.extract_requests} extract / {detail.job.classify_requests} sınıf •
                   ${Number(detail.job.cost_total_usd).toFixed(3)}
                 </p>
               </div>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={() => runJob(detail.job.id)}
-                className="rounded-full bg-google-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-600 disabled:opacity-50"
-              >
+              <Button type="button" variant="success" disabled={busy} onClick={() => runJob(detail.job.id)}>
                 Taramayı Çalıştır
-              </button>
+              </Button>
             </div>
 
             <div>
-              <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-white/60">Adaylar ({detail.candidates.length})</h4>
+              <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted">Adaylar ({detail.candidates.length})</h4>
               <div className="space-y-3">
                 {detail.candidates.map((c) => (
-                  <div key={c.id} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+                  <div key={c.id} className="rounded-card border border-line bg-white p-4">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div className="min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold text-white">{c.canonical_name}</span>
-                          <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white/70">{c.provider_type}</span>
-                          <span className="rounded-full bg-blue-500/20 px-2 py-0.5 text-[10px] text-blue-200">%{Number(c.confidence_score).toFixed(0)}</span>
-                          <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] text-white/50">{c.review_status}</span>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-semibold text-ink">{c.canonical_name}</span>
+                          <Chip className="px-2 py-0.5 text-[10px]">{c.provider_type}</Chip>
+                          <Chip tone="brand" className="px-2 py-0.5 text-[10px]">%{Number(c.confidence_score).toFixed(0)}</Chip>
+                          <Chip className="px-2 py-0.5 text-[10px] text-muted">{c.review_status}</Chip>
                         </div>
-                        <div className="mt-1 text-xs text-white/55">
+                        <div className="mt-1 text-xs text-muted">
                           {c.city} {c.profession_label ? `• ${c.profession_label}` : ''} {c.website_url ? `• ${c.website_url}` : ''}
                         </div>
                         {c.contacts?.length ? (
-                          <div className="mt-1 text-xs text-white/45">
+                          <div className="mt-1 text-xs text-muted">
                             {c.contacts.map((ct) => `${ct.type}: ${ct.value}`).join(' · ')}
                           </div>
                         ) : null}
                       </div>
                       {c.review_status === 'pending' ? (
                         <div className="flex gap-2">
-                          <button onClick={() => reviewCandidate(c.id, 'approve')} disabled={busy} className="rounded-full bg-google-green px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50">Onayla</button>
-                          <button onClick={() => reviewCandidate(c.id, 'reject')} disabled={busy} className="rounded-full bg-google-red px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50">Reddet</button>
+                          <Button size="sm" variant="success" onClick={() => reviewCandidate(c.id, 'approve')} disabled={busy}>Onayla</Button>
+                          <Button size="sm" variant="danger" onClick={() => reviewCandidate(c.id, 'reject')} disabled={busy}>Reddet</Button>
                         </div>
                       ) : null}
                     </div>
                   </div>
                 ))}
-                {detail.candidates.length === 0 ? <p className="text-sm text-white/45">Henüz aday yok. Taramayı çalıştırın.</p> : null}
+                {detail.candidates.length === 0 ? <p className="text-sm text-muted">Henüz aday yok. Taramayı çalıştırın.</p> : null}
               </div>
             </div>
 
             <div>
-              <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-white/60">Olaylar</h4>
+              <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted">Olaylar</h4>
               <div className="max-h-64 space-y-1 overflow-y-auto text-xs">
                 {detail.events.map((ev) => (
-                  <div key={ev.id} className={cn('rounded-lg px-2 py-1', ev.event_level === 'warn' || ev.event_level === 'error' ? 'bg-red-500/10 text-red-200' : 'bg-white/[0.02] text-white/60')}>
-                    <span className="font-mono text-white/40">{ev.event_type}</span> — {ev.message}
+                  <div
+                    key={ev.id}
+                    className={cn(
+                      'rounded-tile px-2 py-1',
+                      ev.event_level === 'warn' || ev.event_level === 'error'
+                        ? cn(TONE_STYLES.red.tint, TONE_STYLES.red.text)
+                        : 'bg-band text-muted'
+                    )}
+                  >
+                    <span className="font-mono text-muted">{ev.event_type}</span> — {ev.message}
                   </div>
                 ))}
               </div>
             </div>
           </div>
         )}
-      </div>
+      </Card>
     </div>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-white/70">{label}</span>
-      {children}
-    </label>
   );
 }
 
 function Input({ label, value, onChange, type = 'text', placeholder }: { label: string; value: string; onChange: (v: string) => void; type?: string; placeholder?: string }) {
   return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-white/70">{label}</span>
+    <AdminField label={label}>
       <input
         type={type}
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue"
+        className={ADMIN_CONTROL_CLASS}
       />
-    </label>
+    </AdminField>
   );
 }

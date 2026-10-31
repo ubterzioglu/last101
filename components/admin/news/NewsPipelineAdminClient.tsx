@@ -2,6 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { adminJsonFetch } from '@/components/admin/news/api';
+import { NewsNotice } from '@/components/admin/news/NewsNotice';
+import { ADMIN_CONTROL_CLASS } from '@/components/admin/ui/AdminField';
+import { AdminTable, AdminTd, AdminTh, AdminThead, AdminTr } from '@/components/admin/ui/AdminTable';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { cn } from '@/lib/utils/cn';
 import type { NewsIngestRunRecord, NewsSourceRecord } from '@/types/news';
 
 export function NewsPipelineAdminClient() {
@@ -55,61 +61,70 @@ export function NewsPipelineAdminClient() {
 
   return (
     <div className="space-y-6">
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-          <div className="flex flex-wrap items-center gap-3">
-            <select value={selectedSourceId} onChange={(e) => setSelectedSourceId(e.target.value)} className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue">
-              <option value="" className="bg-black">Tüm aktif kaynaklar</option>
-              {sources.map((item) => (
-                <option key={item.id} value={item.id} className="bg-black">
-                  {item.name}
-                </option>
+      <Card>
+        <div className="flex flex-wrap items-center gap-3">
+          <select
+            value={selectedSourceId}
+            onChange={(e) => setSelectedSourceId(e.target.value)}
+            aria-label="Kaynak seç"
+            className={cn(ADMIN_CONTROL_CLASS, 'w-auto min-w-[240px]')}
+          >
+            <option value="">Tüm aktif kaynaklar</option>
+            {sources.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+          <Button type="button" onClick={() => void runPipeline()} disabled={running}>
+            {running ? 'Çalıştırılıyor...' : 'Pipeline’ı Şimdi Çalıştır'}
+          </Button>
+          <Button type="button" variant="outline" onClick={() => void loadData()}>
+            Yenile
+          </Button>
+        </div>
+
+        {message ? <NewsNotice tone="green" className="mt-4">{message}</NewsNotice> : null}
+        {error ? <NewsNotice tone="red" className="mt-4">{error}</NewsNotice> : null}
+      </Card>
+
+      <Card>
+        <h2 className="text-2xl font-extrabold tracking-tight text-ink">Son Çalışmalar</h2>
+        <div className="mt-5">
+          <AdminTable caption="Son pipeline çalışmaları">
+            <AdminThead>
+              <AdminTr className="hover:bg-transparent">
+                <AdminTh>Başlangıç</AdminTh>
+                <AdminTh>Tetikleyici</AdminTh>
+                <AdminTh>Durum</AdminTh>
+                <AdminTh>Yeni Aday</AdminTh>
+                <AdminTh>Duplicate</AdminTh>
+                <AdminTh>Hata</AdminTh>
+              </AdminTr>
+            </AdminThead>
+            <tbody>
+              {loading ? (
+                <AdminTr className="hover:bg-transparent">
+                  <AdminTd colSpan={6} className="py-10 text-center text-muted">Yükleniyor...</AdminTd>
+                </AdminTr>
+              ) : runs.length === 0 ? (
+                <AdminTr className="hover:bg-transparent">
+                  <AdminTd colSpan={6} className="py-10 text-center text-muted">Henüz ingest run yok.</AdminTd>
+                </AdminTr>
+              ) : runs.map((run) => (
+                <AdminTr key={run.id}>
+                  <AdminTd className="text-muted">{new Date(run.started_at).toLocaleString('tr-TR')}</AdminTd>
+                  <AdminTd className="text-muted">{run.trigger_type}</AdminTd>
+                  <AdminTd className="text-muted">{run.status}</AdminTd>
+                  <AdminTd className="text-muted">{run.inserted_count}</AdminTd>
+                  <AdminTd className="text-muted">{run.duplicate_count}</AdminTd>
+                  <AdminTd className="text-muted">{run.error_count}</AdminTd>
+                </AdminTr>
               ))}
-            </select>
-            <button type="button" onClick={() => void runPipeline()} disabled={running} className="rounded-full bg-google-blue px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-500 disabled:opacity-60">
-              {running ? 'Çalıştırılıyor...' : 'Pipeline’ı Şimdi Çalıştır'}
-            </button>
-            <button type="button" onClick={() => void loadData()} className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.1]">
-              Yenile
-            </button>
-          </div>
-
-          {message ? <div className="mt-4 rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">{message}</div> : null}
-          {error ? <div className="mt-4 rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">{error}</div> : null}
+            </tbody>
+          </AdminTable>
         </div>
-
-        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="text-2xl font-bold">Son Çalışmalar</h2>
-          <div className="mt-5 overflow-x-auto">
-            <table className="min-w-full border-separate border-spacing-y-3 text-sm">
-              <thead className="text-left text-white/48">
-                <tr>
-                  <th className="px-4">Başlangıç</th>
-                  <th className="px-4">Tetikleyici</th>
-                  <th className="px-4">Durum</th>
-                  <th className="px-4">Yeni Aday</th>
-                  <th className="px-4">Duplicate</th>
-                  <th className="px-4">Hata</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr><td colSpan={6} className="px-4 py-10 text-center text-white/60">Yükleniyor...</td></tr>
-                ) : runs.length === 0 ? (
-                  <tr><td colSpan={6} className="px-4 py-10 text-center text-white/60">Henüz ingest run yok.</td></tr>
-                ) : runs.map((run) => (
-                  <tr key={run.id}>
-                    <td className="rounded-l-[1.4rem] bg-white/[0.02] px-4 py-4 text-white/70">{new Date(run.started_at).toLocaleString('tr-TR')}</td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{run.trigger_type}</td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{run.status}</td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{run.inserted_count}</td>
-                    <td className="bg-white/[0.02] px-4 py-4 text-white/70">{run.duplicate_count}</td>
-                    <td className="rounded-r-[1.4rem] bg-white/[0.02] px-4 py-4 text-white/60">{run.error_count}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      </Card>
+    </div>
   );
 }

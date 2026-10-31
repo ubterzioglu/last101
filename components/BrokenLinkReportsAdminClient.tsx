@@ -1,7 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
+import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
+import { ADMIN_CONTROL_CLASS } from '@/components/admin/ui/AdminField';
+import { AdminFilterBar } from '@/components/admin/ui/AdminFilterBar';
+import { AdminPageHeader } from '@/components/admin/ui/AdminPageHeader';
+import { AdminTable, AdminTd, AdminTh, AdminThead, AdminTr } from '@/components/admin/ui/AdminTable';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils/cn';
 import { getErrorMessage, postAdminAction } from '@/lib/admin/adminResource';
 import { useAdminGate } from '@/hooks/useAdminGate';
 import { useAdminResource } from '@/hooks/useAdminResource';
@@ -81,103 +88,83 @@ export default function BrokenLinkReportsAdminClient() {
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-        <div className="text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
+      <div className="flex items-center justify-center bg-page p-4 py-20 text-ink">
+        <div className="text-sm text-muted">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold">Kırık Link Bildirimleri Admin</h1>
-            <div className="flex gap-4 mt-2 text-sm">
-              <span>Toplam: {reports.length}</span>
-            </div>
-          </div>
-          <Link
-            href="/admin"
-            className="px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-          >
+    <div className="bg-page text-ink">
+      <AdminPageHeader
+        title="Kırık Link Bildirimleri Admin"
+        description={`Toplam: ${reports.length}`}
+        actions={
+          <Button href="/admin" variant="outline">
             Admin Ana Sayfa
-          </Link>
-        </div>
+          </Button>
+        }
+      />
 
+      <div className="space-y-6 px-4 py-8 sm:px-6 lg:px-9">
         {/* Filters */}
-        <div className="flex gap-4 mb-6">
+        <AdminFilterBar>
           <input
             type="text"
             placeholder="Rapor ara..."
+            aria-label="Rapor ara"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-google-yellow"
+            className={cn(ADMIN_CONTROL_CLASS, 'min-w-[200px] flex-1')}
           />
-          <button
-            onClick={() => loadReports()}
-            disabled={listLoading}
-            className="px-6 py-3 bg-google-blue text-white rounded-lg hover:bg-google-blue/90 disabled:opacity-50 whitespace-nowrap"
-          >
+          <Button onClick={() => loadReports()} disabled={listLoading} className="whitespace-nowrap">
             {listLoading ? 'Yükleniyor...' : 'Yenile'}
-          </button>
-        </div>
+          </Button>
+        </AdminFilterBar>
 
         {listError && (
-          <div className="text-red-400 mb-4">Hata: {listError}</div>
+          <div
+            role="alert"
+            className={cn('rounded-btn border px-4 py-3 text-sm', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}
+          >
+            Hata: {listError}
+          </div>
         )}
 
         {/* Reports List */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-white/10">
-                <tr>
-                  <th className="text-left px-6 py-4 font-medium">ID</th>
-                  <th className="text-left px-6 py-4 font-medium">Agency Adı</th>
-                  <th className="text-left px-6 py-4 font-medium">Rapor</th>
-                  <th className="text-left px-6 py-4 font-medium">Tarih</th>
-                  <th className="text-left px-6 py-4 font-medium">İşlemler</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredReports.map((report) => (
-                  <tr key={report.id} className="border-t border-white/10 hover:bg-white/5">
-                    <td className="px-6 py-4 text-sm text-white/60">
-                      {report.id}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="font-medium">{report.agency_name}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-white/80 line-clamp-2">
-                        {report.report_text}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-white/60">
-                      {formatDate(report.created_at)}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => handleDelete(report.id)}
-                          className="px-3 py-1 text-sm bg-red-500/20 text-red-400 rounded hover:bg-red-500/30"
-                        >
-                          Sil
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {filteredReports.length === 0 && (
-            <div className="text-center py-12 text-white/60">
-              Henüz rapor bulunmuyor.
-            </div>
-          )}
-        </div>
+        <AdminTable caption="Kırık link bildirimleri">
+          <AdminThead>
+            <AdminTr className="hover:bg-transparent">
+              <AdminTh>ID</AdminTh>
+              <AdminTh>Agency Adı</AdminTh>
+              <AdminTh>Rapor</AdminTh>
+              <AdminTh>Tarih</AdminTh>
+              <AdminTh>İşlemler</AdminTh>
+            </AdminTr>
+          </AdminThead>
+          <tbody>
+            {filteredReports.map((report) => (
+              <AdminTr key={report.id}>
+                <AdminTd className="text-muted">{report.id}</AdminTd>
+                <AdminTd>
+                  <div className="font-medium">{report.agency_name}</div>
+                </AdminTd>
+                <AdminTd>
+                  <div className="line-clamp-2 text-sm text-ink">{report.report_text}</div>
+                </AdminTd>
+                <AdminTd className="text-muted">{formatDate(report.created_at)}</AdminTd>
+                <AdminTd>
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="danger" onClick={() => handleDelete(report.id)}>
+                      Sil
+                    </Button>
+                  </div>
+                </AdminTd>
+              </AdminTr>
+            ))}
+          </tbody>
+        </AdminTable>
+        {filteredReports.length === 0 && <AdminEmptyState title="Henüz rapor bulunmuyor." />}
       </div>
     </div>
   );

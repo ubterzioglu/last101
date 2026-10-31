@@ -1,7 +1,14 @@
 'use client';
 
-import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
+import { ADMIN_CONTROL_CLASS } from '@/components/admin/ui/AdminField';
+import { AdminPageHeader } from '@/components/admin/ui/AdminPageHeader';
+import { Chip } from '@/components/site/Chip';
+import { TONE_STYLES } from '@/components/site/tones';
+import type { SiteTone } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { useAdminGate } from '@/hooks/useAdminGate';
 import { TOOL_CATALOG, getToolHref } from '@/lib/tools/catalog';
 import { TOOL_QUESTIONNAIRE_REGISTRY } from '@/lib/tools/surveys';
@@ -36,11 +43,11 @@ interface ToolRow {
   mismatch: boolean;
 }
 
-const CATEGORY_ACCENT: Record<ToolCatalogItem['category'], string> = {
-  'Rota ve Strateji': 'border-google-blue/40 bg-google-blue/10 text-google-blue',
-  'Kariyer ve Gelir': 'border-google-green/40 bg-google-green/10 text-google-green',
-  'Hazırlık ve Yerleşim': 'border-google-yellow/40 bg-google-yellow/10 text-google-yellow',
-  'Yaşam ve Destek': 'border-google-red/40 bg-google-red/10 text-google-red',
+const CATEGORY_TONE: Record<ToolCatalogItem['category'], SiteTone> = {
+  'Rota ve Strateji': 'blue',
+  'Kariyer ve Gelir': 'green',
+  'Hazırlık ve Yerleşim': 'yellow',
+  'Yaşam ve Destek': 'red',
 };
 
 function buildRows(): ToolRow[] {
@@ -92,112 +99,85 @@ export function AraclarAdminClient() {
 
   if (gateStatus !== 'authed') {
     return (
-      <div className="min-h-screen bg-black text-white">
-        <div className="container py-20 text-center text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
+      <div className="bg-page text-ink">
+        <div className="container py-20 text-center text-sm text-muted">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen">
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-google-blue/10 via-transparent to-google-green/10" />
-        <div
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-google-blue/20 blur-3xl"
-          aria-hidden="true"
-        />
-        <div className="container relative py-12">
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-google-blue">Araçlar</div>
-          <h1 className="mt-3 text-4xl font-black md:text-5xl">İnteraktif Araçlar</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/68">
-            Sitedeki interaktif planlama araçlarının tam listesi: her aracın kategorisi, açıklaması ve{' '}
-            <strong className="text-white">gerçek soru sayısı</strong>. Soru sayısı, ankete kayıtlı asıl yapılandırmadan
-            (questionnaire registry) okunur. Katalogdaki gösterim değeri farklıysa{' '}
-            <strong className="text-white">uyuşmazlık rozeti</strong> ile işaretlenir.
-          </p>
+    <div className="bg-page text-ink">
+      <AdminPageHeader
+        eyebrow="Araçlar"
+        title="İnteraktif Araçlar"
+        description="Sitedeki interaktif planlama araçlarının tam listesi: her aracın kategorisi, açıklaması ve gerçek soru sayısı. Soru sayısı, ankete kayıtlı asıl yapılandırmadan (questionnaire registry) okunur. Katalogdaki gösterim değeri farklıysa uyuşmazlık rozeti ile işaretlenir."
+      />
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <SummaryCard label="Toplam Araç" value={totals.toolCount} accent="text-google-blue" />
-            <SummaryCard label="Ankete Kayıtlı" value={totals.registeredCount} accent="text-google-green" />
-            <SummaryCard label="Toplam Soru" value={totals.totalQuestions} accent="text-google-yellow" />
-            <SummaryCard
-              label="Katalog Uyuşmazlığı"
-              value={totals.mismatchCount}
-              accent={totals.mismatchCount > 0 ? 'text-google-red' : 'text-white/70'}
+      <section className="space-y-6 px-4 pt-8 sm:px-6 lg:px-9">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <SummaryCard label="Toplam Araç" value={totals.toolCount} tone="blue" />
+          <SummaryCard label="Ankete Kayıtlı" value={totals.registeredCount} tone="green" />
+          <SummaryCard label="Toplam Soru" value={totals.totalQuestions} tone="yellow" />
+          <SummaryCard
+            label="Katalog Uyuşmazlığı"
+            value={totals.mismatchCount}
+            tone={totals.mismatchCount > 0 ? 'red' : 'muted'}
+          />
+        </div>
+
+        <div className="max-w-md">
+          <label className="block">
+            <span className="sr-only">Araç ara</span>
+            <input
+              type="search"
+              value={filter}
+              onChange={(event) => setFilter(event.target.value)}
+              placeholder="Araç ara (ör. maaş, şehir, vize)..."
+              className={ADMIN_CONTROL_CLASS}
             />
-          </div>
-
-          <div className="mt-6 max-w-md">
-            <label className="block">
-              <span className="sr-only">Araç ara</span>
-              <input
-                type="search"
-                value={filter}
-                onChange={(event) => setFilter(event.target.value)}
-                placeholder="Araç ara (ör. maaş, şehir, vize)..."
-                className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue focus-visible:ring-2 focus-visible:ring-google-blue"
-              />
-            </label>
-          </div>
+          </label>
         </div>
       </section>
 
-      <div className="container space-y-4 py-10">
+      <div className="space-y-4 px-4 py-8 sm:px-6 lg:px-9">
         {visible.length === 0 ? (
-          <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-10 text-center text-sm text-white/55">
-            “{filter}” için araç bulunamadı.
-          </div>
+          <AdminEmptyState title={`“${filter}” için araç bulunamadı.`} />
         ) : (
           visible.map((row) => (
-            <article
-              key={row.slug}
-              className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/20 hover:bg-white/[0.05]"
-            >
+            <Card key={row.slug} variant="hoverable">
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span
-                      className={cn(
-                        'inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em]',
-                        CATEGORY_ACCENT[row.category],
-                      )}
-                    >
+                    <Chip tone={CATEGORY_TONE[row.category]} className="uppercase tracking-[0.14em]">
                       {row.category}
-                    </span>
+                    </Chip>
                     {row.mismatch ? (
-                      <span className="inline-flex items-center gap-1 rounded-full border border-google-red/40 bg-google-red/10 px-3 py-1 text-xs font-semibold text-red-200">
-                        ⚠ Katalog: {row.catalogQuestionCount} soru
-                      </span>
+                      <Chip tone="red">⚠ Katalog: {row.catalogQuestionCount} soru</Chip>
                     ) : null}
                   </div>
 
-                  <h2 className="mt-3 text-xl font-bold text-white">{row.title}</h2>
-                  <p className="mt-2 text-sm leading-7 text-white/68">{row.description}</p>
-                  <p className="mt-3 font-mono text-xs text-white/40">/{row.slug}</p>
+                  <h2 className="mt-3 text-xl font-extrabold tracking-tight text-ink">{row.title}</h2>
+                  <p className="mt-2 text-sm leading-7 text-muted">{row.description}</p>
+                  <p className="mt-3 font-mono text-xs text-muted">/{row.slug}</p>
                 </div>
 
                 <div className="flex shrink-0 flex-col items-stretch gap-3 md:w-44">
-                  <div className="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-center">
-                    <p className="text-[11px] uppercase tracking-[0.16em] text-white/45">Soru sayısı</p>
-                    <p className="mt-1 text-3xl font-black text-white">
+                  <div className="rounded-card border border-line bg-band px-4 py-3 text-center">
+                    <p className="text-[11px] uppercase tracking-[0.16em] text-muted">Soru sayısı</p>
+                    <p className="mt-1 text-3xl font-extrabold text-ink">
                       {row.realQuestionCount ?? '—'}
                     </p>
-                    <p className="mt-1 text-[11px] text-white/40">
+                    <p className="mt-1 text-[11px] text-muted">
                       {row.realQuestionCount === null ? 'Ankete kayıtlı değil' : 'Gerçek (anket)'}
                     </p>
                   </div>
-                  <Link
-                    href={getToolHref(row.slug)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-google-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                  >
+                  <Button href={getToolHref(row.slug)} external>
                     Araca git
                     <span aria-hidden="true">↗</span>
-                  </Link>
+                  </Button>
                 </div>
               </div>
-            </article>
+            </Card>
           ))
         )}
       </div>
@@ -205,11 +185,13 @@ export function AraclarAdminClient() {
   );
 }
 
-function SummaryCard({ label, value, accent }: { label: string; value: number; accent: string }) {
+function SummaryCard({ label, value, tone }: { label: string; value: number; tone: SiteTone | 'muted' }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-      <p className="text-xs font-semibold uppercase tracking-wider text-white/45">{label}</p>
-      <p className={cn('mt-2 text-3xl font-black', accent)}>{value}</p>
-    </div>
+    <Card>
+      <p className="text-xs font-semibold uppercase tracking-wider text-muted">{label}</p>
+      <p className={cn('mt-2 text-3xl font-extrabold', tone === 'muted' ? 'text-muted' : TONE_STYLES[tone].text)}>
+        {value}
+      </p>
+    </Card>
   );
 }

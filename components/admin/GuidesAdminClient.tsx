@@ -2,6 +2,9 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { ADMIN_CONTROL_CLASS } from '@/components/admin/ui/AdminField';
+import { TONE_STYLES, type SiteTone } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
 import { useAdminGate } from '@/hooks/useAdminGate';
 import { cn } from '@/lib/utils/cn';
 
@@ -17,6 +20,16 @@ import { cn } from '@/lib/utils/cn';
  * Bildirimleri) and their real actions.
  */
 
+type GuideTone = 'brand' | SiteTone;
+
+function toneSolid(tone: GuideTone): string {
+  return tone === 'brand' ? 'bg-brand-600' : TONE_STYLES[tone].solid;
+}
+
+function toneText(tone: GuideTone): string {
+  return tone === 'brand' ? 'text-brand-700' : TONE_STYLES[tone].text;
+}
+
 interface GuideEntry {
   /** Stable anchor + filter key. */
   key: string;
@@ -24,10 +37,8 @@ interface GuideEntry {
   title: string;
   /** Short one-line summary shown in the index and under the title. */
   summary: string;
-  /** Left-border accent color class. */
-  accent: string;
-  /** Eyebrow color class. */
-  eyebrow: string;
+  /** Accent colour for the left bar and the eyebrow. */
+  tone: GuideTone;
   /** Primary admin route this guide documents. */
   href?: string;
   /** Label for the primary link button. */
@@ -41,22 +52,21 @@ const GUIDES: GuideEntry[] = [
     key: 'genel',
     title: 'Genel Bakış ve Giriş',
     summary: 'Tek şifreyle giriş, sol menü, rozetler ve oturum davranışı.',
-    accent: 'border-google-blue',
-    eyebrow: 'text-google-blue',
+    tone: 'brand',
     href: '/admin',
     hrefLabel: 'Ana Panele Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
-          Admin paneline <strong className="text-white">tek bir şifreyle</strong> giriş yaparsın. Oturum açıldıktan
+        <p className="mt-3 text-sm leading-7 text-muted">
+          Admin paneline <strong className="text-ink">tek bir şifreyle</strong> giriş yaparsın. Oturum açıldıktan
           sonra alt sayfalar tekrar şifre sormaz; sol menüden istediğin bölüme geçebilirsin. Çıkış yapana kadar oturum
           tarayıcı sekmesinde saklı kalır.
         </p>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
-          <Bullet><strong className="text-white">Sol menü (sidebar)</strong>: Tüm bölümler burada listelenir; aktif bölüm vurgulanır.</Bullet>
-          <Bullet><strong className="text-white">Rozetler</strong>: Bekleyen iş olan bölümlerin yanında kırmızı sayaç görünür (ör. bekleyen hizmet önerisi, kırık link).</Bullet>
-          <Bullet><strong className="text-white">Ana sayfa kartları</strong>: Giriş ekranında bekleyen işler özetlenir; karta tıklayınca ilgili bölüme gidersin.</Bullet>
-          <Bullet><strong className="text-white">Çıkış Yap</strong>: Sol menünün altındaki buton oturumu kapatır ve seni giriş ekranına döndürür.</Bullet>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
+          <Bullet><strong className="text-ink">Sol menü (sidebar)</strong>: Tüm bölümler burada listelenir; aktif bölüm vurgulanır.</Bullet>
+          <Bullet><strong className="text-ink">Rozetler</strong>: Bekleyen iş olan bölümlerin yanında kırmızı sayaç görünür (ör. bekleyen hizmet önerisi, kırık link).</Bullet>
+          <Bullet><strong className="text-ink">Ana sayfa kartları</strong>: Giriş ekranında bekleyen işler özetlenir; karta tıklayınca ilgili bölüme gidersin.</Bullet>
+          <Bullet><strong className="text-ink">Çıkış Yap</strong>: Sol menünün altındaki buton oturumu kapatır ve seni giriş ekranına döndürür.</Bullet>
         </ul>
         <Tip>
           Bir bölümde işlem yaptıktan sonra rozet sayıları otomatik güncellenir. Sayfayı yenilemene gerek yoktur.
@@ -68,38 +78,37 @@ const GUIDES: GuideEntry[] = [
     key: 'uyeler',
     title: 'Üyeler — Yeni Kayıtlar & Profiller',
     summary: 'Araçlara giriş yapan tüm Supabase üyeleri ve devuser profilleri.',
-    accent: 'border-google-blue',
-    eyebrow: 'text-google-blue',
+    tone: 'brand',
     href: '/admin/uyeler',
     hrefLabel: 'Üyeler Bölümüne Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
-          Araçların tamamı artık <strong className="text-white">üyelik (giriş) zorunlu</strong> çalışıyor. Bu bölüm,{' '}
-          <strong className="text-white">yeni üye olan herkesi</strong> tek listede gösterir. İki sekmeye ayrılır:
+        <p className="mt-3 text-sm leading-7 text-muted">
+          Araçların tamamı artık <strong className="text-ink">üyelik (giriş) zorunlu</strong> çalışıyor. Bu bölüm,{' '}
+          <strong className="text-ink">yeni üye olan herkesi</strong> tek listede gösterir. İki sekmeye ayrılır:
         </p>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           <Mini title="👥 Üyeler (Auth)">
-            Araçlara erişmek için <strong className="text-white">Supabase hesabı</strong> oluşturan herkes (e-posta veya
+            Araçlara erişmek için <strong className="text-ink">Supabase hesabı</strong> oluşturan herkes (e-posta veya
             Google ile). Her satırda e-posta, kayıt tarihi, son giriş, sağlayıcı, e-posta doğrulama durumu ve devuser
             profili olup olmadığı görünür.
           </Mini>
           <Mini title="🧑‍💻 DevUser Profili">
-            Developer topluluğuna katılmak için <strong className="text-white">detaylı profil</strong> oluşturanlar.
-            Ad-soyad, şehir, rol, kayıt tarihi ve <strong className="text-white">onay durumu</strong> (Bekliyor / Onaylı /
+            Developer topluluğuna katılmak için <strong className="text-ink">detaylı profil</strong> oluşturanlar.
+            Ad-soyad, şehir, rol, kayıt tarihi ve <strong className="text-ink">onay durumu</strong> (Bekliyor / Onaylı /
             Reddedildi) ile listelenir.
           </Mini>
         </div>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
-          <Bullet><strong className="text-white">İstatistik kartları</strong>: Toplam üye, devuser profili, onay bekleyen devuser ve profilsiz üye sayısı.</Bullet>
-          <Bullet><strong className="text-white">Arama</strong>: E-posta, isim, şehir veya role göre anlık filtreleme.</Bullet>
-          <Bullet><strong className="text-white">Yenile</strong>: Listeyi en güncel haliyle yeniden çeker. En yeni kayıt her zaman en üstte.</Bullet>
-          <Bullet><strong className="text-white">Toplam Üye</strong> sayısı ana panel ekranındaki kartta da görünür.</Bullet>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
+          <Bullet><strong className="text-ink">İstatistik kartları</strong>: Toplam üye, devuser profili, onay bekleyen devuser ve profilsiz üye sayısı.</Bullet>
+          <Bullet><strong className="text-ink">Arama</strong>: E-posta, isim, şehir veya role göre anlık filtreleme.</Bullet>
+          <Bullet><strong className="text-ink">Yenile</strong>: Listeyi en güncel haliyle yeniden çeker. En yeni kayıt her zaman en üstte.</Bullet>
+          <Bullet><strong className="text-ink">Toplam Üye</strong> sayısı ana panel ekranındaki kartta da görünür.</Bullet>
         </ul>
         <Tip>
-          “Üyeler” sekmesindeki bir kişide <strong className="text-white">DevUser ✓ Var</strong> görmüyorsan, o kişi araca
+          “Üyeler” sekmesindeki bir kişide <strong className="text-ink">DevUser ✓ Var</strong> görmüyorsan, o kişi araca
           giriş yapmış ama henüz developer profili oluşturmamış demektir. DevUser onaylarını{' '}
-          <Link href="/admin/software-hub" className="font-semibold text-google-blue hover:underline">Software Hub → Yeni Üye Onayla</Link>{' '}
+          <Link href="/admin/software-hub" className="font-semibold text-brand-700 hover:underline">Software Hub → Yeni Üye Onayla</Link>{' '}
           bölümünden yaparsın.
         </Tip>
       </>
@@ -109,27 +118,26 @@ const GUIDES: GuideEntry[] = [
     key: 'software-hub',
     title: 'Software Hub — Topluluk & Turnuva',
     summary: '11 alt bölüm: üye onayı, turnuvalar, tartışma, news, founder başvuruları.',
-    accent: 'border-google-blue',
-    eyebrow: 'text-google-blue',
+    tone: 'brand',
     href: '/admin/software-hub',
     hrefLabel: 'Software Hub’a Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
+        <p className="mt-3 text-sm leading-7 text-muted">
           Developer topluluğunun ve etkinliklerinin merkezi. Ara menüden bir alt bölüm seçersin; her bölüm kendi
-          listesini, sekmelerini (<code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">Tümü</code> /{' '}
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">Onay Bekleyen</code> /{' '}
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">Onaylanan</code>) ve aksiyonlarını taşır. Sol
+          listesini, sekmelerini (<code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">Tümü</code> /{' '}
+          <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">Onay Bekleyen</code> /{' '}
+          <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">Onaylanan</code>) ve aksiyonlarını taşır. Sol
           menüde de her alt bölüm kısayol olarak görünür.
         </p>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           <Mini title="👤 Yeni Üye Onayla (devuser)">
-            Topluluğa katılan yeni üyeleri incele. <strong className="text-white">Onayla</strong> /{' '}
-            <strong className="text-white">Reddet</strong> ile durumu belirle. Onaysız üyeler kısıtlı sayfaları göremez.
+            Topluluğa katılan yeni üyeleri incele. <strong className="text-ink">Onayla</strong> /{' '}
+            <strong className="text-ink">Reddet</strong> ile durumu belirle. Onaysız üyeler kısıtlı sayfaları göremez.
           </Mini>
           <Mini title="🎲 Tavla Katılımcısı">
-            Tavla turnuvası kayıtlarını onayla/reddet ve <strong className="text-white">playoff tablosunu</strong>{' '}
-            (Son 16 → Final) düzenle: slota katılımcı ata, <strong className="text-white">kazananı işaretle</strong> veya
+            Tavla turnuvası kayıtlarını onayla/reddet ve <strong className="text-ink">playoff tablosunu</strong>{' '}
+            (Son 16 → Final) düzenle: slota katılımcı ata, <strong className="text-ink">kazananı işaretle</strong> veya
             slotu temizle.
           </Mini>
           <Mini title="💻 Vibecoding (hackathon)">
@@ -145,8 +153,8 @@ const GUIDES: GuideEntry[] = [
             Klavye hız yarışması katılımcılarını onayla ve playoff tablosunu (kazanan/temizle) düzenle.
           </Mini>
           <Mini title="💬 Discussion">
-            Topluluk tartışma konularını modere et: <strong className="text-white">Onayla</strong>,{' '}
-            <strong className="text-white">Reddet</strong> veya <strong className="text-white">Sil</strong> (silme onay ister).
+            Topluluk tartışma konularını modere et: <strong className="text-ink">Onayla</strong>,{' '}
+            <strong className="text-ink">Reddet</strong> veya <strong className="text-ink">Sil</strong> (silme onay ister).
           </Mini>
           <Mini title="📰 News Yönetimi">
             Topluluk içi haber/duyuru kayıtlarını listele, ara ve yayın durumunu (taslak/yayında) yönet.
@@ -158,12 +166,12 @@ const GUIDES: GuideEntry[] = [
             Founder etkinlik anketi oylarını ve sonuçlarını görüntüle.
           </Mini>
           <Mini title="📅 Toplantı Anketi (meeting)">
-            Toplantı katılım kayıtlarını tarih bazında gör. <strong className="text-white">Sıfırla</strong> tüm kayıtları
+            Toplantı katılım kayıtlarını tarih bazında gör. <strong className="text-ink">Sıfırla</strong> tüm kayıtları
             kalıcı siler — geri alınamaz, çift onay ister.
           </Mini>
         </div>
         <Warning>
-          <strong className="text-white">Toplantı Anketi → Sıfırla</strong> ve <strong className="text-white">Discussion → Sil</strong>{' '}
+          <strong className="text-ink">Toplantı Anketi → Sıfırla</strong> ve <strong className="text-ink">Discussion → Sil</strong>{' '}
           gibi yıkıcı işlemler geri alınamaz. Onay penceresini dikkatle oku.
         </Warning>
       </>
@@ -173,48 +181,47 @@ const GUIDES: GuideEntry[] = [
     key: 'haberler',
     title: 'Haber Yönetimi — Pipeline & Kuyruk',
     summary: 'RSS pipeline’dan gelen haber adaylarını incele, Türkçeleştir ve yayınla.',
-    accent: 'border-google-yellow',
-    eyebrow: 'text-google-yellow',
+    tone: 'yellow',
     href: '/admin/haberler?tab=kuyruk',
     hrefLabel: 'Haber Yönetimine Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
+        <p className="mt-3 text-sm leading-7 text-muted">
           Public haber sayfasının editoryal merkezi. Beş sekme tek operatörlü akışla çalışır. Hiçbir haber otomatik
           yayınlanmaz — son karar her zaman senindir.
         </p>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
           <Bullet>
-            <strong className="text-white">Kuyruk</strong>{' '}
-            (<Link href="/admin/haberler?tab=kuyruk" className="font-semibold text-google-blue hover:underline">aç</Link>):
-            İnceleme bekleyen adaylar. <strong className="text-white">Düzelt</strong> ile editöre gir,{' '}
-            <strong className="text-white">Yayınla</strong> / <strong className="text-white">Hero Yap</strong> /{' '}
-            <strong className="text-white">Reddet</strong> / arşivle.
+            <strong className="text-ink">Kuyruk</strong>{' '}
+            (<Link href="/admin/haberler?tab=kuyruk" className="font-semibold text-brand-700 hover:underline">aç</Link>):
+            İnceleme bekleyen adaylar. <strong className="text-ink">Düzelt</strong> ile editöre gir,{' '}
+            <strong className="text-ink">Yayınla</strong> / <strong className="text-ink">Hero Yap</strong> /{' '}
+            <strong className="text-ink">Reddet</strong> / arşivle.
           </Bullet>
           <Bullet>
-            <strong className="text-white">Yeni Haber</strong>{' '}
-            (<Link href="/admin/haberler?tab=editor" className="font-semibold text-google-blue hover:underline">aç</Link>):
+            <strong className="text-ink">Yeni Haber</strong>{' '}
+            (<Link href="/admin/haberler?tab=editor" className="font-semibold text-brand-700 hover:underline">aç</Link>):
             Sıfırdan elle haber oluştur (başlık, özet, metin, görsel, kategori).
           </Bullet>
           <Bullet>
-            <strong className="text-white">Kaynaklar</strong>{' '}
-            (<Link href="/admin/haberler?tab=kaynaklar" className="font-semibold text-google-blue hover:underline">aç</Link>):
-            RSS/MRSS kaynaklarını ekle, <strong className="text-white">Test Et</strong>, <strong className="text-white">Şimdi Çek</strong>, öncelik/limit ayarla.
+            <strong className="text-ink">Kaynaklar</strong>{' '}
+            (<Link href="/admin/haberler?tab=kaynaklar" className="font-semibold text-brand-700 hover:underline">aç</Link>):
+            RSS/MRSS kaynaklarını ekle, <strong className="text-ink">Test Et</strong>, <strong className="text-ink">Şimdi Çek</strong>, öncelik/limit ayarla.
           </Bullet>
           <Bullet>
-            <strong className="text-white">Pipeline</strong>{' '}
-            (<Link href="/admin/haberler?tab=pipeline" className="font-semibold text-google-blue hover:underline">aç</Link>):
+            <strong className="text-ink">Pipeline</strong>{' '}
+            (<Link href="/admin/haberler?tab=pipeline" className="font-semibold text-brand-700 hover:underline">aç</Link>):
             “Pipeline’ı Şimdi Çalıştır” ile elle tetikle; son çalışmaların durumunu (cron/manual, yeni aday, duplicate, hata) gör.
           </Bullet>
           <Bullet>
-            <strong className="text-white">Ayarlar</strong>{' '}
-            (<Link href="/admin/haberler?tab=ayarlar" className="font-semibold text-google-blue hover:underline">aç</Link>):
+            <strong className="text-ink">Ayarlar</strong>{' '}
+            (<Link href="/admin/haberler?tab=ayarlar" className="font-semibold text-brand-700 hover:underline">aç</Link>):
             Pipeline aç/kapat, AI (Gemini) taslak ve günlük limit, kaynak başına max aday, retention günleri, hariç/öncelikli kelimeler.
           </Bullet>
         </ul>
         <Tip>
           Akışın tam adım adım kılavuzu için{' '}
-          <Link href="/admin/haberler-rehberi" className="font-semibold text-google-blue hover:underline">
+          <Link href="/admin/haberler-rehberi" className="font-semibold text-brand-700 hover:underline">
             Haber RSS Rehberi
           </Link>{' '}
           bölümüne bak.
@@ -226,12 +233,11 @@ const GUIDES: GuideEntry[] = [
     key: 'haberler-rehberi',
     title: 'Haber RSS Rehberi',
     summary: 'Otomatik haber pipeline’ının ayrıntılı, adım adım operatör kılavuzu.',
-    accent: 'border-google-green',
-    eyebrow: 'text-google-green',
+    tone: 'green',
     href: '/admin/haberler-rehberi',
     hrefLabel: 'RSS Rehberine Git',
     body: (
-      <p className="mt-3 text-sm leading-7 text-white/72">
+      <p className="mt-3 text-sm leading-7 text-muted">
         Haber pipeline’ının uçtan uca nasıl çalıştığını anlatan ayrı bir rehber sayfasıdır: RSS kaynağı ekleme,
         pipeline’ı çalıştırma (cron + manuel), kuyruğu inceleyip yayınlama ve ayarlarla davranışı yönetme. Sorun giderme
         bölümü de içerir. Haber yönetimini ilk kez kullanıyorsan önce burayı oku.
@@ -242,33 +248,32 @@ const GUIDES: GuideEntry[] = [
     key: 'yazi-dizisi',
     title: 'Arkadaşın Köşesi — Köşe Yazıları',
     summary: 'Köşe yazısı / yazı dizisi içeriklerini oluştur ve yönet.',
-    accent: 'border-google-blue',
-    eyebrow: 'text-google-blue',
+    tone: 'brand',
     href: '/admin/yazi-dizisi',
     hrefLabel: 'Arkadaşın Köşesine Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
+        <p className="mt-3 text-sm leading-7 text-muted">
           Çok yazarlı köşe yazısı sistemini buradan yönetirsin. Her yazarın kendi public sayfası (
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/&lt;yazar&gt;</code>), kendi{' '}
-          <strong className="text-white">ayrı giriş ekranı</strong> (
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/authors/&lt;yazar&gt;</code>) ve kendi{' '}
-          <strong className="text-white">yönetim paneli</strong> (
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/authors/&lt;yazar&gt;/panel</code>) vardır.
+          <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">/&lt;yazar&gt;</code>), kendi{' '}
+          <strong className="text-ink">ayrı giriş ekranı</strong> (
+          <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">/authors/&lt;yazar&gt;</code>) ve kendi{' '}
+          <strong className="text-ink">yönetim paneli</strong> (
+          <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">/authors/&lt;yazar&gt;/panel</code>) vardır.
         </p>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
-          <Bullet><strong className="text-white">Yazarlar</strong> sekmesi: public link, giriş linki, düzenle, aktif/pasif toggle ve <strong className="text-white">şifre sıfırlama</strong>.</Bullet>
-          <Bullet><strong className="text-white">Yeni Yazar</strong>: Ad, slug (otomatik üretilir), profil görseli, kısa bio, profil metni, sıralama ve <strong className="text-white">yazar şifresi</strong> (min 6 karakter) gir.</Bullet>
-          <Bullet><strong className="text-white">Yazılar</strong> sekmesi: tüm yazarların yazıları; tek tıkla taslak ↔ yayında.</Bullet>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
+          <Bullet><strong className="text-ink">Yazarlar</strong> sekmesi: public link, giriş linki, düzenle, aktif/pasif toggle ve <strong className="text-ink">şifre sıfırlama</strong>.</Bullet>
+          <Bullet><strong className="text-ink">Yeni Yazar</strong>: Ad, slug (otomatik üretilir), profil görseli, kısa bio, profil metni, sıralama ve <strong className="text-ink">yazar şifresi</strong> (min 6 karakter) gir.</Bullet>
+          <Bullet><strong className="text-ink">Yazılar</strong> sekmesi: tüm yazarların yazıları; tek tıkla taslak ↔ yayında.</Bullet>
         </ul>
         <Tip>
-          Yeni bir yazar eklediğinde ona <strong className="text-white">giriş linkini</strong> (
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/authors/&lt;yazar&gt;</code>) ve belirlediğin{' '}
-          <strong className="text-white">şifreyi</strong> ilet. Yazar kendi panelinden yazı + kapak görseli yükleyip
+          Yeni bir yazar eklediğinde ona <strong className="text-ink">giriş linkini</strong> (
+          <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">/authors/&lt;yazar&gt;</code>) ve belirlediğin{' '}
+          <strong className="text-ink">şifreyi</strong> ilet. Yazar kendi panelinden yazı + kapak görseli yükleyip
           yayınlar; içerik onayı için sana ihtiyaç duymaz ama tüm yazıları bu admin bölümünden görebilir/yönetebilirsin.
         </Tip>
         <Warning>
-          Yazar şifresini admin <strong className="text-white">göremez</strong>, yalnızca sıfırlayabilir. Yazar şifresini
+          Yazar şifresini admin <strong className="text-ink">göremez</strong>, yalnızca sıfırlayabilir. Yazar şifresini
           unutursa “şifre sıfırlama” ile yeni bir şifre belirleyip ona iletmen gerekir.
         </Warning>
       </>
@@ -278,20 +283,19 @@ const GUIDES: GuideEntry[] = [
     key: 'hizmet-rehberi',
     title: 'Hizmet Rehberi — Öneri Onayları',
     summary: 'Kullanıcıların önerdiği hizmet sağlayıcılarını onayla, reddet veya sil.',
-    accent: 'border-google-red',
-    eyebrow: 'text-google-red',
+    tone: 'red',
     href: '/admin/hizmet-rehberi',
     hrefLabel: 'Hizmet Rehberine Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
+        <p className="mt-3 text-sm leading-7 text-muted">
           Kullanıcılar hizmet rehberine yeni sağlayıcı önerebilir. Bekleyen öneriler bu bölümde toplanır ve sol menüde
           rozetle gösterilir.
         </p>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
-          <Bullet><strong className="text-white">Onayla</strong>: Öneriyi public rehbere ekler.</Bullet>
-          <Bullet><strong className="text-white">Reddet</strong>: Öneriyi listeden çıkarır (yayınlanmaz).</Bullet>
-          <Bullet><strong className="text-white">Sil</strong>: Kaydı tamamen kaldırır.</Bullet>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
+          <Bullet><strong className="text-ink">Onayla</strong>: Öneriyi public rehbere ekler.</Bullet>
+          <Bullet><strong className="text-ink">Reddet</strong>: Öneriyi listeden çıkarır (yayınlanmaz).</Bullet>
+          <Bullet><strong className="text-ink">Sil</strong>: Kaydı tamamen kaldırır.</Bullet>
         </ul>
         <Tip>Bekleyen öneri sayısı sol menüdeki rozette ve ana sayfa kartında görünür.</Tip>
       </>
@@ -301,19 +305,18 @@ const GUIDES: GuideEntry[] = [
     key: 'recruitment-agencies',
     title: 'Recruitment Agencies — Ajans Listesi',
     summary: 'İşe alım ajansı kayıtlarını ekle, düzenle ve sil.',
-    accent: 'border-google-green',
-    eyebrow: 'text-google-green',
+    tone: 'green',
     href: '/admin/recruitment-agencies',
     hrefLabel: 'Recruitment Agencies’e Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
+        <p className="mt-3 text-sm leading-7 text-muted">
           Sitede listelenen işe alım / recruitment ajanslarını yönettiğin bölüm. Liste tamamen elle yönetilir.
         </p>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
-          <Bullet><strong className="text-white">Yeni / Ekle</strong>: Yeni bir ajans kaydı oluştur.</Bullet>
-          <Bullet><strong className="text-white">Düzenle</strong>: Mevcut bir ajansın bilgilerini güncelle.</Bullet>
-          <Bullet><strong className="text-white">Sil</strong>: Ajans kaydını listeden kaldır.</Bullet>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
+          <Bullet><strong className="text-ink">Yeni / Ekle</strong>: Yeni bir ajans kaydı oluştur.</Bullet>
+          <Bullet><strong className="text-ink">Düzenle</strong>: Mevcut bir ajansın bilgilerini güncelle.</Bullet>
+          <Bullet><strong className="text-ink">Sil</strong>: Ajans kaydını listeden kaldır.</Bullet>
         </ul>
       </>
     ),
@@ -322,20 +325,19 @@ const GUIDES: GuideEntry[] = [
     key: 'service-finder',
     title: 'Service Finder — Uzman Tarama',
     summary: 'Otomatik uzman tarama adaylarını çalıştır, incele ve onayla/reddet.',
-    accent: 'border-google-blue',
-    eyebrow: 'text-google-blue',
+    tone: 'brand',
     href: '/admin/service-finder',
     hrefLabel: 'Service Finder’a Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
+        <p className="mt-3 text-sm leading-7 text-muted">
           Uzman / hizmet sağlayıcı adaylarını otomatik tarayan modül. Tarama çalıştırılır, bulunan adaylar listelenir ve
           her aday için karar verilir.
         </p>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
-          <Bullet><strong className="text-white">Tara / Çalıştır</strong>: Yeni aday taraması başlatır.</Bullet>
-          <Bullet><strong className="text-white">Onayla</strong>: Adayı geçerli bir sonuç olarak kabul eder.</Bullet>
-          <Bullet><strong className="text-white">Reddet</strong>: Adayı eler.</Bullet>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
+          <Bullet><strong className="text-ink">Tara / Çalıştır</strong>: Yeni aday taraması başlatır.</Bullet>
+          <Bullet><strong className="text-ink">Onayla</strong>: Adayı geçerli bir sonuç olarak kabul eder.</Bullet>
+          <Bullet><strong className="text-ink">Reddet</strong>: Adayı eler.</Bullet>
         </ul>
         <Warning>
           Tarama dış kaynaklara istek atar; çalıştırmadan önce sonuçların onayını senin vereceğini unutma — hiçbir aday
@@ -348,19 +350,18 @@ const GUIDES: GuideEntry[] = [
     key: 'broken-link-reports',
     title: 'Kırık Link Bildirimleri',
     summary: 'Kullanıcıların bildirdiği kırık bağlantı raporlarını incele ve temizle.',
-    accent: 'border-google-orange',
-    eyebrow: 'text-google-orange',
+    tone: 'orange',
     href: '/admin/broken-link-reports',
     hrefLabel: 'Kırık Link Bildirimlerine Git',
     body: (
       <>
-        <p className="mt-3 text-sm leading-7 text-white/72">
+        <p className="mt-3 text-sm leading-7 text-muted">
           Kullanıcılar bir bağlantının çalışmadığını bildirebilir. Bu raporlar burada toplanır; ajans adı, rapor metni ve
           tarih ile listelenir. Bekleyen rapor sayısı sol menüde rozetle gösterilir.
         </p>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-white/75">
-          <Bullet><strong className="text-white">İncele</strong>: Bildirilen linki kontrol et ve ilgili kaydı düzelt.</Bullet>
-          <Bullet><strong className="text-white">Sil</strong>: Çözülen veya geçersiz raporu listeden kaldır.</Bullet>
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
+          <Bullet><strong className="text-ink">İncele</strong>: Bildirilen linki kontrol et ve ilgili kaydı düzelt.</Bullet>
+          <Bullet><strong className="text-ink">Sil</strong>: Çözülen veya geçersiz raporu listeden kaldır.</Bullet>
         </ul>
       </>
     ),
@@ -373,8 +374,8 @@ export function GuidesAdminClient() {
 
   if (gateStatus !== 'authed') {
     return (
-      <div className="min-h-screen bg-black text-white">
-        <div className="container py-20 text-center text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
+      <div className="min-h-screen bg-page text-ink">
+        <div className="container py-20 text-center text-sm text-muted">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }
@@ -390,27 +391,24 @@ export function GuidesAdminClient() {
     : GUIDES;
 
   return (
-    <div className="min-h-screen">
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-google-blue/10 via-transparent to-google-green/10" />
-        <div
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-google-blue/20 blur-3xl"
-          aria-hidden="true"
-        />
-        <div className="container relative py-12">
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-google-blue">Rehber</div>
-          <h1 className="mt-3 text-4xl font-black md:text-5xl">Kullanım Kılavuzu</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/68">
-            Bu sayfa, admin panelindeki <strong className="text-white">tüm bölümleri</strong> tek tek anlatır: her bölümün
+    <div className="min-h-screen bg-page text-ink">
+      <section className="border-b border-line bg-page">
+        <div className="container py-12">
+          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">Rehber</div>
+          <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-ink md:text-5xl">Kullanım Kılavuzu</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-muted">
+            Bu sayfa, admin panelindeki <strong className="text-ink">tüm bölümleri</strong> tek tek anlatır: her bölümün
             ne işe yaradığı, hangi butonların bulunduğu ve verinin nasıl aktığı. Aşağıdaki dizinden bir bölüme atlayabilir
             ya da arama kutusuyla filtreleyebilirsin.
           </p>
 
-          <div className="mt-6 inline-flex rounded-xl border border-white/10 bg-black/40 p-1">
-            <span className="rounded-lg bg-google-blue px-4 py-2 text-sm font-semibold text-white">Admin Paneli</span>
+          <div className="mt-6 inline-flex rounded-btn border border-line bg-band p-1">
+            <span className="inline-flex min-h-[44px] items-center rounded-tile bg-brand-700 px-4 text-sm font-semibold text-white">
+              Admin Paneli
+            </span>
             <Link
               href="/admin/uygulama-rehberi"
-              className="rounded-lg px-4 py-2 text-sm font-semibold text-white/60 transition hover:text-white"
+              className="inline-flex min-h-[44px] items-center rounded-tile px-4 text-sm font-semibold text-muted transition-colors hover:text-ink"
             >
               Uygulama
             </Link>
@@ -424,7 +422,7 @@ export function GuidesAdminClient() {
                 value={filter}
                 onChange={(event) => setFilter(event.target.value)}
                 placeholder="Bölüm ara (ör. haber, tavla, link)..."
-                className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition focus:border-google-blue focus-visible:ring-2 focus-visible:ring-google-blue"
+                className={ADMIN_CONTROL_CLASS}
               />
             </label>
           </div>
@@ -433,20 +431,17 @@ export function GuidesAdminClient() {
 
       <div className="container space-y-6 py-10">
         {/* Hızlı dizin */}
-        <nav
-          aria-label="Rehber dizini"
-          className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-6"
-        >
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">İçindekiler</div>
+        <nav aria-label="Rehber dizini" className="rounded-card border border-line bg-band p-6">
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">İçindekiler</div>
           <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {GUIDES.map((g) => (
               <li key={g.key}>
                 <a
                   href={`#${g.key}`}
-                  className="block rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm transition hover:border-google-blue/40 hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-google-blue"
+                  className="block rounded-btn border border-line bg-white px-4 py-3 text-sm transition-colors hover:border-brand-700"
                 >
-                  <span className="block font-semibold text-white">{g.title}</span>
-                  <span className="mt-1 block text-[12px] leading-5 text-white/50">{g.summary}</span>
+                  <span className="block font-semibold text-ink">{g.title}</span>
+                  <span className="mt-1 block text-[12px] leading-5 text-muted">{g.summary}</span>
                 </a>
               </li>
             ))}
@@ -454,27 +449,24 @@ export function GuidesAdminClient() {
         </nav>
 
         {visible.length === 0 ? (
-          <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-10 text-center text-sm text-white/55">
+          <div className="rounded-card border border-line bg-white p-10 text-center text-sm text-muted">
             “{filter}” için bölüm bulunamadı.
           </div>
         ) : (
           visible.map((g) => (
-            <Card key={g.key} id={g.key} accent={g.accent}>
-              <Eyebrow color={g.eyebrow}>{g.summary}</Eyebrow>
-              <h2 className="mt-2 text-2xl font-bold">{g.title}</h2>
+            <GuideCard key={g.key} id={g.key} tone={g.tone}>
+              <Eyebrow tone={g.tone}>{g.summary}</Eyebrow>
+              <h2 className="mt-2 text-2xl font-bold text-ink">{g.title}</h2>
               {g.body}
               {g.href ? (
                 <div className="mt-5">
-                  <Link
-                    href={g.href}
-                    className="inline-flex items-center gap-2 rounded-full bg-google-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
-                  >
+                  <Button href={g.href} variant="primary" size="sm">
                     {g.hrefLabel ?? 'Bölüme Git'}
                     <span aria-hidden="true">→</span>
-                  </Link>
+                  </Button>
                 </div>
               ) : null}
-            </Card>
+            </GuideCard>
           ))
         )}
       </div>
@@ -482,25 +474,26 @@ export function GuidesAdminClient() {
   );
 }
 
-function Card({ children, accent, id }: { children: React.ReactNode; accent: string; id?: string }) {
+function GuideCard({ children, tone, id }: { children: React.ReactNode; tone: GuideTone; id?: string }) {
   return (
     <section
       id={id}
-      className={`scroll-mt-24 rounded-[1.6rem] border-l-4 ${accent} border-y border-r border-white/10 bg-white/[0.03] p-6`}
+      className="relative scroll-mt-24 overflow-hidden rounded-card border border-line bg-white p-6 pl-7"
     >
+      <span aria-hidden="true" className={cn('absolute inset-y-0 left-0 w-1', toneSolid(tone))} />
       {children}
     </section>
   );
 }
 
-function Eyebrow({ children, color }: { children: React.ReactNode; color: string }) {
-  return <div className={cn('text-xs font-semibold uppercase tracking-[0.18em]', color)}>{children}</div>;
+function Eyebrow({ children, tone }: { children: React.ReactNode; tone: GuideTone }) {
+  return <div className={cn('text-xs font-semibold uppercase tracking-[0.18em]', toneText(tone))}>{children}</div>;
 }
 
 function Bullet({ children }: { children: React.ReactNode }) {
   return (
     <li className="flex gap-3">
-      <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-white/40" aria-hidden="true" />
+      <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-muted" aria-hidden="true" />
       <span>{children}</span>
     </li>
   );
@@ -508,17 +501,23 @@ function Bullet({ children }: { children: React.ReactNode }) {
 
 function Mini({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-      <div className="text-sm font-semibold text-white">{title}</div>
-      <p className="mt-2 text-sm leading-7 text-white/72">{children}</p>
+    <div className="rounded-btn border border-line bg-band p-4">
+      <div className="text-sm font-semibold text-ink">{title}</div>
+      <p className="mt-2 text-sm leading-7 text-muted">{children}</p>
     </div>
   );
 }
 
 function Tip({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-4 rounded-2xl border border-google-blue/25 bg-google-blue/10 px-4 py-3 text-sm leading-7 text-white/80">
-      <span className="font-semibold text-google-blue">İpucu: </span>
+    <div
+      className={cn(
+        'mt-4 rounded-btn border px-4 py-3 text-sm leading-7 text-ink',
+        TONE_STYLES.blue.border,
+        TONE_STYLES.blue.tint,
+      )}
+    >
+      <span className="font-semibold text-brand-700">İpucu: </span>
       {children}
     </div>
   );
@@ -526,8 +525,14 @@ function Tip({ children }: { children: React.ReactNode }) {
 
 function Warning({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-4 rounded-2xl border border-google-red/25 bg-google-red/10 px-4 py-3 text-sm leading-7 text-white/80">
-      <span className="font-semibold text-google-red">Önemli: </span>
+    <div
+      className={cn(
+        'mt-4 rounded-btn border px-4 py-3 text-sm leading-7 text-ink',
+        TONE_STYLES.red.border,
+        TONE_STYLES.red.tint,
+      )}
+    >
+      <span className={cn('font-semibold', TONE_STYLES.red.text)}>Önemli: </span>
       {children}
     </div>
   );

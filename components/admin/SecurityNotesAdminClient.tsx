@@ -1,10 +1,19 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
 import { getAdminHeaders } from '@/lib/admin/clientAuth';
 import { useAdminGate } from '@/hooks/useAdminGate';
 import { cn } from '@/lib/utils/cn';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Chip } from '@/components/site/Chip';
+import type { ChipTone } from '@/components/site/Chip';
+import { Button } from '@/components/ui/Button';
+import { AdminPageHeader } from '@/components/admin/ui/AdminPageHeader';
+import { AdminFilterBar } from '@/components/admin/ui/AdminFilterBar';
+import { ADMIN_CONTROL_CLASS } from '@/components/admin/ui/AdminField';
+import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
+import { AdminStatusBadge } from '@/components/admin/ui/AdminStatusBadge';
+import type { AdminStatusTone } from '@/components/admin/ui/AdminStatusBadge';
 
 interface SecurityNote {
   id: string;
@@ -47,17 +56,17 @@ const SOURCE_LABEL: Record<string, string> = {
   manual: 'Manuel', agent: 'Agent', system: 'Sistem',
 };
 
-const SEVERITY_STYLE: Record<string, string> = {
-  low: 'bg-white/10 text-white/70',
-  medium: 'bg-google-blue/20 text-blue-200',
-  high: 'bg-google-orange/20 text-orange-200',
-  critical: 'bg-google-red/20 text-red-200',
+const SEVERITY_TONE: Record<string, ChipTone> = {
+  low: 'neutral',
+  medium: 'brand',
+  high: 'orange',
+  critical: 'red',
 };
-const STATUS_STYLE: Record<string, string> = {
-  open: 'bg-google-red/20 text-red-200',
-  in_progress: 'bg-google-yellow/20 text-yellow-200',
-  resolved: 'bg-google-green/20 text-green-200',
-  wontfix: 'bg-white/10 text-white/50',
+const STATUS_TONE: Record<string, AdminStatusTone> = {
+  open: 'red',
+  in_progress: 'yellow',
+  resolved: 'green',
+  wontfix: 'neutral',
 };
 
 function formatDate(value: string) {
@@ -170,123 +179,133 @@ export default function SecurityNotesAdminClient() {
 
   if (!authed) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-black p-4 text-white">
-        <div className="text-sm text-white/60">Admin oturumu doğrulanıyor...</div>
+      <div className="flex min-h-screen items-center justify-center bg-page p-4 text-ink">
+        <div className="text-sm text-muted">Admin oturumu doğrulanıyor...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold">Güvenlik Notları</h1>
-            <div className="mt-2 flex gap-4 text-sm text-white/70">
-              <span>Toplam: {stats.total}</span>
-              <span className="text-red-300">Açık: {stats.open}</span>
-              <span className="text-red-400">Kritik: {stats.critical}</span>
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setShowForm((v) => !v)}
-              className="rounded-lg bg-google-blue px-4 py-2 font-semibold transition hover:bg-google-blue/90"
-            >
+    <div className="min-h-screen bg-page text-ink">
+      <AdminPageHeader
+        title="Güvenlik Notları"
+        actions={
+          <>
+            <Button type="button" onClick={() => setShowForm((v) => !v)}>
               {showForm ? 'Formu Kapat' : '+ Yeni Not'}
-            </button>
-            <Link href="/admin" className="rounded-lg bg-white/10 px-4 py-2 transition hover:bg-white/20">
+            </Button>
+            <Button href="/admin" variant="outline">
               Admin Ana Sayfa
-            </Link>
-          </div>
+            </Button>
+          </>
+        }
+      />
+
+      <div className="px-4 py-8 sm:px-6 lg:px-9">
+        <div className="mb-6 flex flex-wrap gap-4 text-sm text-muted">
+          <span>Toplam: {stats.total}</span>
+          <span className={cn('font-semibold', TONE_STYLES.red.text)}>Açık: {stats.open}</span>
+          <span className={cn('font-semibold', TONE_STYLES.red.text)}>Kritik: {stats.critical}</span>
         </div>
 
         {showForm && (
-          <form onSubmit={handleCreate} className="mb-6 space-y-3 rounded-xl border border-white/10 bg-white/5 p-5">
+          <form onSubmit={handleCreate} className="mb-6 space-y-3 rounded-card border border-line bg-white p-5">
             <input
               type="text"
               placeholder="Başlık"
+              aria-label="Başlık"
               value={form.title}
               onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-              className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-white placeholder-white/50 focus:border-google-blue focus:outline-none"
+              className={ADMIN_CONTROL_CLASS}
               required
             />
             <textarea
               placeholder="Açıklama"
+              aria-label="Açıklama"
               value={form.description}
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
               rows={3}
-              className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-white placeholder-white/50 focus:border-google-blue focus:outline-none"
+              className={cn(ADMIN_CONTROL_CLASS, 'py-2.5')}
               required
             />
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <select
+                aria-label="Önem"
                 value={form.severity}
                 onChange={(e) => setForm((f) => ({ ...f, severity: e.target.value }))}
-                className="rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white focus:border-google-blue focus:outline-none"
+                className={ADMIN_CONTROL_CLASS}
               >
-                {SEVERITIES.map((s) => <option key={s} value={s} className="bg-black">{SEVERITY_LABEL[s]}</option>)}
+                {SEVERITIES.map((s) => <option key={s} value={s}>{SEVERITY_LABEL[s]}</option>)}
               </select>
               <select
+                aria-label="Kategori"
                 value={form.category}
                 onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                className="rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white focus:border-google-blue focus:outline-none"
+                className={ADMIN_CONTROL_CLASS}
               >
-                {CATEGORIES.map((c) => <option key={c} value={c} className="bg-black">{CATEGORY_LABEL[c]}</option>)}
+                {CATEGORIES.map((c) => <option key={c} value={c}>{CATEGORY_LABEL[c]}</option>)}
               </select>
               <input
                 type="text"
                 placeholder="İlgili dosya/alan (ops.)"
+                aria-label="İlgili dosya veya alan"
                 value={form.related_path}
                 onChange={(e) => setForm((f) => ({ ...f, related_path: e.target.value }))}
-                className="rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white placeholder-white/50 focus:border-google-blue focus:outline-none"
+                className={ADMIN_CONTROL_CLASS}
               />
             </div>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="rounded-lg bg-google-green px-5 py-2.5 font-semibold transition hover:bg-google-green/90 disabled:opacity-50"
-            >
+            <Button type="submit" variant="success" disabled={submitting}>
               {submitting ? 'Kaydediliyor...' : 'Kaydet'}
-            </button>
+            </Button>
           </form>
         )}
 
         {/* Filtreler */}
-        <div className="mb-6 flex flex-wrap gap-3">
+        <AdminFilterBar className="mb-6">
           <input
             type="text"
             placeholder="Ara..."
+            aria-label="Not ara"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="min-w-48 flex-1 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 text-white placeholder-white/50 focus:border-google-yellow focus:outline-none"
+            className={cn(ADMIN_CONTROL_CLASS, 'min-w-48 flex-1')}
           />
           <select
+            aria-label="Durum filtresi"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white focus:border-google-blue focus:outline-none"
+            className={cn(ADMIN_CONTROL_CLASS, 'sm:w-auto')}
           >
-            <option value="" className="bg-black">Tüm durumlar</option>
-            {STATUSES.map((s) => <option key={s} value={s} className="bg-black">{STATUS_LABEL[s]}</option>)}
+            <option value="">Tüm durumlar</option>
+            {STATUSES.map((s) => <option key={s} value={s}>{STATUS_LABEL[s]}</option>)}
           </select>
           <select
+            aria-label="Önem filtresi"
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
-            className="rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-white focus:border-google-blue focus:outline-none"
+            className={cn(ADMIN_CONTROL_CLASS, 'sm:w-auto')}
           >
-            <option value="" className="bg-black">Tüm önemler</option>
-            {SEVERITIES.map((s) => <option key={s} value={s} className="bg-black">{SEVERITY_LABEL[s]}</option>)}
+            <option value="">Tüm önemler</option>
+            {SEVERITIES.map((s) => <option key={s} value={s}>{SEVERITY_LABEL[s]}</option>)}
           </select>
-          <button
-            onClick={() => loadNotes()}
-            disabled={loading}
-            className="rounded-lg bg-google-blue px-5 py-2.5 font-semibold transition hover:bg-google-blue/90 disabled:opacity-50"
-          >
+          <Button type="button" onClick={() => loadNotes()} disabled={loading}>
             {loading ? 'Yükleniyor...' : 'Yenile'}
-          </button>
-        </div>
+          </Button>
+        </AdminFilterBar>
 
-        {error && <div className="mb-4 text-red-400">Hata: {error}</div>}
+        {error && (
+          <div
+            role="alert"
+            className={cn(
+              'mb-4 rounded-card border px-4 py-3 text-sm',
+              TONE_STYLES.red.tint,
+              TONE_STYLES.red.border,
+              TONE_STYLES.red.text,
+            )}
+          >
+            Hata: {error}
+          </div>
+        )}
 
         {/* Liste */}
         <div className="space-y-3">
@@ -294,83 +313,83 @@ export default function SecurityNotesAdminClient() {
             <div
               key={note.id}
               className={cn(
-                'rounded-xl border bg-white/5 p-5',
+                'rounded-card border bg-white p-5',
                 note.severity === 'critical' && note.status === 'open'
-                  ? 'border-google-red/40'
-                  : 'border-white/10',
+                  ? cn(TONE_STYLES.red.border, TONE_STYLES.red.wash)
+                  : 'border-line',
               )}
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="mb-2 flex flex-wrap items-center gap-2">
-                    <span className={cn('rounded px-2 py-0.5 text-xs font-bold', SEVERITY_STYLE[note.severity])}>
-                      {SEVERITY_LABEL[note.severity]}
-                    </span>
-                    <span className={cn('rounded px-2 py-0.5 text-xs font-bold', STATUS_STYLE[note.status])}>
-                      {STATUS_LABEL[note.status]}
-                    </span>
-                    <span className="rounded bg-white/10 px-2 py-0.5 text-xs text-white/60">
-                      {CATEGORY_LABEL[note.category]}
-                    </span>
-                    <span className="rounded bg-white/5 px-2 py-0.5 text-xs text-white/40">
+                    <Chip tone={SEVERITY_TONE[note.severity] ?? 'neutral'}>{SEVERITY_LABEL[note.severity]}</Chip>
+                    <AdminStatusBadge
+                      status={note.status}
+                      label={STATUS_LABEL[note.status]}
+                      tone={STATUS_TONE[note.status] ?? 'neutral'}
+                    />
+                    <Chip tone="neutral">{CATEGORY_LABEL[note.category]}</Chip>
+                    <Chip tone="neutral" className="text-muted">
                       {SOURCE_LABEL[note.source]}
-                    </span>
+                    </Chip>
                   </div>
-                  <h3 className="font-semibold">{note.title}</h3>
-                  <p className="mt-1 whitespace-pre-wrap text-sm text-white/75">{note.description}</p>
+                  <h3 className="font-semibold text-ink">{note.title}</h3>
+                  <p className="mt-1 whitespace-pre-wrap text-sm text-muted">{note.description}</p>
                   {note.related_path && (
-                    <p className="mt-2 font-mono text-xs text-google-blue/80">{note.related_path}</p>
+                    <p className="mt-2 font-mono text-xs text-brand-700">{note.related_path}</p>
                   )}
                   {note.resolution_note && (
-                    <p className="mt-2 rounded bg-google-green/10 px-3 py-2 text-sm text-green-200/90">
+                    <p
+                      className={cn(
+                        'mt-2 rounded-tile px-3 py-2 text-sm',
+                        TONE_STYLES.green.tint,
+                        TONE_STYLES.green.text,
+                      )}
+                    >
                       <span className="font-semibold">Çözüm:</span> {note.resolution_note}
                     </p>
                   )}
-                  <p className="mt-2 text-xs text-white/40">
+                  <p className="mt-2 text-xs text-muted">
                     Oluşturma: {formatDate(note.created_at)}
                     {note.resolved_at ? ` · Çözüm: ${formatDate(note.resolved_at)}` : ''}
                   </p>
                 </div>
                 <div className="flex shrink-0 flex-col gap-2">
                   {note.status !== 'resolved' && (
-                    <button
-                      onClick={() => handleResolve(note)}
-                      className="rounded bg-google-green/20 px-3 py-1 text-sm text-green-300 transition hover:bg-google-green/30"
-                    >
+                    <Button type="button" size="sm" variant="success" onClick={() => handleResolve(note)}>
                       Çözüldü
-                    </button>
+                    </Button>
                   )}
                   {note.status === 'open' && (
-                    <button
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
                       onClick={() => updateNote(note.id, { status: 'in_progress' })}
-                      className="rounded bg-google-yellow/20 px-3 py-1 text-sm text-yellow-200 transition hover:bg-google-yellow/30"
                     >
                       Devam ediyor
-                    </button>
+                    </Button>
                   )}
                   {note.status === 'resolved' && (
-                    <button
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
                       onClick={() => updateNote(note.id, { status: 'open' })}
-                      className="rounded bg-white/10 px-3 py-1 text-sm text-white/70 transition hover:bg-white/20"
                     >
                       Tekrar aç
-                    </button>
+                    </Button>
                   )}
-                  <button
-                    onClick={() => handleDelete(note.id)}
-                    className="rounded bg-red-500/20 px-3 py-1 text-sm text-red-400 transition hover:bg-red-500/30"
-                  >
+                  <Button type="button" size="sm" variant="danger" onClick={() => handleDelete(note.id)}>
                     Sil
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {notes.length === 0 && !loading && (
-          <div className="py-12 text-center text-white/60">Henüz güvenlik notu yok.</div>
-        )}
+        {notes.length === 0 && !loading && <AdminEmptyState title="Henüz güvenlik notu yok." />}
       </div>
     </div>
   );
