@@ -4,9 +4,9 @@ Son kontrol: **2026-10-31** (canlı veritabanı: proje `ldptefnpiudquipdsezr`). 
 
 **Özet:** 33 dosya, 33 tanesi canlıda uygulanmış durumda, bekleyen yok.
 
-## Neden bazılarında kayıt yok
+## Kayıt tablosu
 
-`supabase_migrations.schema_migrations` tablosu `20260618110000` sürümünden sonra güncellenmiyor, çünkü migration'lar `supabase db push` ile değil, doğrudan SQL ile uygulanıyor. Bu yüzden "kayıt yok" **uygulanmadı demek değildir**. Aşağıdaki durum sütunu kayıta değil, canlı veritabanındaki etkiye bakılarak yazıldı.
+`supabase_migrations.schema_migrations` tablosu `20260618110000` sürümünden sonra güncellenmiyordu, çünkü migration'lar `supabase db push` ile değil, doğrudan SQL ile uygulanıyor. **2026-10-31'de eksik 19 kayıt geriye dönük eklendi** (yalnızca `version` ve `name`; `statements` boş, eski satırlardaki gibi dolu değil). Önce her birinin etkisi canlı veritabanında doğrulandı. Şu an tabloda 33 satır var ve dosya sayısıyla aynı. Bundan sonra uygulanan her migration için buraya da kayıt düş (aşağıdaki 4. adım).
 
 ## Durum
 
@@ -26,33 +26,34 @@ Son kontrol: **2026-10-31** (canlı veritabanı: proje `ldptefnpiudquipdsezr`). 
 | `20260617120000_news_pipeline_scraper_adapters.sql` | Uygulandı (schema_migrations kaydı var) | News pipeline scraper genişletmesi (corteqsmvp radar-news-scan entegrasyonu). |
 | `20260618100000_unify_providers_service_finder.sql` | Uygulandı (schema_migrations kaydı var) | Hizmet Rehberi birleştirme: gastronomy_providers -> providers (tek tablo, type ile yönetim). |
 | `20260618110000_service_finder_module.sql` | Uygulandı (schema_migrations kaydı var) | Service Finder modülü — AI uzman/hizmet bulucu scraper şeması. |
-| `20260624085000_news_sources_trthaber_type.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | TRT Haber özel mobil XML formatı için yeni source_type: 'trthaber'. |
-| `20260624090000_seed_news_sources.sql` | Uygulandı (kayıt yok; oluşturduğu nesneler canlıda mevcut, 2026-10-31) | Haber pipeline'ı için başlangıç kaynaklarının seed'lenmesi. |
-| `20260624091000_news_pipeline_cron.sql` | Uygulandı (kayıt yok; oluşturduğu nesneler canlıda mevcut, 2026-10-31) | Haber pipeline'ı için günlük otomatik tetikleme (news.md §12). |
-| `20260624120000_security_notes.sql` | Uygulandı (kayıt yok; oluşturduğu nesneler canlıda mevcut, 2026-10-31) | Admin Güvenlik Notları / Uyarıları tablosu. |
-| `20260626100000_add_tool_questionnaire_submissions.sql` | Uygulandı 2026-10-31 (bu oturumda) |  |
-| `20261021120000_add_career_platforms_recruitment_agencies.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | "İş ve Kariyer Platformları" kategorisi |
-| `20261021130000_news_language_filter.sql` | Uygulandı (kayıt yok; oluşturduğu nesneler canlıda mevcut, 2026-10-31) | Haber hattında dil filtresi: İngilizce (ve izin verilmeyen) haberlerin kuyruğa/yayına girmesini engeller. |
-| `20261021140000_normalize_recruitment_agency_categories.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | recruitment_agencies kategori normalizasyonu |
-| `20261021150000_news_editor_actions_keep_on_delete.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | Haber silindiğinde audit kaydı da cascade ile siliniyordu; kim neyi sildi bilgisi kayboluyordu. |
-| `20261021170000_news_language_checks.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | Dil kolonları yalnızca desteklenen kodları alabilsin (uygulama tipleri: NewsLanguage = 'tr' / 'de' / 'en'). |
-| `20261021171000_broken_link_reports_private_select.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | "Admin can read all broken link reports" policy'si rol belirtmeden `using (true)` ile tanımlıydı; |
-| `20261021180000_close_anonymous_write_paths.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | docs/security/db-audit-2026-10-21.md bulgu 1–5'in kapatılması + hazırlık sırasında bulunan view yazma yolu. |
-| `20261021190000_function_search_path.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | docs/plans/security-batches.md S2: sabit search_path (Supabase advisor "function_search_path_mutable"). |
-| `20261021191000_storage_no_public_listing.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | docs/plans/security-batches.md S5: corner ve news bucket'ları anonim listelenebiliyordu |
-| `20261021200000_hide_secret_columns_and_participant_writes.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | Acil: erişim haritası doğrulamasında bulunan ve anon anahtarla canlıda doğrulanan açıklar. |
-| `20261021201000_lock_legacy_pii_tables.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | Eski statik uygulamadan kalan, mevcut kodun hiç kullanmadığı tablolar (erişim haritası + doğrulama). |
-| `20261021202000_drop_legacy_event_tables.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | Kullanıcı kararı (21 Ekim 2026): 20261021180000 ile kilitlenen eski etkinlik/vize tabloları silinir. |
-| `20261021203000_devuser_base_table_private.sql` | Uygulandı (kayıt yok; etkisi canlıda doğrulandı 2026-10-31) | Güvenlik batch S3, adım 2: devuser taban tablosu anon/authenticated'a tamamen kapanır. |
-| `20261031120000_seed_almanya101_author.sql` | Uygulandı 2026-10-31 (bu oturumda) | Kurumsal yazar: "almanya101" (Organization). Rehber, haber ve yazarsız içerik bu kimliğe atfedilir. |
+| `20260624085000_news_sources_trthaber_type.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | TRT Haber özel mobil XML formatı için yeni source_type: 'trthaber'. |
+| `20260624090000_seed_news_sources.sql` | Uygulanmıştı; nesneleri canlıda mevcut, kayıt 2026-10-31'de geriye dönük eklendi | Haber pipeline'ı için başlangıç kaynaklarının seed'lenmesi. |
+| `20260624091000_news_pipeline_cron.sql` | Uygulanmıştı; nesneleri canlıda mevcut, kayıt 2026-10-31'de geriye dönük eklendi | Haber pipeline'ı için günlük otomatik tetikleme (news.md §12). |
+| `20260624120000_security_notes.sql` | Uygulanmıştı; nesneleri canlıda mevcut, kayıt 2026-10-31'de geriye dönük eklendi | Admin Güvenlik Notları / Uyarıları tablosu. |
+| `20260626100000_add_tool_questionnaire_submissions.sql` | Uygulandı 2026-10-31 (kayıt düşüldü) |  |
+| `20261021120000_add_career_platforms_recruitment_agencies.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | "İş ve Kariyer Platformları" kategorisi |
+| `20261021130000_news_language_filter.sql` | Uygulanmıştı; nesneleri canlıda mevcut, kayıt 2026-10-31'de geriye dönük eklendi | Haber hattında dil filtresi: İngilizce (ve izin verilmeyen) haberlerin kuyruğa/yayına girmesini engeller. |
+| `20261021140000_normalize_recruitment_agency_categories.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | recruitment_agencies kategori normalizasyonu |
+| `20261021150000_news_editor_actions_keep_on_delete.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | Haber silindiğinde audit kaydı da cascade ile siliniyordu; kim neyi sildi bilgisi kayboluyordu. |
+| `20261021170000_news_language_checks.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | Dil kolonları yalnızca desteklenen kodları alabilsin (uygulama tipleri: NewsLanguage = 'tr' / 'de' / 'en'). |
+| `20261021171000_broken_link_reports_private_select.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | "Admin can read all broken link reports" policy'si rol belirtmeden `using (true)` ile tanımlıydı; |
+| `20261021180000_close_anonymous_write_paths.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | docs/security/db-audit-2026-10-21.md bulgu 1–5'in kapatılması + hazırlık sırasında bulunan view yazma yolu. |
+| `20261021190000_function_search_path.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | docs/plans/security-batches.md S2: sabit search_path (Supabase advisor "function_search_path_mutable"). |
+| `20261021191000_storage_no_public_listing.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | docs/plans/security-batches.md S5: corner ve news bucket'ları anonim listelenebiliyordu |
+| `20261021200000_hide_secret_columns_and_participant_writes.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | Acil: erişim haritası doğrulamasında bulunan ve anon anahtarla canlıda doğrulanan açıklar. |
+| `20261021201000_lock_legacy_pii_tables.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | Eski statik uygulamadan kalan, mevcut kodun hiç kullanmadığı tablolar (erişim haritası + doğrulama). |
+| `20261021202000_drop_legacy_event_tables.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | Kullanıcı kararı (21 Ekim 2026): 20261021180000 ile kilitlenen eski etkinlik/vize tabloları silinir. |
+| `20261021203000_devuser_base_table_private.sql` | Uygulanmıştı; etkisi doğrulandı, kayıt 2026-10-31'de geriye dönük eklendi | Güvenlik batch S3, adım 2: devuser taban tablosu anon/authenticated'a tamamen kapanır. |
+| `20261031120000_seed_almanya101_author.sql` | Uygulandı 2026-10-31 (kayıt düşüldü) | Kurumsal yazar: "almanya101" (Organization). Rehber, haber ve yazarsız içerik bu kimliğe atfedilir. |
 
 ## Yeni migration nasıl uygulanır
 
 1. **psql yok.** Bu makinede `psql` kurulu değil. `pg` paketini proje dışında bir klasöre kur (proje bağımlılığı olarak ekleme) ve Node ile bağlan. Bağlantı dizesi `.env.local` içinde `DIRECT_CONNECTION_STRING` olarak durur; Git'e girmez, çıktıya yazdırma.
 2. **Önce kuru çalıştırma.** Dosyayı `BEGIN` ... `ROLLBACK` içinde çalıştır ve sonucu doğrula. Hata varsa canlıya hiçbir şey yazılmamış olur. (Geçerli SQL değilse burada yakalanır; 31 Ekim'de `E'...'` literalleri `||` ile birleştirilmediği için seed dosyası böyle yakalandı.)
 3. **Sonra uygula.** Aynı dosyayı `BEGIN` ... `COMMIT` içinde, `set local lock_timeout = '10s'` ile çalıştır, etkisini doğrula.
-4. **Eklemeli ve yeniden çalıştırılabilir yaz.** `if not exists`, `on conflict do nothing`, `drop ... if exists` kullan.
-5. **Bu dosyayı güncelle.** Yeni migration'ı tabloya ekle ve "Son kontrol" tarihini değiştir.
+4. **Kaydı düş.** Aynı transaction içinde `insert into supabase_migrations.schema_migrations (version, name) values ('<sürüm>', '<ad>') on conflict (version) do nothing;` çalıştır. Sürüm dosya adının başındaki sayıdır.
+5. **Eklemeli ve yeniden çalıştırılabilir yaz.** `if not exists`, `on conflict do nothing`, `drop ... if exists` kullan.
+6. **Bu dosyayı güncelle.** Yeni migration'ı tabloya ekle ve "Son kontrol" tarihini değiştir.
 
 ## Bilinen notlar
 
