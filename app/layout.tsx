@@ -120,7 +120,8 @@ export default function RootLayout({
         <OrganizationJsonLd />
         <WebSiteJsonLd />
       </head>
-      <body className="font-sans antialiased min-h-screen flex flex-col">
+      {/* app/admin/layout.tsx sets body[data-admin] before hydration; the attribute mismatch is expected. */}
+      <body className="font-sans antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         {/* Skip to main content link for accessibility */}
         <a href="#main-content" className="skip-to-main">
           Ana içeriğe atla
