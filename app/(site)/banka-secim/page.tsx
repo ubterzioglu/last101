@@ -1,5 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import { ToolHero } from '@/components/tools/ToolHero';
 import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
 import { ToolFaq } from '@/components/tools/ToolFaq';
@@ -79,7 +80,21 @@ export default function BankaSecimPage() {
         howItWorksTitle="Nasıl Çalışır?"
         howItWorks={HOW_IT_WORKS}
       />
-      <BankaClient />
+      <ToolAccessGate
+        intro={{
+          title: 'Banka Seçim Aracı',
+          description:
+            '20 kısa soruyla bankacılık alışkanlıklarını ve ihtiyaçlarını ölçer; dijital banka, direkt banka, yerel banka veya yatırım odaklı banka türlerinden hangisinin sana daha uygun olduğunu gösterir.',
+          highlights: [
+            'Dijital kullanım, şube ihtiyacı, yatırım alışkanlığı ve ücret hassasiyetini birlikte değerlendirir.',
+            'Sana uygun banka türünü gerekçesiyle açıklar; belirli bir bankayı satmaz, komisyon almaz.',
+            'Sonuç anında görünür; kişisel veya finansal veri saklanmaz.',
+          ],
+          toolPath: '/banka-secim',
+        }}
+      >
+        <BankaClient />
+      </ToolAccessGate>
       <ToolInfoBand why={WHY} />
       <ToolFaq name="banka-secim-sss" items={FAQ_ITEMS} />
     </>

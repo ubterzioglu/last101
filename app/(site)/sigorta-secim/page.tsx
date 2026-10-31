@@ -1,5 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import { ToolHero } from '@/components/tools/ToolHero';
 import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
 import { ToolFaq } from '@/components/tools/ToolFaq';
@@ -77,7 +78,21 @@ export default function SigortaSecimPage() {
         howItWorksTitle="Nasıl Çalışır?"
         howItWorks={HOW_IT_WORKS}
       />
-      <SigortaClient />
+      <ToolAccessGate
+        intro={{
+          title: 'Sigorta Seçim Aracı',
+          description:
+            '20 kısa soruyla yaşam durumunu ve risk önceliklerini ölçer; her sigorta türü için "Önce Al", "Güçlü Öneri" veya "Opsiyonel" etiketiyle kişiselleştirilmiş bir öncelik listesi oluşturur.',
+          highlights: [
+            'Medeni hal, çocuk, araba, kira ve benzeri yaşam bilgilerine göre sigortaları önceliklendirir.',
+            'Zorunlu sağlık sigortası (Krankenversicherung) ve trafik sorumluluk sigortası (Kfz-Haftpflicht) gibi yasal gereklilikleri ayrıca işaretler.',
+            'Sonuç anında görünür; tamamen ücretsiz ve bağımsızdır, belirli bir sigorta şirketini önermez.',
+          ],
+          toolPath: '/sigorta-secim',
+        }}
+      >
+        <SigortaClient />
+      </ToolAccessGate>
       <ToolInfoBand why={WHY} />
       <ToolFaq name="sigorta-secim-sss" items={FAQ_ITEMS} />
     </>

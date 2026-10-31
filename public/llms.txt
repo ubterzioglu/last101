@@ -19,7 +19,7 @@
 - [Rehber](https://almanya101.de/rehber): Almanya'da yaşam, iş, konut, eğitim ve bürokrasi hakkında kapsamlı rehber makaleleri.
 - [Haberler](https://almanya101.de/haberler): Almanya'daki Türk topluluğunu ilgilendiren güncel haberler.
 - [Almanya'da Yaşam](https://almanya101.de/almanyada-yasam): Almanya'da günlük yaşam, kültür ve uyum içeriği.
-- [İş İlanları](https://almanya101.de/is-ilanlari): Almanya'da iş arama ve fırsatlar.
+- [İşe Alım Firmaları](https://almanya101.de/is-ilanlari): Almanya'daki işe alım ajanslarını ve iş fırsatlarını inceleme.
 - [Arkadaşın Köşesi](https://almanya101.de/yazi-dizisi): almanya101 yazarlarının kişisel deneyim ve notları.
 
 ## Topluluk ve Kurumsal

@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { ArrowLink } from '@/components/site/ArrowLink';
 import { Eyebrow } from '@/components/site/Eyebrow';
-import { WhatsAppShareButton } from '@/components/news/WhatsAppShareButton';
+import { ShareBar } from '@/components/articles/ShareBar';
+import { cn } from '@/lib/utils/cn';
 
 export interface AsideSource {
   name: string;
@@ -13,8 +14,16 @@ export interface AsideSource {
 const OUTLINE_LINK_CLASSES =
   'inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-btn border border-line bg-white px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:border-ink motion-reduce:transition-none';
 
-/** Share card: optional source facts, WhatsApp share and the original source link. */
-export function AsideShareCard({ shareText, source }: { shareText: string; source?: AsideSource }) {
+export interface AsideShareCardProps {
+  url: string;
+  title: string;
+  /** WhatsApp message; defaults to "title + link". */
+  shareText?: string;
+  source?: AsideSource;
+}
+
+/** Share card: optional source facts, share bar (WhatsApp, X, Facebook, LinkedIn, copy link) and the original source link. */
+export function AsideShareCard({ url, title, shareText, source }: AsideShareCardProps) {
   return (
     <div className="rounded-card border border-line bg-white p-5">
       {source ? (
@@ -29,15 +38,13 @@ export function AsideShareCard({ shareText, source }: { shareText: string; sourc
           </div>
         </dl>
       ) : null}
-      <div className="flex flex-col gap-3">
-        <WhatsAppShareButton text={shareText} className="w-full" />
-        {source?.url ? (
-          <a href={source.url} target="_blank" rel="noopener noreferrer" className={OUTLINE_LINK_CLASSES}>
-            Kaynak bağlantısını aç
-            <ArrowUpRight aria-hidden="true" size={16} className="shrink-0" />
-          </a>
-        ) : null}
-      </div>
+      <ShareBar url={url} title={title} whatsappText={shareText} />
+      {source?.url ? (
+        <a href={source.url} target="_blank" rel="noopener noreferrer" className={cn(OUTLINE_LINK_CLASSES, 'mt-4')}>
+          Kaynak bağlantısını aç
+          <ArrowUpRight aria-hidden="true" size={16} className="shrink-0" />
+        </a>
+      ) : null}
     </div>
   );
 }

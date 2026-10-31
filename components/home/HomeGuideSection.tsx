@@ -7,7 +7,7 @@ import { Section } from '@/components/ui/Section';
 import { HOME_GUIDE_STEPS } from '@/constants/home-data';
 
 const GUIDE_INTRO =
-  'Almanya101 nedir? Kısaca Almanya101, bu ülkeye taşınan veya burada yaşayan Türkler için Türkçe rehber, araç ve topluluk platformudur. ~3,5 milyon Türk kökenli insan burada yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa; yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek.';
+  'Almanya101 nedir? Kısaca Almanya101, bu ülkeye taşınan veya burada yaşayan Türkler için Türkçe rehber, araç ve topluluk platformudur. Destatis Mikrozensus 2025 ilk sonuçlarına göre Türkiye kökenli yaklaşık 3 milyon insan burada yaşıyor ve her yıl binlercesi yeni taşınıyor. Bu sayfa; yaşam rehberi arayan, iş bulma sürecini anlamak isteyen ve Türk topluluğuyla güvenli şekilde bağ kurmak isteyen kullanıcılar için karar destek sayfası olarak tasarlandı. Hedef, bilgi kalabalığını azaltıp sıradaki mantıklı adımı görünür hale getirmek.';
 
 const GUIDE_STEPS = HOME_GUIDE_STEPS.map((title) => ({ title }));
 

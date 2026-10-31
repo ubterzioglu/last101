@@ -1,8 +1,9 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { cn } from '@/lib/utils/cn';
-import { ARTICLE_TONE_CLASSES } from './articleTone';
-import type { ArticleTone } from './articleTone';
+import { FileText } from 'lucide-react';
+import { realCoverUrl } from '@/components/news/cover';
+import { MediaCard } from '@/components/site/MediaCard';
+import { SectionHeader } from '@/components/site/SectionHeader';
+import { toneAt } from '@/components/site/tones';
+import { Section } from '@/components/ui/Section';
 
 export interface RelatedArticleItem {
   id: string;
@@ -16,34 +17,33 @@ export interface RelatedArticleItem {
 interface RelatedArticlesProps {
   heading: string;
   items: ReadonlyArray<RelatedArticleItem>;
-  tone?: ArticleTone;
+  linkLabel?: string;
 }
 
-export function RelatedArticles({ heading, items, tone = 'dark' }: RelatedArticlesProps) {
+/** İlgili içerikler: bant zemin üzerinde MediaCard ızgarası. */
+export function RelatedArticles({ heading, items, linkLabel }: RelatedArticlesProps) {
   if (items.length === 0) return null;
-  const classes = ARTICLE_TONE_CLASSES[tone];
 
   return (
-    <section className="container pb-20">
-      <h2 className={cn('mb-6 text-2xl font-bold', classes.title)}>{heading}</h2>
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {items.map((item) => (
-          <Link
-            key={item.id}
-            href={item.href}
-            className={cn('group flex flex-col overflow-hidden rounded-2xl border transition hover:-translate-y-1', classes.panel)}
-          >
-            <div className="relative aspect-[16/9]">
-              <Image src={item.coverImageUrl} alt="" fill unoptimized sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover" />
-            </div>
-            <div className="flex flex-1 flex-col gap-2 p-5">
-              <span className={cn('text-xs', classes.muted)}>{item.dateLabel}</span>
-              <h3 className={cn('text-lg font-bold leading-snug group-hover:underline', classes.title)}>{item.title}</h3>
-              {item.summary ? <p className={cn('line-clamp-3 text-sm leading-6', classes.muted)}>{item.summary}</p> : null}
-            </div>
-          </Link>
-        ))}
+    <Section tone="band">
+      <SectionHeader title={heading} />
+      <div className="mt-10 grid gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item, index) => {
+          const cover = realCoverUrl(item.coverImageUrl);
+          return (
+            <MediaCard
+              key={item.id}
+              href={item.href}
+              title={item.title}
+              description={item.summary || undefined}
+              image={cover ? { src: cover, alt: item.title } : undefined}
+              fallback={{ icon: FileText, tone: toneAt(index) }}
+              meta={item.dateLabel}
+              linkLabel={linkLabel}
+            />
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 }

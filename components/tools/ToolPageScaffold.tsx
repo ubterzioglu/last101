@@ -1,8 +1,10 @@
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolIntroPanel } from '@/components/tools/ToolIntroPanel';
+import { getToolUser } from '@/lib/tools/access';
 import { SITE_URL } from '@/lib/utils/constants';
 import type { ToolConfig } from '@/lib/tools/types';
 
-export function ToolPageScaffold({
+export async function ToolPageScaffold({
   config,
   children,
 }: {
@@ -10,6 +12,7 @@ export function ToolPageScaffold({
   children: React.ReactNode;
 }) {
   const pageUrl = new URL(config.path, SITE_URL).toString();
+  const user = await getToolUser();
 
   return (
     <>
@@ -21,7 +24,7 @@ export function ToolPageScaffold({
         ]}
       />
       <FaqJsonLd items={config.faqs} />
-      <div className="bg-page text-ink">{children}</div>
+      <div className="bg-page text-ink">{user ? children : <ToolIntroPanel config={config} />}</div>
     </>
   );
 }

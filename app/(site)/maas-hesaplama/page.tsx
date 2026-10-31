@@ -1,6 +1,7 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
 import { ToolFaq } from '@/components/tools/ToolFaq';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import { ToolHero } from '@/components/tools/ToolHero';
 import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
 import { STATES, TAX_CLASSES } from '@/lib/salary/types';
@@ -8,7 +9,7 @@ import MaasClient from './MaasClient';
 import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
-  title: 'Maaş Hesaplayıcı',
+  title: 'Almanya Maaş Hesaplayıcı',
   description: 'Almanya\'da brüt maaşınızı net maaşa, net maaşınızı brüt maaşa dönüştürün. Vergi sınıfı, eyalet, çocuk durumu ve daha fazlasını hesaplayın.',
   path: '/maas-hesaplama',
 });
@@ -62,14 +63,14 @@ export default function MaasHesaplamaPage() {
   return (
     <>
       <WebPageJsonLd
-        title="Maaş Hesaplayıcı"
+        title="Almanya Maaş Hesaplayıcı"
         description="Almanya'da brüt maaşınızı net maaşa, net maaşınızı brüt maaşa dönüştürün. Vergi sınıfı, eyalet, çocuk durumu ve daha fazlasını hesaplayın."
         url={pageUrl}
       />
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Maaş Hesaplayıcı', url: pageUrl },
+          { name: 'Almanya Maaş Hesaplayıcı', url: pageUrl },
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
@@ -81,7 +82,21 @@ export default function MaasHesaplamaPage() {
         howItWorksTitle="Nasıl Çalışır?"
         howItWorks={HOW_IT_WORKS}
       />
-      <MaasClient />
+      <ToolAccessGate
+        intro={{
+          title: 'Almanya Maaş Hesaplayıcı',
+          description:
+            'Almanya\'da brüt maaşını net maaşa, net maaşını brüt maaşa dönüştür. Vergi sınıfı, eyalet, çocuk durumu, kilise vergisi ve sosyal sigorta kesintilerini yürürlükteki oranlarla hesapla.',
+          highlights: [
+            'Brütten nete ve netten brüte çift yönlü hesaplama yapar.',
+            'Steuerklasse, Bundesland, çocuk sayısı, kilise vergisi ve bakım sigortası gibi değişkenleri dikkate alır.',
+            'Gelir vergisi ile sağlık, emeklilik, işsizlik ve bakım sigortası kesintilerini kalem kalem gösterir.',
+          ],
+          toolPath: '/maas-hesaplama',
+        }}
+      >
+        <MaasClient />
+      </ToolAccessGate>
       <ToolInfoBand why={WHY_TEXT} />
       <ToolFaq name="maas-hesaplama-sss" items={FAQ_ITEMS} />
     </>

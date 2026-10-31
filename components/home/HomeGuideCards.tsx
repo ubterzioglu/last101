@@ -25,8 +25,9 @@ export const HOME_GUIDE_CARDS: AccordionItem[] = [
         <p>
           Almanya&apos;ya yeni taşınan biri için ilk problem çoğu zaman bilgi eksikliği değil, <strong>bilgi dağınıklığı</strong>tır. <strong>Adres kaydı</strong>,
           vergi numarası, banka hesabı, sağlık sigortası, telefon hattı ve oturum süreçleri aynı döneme yığıldığında,
-          insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Ortalama <strong>2-4 hafta</strong> içinde adres kaydı tamamlanır;
-          ardından kalan adımlar 6-8 hafta daha sürebilir. Bu nedenle bu ana sayfada yalnızca içerik
+          insanlar hangi adımı önce tamamlaması gerektiğini karıştırır. Adres kaydı yasal olarak <strong>14 gün</strong> içinde
+          yapılmalıdır ve randevu bulunabildiğinde genellikle birkaç hafta içinde tamamlanır;
+          kalan adımlar ise kuruma ve şehre göre birkaç hafta ile birkaç ay daha sürebilir. Bu nedenle bu ana sayfada yalnızca içerik
           listelemek yerine, kullanıcıyı <strong>günlük hayatta en çok etkileyecek başlıklara</strong> doğrudan yönlendiren bir yapı kurduk.
         </p>
         <p>
@@ -55,14 +56,14 @@ export const HOME_GUIDE_CARDS: AccordionItem[] = [
           Almanya&apos;da iş bulma süreci yalnızca ilan sitelerine bakmaktan ibaret değildir. <strong>Özgeçmişin Alman işveren beklentilerine
           göre düzenlenmesi</strong>, başvuru metinlerinin pozisyona göre yeniden yazılması, maaş beklentisinin doğru kurulması ve sektör
           dilinin anlaşılması gerekir. Birçok aday iyi profillere sahip olmasına rağmen <strong>başvuru stratejisi eksik</strong> olduğu için geri
-          dönüş alamaz. Araştırmalara göre <strong>ortalama 50-80 başvuru</strong> sonrası ilk mülakat daveti gelmektedir.{' '}
+          dönüş alamaz. İlk mülakat davetine kadar gereken başvuru sayısı sektöre ve profile göre değişir.{' '}
           <ExternalLink href="https://www.arbeitsagentur.de">Bundesagentur für Arbeit</ExternalLink>{' '}
-          verilerine göre ülkede işsizlik oranı %6 civarındadır ve Türk kökenli adaylar için dil seviyesi en kritik faktördür. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
+          verilerine göre ülkede işsizlik oranı Eylül 2026 itibarıyla %6,4&apos;tür ve Türk kökenli adaylar için dil seviyesi en kritik faktördür. Bu yüzden ana sayfada hem araçlara hem de doğrudan <strong>iş fırsatlarına</strong> giden linkleri görünür hale getirdik.
         </p>
         <p>
           Özellikle{' '}
           <Link href="/is-ilanlari" className={LINK_CLASS}>
-            iş ilanları
+            işe alım firmaları
           </Link>
           ,{' '}
           <Link href="/stepstone-karsilastirma" className={LINK_CLASS}>
@@ -86,7 +87,7 @@ export const HOME_GUIDE_CARDS: AccordionItem[] = [
           Yeni bir ülkede doğru insanlara ulaşmak, bazen en doğru belgeyi bulmaktan bile daha değerlidir. Çünkü taşınma sürecinde
           sorular yalnızca resmi işlemlerle sınırlı kalmaz; hangi şehir daha uygundur, ilk ev nasıl bulunur, hangi banka daha hızlı
           hesap açar, hangi işverenler Türkçe iletişim konusunda daha rahattır gibi <strong>gündelik ama kritik kararlar</strong> ortaya çıkar.
-          Burada <strong>~3,5 milyon Türk kökenli insan</strong> yaşıyor ve ilk yıl içinde <strong>%60&apos;ı en az bir kez iş değiştirmektedir</strong>.
+          Burada Destatis Mikrozensus 2025 ilk sonuçlarına göre <strong>Türkiye kökenli yaklaşık 3 milyon insan</strong> yaşıyor.
           Topluluk, bu noktada hazır cevap değil; <strong>deneyim filtresi</strong> sağlar.
         </p>
         <p>

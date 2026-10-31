@@ -1,5 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import { ToolHero } from '@/components/tools/ToolHero';
 import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
 import { ToolFaq } from '@/components/tools/ToolFaq';
@@ -66,7 +67,7 @@ export default function VizeSecimPage() {
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Vize Seçim Aracı', url: pageUrl },
+          { name: 'Almanya Vize Seçim Aracı', url: pageUrl },
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
@@ -77,7 +78,21 @@ export default function VizeSecimPage() {
         howItWorksTitle="Nasıl Çalışır?"
         howItWorks={HOW_IT_WORKS}
       />
-      <VizeClient />
+      <ToolAccessGate
+        intro={{
+          title: 'Almanya Vize Seçim Aracı',
+          description:
+            '10-13 kısa soruyla mesleğini, eğitim durumunu, iş teklifin olup olmadığını ve maaş beklentini değerlendirir; sana en uygun Almanya çalışma izni veya vize türünü önerir.',
+          highlights: [
+            'EU Mavi Kart, Fachkräftevisa, Chancenkarte ve IT Uzmanı Vizesi gibi güncel izin türlerini karşılaştırır.',
+            'Profiline göre hangi vize yolunun gerçekçi olduğunu gerekçesiyle gösterir.',
+            'Sonuç anında görünür; kişisel veri saklanmaz, hukuki danışmanlık yerine geçmez.',
+          ],
+          toolPath: '/vize-secim',
+        }}
+      >
+        <VizeClient />
+      </ToolAccessGate>
       <ToolInfoBand why={WHY} />
       <ToolFaq name="vize-secim-sss" items={FAQ_ITEMS} />
     </>

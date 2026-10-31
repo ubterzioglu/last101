@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Section';
 
 export const metadata = createMetadata({
-  title: 'Blog',
+  title: 'Blog — Yazı, Haber ve Rehber Merkezi',
   description:
     'almanya101 blog: Almanya’da yaşam, vize, iş, maaş, bankacılık ve daha fazlası üzerine yazılar, haberler ve rehberler tek bir yerde.',
   path: '/blog',

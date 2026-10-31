@@ -1,7 +1,14 @@
-import Link from 'next/link';
-import { getToolCatalogItem, getToolHref } from '@/lib/tools/catalog';
+import { Container } from '@/components/ui/Container';
+import { Button } from '@/components/ui/Button';
+import { ToolFaq } from '@/components/tools/ToolFaq';
+import { ToolHero } from '@/components/tools/ToolHero';
+import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
+import { ToolLegalNote, ToolResources } from '@/components/tools/ToolResources';
+import { getToolCatalogItem } from '@/lib/tools/catalog';
 import { getToolUser } from '@/lib/tools/access';
 import type { ToolConfig } from '@/lib/tools/types';
+
+const CTA_EYEBROW = 'Ücretsiz üyelikle kullanılabilen interaktif araç';
 
 function buildLoginHref(toolPath: string) {
   return `/giris?next=${encodeURIComponent(toolPath)}`;
@@ -9,19 +16,19 @@ function buildLoginHref(toolPath: string) {
 
 function LoginCtaCard({ toolPath }: { toolPath: string }) {
   return (
-    <div className="rounded-xl border-2 border-google-green bg-white px-4 py-4">
-      <p className="font-semibold text-gray-900">Aracı açmak ister misin?</p>
-      <p className="mt-1 text-sm leading-6 text-gray-700">
+    <div className="rounded-card border border-line bg-white p-6 shadow-float md:p-7">
+      <p className="text-[13px] font-bold uppercase tracking-[0.13em] text-brand-700">{CTA_EYEBROW}</p>
+      <h2 className="mt-3 text-[19px] font-extrabold leading-snug tracking-[-0.02em] text-ink">
+        Aracı açmak ister misin?
+      </h2>
+      <p className="mt-2 max-w-3xl leading-relaxed text-muted">
         Bu sayfadaki tanıtım içeriği ve sıkça sorulan sorular herkese açıktır. Soru akışını
         başlatmak, kişisel sonucunu görmek ve ilerlemeni kaydetmek için ücretsiz hesapla giriş
         yapman yeterlidir.
       </p>
-      <Link
-        href={buildLoginHref(toolPath)}
-        className="mt-3 inline-flex items-center justify-center rounded-lg bg-google-blue px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-600"
-      >
+      <Button href={buildLoginHref(toolPath)} className="mt-5">
         Ücretsiz giriş yap ve aracı aç
-      </Link>
+      </Button>
     </div>
   );
 }
@@ -36,42 +43,39 @@ export interface SimpleToolIntroProps {
 /**
  * Anonim ziyaretçiye sunucudan render edilen tanıtım içeriği: aracın ne
  * yaptığını, kapsamını ve sınırlamalarını anlatır; etkileşimli akış için
- * ücretsiz girişe yönlendirir.
+ * ücretsiz girişe yönlendirir. Sayfanın H1'i sayfadaki ToolHero'dan gelir.
  */
 export function SimpleToolIntro({ title, description, highlights, toolPath }: SimpleToolIntroProps) {
   return (
-    <div className="space-y-4 py-6">
-      <div className="rounded-xl border-2 border-google-blue bg-white px-4 py-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-google-blue">
-          Ücretsiz üyelikle kullanılabilen interaktif araç
-        </p>
-        <h1 className="mt-2 text-2xl font-bold leading-tight text-gray-900">{title}</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-gray-700">{description}</p>
+    <Container className="py-10 md:py-12">
+      <div className="space-y-6">
+        <LoginCtaCard toolPath={toolPath} />
+
+        <section aria-label={`${title} kapsamı`} className="rounded-card bg-band p-6 md:p-7">
+          <h2 className="text-[19px] font-extrabold leading-snug tracking-[-0.02em] text-ink">
+            Bu araç sana ne sunar?
+          </h2>
+          <p className="mt-2 max-w-3xl leading-relaxed text-muted">{description}</p>
+          <ul className="mt-4 divide-y divide-line border-y border-line">
+            {highlights.map((item) => (
+              <li key={item} className="flex gap-3 py-3 leading-relaxed text-ink">
+                <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="border-t border-line pt-6">
+          <h2 className="text-sm font-bold text-ink">Sınırlar ve yasal not</h2>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
+            Kişisel hesaplama ve sonuç işlemleri ücretsiz üyelik gerektirir; bu sayfadaki tanıtım
+            içeriği genel bilgilendirme amaçlıdır ve hukuki, mali veya resmî danışmanlık yerine
+            geçmez. Güncel ve bağlayıcı bilgi için ilgili resmî kurumların kaynaklarını kullan.
+          </p>
+        </section>
       </div>
-
-      <LoginCtaCard toolPath={toolPath} />
-
-      <section className="rounded-xl border border-white/10 bg-white/[0.03] p-5 text-white">
-        <h2 className="text-lg font-semibold">Bu araç sana ne sunar?</h2>
-        <ul className="mt-3 space-y-2 text-sm leading-6 text-white/80">
-          {highlights.map((item) => (
-            <li key={item} className="flex gap-2">
-              <span className="mt-0.5 shrink-0">•</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-5 text-yellow-50">
-        <h2 className="text-lg font-semibold">Sınırlar ve yasal not</h2>
-        <p className="mt-2 text-sm leading-6">
-          Kişisel hesaplama ve sonuç işlemleri ücretsiz üyelik gerektirir; bu sayfadaki tanıtım
-          içeriği genel bilgilendirme amaçlıdır ve hukuki, mali veya resmî danışmanlık yerine
-          geçmez. Güncel ve bağlayıcı bilgi için ilgili resmî kurumların kaynaklarını kullan.
-        </p>
-      </section>
-    </div>
+    </Container>
   );
 }
 
@@ -82,114 +86,31 @@ export function SimpleToolIntro({ title, description, highlights, toolPath }: Si
  */
 export function ToolIntroPanel({ config }: { config: ToolConfig }) {
   return (
-    <div className="space-y-4 py-6">
-      <div className="rounded-xl border-2 border-google-blue bg-white px-4 py-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-google-blue">
-          Ücretsiz üyelikle kullanılabilen interaktif araç
-        </p>
-        <h1 className="mt-2 text-2xl font-bold leading-tight text-gray-900">{config.title}</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-gray-700">{config.intro}</p>
-      </div>
+    <>
+      <ToolHero
+        eyebrow={getToolCatalogItem(config.slug)?.category ?? 'Araç'}
+        title={config.title}
+        intro={config.intro}
+        howItWorks={config.howItWorks}
+      />
 
-      <LoginCtaCard toolPath={config.path} />
+      <Container className="py-10 md:py-12">
+        <LoginCtaCard toolPath={config.path} />
+      </Container>
 
-      <section className="rounded-xl border border-white/10 bg-white/[0.03] p-5 text-white">
-        <h2 className="text-lg font-semibold">Bu araç neden var?</h2>
-        <p className="mt-2 text-sm leading-6 text-white/75">{config.why}</p>
-      </section>
+      <ToolInfoBand why={config.why} whoFor={config.whoFor} />
 
-      <section className="rounded-xl border border-white/10 bg-white/[0.03] p-5 text-white">
-        <h2 className="text-lg font-semibold">Bu araç kimin için?</h2>
-        <ul className="mt-3 space-y-2 text-sm leading-6 text-white/80">
-          {config.whoFor.map((item) => (
-            <li key={item} className="flex gap-2">
-              <span className="mt-0.5 shrink-0">•</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="rounded-xl border border-white/10 bg-white/[0.03] p-5 text-white">
-        <h2 className="text-lg font-semibold">Nasıl çalışır?</h2>
-        <ol className="mt-3 space-y-2 text-sm leading-6 text-white/80">
-          {config.howItWorks.map((item, index) => (
-            <li key={item} className="flex gap-2">
-              <span className="mt-0.5 shrink-0">{index + 1}.</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {config.officialSources.length > 0 && (
-        <section className="rounded-xl border border-white/10 bg-white/[0.03] p-5 text-white">
-          <h2 className="text-lg font-semibold">Resmî kaynaklar</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {config.officialSources.map((source) => (
-              <a
-                key={source.href}
-                href={source.href}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full border border-white/20 px-3 py-1 text-sm text-white/85 hover:border-white/40 hover:text-white"
-              >
-                {source.label}
-              </a>
-            ))}
-          </div>
-        </section>
+      {(config.officialSources.length > 0 || (config.relatedTools?.length ?? 0) > 0) && (
+        <ToolResources officialSources={config.officialSources} relatedTools={config.relatedTools} />
       )}
 
-      <section className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-5 text-yellow-50">
-        <h2 className="text-lg font-semibold">Yasal not</h2>
-        <p className="mt-2 text-sm leading-6">{config.legalNote}</p>
-        <p className="mt-2 text-sm leading-6">
-          Kişisel hesaplama ve sonuç kaydı ücretsiz üyelik gerektirir; yukarıdaki tanıtım
-          içeriği herkese açıktır.
-        </p>
-      </section>
+      <ToolFaq name={`${config.slug}-sss`} items={config.faqs} />
 
-      {config.relatedTools && config.relatedTools.length > 0 && (
-        <section className="rounded-xl border border-white/10 bg-white/[0.03] p-5 text-white">
-          <h2 className="text-lg font-semibold">Diğer araçlar</h2>
-          <div className="mt-4 grid gap-3 md:grid-cols-2">
-            {config.relatedTools.map((slug) => {
-              const item = getToolCatalogItem(slug);
-              if (!item) return null;
-              return (
-                <Link
-                  key={slug}
-                  href={getToolHref(slug)}
-                  className="rounded-xl border border-white/15 bg-white/[0.03] p-4 transition-colors hover:border-white/30 hover:bg-white/[0.06]"
-                >
-                  <p className="font-semibold">{item.title}</p>
-                  <p className="mt-1 text-sm text-white/70">{item.description}</p>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-      )}
-
-      {config.faqs.length > 0 && (
-        <section className="border-t border-white/10 pt-8 text-white" aria-labelledby="sss-baslik">
-          <h2 id="sss-baslik" className="text-2xl font-bold md:text-3xl">
-            Sıkça Sorulan Sorular
-          </h2>
-          <div className="mt-6 space-y-4">
-            {config.faqs.map((item) => (
-              <details key={item.question} className="group rounded-xl border border-white/10 bg-white/[0.03] p-5">
-                <summary className="cursor-pointer list-none text-lg font-semibold text-white">
-                  {item.question}
-                </summary>
-                <p className="mt-3 leading-7 text-white/75">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      )}
-    </div>
+      <ToolLegalNote>
+        {config.legalNote} Kişisel hesaplama ve sonuç kaydı ücretsiz üyelik gerektirir; yukarıdaki
+        tanıtım içeriği herkese açıktır.
+      </ToolLegalNote>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, FaqJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
 import { TransferSelector } from '@/components/para-transferi/transfer-selector';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import { ToolHero } from '@/components/tools/ToolHero';
 import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
 import { ToolFaq } from '@/components/tools/ToolFaq';
@@ -68,7 +69,7 @@ export default function ParaTransferiPage() {
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Para Transferi', url: pageUrl },
+          { name: 'Para Transferi Seçim Aracı', url: pageUrl },
         ]}
       />
       <FaqJsonLd items={FAQ_ITEMS} />
@@ -79,7 +80,21 @@ export default function ParaTransferiPage() {
         howItWorksTitle="Nasıl Çalışır?"
         howItWorks={HOW_IT_WORKS}
       />
-      <TransferSelector />
+      <ToolAccessGate
+        intro={{
+          title: 'Para Transferi Seçim Aracı',
+          description:
+            'Almanya\'dan Türkiye\'ye para gönderirken tutar, öncelik ve ödeme yöntemine göre en uygun transfer seçeneğini karşılaştır: fintech uygulamaları, banka havalesi ve döviz büroları.',
+          highlights: [
+            'Komisyon, döviz kuru farkı, hız ve güvenilirlik kriterlerini birlikte değerlendirir.',
+            'Gönderim tutarına göre toplam maliyeti karşılaştırmalı gösterir.',
+            'BaFin denetimli ve lisanslı platformlar üzerinden güvenli seçim yapmana yardımcı olur.',
+          ],
+          toolPath: '/para-transferi',
+        }}
+      >
+        <TransferSelector />
+      </ToolAccessGate>
       <ToolInfoBand why={WHY} />
       <ToolFaq name="para-transferi-sss" items={FAQ_ITEMS} />
     </>

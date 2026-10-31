@@ -9,7 +9,7 @@ const { getPublishedNewsItemsMock } = vi.hoisted(() => ({ getPublishedNewsItemsM
 
 vi.mock('@/lib/public-news', () => ({ getPublishedNewsItems: getPublishedNewsItemsMock }));
 
-import HomePage from '@/app/page';
+import HomePage, { metadata as homeMetadata } from '@/app/page';
 import { ContactChannelCard } from '@/components/home/ContactChannelCard';
 import { HomeFaqSection } from '@/components/home/HomeFaqSection';
 import { HomeHero } from '@/components/home/HomeHero';
@@ -276,13 +276,31 @@ describe('HomePage', () => {
     }
   });
 
+  it('keeps the RSS alternate next to the canonical in the home metadata', () => {
+    expect(homeMetadata.alternates?.canonical).toMatch(/\/$/);
+    expect(homeMetadata.alternates?.types).toEqual({
+      'application/rss+xml': expect.stringMatching(/\/feed\.xml$/),
+    });
+  });
+
+  it('does not repeat the unsourced numeric claims in visible copy or FAQ JSON-LD', async () => {
+    const $ = await renderHomePage();
+    const text = [$.root().text(), ...HOMEPAGE_FAQ_ITEMS.map((item) => item.answer)].join(' ');
+
+    for (const claim of ['2-4 hafta', '50-80', '~3,5 milyon', "%60'ı"]) {
+      expect(text, claim).not.toContain(claim);
+    }
+    expect(text).toContain('Destatis Mikrozensus 2025');
+    expect(text).toContain('Eylül 2026 itibarıyla %6,4');
+  });
+
   it('keeps the JSON-LD values', async () => {
     const [webPage, breadcrumb, faq, howTo] = jsonLdPayloads(await renderHomePage());
 
     expect(webPage).toMatchObject({
       name: "Almanya'da Yaşam ve İş İçin Türkçe Rehber",
       datePublished: '2026-01-01',
-      dateModified: '2026-10-21',
+      dateModified: '2026-10-24',
     });
     expect(breadcrumb.itemListElement).toEqual([
       expect.objectContaining({ position: 1, name: 'Ana Sayfa' }),
@@ -357,9 +375,9 @@ describe('HomePage', () => {
     const $ = await renderHomePage();
     const backToTop = $('a[aria-label="Yukarı git"]');
 
-    expect($.root().text()).toContain('Yayın tarihi: Ocak 2026 · Son güncelleme: Ekim 2026');
+    expect($.root().text()).toContain('Yayın tarihi: Ocak 2026 · Son güncelleme: 24 Ekim 2026');
     expect($('time[datetime="2026-01-01"]')).toHaveLength(1);
-    expect($('time[datetime="2026-10-21"]')).toHaveLength(1);
+    expect($('time[datetime="2026-10-24"]')).toHaveLength(1);
     expect(backToTop.attr('href')).toBe('#');
     expect((backToTop.attr('class') ?? '').split(/\s+/)).toEqual(
       expect.arrayContaining(['fixed', 'rounded-full', 'border-line', 'bg-white', 'shadow-float'])

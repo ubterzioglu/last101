@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { CookieSettingsButton } from '@/components/analytics/CookieSettingsButton';
 import { Container } from '@/components/ui/Container';
 import { SITE_NAME } from '@/lib/utils/constants';
 
@@ -63,7 +64,10 @@ export function Footer({ note }: FooterProps) {
           <p>
             © {year} {SITE_NAME}
           </p>
-          {note ? <div>{note}</div> : null}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            {note ? <div>{note}</div> : null}
+            <CookieSettingsButton />
+          </div>
         </div>
       </Container>
     </footer>

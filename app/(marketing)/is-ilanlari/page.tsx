@@ -30,7 +30,7 @@ export default function IsIlanlariPage() {
   return (
     <>
       <PageHead
-        eyebrow="İş İlanları"
+        eyebrow="İşe Alım Firmaları"
         title="Almanya'daki İş Bulma Ajansları ve Şirketler"
         description="Almanya'da faaliyet gösteren işe alım ajansları, kafa avcıları ve personel şirketlerinin kapsamlı listesi. Kariyer veya işe alım ihtiyaçlarınız için doğru ajansı bulun."
         stats={[

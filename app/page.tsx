@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { createMetadata } from '@/lib/seo/metadata';
 import { HomeCommunityBand } from '@/components/home/HomeCommunityBand';
 import { HomeCostSection } from '@/components/home/HomeCostSection';
@@ -14,19 +15,25 @@ import { CANONICAL_SITE_URL, DEFAULT_META_DESCRIPTION, DEFAULT_SEO_TITLE } from 
 import { HOMEPAGE_FAQ_ITEMS, HOME_INTENT_ITEMS } from '@/constants/home-data';
 import { CONTACT_CHANNELS } from '@/constants/contact-channels';
 
-export const metadata = createMetadata({
-  title: DEFAULT_SEO_TITLE,
-  description: DEFAULT_META_DESCRIPTION,
-  path: '/',
-  absoluteTitle: true,
-  keywords: [
-    'Almanya yaşam rehberi',
-    'Almanya iş bulma',
-    'Almanya Türk topluluğu',
-    'Almanya iş ilanları',
-    'Almanya belgeler',
-  ],
-});
+export const metadata: Metadata = {
+  ...createMetadata({
+    title: DEFAULT_SEO_TITLE,
+    description: DEFAULT_META_DESCRIPTION,
+    path: '/',
+    absoluteTitle: true,
+    keywords: [
+      'Almanya yaşam rehberi',
+      'Almanya iş bulma',
+      'Almanya Türk topluluğu',
+      'Almanya iş ilanları',
+      'Almanya belgeler',
+    ],
+  }),
+  alternates: {
+    canonical: `${CANONICAL_SITE_URL}/`,
+    types: { 'application/rss+xml': `${CANONICAL_SITE_URL}/feed.xml` },
+  },
+};
 
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +50,7 @@ export default async function HomePage() {
         description={DEFAULT_META_DESCRIPTION}
         url={HOME_PAGE_URL}
         datePublished="2026-01-01"
-        dateModified="2026-10-21"
+        dateModified="2026-10-24"
       />
       <BreadcrumbJsonLd items={[{ name: 'Ana Sayfa', url: HOME_PAGE_URL }]} />
       <FaqJsonLd items={HOMEPAGE_FAQ_ITEMS} />
@@ -51,7 +58,7 @@ export default async function HomePage() {
         name="Almanya'da Düzen Kurmak İçin İlk 6 Adım"
         description="Almanya'ya taşınan birinin tamamlaması gereken temel adımlar: adres kaydı, vergi numarası, sağlık sigortası, banka hesabı, telefon hattı ve oturum izni."
         steps={[
-          { name: 'Adres kaydı (Anmeldung)', text: 'İlk 14 gün içinde belediyeye adres kaydı yaptırın. Ortalama 2-4 hafta içinde tamamlanır.' },
+          { name: 'Adres kaydı (Anmeldung)', text: 'İlk 14 gün içinde belediyeye adres kaydı yaptırın; randevu bulunabildiğinde genellikle birkaç hafta içinde tamamlanır.' },
           { name: 'Vergi numarası (Steuernummer)', text: 'Adres kaydından sonra Federal Vergi Dairesi (Bundeszentralamt für Steuern) otomatik olarak vergi numaranızı gönderir.' },
           { name: 'Sağlık sigortası (Krankenversicherung)', text: 'Aylık €200-€400 arası değişen kamu veya özel sigorta seçeneklerinden birini belirleyin.' },
           { name: 'Banka hesabı açma', text: 'Girokonto (vadesiz hesap) açarak maaş ve kira ödemelerinizi yönetin.' },

@@ -1,13 +1,12 @@
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd';
-import MarkdownPreview from '@/components/MarkdownPreview';
 import { createArticleMetadata } from '@/lib/seo/metadata';
-import { ArticleBreadcrumb } from '@/components/articles/ArticleBreadcrumb';
-import { ArticleDates } from '@/components/articles/ArticleDates';
-import { ArticleToc } from '@/components/articles/ArticleToc';
+import { ArticleBody } from '@/components/articles/ArticleBody';
 import { RelatedArticles } from '@/components/articles/RelatedArticles';
-import { ShareBar } from '@/components/articles/ShareBar';
+import { AsideCommunityCard, AsideLinkList, AsideShareCard } from '@/components/news/ArticleAside';
+import { ArticleShell } from '@/components/news/ArticleShell';
+import { realCoverUrl } from '@/components/news/cover';
+import { buildArticleShareText } from '@/components/news/share-text';
 import { getPublishedRehberArticleBySlug, getPublishedRehberArticles } from '@/lib/rehber-articles';
 import { SITE_URL } from '@/lib/utils/constants';
 
@@ -52,6 +51,7 @@ export default async function RehberArticleDetailPage({ params }: RehberArticleD
   if (!article) notFound();
 
   const pageUrl = new URL(article.href, SITE_URL).toString();
+  const cover = realCoverUrl(article.coverImageUrl);
   const candidates = (await getPublishedRehberArticles(24)).filter((item) => item.id !== article.id);
   // Aynı kategoridekiler önce gelir; yeterli değilse en yeni rehberlerle tamamlanır.
   const relatedArticles = [
@@ -77,69 +77,35 @@ export default async function RehberArticleDetailPage({ params }: RehberArticleD
         ]}
       />
 
-      <div className="bg-white text-gray-900">
-        <section className="border-b border-gray-100 bg-gray-50">
-          <div className="container py-12 md:py-16">
-            <ArticleBreadcrumb
-              tone="light"
-              items={[
-                { name: 'Ana Sayfa', href: '/' },
-                { name: 'Rehber', href: '/rehber' },
-                { name: article.title },
-              ]}
+      <ArticleShell
+        breadcrumb={[
+          { label: 'Ana Sayfa', href: '/' },
+          { label: 'Rehber', href: '/rehber' },
+          { label: article.title },
+        ]}
+        eyebrow={article.category}
+        title={article.title}
+        summary={article.summary}
+        publishedAt={article.publishedAt}
+        updatedAt={article.updatedAt}
+        readingMinutes={article.readingMinutes}
+        cover={cover ? { src: cover, alt: article.title } : null}
+        aside={
+          <>
+            <AsideShareCard
+              url={pageUrl}
+              title={article.title}
+              shareText={buildArticleShareText({ title: article.title, summary: article.summary, url: pageUrl })}
             />
+            <AsideLinkList links={[{ href: '/rehber', label: 'Tüm rehberlere dön' }]} />
+            <AsideCommunityCard />
+          </>
+        }
+      >
+        {article.content ? <ArticleBody content={article.content} /> : null}
+      </ArticleShell>
 
-            <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_420px] lg:items-start">
-              <div>
-                <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500">
-                  <span className="rounded-full bg-google-blue px-3 py-1 font-semibold text-white">
-                    {article.category}
-                  </span>
-                  <ArticleDates publishedAt={article.publishedAt} updatedAt={article.updatedAt} />
-                  <span>{article.readingMinutes} dk okuma</span>
-                </div>
-
-                <h1 className="mt-5 max-w-4xl text-4xl font-black leading-tight text-gray-900 md:text-5xl">
-                  {article.title}
-                </h1>
-
-                {article.summary ? (
-                  <p className="mt-5 max-w-3xl text-lg leading-8 text-gray-600">{article.summary}</p>
-                ) : null}
-
-                <ShareBar tone="light" url={pageUrl} title={article.title} className="mt-6" />
-              </div>
-
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200 shadow-xl">
-                <Image
-                  src={article.coverImageUrl}
-                  alt={article.title}
-                  fill
-                  unoptimized
-                  sizes="(min-width: 1024px) 420px, 100vw"
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {article.content ? (
-          <section className="container py-14 md:py-20">
-            <article className="mx-auto max-w-4xl">
-              <ArticleToc content={article.content} tone="light" />
-              <div className="mt-8">
-                <MarkdownPreview content={article.content} tone="light" demoteH1 />
-              </div>
-              <div className="mt-12 border-t border-gray-200 pt-6">
-                <ShareBar tone="light" url={pageUrl} title={article.title} />
-              </div>
-            </article>
-          </section>
-        ) : null}
-
-        <RelatedArticles heading="Diğer rehberler" tone="light" items={relatedArticles} />
-      </div>
+      <RelatedArticles heading="Diğer rehberler" items={relatedArticles} linkLabel="Rehberi oku" />
     </>
   );
 }

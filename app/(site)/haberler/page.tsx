@@ -10,7 +10,8 @@ import { SITE_URL } from '@/lib/utils/constants';
 
 export const metadata = createMetadata({
   title: 'Haberler',
-  description: "Almanya, Avrupa ve Dünya'dan güncel haberler ve gelişmeler.",
+  description:
+    "Almanya, Türkiye, Avrupa ve dünyadan güncel haberler; Almanya'daki Türk topluluğunu ilgilendiren gelişmeler, siyaset, ekonomi ve yaşam başlıkları tek akışta.",
   path: '/haberler',
 });
 
@@ -28,7 +29,7 @@ export default async function HaberlerPage() {
     <>
       <WebPageJsonLd
         title="Haberler"
-        description="Almanya, Avrupa ve Dünya'dan güncel haberler ve gelişmeler."
+        description="Almanya, Türkiye, Avrupa ve dünyadan güncel haberler; Almanya'daki Türk topluluğunu ilgilendiren gelişmeler tek akışta."
         url={pageUrl}
       />
       <BreadcrumbJsonLd
@@ -48,8 +49,8 @@ export default async function HaberlerPage() {
       <Section>
         {!heroArticle && initialFeed.items.length === 0 ? (
           <EmptyState
-            title="Henüz yayınlanmış haber bulunmuyor."
-            description="`/admin/haberler` üzerinden bir haberi yayına aldığınızda burada görünür."
+            title="Henüz yayınlanmış haber bulunmuyor"
+            description="Haber akışımız hazırlanıyor. Kısa süre sonra Almanya, Türkiye ve Avrupa gündeminden güncel başlıklar burada yayımlanacak."
           />
         ) : (
           <div className="space-y-12">

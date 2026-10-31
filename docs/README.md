@@ -6,6 +6,7 @@ Bu sayfa belgelerin amacını ve güncellik durumunu gösterir. Uygulamanın mev
 
 Bu belgeler öneri ve yapılacak işlerdir; tamamlanmış özellik listesi olarak okunmamalıdır.
 
+- [Admin panelini yeni açık layouta taşıma planı](./plans/admin-redesign-2026-10-31.md) — `/admin` için fazlı geçiş (iskelet, ortak bileşenler, bölümler); [devir notu](./handovers/ADMIN_REDESIGN_HANDOFF.md) ile birlikte okunmalı.
 - [25 Ekim ana sayfa SEO analizini düzeltme planı](./plans/seo-analyzer-ana-sayfa-2026-10-25.md) — boş `alt` ve mevcut tarihlerin yanlış raporlanmasını ele alır.
 - [24 Ekim GEO denetimi düzeltme planı](./plans/geo-audit-2026-10-24.md) — canlı 85/100 denetimindeki doğrulanmış eksikleri ve yalancı pozitifleri ayırır.
 - [SEO ve GEO denetimi ve iyileştirme planı](./plans/seo-geo-2026-10-21.md) — 21 Ekim 2026 tarihli kod ve canlı site kontrolü.

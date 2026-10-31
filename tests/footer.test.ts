@@ -52,6 +52,15 @@ describe('Footer', () => {
     }
   });
 
+  it('offers the cookie preferences button next to the legal links', () => {
+    const { $ } = renderFooter();
+    const button = $('footer button');
+
+    expect(button).toHaveLength(1);
+    expect(button.text()).toBe('Çerez tercihleri');
+    expect(button.attr('type')).toBe('button');
+  });
+
   it('renders none of the removed SEO partner links', () => {
     const { html, $ } = renderFooter();
     const footerText = $('footer').text();

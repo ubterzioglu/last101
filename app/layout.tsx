@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next';
-import Script from 'next/script';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
+import { AnalyticsScripts } from '@/components/analytics/AnalyticsScripts';
+import { CookieConsent } from '@/components/analytics/CookieConsent';
+import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/seo/JsonLd';
 import {
@@ -19,8 +21,6 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
   variable: '--font-sans',
 });
-
-const GOATCOUNTER_ENDPOINT = 'https://almanya101de.goatcounter.com/count';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -114,12 +114,6 @@ export default function RootLayout({
         {/* Structured Data */}
         <OrganizationJsonLd />
         <WebSiteJsonLd />
-
-        {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-GNYJ39RG89"
-          strategy="afterInteractive"
-        />
       </head>
       <body className="font-sans antialiased min-h-screen flex flex-col">
         {/* Skip to main content link for accessibility */}
@@ -131,29 +125,10 @@ export default function RootLayout({
         <main id="main-content" className="flex-grow">
           {children}
         </main>
-        <Script
-          id="goatcounter"
-          src="https://gc.zgo.at/count.js"
-          data-goatcounter={GOATCOUNTER_ENDPOINT}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-GNYJ39RG89');
-          `}
-        </Script>
-        <Script id="microsoft-clarity" strategy="afterInteractive">
-          {`
-            (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "walpfs3c2q");
-          `}
-        </Script>
+        <Footer />
+        {/* İzleme betikleri yalnızca açık analitik izin sonrası yüklenir. */}
+        <AnalyticsScripts />
+        <CookieConsent />
       </body>
     </html>
   );

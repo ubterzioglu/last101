@@ -1,3 +1,4 @@
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import { ToolHero } from '@/components/tools/ToolHero';
 import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
 import VatandaslikTestiClient from './VatandaslikTestiClient';
@@ -28,7 +29,21 @@ export default function VatandaslikTestiPage() {
         howItWorksTitle="Nasıl Çalışır?"
         howItWorks={HOW_IT_WORKS}
       />
-      <VatandaslikTestiClient />
+      <ToolAccessGate
+        intro={{
+          title: 'Almanya Vatandaşlık Testi',
+          description:
+            'Gerçek Einbürgerungstest formatında 33 soruluk deneme sınavı: her soruda 4 seçenek ve tek doğru cevap. Süre tut, skorunu gör ve eksik konularını tespit et.',
+          highlights: [
+            'BAMF soru havuzunu temel alan bağımsız bir pratik ortamı sunar.',
+            'Almanya\'nın demokratik düzeni, tarihi, toplumsal yapısı ve eyalet bilgisi sorularını kapsar.',
+            'Sınav sonunda doğru sayını ve geçme eşiğine (en az 17 doğru) göre durumunu gösterir.',
+          ],
+          toolPath: '/vatandaslik-testi',
+        }}
+      >
+        <VatandaslikTestiClient />
+      </ToolAccessGate>
       <ToolInfoBand why={WHY_TEXT} />
     </>
   );

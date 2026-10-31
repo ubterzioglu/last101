@@ -2,23 +2,22 @@
 
 import { useState } from 'react';
 import { cn } from '@/lib/utils/cn';
-import { ARTICLE_TONE_CLASSES } from './articleTone';
-import type { ArticleTone } from './articleTone';
 
 interface ShareBarProps {
   url: string;
   title: string;
   /** WhatsApp için özel metin; verilmezse "başlık + bağlantı" kullanılır. */
   whatsappText?: string;
-  tone?: ArticleTone;
   className?: string;
 }
 
 const COPY_RESET_MS = 2000;
 
-export function ShareBar({ url, title, whatsappText, tone = 'dark', className }: ShareBarProps) {
+const CHIP_CLASSES =
+  'inline-flex min-h-[44px] items-center rounded-btn border border-line bg-white px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-ink motion-reduce:transition-none';
+
+export function ShareBar({ url, title, whatsappText, className }: ShareBarProps) {
   const [copied, setCopied] = useState(false);
-  const classes = ARTICLE_TONE_CLASSES[tone];
 
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
@@ -39,14 +38,9 @@ export function ShareBar({ url, title, whatsappText, tone = 'dark', className }:
     }
   }
 
-  const chipClass = cn(
-    'inline-flex rounded-full border px-4 py-2 text-sm font-semibold transition',
-    classes.chip
-  );
-
   return (
     <div className={cn('flex flex-wrap items-center gap-2', className)}>
-      <span className={cn('mr-1 text-sm font-semibold', classes.muted)}>Paylaş:</span>
+      <span className="mr-1 w-full text-[13px] font-bold uppercase tracking-[0.13em] text-muted">Paylaş</span>
       {targets.map((target) => (
         <a
           key={target.label}
@@ -54,12 +48,12 @@ export function ShareBar({ url, title, whatsappText, tone = 'dark', className }:
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${target.label} üzerinde paylaş`}
-          className={chipClass}
+          className={CHIP_CLASSES}
         >
           {target.label}
         </a>
       ))}
-      <button type="button" onClick={copyLink} className={chipClass} aria-live="polite">
+      <button type="button" onClick={copyLink} className={CHIP_CLASSES} aria-live="polite">
         {copied ? 'Kopyalandı' : 'Bağlantıyı kopyala'}
       </button>
     </div>

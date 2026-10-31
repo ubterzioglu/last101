@@ -14,7 +14,7 @@ export function CookieSettingsButton() {
         clearConsent();
         window.location.reload();
       }}
-      className="rounded-sm text-sm text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-google-yellow"
+      className="rounded-sm text-sm text-muted underline-offset-4 transition-colors hover:text-ink hover:underline"
     >
       Çerez tercihleri
     </button>

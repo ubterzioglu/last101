@@ -14,7 +14,7 @@ export default function GizlilikPolitikasiPage() {
     <LegalPage
       title="Gizlilik Politikası"
       description="Kişisel verilerinizin gizliliği bizim için önemlidir. Bu politika, almanya101’i kullanırken hangi verilerin işlendiğini ve haklarınızı açıklar."
-      lastUpdated="17 Haziran 2026"
+      lastUpdated="24 Ekim 2026"
     >
       <LegalSection heading="1. Veri Sorumlusu">
         <p>
@@ -48,12 +48,15 @@ export default function GizlilikPolitikasiPage() {
             (devuser) hesabı oluşturduğunuzda sağladığınız profil bilgileri.
           </li>
           <li>
-            <strong>Kullanım verileri:</strong> Sayfa
-            görüntülemeleri ve anonim analiz verileri (ziyaret istatistikleri).
+            <strong>Kullanım verileri:</strong> Yalnızca
+            açık izninizle yüklenen analitik araçlar (Google Analytics,
+            GoatCounter, Microsoft Clarity) aracılığıyla toplanan anonim sayfa
+            kullanımı istatistikleri. İzin vermezseniz bu veriler toplanmaz.
           </li>
           <li>
-            <strong>Çerezler:</strong> Tarayıcınızda
-            saklanan teknik ve analitik çerezler.
+            <strong>Çerezler:</strong> Oturum yönetimi
+            için zorunlu teknik çerezler; analitik çerezler ise yalnızca izin
+            verdikten sonra saklanır.
           </li>
         </ul>
       </LegalSection>
@@ -86,9 +89,12 @@ export default function GizlilikPolitikasiPage() {
         </p>
       </LegalSection>
 
-      <LegalSection heading="6. Çerezler">
+      <LegalSection heading="6. Çerezler ve Analitik İzniniz">
         <p>
-          Çerez kullanımımız hakkında ayrıntılı bilgi için{' '}
+          Analitik çerezler ve izleme betikleri yalnızca açık izninizle
+          yüklenir; izninizi her sayfanın alt bilgisindeki “Çerez tercihleri”
+          bağlantısından dilediğiniz zaman geri alabilirsiniz. Çerez kullanımımız
+          hakkında ayrıntılı bilgi için{' '}
           <Link href="/cerez-politikasi">
             Çerez Politikası
           </Link>{' '}

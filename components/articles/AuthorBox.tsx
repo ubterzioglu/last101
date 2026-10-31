@@ -1,32 +1,29 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { cn } from '@/lib/utils/cn';
-import { ARTICLE_TONE_CLASSES } from './articleTone';
-import type { ArticleTone } from './articleTone';
 
 interface AuthorBoxProps {
   name: string;
   href: string;
   avatarImageUrl: string;
   bio?: string;
-  tone?: ArticleTone;
 }
 
-export function AuthorBox({ name, href, avatarImageUrl, bio, tone = 'dark' }: AuthorBoxProps) {
-  const classes = ARTICLE_TONE_CLASSES[tone];
-
+export function AuthorBox({ name, href, avatarImageUrl, bio }: AuthorBoxProps) {
   return (
-    <aside aria-label="Yazar hakkında" className={cn('flex gap-4 rounded-2xl border p-5 md:p-6', classes.panel)}>
-      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-white/10">
-        <Image src={avatarImageUrl} alt={name} fill unoptimized sizes="64px" className="object-cover" />
+    <section aria-label="Yazar hakkında" className="flex gap-4 rounded-card border border-line bg-white p-5">
+      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-line bg-band">
+        <Image src={avatarImageUrl} alt="" fill sizes="56px" className="object-cover" />
       </div>
       <div className="min-w-0">
-        <p className={cn('text-xs font-semibold uppercase tracking-[0.18em]', classes.muted)}>Yazar</p>
-        <Link href={href} className={cn('text-lg font-bold hover:underline', classes.title)}>
+        <p className="text-[13px] font-bold uppercase tracking-[0.13em] text-muted">Yazar</p>
+        <Link
+          href={href}
+          className="mt-1 block break-words text-[17px] font-extrabold leading-snug tracking-[-0.02em] text-ink transition-colors hover:text-brand-700 motion-reduce:transition-none"
+        >
           {name}
         </Link>
-        {bio ? <p className={cn('mt-2 text-sm leading-6', classes.muted)}>{bio}</p> : null}
+        {bio ? <p className="mt-2 text-sm leading-relaxed text-muted">{bio}</p> : null}
       </div>
-    </aside>
+    </section>
   );
 }

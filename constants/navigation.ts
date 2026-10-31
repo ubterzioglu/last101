@@ -68,7 +68,7 @@ export const DRAWER_ITEMS: DrawerItem[] = [
   },
   {
     href: '/is-ilanlari',
-    label: 'İş İlanları',
+    label: 'İşe Alım Firmaları',
     description: 'Almanya\'daki işe alım ajanslarını inceleyin.',
     category: 'tools',
   },

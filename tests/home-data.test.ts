@@ -160,6 +160,6 @@ describe('home guide and FAQ copy', () => {
     expect(answers[2]).toMatch(/^Almanya101; yaşam rehberleri, iş ilanları.*yol haritası sunmaktır\.$/);
     expect(answers[3]).toMatch(/^Yeni bir ülkede doğru insanlara hızlı ulaşmak.*birçok konuda fark yaratır\.$/);
     expect(answers[4]).toMatch(/^En yaygın hatalar: adres kaydı süresini kaçırmak \(14 gün sınırı var\).*güncel deneyimler paylaşılmaktadır\.$/);
-    expect(answers.map((answer) => answer.length)).toEqual([332, 312, 353, 298, 395]);
+    expect(answers.map((answer) => answer.length)).toEqual([485, 342, 406, 242, 395]);
   });
 });

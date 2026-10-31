@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { CalendarDays, Clock } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { ArticleDates } from '@/components/articles/ArticleDates';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import type { BreadcrumbItem } from '@/components/layout/Breadcrumb';
 import { Eyebrow } from '@/components/site/Eyebrow';
@@ -22,7 +23,10 @@ export interface ArticleShellProps {
   eyebrowTone?: SiteTone;
   title: string;
   summary?: string;
-  dateLabel: string;
+  /** ISO publish date; shown as "Yayın" with a <time> element. */
+  publishedAt: string;
+  /** ISO update date; shown as "Güncelleme" only when it is a meaningful update. */
+  updatedAt?: string | null;
   readingMinutes: number;
   author?: ArticleAuthor;
   /** Real cover photo; pass null to show none. */
@@ -33,7 +37,12 @@ export interface ArticleShellProps {
   children?: ReactNode;
 }
 
-function ArticleMeta({ dateLabel, readingMinutes, author }: Pick<ArticleShellProps, 'dateLabel' | 'readingMinutes' | 'author'>) {
+function ArticleMeta({
+  publishedAt,
+  updatedAt,
+  readingMinutes,
+  author,
+}: Pick<ArticleShellProps, 'publishedAt' | 'updatedAt' | 'readingMinutes' | 'author'>) {
   return (
     <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-muted">
       {author ? (
@@ -44,9 +53,9 @@ function ArticleMeta({ dateLabel, readingMinutes, author }: Pick<ArticleShellPro
           {author.name}
         </span>
       ) : null}
-      <span className="inline-flex items-center gap-1.5">
+      <span className="inline-flex flex-wrap items-center gap-x-4 gap-y-1">
         <CalendarDays aria-hidden="true" size={16} className="shrink-0" />
-        {dateLabel}
+        <ArticleDates publishedAt={publishedAt} updatedAt={updatedAt} />
       </span>
       <span className="inline-flex items-center gap-1.5">
         <Clock aria-hidden="true" size={16} className="shrink-0" />
@@ -56,14 +65,18 @@ function ArticleMeta({ dateLabel, readingMinutes, author }: Pick<ArticleShellPro
   );
 }
 
-/** Article template: breadcrumb, eyebrow, H1, meta, cover; body and sticky aside side by side on desktop. */
+/**
+ * Shared light article template (haberler, yazi-dizisi, rehber): breadcrumb, eyebrow, the single H1,
+ * meta (author, publish/update dates, reading time), cover; body and sticky aside side by side on desktop.
+ */
 export function ArticleShell({
   breadcrumb,
   eyebrow,
   eyebrowTone,
   title,
   summary,
-  dateLabel,
+  publishedAt,
+  updatedAt,
   readingMinutes,
   author,
   cover,
@@ -87,7 +100,12 @@ export function ArticleShell({
               {title}
             </h1>
             {summary ? <p className="mt-5 max-w-3xl text-lg leading-relaxed text-muted">{summary}</p> : null}
-            <ArticleMeta dateLabel={dateLabel} readingMinutes={readingMinutes} author={author} />
+            <ArticleMeta
+              publishedAt={publishedAt}
+              updatedAt={updatedAt}
+              readingMinutes={readingMinutes}
+              author={author}
+            />
           </header>
 
           {cover ? (

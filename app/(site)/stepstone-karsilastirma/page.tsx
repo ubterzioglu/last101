@@ -1,5 +1,6 @@
 import { createMetadata } from '@/lib/seo/metadata';
 import { BreadcrumbJsonLd, WebPageJsonLd } from '@/components/seo/JsonLd';
+import { ToolAccessGate } from '@/components/tools/ToolIntroPanel';
 import { ToolHero } from '@/components/tools/ToolHero';
 import { ToolInfoBand } from '@/components/tools/ToolInfoBand';
 import { getSortedCities, getSortedJobGroups } from '@/lib/salary/stepstone-data';
@@ -40,7 +41,7 @@ export default function StepstoneKarsilastirmaPage() {
       <BreadcrumbJsonLd
         items={[
           { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'StepStone Maaş Karşılaştırma', url: pageUrl },
+          { name: 'StepStone 2026 Maaş Karşılaştırma', url: pageUrl },
         ]}
       />
       <ToolHero
@@ -51,7 +52,21 @@ export default function StepstoneKarsilastirmaPage() {
         howItWorksTitle="Nasıl Çalışır?"
         howItWorks={HOW_IT_WORKS}
       />
-      <StepstoneClient />
+      <ToolAccessGate
+        intro={{
+          title: 'StepStone 2026 Maaş Karşılaştırma',
+          description:
+            'StepStone 2026 maaş verilerine göre kendi maaşını Almanya geneliyle karşılaştır: eyalet, deneyim, meslek grubu ve şirket büyüklüğüne göre nerede durduğunu gör.',
+          highlights: [
+            'Maaşını StepStone 2026 referans aralıklarıyla yan yana getirir.',
+            'Eyalet, deneyim seviyesi ve meslek grubu kırılımında analiz sunar.',
+            'Pazarlık ve iş değişikliği kararları için somut bir referans çerçevesi oluşturur.',
+          ],
+          toolPath: '/stepstone-karsilastirma',
+        }}
+      >
+        <StepstoneClient />
+      </ToolAccessGate>
       <ToolInfoBand why={WHY_TEXT} />
     </>
   );
