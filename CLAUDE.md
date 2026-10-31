@@ -62,7 +62,7 @@ Tool page structure (shared shell in `components/tools/`):
 2. `ToolPanel` (band panel) holding `ToolProgress` ("Soru X / Y") and `ToolQuestionCard` (`data-pw="tool-question-card"`) with `ToolOption` buttons, or the calculator form (`components/calc/*` fields)
 3. Results in featured cards (`Card variant="featured"`) with hairline metric grids
 4. `ToolInfoBand` (dark band: "Bu araç neden var?" / "Bu araç kim için?"), then sources/related tools, `ToolFaq` (accordion), legal note
-Config-driven tools render all of this through `ToolPageScaffold` + `ToolExperience`. Keep `data-pw` hooks and the texts e2e specs select on.
+Config-driven tools render all of this through `ToolPageScaffold` + `ToolExperience`. Tools are login-gated: `ToolPageScaffold` (config-driven) and `ToolAccessGate` (the hand-written tool pages) show `ToolIntroPanel` to anonymous visitors, with a `/giris?next=<path>` CTA, and the interactive tool only to signed-in users. Keep `data-pw` hooks and the texts e2e specs select on.
 
 ## DevUser Dashboard (`app/(devuser)/devuser/`)
 

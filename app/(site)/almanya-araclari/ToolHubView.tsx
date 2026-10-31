@@ -85,7 +85,10 @@ function CategorySection({ group }: { group: ToolHubGroup }) {
           Bu bölümde <span className="font-semibold text-ink">{group.items.length} araç var</span>
         </p>
       </div>
-      <ServiceGrid items={group.items} columns={3} />
+      <ServiceGrid
+        items={group.items.map((item) => ({ ...item, ariaLabel: `Aracı aç: ${item.title}` }))}
+        columns={3}
+      />
     </section>
   );
 }

@@ -20,6 +20,8 @@ export interface ServiceItem {
   detail?: { label: string; text: string };
   /** Call-to-action label shown at the bottom of the tile. */
   cta?: string;
+  /** Accessible name for the whole link when the visible text alone is ambiguous. */
+  ariaLabel?: string;
 }
 
 export type ServiceTileProps = ServiceItem & {
@@ -45,6 +47,7 @@ export function ServiceTile({
   meta,
   detail,
   cta,
+  ariaLabel,
   className,
   headingLevel = 3,
 }: ServiceTileProps) {
@@ -98,14 +101,14 @@ export function ServiceTile({
 
   if (external ?? EXTERNAL_HREF.test(href)) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
+      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={ariaLabel} className={classes}>
         {content}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={classes}>
+    <Link href={href} aria-label={ariaLabel} className={classes}>
       {content}
     </Link>
   );

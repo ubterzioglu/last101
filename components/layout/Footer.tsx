@@ -22,6 +22,15 @@ const FOOTER_LEGAL_LINKS: readonly FooterLink[] = [
   { href: '/impressum', label: 'Impressum' },
 ];
 
+const FOOTER_CONTENT_LINKS: readonly FooterLink[] = [
+  { href: '/almanyada-yasam', label: "Almanya'da Yaşam" },
+  { href: '/haberler', label: 'Haberler' },
+  { href: '/belgeler', label: 'Yararlı Belgeler' },
+  { href: '/almanya-araclari', label: 'Almanya Araçları' },
+  { href: '/hizmet-rehberi', label: 'Hizmet Rehberi' },
+  { href: '/is-ilanlari', label: 'İşe Alım Firmaları' },
+];
+
 interface FooterProps {
   /** Optional right-hand note on the copyright row, e.g. a last-updated line. */
   note?: ReactNode;
@@ -47,17 +56,30 @@ export function Footer({ note }: FooterProps) {
             <p className="text-sm text-muted">yalnız değilsin! almanya101 seninle!</p>
           </div>
 
-          <nav aria-label="Kurumsal bağlantılar">
-            <ul className="flex flex-wrap gap-x-4 gap-y-2 xl:justify-end">
-              {FOOTER_LEGAL_LINKS.map(({ href, label }) => (
-                <li key={href}>
-                  <Link href={href} className="text-sm text-muted transition-colors hover:text-ink">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="flex flex-col gap-3 xl:items-end">
+            <nav aria-label="İçerik ve araç bağlantıları">
+              <ul className="flex flex-wrap gap-x-4 gap-y-2 xl:justify-end">
+                {FOOTER_CONTENT_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="text-sm font-semibold text-ink transition-colors hover:text-brand-700">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <nav aria-label="Kurumsal bağlantılar">
+              <ul className="flex flex-wrap gap-x-4 gap-y-2 xl:justify-end">
+                {FOOTER_LEGAL_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link href={href} className="text-sm text-muted transition-colors hover:text-ink">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
 
         <div className="flex flex-col gap-2 border-t border-line py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
