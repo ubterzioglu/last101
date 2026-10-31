@@ -24,12 +24,12 @@ values (
   'almanya101',
   'Almanya101 editör ekibi: Almanya''da yaşam, vize, iş ve günlük işlemler üzerine rehberleri ve haberleri hazırlar ve günceller.',
   E'Almanya101, Almanya''da yaşayan veya Almanya''ya taşınmayı düşünen Türkçe konuşan kullanıcılar için hazırlanan bir bilgi platformudur.\n\n'
-  E'Bu sayfadaki içerikler Almanya101 editör ekibi tarafından hazırlanır. Editör ekibi; rehberleri, haberleri ve araçları yayınlar, içerikleri düzenli olarak gözden geçirir ve güncel tutmaya çalışır.\n\n'
-  E'Yayın ilkeleri\n\n'
-  E'- Rehber ve haber içeriklerinde, mümkün olduğunda resmî kurumların ve ilgili kaynakların bilgileri esas alınır.\n'
-  E'- İçeriklerde yayın ve güncelleme tarihleri görünür biçimde belirtilir.\n'
-  E'- Yanlış veya eski bir bilgi fark edilirse iletişim sayfasından bildirilebilir; bildirimler incelenir ve gerekli düzeltmeler yapılır.\n\n'
-  E'Almanya101 içerikleri genel bilgilendirme amacı taşır; hukuki, mali veya bireysel danışmanlık yerine geçmez. Ayrıntılar için Hakkımızda sayfasına bakabilirsiniz.',
+  || E'Bu sayfadaki içerikler Almanya101 editör ekibi tarafından hazırlanır. Editör ekibi; rehberleri, haberleri ve araçları yayınlar, içerikleri düzenli olarak gözden geçirir ve güncel tutmaya çalışır.\n\n'
+  || E'Yayın ilkeleri\n\n'
+  || E'- Rehber ve haber içeriklerinde, mümkün olduğunda resmî kurumların ve ilgili kaynakların bilgileri esas alınır.\n'
+  || E'- İçeriklerde yayın ve güncelleme tarihleri görünür biçimde belirtilir.\n'
+  || E'- Yanlış veya eski bir bilgi fark edilirse iletişim sayfasından bildirilebilir; bildirimler incelenir ve gerekli düzeltmeler yapılır.\n\n'
+  || E'Almanya101 içerikleri genel bilgilendirme amacı taşır; hukuki, mali veya bireysel danışmanlık yerine geçmez. Ayrıntılar için Hakkımızda sayfasına bakabilirsiniz.',
   '/almanya101.png',
   9999,
   '',
