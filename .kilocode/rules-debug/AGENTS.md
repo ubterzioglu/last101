@@ -7,8 +7,8 @@
 - Session persistence is DISABLED in devuser client (`persistSession: false`)
 
 ### Header/Footer Visibility
-- Header/Footer hide when `body[data-devuser]` attribute is set
-- Admin and devuser pages must set `document.body.setAttribute('data-devuser', 'true')`
+- Header/Footer hide when `body[data-admin]` (admin) or `body[data-devuser]` (devuser) is set
+- Admin pages set `document.body.setAttribute('data-admin', 'true')` (`app/admin/layout.tsx`, `AdminLayoutShell`); devuser pages set `data-devuser`
 
 ### Admin Auth
 - Rate limit: 12 attempts / 15 min, then 30 min block

@@ -35,6 +35,8 @@ Use Node.js 20 and `npm` for all package operations. Do not use `bun` or `yarn`.
 Important: `(devuser)` is hidden in the URL.  
 Code path: `app/(devuser)/devuser/survey/` -> URL: `/devuser/survey` (never `/devuser/devuser/survey`).
 
+Blog (columnists): `app/(marketing)/blog/` serves `/blog`, `/blog/<title>--<uuid>`, `/blog/yazar/<slug>` and `/blog/feed.xml`. Old `/yazi-dizisi/*` URLs 308 to `/blog/*` (`lib/seo/redirects.ts`, `next.config.ts`); root author URLs like `/ubt` 308 to `/blog/yazar/<slug>` (`app/(site)/[authorSlug]/page.tsx`). The `almanya101` editorial author lives in `lib/authors.ts` (`SITE_AUTHOR`, `resolveArticleAuthor`).
+
 ## Core Coding Rules
 
 1. Class merging: always use `cn()` from `@/lib/utils/cn`.
@@ -73,9 +75,12 @@ Config-driven tools render all of this through `ToolPageScaffold` + `ToolExperie
 
 ## Admin Panel (`app/admin/`)
 
-- `page.tsx`: full client component with password gate, code-rain canvas, 9 sections
-- `layout.tsx`: sets `robots: { index: false, follow: false }`
-- Grid layout: 5 columns desktop, 2 columns mobile
+- Light theme, same tokens as the public site (no `google-*`, `bg-black`, glass or gradients)
+- `layout.tsx`: sets `robots: { index: false, follow: false }`, sets `body[data-admin]` before first paint, wraps pages in `AdminLayoutShell` (sidebar, accessible mobile drawer)
+- `page.tsx`: renders `AdminHomeClient` (password login via `AuthSplitLayout`, then the dashboard)
+- Sidebar items come from `constants/adminNav.tsx`; each section is `app/admin/<section>/`
+- Shared admin components: `components/admin/ui/` (see its README); build admin pages from these
+- Software Hub sections live in `components/admin/softwareHub/`
 - Bottom actions should use `Link`, not `<a>`
 
 Admin auth (`lib/admin/adminAuth.ts`):

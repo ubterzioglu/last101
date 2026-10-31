@@ -17,7 +17,7 @@ import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
  *
  * Where GuidesAdminClient documents the admin sections, this page explains how
  * end users experience the product: the new auth requirement and member login,
- * the interactive tools + hubs, the corner-author (Arkadaşın Köşesi) flow, and
+ * the interactive tools + hubs, the corner-author (blog) flow, and
  * the DevUser dashboard. It is read-only and rendered inside the admin shell so
  * the operator understands every user journey from one place.
  */
@@ -49,7 +49,7 @@ const GUIDES: GuideEntry[] = [
         </p>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           <Mini title="🌐 Pazarlama & İçerik">
-            Ana sayfa, haberler, köşe yazıları (Arkadaşın Köşesi), hizmet rehberi gibi <strong className="text-ink">herkese açık</strong> sayfalar. Giriş gerektirmez.
+            Ana sayfa, haberler, köşe yazıları (blog), hizmet rehberi gibi <strong className="text-ink">herkese açık</strong> sayfalar. Giriş gerektirmez.
           </Mini>
           <Mini title="🧰 İnteraktif Araçlar">
             Maaş hesaplama, vize/banka/sigorta seçimi, planlama araçları. <strong className="text-ink">Artık üyelik (giriş) zorunlu.</strong>
@@ -96,7 +96,7 @@ const GUIDES: GuideEntry[] = [
   },
   {
     key: 'kose-yazari',
-    title: 'Köşe Yazarı Paneli — Arkadaşın Köşesi',
+    title: 'Köşe Yazarı Paneli — Blog / Köşe Yazıları',
     summary: 'Yazarların ayrı giriş + yazı/foto yükleme akışı.',
     tone: 'green',
     href: '/admin/yazi-dizisi',
@@ -106,14 +106,14 @@ const GUIDES: GuideEntry[] = [
         <p className="mt-3 text-sm leading-7 text-muted">
           Köşe yazarları, ana üyelik sisteminden <strong className="text-ink">bağımsız</strong> çalışır. Her yazarın
           kendi şifresi ve kendi paneli vardır. Yazar yönetimini (yeni yazar ekleme, şifre) admin{' '}
-          <Link href="/admin/yazi-dizisi" className={LINK_CLASS}>Arkadaşın Köşesi</Link>{' '}
+          <Link href="/admin/yazi-dizisi" className={LINK_CLASS}>Blog / Köşe Yazıları</Link>{' '}
           bölümünden yaparsın.
         </p>
         <ul className="mt-4 space-y-2 text-sm leading-7 text-muted">
           <Bullet><strong className="text-ink">1. Giriş</strong>: Yazar <code className={CODE_CLASS}>/authors/&lt;yazar&gt;</code> adresinden, admin’in verdiği şifreyle girer.</Bullet>
           <Bullet><strong className="text-ink">2. Panel</strong>: <code className={CODE_CLASS}>/authors/&lt;yazar&gt;/panel</code> — profilini (ad, bio, profil görseli) düzenler.</Bullet>
           <Bullet><strong className="text-ink">3. Yazı yaz</strong>: Başlık, özet, kapak görseli, okuma süresi ve Markdown içerik. <strong className="text-ink">Canlı önizleme</strong> ile yazarken sonucu görür.</Bullet>
-          <Bullet><strong className="text-ink">4. Yayınla</strong>: Taslak olarak kaydeder veya doğrudan yayına alır. Yayındaki yazı <Link href="/yazi-dizisi" className={LINK_CLASS}>/yazi-dizisi</Link> ve yazarın kendi sayfasında (<code className={CODE_CLASS}>/&lt;yazar&gt;</code>) görünür.</Bullet>
+          <Bullet><strong className="text-ink">4. Yayınla</strong>: Taslak olarak kaydeder veya doğrudan yayına alır. Yayındaki yazı <Link href="/blog" className={LINK_CLASS}>/blog</Link> ve yazarın kendi sayfasında (<code className={CODE_CLASS}>/blog/yazar/&lt;yazar&gt;</code>) görünür.</Bullet>
         </ul>
         <Warning>
           Görsel yükleme JPG/PNG/WEBP/GIF ve <strong className="text-ink">en fazla 5 MB</strong> ile sınırlıdır. Yazar

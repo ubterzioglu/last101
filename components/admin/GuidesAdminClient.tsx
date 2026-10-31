@@ -246,16 +246,17 @@ const GUIDES: GuideEntry[] = [
   },
   {
     key: 'yazi-dizisi',
-    title: 'Arkadaşın Köşesi — Köşe Yazıları',
+    title: 'Blog / Köşe Yazıları',
     summary: 'Köşe yazısı / yazı dizisi içeriklerini oluştur ve yönet.',
     tone: 'brand',
     href: '/admin/yazi-dizisi',
-    hrefLabel: 'Arkadaşın Köşesine Git',
+    hrefLabel: 'Köşe Yazılarına Git',
     body: (
       <>
         <p className="mt-3 text-sm leading-7 text-muted">
-          Çok yazarlı köşe yazısı sistemini buradan yönetirsin. Her yazarın kendi public sayfası (
-          <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">/&lt;yazar&gt;</code>), kendi{' '}
+          Çok yazarlı köşe yazısı sistemini buradan yönetirsin. Yazılar <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">/blog</code>{' '}
+          altında yayınlanır. Her yazarın kendi public sayfası (
+          <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">/blog/yazar/&lt;yazar&gt;</code>), kendi{' '}
           <strong className="text-ink">ayrı giriş ekranı</strong> (
           <code className="rounded-tile bg-band px-1.5 py-0.5 text-xs text-ink">/authors/&lt;yazar&gt;</code>) ve kendi{' '}
           <strong className="text-ink">yönetim paneli</strong> (

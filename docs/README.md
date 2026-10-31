@@ -6,8 +6,8 @@ Bu sayfa belgelerin amacını ve güncellik durumunu gösterir. Uygulamanın mev
 
 Bu belgeler öneri ve yapılacak işlerdir; tamamlanmış özellik listesi olarak okunmamalıdır.
 
-- [Admin panelini yeni açık layouta taşıma planı](./plans/admin-redesign-2026-10-31.md) — `/admin` için fazlı geçiş (iskelet, ortak bileşenler, bölümler); [devir notu](./handovers/ADMIN_REDESIGN_HANDOFF.md) ile birlikte okunmalı.
-- [Blog adresi ve almanya101 yazarı SEO/GEO planı](./plans/blog-seo-geo-2026-10-31.md) — `/yazi-dizisi` yolunu `/blog` altına taşıma, 308 yönlendirmeleri ve anonim içerik için kurumsal yazar. Uygulandı; admin etiketleri ve CLAUDE.md güncellemesi admin dalı birleşince yapılacak.
+- [Admin panelini yeni açık layouta taşıma planı](./plans/admin-redesign-2026-10-31.md) — `/admin` için fazlı geçiş (iskelet, ortak bileşenler, bölümler); [devir notu](./handovers/ADMIN_REDESIGN_HANDOFF.md) ile birlikte okunmalı. Uygulandı ve main'de (31 Ekim 2026); güncel durum için [31 Ekim devir notu](./handovers/HANDOVER_2026-10-31.md).
+- [Blog adresi ve almanya101 yazarı SEO/GEO planı](./plans/blog-seo-geo-2026-10-31.md) — `/yazi-dizisi` yolunu `/blog` altına taşıma, 308 yönlendirmeleri ve anonim içerik için kurumsal yazar. Uygulandı ve main'de; CLAUDE.md güncellendi. K8 ve `/arkadasin-kosesi` kısımları geçersiz, ayrıntı devir notunda.
 - [25 Ekim ana sayfa SEO analizini düzeltme planı](./plans/seo-analyzer-ana-sayfa-2026-10-25.md) — boş `alt` ve mevcut tarihlerin yanlış raporlanmasını ele alır.
 - [24 Ekim GEO denetimi düzeltme planı](./plans/geo-audit-2026-10-24.md) — canlı 85/100 denetimindeki doğrulanmış eksikleri ve yalancı pozitifleri ayırır.
 - [SEO ve GEO denetimi ve iyileştirme planı](./plans/seo-geo-2026-10-21.md) — 21 Ekim 2026 tarihli kod ve canlı site kontrolü.

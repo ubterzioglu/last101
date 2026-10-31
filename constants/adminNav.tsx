@@ -63,7 +63,7 @@ export const ADMIN_NAV_ITEMS: readonly AdminNavItem[] = [
   },
   {
     href: '/admin/yazi-dizisi',
-    label: 'Arkadaşın Köşesi',
+    label: 'Blog / Köşe Yazıları',
     description: 'Köşe yazıları',
     tone: 'blue',
     icon: (
