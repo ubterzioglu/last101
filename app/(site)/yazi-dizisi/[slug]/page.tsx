@@ -1,11 +1,22 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import MarkdownPreview from '@/components/MarkdownPreview';
 import { createArticleMetadata } from '@/lib/seo/metadata';
-import { getPublishedCornerPostBySlug } from '@/lib/corner';
+import { ArticleBreadcrumb } from '@/components/articles/ArticleBreadcrumb';
+import { ArticleDates } from '@/components/articles/ArticleDates';
+import { ArticleToc } from '@/components/articles/ArticleToc';
+import { AuthorBox } from '@/components/articles/AuthorBox';
+import { RelatedArticles } from '@/components/articles/RelatedArticles';
+import { ShareBar } from '@/components/articles/ShareBar';
+import {
+  getPublishedCornerAuthorBySlug,
+  getPublishedCornerPostBySlug,
+  getPublishedCornerPosts,
+} from '@/lib/corner';
 import { SITE_URL } from '@/lib/utils/constants';
+
+const RELATED_LIMIT = 3;
 
 interface CornerPostDetailPageProps {
   params: Promise<{
@@ -47,6 +58,19 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
   if (!post) notFound();
 
   const pageUrl = new URL(post.href, SITE_URL).toString();
+  const authorName = post.authorName || 'Arkadaşın Köşesi';
+  const [author, allPosts] = await Promise.all([
+    post.authorSlug ? getPublishedCornerAuthorBySlug(post.authorSlug) : Promise.resolve(undefined),
+    getPublishedCornerPosts(),
+  ]);
+  // Aynı yazarın diğer yazıları önce, ardından en yeniler; liste yeniden eskiye sıralanır.
+  const others = allPosts
+    .filter((item) => item.id !== post.id)
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  const relatedPosts = [
+    ...others.filter((item) => item.authorId === post.authorId),
+    ...others.filter((item) => item.authorId !== post.authorId),
+  ].slice(0, RELATED_LIMIT);
 
   return (
     <>
@@ -55,7 +79,9 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
         description={post.summary || post.title}
         datePublished={post.publishedAt}
         dateModified={post.updatedAt || undefined}
-        author={post.authorName || 'Arkadaşın Köşesi'}
+        author={authorName}
+        authorType={post.authorSlug ? 'Person' : 'Organization'}
+        authorUrl={post.authorSlug ? new URL(`/${post.authorSlug}`, SITE_URL).toString() : undefined}
         url={pageUrl}
         image={post.coverImageUrl}
       />
@@ -71,12 +97,13 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
         <section className="relative overflow-hidden border-b border-white/10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.22),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(255,187,0,0.16),_transparent_35%)]" />
           <div className="container relative py-16 md:py-24">
-            <Link
-              href="/yazi-dizisi"
-              className="inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10 hover:text-white"
-            >
-              Tüm yazılara dön
-            </Link>
+            <ArticleBreadcrumb
+              items={[
+                { name: 'Ana Sayfa', href: '/' },
+                { name: 'Arkadaşın Köşesi', href: '/yazi-dizisi' },
+                { name: post.title },
+              ]}
+            />
 
             <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_420px] lg:items-start">
               <div>
@@ -84,7 +111,7 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
                   <span className="rounded-full bg-google-yellow px-3 py-1 font-semibold text-black">
                     Arkadaşın Köşesi
                   </span>
-                  <span>{post.dateLabel}</span>
+                  <ArticleDates publishedAt={post.publishedAt} updatedAt={post.updatedAt} />
                   <span>{post.readingMinutes} dk okuma</span>
                 </div>
 
@@ -98,10 +125,12 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
 
                 <div className="mt-6 flex items-center gap-3 text-sm text-white/64">
                   <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/10">
-                    <Image src={post.authorAvatarImageUrl || '/images/profil.jpg'} alt={post.authorName || 'Arkadaşın Köşesi'} fill unoptimized sizes="40px" className="object-cover" />
+                    <Image src={post.authorAvatarImageUrl || '/images/profil.jpg'} alt={authorName} fill unoptimized sizes="40px" className="object-cover" />
                   </div>
-                  <span>{post.authorName || 'Arkadaşın Köşesi'}</span>
+                  <span>{authorName}</span>
                 </div>
+
+                <ShareBar url={pageUrl} title={post.title} className="mt-6" />
               </div>
 
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/40">
@@ -121,10 +150,26 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
         {post.content ? (
           <section className="container py-14 md:py-20">
             <article className="mx-auto max-w-4xl">
-              <MarkdownPreview content={post.content} demoteH1 />
+              <ArticleToc content={post.content} />
+              <div className="mt-8">
+                <MarkdownPreview content={post.content} demoteH1 />
+              </div>
+              <div className="mt-12 space-y-8 border-t border-white/10 pt-6">
+                <ShareBar url={pageUrl} title={post.title} />
+                {post.authorSlug ? (
+                  <AuthorBox
+                    name={authorName}
+                    href={`/${post.authorSlug}`}
+                    avatarImageUrl={post.authorAvatarImageUrl || '/images/profil.jpg'}
+                    bio={author?.shortBio}
+                  />
+                ) : null}
+              </div>
             </article>
           </section>
         ) : null}
+
+        <RelatedArticles heading="Diğer yazılar" items={relatedPosts} />
       </div>
     </>
   );

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { createArticleMetadata } from '@/lib/seo/metadata';
@@ -7,7 +6,10 @@ import { getPublishedNewsArticleBySlug, getRelatedPublishedNewsArticles } from '
 import { SITE_URL } from '@/lib/utils/constants';
 import MarkdownPreview from '@/components/MarkdownPreview';
 import { NewsListCard } from '@/components/news/NewsListCard';
-import { WhatsAppShareButton } from '@/components/news/WhatsAppShareButton';
+import { ArticleBreadcrumb } from '@/components/articles/ArticleBreadcrumb';
+import { ArticleDates } from '@/components/articles/ArticleDates';
+import { ArticleToc } from '@/components/articles/ArticleToc';
+import { ShareBar } from '@/components/articles/ShareBar';
 
 interface NewsDetailPageProps {
   params: Promise<{
@@ -75,12 +77,13 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         <section className="relative overflow-hidden border-b border-white/10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(1,161,241,0.25),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(255,187,0,0.18),_transparent_35%)]" />
           <div className="container relative py-16 md:py-24">
-            <Link
-              href="/haberler"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10 hover:text-white"
-            >
-              Tüm haberlere dön
-            </Link>
+            <ArticleBreadcrumb
+              items={[
+                { name: 'Ana Sayfa', href: '/' },
+                { name: 'Haberler', href: '/haberler' },
+                { name: article.title },
+              ]}
+            />
 
             <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_420px] lg:items-start">
               <div>
@@ -88,7 +91,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
                   <span className="rounded-full bg-google-yellow px-3 py-1 font-semibold text-black">
                     {article.categoryLabel}
                   </span>
-                  <time dateTime={article.publishedAt}>{article.publishedLabel}</time>
+                  <ArticleDates publishedAt={article.publishedAt} updatedAt={article.updatedAt} />
                   <span>{article.readingMinutes} dk okuma</span>
                 </div>
 
@@ -104,7 +107,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
               <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/40">
                 <Image
                   src={article.coverImageUrl}
-                  alt=""
+                  alt={article.title}
                   width={840}
                   height={630}
                   unoptimized
@@ -120,14 +123,17 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         {article.content ? (
           <section className="container py-14 md:py-20">
             <div className="mx-auto max-w-4xl">
-              <MarkdownPreview content={article.content} demoteH1 />
+              <ArticleToc content={article.content} />
+              <div className="mt-8">
+                <MarkdownPreview content={article.content} demoteH1 />
+              </div>
             </div>
           </section>
         ) : null}
 
         <section className="container pb-12">
           <div className="mx-auto flex max-w-4xl flex-wrap items-center gap-3 rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
-            <WhatsAppShareButton text={article.whatsappShareText} />
+            <ShareBar url={pageUrl} title={article.title} whatsappText={article.whatsappShareText} />
             {article.sourceUrl ? (
               <a
                 href={article.sourceUrl}

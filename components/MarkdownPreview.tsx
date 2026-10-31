@@ -1,9 +1,12 @@
 'use client';
 
+import { isValidElement } from 'react';
+import type { ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
+import { createHeadingIdGenerator } from '@/lib/articles/headings';
 import { cn } from '@/lib/utils/cn';
 
 interface MarkdownPreviewProps {
@@ -18,8 +21,18 @@ interface MarkdownPreviewProps {
   demoteH1?: boolean;
 }
 
+function childrenToText(node: ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(childrenToText).join('');
+  if (isValidElement<{ children?: ReactNode }>(node)) return childrenToText(node.props.children);
+  return '';
+}
+
 export default function MarkdownPreview({ content, className = '', demoteH1 = false }: MarkdownPreviewProps) {
   if (!content) return null;
+
+  // Başlık id'leri extractHeadings ile aynı kuralla üretilir; içindekiler bağlantıları bu id'lere gider.
+  const nextHeadingId = createHeadingIdGenerator();
 
   return (
     <div className={cn('prose prose-invert max-w-none', className)}>
@@ -29,12 +42,24 @@ export default function MarkdownPreview({ content, className = '', demoteH1 = fa
         components={{
           h1: ({ children }) =>
             demoteH1 ? (
-              <h2 className="text-3xl font-bold mb-4">{children}</h2>
+              <h2 id={nextHeadingId(childrenToText(children))} className="scroll-mt-24 text-3xl font-bold mb-4">
+                {children}
+              </h2>
             ) : (
-              <h1 className="text-3xl font-bold mb-4">{children}</h1>
+              <h1 id={nextHeadingId(childrenToText(children))} className="scroll-mt-24 text-3xl font-bold mb-4">
+                {children}
+              </h1>
             ),
-          h2: ({ children }) => <h2 className="text-2xl font-bold mb-3">{children}</h2>,
-          h3: ({ children }) => <h3 className="text-xl font-bold mb-2">{children}</h3>,
+          h2: ({ children }) => (
+            <h2 id={nextHeadingId(childrenToText(children))} className="scroll-mt-24 text-2xl font-bold mb-3">
+              {children}
+            </h2>
+          ),
+          h3: ({ children }) => (
+            <h3 id={nextHeadingId(childrenToText(children))} className="scroll-mt-24 text-xl font-bold mb-2">
+              {children}
+            </h3>
+          ),
           p: ({ children }) => <p className="mb-4 leading-7">{children}</p>,
           a: ({ href, children }) => (
             <a href={href} className="text-[#7fd5ff] hover:underline" target="_blank" rel="noopener noreferrer">
