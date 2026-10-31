@@ -20,10 +20,15 @@
 - [Haberler](https://almanya101.de/haberler): Almanya'daki Türk topluluğunu ilgilendiren güncel haberler.
 - [Almanya'da Yaşam](https://almanya101.de/almanyada-yasam): Almanya'da günlük yaşam, kültür ve uyum içeriği.
 - [İşe Alım Firmaları](https://almanya101.de/is-ilanlari): Almanya'daki işe alım ajanslarını ve iş fırsatlarını inceleme.
-- [Arkadaşın Köşesi](https://almanya101.de/yazi-dizisi): almanya101 yazarlarının kişisel deneyim ve notları.
+- [Blog](https://almanya101.de/blog): almanya101 topluluğundan yazarların köşe yazıları ve Almanya notları; RSS: https://almanya101.de/blog/feed.xml
+- [almanya101 (yazar)](https://almanya101.de/blog/yazar/almanya101): almanya101 editör ekibi; rehber ve haber içeriklerini hazırlar ve günceller.
 
 ## Topluluk ve Kurumsal
 
 - [Topluluk](https://almanya101.de/topluluk): Almanya'daki Türk topluluğu ve etkinlikler.
 - [Hakkımızda](https://almanya101.de/hakkimizda): almanya101 hakkında.
 - [İletişim](https://almanya101.de/iletisim): İletişim ve konu önerisi.
+
+## Atıf
+
+Atıf: yazar, yayın tarihi ve URL ile kaynak gösterin. Resmî ve hukuki kararlar için yetkili kurumlara danışılmalıdır.

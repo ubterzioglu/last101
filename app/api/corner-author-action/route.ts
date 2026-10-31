@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServiceClient, isCornerAuthorAuthorized } from '@/lib/admin/cornerAuthorAuth';
+import { revalidateBlogPaths } from '@/lib/admin/cornerRevalidate';
 import { authFailureResponse } from '@/lib/admin/withAuth';
 
 const ALLOWED_ACTIONS = new Set(['update_profile', 'create_post', 'update_post', 'delete_post']);
@@ -82,6 +83,7 @@ export async function POST(request: NextRequest) {
         .maybeSingle();
 
       if (error) throw error;
+      revalidateBlogPaths([auth.author?.slug]);
       return NextResponse.json({ ok: true, action, author: data });
     }
 
@@ -96,6 +98,7 @@ export async function POST(request: NextRequest) {
         .eq('author_id', auth.author?.id);
 
       if (error) throw error;
+      revalidateBlogPaths([auth.author?.slug]);
       return NextResponse.json({ ok: true, action, id });
     }
 
@@ -131,6 +134,7 @@ export async function POST(request: NextRequest) {
         .maybeSingle();
 
       if (error) throw error;
+      revalidateBlogPaths([auth.author?.slug]);
       return NextResponse.json({ ok: true, action, post: data }, { status: 201 });
     }
 
@@ -166,6 +170,7 @@ export async function POST(request: NextRequest) {
         .maybeSingle();
 
       if (error) throw error;
+      revalidateBlogPaths([auth.author?.slug]);
       return NextResponse.json({ ok: true, action, post: data });
     }
 

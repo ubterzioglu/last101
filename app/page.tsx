@@ -31,7 +31,12 @@ export const metadata: Metadata = {
   }),
   alternates: {
     canonical: `${CANONICAL_SITE_URL}/`,
-    types: { 'application/rss+xml': `${CANONICAL_SITE_URL}/feed.xml` },
+    types: {
+      'application/rss+xml': [
+        { url: `${CANONICAL_SITE_URL}/feed.xml`, title: 'Almanya101 Haberler' },
+        { url: `${CANONICAL_SITE_URL}/blog/feed.xml`, title: 'Almanya101 Blog' },
+      ],
+    },
   },
 };
 

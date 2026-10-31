@@ -90,7 +90,7 @@ export const TOOL_ITEMS: HomeLinkItem[] = [
 
 /** The old "İş İlanları" card duplicated /is-ilanlari (kept above as "İşe Alım Firmaları"). */
 export const OTHER_LINK_ITEMS: HomeLinkItem[] = [
-  { href: '/yazi-dizisi', title: 'Yazı Dizisi', description: 'Adım adım rehberler ve yazılar.', icon: NotebookPen, group: 'icerik' },
+  { href: '/blog', title: 'Blog', description: 'Topluluk köşe yazıları ve notlar.', icon: NotebookPen, group: 'icerik' },
   { href: '/haberler', title: 'Haberler', description: 'Güncel haberler ve gelişmeler.', icon: Newspaper, group: 'icerik' },
   { href: '/belgeler', title: 'Yararlı Belgeler', description: 'İhtiyacınız olan belgeler ve formlar.', icon: FileText, group: 'icerik' },
   { href: '/ekibimize-katil', title: 'Bize Katıl!', description: 'Ekibimize katılmak için tıkla!', icon: UserPlus, group: 'topluluk' },

@@ -8,6 +8,8 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://almanya101.
 export const CANONICAL_SITE_URL = SITE_URL.replace(/\/+$/, '');
 export const SITE_LOCALE = 'tr_TR';
 export const DEFAULT_OG_IMAGE = '/og.png?v=2';
+/** Placeholder cover for articles without their own image (never used as og:image). */
+export const DEFAULT_COVER_IMAGE = '/images/hero-background.webp';
 export const DEFAULT_SEO_TITLE = `${SEO_SITE_NAME} | Almanya'da Yaşam, İş ve Türk Topluluğu`;
 export const DEFAULT_META_DESCRIPTION =
   "Almanya'da yaşayan veya taşınmayı planlayan Türkler için yaşam rehberi, iş fırsatları, belgeler ve güçlü bir topluluk. Hemen keşfet ve aramıza katıl.";

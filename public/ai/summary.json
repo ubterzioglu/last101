@@ -10,11 +10,13 @@
   "sections": {
     "rehber": "https://almanya101.de/rehber",
     "haberler": "https://almanya101.de/haberler",
+    "blog": "https://almanya101.de/blog",
+    "editor_yazar": "https://almanya101.de/blog/yazar/almanya101",
     "araclar": "https://almanya101.de/maas-hesaplama",
     "hakkimizda": "https://almanya101.de/hakkimizda",
     "iletisim": "https://almanya101.de/iletisim"
   },
-  "feeds": { "rss": "https://almanya101.de/feed.xml" },
+  "feeds": { "rss": "https://almanya101.de/feed.xml", "blog_rss": "https://almanya101.de/blog/feed.xml" },
   "llms_txt": "https://almanya101.de/llms.txt",
   "sameAs": [
     "https://x.com/101Almanya46905",

@@ -1,7 +1,5 @@
 import { createElement } from 'react';
-import { readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { load } from 'cheerio';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -28,28 +26,11 @@ import { Header } from '@/components/layout/Header';
 import { HeaderDrawer } from '@/components/layout/HeaderDrawer';
 import { getTrapTarget } from '@/components/layout/useDrawerA11y';
 import { CONTACT_CHANNELS } from '@/constants/contact-channels';
+import { collectAppRoutes } from './helpers/app-routes';
 import { DRAWER_CATEGORIES, DRAWER_ITEMS, HEADER_PRIMARY_LINKS } from '@/constants/navigation';
 
 const APP_DIR = fileURLToPath(new URL('../app', import.meta.url));
-const PAGE_FILE = /^page\.(tsx|ts|jsx|js|mdx)$/;
 const WHATSAPP_HREF = CONTACT_CHANNELS.find((channel) => channel.id === 'whatsapp')?.href;
-
-/** Static URL paths of every `page.*` file under app/, with route groups removed. */
-function collectAppRoutes(dir: string, segments: readonly string[] = []): string[] {
-  const entries = readdirSync(dir, { withFileTypes: true });
-  const ownRoute = entries.some((entry) => entry.isFile() && PAGE_FILE.test(entry.name))
-    ? [`/${segments.join('/')}`]
-    : [];
-
-  return entries
-    .filter((entry) => entry.isDirectory() && !/^[_@]/.test(entry.name))
-    .flatMap((entry) => {
-      const isRouteGroup = /^\(.+\)$/.test(entry.name);
-      const nextSegments = isRouteGroup ? segments : [...segments, entry.name];
-      return collectAppRoutes(path.join(dir, entry.name), nextSegments);
-    })
-    .concat(ownRoute);
-}
 
 function renderHeader() {
   const html = renderToStaticMarkup(createElement(Header));
@@ -80,7 +61,7 @@ describe('HEADER_PRIMARY_LINKS', () => {
     expect(HEADER_PRIMARY_LINKS.map(({ href, label }) => [href, label])).toEqual([
       ['/almanya-araclari', 'Araçlar'],
       ['/haberler', 'Haberler'],
-      ['/yazi-dizisi', 'Arkadaşın Köşesi'],
+      ['/blog', 'Blog'],
       ['/belgeler', 'Yararlı Belgeler'],
       ['/topluluk', 'Topluluk'],
       ['/iletisim', 'İletişim'],

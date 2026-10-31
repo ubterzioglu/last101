@@ -40,7 +40,7 @@ const PREVIOUS_CARDS: readonly PreviousCard[] = [
   ['/tatil/turkiye', '2026 Türkiye Tatil Planlayıcı', '2026 tatilinizi planlayın.'],
   ['/hizmet-rehberi', 'Türk Hizmet Rehberi', 'Doktor, avukat, restoran, market - Türkçe destek bulun!'],
   ['/is-ilanlari', 'İşe Alım Firmaları', "Almanya'daki işe alım ajanslarını inceleyin."],
-  ['/yazi-dizisi', 'Yazı Dizisi', 'Adım adım rehberler ve yazılar.'],
+  ['/blog', 'Blog', 'Topluluk köşe yazıları ve notlar.'],
   ['/haberler', 'Haberler', 'Güncel haberler ve gelişmeler.'],
   ['/belgeler', 'Yararlı Belgeler', 'İhtiyacınız olan belgeler ve formlar.'],
   ['/ekibimize-katil', 'Bize Katıl!', 'Ekibimize katılmak için tıkla!'],

@@ -1,4 +1,7 @@
 import type { MetadataRoute } from 'next';
+import { hasMeaningfulUpdate } from '@/lib/articles/headings';
+import { SITE_AUTHOR_SLUG } from '@/lib/authors';
+import { getAllCornerPostsForSitemap } from '@/lib/corner';
 import { getAllPublishedNewsEntriesForSitemap } from '@/lib/public-news';
 import { getAllRehberArticlesForSitemap } from '@/lib/rehber-articles';
 import { CANONICAL_SITE_URL } from '@/lib/utils/constants';
@@ -35,8 +38,6 @@ const STATIC_ROUTES: StaticRoute[] = [
   { path: '/almanya-araclari', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/yeniarachub', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/belgeler', changeFrequency: 'weekly', priority: 0.7 },
-  { path: '/yazi-dizisi', changeFrequency: 'weekly', priority: 0.6 },
-  { path: '/blog', changeFrequency: 'weekly', priority: 0.6 },
   { path: '/kariyer', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/gizlilik-politikasi', changeFrequency: 'yearly', priority: 0.4 },
   { path: '/kullanim-sartlari', changeFrequency: 'yearly', priority: 0.4 },
@@ -52,12 +53,78 @@ const STATIC_ROUTES: StaticRoute[] = [
   })),
 ];
 
+type SitemapEntry = MetadataRoute.Sitemap[number];
+type CornerSitemapPost = Awaited<ReturnType<typeof getAllCornerPostsForSitemap>>[number];
+
+function toValidDate(value: string | null | undefined): Date | undefined {
+  if (!value) return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+/** lastModified only when the update is meaningful; otherwise the publish date. */
+function postLastModified(post: CornerSitemapPost): Date | undefined {
+  const useUpdate = hasMeaningfulUpdate(post.publishedAt, post.updatedAt);
+  return toValidDate(useUpdate ? post.updatedAt : post.publishedAt);
+}
+
+function newestDate(dates: readonly (Date | undefined)[]): Date | undefined {
+  return dates.reduce<Date | undefined>(
+    (newest, date) => (date && (!newest || date > newest) ? date : newest),
+    undefined,
+  );
+}
+
+function buildBlogEntries(baseUrl: string, posts: readonly CornerSitemapPost[]): SitemapEntry[] {
+  // Never invent a date: /blog gets lastModified only when a post date exists.
+  const blogLastModified = newestDate(posts.map((post) => toValidDate(post.publishedAt)));
+  const blogIndex: SitemapEntry = {
+    url: `${baseUrl}/blog`,
+    ...(blogLastModified ? { lastModified: blogLastModified } : {}),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  };
+
+  const postEntries = posts.map((post): SitemapEntry => {
+    const lastModified = postLastModified(post);
+    return {
+      url: `${baseUrl}${post.href}`,
+      ...(lastModified ? { lastModified } : {}),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    };
+  });
+
+  // Only authors that own at least one published post; the editorial author
+  // always has guide and news content, so its profile is always listed.
+  const authorSlugs = new Set<string>([SITE_AUTHOR_SLUG]);
+  for (const post of posts) {
+    if (post.authorSlug) authorSlugs.add(post.authorSlug);
+  }
+  const authorEntries = [...authorSlugs].map((slug): SitemapEntry => ({
+    url: `${baseUrl}/blog/yazar/${slug}`,
+    changeFrequency: 'weekly',
+    priority: 0.5,
+  }));
+
+  return [blogIndex, ...postEntries, ...authorEntries];
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = CANONICAL_SITE_URL;
-  const [newsEntries, rehberArticles] = await Promise.all([
+  const [newsResult, rehberResult, cornerResult] = await Promise.allSettled([
     getAllPublishedNewsEntriesForSitemap(),
     getAllRehberArticlesForSitemap(),
+    getAllCornerPostsForSitemap(),
   ]);
+
+  const newsEntries = newsResult.status === 'fulfilled' ? newsResult.value : [];
+  const rehberArticles = rehberResult.status === 'fulfilled' ? rehberResult.value : [];
+  const cornerPosts = cornerResult.status === 'fulfilled' ? cornerResult.value : [];
+
+  for (const result of [newsResult, rehberResult, cornerResult]) {
+    if (result.status === 'rejected') console.error('sitemap: dynamic source failed:', result.reason);
+  }
 
   const routes = STATIC_ROUTES.map((route) => ({
     url: route.path === '/' ? baseUrl : `${baseUrl}${route.path}`,
@@ -67,6 +134,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...routes,
+    ...buildBlogEntries(baseUrl, cornerPosts),
     ...newsEntries.map((entry) => ({
       url: `${baseUrl}/haberler/${entry.slug}`,
       lastModified: new Date(entry.updatedAt),

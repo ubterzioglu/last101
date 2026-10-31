@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { CalendarDays, Clock } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { ArticleDates } from '@/components/articles/ArticleDates';
@@ -12,7 +13,10 @@ import { cn } from '@/lib/utils/cn';
 
 export interface ArticleAuthor {
   name: string;
-  avatarUrl: string;
+  /** Without an avatar a neutral initial badge is shown. */
+  avatarUrl?: string;
+  /** Author profile path; when set the name is a `rel="author"` link. */
+  href?: string;
 }
 
 export interface ArticleShellProps {
@@ -47,10 +51,24 @@ function ArticleMeta({
     <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-muted">
       {author ? (
         <span className="inline-flex items-center gap-2.5 font-semibold text-ink">
-          <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-line bg-band">
-            <Image src={author.avatarUrl} alt="" fill sizes="36px" className="object-cover" />
+          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-band text-sm font-extrabold text-ink">
+            {author.avatarUrl ? (
+              <Image src={author.avatarUrl} alt="" fill sizes="36px" className="object-cover" />
+            ) : (
+              <span aria-hidden="true">{author.name.trim().charAt(0).toLocaleUpperCase('tr-TR')}</span>
+            )}
           </span>
-          {author.name}
+          {author.href ? (
+            <Link
+              href={author.href}
+              rel="author"
+              className="transition-colors hover:text-brand-700 motion-reduce:transition-none"
+            >
+              {author.name}
+            </Link>
+          ) : (
+            author.name
+          )}
         </span>
       ) : null}
       <span className="inline-flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -66,7 +84,7 @@ function ArticleMeta({
 }
 
 /**
- * Shared light article template (haberler, yazi-dizisi, rehber): breadcrumb, eyebrow, the single H1,
+ * Shared light article template (haberler, blog, rehber): breadcrumb, eyebrow, the single H1,
  * meta (author, publish/update dates, reading time), cover; body and sticky aside side by side on desktop.
  */
 export function ArticleShell({

@@ -6,9 +6,14 @@ import {
   normalizeAuthorSlug,
 } from '@/lib/admin/cornerAuthorAuth';
 import { createPasswordHash } from '@/lib/admin/cornerPasswords';
+import { revalidateBlogPaths } from '@/lib/admin/cornerRevalidate';
+import { isSystemAuthorSlug } from '@/lib/authors';
 
 const ALLOWED_ACTIONS = new Set(['create_author', 'update_author', 'set_author_active', 'reset_author_password', 'delete_author', 'set_post_status', 'delete_post']);
 const ALLOWED_STATUSES = new Set(['draft', 'published']);
+
+const SYSTEM_AUTHOR_DELETE_ERROR = 'Sistem yazarı silinemez.';
+const SYSTEM_AUTHOR_DEACTIVATE_ERROR = 'Sistem yazarı pasife alınamaz.';
 
 function normalizeAction(value: unknown): string {
   const safe = String(value || '').trim().toLowerCase();
@@ -98,6 +103,7 @@ export const POST = withCornerAdmin(async (request) => {
         .maybeSingle();
 
       if (authorError) throw authorError;
+      revalidateBlogPaths([slug]);
       return NextResponse.json({ ok: true, action, author }, { status: 201 });
     }
 
@@ -112,13 +118,28 @@ export const POST = withCornerAdmin(async (request) => {
       const displayOrder = Math.max(1, Math.min(9999, Number.parseInt(String(body.displayOrder || '1000'), 10) || 1000));
 
       if (!displayName) return NextResponse.json({ error: 'Yazar adı gerekli.' }, { status: 400 });
-      if (!slug || isReservedAuthorSlug(slug)) return NextResponse.json({ error: 'Slug geçersiz veya rezerve.' }, { status: 400 });
+
+      const { data: existing, error: existingError } = await supabase
+        .from('corner_authors')
+        .select('id, slug')
+        .eq('id', id)
+        .maybeSingle();
+      if (existingError) throw existingError;
+      if (!existing) return NextResponse.json({ error: 'Yazar bulunamadı.' }, { status: 404 });
+
+      // Sistem yazarının slug'ı kimliğidir: gönderilen slug yok sayılır, rezerve kontrolü atlanır.
+      const isSystemAuthor = isSystemAuthorSlug(existing.slug);
+      // An unchanged slug is never rejected, so an existing author whose slug became reserved can still edit their bio.
+      const slugChanged = slug !== existing.slug;
+      if (!isSystemAuthor && (!slug || (slugChanged && isReservedAuthorSlug(slug)))) {
+        return NextResponse.json({ error: 'Slug geçersiz veya rezerve.' }, { status: 400 });
+      }
 
       const { data, error } = await supabase
         .from('corner_authors')
         .update({
           display_name: displayName,
-          slug,
+          ...(isSystemAuthor ? {} : { slug }),
           short_bio: shortBio || null,
           bio_content: bioContent || null,
           avatar_image_url: avatarImageUrl || null,
@@ -131,11 +152,21 @@ export const POST = withCornerAdmin(async (request) => {
 
       if (error) throw error;
       if (!data) return NextResponse.json({ error: 'Yazar bulunamadı.' }, { status: 404 });
+      revalidateBlogPaths([existing.slug, data.slug]);
       return NextResponse.json({ ok: true, action, data });
     }
 
     if (action === 'set_author_active') {
       const isActive = normalizeBoolean(body.isActive, true);
+      const { data: existing, error: existingError } = await supabase
+        .from('corner_authors')
+        .select('id, slug')
+        .eq('id', id)
+        .maybeSingle();
+      if (existingError) throw existingError;
+      if (!isActive && existing && isSystemAuthorSlug(existing.slug)) {
+        return NextResponse.json({ error: SYSTEM_AUTHOR_DEACTIVATE_ERROR }, { status: 403 });
+      }
       const { data, error } = await supabase
         .from('corner_authors')
         .update({ is_active: isActive, updated_at: new Date().toISOString() })
@@ -143,6 +174,7 @@ export const POST = withCornerAdmin(async (request) => {
         .select('*')
         .maybeSingle();
       if (error) throw error;
+      revalidateBlogPaths([existing?.slug]);
       return NextResponse.json({ ok: true, action, data });
     }
 
@@ -161,8 +193,18 @@ export const POST = withCornerAdmin(async (request) => {
     }
 
     if (action === 'delete_author') {
+      const { data: existing, error: existingError } = await supabase
+        .from('corner_authors')
+        .select('id, slug')
+        .eq('id', id)
+        .maybeSingle();
+      if (existingError) throw existingError;
+      if (existing && isSystemAuthorSlug(existing.slug)) {
+        return NextResponse.json({ error: SYSTEM_AUTHOR_DELETE_ERROR }, { status: 403 });
+      }
       const { error } = await supabase.from('corner_authors').delete().eq('id', id);
       if (error) throw error;
+      revalidateBlogPaths([existing?.slug]);
       return NextResponse.json({ ok: true, action, id });
     }
 
@@ -184,12 +226,14 @@ export const POST = withCornerAdmin(async (request) => {
         .select('*')
         .maybeSingle();
       if (error) throw error;
+      revalidateBlogPaths();
       return NextResponse.json({ ok: true, action, data });
     }
 
     if (action === 'delete_post') {
       const { error } = await supabase.from('corner_posts').delete().eq('id', id);
       if (error) throw error;
+      revalidateBlogPaths();
       return NextResponse.json({ ok: true, action, id });
     }
 

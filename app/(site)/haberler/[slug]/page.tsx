@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { createArticleMetadata } from '@/lib/seo/metadata';
+import { resolveArticleAuthor } from '@/lib/authors';
 import { getPublishedNewsArticleBySlug, getRelatedPublishedNewsArticles } from '@/lib/public-news';
-import { SITE_URL } from '@/lib/utils/constants';
+import { DEFAULT_OG_IMAGE, SITE_URL } from '@/lib/utils/constants';
 import { ArticleBody } from '@/components/articles/ArticleBody';
+import { AuthorBox } from '@/components/articles/AuthorBox';
 import { AsideCommunityCard, AsideLinkList, AsideShareCard } from '@/components/news/ArticleAside';
 import { ArticleShell } from '@/components/news/ArticleShell';
 import { realCoverUrl } from '@/components/news/cover';
@@ -30,16 +32,20 @@ export async function generateMetadata({ params }: NewsDetailPageProps) {
       description: 'Aradığınız yayınlanmış haber bulunamadı.',
       publishedTime: new Date().toISOString(),
       path: `/haberler/${slug}`,
+      noIndex: true,
     });
   }
+
+  const author = resolveArticleAuthor();
 
   return createArticleMetadata({
     title: article.title,
     description: article.summary || article.title,
     publishedTime: article.publishedAt,
     modifiedTime: article.updatedAt,
+    authors: [author.href],
     path: `/haberler/${article.slug}`,
-    image: article.coverImageUrl,
+    image: realCoverUrl(article.coverImageUrl) ?? DEFAULT_OG_IMAGE,
     tags: [article.categoryLabel, 'Haberler', 'Almanya'],
   });
 }
@@ -51,6 +57,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   if (!article) notFound();
 
   const pageUrl = new URL(`/haberler/${article.slug}`, SITE_URL).toString();
+  const author = resolveArticleAuthor();
   const relatedArticles = await getRelatedPublishedNewsArticles(article.id);
   const cover = realCoverUrl(article.coverImageUrl);
   const source =
@@ -69,7 +76,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         description={article.summary || article.title}
         datePublished={article.publishedAt}
         dateModified={article.updatedAt}
-        author="Almanya101"
+        author={author}
         url={pageUrl}
         image={article.coverImageUrl}
         sourceName={article.sourceName || undefined}
@@ -96,6 +103,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         publishedAt={article.publishedAt}
         updatedAt={article.updatedAt}
         readingMinutes={article.readingMinutes}
+        author={{ name: author.name, avatarUrl: author.avatarUrl, href: author.href }}
         cover={cover ? { src: cover, alt: article.coverImageAlt } : null}
         aside={
           <>
@@ -105,6 +113,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
               shareText={article.whatsappShareText}
               source={source}
             />
+            <AuthorBox name={author.name} href={author.href} avatarImageUrl={author.avatarUrl} kind={author.kind} />
             <AsideLinkList links={[{ href: '/haberler', label: 'Tüm haberlere dön' }]} />
             <AsideCommunityCard />
           </>
