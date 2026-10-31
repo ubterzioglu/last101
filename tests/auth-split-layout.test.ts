@@ -70,7 +70,7 @@ describe('AuthSplitLayout default (dark) tone for admin and the author panel', (
       <div class="pointer-events-none absolute -bottom-32 -right-24 h-96 w-96 rounded-full bg-white/5 blur-3xl" aria-hidden="true">
       </div>
       <div class="relative p-10">
-      <img src="/almanya101.png" alt="almanya101" width="180" height="48" class="h-10 w-auto object-contain" data-priority="true"/>
+      <img src="/almanya101.png" alt="Almanya101 logosu" width="180" height="48" class="h-10 w-auto object-contain" data-priority="true"/>
       </div>
       <div class="relative max-w-lg p-10">
       <h2 class="text-4xl font-black leading-tight tracking-tight md:text-5xl">Almanya101</h2>
@@ -101,10 +101,10 @@ describe('AuthSplitLayout default (dark) tone for admin and the author panel', (
       </div>
       <div class="relative p-10 text-xs text-white/45">© almanya101 — Almanya&#x27;da yaşayan Türkler için.</div>
       </aside>
-      <main class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-8">
+      <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-8">
       <div class="w-full max-w-md">
       <div class="mb-8 flex justify-center lg:hidden">
-      <img src="/almanya101.png" alt="almanya101" width="160" height="42" class="h-9 w-auto object-contain" data-priority="true"/>
+      <img src="/almanya101.png" alt="Almanya101 logosu" width="160" height="42" class="h-9 w-auto object-contain" data-priority="true"/>
       </div>
       <div class="mb-8 text-center lg:text-left">
       <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Admin Paneli</h1>
@@ -114,7 +114,7 @@ describe('AuthSplitLayout default (dark) tone for admin and the author panel', (
       <button type="submit">Giriş Yap</button>
       </form>
       </div>
-      </main>
+      </div>
       </div>"
     `);
   });

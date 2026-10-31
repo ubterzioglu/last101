@@ -125,7 +125,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
             <div className="mx-auto max-w-4xl">
               <ArticleToc content={article.content} />
               <div className="mt-8">
-                <MarkdownPreview content={article.content} demoteH1 />
+                <MarkdownPreview content={article.content} tone="light" demoteH1 />
               </div>
             </div>
           </section>

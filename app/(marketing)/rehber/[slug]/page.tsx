@@ -129,7 +129,7 @@ export default async function RehberArticleDetailPage({ params }: RehberArticleD
             <article className="mx-auto max-w-4xl">
               <ArticleToc content={article.content} tone="light" />
               <div className="mt-8">
-                <MarkdownPreview content={article.content} demoteH1 />
+                <MarkdownPreview content={article.content} tone="light" demoteH1 />
               </div>
               <div className="mt-12 border-t border-gray-200 pt-6">
                 <ShareBar tone="light" url={pageUrl} title={article.title} />

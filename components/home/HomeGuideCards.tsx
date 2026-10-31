@@ -39,7 +39,7 @@ export const HOME_GUIDE_CARDS: AccordionItem[] = [
             hizmet rehberi
           </Link>{' '}
           gibi kaynaklardan <strong>temel çerçeveyi kurmak</strong> gerekir. Adres kaydı için{' '}
-          <ExternalLink href="https://www.berlin.de/buergeramt/">Bürgeramt</ExternalLink>, oturum izni için{' '}
+          <ExternalLink href="https://service.berlin.de/dienstleistung/120686/">Berlin adres kaydı (Bürgeramt)</ExternalLink>, oturum izni için{' '}
           <ExternalLink href="https://www.bamf.de">BAMF</ExternalLink>{' '}
           gibi resmi kurumlar süreçlerin ilk durağıdır. Böylece resmi işlem, günlük yaşam ve yerel destek başlıkları
           ayrı ayrı değil, <strong>birbirini tamamlayan tek bir yol haritası</strong> halinde okunabilir.

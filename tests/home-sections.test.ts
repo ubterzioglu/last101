@@ -29,6 +29,7 @@ const SAMPLE_NEWS = [
     excerpt: 'Nitelikli göç için başvuru adımları sadeleşiyor.',
     image: 'https://cdn.example.com/haber.jpg',
     date: '20 Ekim 2026',
+    publishedAt: new Date().toISOString(),
     category: 'Göç',
   },
   {
@@ -39,6 +40,7 @@ const SAMPLE_NEWS = [
     excerpt: '',
     image: '',
     date: '19 Ekim 2026',
+    publishedAt: new Date().toISOString(),
   },
 ];
 

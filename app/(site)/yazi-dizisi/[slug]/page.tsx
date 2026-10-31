@@ -152,7 +152,7 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
             <article className="mx-auto max-w-4xl">
               <ArticleToc content={post.content} />
               <div className="mt-8">
-                <MarkdownPreview content={post.content} demoteH1 />
+                <MarkdownPreview content={post.content} tone="light" demoteH1 />
               </div>
               <div className="mt-12 space-y-8 border-t border-white/10 pt-6">
                 <ShareBar url={pageUrl} title={post.title} />
