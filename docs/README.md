@@ -19,6 +19,7 @@ Bu belgeler öneri ve yapılacak işlerdir; tamamlanmış özellik listesi olara
 ## Teknik başvuru
 
 - [Yeni araçlar özeti](./almanya-araclari-ozet.md) — araç altyapısı oluşturulduğunda yazılmış teknik özet; değişen ayrıntıları koddan doğrulayın.
+- [Supabase migration durumu](../supabase/MIGRATIONS_STATUS.md) — her migration'ın canlıda uygulanıp uygulanmadığı, nasıl doğrulandığı ve yeni migration'ın nasıl uygulanacağı. Bir migration çalıştırmadan önce bakın.
 - [Kök geliştirici kuralları](../AGENTS.md) ve [Claude Code kılavuzu](../CLAUDE.md).
 
 ## Test belgeleri
