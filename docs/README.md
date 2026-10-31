@@ -22,6 +22,10 @@ Bu belgeler öneri ve yapılacak işlerdir; tamamlanmış özellik listesi olara
 - [Supabase migration durumu](../supabase/MIGRATIONS_STATUS.md) — her migration'ın canlıda uygulanıp uygulanmadığı, nasıl doğrulandığı ve yeni migration'ın nasıl uygulanacağı. Bir migration çalıştırmadan önce bakın.
 - [Kök geliştirici kuralları](../AGENTS.md) ve [Claude Code kılavuzu](../CLAUDE.md).
 
+## Kullanım kılavuzları
+
+- [Köşe yazarı paneli kılavuzu (Aslıhan)](./aslihan-kose-yazari-kilavuzu.md) — `/authors/<yazar>` girişi, profil, yazı yazma, taslak/yayın, Markdown ve görsel kuralları; yazara iletilecek metin.
+
 ## Test belgeleri
 
 - [E2E test planı](./e2e-test-plan.md) — tarihli senaryo ve öneriler. Güncel test komutları için [package.json](../package.json) ve [Playwright yapılandırması](../playwright.config.ts) geçerlidir.
