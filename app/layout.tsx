@@ -31,7 +31,12 @@ export const metadata: Metadata = {
   creator: SEO_SITE_NAME,
   publisher: SEO_SITE_NAME,
   alternates: {
-    types: { 'application/rss+xml': `${SITE_URL}/feed.xml` },
+    types: {
+      'application/rss+xml': [
+        { url: `${SITE_URL}/feed.xml`, title: `${SEO_SITE_NAME} Haberler` },
+        { url: `${SITE_URL}/blog/feed.xml`, title: `${SEO_SITE_NAME} Blog` },
+      ],
+    },
   },
 
   openGraph: {

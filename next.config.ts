@@ -1,27 +1,5 @@
 import type { NextConfig } from 'next';
-
-const devuserRedirects = [
-  'du', 'list', 'cvopt', 'dev', 'devuser', 'devuseradmin', 'devuserlist',
-  'devuserprofile', 'profile-edit', 'reset-password', 'news', 'gelismeler',
-  'discussion', 'survey', 'promote', 'summary', 'typing', 'tavla', 'vct',
-  'ubt', 'e1', 'e1a', 'e2', 'e2a', 'dad', 'disad',
-].map((slug) => ({
-  source: `/devuser/${slug}.html`,
-  destination: `/devuser/${slug}`,
-  permanent: true,
-}));
-
-const wwwRedirect = {
-  source: '/:path*',
-  has: [
-    {
-      type: 'host',
-      value: 'www.almanya101.de',
-    },
-  ],
-  destination: 'https://almanya101.de/:path*',
-  permanent: true,
-};
+import { buildRedirects } from './lib/seo/redirects';
 
 const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/\/+$/, '');
 
@@ -68,7 +46,8 @@ const contentSecurityPolicy = Object.entries(cspDirectives)
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return [wwwRedirect, ...devuserRedirects];
+    // Sıra önemli: yazi-dizisi www kuralları wwwRedirect'ten önce gelmeli (tek sıçrama).
+    return buildRedirects();
   },
 
   async headers() {

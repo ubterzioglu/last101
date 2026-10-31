@@ -276,10 +276,13 @@ describe('HomePage', () => {
     }
   });
 
-  it('keeps the RSS alternate next to the canonical in the home metadata', () => {
+  it('keeps the RSS alternates (news and blog) next to the canonical in the home metadata', () => {
     expect(homeMetadata.alternates?.canonical).toMatch(/\/$/);
     expect(homeMetadata.alternates?.types).toEqual({
-      'application/rss+xml': expect.stringMatching(/\/feed\.xml$/),
+      'application/rss+xml': [
+        { url: expect.stringMatching(/\/feed\.xml$/), title: 'Almanya101 Haberler' },
+        { url: expect.stringMatching(/\/blog\/feed\.xml$/), title: 'Almanya101 Blog' },
+      ],
     });
   });
 

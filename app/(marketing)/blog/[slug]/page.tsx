@@ -1,6 +1,7 @@
+import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, BreadcrumbJsonLd } from '@/components/seo/JsonLd';
-import { createArticleMetadata } from '@/lib/seo/metadata';
+import { createArticleMetadata, createMetadata } from '@/lib/seo/metadata';
 import { ArticleBody } from '@/components/articles/ArticleBody';
 import { AuthorBox } from '@/components/articles/AuthorBox';
 import { RelatedArticles } from '@/components/articles/RelatedArticles';
@@ -8,15 +9,19 @@ import { AsideCommunityCard, AsideLinkList, AsideShareCard } from '@/components/
 import { ArticleShell } from '@/components/news/ArticleShell';
 import { realCoverUrl } from '@/components/news/cover';
 import { buildArticleShareText } from '@/components/news/share-text';
+import { resolveArticleAuthor } from '@/lib/authors';
+import type { ArticleAuthorRef } from '@/lib/authors';
 import {
-  getPublishedCornerAuthorBySlug,
+  getPublishedCornerAuthorProfileBySlug,
   getPublishedCornerPostBySlug,
-  getPublishedCornerPosts,
+  getPublishedCornerPostSummaries,
 } from '@/lib/corner';
-import { SITE_URL } from '@/lib/utils/constants';
+import type { PublicCornerPost } from '@/lib/corner';
+import { CANONICAL_SITE_URL, DEFAULT_OG_IMAGE } from '@/lib/utils/constants';
 
 const RELATED_LIMIT = 3;
-const DEFAULT_AVATAR = '/images/profil.jpg';
+const RELATED_CANDIDATE_LIMIT = 24;
+const ARTICLE_SECTION = 'Köşe Yazıları';
 
 interface CornerPostDetailPageProps {
   params: Promise<{
@@ -26,49 +31,71 @@ interface CornerPostDetailPageProps {
 
 export const dynamic = 'force-dynamic';
 
+/** One fetch per request, shared by generateMetadata and the page. */
+const loadPost = cache(getPublishedCornerPostBySlug);
+
+function authorOfPost(post: PublicCornerPost): ArticleAuthorRef {
+  return resolveArticleAuthor(
+    post.authorSlug
+      ? {
+          slug: post.authorSlug,
+          displayName: post.authorName ?? '',
+          avatarImageUrl: post.authorAvatarImageUrl,
+        }
+      : null,
+  );
+}
+
+function countWords(content: string | null): number | undefined {
+  const text = content?.trim();
+  if (!text) return undefined;
+  return text.split(/\s+/).length;
+}
+
 export async function generateMetadata({ params }: CornerPostDetailPageProps) {
   const { slug } = await params;
-  const post = await getPublishedCornerPostBySlug(slug);
+  const post = await loadPost(slug);
 
   if (!post) {
-    return createArticleMetadata({
+    // No canonical from user input and no invented publish date for a page that does not exist.
+    return createMetadata({
       title: 'Yazı bulunamadı',
       description: 'Aradığınız yayınlanmış köşe yazısı bulunamadı.',
-      publishedTime: new Date().toISOString(),
-      path: `/yazi-dizisi/${slug}`,
+      path: '/blog',
+      noIndex: true,
     });
   }
+
+  const author = authorOfPost(post);
 
   return createArticleMetadata({
     title: post.title,
     description: post.summary || post.title,
     publishedTime: post.publishedAt,
-    modifiedTime: post.updatedAt || undefined,
-    authors: [post.authorName || 'Arkadaşın Köşesi'],
-    tags: ['Arkadaşın Köşesi', 'Yazı Dizisi', 'Almanya'],
+    modifiedTime: post.updatedAt,
+    authors: [author.href],
+    tags: [ARTICLE_SECTION, 'Almanya'],
+    section: ARTICLE_SECTION,
     path: post.href,
-    image: post.coverImageUrl,
+    image: realCoverUrl(post.coverImageUrl) ?? DEFAULT_OG_IMAGE,
   });
 }
 
 export default async function CornerPostDetailPage({ params }: CornerPostDetailPageProps) {
   const { slug } = await params;
-  const post = await getPublishedCornerPostBySlug(slug);
+  const post = await loadPost(slug);
 
   if (!post) notFound();
 
-  const pageUrl = new URL(post.href, SITE_URL).toString();
-  const authorName = post.authorName || 'Arkadaşın Köşesi';
-  const avatarUrl = post.authorAvatarImageUrl || DEFAULT_AVATAR;
+  const pageUrl = new URL(post.href, CANONICAL_SITE_URL).toString();
+  const author = authorOfPost(post);
   const cover = realCoverUrl(post.coverImageUrl);
-  const [author, allPosts] = await Promise.all([
-    post.authorSlug ? getPublishedCornerAuthorBySlug(post.authorSlug) : Promise.resolve(undefined),
-    getPublishedCornerPosts(),
+  const [authorProfile, candidates] = await Promise.all([
+    author.kind === 'Person' ? getPublishedCornerAuthorProfileBySlug(author.slug) : Promise.resolve(undefined),
+    getPublishedCornerPostSummaries(RELATED_CANDIDATE_LIMIT),
   ]);
-  // Aynı yazarın diğer yazıları önce, ardından en yeniler; liste yeniden eskiye sıralanır.
-  const others = allPosts
-    .filter((item) => item.id !== post.id)
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  // Aynı yazarın diğer yazıları önce, ardından en yeniler (liste zaten yeniden eskiye sıralı).
+  const others = candidates.filter((item) => item.id !== post.id);
   const relatedPosts = [
     ...others.filter((item) => item.authorId === post.authorId),
     ...others.filter((item) => item.authorId !== post.authorId),
@@ -77,20 +104,21 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
   return (
     <>
       <ArticleJsonLd
+        type="BlogPosting"
         title={post.title}
         description={post.summary || post.title}
         datePublished={post.publishedAt}
-        dateModified={post.updatedAt || undefined}
-        author={authorName}
-        authorType={post.authorSlug ? 'Person' : 'Organization'}
-        authorUrl={post.authorSlug ? new URL(`/${post.authorSlug}`, SITE_URL).toString() : undefined}
+        dateModified={post.updatedAt}
+        author={author}
         url={pageUrl}
         image={post.coverImageUrl}
+        articleSection={ARTICLE_SECTION}
+        wordCount={countWords(post.content)}
       />
       <BreadcrumbJsonLd
         items={[
-          { name: 'Ana Sayfa', url: new URL('/', SITE_URL).toString() },
-          { name: 'Arkadaşın Köşesi', url: new URL('/yazi-dizisi', SITE_URL).toString() },
+          { name: 'Ana Sayfa', url: new URL('/', CANONICAL_SITE_URL).toString() },
+          { name: 'Blog', url: new URL('/blog', CANONICAL_SITE_URL).toString() },
           { name: post.title, url: pageUrl },
         ]}
       />
@@ -98,16 +126,16 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
       <ArticleShell
         breadcrumb={[
           { label: 'Ana Sayfa', href: '/' },
-          { label: 'Arkadaşın Köşesi', href: '/yazi-dizisi' },
+          { label: 'Blog', href: '/blog' },
           { label: post.title },
         ]}
-        eyebrow="Arkadaşın Köşesi"
+        eyebrow={ARTICLE_SECTION}
         title={post.title}
         summary={post.summary}
         publishedAt={post.publishedAt}
         updatedAt={post.updatedAt}
         readingMinutes={post.readingMinutes}
-        author={{ name: authorName, avatarUrl }}
+        author={{ name: author.name, avatarUrl: author.avatarUrl, href: author.href }}
         cover={cover ? { src: cover, alt: post.title } : null}
         aside={
           <>
@@ -116,15 +144,14 @@ export default async function CornerPostDetailPage({ params }: CornerPostDetailP
               title={post.title}
               shareText={buildArticleShareText({ title: post.title, summary: post.summary, url: pageUrl })}
             />
-            {post.authorSlug ? (
-              <AuthorBox
-                name={authorName}
-                href={`/${post.authorSlug}`}
-                avatarImageUrl={avatarUrl}
-                bio={author?.shortBio}
-              />
-            ) : null}
-            <AsideLinkList links={[{ href: '/yazi-dizisi', label: 'Tüm yazılara dön' }]} />
+            <AuthorBox
+              name={author.name}
+              href={author.href}
+              avatarImageUrl={author.avatarUrl}
+              bio={authorProfile?.shortBio || undefined}
+              kind={author.kind}
+            />
+            <AsideLinkList links={[{ href: '/blog', label: 'Tüm yazılara dön' }]} />
             <AsideCommunityCard />
           </>
         }

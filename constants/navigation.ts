@@ -89,9 +89,9 @@ export const DRAWER_ITEMS: DrawerItem[] = [
 
   // Content
   {
-    href: '/yazi-dizisi',
-    label: 'Arkadaşın Köşesi',
-    description: 'Kişisel yazılar ve Almanya notları.',
+    href: '/blog',
+    label: 'Blog',
+    description: 'Topluluk köşe yazıları ve Almanya notları.',
     category: 'content',
   },
   {
@@ -159,7 +159,7 @@ export interface HeaderLink {
 export const HEADER_PRIMARY_LINKS: readonly HeaderLink[] = [
   { href: '/almanya-araclari', label: 'Araçlar' },
   { href: '/haberler', label: 'Haberler' },
-  { href: '/yazi-dizisi', label: 'Arkadaşın Köşesi' },
+  { href: '/blog', label: 'Blog' },
   { href: '/belgeler', label: 'Yararlı Belgeler' },
   { href: '/topluluk', label: 'Topluluk' },
   { href: '/iletisim', label: 'İletişim' },

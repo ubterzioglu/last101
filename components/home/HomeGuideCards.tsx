@@ -123,8 +123,8 @@ export const HOME_GUIDE_CARDS: AccordionItem[] = [
             güncel haberler
           </Link>{' '}
           ve{' '}
-          <Link href="/yazi-dizisi" className={LINK_CLASS}>
-            yazı dizileri
+          <Link href="/blog" className={LINK_CLASS}>
+            blog köşe yazıları
           </Link>{' '}
           birbirini tamamlayan modüller olarak öne çıkarıldı. Böylece kullanıcı yalnızca <strong>&quot;ne yapmalıyım?&quot;</strong> sorusuna değil, <strong>&quot;bugün hangi adımı
           tamamlamalıyım?&quot;</strong> sorusuna da net bir cevap bulabilir. SEO açısından da bu yaklaşım, <strong>iç linkleme gücünü artırırken</strong> sayfalar arası niyet
