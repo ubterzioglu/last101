@@ -1,6 +1,14 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
+import { AdminFilterBar } from '@/components/admin/ui/AdminFilterBar';
+import { ADMIN_CONTROL_CLASS } from '@/components/admin/ui/AdminField';
+import { AdminStatusBadge } from '@/components/admin/ui/AdminStatusBadge';
+import { AdminTabs } from '@/components/admin/ui/AdminTabs';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { getAdminHeaders } from '@/lib/admin/clientAuth';
 import { normalizeFounderStatus } from '@/lib/founder';
 import { cn } from '@/lib/utils/cn';
@@ -44,6 +52,19 @@ function formatDate(value: string | null) {
     hour: '2-digit',
     minute: '2-digit',
   });
+}
+
+const STATUS_TABS = [
+  { key: 'all', label: 'Tümü' },
+  { key: 'pending', label: 'Bekleyen' },
+  { key: 'approved', label: 'Onaylı' },
+  { key: 'rejected', label: 'Reddedilen' },
+] as const;
+
+const SMALL_LABEL_CLASS = 'text-xs font-semibold uppercase tracking-wider text-muted';
+
+function isStatusFilter(value: string): value is FounderSubmissionStatusFilter {
+  return STATUS_TABS.some((tab) => tab.key === value);
 }
 
 function buildWaUrl(value: string | null) {
@@ -171,57 +192,79 @@ export default function FounderSubmissionsAdminSection({
 
   if (!active) return null;
 
+  const statCards = [
+    { label: 'Toplam Başvuru', value: stats.total },
+    { label: 'Bekleyen', value: stats.pending },
+    { label: 'Onaylı', value: stats.approved },
+    { label: 'Reddedilen', value: stats.rejected },
+  ];
+
   return (
-    <div className="section active">
-      <div className="stats-grid">
-        <div className="stat-card"><div className="stat-value">{stats.total}</div><div className="stat-label">Toplam Başvuru</div></div>
-        <div className="stat-card"><div className="stat-value">{stats.pending}</div><div className="stat-label">Bekleyen</div></div>
-        <div className="stat-card"><div className="stat-value">{stats.approved}</div><div className="stat-label">Onaylı</div></div>
-        <div className="stat-card"><div className="stat-value">{stats.rejected}</div><div className="stat-label">Reddedilen</div></div>
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {statCards.map((card) => (
+          <div key={card.label} className="rounded-card border border-line bg-white p-5">
+            <div className="text-[28px] font-extrabold leading-none text-ink">{card.value}</div>
+            <div className={cn('mt-3', SMALL_LABEL_CLASS)}>{card.label}</div>
+          </div>
+        ))}
       </div>
 
-      <div className="card">
-        <div className="section-header">
-          <h3 className="section-title">🚀 Founder Başvuruları</h3>
-          <button className="back-btn" onClick={onBack}>← Menüye Dön</button>
+      <Card className="space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h3 className="text-xl font-extrabold tracking-tight text-ink">🚀 Founder Başvuruları</h3>
+          <Button variant="outline" size="sm" onClick={onBack}>← Menüye Dön</Button>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 18 }}>
-          <div className="tabs" style={{ marginBottom: 0 }}>
-            {(['all', 'pending', 'approved', 'rejected'] as FounderSubmissionStatusFilter[]).map((tab) => (
-              <button
-                key={tab}
-                className={cn('tab-btn', statusFilter === tab && 'active')}
-                onClick={() => setStatusFilter(tab)}
-              >
-                {tab === 'all' ? 'Tümü' : tab === 'pending' ? 'Bekleyen' : tab === 'approved' ? 'Onaylı' : 'Reddedilen'}
-              </button>
-            ))}
-          </div>
-          <div style={{ color: 'var(--text-secondary)', fontSize: 14 }}>{visibleCountLabel}</div>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <AdminTabs
+            ariaLabel="Başvuru durumu"
+            tabs={STATUS_TABS}
+            active={statusFilter}
+            onChange={(key) => {
+              if (isStatusFilter(key)) setStatusFilter(key);
+            }}
+          />
+          <div className="pb-2 text-sm text-muted">{visibleCountLabel}</div>
         </div>
 
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 16 }}>
+        <AdminFilterBar>
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="İsim, proje, WhatsApp veya LinkedIn ara..."
-            style={{ flex: 1, minWidth: 240, padding: '10px 12px', border: '1px solid var(--glass-border)', borderRadius: 10, background: 'rgba(255,255,255,0.04)', color: 'var(--text-primary)', outline: 'none' }}
+            className={cn(ADMIN_CONTROL_CLASS, 'w-auto min-w-[240px] flex-1')}
           />
-          <button className="action-btn view" onClick={() => void loadRows(statusFilter, search)}>Filtrele</button>
-          <button className="action-btn approve" onClick={() => void loadRows()}>Yenile</button>
-        </div>
+          <Button variant="outline" onClick={() => void loadRows(statusFilter, search)}>Filtrele</Button>
+          <Button variant="primary" onClick={() => void loadRows()}>Yenile</Button>
+        </AdminFilterBar>
 
         {error ? (
-          <div className="auth-error" style={{ marginBottom: 16 }}>{error}</div>
+          <div
+            role="alert"
+            className={cn(
+              'rounded-btn border px-4 py-3 text-sm font-medium',
+              TONE_STYLES.red.tint,
+              TONE_STYLES.red.border,
+              TONE_STYLES.red.text
+            )}
+          >
+            {error}
+          </div>
         ) : null}
 
         {listLoading ? (
-          <div className="loading"><div className="loading-spinner" /><p>Founder başvuruları yükleniyor...</p></div>
+          <div role="status" className="flex flex-col items-center gap-3 py-10 text-sm text-muted">
+            <div
+              aria-hidden="true"
+              className="h-8 w-8 animate-spin rounded-full border-2 border-line border-t-brand-700"
+            />
+            <p>Founder başvuruları yükleniyor...</p>
+          </div>
         ) : rows.length === 0 ? (
-          <div className="empty-state"><div className="empty-state-icon">🚀</div><p>Bu filtre için founder kaydı yok.</p></div>
+          <AdminEmptyState title="Bu filtre için founder kaydı yok." />
         ) : (
-          <div style={{ display: 'grid', gap: 16 }}>
+          <div className="grid gap-4">
             {rows
               .filter((row) => statusFilter === 'all' || normalizeFounderStatus(row.status) === statusFilter)
               .map((row) => {
@@ -229,41 +272,41 @@ export default function FounderSubmissionsAdminSection({
                 const isBusy = busyIds.includes(row.id);
                 const waUrl = buildWaUrl(row.whatsapp);
                 return (
-                  <article key={row.id} className="card" style={{ padding: 22 }}>
-                    <div className="section-header" style={{ marginBottom: 14 }}>
+                  <article key={row.id} className="rounded-card border border-line bg-white p-5 md:p-6">
+                    <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                       <div>
-                        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-                          <span className={cn('status-badge', status === 'approved' ? 'approved' : status === 'rejected' ? 'review' : 'pending')}>
-                            {status === 'approved' ? 'Onaylı' : status === 'rejected' ? 'Reddedildi' : 'Onay Bekliyor'}
-                          </span>
-                          <span className="status-badge muted">{formatDate(row.created_at)}</span>
+                        <div className="mb-2 flex flex-wrap gap-2">
+                          <AdminStatusBadge
+                            status={status}
+                            tone={status === 'approved' ? 'green' : status === 'rejected' ? 'red' : 'yellow'}
+                            label={status === 'approved' ? 'Onaylı' : status === 'rejected' ? 'Reddedildi' : 'Onay Bekliyor'}
+                          />
+                          <AdminStatusBadge status="date" tone="neutral" label={formatDate(row.created_at)} />
                         </div>
-                        <h4 style={{ fontSize: 24, margin: 0 }}>{row.full_name || 'İsimsiz kayıt'}</h4>
-                        <div style={{ color: 'var(--text-secondary)', marginTop: 6 }}>{row.project_name || 'Proje adı belirtilmedi'}</div>
+                        <h4 className="m-0 text-2xl font-extrabold tracking-tight text-ink">{row.full_name || 'İsimsiz kayıt'}</h4>
+                        <div className="mt-1.5 text-muted">{row.project_name || 'Proje adı belirtilmedi'}</div>
                       </div>
                       {status === 'approved' ? (
-                        <button className="action-btn view" onClick={() => void copySurveyLink(row)}>
+                        <Button variant="outline" size="sm" onClick={() => void copySurveyLink(row)}>
                           Survey Linkini Kopyala
-                        </button>
+                        </Button>
                       ) : null}
                     </div>
 
-                    <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginBottom: 14 }}>
+                    <div className="mb-4 grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
                       <InfoChip label="LinkedIn" value={row.linkedin_url} href={row.linkedin_url} />
                       <InfoChip label="WhatsApp" value={row.whatsapp} href={waUrl || null} />
                     </div>
 
-                    <div style={{ border: '1px solid var(--glass-border)', borderRadius: 14, padding: 14, background: 'rgba(255,255,255,0.03)' }}>
-                      <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                        Kısa Açıklama
+                    <div className="rounded-card border border-line bg-band p-4">
+                      <div className={cn('mb-1.5', SMALL_LABEL_CLASS)}>Kısa Açıklama</div>
+                      <div className="whitespace-pre-wrap leading-relaxed text-ink">
+                        {row.short_description || 'Açıklama bırakılmadı.'}
                       </div>
-                      <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>{row.short_description || 'Açıklama bırakılmadı.'}</div>
                     </div>
 
-                    <div style={{ marginTop: 14 }}>
-                      <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                        Admin Notu
-                      </div>
+                    <div className="mt-4">
+                      <div className={cn('mb-2', SMALL_LABEL_CLASS)}>Admin Notu</div>
                       <textarea
                         value={commentDrafts[row.id] || ''}
                         onChange={(event) =>
@@ -272,31 +315,31 @@ export default function FounderSubmissionsAdminSection({
                             [row.id]: event.target.value,
                           }))
                         }
-                        style={{ width: '100%', minHeight: 90, borderRadius: 12, border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.04)', color: '#fff', padding: '12px 14px', outline: 'none' }}
+                        className={cn(ADMIN_CONTROL_CLASS, 'min-h-[90px] py-3')}
                         placeholder="İç not, dönüş notu veya karar gerekçesi..."
                       />
                     </div>
 
-                    <div className="action-btns" style={{ marginTop: 14 }}>
-                      <button className="action-btn approve" disabled={isBusy} onClick={() => void runAction(row.id, 'approve')}>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <Button variant="success" size="sm" disabled={isBusy} onClick={() => void runAction(row.id, 'approve')}>
                         Onayla
-                      </button>
-                      <button className="action-btn view" disabled={isBusy} onClick={() => void runAction(row.id, 'pending')}>
+                      </Button>
+                      <Button variant="outline" size="sm" disabled={isBusy} onClick={() => void runAction(row.id, 'pending')}>
                         Beklemeye Al
-                      </button>
-                      <button className="action-btn reject" disabled={isBusy} onClick={() => void runAction(row.id, 'reject')}>
+                      </Button>
+                      <Button variant="danger" size="sm" disabled={isBusy} onClick={() => void runAction(row.id, 'reject')}>
                         Reddet
-                      </button>
-                      <button className="action-btn reject" disabled={isBusy} onClick={() => void runAction(row.id, 'delete')}>
+                      </Button>
+                      <Button variant="danger" size="sm" disabled={isBusy} onClick={() => void runAction(row.id, 'delete')}>
                         Sil
-                      </button>
+                      </Button>
                     </div>
                   </article>
                 );
               })}
           </div>
         )}
-      </div>
+      </Card>
     </div>
   );
 }
@@ -312,16 +355,19 @@ function InfoChip({
 }) {
   if (!value) return null;
   return (
-    <div style={{ border: '1px solid var(--glass-border)', borderRadius: 12, padding: '12px 14px', background: 'rgba(255,255,255,0.03)' }}>
-      <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-        {label}
-      </div>
+    <div className="rounded-btn border border-line bg-band px-4 py-3">
+      <div className={cn('mb-1.5', SMALL_LABEL_CLASS)}>{label}</div>
       {href ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: '#8ab4f8', textDecoration: 'none', wordBreak: 'break-all' }}>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="break-all text-brand-700 underline underline-offset-4 hover:text-brand-800"
+        >
           {value}
         </a>
       ) : (
-        <div style={{ wordBreak: 'break-all' }}>{value}</div>
+        <div className="break-all text-ink">{value}</div>
       )}
     </div>
   );

@@ -1,7 +1,14 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { AdminEmptyState } from '@/components/admin/ui/AdminEmptyState';
+import { ADMIN_CONTROL_CLASS } from '@/components/admin/ui/AdminField';
+import { AdminTable, AdminTd, AdminTh, AdminThead, AdminTr } from '@/components/admin/ui/AdminTable';
+import { TONE_STYLES } from '@/components/site/tones';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { getAdminHeaders } from '@/lib/admin/clientAuth';
+import { cn } from '@/lib/utils/cn';
 import { formatFounderSlotLabel, type FounderEventSlot } from '@/lib/founder';
 
 interface VoteRow {
@@ -199,118 +206,131 @@ export default function FounderEventSurveyAdminSection({
 
   if (!active) return null;
 
+  const slots = payload?.slots || [];
+  const votes = payload?.votes || [];
+  const stats = [
+    { label: 'Toplam Slot', value: payload?.stats.total_slots ?? 0 },
+    { label: 'Aktif Slot', value: payload?.stats.active_slots ?? 0 },
+    { label: 'Toplam Oy Kaydı', value: payload?.stats.total_votes ?? 0 },
+    { label: 'Onaylı Founder', value: payload?.stats.approved_founders ?? 0 },
+  ];
+
   return (
-    <div className="section active">
-      <div className="stats-grid">
-        <div className="stat-card"><div className="stat-value">{payload?.stats.total_slots ?? 0}</div><div className="stat-label">Toplam Slot</div></div>
-        <div className="stat-card"><div className="stat-value">{payload?.stats.active_slots ?? 0}</div><div className="stat-label">Aktif Slot</div></div>
-        <div className="stat-card"><div className="stat-value">{payload?.stats.total_votes ?? 0}</div><div className="stat-label">Toplam Oy Kaydı</div></div>
-        <div className="stat-card"><div className="stat-value">{payload?.stats.approved_founders ?? 0}</div><div className="stat-label">Onaylı Founder</div></div>
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {stats.map((stat) => (
+          <div key={stat.label} className="rounded-card border border-line bg-white p-5">
+            <div className="text-[28px] font-extrabold leading-none text-ink">{stat.value}</div>
+            <div className="mt-3 text-xs font-semibold uppercase tracking-wider text-muted">{stat.label}</div>
+          </div>
+        ))}
       </div>
 
-      <div className="card">
-        <div className="section-header">
-          <h3 className="section-title">🗓 Founder Event Survey</h3>
-          <button className="back-btn" onClick={onBack}>← Menüye Dön</button>
+      <Card>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <h3 className="text-xl font-extrabold tracking-tight text-ink">🗓 Founder Event Survey</h3>
+          <Button variant="outline" size="sm" onClick={onBack}>← Menüye Dön</Button>
         </div>
 
-        {error ? <div className="auth-error" style={{ marginBottom: 16 }}>{error}</div> : null}
+        {error ? (
+          <div
+            role="alert"
+            className={cn('mb-4 rounded-btn border px-4 py-3 text-sm font-medium', TONE_STYLES.red.tint, TONE_STYLES.red.border, TONE_STYLES.red.text)}
+          >
+            {error}
+          </div>
+        ) : null}
 
-        <form onSubmit={submitSlot} style={{ display: 'grid', gap: 12, marginBottom: 22 }}>
-          <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+        <form onSubmit={submitSlot} className="mb-6 grid gap-3 rounded-card bg-band p-4">
+          <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
             <input
               value={form.title}
               onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
               placeholder="Slot başlığı (opsiyonel)"
-              style={{ padding: '12px 14px', border: '1px solid var(--glass-border)', borderRadius: 12, background: 'rgba(255,255,255,0.04)', color: '#fff', outline: 'none' }}
+              className={ADMIN_CONTROL_CLASS}
             />
             <input
               type="datetime-local"
               value={form.startsAt}
               onChange={(event) => setForm((prev) => ({ ...prev, startsAt: event.target.value }))}
-              style={{ padding: '12px 14px', border: '1px solid var(--glass-border)', borderRadius: 12, background: 'rgba(255,255,255,0.04)', color: '#fff', outline: 'none' }}
+              className={ADMIN_CONTROL_CLASS}
               required
             />
             <input
               type="datetime-local"
               value={form.endsAt}
               onChange={(event) => setForm((prev) => ({ ...prev, endsAt: event.target.value }))}
-              style={{ padding: '12px 14px', border: '1px solid var(--glass-border)', borderRadius: 12, background: 'rgba(255,255,255,0.04)', color: '#fff', outline: 'none' }}
+              className={ADMIN_CONTROL_CLASS}
             />
             <input
               type="number"
               value={form.sortOrder}
               onChange={(event) => setForm((prev) => ({ ...prev, sortOrder: event.target.value }))}
               placeholder="Sıra"
-              style={{ padding: '12px 14px', border: '1px solid var(--glass-border)', borderRadius: 12, background: 'rgba(255,255,255,0.04)', color: '#fff', outline: 'none' }}
+              className={ADMIN_CONTROL_CLASS}
             />
           </div>
 
-          <label style={{ display: 'inline-flex', alignItems: 'center', gap: 10, color: '#fff', fontSize: 14 }}>
+          <label className="inline-flex min-h-[44px] items-center gap-2.5 text-sm text-ink">
             <input
               type="checkbox"
               checked={form.isActive}
               onChange={(event) => setForm((prev) => ({ ...prev, isActive: event.target.checked }))}
+              className="h-4 w-4 accent-brand-700"
             />
             Slot aktif olsun
           </label>
 
-          <div className="action-btns">
-            <button type="submit" className="action-btn approve" disabled={saving}>
+          <div className="flex flex-wrap gap-2">
+            <Button type="submit" variant="primary" size="sm" disabled={saving}>
               {editingSlotId ? 'Slotu Güncelle' : 'Yeni Slot Ekle'}
-            </button>
-            <button type="button" className="action-btn view" onClick={resetForm} disabled={saving}>
+            </Button>
+            <Button type="button" variant="outline" size="sm" onClick={resetForm} disabled={saving}>
               Formu Temizle
-            </button>
-            <button type="button" className="action-btn view" onClick={() => void loadData()} disabled={loading || saving}>
+            </Button>
+            <Button type="button" variant="outline" size="sm" onClick={() => void loadData()} disabled={loading || saving}>
               Yenile
-            </button>
+            </Button>
           </div>
         </form>
 
         {loading ? (
-          <div className="loading"><div className="loading-spinner" /><p>Founder survey verileri yükleniyor...</p></div>
+          <div className="flex flex-col items-center gap-3 py-10 text-center text-muted" role="status">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-line border-t-brand-700" />
+            <p>Founder survey verileri yükleniyor...</p>
+          </div>
         ) : (
           <>
-            <h4 style={{ fontSize: 16, marginBottom: 14 }}>Slot Yönetimi</h4>
-            <div style={{ display: 'grid', gap: 10, marginBottom: 26 }}>
-              {(payload?.slots || []).length === 0 ? (
-                <div className="empty-state"><div className="empty-state-icon">🗓</div><p>Henüz slot eklenmedi.</p></div>
+            <h4 className="mb-3.5 text-base font-bold text-ink">Slot Yönetimi</h4>
+            <div className="mb-6 grid gap-2.5">
+              {slots.length === 0 ? (
+                <AdminEmptyState title="Henüz slot eklenmedi." />
               ) : (
-                (payload?.slots || []).map((slot) => {
+                slots.map((slot) => {
                   const voteCount = payload?.slot_vote_stats.find((stat) => stat.slot_id === slot.id)?.vote_count || 0;
                   return (
                     <div
                       key={slot.id}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        gap: 12,
-                        padding: '14px 16px',
-                        border: '1px solid var(--glass-border)',
-                        borderRadius: 14,
-                        background: 'rgba(255,255,255,0.03)',
-                        flexWrap: 'wrap',
-                      }}
+                      className="flex flex-wrap justify-between gap-3 rounded-card border border-line bg-white px-4 py-3.5"
                     >
                       <div>
-                        <div style={{ fontWeight: 600, marginBottom: 6 }}>{formatFounderSlotLabel(slot)}</div>
-                        <div style={{ color: 'var(--text-secondary)', fontSize: 13 }}>
+                        <div className="mb-1.5 font-semibold text-ink">{formatFounderSlotLabel(slot)}</div>
+                        <div className="text-[13px] text-muted">
                           {slot.is_active ? 'Aktif' : 'Pasif'} • {voteCount} oy • Sıra {slot.sort_order}
                         </div>
-                        <div style={{ color: 'var(--text-secondary)', fontSize: 12, marginTop: 4 }}>
+                        <div className="mt-1 text-xs text-muted">
                           Oluşturma: {formatDateTime(slot.created_at || null)} • Güncelleme: {formatDateTime(slot.updated_at || null)}
                         </div>
                       </div>
 
-                      <div className="action-btns">
-                        <button className="action-btn view" onClick={() => startEdit(slot)}>Düzenle</button>
-                        <button className="action-btn approve" onClick={() => void runSlotAction('toggle_active', slot)} disabled={saving}>
+                      <div className="flex flex-wrap items-start gap-2">
+                        <Button variant="outline" size="sm" onClick={() => startEdit(slot)}>Düzenle</Button>
+                        <Button variant="success" size="sm" onClick={() => void runSlotAction('toggle_active', slot)} disabled={saving}>
                           {slot.is_active ? 'Pasife Al' : 'Aktif Et'}
-                        </button>
-                        <button className="action-btn reject" onClick={() => void runSlotAction('delete', slot)} disabled={saving}>
+                        </Button>
+                        <Button variant="danger" size="sm" onClick={() => void runSlotAction('delete', slot)} disabled={saving}>
                           Sil
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   );
@@ -318,51 +338,49 @@ export default function FounderEventSurveyAdminSection({
               )}
             </div>
 
-            <h4 style={{ fontSize: 16, marginBottom: 14 }}>Founder Oyları</h4>
-            <div className="table-container">
-              <table className="data-table">
-                <thead>
+            <h4 className="mb-3.5 text-base font-bold text-ink">Founder Oyları</h4>
+            <AdminTable caption="Founder oyları">
+              <AdminThead>
+                <AdminTr>
+                  <AdminTh>Founder</AdminTh>
+                  <AdminTh>Proje</AdminTh>
+                  <AdminTh>WhatsApp</AdminTh>
+                  <AdminTh>Seçilen Slotlar</AdminTh>
+                  <AdminTh>Son Güncelleme</AdminTh>
+                </AdminTr>
+              </AdminThead>
+              <tbody>
+                {votes.length === 0 ? (
                   <tr>
-                    <th>Founder</th>
-                    <th>Proje</th>
-                    <th>WhatsApp</th>
-                    <th>Seçilen Slotlar</th>
-                    <th>Son Güncelleme</th>
+                    <AdminTd colSpan={5}>
+                      <AdminEmptyState title="Henüz oy kaydı yok." />
+                    </AdminTd>
                   </tr>
-                </thead>
-                <tbody>
-                  {(payload?.votes || []).length === 0 ? (
-                    <tr>
-                      <td colSpan={5}>
-                        <div className="empty-state"><div className="empty-state-icon">📭</div><p>Henüz oy kaydı yok.</p></div>
-                      </td>
-                    </tr>
-                  ) : (
-                    (payload?.votes || []).map((vote) => (
-                      <tr key={vote.id}>
-                        <td>{vote.founder_full_name}</td>
-                        <td>{vote.founder_project_name}</td>
-                        <td>{vote.founder_whatsapp || '-'}</td>
-                        <td>
-                          {vote.selected_slot_ids.length === 0
-                            ? '-'
-                            : vote.selected_slot_ids
-                                .map((slotId) => {
-                                  const slot = slotMap.get(slotId);
-                                  return slot ? formatFounderSlotLabel(slot) : `Silinmiş slot (${slotId})`;
-                                })
-                                .join(', ')}
-                        </td>
-                        <td>{formatDateTime(vote.updated_at || vote.created_at)}</td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+                ) : (
+                  votes.map((vote) => (
+                    <AdminTr key={vote.id}>
+                      <AdminTd>{vote.founder_full_name}</AdminTd>
+                      <AdminTd>{vote.founder_project_name}</AdminTd>
+                      <AdminTd>{vote.founder_whatsapp || '-'}</AdminTd>
+                      <AdminTd>
+                        {vote.selected_slot_ids.length === 0
+                          ? '-'
+                          : vote.selected_slot_ids
+                              .map((slotId) => {
+                                const slot = slotMap.get(slotId);
+                                return slot ? formatFounderSlotLabel(slot) : `Silinmiş slot (${slotId})`;
+                              })
+                              .join(', ')}
+                      </AdminTd>
+                      <AdminTd>{formatDateTime(vote.updated_at || vote.created_at)}</AdminTd>
+                    </AdminTr>
+                  ))
+                )}
+              </tbody>
+            </AdminTable>
           </>
         )}
-      </div>
+      </Card>
     </div>
   );
 }
