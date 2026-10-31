@@ -131,8 +131,8 @@ Header behavior (`components/layout/Header.tsx`):
 - Desktop: primary links from `HEADER_PRIMARY_LINKS` in `constants/navigation.ts`, WhatsApp, Giriş yap / Çıkış, "Üye Ol" button
 - Mobile: "Menü" opens `HeaderDrawer` (categories from `constants/navigation.ts`; Escape, focus trap, scroll lock)
 - Categories: Tools / Community / Content / Contact
-- Header/Footer hide when `body[data-devuser]` is set
-- Admin and devuser pages set `document.body.setAttribute('data-devuser', 'true')`
+- Header/Footer hide when `body[data-admin]` (admin) or `body[data-devuser]` (devuser) is set
+- Admin pages set `document.body.setAttribute('data-admin', 'true')`; devuser pages set `data-devuser`
 
 ## Styling and Layout Conventions
 
@@ -206,7 +206,7 @@ Key variables:
 ## Known Pitfalls
 
 - Devuser route appears duplicated in code path, but URL is always `/devuser/<page>`
-- Admin/devuser UI can render incorrectly if `body[data-devuser]` is not set
+- Admin UI can render incorrectly if `body[data-admin]` is not set (devuser: `body[data-devuser]`)
 - Docker build can fail on ESLint issues; always run `npm run lint`
 - Missing `SUPABASE_SERVICE_ROLE_KEY` breaks admin service mode
 - Wrong service key causes "Invalid API key" errors

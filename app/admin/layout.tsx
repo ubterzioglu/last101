@@ -15,12 +15,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <>
       {/*
-        Set `data-devuser` before first paint so the global site Header/Footer
-        (hidden via `body[data-devuser]` in globals.css) never flash on admin
+        Set `data-admin` before first paint so the global site Header/Footer
+        (hidden via `body[data-admin]` in globals.css) never flash on admin
         pages. AdminLayoutShell keeps managing the attribute after hydration.
       */}
       <Script id="admin-chrome-flag" strategy="beforeInteractive">
-        {`document.body.setAttribute('data-devuser','true');`}
+        {`document.body.setAttribute('data-admin','true');`}
       </Script>
       <AdminLayoutShell>{children}</AdminLayoutShell>
     </>

@@ -187,4 +187,34 @@ describe('AuthSplitLayout tone="light" for the public /giris page', () => {
   it('does not nest a second <main> inside the root layout', () => {
     expect(parse(render(LIGHT_PROPS))('main')).toHaveLength(0);
   });
+
+  it('lists the default highlights when none are passed', () => {
+    const $ = parse(render(LIGHT_PROPS));
+    const items = $('aside li')
+      .map((_, el) => $(el).text())
+      .get();
+
+    expect(items).toEqual([
+      'Ücretsiz interaktif Almanya araçları',
+      'Topluluk, köşe yazıları ve güncel haberler',
+      'Kişisel planlama ve karar destek',
+    ]);
+  });
+
+  it('renders custom highlights instead of the defaults', () => {
+    const highlights = ['Üyeler, haberler ve köşe yazıları', 'Hizmet rehberi öneri onayları'] as const;
+    const $ = parse(render({ ...LIGHT_PROPS, highlights }));
+    const items = $('aside li')
+      .map((_, el) => $(el).text())
+      .get();
+
+    expect(items).toEqual([...highlights]);
+    expect($('aside').text()).not.toContain('Kişisel planlama ve karar destek');
+  });
+
+  it('ignores highlights in the dark layout so its markup stays identical', () => {
+    const props = { ...ADMIN_PROPS, highlights: ['Özel madde'] };
+
+    expect(render(props)).toBe(render(ADMIN_PROPS));
+  });
 });
