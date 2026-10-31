@@ -233,22 +233,23 @@ export function HowToJsonLd({ name, description, steps }: { name: string; descri
   return <JsonLd data={data} />;
 }
 
+interface SpeakableJsonLdProps {
+  xpath?: string[];
+  cssSelector?: string[];
+}
 
-
-export function SpeakableJsonLd({ xpath, cssSelector }: { xpath?: string[]; cssSelector?: string[] }) {
-  const speakable: Record<string, unknown> = {
-    '@context': 'https://schema.org',
-    '@type': 'SpeakableSpecification',
-  };
-  if (xpath) speakable.xpath = xpath;
-  if (cssSelector) speakable.cssSelector = cssSelector;
-
+export function SpeakableJsonLd({ xpath, cssSelector }: SpeakableJsonLdProps) {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: SEO_SITE_NAME,
     url: SITE_URL,
-    speakable,
+    speakable: {
+      '@context': 'https://schema.org',
+      '@type': 'SpeakableSpecification',
+      ...(xpath ? { xpath } : {}),
+      ...(cssSelector ? { cssSelector } : {}),
+    },
   };
 
   return <JsonLd data={data} />;
