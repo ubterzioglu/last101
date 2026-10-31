@@ -2,6 +2,7 @@ import 'server-only';
 
 import { unstable_noStore as noStore } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
+import { DEFAULT_COVER_IMAGE } from '@/lib/utils/constants';
 
 export interface PublicRehberArticle {
   id: string;
@@ -33,7 +34,7 @@ interface RehberArticleRow {
   updated_at: string | null;
 }
 
-const DEFAULT_COVER = '/images/hero-background.webp';
+const DEFAULT_COVER = DEFAULT_COVER_IMAGE;
 const REHBER_TABLE = 'rehber_articles';
 const ARTICLE_SELECT =
   'id, slug, title, summary, content, cover_image_url, category, reading_minutes, published_at, created_at, updated_at';

@@ -3,6 +3,10 @@
  * Renders JSON-LD script tags for SEO
  */
 
+import { realCoverUrl } from '@/components/news/cover';
+import { hasMeaningfulUpdate } from '@/lib/articles/headings';
+import { SITE_AUTHOR_SLUG } from '@/lib/authors';
+import type { ArticleAuthorRef } from '@/lib/authors';
 import {
   CONTACT_INFO,
   DEFAULT_META_DESCRIPTION,
@@ -17,10 +21,15 @@ type JsonLdProps = {
   data: Record<string, unknown>;
 };
 
+type JsonLdNode = Record<string, unknown>;
+
 interface BreadcrumbItem {
   name: string;
   url: string;
 }
+
+/** Schema.org page types the generic WebPage builder is used for. */
+export type WebPageType = 'WebPage' | 'CollectionPage' | 'ProfilePage' | 'AboutPage' | 'ContactPage';
 
 interface WebPageJsonLdProps {
   title: string;
@@ -28,6 +37,10 @@ interface WebPageJsonLdProps {
   url: string;
   datePublished?: string;
   dateModified?: string;
+  /** Schema.org @type; defaults to 'WebPage'. */
+  type?: WebPageType;
+  /** Optional main entity node (Person, Organization, ItemList...). */
+  mainEntity?: JsonLdNode;
 }
 
 interface FaqItem {
@@ -35,15 +48,97 @@ interface FaqItem {
   answer: string;
 }
 
+const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const ORGANIZATION_ALTERNATE_NAMES: readonly string[] = ['almanya101'];
+
+function isAbsoluteUrl(value: string): boolean {
+  return value.startsWith('http://') || value.startsWith('https://');
+}
+
+/** Absolute URL for a site path; absolute URLs pass through. */
+function absoluteUrl(value: string): string {
+  return isAbsoluteUrl(value) ? value : new URL(value, SITE_URL).toString();
+}
+
+/** Site-relative path of an image URL (absolute URLs of this site are stripped to a path). */
+function toSitePath(value: string): string {
+  const prefix = SITE_URL.replace(/\/+$/, '');
+  return value.startsWith(`${prefix}/`) ? value.slice(prefix.length) : value;
+}
+
+/**
+ * JSON for an inline <script>. `JSON.stringify` leaves `<`, `>` and `&` as is, so a
+ * title such as `</script><script>...` would close the block and run markup. Escaping
+ * them (and the JS line separators) keeps the payload valid JSON and inert in HTML.
+ */
+export function serializeJsonLd(data: unknown): string {
+  return JSON.stringify(data, null, 2)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(new RegExp('\\u2028', 'g'), '\\u2028')
+    .replace(new RegExp('\\u2029', 'g'), '\\u2029');
+}
+
 export function JsonLd({ data }: JsonLdProps) {
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data, null, 2),
+        __html: serializeJsonLd(data),
       }}
     />
   );
+}
+
+/**
+ * Self-contained Organization node. Article author (site author), publisher and
+ * ProfilePage.mainEntity inline this so crawlers that parse a single block never
+ * meet a dangling `@id` reference.
+ */
+export function organizationRef(): JsonLdNode {
+  return {
+    '@type': 'Organization',
+    '@id': ORGANIZATION_ID,
+    name: SEO_SITE_NAME,
+    alternateName: [...ORGANIZATION_ALTERNATE_NAMES],
+    url: SITE_URL,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/almanya101.png`,
+    },
+  };
+}
+
+/**
+ * Person node for a real columnist. The `@id` is the author page URL plus
+ * `#person`, so the article author and the ProfilePage main entity merge.
+ */
+export function personRef(author: ArticleAuthorRef, extra: { description?: string } = {}): JsonLdNode {
+  const profileUrl = absoluteUrl(author.href);
+
+  return {
+    '@type': 'Person',
+    '@id': `${profileUrl}#person`,
+    name: author.name,
+    url: profileUrl,
+    ...(extra.description ? { description: extra.description } : {}),
+    ...(author.avatarUrl ? { image: absoluteUrl(author.avatarUrl) } : {}),
+  };
+}
+
+function isSiteAuthor(author: ArticleAuthorRef): boolean {
+  return author.kind === 'Organization' && author.slug === SITE_AUTHOR_SLUG;
+}
+
+/** JSON-LD node for any resolved author (site Organization, other Organization or Person). */
+export function authorNode(author: ArticleAuthorRef, extra: { description?: string } = {}): JsonLdNode {
+  if (isSiteAuthor(author)) return organizationRef();
+  if (author.kind === 'Organization') {
+    return { '@type': 'Organization', name: author.name, url: absoluteUrl(author.href) };
+  }
+  return personRef(author, extra);
 }
 
 /**
@@ -52,11 +147,7 @@ export function JsonLd({ data }: JsonLdProps) {
 export function OrganizationJsonLd() {
   const data = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    '@id': `${SITE_URL}/#organization`,
-    name: SEO_SITE_NAME,
-    url: SITE_URL,
-    logo: `${SITE_URL}/almanya101.png`,
+    ...organizationRef(),
     description: DEFAULT_META_DESCRIPTION,
     sameAs: Object.values(SOCIAL_LINKS),
     contactPoint: {
@@ -78,21 +169,29 @@ export function WebSiteJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    '@id': `${SITE_URL}/#website`,
+    '@id': WEBSITE_ID,
     name: SEO_SITE_NAME,
     url: SITE_URL,
     description: DEFAULT_META_DESCRIPTION,
     inLanguage: 'tr',
-    publisher: { '@id': `${SITE_URL}/#organization` },
+    publisher: { '@id': ORGANIZATION_ID },
   };
 
   return <JsonLd data={data} />;
 }
 
-export function WebPageJsonLd({ title, description, url, datePublished, dateModified }: WebPageJsonLdProps) {
-  const data = {
+export function buildWebPageJsonLd({
+  title,
+  description,
+  url,
+  datePublished,
+  dateModified,
+  type = 'WebPage',
+  mainEntity,
+}: WebPageJsonLdProps): JsonLdNode {
+  return {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': type,
     '@id': url,
     name: title,
     description,
@@ -100,10 +199,77 @@ export function WebPageJsonLd({ title, description, url, datePublished, dateModi
     inLanguage: 'tr',
     ...(datePublished && { datePublished }),
     ...(dateModified && { dateModified }),
-    isPartOf: { '@id': `${SITE_URL}/#website` },
+    isPartOf: { '@id': WEBSITE_ID },
+    ...(mainEntity ? { mainEntity } : {}),
   };
+}
 
-  return <JsonLd data={data} />;
+export function WebPageJsonLd(props: WebPageJsonLdProps) {
+  return <JsonLd data={buildWebPageJsonLd(props)} />;
+}
+
+interface ProfilePageJsonLdProps {
+  author: ArticleAuthorRef;
+  /** Absolute URL of the author page. */
+  url: string;
+  /** Page name; defaults to the author name. */
+  title?: string;
+  /** Bio shown on the page; also set on the Person node. */
+  description?: string;
+}
+
+export function buildProfilePageJsonLd({ author, url, title, description }: ProfilePageJsonLdProps): JsonLdNode {
+  const mainEntity = authorNode(author, { description });
+
+  return buildWebPageJsonLd({
+    title: title ?? author.name,
+    description: description ?? author.name,
+    url,
+    type: 'ProfilePage',
+    mainEntity,
+  });
+}
+
+/** ProfilePage whose main entity is the same Person (or Organization) node the articles use. */
+export function ProfilePageJsonLd(props: ProfilePageJsonLdProps) {
+  return <JsonLd data={buildProfilePageJsonLd(props)} />;
+}
+
+interface CollectionItem {
+  /** Absolute URL or site path. */
+  url: string;
+  name: string;
+}
+
+interface CollectionPageJsonLdProps {
+  title: string;
+  description: string;
+  url: string;
+  items: readonly CollectionItem[];
+}
+
+export function buildCollectionPageJsonLd({ title, description, url, items }: CollectionPageJsonLdProps): JsonLdNode {
+  return buildWebPageJsonLd({
+    title,
+    description,
+    url,
+    type: 'CollectionPage',
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: items.length,
+      itemListElement: items.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: absoluteUrl(item.url),
+        name: item.name,
+      })),
+    },
+  });
+}
+
+/** Hub/listing page: CollectionPage with an ItemList of its entries. */
+export function CollectionPageJsonLd(props: CollectionPageJsonLdProps) {
+  return <JsonLd data={buildCollectionPageJsonLd(props)} />;
 }
 
 export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
@@ -141,24 +307,56 @@ export function FaqJsonLd({ items }: { items: FaqItem[] }) {
 /**
  * Article Schema (for content pages)
  */
-interface ArticleJsonLdProps {
+export interface ArticleJsonLdProps {
   title: string;
   description: string;
   datePublished: string;
-  dateModified?: string;
-  author?: string;
-  /** Yazar gerçek bir kişiyse 'Person' verilir; varsayılan 'Organization'. */
+  /** Written as `dateModified` only when it is a meaningful update (see hasMeaningfulUpdate). */
+  dateModified?: string | null;
+  /**
+   * Resolved author (preferred), or a plain name. The site author / "almanya101"
+   * becomes an inline Organization; a real columnist becomes a Person.
+   */
+  author?: string | ArticleAuthorRef;
+  /** Legacy string-author only: 'Person' for a real person; default 'Organization'. */
   authorType?: 'Person' | 'Organization';
-  /** Yazar sayfasının mutlak URL'i (E-E-A-T için). */
+  /** Legacy string-author only: absolute URL of the author page. */
   authorUrl?: string;
   url: string;
-  image?: string;
+  /** Cover URL; placeholder covers are replaced with the OG banner. */
+  image?: string | null;
+  /** 'BlogPosting' for blog posts; default 'Article'. */
+  type?: 'Article' | 'BlogPosting';
+  articleSection?: string;
+  keywords?: readonly string[] | string;
+  wordCount?: number;
   /** Sayfadaki görünür "Kaynak" bloğuyla eşleşen kaynak adı/bağlantısı. */
   sourceName?: string;
   sourceUrl?: string;
 }
 
-export function ArticleJsonLd({
+function legacyAuthorNode(
+  name: string,
+  authorType: 'Person' | 'Organization',
+  authorUrl: string | undefined,
+): JsonLdNode {
+  const lower = name.toLowerCase();
+  if (lower === SEO_SITE_NAME.toLowerCase() || lower === SITE_NAME.toLowerCase()) return organizationRef();
+
+  return {
+    '@type': authorType,
+    ...(authorUrl ? { '@id': `${authorUrl}#${authorType.toLowerCase()}` } : {}),
+    name,
+    ...(authorUrl ? { url: authorUrl } : {}),
+  };
+}
+
+function resolveArticleImage(image: string | null | undefined): string {
+  const real = image ? realCoverUrl(toSitePath(image)) : null;
+  return absoluteUrl(real ?? DEFAULT_OG_IMAGE);
+}
+
+export function buildArticleJsonLd({
   title,
   description,
   datePublished,
@@ -167,22 +365,28 @@ export function ArticleJsonLd({
   authorType = 'Organization',
   authorUrl,
   url,
-  image = `${SITE_URL}${DEFAULT_OG_IMAGE}`,
+  image,
+  type = 'Article',
+  articleSection,
+  keywords,
+  wordCount,
   sourceName,
   sourceUrl,
-}: ArticleJsonLdProps) {
-  const imageUrl = image.startsWith('http://') || image.startsWith('https://') ? image : `${SITE_URL}${image}`;
-  const isSiteOrganization =
-    author.toLowerCase() === SEO_SITE_NAME.toLowerCase() || author.toLowerCase() === SITE_NAME.toLowerCase();
+}: ArticleJsonLdProps): JsonLdNode {
+  const authorData = typeof author === 'string' ? legacyAuthorNode(author, authorType, authorUrl) : authorNode(author);
 
-  const data = {
+  return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': type,
     headline: title,
     description,
-    image: imageUrl,
+    inLanguage: 'tr',
+    image: [resolveArticleImage(image)],
     datePublished,
-    dateModified: dateModified || datePublished,
+    ...(dateModified && hasMeaningfulUpdate(datePublished, dateModified) ? { dateModified } : {}),
+    ...(articleSection ? { articleSection } : {}),
+    ...(keywords && keywords.length > 0 ? { keywords: typeof keywords === 'string' ? keywords : [...keywords] } : {}),
+    ...(typeof wordCount === 'number' && wordCount > 0 ? { wordCount } : {}),
     ...(sourceName || sourceUrl
       ? {
           citation: {
@@ -192,23 +396,19 @@ export function ArticleJsonLd({
           },
         }
       : {}),
-    author: isSiteOrganization
-      ? { '@id': `${SITE_URL}/#organization` }
-      : {
-          '@type': authorType,
-          name: author,
-          ...(authorUrl ? { url: authorUrl } : {}),
-        },
-    publisher: { '@id': `${SITE_URL}/#organization` },
+    author: authorData,
+    publisher: organizationRef(),
     url,
-    isPartOf: { '@id': `${SITE_URL}/#website` },
+    isPartOf: { '@id': WEBSITE_ID },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,
     },
   };
+}
 
-  return <JsonLd data={data} />;
+export function ArticleJsonLd(props: ArticleJsonLdProps) {
+  return <JsonLd data={buildArticleJsonLd(props)} />;
 }
 
 interface HowToStep {
