@@ -147,6 +147,10 @@ interface ArticleJsonLdProps {
   datePublished: string;
   dateModified?: string;
   author?: string;
+  /** Yazar gerçek bir kişiyse 'Person' verilir; varsayılan 'Organization'. */
+  authorType?: 'Person' | 'Organization';
+  /** Yazar sayfasının mutlak URL'i (E-E-A-T için). */
+  authorUrl?: string;
   url: string;
   image?: string;
   /** Sayfadaki görünür "Kaynak" bloğuyla eşleşen kaynak adı/bağlantısı. */
@@ -160,6 +164,8 @@ export function ArticleJsonLd({
   datePublished,
   dateModified,
   author = SEO_SITE_NAME,
+  authorType = 'Organization',
+  authorUrl,
   url,
   image = `${SITE_URL}${DEFAULT_OG_IMAGE}`,
   sourceName,
@@ -189,8 +195,9 @@ export function ArticleJsonLd({
     author: isSiteOrganization
       ? { '@id': `${SITE_URL}/#organization` }
       : {
-          '@type': 'Organization',
+          '@type': authorType,
           name: author,
+          ...(authorUrl ? { url: authorUrl } : {}),
         },
     publisher: { '@id': `${SITE_URL}/#organization` },
     url,
