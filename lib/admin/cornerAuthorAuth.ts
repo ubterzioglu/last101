@@ -72,36 +72,77 @@ export function normalizeAuthorSlug(value: unknown): string {
     .slice(0, 80);
 }
 
+/**
+ * Slugs that must never be handed to an author: every top-level URL segment
+ * served by the app or public/ (tests/reserved-author-slugs.test.ts keeps the
+ * app/ part in sync) plus planned/system names.
+ */
 export const RESERVED_AUTHOR_SLUGS = new Set([
+  // Panels, API and auth
   'admin',
   'api',
+  'auth',
+  'giris',
   'authors',
   'devuser',
-  'haberler',
-  'yazi-dizisi',
   'kose-giris',
   'kose-panel',
+  // Blog and authorship (yazi-dizisi stays reserved for the legacy redirect)
+  'blog',
+  'yazar',
+  'yazi-dizisi',
+  'almanya101',
+  'haberler',
+  'rehber',
+  // Public pages
   'hakkimizda',
   'iletisim',
   'topluluk',
   'belgeler',
   'software-hub',
+  'tatil',
+  'hizmet-rehberi',
+  'is-ilanlari',
+  'kariyer',
+  'ekibimize-katil',
+  'almanyada-yasam',
+  'almanya-araclari',
+  'yeniarachub',
+  // Legal pages
+  'impressum',
+  'gizlilik-politikasi',
+  'kullanim-sartlari',
+  'kvkk-gdpr-ccpa',
+  'cerez-politikasi',
+  // Tools
   'maas-hesaplama',
   'vatandaslik-testi',
   'banka-secim',
   'sigorta-secim',
   'para-transferi',
   'vize-secim',
-  'tatil',
-  'hizmet-rehberi',
-  'is-ilanlari',
   'stepstone-karsilastirma',
-  'rehber',
+  'almanya-maas-beklentisi',
+  'almanya-yasam-tarzi-uyumu',
+  'almanya-yolunu-sec',
+  'almanyada-is-bulma-olasiligi',
+  'almanyaya-hazir-misin',
+  'hangi-sehir-sana-uygun',
+  'ilk-90-gun-planlayici',
+  'kariyer-ve-egitim-rotasi',
+  'once-hangi-sorunu-cozmelisin',
+  'topluluk-ve-danismanlik',
+  // Static and metadata files / public directories
+  'ai',
+  'images',
+  'article-old',
+  'rehber-old',
+  'feed.xml',
+  'llms.txt',
   'robots.txt',
   'sitemap.xml',
   'icon.svg',
 ]);
-
 export function isReservedAuthorSlug(slug: string) {
   return RESERVED_AUTHOR_SLUGS.has(slug);
 }
