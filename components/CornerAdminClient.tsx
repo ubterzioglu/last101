@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CORNER_ADMIN_KEY_HEADER } from '@/lib/admin/headers';
+import { CORNER_SHORT_BIO_MAX_LENGTH } from '@/constants/corner';
 import { cn } from '@/lib/utils/cn';
 
 type Tab = 'authors' | 'new' | 'posts';
@@ -356,7 +357,7 @@ export default function CornerAdminClient() {
             {form.avatarImageUrl ? <div className="relative mt-4 h-20 w-20 overflow-hidden rounded-full border border-white/10"><Image src={form.avatarImageUrl} alt="Profil" fill unoptimized className="object-cover" /></div> : null}
             <label className="mt-4 block">
               <span className="mb-1.5 block text-xs text-white/70">Kısa bio</span>
-              <textarea value={form.shortBio} onChange={(event) => setForm((prev) => ({ ...prev, shortBio: event.target.value }))} className="min-h-24 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
+              <textarea maxLength={CORNER_SHORT_BIO_MAX_LENGTH} value={form.shortBio}onChange={(event) => setForm((prev) => ({ ...prev, shortBio: event.target.value }))} className="min-h-24 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
             </label>
             <label className="mt-4 block">
               <span className="mb-1.5 block text-xs text-white/70">Profil metni</span>

@@ -284,7 +284,7 @@ describe('SplitHero', () => {
 });
 
 describe('HeroDots', () => {
-  it('is a static, aria-hidden decoration of small blurred dots', () => {
+  it('is an aria-hidden decoration of small blurred, slowly floating dots', () => {
     const { $ } = render(createElement(HeroDots));
     const root = $.root().children().first();
     const dots = root.children();
@@ -293,13 +293,16 @@ describe('HeroDots', () => {
     expect(classList(root.attr('class'))).toEqual(
       expect.arrayContaining(['pointer-events-none', 'absolute', 'overflow-hidden'])
     );
-    expect(dots.length).toBeGreaterThanOrEqual(8);
-    expect(dots.length).toBeLessThanOrEqual(12);
+    expect(dots.length).toBeGreaterThanOrEqual(20);
+    expect(dots.length).toBeLessThanOrEqual(32);
     dots.each((_, dot) => {
       const classes = classList($(dot).attr('class'));
-      expect(classes).toEqual(expect.arrayContaining(['rounded-full', 'opacity-25', 'blur-[1px]']));
-      expect(classes.some((token) => /^bg-alm-(blue|green|orange|yellow)$/.test(token))).toBe(true);
+      expect(classes).toEqual(
+        expect.arrayContaining(['animate-hero-dot', 'rounded-full', 'opacity-30', 'blur-[1px]'])
+      );
+      expect(classes.some((token) => /^bg-alm-(blue|green|orange|yellow|teal|red)$/.test(token))).toBe(true);
       expect(classes.some((token) => /^size-(2|3|5)$/.test(token))).toBe(true);
+      expect($(dot).attr('style')).toMatch(/animation-duration:\s*\d+s/);
     });
   });
 });
@@ -568,7 +571,7 @@ describe('hard rules across the blocks', () => {
     /^font-display$/,
     /gradient/,
     /backdrop-blur/,
-    /^animate-/,
+    /^animate-(?!hero-dot$)/,
   ];
 
   const allBlocks = createElement(
