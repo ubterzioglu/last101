@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import MarkdownPreview from '@/components/MarkdownPreview';
 import { CORNER_AUTHOR_KEY_HEADER } from '@/lib/admin/headers';
+import { CORNER_SHORT_BIO_MAX_LENGTH } from '@/constants/corner';
 import { cn } from '@/lib/utils/cn';
 import { AuthSplitLayout } from '@/components/auth/AuthSplitLayout';
 
@@ -322,7 +323,7 @@ export default function CornerAuthorPanelClient({ slug, mode }: Props) {
             <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => void handleUpload(event, 'profile')} className="rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm" />
             {profileForm.avatarImageUrl ? <div className="relative h-14 w-14 overflow-hidden rounded-full border border-white/10"><Image src={profileForm.avatarImageUrl} alt="Profil" fill unoptimized className="object-cover" /></div> : null}
           </div>
-          <textarea value={profileForm.shortBio} onChange={(event) => setProfileForm((prev) => ({ ...prev, shortBio: event.target.value }))} placeholder="Kısa profil metni" className="mt-4 min-h-20 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
+          <textarea maxLength={CORNER_SHORT_BIO_MAX_LENGTH} value={profileForm.shortBio} onChange={(event) => setProfileForm((prev) => ({ ...prev, shortBio: event.target.value }))} placeholder="Kısa profil metni" className="mt-4 min-h-20 w-full rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-sm outline-none focus:border-google-blue" />
           <button disabled={loading || uploading} className="mt-4 rounded-lg bg-google-blue px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-60">Profili Kaydet</button>
         </form>
 

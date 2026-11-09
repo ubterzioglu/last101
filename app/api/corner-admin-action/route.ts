@@ -8,6 +8,7 @@ import {
 import { createPasswordHash } from '@/lib/admin/cornerPasswords';
 import { revalidateBlogPaths } from '@/lib/admin/cornerRevalidate';
 import { isSystemAuthorSlug } from '@/lib/authors';
+import { CORNER_SHORT_BIO_MAX_LENGTH } from '@/constants/corner';
 
 const ALLOWED_ACTIONS = new Set(['create_author', 'update_author', 'set_author_active', 'reset_author_password', 'delete_author', 'set_post_status', 'delete_post']);
 const ALLOWED_STATUSES = new Set(['draft', 'published']);
@@ -71,7 +72,7 @@ export const POST = withCornerAdmin(async (request) => {
       const displayName = normalizeText(body.displayName, 120);
       const slug = normalizeAuthorSlug(body.slug || displayName);
       const password = String(body.password || '').trim();
-      const shortBio = normalizeText(body.shortBio, 700);
+      const shortBio = normalizeText(body.shortBio, CORNER_SHORT_BIO_MAX_LENGTH);
       const bioContent = normalizeText(body.bioContent, 1000000);
       const avatarImageUrl = normalizeOptionalUrl(body.avatarImageUrl);
       const displayOrder = Math.max(1, Math.min(9999, Number.parseInt(String(body.displayOrder || '1000'), 10) || 1000));
@@ -112,7 +113,7 @@ export const POST = withCornerAdmin(async (request) => {
     if (action === 'update_author') {
       const displayName = normalizeText(body.displayName, 120);
       const slug = normalizeAuthorSlug(body.slug || displayName);
-      const shortBio = normalizeText(body.shortBio, 700);
+      const shortBio = normalizeText(body.shortBio, CORNER_SHORT_BIO_MAX_LENGTH);
       const bioContent = normalizeText(body.bioContent, 1000000);
       const avatarImageUrl = normalizeOptionalUrl(body.avatarImageUrl);
       const displayOrder = Math.max(1, Math.min(9999, Number.parseInt(String(body.displayOrder || '1000'), 10) || 1000));
