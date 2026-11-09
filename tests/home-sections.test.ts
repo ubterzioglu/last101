@@ -408,7 +408,7 @@ describe('HomePage', () => {
       /^font-display$/,
       /gradient/,
       /backdrop-blur/,
-      /^animate-/,
+      /^animate-(?!hero-dot$)/,
       /^drop-shadow/,
     ];
     const utilities = classTokens($).map((token) => token.split(':').pop() ?? token);

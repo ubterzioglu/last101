@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServiceClient, isCornerAuthorAuthorized } from '@/lib/admin/cornerAuthorAuth';
 import { revalidateBlogPaths } from '@/lib/admin/cornerRevalidate';
 import { authFailureResponse } from '@/lib/admin/withAuth';
+import { CORNER_SHORT_BIO_MAX_LENGTH } from '@/constants/corner';
 
 const ALLOWED_ACTIONS = new Set(['update_profile', 'create_post', 'update_post', 'delete_post']);
 const ALLOWED_STATUSES = new Set(['draft', 'published']);
@@ -65,7 +66,7 @@ export async function POST(request: NextRequest) {
   try {
     if (action === 'update_profile') {
       const displayName = normalizeText(body.displayName, 120);
-      const shortBio = normalizeText(body.shortBio, 700);
+      const shortBio = normalizeText(body.shortBio, CORNER_SHORT_BIO_MAX_LENGTH);
       const avatarImageUrl = normalizeOptionalUrl(body.avatarImageUrl);
 
       if (!displayName) return NextResponse.json({ error: 'Profil adı gerekli.' }, { status: 400 });

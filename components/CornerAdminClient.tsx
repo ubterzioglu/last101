@@ -11,6 +11,7 @@ import { TONE_STYLES } from '@/components/site/tones';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { CORNER_ADMIN_KEY_HEADER } from '@/lib/admin/headers';
+import { CORNER_SHORT_BIO_MAX_LENGTH } from '@/constants/corner';
 import { cn } from '@/lib/utils/cn';
 
 type Tab = 'authors' | 'new' | 'posts';
@@ -369,7 +370,7 @@ export default function CornerAdminClient() {
               </div>
               {form.avatarImageUrl ? <div className="relative mt-4 h-20 w-20 overflow-hidden rounded-full border border-line"><Image src={form.avatarImageUrl} alt="Profil" fill unoptimized className="object-cover" /></div> : null}
               <AdminField label="Kısa bio" className="mt-4">
-                <textarea value={form.shortBio} onChange={(event) => setForm((prev) => ({ ...prev, shortBio: event.target.value }))} className={cn(ADMIN_CONTROL_CLASS, 'min-h-24 py-2')} />
+                <textarea maxLength={CORNER_SHORT_BIO_MAX_LENGTH} value={form.shortBio} onChange={(event) => setForm((prev) => ({ ...prev, shortBio: event.target.value }))} className={cn(ADMIN_CONTROL_CLASS, 'min-h-24 py-2')} />
               </AdminField>
               <AdminField label="Profil metni" className="mt-4">
                 <textarea value={form.bioContent} onChange={(event) => setForm((prev) => ({ ...prev, bioContent: event.target.value }))} className={cn(ADMIN_CONTROL_CLASS, 'min-h-36 py-2')} />

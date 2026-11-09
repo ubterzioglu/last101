@@ -79,3 +79,11 @@ supabase/.temp/
 # Playwright MCP captures (reference screenshots live in .omc/artifacts/reference)
 .playwright-mcp/
 .superpowers/
+
+# local dev server logs
+.next-dev.*
+.start.*
+
+# machine-local agent tooling state (plans, lockfiles, local permissions)
+.kilo/
+.claude/settings.local.json

@@ -103,8 +103,23 @@
     animation: fade-in-up 1s ease-out;
   }
 
+  @keyframes hero-dot-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(0, -14px, 0) scale(1.15);
+    }
+  }
+
+  .animate-hero-dot {
+    animation: hero-dot-float 7s ease-in-out infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .animate-fade-in-up {
+    .animate-fade-in-up,
+    .animate-hero-dot {
       animation: none !important;
     }
   }
